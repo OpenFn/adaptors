@@ -52,8 +52,21 @@ export default function(props: Partial<ImmunizationEvaluation_Props>) {
         resource.authority = dt.reference(props.authority);
     }
 
+    if (!_.isNil(props.targetDisease)) {
+        resource.targetDisease = dt.concept(props.targetDisease);
+    }
+
     if (!_.isNil(props.immunizationEvent)) {
         resource.immunizationEvent = dt.reference(props.immunizationEvent);
+    }
+
+    if (!_.isNil(props.doseStatus)) {
+        resource.doseStatus = dt.concept(props.doseStatus);
+    }
+
+    if (!_.isNil(props.doseStatusReason)) {
+        if (!Array.isArray(props.doseStatusReason)) { props.doseStatusReason = [props.doseStatusReason]; }
+        resource.doseStatusReason = dt.concept(props.doseStatusReason);
     }
 
     if (!_.isNil(props.doseNumber)) {

@@ -50,6 +50,10 @@ export default function(props: Partial<MeasureReport_Props>) {
         resource.reporter = dt.reference(props.reporter);
     }
 
+    if (!_.isNil(props.improvementNotation)) {
+        resource.improvementNotation = dt.concept(props.improvementNotation);
+    }
+
     if (!_.isNil(props.group)) {
         let src = props.group;
         if (!Array.isArray(src)) { src = [src]; }

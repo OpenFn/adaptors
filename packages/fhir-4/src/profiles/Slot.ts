@@ -42,6 +42,25 @@ export default function(props: Partial<Slot_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.serviceCategory)) {
+        if (!Array.isArray(props.serviceCategory)) { props.serviceCategory = [props.serviceCategory]; }
+        resource.serviceCategory = dt.concept(props.serviceCategory);
+    }
+
+    if (!_.isNil(props.serviceType)) {
+        if (!Array.isArray(props.serviceType)) { props.serviceType = [props.serviceType]; }
+        resource.serviceType = dt.concept(props.serviceType);
+    }
+
+    if (!_.isNil(props.specialty)) {
+        if (!Array.isArray(props.specialty)) { props.specialty = [props.specialty]; }
+        resource.specialty = dt.concept(props.specialty);
+    }
+
+    if (!_.isNil(props.appointmentType)) {
+        resource.appointmentType = dt.concept(props.appointmentType);
+    }
+
     if (!_.isNil(props.schedule)) {
         resource.schedule = dt.reference(props.schedule);
     }

@@ -69,6 +69,18 @@ export default function(props: Partial<Procedure_Props>) {
         resource.partOf = dt.reference(props.partOf);
     }
 
+    if (!_.isNil(props.statusReason)) {
+        resource.statusReason = dt.concept(props.statusReason);
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = dt.concept(props.category);
+    }
+
+    if (!_.isNil(props.code)) {
+        resource.code = dt.concept(props.code);
+    }
+
     if (!_.isNil(props.subject)) {
         resource.subject = dt.reference(props.subject);
     }
@@ -108,9 +120,23 @@ export default function(props: Partial<Procedure_Props>) {
         resource.location = dt.reference(props.location);
     }
 
+    if (!_.isNil(props.reasonCode)) {
+        if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
+        resource.reasonCode = dt.concept(props.reasonCode);
+    }
+
     if (!_.isNil(props.reasonReference)) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = dt.reference(props.reasonReference);
+    }
+
+    if (!_.isNil(props.bodySite)) {
+        if (!Array.isArray(props.bodySite)) { props.bodySite = [props.bodySite]; }
+        resource.bodySite = dt.concept(props.bodySite);
+    }
+
+    if (!_.isNil(props.outcome)) {
+        resource.outcome = dt.concept(props.outcome);
     }
 
     if (!_.isNil(props.report)) {
@@ -118,9 +144,19 @@ export default function(props: Partial<Procedure_Props>) {
         resource.report = dt.reference(props.report);
     }
 
+    if (!_.isNil(props.complication)) {
+        if (!Array.isArray(props.complication)) { props.complication = [props.complication]; }
+        resource.complication = dt.concept(props.complication);
+    }
+
     if (!_.isNil(props.complicationDetail)) {
         if (!Array.isArray(props.complicationDetail)) { props.complicationDetail = [props.complicationDetail]; }
         resource.complicationDetail = dt.reference(props.complicationDetail);
+    }
+
+    if (!_.isNil(props.followUp)) {
+        if (!Array.isArray(props.followUp)) { props.followUp = [props.followUp]; }
+        resource.followUp = dt.concept(props.followUp);
     }
 
     if (!_.isNil(props.focalDevice)) {
@@ -140,6 +176,11 @@ export default function(props: Partial<Procedure_Props>) {
     if (!_.isNil(props.usedReference)) {
         if (!Array.isArray(props.usedReference)) { props.usedReference = [props.usedReference]; }
         resource.usedReference = dt.reference(props.usedReference);
+    }
+
+    if (!_.isNil(props.usedCode)) {
+        if (!Array.isArray(props.usedCode)) { props.usedCode = [props.usedCode]; }
+        resource.usedCode = dt.concept(props.usedCode);
     }
 
     return resource;

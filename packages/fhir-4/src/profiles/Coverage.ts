@@ -48,6 +48,10 @@ export default function(props: Partial<Coverage_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.type)) {
+        resource.type = dt.concept(props.type);
+    }
+
     if (!_.isNil(props.policyHolder)) {
         resource.policyHolder = dt.reference(props.policyHolder);
     }
@@ -58,6 +62,10 @@ export default function(props: Partial<Coverage_Props>) {
 
     if (!_.isNil(props.beneficiary)) {
         resource.beneficiary = dt.reference(props.beneficiary);
+    }
+
+    if (!_.isNil(props.relationship)) {
+        resource.relationship = dt.concept(props.relationship);
     }
 
     if (!_.isNil(props.payor)) {

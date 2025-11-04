@@ -65,6 +65,39 @@ export default function(props: Partial<ResearchStudy_Props>) {
         resource.partOf = dt.reference(props.partOf);
     }
 
+    if (!_.isNil(props.primaryPurposeType)) {
+        resource.primaryPurposeType = dt.concept(props.primaryPurposeType);
+    }
+
+    if (!_.isNil(props.phase)) {
+        resource.phase = dt.concept(props.phase);
+    }
+
+    if (!_.isNil(props.category)) {
+        if (!Array.isArray(props.category)) { props.category = [props.category]; }
+        resource.category = dt.concept(props.category);
+    }
+
+    if (!_.isNil(props.focus)) {
+        if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
+        resource.focus = dt.concept(props.focus);
+    }
+
+    if (!_.isNil(props.condition)) {
+        if (!Array.isArray(props.condition)) { props.condition = [props.condition]; }
+        resource.condition = dt.concept(props.condition);
+    }
+
+    if (!_.isNil(props.keyword)) {
+        if (!Array.isArray(props.keyword)) { props.keyword = [props.keyword]; }
+        resource.keyword = dt.concept(props.keyword);
+    }
+
+    if (!_.isNil(props.location)) {
+        if (!Array.isArray(props.location)) { props.location = [props.location]; }
+        resource.location = dt.concept(props.location);
+    }
+
     if (!_.isNil(props.enrollment)) {
         if (!Array.isArray(props.enrollment)) { props.enrollment = [props.enrollment]; }
         resource.enrollment = dt.reference(props.enrollment);
@@ -81,6 +114,10 @@ export default function(props: Partial<ResearchStudy_Props>) {
     if (!_.isNil(props.site)) {
         if (!Array.isArray(props.site)) { props.site = [props.site]; }
         resource.site = dt.reference(props.site);
+    }
+
+    if (!_.isNil(props.reasonStopped)) {
+        resource.reasonStopped = dt.concept(props.reasonStopped);
     }
 
     if (!_.isNil(props.arm)) {

@@ -75,6 +75,14 @@ export default function(props: Partial<Evidence_Props>) {
         }
     }
 
+    if (!_.isNil(props.synthesisType)) {
+        resource.synthesisType = dt.concept(props.synthesisType);
+    }
+
+    if (!_.isNil(props.studyType)) {
+        resource.studyType = dt.concept(props.studyType);
+    }
+
     if (!_.isNil(props.statistic)) {
         let src = props.statistic;
         if (!Array.isArray(src)) { src = [src]; }

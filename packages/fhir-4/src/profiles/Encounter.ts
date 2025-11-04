@@ -82,6 +82,19 @@ export default function(props: Partial<Encounter_Props>) {
         }
     }
 
+    if (!_.isNil(props.type)) {
+        if (!Array.isArray(props.type)) { props.type = [props.type]; }
+        resource.type = dt.concept(props.type);
+    }
+
+    if (!_.isNil(props.serviceType)) {
+        resource.serviceType = dt.concept(props.serviceType);
+    }
+
+    if (!_.isNil(props.priority)) {
+        resource.priority = dt.concept(props.priority);
+    }
+
     if (!_.isNil(props.subject)) {
         resource.subject = dt.reference(props.subject);
     }
@@ -113,6 +126,11 @@ export default function(props: Partial<Encounter_Props>) {
     if (!_.isNil(props.appointment)) {
         if (!Array.isArray(props.appointment)) { props.appointment = [props.appointment]; }
         resource.appointment = dt.reference(props.appointment);
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
+        resource.reasonCode = dt.concept(props.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {

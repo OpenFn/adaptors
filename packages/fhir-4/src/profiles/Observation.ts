@@ -65,6 +65,15 @@ export default function(props: Partial<Observation_Props>) {
         resource.partOf = dt.reference(props.partOf);
     }
 
+    if (!_.isNil(props.category)) {
+        if (!Array.isArray(props.category)) { props.category = [props.category]; }
+        resource.category = dt.concept(props.category);
+    }
+
+    if (!_.isNil(props.code)) {
+        resource.code = dt.concept(props.code);
+    }
+
     if (!_.isNil(props.subject)) {
         resource.subject = dt.reference(props.subject);
     }
@@ -91,6 +100,23 @@ export default function(props: Partial<Observation_Props>) {
     if (!_.isNil(props.value)) {
         delete resource.value;
         dt.composite(resource, "value", props.value);
+    }
+
+    if (!_.isNil(props.dataAbsentReason)) {
+        resource.dataAbsentReason = dt.concept(props.dataAbsentReason);
+    }
+
+    if (!_.isNil(props.interpretation)) {
+        if (!Array.isArray(props.interpretation)) { props.interpretation = [props.interpretation]; }
+        resource.interpretation = dt.concept(props.interpretation);
+    }
+
+    if (!_.isNil(props.bodySite)) {
+        resource.bodySite = dt.concept(props.bodySite);
+    }
+
+    if (!_.isNil(props.method)) {
+        resource.method = dt.concept(props.method);
     }
 
     if (!_.isNil(props.specimen)) {

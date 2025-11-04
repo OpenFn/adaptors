@@ -57,6 +57,11 @@ export default function(props: Partial<EpisodeOfCare_Props>) {
         }
     }
 
+    if (!_.isNil(props.type)) {
+        if (!Array.isArray(props.type)) { props.type = [props.type]; }
+        resource.type = dt.concept(props.type);
+    }
+
     if (!_.isNil(props.diagnosis)) {
         let src = props.diagnosis;
         if (!Array.isArray(src)) { src = [src]; }

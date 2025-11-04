@@ -36,6 +36,15 @@ export default function(props: Partial<NutritionProduct_Props>) {
         ...props
     };
 
+    if (!_.isNil(props.category)) {
+        if (!Array.isArray(props.category)) { props.category = [props.category]; }
+        resource.category = dt.concept(props.category);
+    }
+
+    if (!_.isNil(props.code)) {
+        resource.code = dt.concept(props.code);
+    }
+
     if (!_.isNil(props.manufacturer)) {
         if (!Array.isArray(props.manufacturer)) { props.manufacturer = [props.manufacturer]; }
         resource.manufacturer = dt.reference(props.manufacturer);

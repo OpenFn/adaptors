@@ -45,9 +45,17 @@ export default function(props: Partial<PackagedProductDefinition_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.type)) {
+        resource.type = dt.concept(props.type);
+    }
+
     if (!_.isNil(props.packageFor)) {
         if (!Array.isArray(props.packageFor)) { props.packageFor = [props.packageFor]; }
         resource.packageFor = dt.reference(props.packageFor);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = dt.concept(props.status);
     }
 
     if (!_.isNil(props.legalStatusOfSupply)) {
@@ -62,6 +70,11 @@ export default function(props: Partial<PackagedProductDefinition_Props>) {
 
             resource.legalStatusOfSupply.push(_legalStatusOfSupply);
         }
+    }
+
+    if (!_.isNil(props.characteristic)) {
+        if (!Array.isArray(props.characteristic)) { props.characteristic = [props.characteristic]; }
+        resource.characteristic = dt.concept(props.characteristic);
     }
 
     if (!_.isNil(props.manufacturer)) {

@@ -46,6 +46,10 @@ export default function(props: Partial<SupplyRequest_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.category)) {
+        resource.category = dt.concept(props.category);
+    }
+
     if (!_.isNil(props.item)) {
         delete resource.item;
         dt.composite(resource, "item", props.item);
@@ -77,6 +81,11 @@ export default function(props: Partial<SupplyRequest_Props>) {
     if (!_.isNil(props.supplier)) {
         if (!Array.isArray(props.supplier)) { props.supplier = [props.supplier]; }
         resource.supplier = dt.reference(props.supplier);
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
+        resource.reasonCode = dt.concept(props.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {

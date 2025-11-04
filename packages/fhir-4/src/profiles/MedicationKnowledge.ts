@@ -48,8 +48,16 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
         ...props
     };
 
+    if (!_.isNil(props.code)) {
+        resource.code = dt.concept(props.code);
+    }
+
     if (!_.isNil(props.manufacturer)) {
         resource.manufacturer = dt.reference(props.manufacturer);
+    }
+
+    if (!_.isNil(props.doseForm)) {
+        resource.doseForm = dt.concept(props.doseForm);
     }
 
     if (!_.isNil(props.relatedMedicationKnowledge)) {
@@ -69,6 +77,11 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
     if (!_.isNil(props.associatedMedication)) {
         if (!Array.isArray(props.associatedMedication)) { props.associatedMedication = [props.associatedMedication]; }
         resource.associatedMedication = dt.reference(props.associatedMedication);
+    }
+
+    if (!_.isNil(props.productType)) {
+        if (!Array.isArray(props.productType)) { props.productType = [props.productType]; }
+        resource.productType = dt.concept(props.productType);
     }
 
     if (!_.isNil(props.monograph)) {
@@ -97,6 +110,11 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
 
             resource.ingredient.push(_ingredient);
         }
+    }
+
+    if (!_.isNil(props.intendedRoute)) {
+        if (!Array.isArray(props.intendedRoute)) { props.intendedRoute = [props.intendedRoute]; }
+        resource.intendedRoute = dt.concept(props.intendedRoute);
     }
 
     if (!_.isNil(props.cost)) {

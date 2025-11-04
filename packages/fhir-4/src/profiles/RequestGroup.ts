@@ -63,6 +63,10 @@ export default function(props: Partial<RequestGroup_Props>) {
         resource.groupIdentifier = dt.identifier(props.groupIdentifier);
     }
 
+    if (!_.isNil(props.code)) {
+        resource.code = dt.concept(props.code);
+    }
+
     if (!_.isNil(props.subject)) {
         resource.subject = dt.reference(props.subject);
     }
@@ -73,6 +77,11 @@ export default function(props: Partial<RequestGroup_Props>) {
 
     if (!_.isNil(props.author)) {
         resource.author = dt.reference(props.author);
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
+        resource.reasonCode = dt.concept(props.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {

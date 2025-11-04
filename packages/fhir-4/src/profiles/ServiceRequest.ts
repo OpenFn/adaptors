@@ -78,6 +78,20 @@ export default function(props: Partial<ServiceRequest_Props>) {
         resource.requisition = dt.identifier(props.requisition);
     }
 
+    if (!_.isNil(props.category)) {
+        if (!Array.isArray(props.category)) { props.category = [props.category]; }
+        resource.category = dt.concept(props.category);
+    }
+
+    if (!_.isNil(props.code)) {
+        resource.code = dt.concept(props.code);
+    }
+
+    if (!_.isNil(props.orderDetail)) {
+        if (!Array.isArray(props.orderDetail)) { props.orderDetail = [props.orderDetail]; }
+        resource.orderDetail = dt.concept(props.orderDetail);
+    }
+
     if (!_.isNil(props.quantity)) {
         delete resource.quantity;
         dt.composite(resource, "quantity", props.quantity);
@@ -105,14 +119,28 @@ export default function(props: Partial<ServiceRequest_Props>) {
         resource.requester = dt.reference(props.requester);
     }
 
+    if (!_.isNil(props.performerType)) {
+        resource.performerType = dt.concept(props.performerType);
+    }
+
     if (!_.isNil(props.performer)) {
         if (!Array.isArray(props.performer)) { props.performer = [props.performer]; }
         resource.performer = dt.reference(props.performer);
     }
 
+    if (!_.isNil(props.locationCode)) {
+        if (!Array.isArray(props.locationCode)) { props.locationCode = [props.locationCode]; }
+        resource.locationCode = dt.concept(props.locationCode);
+    }
+
     if (!_.isNil(props.locationReference)) {
         if (!Array.isArray(props.locationReference)) { props.locationReference = [props.locationReference]; }
         resource.locationReference = dt.reference(props.locationReference);
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
+        resource.reasonCode = dt.concept(props.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {
@@ -133,6 +161,11 @@ export default function(props: Partial<ServiceRequest_Props>) {
     if (!_.isNil(props.specimen)) {
         if (!Array.isArray(props.specimen)) { props.specimen = [props.specimen]; }
         resource.specimen = dt.reference(props.specimen);
+    }
+
+    if (!_.isNil(props.bodySite)) {
+        if (!Array.isArray(props.bodySite)) { props.bodySite = [props.bodySite]; }
+        resource.bodySite = dt.concept(props.bodySite);
     }
 
     if (!_.isNil(props.relevantHistory)) {

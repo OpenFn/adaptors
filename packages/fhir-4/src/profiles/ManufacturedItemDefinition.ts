@@ -38,9 +38,22 @@ export default function(props: Partial<ManufacturedItemDefinition_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.manufacturedDoseForm)) {
+        resource.manufacturedDoseForm = dt.concept(props.manufacturedDoseForm);
+    }
+
+    if (!_.isNil(props.unitOfPresentation)) {
+        resource.unitOfPresentation = dt.concept(props.unitOfPresentation);
+    }
+
     if (!_.isNil(props.manufacturer)) {
         if (!Array.isArray(props.manufacturer)) { props.manufacturer = [props.manufacturer]; }
         resource.manufacturer = dt.reference(props.manufacturer);
+    }
+
+    if (!_.isNil(props.ingredient)) {
+        if (!Array.isArray(props.ingredient)) { props.ingredient = [props.ingredient]; }
+        resource.ingredient = dt.concept(props.ingredient);
     }
 
     if (!_.isNil(props.property)) {

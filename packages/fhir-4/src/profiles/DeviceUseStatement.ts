@@ -71,9 +71,18 @@ export default function(props: Partial<DeviceUseStatement_Props>) {
         resource.device = dt.reference(props.device);
     }
 
+    if (!_.isNil(props.reasonCode)) {
+        if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
+        resource.reasonCode = dt.concept(props.reasonCode);
+    }
+
     if (!_.isNil(props.reasonReference)) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = dt.reference(props.reasonReference);
+    }
+
+    if (!_.isNil(props.bodySite)) {
+        resource.bodySite = dt.concept(props.bodySite);
     }
 
     return resource;

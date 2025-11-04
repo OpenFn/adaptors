@@ -59,6 +59,14 @@ export default function(props: Partial<Immunization_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.statusReason)) {
+        resource.statusReason = dt.concept(props.statusReason);
+    }
+
+    if (!_.isNil(props.vaccineCode)) {
+        resource.vaccineCode = dt.concept(props.vaccineCode);
+    }
+
     if (!_.isNil(props.patient)) {
         resource.patient = dt.reference(props.patient);
     }
@@ -72,12 +80,24 @@ export default function(props: Partial<Immunization_Props>) {
         dt.composite(resource, "occurrence", props.occurrence);
     }
 
+    if (!_.isNil(props.reportOrigin)) {
+        resource.reportOrigin = dt.concept(props.reportOrigin);
+    }
+
     if (!_.isNil(props.location)) {
         resource.location = dt.reference(props.location);
     }
 
     if (!_.isNil(props.manufacturer)) {
         resource.manufacturer = dt.reference(props.manufacturer);
+    }
+
+    if (!_.isNil(props.site)) {
+        resource.site = dt.concept(props.site);
+    }
+
+    if (!_.isNil(props.route)) {
+        resource.route = dt.concept(props.route);
     }
 
     if (!_.isNil(props.performer)) {
@@ -94,9 +114,19 @@ export default function(props: Partial<Immunization_Props>) {
         }
     }
 
+    if (!_.isNil(props.reasonCode)) {
+        if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
+        resource.reasonCode = dt.concept(props.reasonCode);
+    }
+
     if (!_.isNil(props.reasonReference)) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = dt.reference(props.reasonReference);
+    }
+
+    if (!_.isNil(props.subpotentReason)) {
+        if (!Array.isArray(props.subpotentReason)) { props.subpotentReason = [props.subpotentReason]; }
+        resource.subpotentReason = dt.concept(props.subpotentReason);
     }
 
     if (!_.isNil(props.education)) {
@@ -111,6 +141,15 @@ export default function(props: Partial<Immunization_Props>) {
 
             resource.education.push(_education);
         }
+    }
+
+    if (!_.isNil(props.programEligibility)) {
+        if (!Array.isArray(props.programEligibility)) { props.programEligibility = [props.programEligibility]; }
+        resource.programEligibility = dt.concept(props.programEligibility);
+    }
+
+    if (!_.isNil(props.fundingSource)) {
+        resource.fundingSource = dt.concept(props.fundingSource);
     }
 
     if (!_.isNil(props.reaction)) {

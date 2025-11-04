@@ -69,6 +69,16 @@ export default function(props: Partial<ResearchElementDefinition_Props>) {
         dt.composite(resource, "subject", props.subject);
     }
 
+    if (!_.isNil(props.jurisdiction)) {
+        if (!Array.isArray(props.jurisdiction)) { props.jurisdiction = [props.jurisdiction]; }
+        resource.jurisdiction = dt.concept(props.jurisdiction);
+    }
+
+    if (!_.isNil(props.topic)) {
+        if (!Array.isArray(props.topic)) { props.topic = [props.topic]; }
+        resource.topic = dt.concept(props.topic);
+    }
+
     if (!_.isNil(props.characteristic)) {
         let src = props.characteristic;
         if (!Array.isArray(src)) { src = [src]; }

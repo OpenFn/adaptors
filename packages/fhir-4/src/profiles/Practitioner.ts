@@ -55,5 +55,10 @@ export default function(props: Partial<Practitioner_Props>) {
         }
     }
 
+    if (!_.isNil(props.communication)) {
+        if (!Array.isArray(props.communication)) { props.communication = [props.communication]; }
+        resource.communication = dt.concept(props.communication);
+    }
+
     return resource;
 }

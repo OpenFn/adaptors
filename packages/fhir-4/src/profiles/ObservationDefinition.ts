@@ -39,9 +39,22 @@ export default function(props: Partial<ObservationDefinition_Props>) {
         ...props
     };
 
+    if (!_.isNil(props.category)) {
+        if (!Array.isArray(props.category)) { props.category = [props.category]; }
+        resource.category = dt.concept(props.category);
+    }
+
+    if (!_.isNil(props.code)) {
+        resource.code = dt.concept(props.code);
+    }
+
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = dt.identifier(props.identifier);
+    }
+
+    if (!_.isNil(props.method)) {
+        resource.method = dt.concept(props.method);
     }
 
     if (!_.isNil(props.quantitativeDetails)) {

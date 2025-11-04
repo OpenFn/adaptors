@@ -67,5 +67,9 @@ export default function(props: Partial<PaymentNotice_Props>) {
         resource.recipient = dt.reference(props.recipient);
     }
 
+    if (!_.isNil(props.paymentStatus)) {
+        resource.paymentStatus = dt.concept(props.paymentStatus);
+    }
+
     return resource;
 }

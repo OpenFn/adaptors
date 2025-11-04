@@ -42,6 +42,10 @@ export default function(props: Partial<Account_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.type)) {
+        resource.type = dt.concept(props.type);
+    }
+
     if (!_.isNil(props.subject)) {
         if (!Array.isArray(props.subject)) { props.subject = [props.subject]; }
         resource.subject = dt.reference(props.subject);

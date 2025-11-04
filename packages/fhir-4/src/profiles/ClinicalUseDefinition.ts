@@ -42,9 +42,18 @@ export default function(props: Partial<ClinicalUseDefinition_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.category)) {
+        if (!Array.isArray(props.category)) { props.category = [props.category]; }
+        resource.category = dt.concept(props.category);
+    }
+
     if (!_.isNil(props.subject)) {
         if (!Array.isArray(props.subject)) { props.subject = [props.subject]; }
         resource.subject = dt.reference(props.subject);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = dt.concept(props.status);
     }
 
     if (!_.isNil(props.contraindication)) {

@@ -48,6 +48,15 @@ export default function(props: Partial<Location_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.type)) {
+        if (!Array.isArray(props.type)) { props.type = [props.type]; }
+        resource.type = dt.concept(props.type);
+    }
+
+    if (!_.isNil(props.physicalType)) {
+        resource.physicalType = dt.concept(props.physicalType);
+    }
+
     if (!_.isNil(props.position)) {
         let src = props.position;
 

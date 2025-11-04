@@ -53,6 +53,34 @@ export default function(props: Partial<Appointment_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.cancelationReason)) {
+        resource.cancelationReason = dt.concept(props.cancelationReason);
+    }
+
+    if (!_.isNil(props.serviceCategory)) {
+        if (!Array.isArray(props.serviceCategory)) { props.serviceCategory = [props.serviceCategory]; }
+        resource.serviceCategory = dt.concept(props.serviceCategory);
+    }
+
+    if (!_.isNil(props.serviceType)) {
+        if (!Array.isArray(props.serviceType)) { props.serviceType = [props.serviceType]; }
+        resource.serviceType = dt.concept(props.serviceType);
+    }
+
+    if (!_.isNil(props.specialty)) {
+        if (!Array.isArray(props.specialty)) { props.specialty = [props.specialty]; }
+        resource.specialty = dt.concept(props.specialty);
+    }
+
+    if (!_.isNil(props.appointmentType)) {
+        resource.appointmentType = dt.concept(props.appointmentType);
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
+        resource.reasonCode = dt.concept(props.reasonCode);
+    }
+
     if (!_.isNil(props.reasonReference)) {
         if (!Array.isArray(props.reasonReference)) { props.reasonReference = [props.reasonReference]; }
         resource.reasonReference = dt.reference(props.reasonReference);

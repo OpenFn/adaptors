@@ -43,6 +43,15 @@ export default function(props: Partial<Ingredient_Props>) {
         resource.for = dt.reference(props.for);
     }
 
+    if (!_.isNil(props.role)) {
+        resource.role = dt.concept(props.role);
+    }
+
+    if (!_.isNil(props.function)) {
+        if (!Array.isArray(props.function)) { props.function = [props.function]; }
+        resource.function = dt.concept(props.function);
+    }
+
     if (!_.isNil(props.manufacturer)) {
         let src = props.manufacturer;
         if (!Array.isArray(src)) { src = [src]; }

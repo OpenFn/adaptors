@@ -45,6 +45,11 @@ export default function(props: Partial<InsurancePlan_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.type)) {
+        if (!Array.isArray(props.type)) { props.type = [props.type]; }
+        resource.type = dt.concept(props.type);
+    }
+
     if (!_.isNil(props.ownedBy)) {
         resource.ownedBy = dt.reference(props.ownedBy);
     }

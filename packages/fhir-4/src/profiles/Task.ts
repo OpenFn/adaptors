@@ -76,6 +76,18 @@ export default function(props: Partial<Task_Props>) {
         resource.partOf = dt.reference(props.partOf);
     }
 
+    if (!_.isNil(props.statusReason)) {
+        resource.statusReason = dt.concept(props.statusReason);
+    }
+
+    if (!_.isNil(props.businessStatus)) {
+        resource.businessStatus = dt.concept(props.businessStatus);
+    }
+
+    if (!_.isNil(props.code)) {
+        resource.code = dt.concept(props.code);
+    }
+
     if (!_.isNil(props.focus)) {
         resource.focus = dt.reference(props.focus);
     }
@@ -92,12 +104,21 @@ export default function(props: Partial<Task_Props>) {
         resource.requester = dt.reference(props.requester);
     }
 
+    if (!_.isNil(props.performerType)) {
+        if (!Array.isArray(props.performerType)) { props.performerType = [props.performerType]; }
+        resource.performerType = dt.concept(props.performerType);
+    }
+
     if (!_.isNil(props.owner)) {
         resource.owner = dt.reference(props.owner);
     }
 
     if (!_.isNil(props.location)) {
         resource.location = dt.reference(props.location);
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        resource.reasonCode = dt.concept(props.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {
