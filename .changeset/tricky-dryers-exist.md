@@ -1,6 +1,6 @@
 ---
-'@openfn/generate-fhir': minor
-'@openfn/language-fhir-4': minor
+'@openfn/generate-fhir': patch
+'@openfn/language-fhir-4': patch
 ---
 
-Add mappings for `CodeableConcept`
+Fix mappings for `CodeableConcept`
