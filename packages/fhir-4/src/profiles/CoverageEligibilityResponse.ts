@@ -81,6 +81,10 @@ export default function(props: Partial<CoverageEligibilityResponse_Props>) {
         }
     }
 
+    if (!_.isNil(props.form)) {
+        resource.form = dt.concept(props.form);
+    }
+
     if (!_.isNil(props.error)) {
         let src = props.error;
         if (!Array.isArray(src)) { src = [src]; }

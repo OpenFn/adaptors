@@ -47,6 +47,11 @@ export default function(props: Partial<RelatedPerson_Props>) {
         resource.patient = dt.reference(props.patient);
     }
 
+    if (!_.isNil(props.relationship)) {
+        if (!Array.isArray(props.relationship)) { props.relationship = [props.relationship]; }
+        resource.relationship = dt.concept(props.relationship);
+    }
+
     if (!_.isNil(props.communication)) {
         let src = props.communication;
         if (!Array.isArray(src)) { src = [src]; }

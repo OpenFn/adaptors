@@ -47,6 +47,23 @@ export default function(props: Partial<Goal_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.achievementStatus)) {
+        resource.achievementStatus = dt.concept(props.achievementStatus);
+    }
+
+    if (!_.isNil(props.category)) {
+        if (!Array.isArray(props.category)) { props.category = [props.category]; }
+        resource.category = dt.concept(props.category);
+    }
+
+    if (!_.isNil(props.priority)) {
+        resource.priority = dt.concept(props.priority);
+    }
+
+    if (!_.isNil(props.description)) {
+        resource.description = dt.concept(props.description);
+    }
+
     if (!_.isNil(props.subject)) {
         resource.subject = dt.reference(props.subject);
     }
@@ -77,6 +94,11 @@ export default function(props: Partial<Goal_Props>) {
     if (!_.isNil(props.addresses)) {
         if (!Array.isArray(props.addresses)) { props.addresses = [props.addresses]; }
         resource.addresses = dt.reference(props.addresses);
+    }
+
+    if (!_.isNil(props.outcomeCode)) {
+        if (!Array.isArray(props.outcomeCode)) { props.outcomeCode = [props.outcomeCode]; }
+        resource.outcomeCode = dt.concept(props.outcomeCode);
     }
 
     if (!_.isNil(props.outcomeReference)) {

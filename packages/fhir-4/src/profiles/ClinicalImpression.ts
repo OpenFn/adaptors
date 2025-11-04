@@ -51,6 +51,14 @@ export default function(props: Partial<ClinicalImpression_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.statusReason)) {
+        resource.statusReason = dt.concept(props.statusReason);
+    }
+
+    if (!_.isNil(props.code)) {
+        resource.code = dt.concept(props.code);
+    }
+
     if (!_.isNil(props.subject)) {
         resource.subject = dt.reference(props.subject);
     }
@@ -103,6 +111,11 @@ export default function(props: Partial<ClinicalImpression_Props>) {
 
             resource.finding.push(_finding);
         }
+    }
+
+    if (!_.isNil(props.prognosisCodeableConcept)) {
+        if (!Array.isArray(props.prognosisCodeableConcept)) { props.prognosisCodeableConcept = [props.prognosisCodeableConcept]; }
+        resource.prognosisCodeableConcept = dt.concept(props.prognosisCodeableConcept);
     }
 
     if (!_.isNil(props.prognosisReference)) {

@@ -1,6 +1,6 @@
 # @openfn/language-arcgis
 
-## 1.0.1
+## 1.0.1 - 04 November 2025
 
 ### Patch Changes
 
@@ -15,7 +15,7 @@
 
 ### Patch Changes
 
-- Updated dependencies [408a3a2]
+- Updated dependencies \[408a3a2]
   - @openfn/language-common@3.1.1
 
 ## 0.0.1

@@ -45,6 +45,10 @@ export default function(props: Partial<CoverageEligibilityRequest_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.priority)) {
+        resource.priority = dt.concept(props.priority);
+    }
+
     if (!_.isNil(props.patient)) {
         resource.patient = dt.reference(props.patient);
     }

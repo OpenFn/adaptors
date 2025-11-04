@@ -39,8 +39,16 @@ export default function(props: Partial<Medication_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.code)) {
+        resource.code = dt.concept(props.code);
+    }
+
     if (!_.isNil(props.manufacturer)) {
         resource.manufacturer = dt.reference(props.manufacturer);
+    }
+
+    if (!_.isNil(props.form)) {
+        resource.form = dt.concept(props.form);
     }
 
     if (!_.isNil(props.ingredient)) {

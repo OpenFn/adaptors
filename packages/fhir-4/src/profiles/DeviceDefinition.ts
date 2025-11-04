@@ -86,6 +86,10 @@ export default function(props: Partial<DeviceDefinition_Props>) {
         }
     }
 
+    if (!_.isNil(props.type)) {
+        resource.type = dt.concept(props.type);
+    }
+
     if (!_.isNil(props.specialization)) {
         let src = props.specialization;
         if (!Array.isArray(src)) { src = [src]; }
@@ -98,6 +102,16 @@ export default function(props: Partial<DeviceDefinition_Props>) {
 
             resource.specialization.push(_specialization);
         }
+    }
+
+    if (!_.isNil(props.safety)) {
+        if (!Array.isArray(props.safety)) { props.safety = [props.safety]; }
+        resource.safety = dt.concept(props.safety);
+    }
+
+    if (!_.isNil(props.languageCode)) {
+        if (!Array.isArray(props.languageCode)) { props.languageCode = [props.languageCode]; }
+        resource.languageCode = dt.concept(props.languageCode);
     }
 
     if (!_.isNil(props.capability)) {

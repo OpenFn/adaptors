@@ -53,6 +53,11 @@ export default function(props: Partial<Questionnaire_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.jurisdiction)) {
+        if (!Array.isArray(props.jurisdiction)) { props.jurisdiction = [props.jurisdiction]; }
+        resource.jurisdiction = dt.concept(props.jurisdiction);
+    }
+
     if (!_.isNil(props.item)) {
         let src = props.item;
         if (!Array.isArray(src)) { src = [src]; }

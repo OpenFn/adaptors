@@ -65,6 +65,10 @@ export default function(props: Partial<MedicationDispense_Props>) {
         dt.composite(resource, "statusReason", props.statusReason);
     }
 
+    if (!_.isNil(props.category)) {
+        resource.category = dt.concept(props.category);
+    }
+
     if (!_.isNil(props.medication)) {
         delete resource.medication;
         dt.composite(resource, "medication", props.medication);
@@ -104,6 +108,10 @@ export default function(props: Partial<MedicationDispense_Props>) {
     if (!_.isNil(props.authorizingPrescription)) {
         if (!Array.isArray(props.authorizingPrescription)) { props.authorizingPrescription = [props.authorizingPrescription]; }
         resource.authorizingPrescription = dt.reference(props.authorizingPrescription);
+    }
+
+    if (!_.isNil(props.type)) {
+        resource.type = dt.concept(props.type);
     }
 
     if (!_.isNil(props.destination)) {

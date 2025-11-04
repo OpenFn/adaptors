@@ -42,6 +42,10 @@ export default function(props: Partial<BiologicallyDerivedProduct_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.productCode)) {
+        resource.productCode = dt.concept(props.productCode);
+    }
+
     if (!_.isNil(props.request)) {
         if (!Array.isArray(props.request)) { props.request = [props.request]; }
         resource.request = dt.reference(props.request);

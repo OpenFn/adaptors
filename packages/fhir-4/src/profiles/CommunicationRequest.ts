@@ -67,6 +67,20 @@ export default function(props: Partial<CommunicationRequest_Props>) {
         resource.groupIdentifier = dt.identifier(props.groupIdentifier);
     }
 
+    if (!_.isNil(props.statusReason)) {
+        resource.statusReason = dt.concept(props.statusReason);
+    }
+
+    if (!_.isNil(props.category)) {
+        if (!Array.isArray(props.category)) { props.category = [props.category]; }
+        resource.category = dt.concept(props.category);
+    }
+
+    if (!_.isNil(props.medium)) {
+        if (!Array.isArray(props.medium)) { props.medium = [props.medium]; }
+        resource.medium = dt.concept(props.medium);
+    }
+
     if (!_.isNil(props.subject)) {
         resource.subject = dt.reference(props.subject);
     }
@@ -110,6 +124,11 @@ export default function(props: Partial<CommunicationRequest_Props>) {
 
     if (!_.isNil(props.sender)) {
         resource.sender = dt.reference(props.sender);
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
+        resource.reasonCode = dt.concept(props.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {

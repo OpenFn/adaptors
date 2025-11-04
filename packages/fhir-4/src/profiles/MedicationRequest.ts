@@ -63,6 +63,15 @@ export default function(props: Partial<MedicationRequest_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.statusReason)) {
+        resource.statusReason = dt.concept(props.statusReason);
+    }
+
+    if (!_.isNil(props.category)) {
+        if (!Array.isArray(props.category)) { props.category = [props.category]; }
+        resource.category = dt.concept(props.category);
+    }
+
     if (!_.isNil(props.reported)) {
         delete resource.reported;
         dt.composite(resource, "reported", props.reported);
@@ -94,8 +103,17 @@ export default function(props: Partial<MedicationRequest_Props>) {
         resource.performer = dt.reference(props.performer);
     }
 
+    if (!_.isNil(props.performerType)) {
+        resource.performerType = dt.concept(props.performerType);
+    }
+
     if (!_.isNil(props.recorder)) {
         resource.recorder = dt.reference(props.recorder);
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
+        resource.reasonCode = dt.concept(props.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {
@@ -110,6 +128,10 @@ export default function(props: Partial<MedicationRequest_Props>) {
 
     if (!_.isNil(props.groupIdentifier)) {
         resource.groupIdentifier = dt.identifier(props.groupIdentifier);
+    }
+
+    if (!_.isNil(props.courseOfTherapyType)) {
+        resource.courseOfTherapyType = dt.concept(props.courseOfTherapyType);
     }
 
     if (!_.isNil(props.insurance)) {

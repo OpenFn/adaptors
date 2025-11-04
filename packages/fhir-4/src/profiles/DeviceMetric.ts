@@ -41,6 +41,14 @@ export default function(props: Partial<DeviceMetric_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.type)) {
+        resource.type = dt.concept(props.type);
+    }
+
+    if (!_.isNil(props.unit)) {
+        resource.unit = dt.concept(props.unit);
+    }
+
     if (!_.isNil(props.source)) {
         resource.source = dt.reference(props.source);
     }

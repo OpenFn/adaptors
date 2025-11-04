@@ -52,6 +52,10 @@ export default function(props: Partial<Patient_Props>) {
         dt.composite(resource, "deceased", props.deceased);
     }
 
+    if (!_.isNil(props.maritalStatus)) {
+        resource.maritalStatus = dt.concept(props.maritalStatus);
+    }
+
     if (!_.isNil(props.multipleBirth)) {
         delete resource.multipleBirth;
         dt.composite(resource, "multipleBirth", props.multipleBirth);

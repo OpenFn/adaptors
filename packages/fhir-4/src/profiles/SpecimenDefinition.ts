@@ -36,6 +36,20 @@ export default function(props: Partial<SpecimenDefinition_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.typeCollected)) {
+        resource.typeCollected = dt.concept(props.typeCollected);
+    }
+
+    if (!_.isNil(props.patientPreparation)) {
+        if (!Array.isArray(props.patientPreparation)) { props.patientPreparation = [props.patientPreparation]; }
+        resource.patientPreparation = dt.concept(props.patientPreparation);
+    }
+
+    if (!_.isNil(props.collection)) {
+        if (!Array.isArray(props.collection)) { props.collection = [props.collection]; }
+        resource.collection = dt.concept(props.collection);
+    }
+
     if (!_.isNil(props.typeTested)) {
         let src = props.typeTested;
         if (!Array.isArray(src)) { src = [src]; }

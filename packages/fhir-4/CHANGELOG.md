@@ -1,5 +1,11 @@
 # @openfn/language-fhir-4
 
+## 0.2.3 - 04 November 2025
+
+### Patch Changes
+
+- 4e531fe: Fix mappings for `CodeableConcept`
+
 ## 0.2.2
 
 ### Patch Changes
@@ -24,7 +30,7 @@
 
 ### Patch Changes
 
-- Updated dependencies [408a3a2]
+- Updated dependencies \[408a3a2]
   - @openfn/language-common@3.1.1
 
 ## 0.1.11 - 18 September 2025

@@ -1,6 +1,6 @@
 # @openfn/language-claude
 
-## 1.0.16
+## 1.0.16 - 04 November 2025
 
 ### Patch Changes
 
@@ -11,7 +11,7 @@
 
 ### Patch Changes
 
-- Updated dependencies [408a3a2]
+- Updated dependencies \[408a3a2]
   - @openfn/language-common@3.1.1
 
 ## 1.0.14 - 18 September 2025

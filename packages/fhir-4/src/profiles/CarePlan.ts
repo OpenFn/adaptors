@@ -69,6 +69,11 @@ export default function(props: Partial<CarePlan_Props>) {
         resource.partOf = dt.reference(props.partOf);
     }
 
+    if (!_.isNil(props.category)) {
+        if (!Array.isArray(props.category)) { props.category = [props.category]; }
+        resource.category = dt.concept(props.category);
+    }
+
     if (!_.isNil(props.subject)) {
         resource.subject = dt.reference(props.subject);
     }

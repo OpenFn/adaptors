@@ -50,6 +50,15 @@ export default function(props: Partial<AdverseEvent_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.category)) {
+        if (!Array.isArray(props.category)) { props.category = [props.category]; }
+        resource.category = dt.concept(props.category);
+    }
+
+    if (!_.isNil(props.event)) {
+        resource.event = dt.concept(props.event);
+    }
+
     if (!_.isNil(props.subject)) {
         resource.subject = dt.reference(props.subject);
     }
@@ -65,6 +74,18 @@ export default function(props: Partial<AdverseEvent_Props>) {
 
     if (!_.isNil(props.location)) {
         resource.location = dt.reference(props.location);
+    }
+
+    if (!_.isNil(props.seriousness)) {
+        resource.seriousness = dt.concept(props.seriousness);
+    }
+
+    if (!_.isNil(props.severity)) {
+        resource.severity = dt.concept(props.severity);
+    }
+
+    if (!_.isNil(props.outcome)) {
+        resource.outcome = dt.concept(props.outcome);
     }
 
     if (!_.isNil(props.recorder)) {

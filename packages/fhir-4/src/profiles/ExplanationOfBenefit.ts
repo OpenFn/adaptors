@@ -74,6 +74,14 @@ export default function(props: Partial<ExplanationOfBenefit_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.type)) {
+        resource.type = dt.concept(props.type);
+    }
+
+    if (!_.isNil(props.subType)) {
+        resource.subType = dt.concept(props.subType);
+    }
+
     if (!_.isNil(props.patient)) {
         resource.patient = dt.reference(props.patient);
     }
@@ -88,6 +96,18 @@ export default function(props: Partial<ExplanationOfBenefit_Props>) {
 
     if (!_.isNil(props.provider)) {
         resource.provider = dt.reference(props.provider);
+    }
+
+    if (!_.isNil(props.priority)) {
+        resource.priority = dt.concept(props.priority);
+    }
+
+    if (!_.isNil(props.fundsReserveRequested)) {
+        resource.fundsReserveRequested = dt.concept(props.fundsReserveRequested);
+    }
+
+    if (!_.isNil(props.fundsReserve)) {
+        resource.fundsReserve = dt.concept(props.fundsReserve);
     }
 
     if (!_.isNil(props.related)) {
@@ -268,6 +288,10 @@ export default function(props: Partial<ExplanationOfBenefit_Props>) {
         };
 
         resource.payment = _payment;
+    }
+
+    if (!_.isNil(props.formCode)) {
+        resource.formCode = dt.concept(props.formCode);
     }
 
     if (!_.isNil(props.processNote)) {

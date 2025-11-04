@@ -39,6 +39,21 @@ export default function(props: Partial<Schedule_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.serviceCategory)) {
+        if (!Array.isArray(props.serviceCategory)) { props.serviceCategory = [props.serviceCategory]; }
+        resource.serviceCategory = dt.concept(props.serviceCategory);
+    }
+
+    if (!_.isNil(props.serviceType)) {
+        if (!Array.isArray(props.serviceType)) { props.serviceType = [props.serviceType]; }
+        resource.serviceType = dt.concept(props.serviceType);
+    }
+
+    if (!_.isNil(props.specialty)) {
+        if (!Array.isArray(props.specialty)) { props.specialty = [props.specialty]; }
+        resource.specialty = dt.concept(props.specialty);
+    }
+
     if (!_.isNil(props.actor)) {
         if (!Array.isArray(props.actor)) { props.actor = [props.actor]; }
         resource.actor = dt.reference(props.actor);

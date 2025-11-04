@@ -50,6 +50,24 @@ export default function(props: Partial<SubstanceDefinition_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.status)) {
+        resource.status = dt.concept(props.status);
+    }
+
+    if (!_.isNil(props.classification)) {
+        if (!Array.isArray(props.classification)) { props.classification = [props.classification]; }
+        resource.classification = dt.concept(props.classification);
+    }
+
+    if (!_.isNil(props.domain)) {
+        resource.domain = dt.concept(props.domain);
+    }
+
+    if (!_.isNil(props.grade)) {
+        if (!Array.isArray(props.grade)) { props.grade = [props.grade]; }
+        resource.grade = dt.concept(props.grade);
+    }
+
     if (!_.isNil(props.informationSource)) {
         if (!Array.isArray(props.informationSource)) { props.informationSource = [props.informationSource]; }
         resource.informationSource = dt.reference(props.informationSource);

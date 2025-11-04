@@ -41,6 +41,11 @@ export default function(props: Partial<Organization_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.type)) {
+        if (!Array.isArray(props.type)) { props.type = [props.type]; }
+        resource.type = dt.concept(props.type);
+    }
+
     if (!_.isNil(props.partOf)) {
         resource.partOf = dt.reference(props.partOf);
     }

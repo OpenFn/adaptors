@@ -59,6 +59,59 @@ export default function(props: Partial<MedicinalProductDefinition_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.type)) {
+        resource.type = dt.concept(props.type);
+    }
+
+    if (!_.isNil(props.domain)) {
+        resource.domain = dt.concept(props.domain);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = dt.concept(props.status);
+    }
+
+    if (!_.isNil(props.combinedPharmaceuticalDoseForm)) {
+        resource.combinedPharmaceuticalDoseForm = dt.concept(props.combinedPharmaceuticalDoseForm);
+    }
+
+    if (!_.isNil(props.route)) {
+        if (!Array.isArray(props.route)) { props.route = [props.route]; }
+        resource.route = dt.concept(props.route);
+    }
+
+    if (!_.isNil(props.legalStatusOfSupply)) {
+        resource.legalStatusOfSupply = dt.concept(props.legalStatusOfSupply);
+    }
+
+    if (!_.isNil(props.additionalMonitoringIndicator)) {
+        resource.additionalMonitoringIndicator = dt.concept(props.additionalMonitoringIndicator);
+    }
+
+    if (!_.isNil(props.specialMeasures)) {
+        if (!Array.isArray(props.specialMeasures)) { props.specialMeasures = [props.specialMeasures]; }
+        resource.specialMeasures = dt.concept(props.specialMeasures);
+    }
+
+    if (!_.isNil(props.pediatricUseIndicator)) {
+        resource.pediatricUseIndicator = dt.concept(props.pediatricUseIndicator);
+    }
+
+    if (!_.isNil(props.classification)) {
+        if (!Array.isArray(props.classification)) { props.classification = [props.classification]; }
+        resource.classification = dt.concept(props.classification);
+    }
+
+    if (!_.isNil(props.packagedMedicinalProduct)) {
+        if (!Array.isArray(props.packagedMedicinalProduct)) { props.packagedMedicinalProduct = [props.packagedMedicinalProduct]; }
+        resource.packagedMedicinalProduct = dt.concept(props.packagedMedicinalProduct);
+    }
+
+    if (!_.isNil(props.ingredient)) {
+        if (!Array.isArray(props.ingredient)) { props.ingredient = [props.ingredient]; }
+        resource.ingredient = dt.concept(props.ingredient);
+    }
+
     if (!_.isNil(props.attachedDocument)) {
         if (!Array.isArray(props.attachedDocument)) { props.attachedDocument = [props.attachedDocument]; }
         resource.attachedDocument = dt.reference(props.attachedDocument);

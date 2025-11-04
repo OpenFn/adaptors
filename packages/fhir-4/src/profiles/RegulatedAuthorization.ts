@@ -50,6 +50,28 @@ export default function(props: Partial<RegulatedAuthorization_Props>) {
         resource.subject = dt.reference(props.subject);
     }
 
+    if (!_.isNil(props.type)) {
+        resource.type = dt.concept(props.type);
+    }
+
+    if (!_.isNil(props.region)) {
+        if (!Array.isArray(props.region)) { props.region = [props.region]; }
+        resource.region = dt.concept(props.region);
+    }
+
+    if (!_.isNil(props.status)) {
+        resource.status = dt.concept(props.status);
+    }
+
+    if (!_.isNil(props.intendedUse)) {
+        resource.intendedUse = dt.concept(props.intendedUse);
+    }
+
+    if (!_.isNil(props.basis)) {
+        if (!Array.isArray(props.basis)) { props.basis = [props.basis]; }
+        resource.basis = dt.concept(props.basis);
+    }
+
     if (!_.isNil(props.holder)) {
         resource.holder = dt.reference(props.holder);
     }

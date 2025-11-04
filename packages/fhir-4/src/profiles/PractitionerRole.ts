@@ -53,6 +53,16 @@ export default function(props: Partial<PractitionerRole_Props>) {
         resource.organization = dt.reference(props.organization);
     }
 
+    if (!_.isNil(props.code)) {
+        if (!Array.isArray(props.code)) { props.code = [props.code]; }
+        resource.code = dt.concept(props.code);
+    }
+
+    if (!_.isNil(props.specialty)) {
+        if (!Array.isArray(props.specialty)) { props.specialty = [props.specialty]; }
+        resource.specialty = dt.concept(props.specialty);
+    }
+
     if (!_.isNil(props.location)) {
         if (!Array.isArray(props.location)) { props.location = [props.location]; }
         resource.location = dt.reference(props.location);

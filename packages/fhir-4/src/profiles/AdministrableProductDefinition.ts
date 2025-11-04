@@ -46,9 +46,22 @@ export default function(props: Partial<AdministrableProductDefinition_Props>) {
         resource.formOf = dt.reference(props.formOf);
     }
 
+    if (!_.isNil(props.administrableDoseForm)) {
+        resource.administrableDoseForm = dt.concept(props.administrableDoseForm);
+    }
+
+    if (!_.isNil(props.unitOfPresentation)) {
+        resource.unitOfPresentation = dt.concept(props.unitOfPresentation);
+    }
+
     if (!_.isNil(props.producedFrom)) {
         if (!Array.isArray(props.producedFrom)) { props.producedFrom = [props.producedFrom]; }
         resource.producedFrom = dt.reference(props.producedFrom);
+    }
+
+    if (!_.isNil(props.ingredient)) {
+        if (!Array.isArray(props.ingredient)) { props.ingredient = [props.ingredient]; }
+        resource.ingredient = dt.concept(props.ingredient);
     }
 
     if (!_.isNil(props.device)) {

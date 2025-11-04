@@ -54,6 +54,15 @@ export default function(props: Partial<DiagnosticReport_Props>) {
         resource.basedOn = dt.reference(props.basedOn);
     }
 
+    if (!_.isNil(props.category)) {
+        if (!Array.isArray(props.category)) { props.category = [props.category]; }
+        resource.category = dt.concept(props.category);
+    }
+
+    if (!_.isNil(props.code)) {
+        resource.code = dt.concept(props.code);
+    }
+
     if (!_.isNil(props.subject)) {
         resource.subject = dt.reference(props.subject);
     }
@@ -104,6 +113,11 @@ export default function(props: Partial<DiagnosticReport_Props>) {
 
             resource.media.push(_media);
         }
+    }
+
+    if (!_.isNil(props.conclusionCode)) {
+        if (!Array.isArray(props.conclusionCode)) { props.conclusionCode = [props.conclusionCode]; }
+        resource.conclusionCode = dt.concept(props.conclusionCode);
     }
 
     return resource;
