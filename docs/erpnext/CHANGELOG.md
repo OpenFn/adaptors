@@ -1,6 +1,6 @@
 # @openfn/language-erpnext
 
-## 1.0.0
+## 1.0.0 - 04 November 2025
 
 ### Major Changes
 

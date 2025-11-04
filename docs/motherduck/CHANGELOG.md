@@ -1,6 +1,6 @@
 # @openfn/language-motherduck
 
-## 1.0.1
+## 1.0.1 - 04 November 2025
 
 ### Patch Changes
 
