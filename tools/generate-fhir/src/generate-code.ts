@@ -354,6 +354,8 @@ const mapProps = (schema, mappings) => {
         props.push(mapComposite(key, mappings[key], spec));
       } else if (spec.typeDef) {
         props.push(mapTypeDef(key, mappings[key], spec));
+      } else if (spec.type.includes('CodeableConcept')) {
+        props.push(mapCodeableConcept(key, mappings[key], spec));
       } else {
         // TODO what happens if the type is like `reference | identifier`? Such contrasting types?
         if (spec.type.includes('Reference')) {
