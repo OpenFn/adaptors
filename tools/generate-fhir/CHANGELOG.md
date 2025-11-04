@@ -1,5 +1,11 @@
 # @openfn/generate-fhir
 
+## 0.4.2
+
+### Patch Changes
+
+- 4e531fe: Fix mappings for `CodeableConcept`
+
 ## 0.4.1
 
 ### Patch Changes

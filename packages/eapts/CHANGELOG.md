@@ -1,6 +1,6 @@
 # @openfn/language-eapts
 
-## 2.0.1
+## 2.0.1 - 04 November 2025
 
 ### Patch Changes
 
