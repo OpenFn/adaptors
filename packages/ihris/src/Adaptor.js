@@ -21,4 +21,4 @@ export {
   util,
 } from '@openfn/language-common';
 
-export { builders } from '@openfn/language-fhir-4';
+export { builders, b } from '@openfn/language-fhir-4';
