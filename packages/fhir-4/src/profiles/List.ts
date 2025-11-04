@@ -44,6 +44,10 @@ export default function(props: Partial<List_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.code)) {
+        resource.code = dt.concept(props.code);
+    }
+
     if (!_.isNil(props.subject)) {
         resource.subject = dt.reference(props.subject);
     }
@@ -54,6 +58,10 @@ export default function(props: Partial<List_Props>) {
 
     if (!_.isNil(props.source)) {
         resource.source = dt.reference(props.source);
+    }
+
+    if (!_.isNil(props.orderedBy)) {
+        resource.orderedBy = dt.concept(props.orderedBy);
     }
 
     if (!_.isNil(props.entry)) {
@@ -68,6 +76,10 @@ export default function(props: Partial<List_Props>) {
 
             resource.entry.push(_entry);
         }
+    }
+
+    if (!_.isNil(props.emptyReason)) {
+        resource.emptyReason = dt.concept(props.emptyReason);
     }
 
     return resource;

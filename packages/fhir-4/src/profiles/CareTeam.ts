@@ -44,6 +44,11 @@ export default function(props: Partial<CareTeam_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.category)) {
+        if (!Array.isArray(props.category)) { props.category = [props.category]; }
+        resource.category = dt.concept(props.category);
+    }
+
     if (!_.isNil(props.subject)) {
         resource.subject = dt.reference(props.subject);
     }
@@ -64,6 +69,11 @@ export default function(props: Partial<CareTeam_Props>) {
 
             resource.participant.push(_participant);
         }
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
+        resource.reasonCode = dt.concept(props.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {

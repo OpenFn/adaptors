@@ -63,6 +63,18 @@ export default function(props: Partial<Media_Props>) {
         resource.partOf = dt.reference(props.partOf);
     }
 
+    if (!_.isNil(props.type)) {
+        resource.type = dt.concept(props.type);
+    }
+
+    if (!_.isNil(props.modality)) {
+        resource.modality = dt.concept(props.modality);
+    }
+
+    if (!_.isNil(props.view)) {
+        resource.view = dt.concept(props.view);
+    }
+
     if (!_.isNil(props.subject)) {
         resource.subject = dt.reference(props.subject);
     }
@@ -78,6 +90,15 @@ export default function(props: Partial<Media_Props>) {
 
     if (!_.isNil(props.operator)) {
         resource.operator = dt.reference(props.operator);
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
+        resource.reasonCode = dt.concept(props.reasonCode);
+    }
+
+    if (!_.isNil(props.bodySite)) {
+        resource.bodySite = dt.concept(props.bodySite);
     }
 
     if (!_.isNil(props.device)) {

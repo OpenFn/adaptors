@@ -54,6 +54,15 @@ export default function(props: Partial<ChargeItemDefinition_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.jurisdiction)) {
+        if (!Array.isArray(props.jurisdiction)) { props.jurisdiction = [props.jurisdiction]; }
+        resource.jurisdiction = dt.concept(props.jurisdiction);
+    }
+
+    if (!_.isNil(props.code)) {
+        resource.code = dt.concept(props.code);
+    }
+
     if (!_.isNil(props.instance)) {
         if (!Array.isArray(props.instance)) { props.instance = [props.instance]; }
         resource.instance = dt.reference(props.instance);

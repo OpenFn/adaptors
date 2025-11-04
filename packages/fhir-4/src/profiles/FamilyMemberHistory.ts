@@ -49,8 +49,20 @@ export default function(props: Partial<FamilyMemberHistory_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.dataAbsentReason)) {
+        resource.dataAbsentReason = dt.concept(props.dataAbsentReason);
+    }
+
     if (!_.isNil(props.patient)) {
         resource.patient = dt.reference(props.patient);
+    }
+
+    if (!_.isNil(props.relationship)) {
+        resource.relationship = dt.concept(props.relationship);
+    }
+
+    if (!_.isNil(props.sex)) {
+        resource.sex = dt.concept(props.sex);
     }
 
     if (!_.isNil(props.born)) {
@@ -66,6 +78,11 @@ export default function(props: Partial<FamilyMemberHistory_Props>) {
     if (!_.isNil(props.deceased)) {
         delete resource.deceased;
         dt.composite(resource, "deceased", props.deceased);
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
+        resource.reasonCode = dt.concept(props.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {

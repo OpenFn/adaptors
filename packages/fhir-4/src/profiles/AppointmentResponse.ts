@@ -43,6 +43,11 @@ export default function(props: Partial<AppointmentResponse_Props>) {
         resource.appointment = dt.reference(props.appointment);
     }
 
+    if (!_.isNil(props.participantType)) {
+        if (!Array.isArray(props.participantType)) { props.participantType = [props.participantType]; }
+        resource.participantType = dt.concept(props.participantType);
+    }
+
     if (!_.isNil(props.actor)) {
         resource.actor = dt.reference(props.actor);
     }

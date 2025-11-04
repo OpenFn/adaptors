@@ -55,6 +55,15 @@ export default function(props: Partial<MedicationAdministration_Props>) {
         resource.partOf = dt.reference(props.partOf);
     }
 
+    if (!_.isNil(props.statusReason)) {
+        if (!Array.isArray(props.statusReason)) { props.statusReason = [props.statusReason]; }
+        resource.statusReason = dt.concept(props.statusReason);
+    }
+
+    if (!_.isNil(props.category)) {
+        resource.category = dt.concept(props.category);
+    }
+
     if (!_.isNil(props.medication)) {
         delete resource.medication;
         dt.composite(resource, "medication", props.medication);
@@ -90,6 +99,11 @@ export default function(props: Partial<MedicationAdministration_Props>) {
 
             resource.performer.push(_performer);
         }
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
+        resource.reasonCode = dt.concept(props.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {

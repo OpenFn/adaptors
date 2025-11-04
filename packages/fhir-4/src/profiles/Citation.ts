@@ -60,6 +60,11 @@ export default function(props: Partial<Citation_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.jurisdiction)) {
+        if (!Array.isArray(props.jurisdiction)) { props.jurisdiction = [props.jurisdiction]; }
+        resource.jurisdiction = dt.concept(props.jurisdiction);
+    }
+
     if (!_.isNil(props.summary)) {
         let src = props.summary;
         if (!Array.isArray(src)) { src = [src]; }
@@ -86,6 +91,11 @@ export default function(props: Partial<Citation_Props>) {
 
             resource.classification.push(_classification);
         }
+    }
+
+    if (!_.isNil(props.currentState)) {
+        if (!Array.isArray(props.currentState)) { props.currentState = [props.currentState]; }
+        resource.currentState = dt.concept(props.currentState);
     }
 
     if (!_.isNil(props.statusDate)) {

@@ -43,6 +43,10 @@ export default function(props: Partial<DetectedIssue_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.code)) {
+        resource.code = dt.concept(props.code);
+    }
+
     if (!_.isNil(props.patient)) {
         resource.patient = dt.reference(props.patient);
     }

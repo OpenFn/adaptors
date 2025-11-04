@@ -48,6 +48,10 @@ export default function(props: Partial<Specimen_Props>) {
         resource.accessionIdentifier = dt.identifier(props.accessionIdentifier);
     }
 
+    if (!_.isNil(props.type)) {
+        resource.type = dt.concept(props.type);
+    }
+
     if (!_.isNil(props.subject)) {
         resource.subject = dt.reference(props.subject);
     }
@@ -98,6 +102,11 @@ export default function(props: Partial<Specimen_Props>) {
 
             resource.container.push(_container);
         }
+    }
+
+    if (!_.isNil(props.condition)) {
+        if (!Array.isArray(props.condition)) { props.condition = [props.condition]; }
+        resource.condition = dt.concept(props.condition);
     }
 
     return resource;

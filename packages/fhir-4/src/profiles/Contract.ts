@@ -64,8 +64,20 @@ export default function(props: Partial<Contract_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.legalState)) {
+        resource.legalState = dt.concept(props.legalState);
+    }
+
     if (!_.isNil(props.instantiatesCanonical)) {
         resource.instantiatesCanonical = dt.reference(props.instantiatesCanonical);
+    }
+
+    if (!_.isNil(props.contentDerivative)) {
+        resource.contentDerivative = dt.concept(props.contentDerivative);
+    }
+
+    if (!_.isNil(props.expirationType)) {
+        resource.expirationType = dt.concept(props.expirationType);
     }
 
     if (!_.isNil(props.subject)) {
@@ -92,9 +104,22 @@ export default function(props: Partial<Contract_Props>) {
         resource.author = dt.reference(props.author);
     }
 
+    if (!_.isNil(props.scope)) {
+        resource.scope = dt.concept(props.scope);
+    }
+
     if (!_.isNil(props.topic)) {
         delete resource.topic;
         dt.composite(resource, "topic", props.topic);
+    }
+
+    if (!_.isNil(props.type)) {
+        resource.type = dt.concept(props.type);
+    }
+
+    if (!_.isNil(props.subType)) {
+        if (!Array.isArray(props.subType)) { props.subType = [props.subType]; }
+        resource.subType = dt.concept(props.subType);
     }
 
     if (!_.isNil(props.contentDefinition)) {

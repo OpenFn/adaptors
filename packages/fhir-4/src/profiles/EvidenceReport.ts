@@ -59,6 +59,10 @@ export default function(props: Partial<EvidenceReport_Props>) {
         dt.composite(resource, "citeAs", props.citeAs);
     }
 
+    if (!_.isNil(props.type)) {
+        resource.type = dt.concept(props.type);
+    }
+
     if (!_.isNil(props.subject)) {
         let src = props.subject;
 

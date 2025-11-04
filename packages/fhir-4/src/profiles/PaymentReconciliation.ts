@@ -76,6 +76,10 @@ export default function(props: Partial<PaymentReconciliation_Props>) {
         }
     }
 
+    if (!_.isNil(props.formCode)) {
+        resource.formCode = dt.concept(props.formCode);
+    }
+
     if (!_.isNil(props.processNote)) {
         let src = props.processNote;
         if (!Array.isArray(src)) { src = [src]; }

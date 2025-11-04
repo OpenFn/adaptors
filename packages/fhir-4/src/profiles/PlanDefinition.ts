@@ -62,9 +62,23 @@ export default function(props: Partial<PlanDefinition_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.type)) {
+        resource.type = dt.concept(props.type);
+    }
+
     if (!_.isNil(props.subject)) {
         delete resource.subject;
         dt.composite(resource, "subject", props.subject);
+    }
+
+    if (!_.isNil(props.jurisdiction)) {
+        if (!Array.isArray(props.jurisdiction)) { props.jurisdiction = [props.jurisdiction]; }
+        resource.jurisdiction = dt.concept(props.jurisdiction);
+    }
+
+    if (!_.isNil(props.topic)) {
+        if (!Array.isArray(props.topic)) { props.topic = [props.topic]; }
+        resource.topic = dt.concept(props.topic);
     }
 
     if (!_.isNil(props.goal)) {

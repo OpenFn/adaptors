@@ -62,6 +62,10 @@ export default function(props: Partial<ChargeItem_Props>) {
         resource.partOf = dt.reference(props.partOf);
     }
 
+    if (!_.isNil(props.code)) {
+        resource.code = dt.concept(props.code);
+    }
+
     if (!_.isNil(props.subject)) {
         resource.subject = dt.reference(props.subject);
     }
@@ -101,8 +105,18 @@ export default function(props: Partial<ChargeItem_Props>) {
         resource.costCenter = dt.reference(props.costCenter);
     }
 
+    if (!_.isNil(props.bodysite)) {
+        if (!Array.isArray(props.bodysite)) { props.bodysite = [props.bodysite]; }
+        resource.bodysite = dt.concept(props.bodysite);
+    }
+
     if (!_.isNil(props.enterer)) {
         resource.enterer = dt.reference(props.enterer);
+    }
+
+    if (!_.isNil(props.reason)) {
+        if (!Array.isArray(props.reason)) { props.reason = [props.reason]; }
+        resource.reason = dt.concept(props.reason);
     }
 
     if (!_.isNil(props.service)) {

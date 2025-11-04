@@ -77,6 +77,33 @@ export default function(props: Partial<Measure_Props>) {
         dt.composite(resource, "subject", props.subject);
     }
 
+    if (!_.isNil(props.jurisdiction)) {
+        if (!Array.isArray(props.jurisdiction)) { props.jurisdiction = [props.jurisdiction]; }
+        resource.jurisdiction = dt.concept(props.jurisdiction);
+    }
+
+    if (!_.isNil(props.topic)) {
+        if (!Array.isArray(props.topic)) { props.topic = [props.topic]; }
+        resource.topic = dt.concept(props.topic);
+    }
+
+    if (!_.isNil(props.scoring)) {
+        resource.scoring = dt.concept(props.scoring);
+    }
+
+    if (!_.isNil(props.compositeScoring)) {
+        resource.compositeScoring = dt.concept(props.compositeScoring);
+    }
+
+    if (!_.isNil(props.type)) {
+        if (!Array.isArray(props.type)) { props.type = [props.type]; }
+        resource.type = dt.concept(props.type);
+    }
+
+    if (!_.isNil(props.improvementNotation)) {
+        resource.improvementNotation = dt.concept(props.improvementNotation);
+    }
+
     if (!_.isNil(props.group)) {
         let src = props.group;
         if (!Array.isArray(src)) { src = [src]; }

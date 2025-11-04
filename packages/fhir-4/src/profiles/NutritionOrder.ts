@@ -65,6 +65,16 @@ export default function(props: Partial<NutritionOrder_Props>) {
         resource.allergyIntolerance = dt.reference(props.allergyIntolerance);
     }
 
+    if (!_.isNil(props.foodPreferenceModifier)) {
+        if (!Array.isArray(props.foodPreferenceModifier)) { props.foodPreferenceModifier = [props.foodPreferenceModifier]; }
+        resource.foodPreferenceModifier = dt.concept(props.foodPreferenceModifier);
+    }
+
+    if (!_.isNil(props.excludeFoodModifier)) {
+        if (!Array.isArray(props.excludeFoodModifier)) { props.excludeFoodModifier = [props.excludeFoodModifier]; }
+        resource.excludeFoodModifier = dt.concept(props.excludeFoodModifier);
+    }
+
     if (!_.isNil(props.oralDiet)) {
         let src = props.oralDiet;
 

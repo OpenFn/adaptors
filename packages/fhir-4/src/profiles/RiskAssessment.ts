@@ -56,6 +56,14 @@ export default function(props: Partial<RiskAssessment_Props>) {
         resource.parent = dt.reference(props.parent);
     }
 
+    if (!_.isNil(props.method)) {
+        resource.method = dt.concept(props.method);
+    }
+
+    if (!_.isNil(props.code)) {
+        resource.code = dt.concept(props.code);
+    }
+
     if (!_.isNil(props.subject)) {
         resource.subject = dt.reference(props.subject);
     }
@@ -75,6 +83,11 @@ export default function(props: Partial<RiskAssessment_Props>) {
 
     if (!_.isNil(props.performer)) {
         resource.performer = dt.reference(props.performer);
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
+        resource.reasonCode = dt.concept(props.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {

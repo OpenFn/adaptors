@@ -47,6 +47,18 @@ export default function(props: Partial<AllergyIntolerance_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.clinicalStatus)) {
+        resource.clinicalStatus = dt.concept(props.clinicalStatus);
+    }
+
+    if (!_.isNil(props.verificationStatus)) {
+        resource.verificationStatus = dt.concept(props.verificationStatus);
+    }
+
+    if (!_.isNil(props.code)) {
+        resource.code = dt.concept(props.code);
+    }
+
     if (!_.isNil(props.patient)) {
         resource.patient = dt.reference(props.patient);
     }

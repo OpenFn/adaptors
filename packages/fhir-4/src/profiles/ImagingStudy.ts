@@ -82,8 +82,18 @@ export default function(props: Partial<ImagingStudy_Props>) {
         resource.procedureReference = dt.reference(props.procedureReference);
     }
 
+    if (!_.isNil(props.procedureCode)) {
+        if (!Array.isArray(props.procedureCode)) { props.procedureCode = [props.procedureCode]; }
+        resource.procedureCode = dt.concept(props.procedureCode);
+    }
+
     if (!_.isNil(props.location)) {
         resource.location = dt.reference(props.location);
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
+        resource.reasonCode = dt.concept(props.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {

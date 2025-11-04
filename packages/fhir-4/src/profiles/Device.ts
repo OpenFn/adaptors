@@ -75,6 +75,11 @@ export default function(props: Partial<Device_Props>) {
         }
     }
 
+    if (!_.isNil(props.statusReason)) {
+        if (!Array.isArray(props.statusReason)) { props.statusReason = [props.statusReason]; }
+        resource.statusReason = dt.concept(props.statusReason);
+    }
+
     if (!_.isNil(props.deviceName)) {
         let src = props.deviceName;
         if (!Array.isArray(src)) { src = [src]; }
@@ -87,6 +92,10 @@ export default function(props: Partial<Device_Props>) {
 
             resource.deviceName.push(_deviceName);
         }
+    }
+
+    if (!_.isNil(props.type)) {
+        resource.type = dt.concept(props.type);
     }
 
     if (!_.isNil(props.specialization)) {
@@ -141,6 +150,11 @@ export default function(props: Partial<Device_Props>) {
 
     if (!_.isNil(props.location)) {
         resource.location = dt.reference(props.location);
+    }
+
+    if (!_.isNil(props.safety)) {
+        if (!Array.isArray(props.safety)) { props.safety = [props.safety]; }
+        resource.safety = dt.concept(props.safety);
     }
 
     if (!_.isNil(props.parent)) {

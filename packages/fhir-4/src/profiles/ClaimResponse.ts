@@ -58,6 +58,14 @@ export default function(props: Partial<ClaimResponse_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.type)) {
+        resource.type = dt.concept(props.type);
+    }
+
+    if (!_.isNil(props.subType)) {
+        resource.subType = dt.concept(props.subType);
+    }
+
     if (!_.isNil(props.patient)) {
         resource.patient = dt.reference(props.patient);
     }
@@ -72,6 +80,10 @@ export default function(props: Partial<ClaimResponse_Props>) {
 
     if (!_.isNil(props.request)) {
         resource.request = dt.reference(props.request);
+    }
+
+    if (!_.isNil(props.payeeType)) {
+        resource.payeeType = dt.concept(props.payeeType);
     }
 
     if (!_.isNil(props.item)) {
@@ -124,6 +136,14 @@ export default function(props: Partial<ClaimResponse_Props>) {
         };
 
         resource.payment = _payment;
+    }
+
+    if (!_.isNil(props.fundsReserve)) {
+        resource.fundsReserve = dt.concept(props.fundsReserve);
+    }
+
+    if (!_.isNil(props.formCode)) {
+        resource.formCode = dt.concept(props.formCode);
     }
 
     if (!_.isNil(props.processNote)) {

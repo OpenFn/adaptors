@@ -45,6 +45,23 @@ export default function(props: Partial<VerificationResult_Props>) {
         resource.target = dt.reference(props.target);
     }
 
+    if (!_.isNil(props.need)) {
+        resource.need = dt.concept(props.need);
+    }
+
+    if (!_.isNil(props.validationType)) {
+        resource.validationType = dt.concept(props.validationType);
+    }
+
+    if (!_.isNil(props.validationProcess)) {
+        if (!Array.isArray(props.validationProcess)) { props.validationProcess = [props.validationProcess]; }
+        resource.validationProcess = dt.concept(props.validationProcess);
+    }
+
+    if (!_.isNil(props.failureAction)) {
+        resource.failureAction = dt.concept(props.failureAction);
+    }
+
     if (!_.isNil(props.primarySource)) {
         let src = props.primarySource;
         if (!Array.isArray(src)) { src = [src]; }

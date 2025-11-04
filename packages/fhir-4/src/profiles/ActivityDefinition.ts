@@ -82,6 +82,20 @@ export default function(props: Partial<ActivityDefinition_Props>) {
         dt.composite(resource, "subject", props.subject);
     }
 
+    if (!_.isNil(props.jurisdiction)) {
+        if (!Array.isArray(props.jurisdiction)) { props.jurisdiction = [props.jurisdiction]; }
+        resource.jurisdiction = dt.concept(props.jurisdiction);
+    }
+
+    if (!_.isNil(props.topic)) {
+        if (!Array.isArray(props.topic)) { props.topic = [props.topic]; }
+        resource.topic = dt.concept(props.topic);
+    }
+
+    if (!_.isNil(props.code)) {
+        resource.code = dt.concept(props.code);
+    }
+
     if (!_.isNil(props.timing)) {
         delete resource.timing;
         dt.composite(resource, "timing", props.timing);
@@ -108,6 +122,11 @@ export default function(props: Partial<ActivityDefinition_Props>) {
     if (!_.isNil(props.product)) {
         delete resource.product;
         dt.composite(resource, "product", props.product);
+    }
+
+    if (!_.isNil(props.bodySite)) {
+        if (!Array.isArray(props.bodySite)) { props.bodySite = [props.bodySite]; }
+        resource.bodySite = dt.concept(props.bodySite);
     }
 
     if (!_.isNil(props.specimenRequirement)) {

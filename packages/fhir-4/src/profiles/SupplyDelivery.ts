@@ -56,6 +56,10 @@ export default function(props: Partial<SupplyDelivery_Props>) {
         resource.patient = dt.reference(props.patient);
     }
 
+    if (!_.isNil(props.type)) {
+        resource.type = dt.concept(props.type);
+    }
+
     if (!_.isNil(props.suppliedItem)) {
         let src = props.suppliedItem;
 

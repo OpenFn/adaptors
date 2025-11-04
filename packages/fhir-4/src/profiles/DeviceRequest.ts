@@ -105,8 +105,17 @@ export default function(props: Partial<DeviceRequest_Props>) {
         resource.requester = dt.reference(props.requester);
     }
 
+    if (!_.isNil(props.performerType)) {
+        resource.performerType = dt.concept(props.performerType);
+    }
+
     if (!_.isNil(props.performer)) {
         resource.performer = dt.reference(props.performer);
+    }
+
+    if (!_.isNil(props.reasonCode)) {
+        if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
+        resource.reasonCode = dt.concept(props.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {
