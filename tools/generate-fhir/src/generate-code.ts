@@ -600,11 +600,28 @@ const mapCodeableConcept = (
   mapping: Mapping,
   schema: Schema
 ) => {
-  // TODO maybe if the schema says this is an array, we can
-  // massage the input or throw warnings
-  // otherwise I think this is just a simple mapping tbh
+  const statements: StatementKind[] = [];
 
-  return mapSimpleProp(propName, mapping, schema);
+  if (schema.isArray) {
+    const mexp = `${INPUT_NAME}.${propName}`; // ie resource.code
+    const ast = parse(`if (!Array.isArray(${mexp})) { ${mexp} = [${mexp}]; }`);
+    statements.push(ast.program.body[0]);
+  }
+
+  const callBuilder = b.callExpression(
+    b.memberExpression(b.identifier('dt'), b.identifier('concept')),
+    [b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))]
+  );
+
+  statements.push(assignToInput(propName, callBuilder));
+
+  let elseStmnt;
+  const d = addDefaults(propName, mapping, schema);
+  if (d) {
+    elseStmnt = d;
+  }
+
+  return ifPropInInput(propName, statements, elseStmnt);
 };
 
 // Map a property of the input to some extension
