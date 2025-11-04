@@ -7,4 +7,4 @@ These functions allow a user to:
 `http.get()` - Get `fhir` resources
 `http.post()` - Create a new `fhir`resource
 `http.put()` - Update an existing `fhir` resource
-`request()` - Make a generic request to `iHRIS`
+`http.request()` - Make a generic request to `iHRIS`

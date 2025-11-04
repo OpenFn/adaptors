@@ -27,9 +27,129 @@ describe('http namespace', () => {
           password: 'admin123',
         }),
       })
-      .reply(200, { success: true }, {
-        headers: { 'set-cookie': ['session=abc123; Path=/'] },
-      });
+      .reply(
+        200,
+        { success: true },
+        {
+          headers: { 'set-cookie': ['session=abc123; Path=/'] },
+        }
+      );
+  });
+
+  describe('http.request', () => {
+    it('makes a post request to the right endpoint', async () => {
+      const newRole = {
+        resourceType: 'PractitionerRole',
+        meta: {
+          profile: [
+            'http://ihris.org/fhir/StructureDefinition/ihris-practitioner-role',
+          ],
+        },
+        practitioner: {
+          reference: 'Practitioner/P10004',
+        },
+        organization: {
+          reference: 'Organization/ministry-of-health',
+        },
+        location: [
+          {
+            reference: 'Location/kampala-hospital',
+          },
+        ],
+        code: [
+          {
+            coding: [
+              {
+                system: 'http://ihris.org/fhir/CodeSystem/ihris-job',
+                code: 'doctor',
+                display: 'Doctor',
+              },
+            ],
+          },
+        ],
+        active: true,
+      };
+
+      testServer
+        .intercept({
+          path: '/fhir/PractitionerRole',
+          method: 'POST',
+          body: JSON.stringify(newRole),
+          headers: {
+            Cookie: 'session=abc123',
+            'content-type': 'application/fhir+json',
+          },
+        })
+        .reply(201, {
+          ...newRole,
+          id: 'PR10001',
+          meta: {
+            ...newRole.meta,
+            versionId: '1',
+            lastUpdated: '2024-11-02T10:00:00.000+00:00',
+          },
+        });
+
+      const finalState = await http.request(
+        'POST',
+        '/fhir/PractitionerRole',
+        newRole
+      )(state);
+      expect(finalState.data.id).to.eql('PR10001');
+      expect(finalState.data.resourceType).to.eql('PractitionerRole');
+      expect(finalState.data.practitioner.reference).to.eql(
+        'Practitioner/P10004'
+      );
+    });
+
+    it('makes a get request to the right endpoint', async () => {
+      testServer
+        .intercept({
+          path: '/fhir/Practitioner',
+          method: 'GET',
+          headers: {
+            Cookie: 'session=abc123',
+            'content-type': 'application/fhir+json',
+          },
+          query: { active: 'true', _count: '10' },
+        })
+        .reply(200, {
+          resourceType: 'Bundle',
+          type: 'searchset',
+          total: 2,
+          entry: [
+            {
+              resource: {
+                resourceType: 'Practitioner',
+                id: 'P10004',
+                active: true,
+                name: [{ family: 'Johnson', given: ['Sarah'] }],
+              },
+            },
+            {
+              resource: {
+                resourceType: 'Practitioner',
+                id: 'P10005',
+                active: true,
+                name: [{ family: 'Smith', given: ['John'] }],
+              },
+            },
+          ],
+        });
+
+      const finalState = await http.request(
+        'GET',
+        '/fhir/Practitioner',
+        {},
+        {
+          query: { active: 'true', _count: '10' },
+        }
+      )(state);
+
+      expect(finalState.data.resourceType).to.eql('Bundle');
+      expect(finalState.data.entry).to.have.length(2);
+      expect(finalState.data.total).to.eql(2);
+    });
   });
 
   describe('http.get', () => {
@@ -39,7 +159,7 @@ describe('http namespace', () => {
           path: '/fhir/Practitioner/P10004',
           method: 'GET',
           headers: {
-            'Cookie': 'session=abc123',
+            Cookie: 'session=abc123',
             'content-type': 'application/fhir+json',
           },
         })
@@ -49,7 +169,9 @@ describe('http namespace', () => {
           meta: {
             versionId: '1',
             lastUpdated: '2024-08-06T06:13:10.163+00:00',
-            profile: ['http://ihris.org/fhir/StructureDefinition/ihris-practitioner'],
+            profile: [
+              'http://ihris.org/fhir/StructureDefinition/ihris-practitioner',
+            ],
           },
           active: true,
           name: [
@@ -92,10 +214,10 @@ describe('http namespace', () => {
           path: '/fhir/Practitioner',
           method: 'GET',
           headers: {
-            'Cookie': 'session=abc123',
+            Cookie: 'session=abc123',
             'content-type': 'application/fhir+json',
           },
-          query:{ active: 'true', _count: '10'}
+          query: { active: 'true', _count: '10' },
         })
         .reply(200, {
           resourceType: 'Bundle',
@@ -133,11 +255,11 @@ describe('http namespace', () => {
       testServer
         .intercept({
           path: '/fhir/Practitioner',
-            method: 'GET',
-            headers: {
-                'Cookie': 'session=abc123',
-                'content-type': 'application/fhir+json',
-            },
+          method: 'GET',
+          headers: {
+            Cookie: 'session=abc123',
+            'content-type': 'application/fhir+json',
+          },
         })
         .reply(200, {
           resourceType: 'Bundle',
@@ -176,7 +298,9 @@ describe('http namespace', () => {
       const newPractitioner = {
         resourceType: 'Practitioner',
         meta: {
-          profile: ['http://ihris.org/fhir/StructureDefinition/ihris-practitioner'],
+          profile: [
+            'http://ihris.org/fhir/StructureDefinition/ihris-practitioner',
+          ],
         },
         extension: [
           {
@@ -220,7 +344,7 @@ describe('http namespace', () => {
           method: 'POST',
           body: JSON.stringify(newPractitioner),
           headers: {
-            'Cookie': 'session=abc123',
+            Cookie: 'session=abc123',
             'content-type': 'application/fhir+json',
           },
         })
@@ -234,7 +358,10 @@ describe('http namespace', () => {
           },
         });
 
-      const finalState = await http.post('/fhir/Practitioner', newPractitioner)(state);
+      const finalState = await http.post(
+        '/fhir/Practitioner',
+        newPractitioner
+      )(state);
 
       expect(finalState.data.id).to.eql('P10010');
       expect(finalState.data.resourceType).to.eql('Practitioner');
@@ -245,7 +372,9 @@ describe('http namespace', () => {
       const newRole = {
         resourceType: 'PractitionerRole',
         meta: {
-          profile: ['http://ihris.org/fhir/StructureDefinition/ihris-practitioner-role'],
+          profile: [
+            'http://ihris.org/fhir/StructureDefinition/ihris-practitioner-role',
+          ],
         },
         practitioner: {
           reference: 'Practitioner/P10004',
@@ -278,7 +407,7 @@ describe('http namespace', () => {
           method: 'POST',
           body: JSON.stringify(newRole),
           headers: {
-            'Cookie': 'session=abc123',
+            Cookie: 'session=abc123',
             'content-type': 'application/fhir+json',
           },
         })
@@ -292,11 +421,16 @@ describe('http namespace', () => {
           },
         });
 
-      const finalState = await http.post('/fhir/PractitionerRole', newRole)(state);
+      const finalState = await http.post(
+        '/fhir/PractitionerRole',
+        newRole
+      )(state);
 
       expect(finalState.data.id).to.eql('PR10001');
       expect(finalState.data.resourceType).to.eql('PractitionerRole');
-      expect(finalState.data.practitioner.reference).to.eql('Practitioner/P10004');
+      expect(finalState.data.practitioner.reference).to.eql(
+        'Practitioner/P10004'
+      );
     });
   });
 
@@ -308,7 +442,9 @@ describe('http namespace', () => {
         meta: {
           versionId: '2',
           lastUpdated: '2024-11-02T10:30:00.000+00:00',
-          profile: ['http://ihris.org/fhir/StructureDefinition/ihris-practitioner'],
+          profile: [
+            'http://ihris.org/fhir/StructureDefinition/ihris-practitioner',
+          ],
         },
         active: true,
         name: [
@@ -330,17 +466,19 @@ describe('http namespace', () => {
           method: 'PUT',
           body: JSON.stringify(updatedPractitioner),
           headers: {
-            'Cookie': 'session=abc123',
+            Cookie: 'session=abc123',
             'content-type': 'application/fhir+json',
           },
         })
         .reply(200, updatedPractitioner);
 
-      const finalState = await http.put('/fhir/Practitioner/P10004', updatedPractitioner)(state);
+      const finalState = await http.put(
+        '/fhir/Practitioner/P10004',
+        updatedPractitioner
+      )(state);
 
       expect(finalState.data.name[0].family).to.eql('Johnson-Williams');
       expect(finalState.data.meta.versionId).to.eql('2');
     });
   });
-
 });
