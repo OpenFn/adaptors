@@ -7,6 +7,7 @@ import dateFns from 'date-fns';
 import _ from 'lodash';
 
 import { expandReferences, parseDate } from './util/index.js';
+import { asData, source } from './util.js';
 
 const schemaCache = {};
 
@@ -52,16 +53,6 @@ export function execute(...operations) {
 }
 
 /**
- * alias for "fn()"
- * @function
- * @param {Function} func is the function
- * @returns {Operation}
- */
-export function alterState(func) {
-  return fn(func);
-}
-
-/**
  * Creates a custom step (or operation) for more flexible job writing.
  * @public
  * @function
@@ -95,118 +86,6 @@ export function fnIf(condition, operation) {
 
     return resolvedCondition ? operation(state) : state;
   };
-}
-
-/**
- * Picks out a single value from a JSON object.
- * If a JSONPath returns more than one value for the reference, the first
- * item will be returned.
- * @public
- * @function
- * @example
- * jsonValue({ a:1 }, 'a')
- * @param {object} obj - A valid JSON object.
- * @param {String} path - JSONPath referencing a point in given JSON object.
- * @returns {Operation}
- */
-export function jsonValue(obj, path) {
-  return JSONPath({ path, json: obj })[0];
-}
-
-/**
- * Picks out a single value from source data.
- * If a JSONPath returns more than one value for the reference, the first
- * item will be returned.
- * @public
- * @function
- * @example
- * sourceValue('$.key')
- * @param {String} path - JSONPath referencing a point in `state`.
- * @returns {Operation}
- */
-export function sourceValue(path) {
-  return state => {
-    return JSONPath({ path, json: state })[0];
-  };
-}
-
-/**
- * Picks out a value from source data.
- * Will return whatever JSONPath returns, which will always be an array.
- * If you need a single value use `sourceValue` instead.
- * @public
- * @function
- * @example
- * source('$.key')
- * @param {String} path - JSONPath referencing a point in `state`.
- * @returns {Array.<String|Object>}
- */
-export function source(path) {
-  return state => {
-    return JSONPath({ path, json: state });
-  };
-}
-
-/**
- * Ensures a path points at the data.
- * @public
- * @function
- * @example
- * dataPath('key')
- * @param {string} path - JSONPath referencing a point in `data`.
- * @returns {string}
- */
-export function dataPath(path) {
-  // Remove prepending `$.`, `$` or `.`, in order to ensure the root of the
-  // path starts with `$.data.`
-  const cleanPath = path.match(/^[\$\.]*(.+)/)[1];
-  return '$.data.'.concat(cleanPath);
-}
-
-/**
- * Picks out a single value from the source data object—usually `state.data`.
- * If a JSONPath returns more than one value for the reference, the first
- * item will be returned.
- * @public
- * @function
- * @example
- * dataValue('key')
- * @param {String} path - JSONPath referencing a point in `data`.
- * @returns {Operation}
- */
-export function dataValue(path) {
-  return sourceValue(dataPath(path));
-}
-
-/**
- * Ensures a path points at references.
- * @public
- * @function
- * @example
- * referencePath('key')
- * @param {string} path - JSONPath referencing a point in `references`.
- * @returns {string}
- */
-export function referencePath(path) {
-  // Remove prepending `$.`, `$` or `.`, in order to ensure the root of the
-  // path starts with `$.data.`
-  const cleanPath = path.match(/^[\$\.]*(.+)/)[1];
-  return '$.references'.concat(cleanPath);
-}
-
-/**
- * Picks out the last reference value from source data.
- * @public
- * @function
- * @example
- * lastReferenceValue('key')
- * @param {String} path - JSONPath referencing a point in `references`.
- * @returns {Operation}
- */
-export function lastReferenceValue(path) {
-  const lastReferencePath = referencePath('[0]'.concat('.', path));
-
-  return sourceValue(lastReferencePath);
 }
 
 /**
@@ -244,7 +123,7 @@ export function lastReferenceValue(path) {
 export const map = function (path, callback) {
   return async state => {
     const results = [];
-    const values = typeof path === 'string' ? source(path)(state) : path;
+    const values = typeof path === 'string' ? state => state[path] : path;
 
     let index = 0;
     for (const item of values) {
@@ -255,31 +134,6 @@ export const map = function (path, callback) {
     return { ...state, data: results };
   };
 };
-
-/**
- * Simple switcher allowing other expressions to use either a JSONPath or
- * object literals as a data source.
- * - JSONPath referencing a point in `state`
- * - Object Literal of the data itself.
- * - Function to be called with state.
- * @public
- * @function
- * @example
- * asData('$.key'| key | callback)
- * @param {String|object|function} data
- * @param {object} state - The current state.
- * @returns {array}
- */
-export function asData(data, state) {
-  switch (typeof data) {
-    case 'string':
-      return source(data)(state);
-    case 'object':
-      return data;
-    case 'function':
-      return data(state);
-  }
-}
 
 /**
  * Iterates over an array of items and invokes an operation upon each one, where the state
@@ -363,52 +217,6 @@ export function combine(...operations) {
 }
 
 /**
- * Adds data from a target object
- * @public
- * @function
- * @example
- * join('$.key','$.data','newKey')
- * @param {String} targetPath - Target path
- * @param {String} sourcePath - Source path
- * @param {String} targetKey - Target Key
- * @returns {Operation}
- */
-export function join(targetPath, sourcePath, targetKey) {
-  return state => {
-    return source(targetPath)(state).map(i => {
-      return { [targetKey]: sourceValue(sourcePath)(state), ...i };
-    });
-  };
-}
-
-/**
- * Returns a key, value pair in an array.
- * @public
- * @function
- * @example
- * field('destination_field_name__c', 'value')
- * @param {string} key - Name of the field
- * @param {Value} value - The value itself or a sourceable operation.
- * @returns {Field}
- */
-export function field(key, value) {
-  return [key, value];
-}
-
-/**
- * Zips key value pairs into an object.
- * @public
- * @function
- * @example
- *  fields(list_of_fields)
- * @param {Fields} fields - a list of fields
- * @returns {Object}
- */
-export function fields(...fields) {
-  return _.fromPairs(fields);
-}
-
-/**
  * Merges fields into each item in an array.
  * @public
  * @example
@@ -469,53 +277,6 @@ export function group(arrayOfObjects, keyPath, callback = s => s) {
 }
 
 /**
- * Returns the index of the current array being iterated.
- * To be used with `each` as a data source.
- * @public
- * @function
- * @example
- * index()
- * @returns {DataSource}
- */
-export function index() {
-  return state => {
-    return state.index;
-  };
-}
-
-/**
- * Turns an array into a string, separated by X.
- * @public
- * @function
- * @example
- * field("destination_string__c", function(state) {
- *   return arrayToString(dataValue("path_of_array")(state), ', ')
- * })
- * @param {array} arr - Array of toString'able primatives.
- * @param {string} separator - Separator string.
- * @returns {string}
- */
-export function arrayToString(arr, separator) {
-  return Array.apply(null, arr).join(separator);
-}
-
-/**
- * Ensures primitive data types are wrapped in an array.
- * Does not affect array objects.
- * @public
- * @function
- * @example
- * each(function(state) {
- *   return toArray( dataValue("path_of_array")(state) )
- * }, ...)
- * @param {any} arg - Data required to be in an array
- * @returns {array}
- */
-export function toArray(arg) {
-  return new Array().concat(arg);
-}
-
-/**
  * Prepares next state
  * @public
  * @function
@@ -534,97 +295,6 @@ export function composeNextState(state, response) {
     data: response,
     references: [...state.references, state.data],
   };
-}
-
-/**
- * Substitutes underscores for spaces and proper-cases a string
- * @public
- * @function
- * @example
- * field("destination_string__c", humanProper(state.data.path_to_string))
- * @param {string} str - String that needs converting
- * @returns {string}
- */
-export function humanProper(str) {
-  if (typeof str == 'string') {
-    return str.replace(/[_-]/g, ' ').replace(/\w\S*/g, function (txt) {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
-  } else {
-    return str;
-  }
-}
-
-/**
- * Splits an object into two objects based on a list of keys.
- * The first object contains the keys that are not in the list,
- * and the second contains the keys that are.
- * @public
- * @function
- * @param {Object} obj - The object to split.
- * @param {string[]} keys - List of keys to split on.
- * @returns {Object[]} - Tuple of objects, first object contains keys not in list, second contains keys that are.
- */
-export function splitKeys(obj, keys) {
-  return Object.keys(obj).reduce(
-    ([keep, split], key) => {
-      const value = obj[key];
-
-      if (keys.includes(key)) {
-        return [keep, { ...split, [key]: value }];
-      }
-
-      return [{ ...keep, [key]: value }, split];
-    },
-    [{}, {}]
-  );
-}
-
-/**
- * Replaces emojis in a string.
- * @public
- * @function
- * @example
- * scrubEmojis('Dove🕊️⭐ 29')
- * @param {string} text - String that needs to be cleaned
- * @param {string} replacementChars - Characters that replace the emojis
- * @returns {string}
- */
-export function scrubEmojis(text, replacementChars) {
-  if (!text) return text;
-
-  if (replacementChars == '') {
-    console.warn(
-      'Removing characters from a string may create injection vulnerabilities;',
-      "It's better to replace than remove.",
-      'See https://www.unicode.org/reports/tr36/#Deletion_of_Noncharacters'
-    );
-  }
-
-  const newChars =
-    replacementChars || replacementChars == '' ? replacementChars : '\uFFFD';
-
-  const emojisPattern =
-    /(\uFE0F|\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
-
-  return text.replace(emojisPattern, newChars);
-}
-
-/**
- * Chunks an array into an array of arrays, each with no more than a certain size.
- * @public
- * @function
- * @example
- * chunk([1,2,3,4,5], 2)
- * @param {Object} array - Array to be chunked
- * @param {Integer} chunkSize - The maxiumum size of each chunks
- * @returns {Object}
- */
-export function chunk(array, chunkSize) {
-  const output = [];
-  for (var i = 0, len = array.length; i < len; i += chunkSize)
-    output.push(array.slice(i, i + chunkSize));
-  return output;
 }
 
 const getParser = (csvData, options) => {
