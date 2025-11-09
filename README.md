@@ -84,9 +84,10 @@ export OPENFN_ADAPTORS_REPO=~/repo/openfn/adaptors
    ```json
    {
      "configuration": { //Your salesforce credentials},
-     "data": {
-       "company_name": "Example Inc.",
-       "industry": "Software"
+        "data": {
+          "company_name": "Example Inc.",
+          "industry": "Software"
+        }
      }
    }
    ```
