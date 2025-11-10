@@ -29,7 +29,9 @@
   ],
   "dependencies": {
     "@actual-app/api": "^25.10.0",
-    "@openfn/language-common": "workspace:*"
+    "@openfn/language-common": "workspace:*",
+    "better-sqlite3": "^12.4.1",
+    "mock-fs": "^5.5.0"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",

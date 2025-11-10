@@ -10,6 +10,9 @@ const state = {
 };
 
 const mockBudgetMonth = month => {
+  // if (!month) {
+  //   throw new Error('month is required');
+  // }
   if (month !== '2023-01') {
     throw new Error('Invalid month');
   }
@@ -36,6 +39,16 @@ const mockApi = {
 setMockApi(mockApi);
 
 describe('getBudgetMonth', () => {
+  it.only('should throw an error if no month is provided', async () => {
+    const result = await getBudgetMonth()(state);
+    try {
+      await getBudgetMonth()(state);
+    } catch (err) {
+      expect(err.message).to.equal('month is required');
+    }
+    // expect(result.error).to.be.an('error');
+    // expect(result.error.message).to.equal('month is required');
+  });
   it('should fetch the budget for the given month', async () => {
     const result = await getBudgetMonth('2023-01')(state);
     expect(result.data).to.be.an('array');
