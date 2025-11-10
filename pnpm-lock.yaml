@@ -53,6 +53,12 @@ importers:
       '@openfn/language-common':
         specifier: workspace:*
         version: link:../common
+      better-sqlite3:
+        specifier: ^12.4.1
+        version: 12.4.1
+      mock-fs:
+        specifier: ^5.5.0
+        version: 5.5.0
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -8563,6 +8569,10 @@ packages:
     resolution: {integrity: sha512-L6XC3EdwT6YrIk0yXpavvLkn8h+EU+Y5UcCHKECyMbdUIxyMuZj4bX4U9e1nvnvUUvQVsV2VHQr5zLdcUkhW/g==}
     engines: {node: '>= 12.0.0'}
     hasBin: true
+
+  mock-fs@5.5.0:
+    resolution: {integrity: sha512-d/P1M/RacgM3dB0sJ8rjeRNXxtapkPCUnMGmIN0ixJ16F/E4GUZCvWcSGfWGz8eaXYvn1s9baUwNjI4LOPEjiA==}
+    engines: {node: '>=12.0.0'}
 
   mongodb@3.7.3:
     resolution: {integrity: sha512-Psm+g3/wHXhjBEktkxXsFMZvd3nemI0r3IPsE0bU+4//PnvNWKkzhZcEsbPcYiWqe8XqXJJEg4Tgtr7Raw67Yw==}
@@ -17567,6 +17577,8 @@ snapshots:
       yargs: 16.2.0
       yargs-parser: 20.2.4
       yargs-unparser: 2.0.0
+
+  mock-fs@5.5.0: {}
 
   mongodb@3.7.3:
     dependencies:
