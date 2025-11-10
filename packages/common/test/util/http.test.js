@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+
 import { Readable } from 'node:stream';
 
 import {
@@ -1180,85 +1181,78 @@ describe('generateAgentKey', () => {
 });
 
 describe('redirect handling', () => {
-  let originalWarn;
-  let consoleWarnings = [];
-
-  beforeEach(() => {
-    // Setup: Override console.warn
-    originalWarn = console.warn;
-    consoleWarnings = [];
-    console.warn = (...args) => consoleWarnings.push(args);
+  it('should not throw if response status is 207', async () => {
+    client
+      .intercept({
+        path: '/current-path',
+        method: 'GET',
+      })
+      .reply(207, {});
+    const result = await get('https://www.example.com/current-path');
+    expect(result.statusCode).to.eq(207);
+    expect(result.statusMessage).to.eq('Multi-Status');
   });
-
-  afterEach(() => {
-    // Teardown: Restore console.warn
-    console.warn = originalWarn;
-  });
-
-  const redirectTestCases = [
-    { code: 300, name: 'Moved Permanently' },
-    { code: 399, name: 'Other' },
-  ];
-
-  redirectTestCases.forEach(({ code, name }) => {
-    it(`should log a friendly warning for ${code} (${name}) redirects when maxRedirections is not set`, async () => {
-      client
-        .intercept({
-          path: '/old-path',
-          method: 'GET',
-        })
-        .reply(code, '', {
+  it('should throw error if maxRedirections is unset and response status is 301.', async () => {
+    client
+      .intercept({
+        path: '/current-path',
+        method: 'GET',
+      })
+      .reply(
+        301,
+        {},
+        {
           headers: {
-            location: 'https://www.example.com/new-path',
-          },
-        });
-
-      const response = await request('GET', 'https://www.example.com/old-path');
-
-      // Verify the response is returned (not throwing)
-      expect(response.statusCode).to.equal(code);
-
-      // Verify the warning was logged
-      expect(consoleWarnings.length).to.equal(1);
-      const warningMessage = consoleWarnings[0][0];
-      expect(warningMessage).to.include(`${code} (${name})`);
-      expect(warningMessage).to.include('maxRedirections');
-      expect(warningMessage).to.include('https://www.example.com/new-path');
-      expect(warningMessage).to.include('https://www.example.com/old-path');
-    });
-  });
-
-  it.skip(
-    'should not log warning for 301 when maxRedirections is explicitly set to 0',
-    async () => {
-      client
-        .intercept({
-          path: '/old-path',
-          method: 'GET',
-          query: {
-            maxRedirections: '0',
-          },
-        })
-        .reply(301, '', {
-          headers: {
-            location: 'https://www.example.com/new-path',
+            location: 'https://www.example.com/moved-permanently',
             'content-type': 'application/json',
           },
-        });
-
-      // When maxRedirections is explicitly set (even to 0), we assume the user
-      // is aware of redirect behavior and don't need to warn them
-      const response = await request(
-        'GET',
-        'https://www.example.com/old-path',
-        {
-          maxRedirections: 0,
         }
       );
-      console.warn({ response });
 
-      expect(response.statusCode).to.equal(301);
-      expect(consoleWarnings.length).to.equal(0);
+    try {
+      await get('https://www.example.com/current-path');
+    } catch (error) {
+      expect(error.code).to.eq(301);
+      expect(error.message).to.contain(`301: Response has redirect status,`);
+      expect(error.fix).to.contain(
+        `Set 'maxRedirections' to enable auto-redirect.`
+      );
     }
-  ).timeout(5e6);
+  });
+  it('should not throw for 301 when maxRedirections is explicitly set to 0', async () => {
+    // Create a new mock client with maxRedirections option.
+    const redirectClient = enableMockClient('https://www.example.com', {
+      maxRedirections: 0,
+    });
+    redirectClient
+      .intercept({
+        path: '/current-path',
+        method: 'GET',
+      })
+      .reply(
+        301,
+        {},
+        {
+          headers: {
+            location: 'https://www.example.com/moved-permanently',
+            'content-type': 'application/json',
+          },
+        }
+      );
+
+    // When maxRedirections is explicitly set (even to 0), we assume the user
+    // is aware of redirect behavior and don't need to warn them
+    const response = await request(
+      'GET',
+      'https://www.example.com/current-path',
+      {
+        maxRedirections: 0,
+      }
+    );
+    expect(response.statusCode).to.eq(301);
+    expect(response.statusMessage).to.eq('Moved Permanently');
+    expect(response.headers.location).to.eq(
+      'https://www.example.com/moved-permanently'
+    );
+  }).timeout(5e6);
 });

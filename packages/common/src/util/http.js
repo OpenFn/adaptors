@@ -309,24 +309,21 @@ export async function request(method, fullUrlOrPath, options = {}) {
   });
 
   const statusText = getReasonPhrase(response.statusCode);
+
   await assertOK(response, errors, url, method, startTime);
 
-  const isRedirect = response.statusCode >= 300 && response.statusCode < 400;
+  const isRedirectStatus = [301, 302, 303, 307, 308].includes(
+    response.statusCode
+  );
 
-  if (isRedirect && maxRedirections === undefined) {
-    const redirectLocation = response.headers.location;
-    if (!redirectLocation) {
-      throw new Error(
-        `Redirect response (${response.statusCode}) from ${url} is missing a Location header`
-      );
-    }
-
-    console.log({ statusText, redirectLocation });
-    console.warn(
-      `⚠️  Request to ${url} returned ${response.statusCode} (${statusText}) and was redirected to ${redirectLocation}.\n` +
-        `   To follow redirects automatically, set the 'maxRedirections' option on your request call.\n` +
-        `   For example: request('GET', '${fullUrlOrPath}', { maxRedirections: 5 })`
-    );
+  if (isRedirectStatus && maxRedirections === undefined) {
+    throwError(response.statusCode, {
+      statusMessage: statusText,
+      description: `Response has redirect status, but 'maxRedirections' is not set`,
+      fix:
+        `Set 'maxRedirections' to enable auto-redirect.` +
+        `Example: request('GET', '${fullUrlOrPath}', { maxRedirections: 5 })`,
+    });
   }
 
   const responseBody = await readResponseBody(response, parseAs);
