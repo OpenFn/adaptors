@@ -1,56 +1,30 @@
 import { expect } from 'chai';
-import { getBudgetMonth, setMockApi } from '../src/Adaptor.js';
+import * as actualBudgetApi from '@actual-app/api';
+import { getBudgetMonth, setMockApi, execute } from '../src/Adaptor.js';
 
-const state = {
-  configuration: {
-    serverUrl: 'https://actual.budget',
-    password: 'password',
-    budgetSyncId: 'budgetSyncId',
-  },
-};
-
-const mockBudgetMonth = month => {
-  // if (!month) {
-  //   throw new Error('month is required');
-  // }
-  if (month !== '2023-01') {
-    throw new Error('Invalid month');
-  }
-  return {
-    month: '2025-01',
-    incomeAvailable: -7634035745,
-    lastMonthOverspent: 0,
-    forNextMonth: 0,
-    totalBudgeted: -585000000,
-    toBudget: -8219035745,
-    fromLastMonth: -7634035745,
-    totalIncome: 0,
-    totalSpent: -265500000,
-    totalBalance: 7586744074,
-    categoryGroups: [],
-  };
-};
-const mockApi = {
-  getBudgetMonth: async month => {
-    return mockBudgetMonth(month);
-  },
-};
-
+const state = {};
+let mockApi = actualBudgetApi;
 setMockApi(mockApi);
 
 describe('getBudgetMonth', () => {
-  it.only('should throw an error if no month is provided', async () => {
-    const result = await getBudgetMonth()(state);
-    try {
-      await getBudgetMonth()(state);
-    } catch (err) {
-      expect(err.message).to.equal('month is required');
-    }
-    // expect(result.error).to.be.an('error');
-    // expect(result.error.message).to.equal('month is required');
+  before(async () => {
+    await mockApi.init({
+      dataDir: './test/mocks',
+    });
+    await mockApi.loadBudget('test-budget');
+  });
+
+  it('should throw an error if month is has no budget', async () => {
+    await getBudgetMonth('2012-01')(state).catch(err => {
+      expect(err.message).to.eq(`No budget exists for month: 2012-01`);
+    });
   });
   it('should fetch the budget for the given month', async () => {
-    const result = await getBudgetMonth('2023-01')(state);
-    expect(result.data).to.be.an('array');
+    const { data } = await getBudgetMonth('2023-01')(state);
+    expect(data.month).to.eq('2023-01');
+  });
+
+  after(async () => {
+    await mockApi.shutdown();
   });
 });
