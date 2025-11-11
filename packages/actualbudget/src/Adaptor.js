@@ -1,14 +1,19 @@
 import {
   execute as commonExecute,
   composeNextState,
-  validate,
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 import * as actualBudgetApi from '@actual-app/api';
-import { errorHandler, validateConfig } from './util.js';
+import {
+  tmpDir,
+  errorHandler,
+  validateConfig,
+  createTempDir,
+  deleteTempDir,
+} from './util.js';
 
 let api = actualBudgetApi;
-
+let dataDir = createTempDir(tmpDir);
 const init = async state => {
   validateConfig(state.configuration);
   const { serverUrl, password, budgetSyncId, budgetPassword } =
@@ -16,7 +21,7 @@ const init = async state => {
 
   await api.init({
     // Budget data will be cached locally here, in subdirectories for each file.
-    dataDir: '/tmp',
+    dataDir,
     serverURL: serverUrl,
     password,
   });
@@ -31,6 +36,7 @@ const init = async state => {
 
 const shutdown = async state => {
   await api.shutdown();
+  deleteTempDir(dataDir);
   return state;
 };
 
@@ -77,30 +83,22 @@ export function getBudgetMonth(month) {
   return async state => {
     const [resolvedMonth] = expandReferences(state, month);
     console.log(`Fetching budget for month ${resolvedMonth}`);
-
     const budget = await api.getBudgetMonth(resolvedMonth);
-    console.log({ budget });
     return composeNextState(state, budget);
   };
 }
 
 export {
   as,
+  assert,
   combine,
   cursor,
-  dataPath,
-  dataValue,
   dateFns,
   each,
-  field,
-  fields,
   fn,
   fnIf,
   group,
-  lastReferenceValue,
   map,
   merge,
-  scrubEmojis,
-  sourceValue,
   util,
 } from '@openfn/language-common';
