@@ -1,5 +1,5 @@
+import http from 'http';
 import { expect } from 'chai';
-
 import { Readable } from 'node:stream';
 
 import {
@@ -1181,7 +1181,53 @@ describe('generateAgentKey', () => {
 });
 
 describe('redirect handling', () => {
-  it('should not throw if response status is 207', async () => {
+  it('should throw if maxRedirections is unset and response code is does not exist', async () => {
+    client
+      .intercept({
+        path: '/current-path',
+        method: 'GET',
+      })
+      .reply(
+        306,
+        {},
+        {
+          headers: {
+            location: 'https://www.example.com/unused-code',
+            'content-type': 'application/json',
+          },
+        }
+      );
+    try {
+      await get('https://www.example.com/current-path');
+    } catch (error) {
+      expect(error.message).to.contain('Status code does not exist: 306');
+    }
+  });
+  it('should not throw if maxRedirections is unset and throwOnUnhandledRedirect is false', async () => {
+    client
+      .intercept({
+        path: '/current-path',
+        method: 'GET',
+      })
+      .reply(
+        301,
+        {},
+        {
+          headers: {
+            location: 'https://www.example.com/moved-permanently',
+            'content-type': 'application/json',
+          },
+        }
+      );
+
+    const result = await get('https://www.example.com/current-path', {
+      throwOnUnhandledRedirect: false,
+    });
+    expect(result.statusCode).to.eq(301);
+    expect(result.statusMessage).to.eq('Moved Permanently');
+  });
+
+  it('should not throw if is not a redirect response status eg:207', async () => {
     client
       .intercept({
         path: '/current-path',
@@ -1192,7 +1238,7 @@ describe('redirect handling', () => {
     expect(result.statusCode).to.eq(207);
     expect(result.statusMessage).to.eq('Multi-Status');
   });
-  it('should throw error if maxRedirections is unset and response status is 301.', async () => {
+  it('should throw error if maxRedirections is unset and redirect response status is 301.', async () => {
     client
       .intercept({
         path: '/current-path',
@@ -1254,5 +1300,47 @@ describe('redirect handling', () => {
     expect(response.headers.location).to.eq(
       'https://www.example.com/moved-permanently'
     );
-  }).timeout(5e6);
+  });
+
+  it('should auto redirect if maxRedirections is set', async () => {
+    const maxRedirections = 5;
+
+    let redirectCount = 0;
+    const redirectServer = http.createServer((req, res) => {
+      switch (req.url) {
+        case '/redirect':
+          res.writeHead(301, {
+            Location: `http://localhost:8080/new-location`,
+          });
+          res.end();
+          break;
+        case '/new-location':
+          redirectCount++;
+          res.writeHead(302, {
+            Location: `http://localhost:8080/new-location-1`,
+          });
+          res.end();
+          break;
+        case '/new-location-1':
+          redirectCount++;
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ ok: true }));
+          break;
+        default:
+          res.writeHead(200, { 'Content-Type': 'text/plain' });
+          res.end('Hello, World!');
+          break;
+      }
+    });
+
+    redirectServer.listen(8080);
+    const result = await request('GET', `http://localhost:8080/redirect`, {
+      maxRedirections,
+    });
+    redirectServer.close();
+
+    expect(redirectCount).to.eq(2);
+    expect(result.statusCode).to.eq(200);
+    expect(result.body).to.deep.equal({ ok: true });
+  });
 });
