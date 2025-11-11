@@ -1,36 +1,47 @@
+import { mkdirSync, rmSync } from 'fs';
+import { tmpdir } from 'os';
+import { join } from 'path';
+
 import { throwError } from '@openfn/language-common/util';
 
-export const errorHandler = err => {
-  const { type = 'UnknownError', message, meta } = err;
+export const tmpDir = join(tmpdir(), `actual-budget-${Date.now()}`);
+export const createTempDir = tempDir => {
+  mkdirSync(tempDir, { recursive: true });
+  return tempDir;
+};
+export const deleteTempDir = tempDir => {
+  rmSync(tempDir, { recursive: true, force: true });
+};
 
+export const errorHandler = err => {
+  // Suppress unhandled rejections
+  process.on('unhandledRejection', async (reason, promise) => {
+    console.log('Error:', reason);
+  });
+  const { type = 'UnknownError', message } = err;
   if (
     type == 'PostError' &&
     (message.includes('Not Allowed') || message.includes('network-failure'))
   ) {
-    console.error({
-      type,
-      meta,
+    throwError(message, {
       message,
+      type,
       fix: 'Error accessing Actual Server, check Actual Server url',
     });
-    throwError(err);
   }
-  if (err.message.includes('Could not get remote files')) {
-    console.error({
-      type,
-      meta,
+  if (message.includes('Could not get remote files')) {
+    throwError(message, {
       message,
+      type,
       fix: 'Error accessing Actual Server, check Actual Server password',
     });
-    throwError(err);
   }
   if (
     message.includes('not found') ||
     message.includes('No budget') ||
     message.includes('Cannot destructure property')
   ) {
-    console.error(type || 404, { message, meta });
-    throwError(err);
+    throwError(message, { type, message });
   }
   if (
     message.includes('Invalid month') ||
@@ -40,17 +51,14 @@ export const errorHandler = err => {
     message.includes('convert to integer') ||
     message.includes('must be')
   ) {
-    console.error({ type, message, meta });
-    throwError(err);
+    throwError(message, { type, message });
   }
 
-  console.error({
+  throwError(message, {
     type,
-    meta,
     message,
     fix: 'Unknown error while interacting with Actual Api. See server logs for more information',
   });
-  throwError(err);
 };
 
 export const validateConfig = config => {
