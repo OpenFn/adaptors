@@ -148,178 +148,6 @@
       "valid": true
     },
     {
-      "name": "sourceValue",
-      "params": [
-        "path"
-      ],
-      "docs": {
-        "description": "Picks out a single value from source data.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "example",
-            "description": "sourceValue('$.key')"
-          },
-          {
-            "title": "param",
-            "description": "JSONPath referencing a point in `state`.",
-            "type": {
-              "type": "NameExpression",
-              "name": "String"
-            },
-            "name": "path"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "dataPath",
-      "params": [
-        "path"
-      ],
-      "docs": {
-        "description": "Ensures a path points at the data.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "example",
-            "description": "dataPath('key')"
-          },
-          {
-            "title": "param",
-            "description": "JSONPath referencing a point in `data`.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "path"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "dataValue",
-      "params": [
-        "path"
-      ],
-      "docs": {
-        "description": "Picks out a single value from the source data object—usually `state.data`.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "example",
-            "description": "dataValue('key')"
-          },
-          {
-            "title": "param",
-            "description": "JSONPath referencing a point in `data`.",
-            "type": {
-              "type": "NameExpression",
-              "name": "String"
-            },
-            "name": "path"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "lastReferenceValue",
-      "params": [
-        "path"
-      ],
-      "docs": {
-        "description": "Picks out the last reference value from source data.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "example",
-            "description": "lastReferenceValue('key')"
-          },
-          {
-            "title": "param",
-            "description": "JSONPath referencing a point in `references`.",
-            "type": {
-              "type": "NameExpression",
-              "name": "String"
-            },
-            "name": "path"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "each",
       "params": [
         "dataSource",
@@ -420,102 +248,6 @@
             "type": {
               "type": "NameExpression",
               "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "field",
-      "params": [
-        "key",
-        "value"
-      ],
-      "docs": {
-        "description": "Returns a key, value pair in an array.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "example",
-            "description": "field('destination_field_name__c', 'value')"
-          },
-          {
-            "title": "param",
-            "description": "Name of the field",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "key"
-          },
-          {
-            "title": "param",
-            "description": "The value itself or a sourceable operation.",
-            "type": {
-              "type": "NameExpression",
-              "name": "Value"
-            },
-            "name": "value"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Field"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "fields",
-      "params": [
-        "fields"
-      ],
-      "docs": {
-        "description": "Zips key value pairs into an object.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "example",
-            "description": "fields(list_of_fields)"
-          },
-          {
-            "title": "param",
-            "description": "a list of fields",
-            "type": {
-              "type": "NameExpression",
-              "name": "Fields"
-            },
-            "name": "fields"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
             }
           }
         ]
@@ -658,59 +390,6 @@
       "valid": true
     },
     {
-      "name": "scrubEmojis",
-      "params": [
-        "text",
-        "replacementChars"
-      ],
-      "docs": {
-        "description": "Replaces emojis in a string.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "example",
-            "description": "scrubEmojis('Dove🕊️⭐ 29')"
-          },
-          {
-            "title": "param",
-            "description": "String that needs to be cleaned",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "text"
-          },
-          {
-            "title": "param",
-            "description": "Characters that replace the emojis",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "replacementChars"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "cursor",
       "params": [
         "value",
@@ -795,6 +474,59 @@
         ]
       },
       "valid": false
+    },
+    {
+      "name": "assert",
+      "params": [
+        "expression",
+        "errorMessage"
+      ],
+      "docs": {
+        "description": "Asserts the given expression or function resolves to `true`, or else throws an exception. Optionally accepts and error message.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "assert('a' === 'b', '\"a\" is not equal to \"b\"')"
+          },
+          {
+            "title": "param",
+            "description": "The expression or function to be evaluated.",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "expression"
+          },
+          {
+            "title": "param",
+            "description": "The error message thrown in case of a failed state.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "errorMessage"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     },
     {
       "name": "as",
