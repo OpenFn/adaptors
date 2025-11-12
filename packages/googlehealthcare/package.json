@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-googlehealthcare",
   "label": "Google Health Care",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "description": "A Google Health Care language package for use with Open Function",
   "type": "module",
   "exports": {

@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-beyonic",
   "label": "Beyonic",
-  "version": "0.3.22",
+  "version": "0.3.23",
   "description": "OpenFn adaptor for Beyonic",
   "homepage": "https://docs.openfn.org",
   "repository": {

@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-telerivet",
   "label": "Telerivet",
-  "version": "0.3.21",
+  "version": "0.3.22",
   "description": "OpenFn adaptor for Telerivet",
   "main": "dist/index.cjs",
   "scripts": {
