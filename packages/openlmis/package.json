@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-openlmis",
   "label": "OpenLMIS",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "OpenFn adaptor for OpenLMIS",
   "type": "module",
   "exports": {

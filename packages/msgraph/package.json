@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-msgraph",
   "label": "Microsoft Graph",
-  "version": "0.8.6",
+  "version": "0.8.7",
   "description": "Microsoft Graph Language Pack for OpenFn",
   "type": "module",
   "exports": {

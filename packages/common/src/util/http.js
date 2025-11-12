@@ -283,10 +283,11 @@ export async function request(method, fullUrlOrPath, options = {}) {
     query: optionQuery = {},
     body,
     errors = {},
-    timeout = 300e3, // Default to 300 seconds,
+    timeout = 300e3, // Default to 300 seconds
     tls = {},
     parseAs = 'auto',
     maxRedirections,
+    throwOnUnhandledRedirect = true, // Internal use only
   } = options;
 
   const dispatcher = getDispatcher(baseUrl, { tls, maxRedirections });
@@ -311,6 +312,25 @@ export async function request(method, fullUrlOrPath, options = {}) {
   const statusText = getReasonPhrase(response.statusCode);
 
   await assertOK(response, errors, url, method, startTime);
+
+  // redirect codes https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status#redirection_messages
+  const hasRedirectStatus = [300, 301, 302, 303, 304, 305, 307, 308].includes(
+    response.statusCode
+  );
+
+  if (
+    hasRedirectStatus &&
+    maxRedirections === undefined &&
+    throwOnUnhandledRedirect
+  ) {
+    throwError(response.statusCode, {
+      statusMessage: statusText,
+      description: `Response has redirect status, but 'maxRedirections' is not set`,
+      fix:
+        `Set 'maxRedirections' to enable auto-redirect.` +
+        `Example: request('GET', '${fullUrlOrPath}', { maxRedirections: 5 })`,
+    });
+  }
 
   const responseBody = await readResponseBody(response, parseAs);
   const endTime = Date.now();
