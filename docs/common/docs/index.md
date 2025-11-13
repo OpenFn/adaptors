@@ -65,6 +65,8 @@
     <a href="#splitkeys">splitKeys(obj, keys)</a></dt>
 <dt>
     <a href="#toarray">toArray(arg)</a></dt>
+<dt>
+    <a href="#validate">validate(schema, data)</a></dt>
 </dl>
 
 This adaptor exports the following namespaced functions:
@@ -880,6 +882,37 @@ Does not affect array objects.
 each(function(state) {
   return toArray( dataValue("path_of_array")(state) )
 }, ...)
+```
+
+* * *
+
+### validate
+
+<p><code>validate(schema, data) ⇒ Operation</code></p>
+
+Validate against a JSON schema. Any errors are written to an array at `state.validationErrors`.
+Schema can be passed directly, loaded as a JSON path from state, or loaded from a URL
+Data can be passed directly or loaded as a JSON path from state.
+By default, schema is loaded from `state.schema` and data from `state.data`.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| schema | <code>string</code> \| <code>object</code> | The schema, path or URL to validate against |
+| data | <code>string</code> \| <code>object</code> | The data or path to validate |
+
+
+**Example:** Validate `state.data` with `state.schema`
+```js
+validate()
+```
+**Example:** Validate form data at `state.form` with a schema from a URL
+```js
+validate("https://www.example.com/schema/record", "form")
+```
+**Example:** Validate the each item in `state.records` with a schema from a URL
+```js
+each("records[*]", validate("https://www.example.com/schema/record"))
 ```
 
 * * *
