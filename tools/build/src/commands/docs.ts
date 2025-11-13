@@ -41,7 +41,8 @@ const build = async (lang: string) => {
     '../../tools/build/src/util/docs-template.hbs'
   );
 
-  const templateData = await parse(root); // use the new package
+  const templateData = await parse(root);
+
   const fileSet = new FileSet();
   // This glob does not support conditionals
   // ts files are not supported right now
@@ -92,6 +93,11 @@ const build = async (lang: string) => {
     else if (data.meta?.filename && !data.meta.filename.includes('Adaptor.')) {
       data.scope = data.meta.filename.split('.')[0];
     }
+  });
+
+  // adaptor-apis will include version metadata, but we don't want that here
+  templateData.forEach(data => {
+    delete data.version;
   });
 
   const helper = path.resolve('../../tools/build/src/util/hbs-helpers.js');
