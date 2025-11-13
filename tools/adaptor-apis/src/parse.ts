@@ -37,6 +37,18 @@ export const parse = async (rootDir: string) => {
   templateData.forEach((data: any) => {
     data.source = pkg.name; // annotate the owning adaptor on each function
     data.version = pkg.version;
+
+    if (data.namespace) {
+      data.scope = data.namespace;
+    }
+    // all typedefs are global
+    else if (data.kind === 'typedef') {
+      data.scope = 'global';
+    }
+    // Set scope to be the file name
+    else if (data.meta?.filename && !data.meta.filename.includes('Adaptor.')) {
+      data.scope = data.meta.filename.split('.')[0];
+    }
   });
 
   return templateData;
