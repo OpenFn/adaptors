@@ -1,0 +1,18 @@
+{
+  "plugins": [
+    "../../tools/build/jsdoc/custom-tags.cjs",
+    "jsdoc-babel"
+  ],
+  "source": {
+    "includePattern":  ".+\\.(t|j)s(doc|x)?$"
+  },
+  "babel": {
+    "extensions": ["ts", "tsx"],
+    "ignore": ["**/*.(test|spec).ts"],
+    "babelrc": false,
+    "presets": [
+      "@babel/preset-typescript"
+    ],
+    "plugins": ["@babel/proposal-object-rest-spread"]
+  }
+}

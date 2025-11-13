@@ -4,6 +4,7 @@ import path from 'node:path';
 import jsdoc2md from 'jsdoc-to-markdown';
 import FileSet from 'file-set';
 import chokidar from 'chokidar';
+import { parse } from '@openfn/adaptor-apis';
 
 import resolvePath from '../util/resolve-path';
 import extractExports from '../util/extract-exports';
@@ -40,33 +41,7 @@ const build = async (lang: string) => {
     '../../tools/build/src/util/docs-template.hbs'
   );
 
-  let templateData = await jsdoc2md.getTemplateData({
-    // this glob seems to support conditional expressions
-    files: `${root}/src/**/*.(js|ts)`,
-    configure: [path.resolve('../../tools/build/jsdoc/config.json')],
-    'no-cache': true,
-  });
-
-  // Filter items which are not marked as @public
-  templateData = templateData.filter(
-    data => data.kind === 'typedef' || data.access === 'public'
-  );
-
-  // sort template data
-  // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
-  templateData.sort(function (a, b) {
-    const nameA = a.longname.toUpperCase(); // ignore upper and lowercase
-    const nameB = b.longname.toUpperCase(); // ignore upper and lowercase
-    if (nameA < nameB) {
-      return -1;
-    }
-    if (nameA > nameB) {
-      return 1;
-    }
-    // names must be equal
-    return 0;
-  });
-
+  const templateData = await parse(root); // use the new package
   const fileSet = new FileSet();
   // This glob does not support conditionals
   // ts files are not supported right now
@@ -104,6 +79,7 @@ const build = async (lang: string) => {
     }
   }
 
+  // TODO this needs moving into parse
   templateData.forEach(data => {
     if (data.namespace) {
       data.scope = data.namespace;
