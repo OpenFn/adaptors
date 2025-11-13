@@ -43,7 +43,10 @@ export default async (root: string) => {
 // We really need a smart recursive parser which walks through index
 // to find exports and use actual namespaces
 // But that's for later: first pass is parity but in a standalone package
-const findExternalFunctions = async (root: string) => {
+const findExternalFunctions = async (
+  root: string,
+  commonDefs?: string | object
+) => {
   const externals: any[] = [];
 
   const fileSet = new FileSet();
@@ -55,14 +58,23 @@ const findExternalFunctions = async (root: string) => {
   // try and load common's data
   // (common SHOULD be built first, so this should work)
   try {
-    // TODO: how do we generalise this?
-    // maybe parse(root/node_modules/@openfn/common)
-    // Or use a cached value if it exists
-    const commonRaw = await readFile(
-      path.resolve('../../packages/common/docs/raw.json'),
-      'utf8'
-    );
-    common = JSON.parse(commonRaw || '');
+    // Load common from a file (ie packages/common/docs/raw.json)
+    if (typeof commonDefs === 'string') {
+      const commonRaw = await readFile(
+        // '../../packages/common/docs/raw.json'
+        path.resolve(commonDefs),
+        'utf8'
+      );
+      common = JSON.parse(commonRaw || '');
+    } else if (commonDefs) {
+      // use common defs as an object
+      common = commonDefs as any;
+    } else {
+      // build docs for common
+      common = await parse(`${root}/node_modules/@openfn/language-common`);
+    }
+
+    // TODO: use a cached value if it exists
   } catch (e) {
     console.warn(
       'WARNING: failed to load common docs. This may result in incorrect documentation'
@@ -78,13 +90,19 @@ const findExternalFunctions = async (root: string) => {
       if (!added[fn]) {
         added[fn] = true;
         const def = common.find(thing => thing.name === fn);
-        externals.push({
-          ...def,
-          name: `${fn}()`,
-          common: true,
-          kind: 'external',
-          source: '@openfn/language-common',
-        });
+        if (def) {
+          externals.push({
+            ...def,
+            name: `${fn}()`,
+            common: true,
+            kind: 'external',
+            source: '@openfn/language-common',
+          });
+        } else {
+          console.warn(
+            `WARNING: failed to find definition for common function ${fn}`
+          );
+        }
       }
     });
   }
