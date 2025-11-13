@@ -4,7 +4,7 @@
  * It'll take a path to an adaptor on disk
  *
  * It'll run the doc build tool
- * (or maybe doc build will call this - the key is that the logic is sharead)
+ * (or maybe doc build will call this - the key is that the logic is shared)
  *
  * For now it'll return the verbatim raw output, plus a signature
  *
@@ -13,14 +13,25 @@
  * One of the big jobs here is to also include common docs
  */
 
-import fs, { readFile } from 'node:fs/promises';
+import { readFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
+import { spawn } from 'node:child_process';
 // @ts-ignore
 import FileSet from 'file-set';
 import { parse } from './parse';
 import extractExports from './util/extract-exports';
+import getNameAndVersion from './util/get-name-and-version';
 
-export default async (root: string) => {
+export const installAndGen = async (specifier: string, cacheDir?: string) => {
+  if (!specifier.startsWith('@openfn/language-')) {
+    specifier = '@openfn/language-' + specifier;
+  }
+  const root = await preinstallAdaptor(specifier);
+  console.log({ root });
+  return gen(root);
+};
+
+const gen = async (root: string) => {
   // first we parse the adaptor
   const functions = await parse(root);
   // now find all it's external exports
@@ -36,6 +47,8 @@ export default async (root: string) => {
 
   return functions;
 };
+
+export default gen;
 
 // TODO this is copied out of the old buildtools
 // It's not perfect because it finds any old export from common
@@ -108,4 +121,63 @@ const findExternalFunctions = async (
   }
 
   return externals;
+};
+
+// Install node modules through npm - probably the easiest way, if a little inefficient?
+// Oh, but major hurdle is that the modules include no source, and so have no docs
+// So the only way this will work is to checkout the adaptors repo and the tag
+export const preinstallAdaptor = async (
+  specifier: string,
+  targetDir?: string
+): Promise<string> => {
+  const { name, version } = getNameAndVersion(specifier);
+
+  const packageSpec = version === 'latest' ? name : `${name}@${version}`;
+
+  const installDir = targetDir || path.join(process.cwd(), '.adaptors');
+
+  await mkdir(installDir, { recursive: true });
+
+  return new Promise((resolve, reject) => {
+    const args = [
+      'install',
+      packageSpec,
+      '--omit=dev',
+      '--no-package-lock',
+      '--no-save',
+      '--prefix',
+      installDir,
+    ];
+
+    const npmProcess = spawn('npm', args, {
+      stdio: ['ignore', 'pipe', 'pipe'],
+      cwd: installDir,
+    });
+
+    if (npmProcess.stdout) {
+      npmProcess.stdout.on('data', data => {
+        console.log(data.toString());
+      });
+    }
+
+    if (npmProcess.stderr) {
+      npmProcess.stderr.on('data', data => {
+        console.error(data.toString());
+      });
+    }
+
+    npmProcess.on('close', code => {
+      if (code === 0) {
+        // Return the path to the installed package
+        const installedPath = path.join(installDir, 'node_modules', name);
+        resolve(installedPath);
+      } else {
+        reject(new Error(`npm install failed with code ${code}`));
+      }
+    });
+
+    npmProcess.on('error', error => {
+      reject(new Error(`Failed to spawn npm process: ${error.message}`));
+    });
+  });
 };

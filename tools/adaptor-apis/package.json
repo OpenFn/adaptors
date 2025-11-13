@@ -4,7 +4,8 @@
   "description": "Describes OpenFn Adaptor APIs",
   "type": "module",
   "scripts": {
-    "build": "tsup src/index.ts --config tsup.config.js"
+    "build": "tsup src/index.ts --config tsup.config.js",
+    "gen": "tsx src/cli.ts"
   },
   "exports": {
     ".": {
