@@ -752,11 +752,11 @@ const getAjvVersion = async schema => {
 };
 
 /**
- * Validate against a JSON schema. Any erors are written to an array at `state.validationErrors`.
+ * Validate against a JSON schema. Any errors are written to an array at `state.validationErrors`.
  * Schema can be passed directly, loaded as a JSON path from state, or loaded from a URL
  * Data can be passed directly or loaded as a JSON path from state.
  * By default, schema is loaded from `state.schema` and data from `state.data`.
- * @pubic
+ * @public
  * @function
  * @param {string|object} schema - The schema, path or URL to validate against
  * @param {string|object} data - The data or path to validate
