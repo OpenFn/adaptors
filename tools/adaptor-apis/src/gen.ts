@@ -14,6 +14,7 @@
  */
 
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
+import { rimraf } from 'rimraf';
 import path from 'node:path';
 import { eachLimit } from 'async-es';
 // @ts-ignore
@@ -34,9 +35,18 @@ const loadActualPackageJson = async (specifier: string) => {
   throw new Error(`Fetch failed with status ${res.status}`);
 };
 
-export const installAndGen = async (specifier: string, cacheDir?: string) => {
+export const installAndGen = async (
+  specifier: string,
+  cacheDir?: string,
+  clean?: boolean
+) => {
   if (!specifier.startsWith('@openfn/language-')) {
     specifier = '@openfn/language-' + specifier;
+  }
+
+  if (clean) {
+    console.log('Cleaning install dir');
+    await rimraf(getInstallDir(cacheDir));
   }
 
   console.log(' installing adaptor');
@@ -238,14 +248,24 @@ export const preinstallAdaptor = async (
   const { name, version } = getNameAndVersion(specifier);
   const shortName = name.split('@openfn/language-')[1];
 
-  const installDir = targetDir || path.join(process.cwd(), '.adaptors');
+  const installDir = getInstallDir();
   const outputDir = `${installDir}/${shortName}@${version}`;
-  await mkdir(installDir, { recursive: true });
 
-  const files = await fetchFilesList(specifier, `packages/${shortName}`, [
-    'src',
-  ]);
-  await fetchFiles(files, outputDir);
+  try {
+    const pkg = await loadPkg(outputDir);
+    console.log('Using cached files for', pkg.name, pkg.version);
+  } catch (e) {
+    console.log(' Fetching files...');
+    await mkdir(installDir, { recursive: true });
+
+    const files = await fetchFilesList(specifier, `packages/${shortName}`, [
+      'src',
+    ]);
+    await fetchFiles(files, outputDir);
+  }
 
   return outputDir;
 };
+
+const getInstallDir = (dir?: string) =>
+  dir || path.join(process.cwd(), '.adaptors');

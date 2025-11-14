@@ -13,11 +13,15 @@ export const cmd = yargs(hideBin(process.argv))
   .example('$0 http@6.0.0', 'Build for http v6.0.0')
   .demand('adaptor')
   .option('dir', {
-    description: 'Specifiy which folder to install to',
+    description:
+      'Specifiy which folder to install to (defaults to <cwd>/.adaptors',
+  })
+  .option('clean', {
+    description: 'Remove all contents of the install dir',
   })
   .parse();
 
-installAndGen(cmd.adaptor, cmd.dir).then(({ path }) => {
+installAndGen(cmd.adaptor, cmd.dir, cmd.clean).then(({ path }) => {
   console.log('See docs at ', path);
   console.log('✅ Done!');
 });

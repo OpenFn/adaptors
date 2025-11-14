@@ -27,6 +27,7 @@
     "async-es": "^3.2.6",
     "file-set": "^5.3.0",
     "jsdoc-to-markdown": "^9.1.3",
+    "rimraf": "^6.1.0",
     "ts-node": "10.9.1",
     "tsup": "8.5.0",
     "tsx": "^4.19.2",

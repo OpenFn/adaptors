@@ -99,8 +99,6 @@ const {
 
 ## Issues and Future Work
 
-- There's no caching right now: the service will re-download all the files each
-  time its called
 - I intend to add a `signature` field to the output
 - Need to provide TypeScript interfaces
 - I may restructure the output, removing irrelevant stuff and cleaning
