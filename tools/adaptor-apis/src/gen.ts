@@ -57,7 +57,9 @@ export const installAndGen = async (specifier: string, cacheDir?: string) => {
     commonDocs = await gen(commonPath, { serialize: true });
     console.log('✅ common ready');
   }
-  return gen(root, { serialize: true, common: commonDocs });
+  const docs = await gen(root, { serialize: true, common: commonDocs });
+
+  return { docs, path: path.join(root, 'docs', 'raw.json') };
 };
 
 const gen = async (root: string, { serialize = false, common }: any = {}) => {
@@ -77,7 +79,10 @@ const gen = async (root: string, { serialize = false, common }: any = {}) => {
 
   if (serialize) {
     await mkdir(`${root}/docs`, { recursive: true });
-    await writeFile(`${root}/docs/raw.json`, JSON.stringify(functions));
+    await writeFile(
+      `${root}/docs/raw.json`,
+      JSON.stringify(functions, null, 2)
+    );
   }
 
   return functions;

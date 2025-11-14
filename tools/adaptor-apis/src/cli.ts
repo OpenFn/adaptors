@@ -17,6 +17,7 @@ export const cmd = yargs(hideBin(process.argv))
   })
   .parse();
 
-installAndGen(cmd.adaptor, cmd.dir).then(() => {
+installAndGen(cmd.adaptor, cmd.dir).then(({ path }) => {
+  console.log('See docs at ', path);
   console.log('✅ Done!');
 });
