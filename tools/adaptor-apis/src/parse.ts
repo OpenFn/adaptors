@@ -4,6 +4,9 @@ import loadPkg from './util/load-pkg';
 
 // does all the jsdoc to markdown parsing
 
+// TODO public only is for legacy behaviour
+// the main adaptor should be public only
+// but right now, temporarily, the common stuff should include private
 export const parse = async (rootDir: string) => {
   const pkg = loadPkg(rootDir);
 

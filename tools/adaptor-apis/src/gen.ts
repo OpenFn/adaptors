@@ -61,6 +61,7 @@ export const installAndGen = async (
 const gen = async (root: string, { serialize = false, common }: any = {}) => {
   // first we parse the adaptor
   const functions = await parse(root);
+
   // now find all it's external exports
   // for any external @openfn export, build its docs
   // add all new functions
@@ -148,9 +149,16 @@ const findExternalFunctions = async (
             source: '@openfn/language-common',
           });
         } else {
-          console.warn(
-            `WARNING: failed to find definition for common function ${fn}`
-          );
+          // Things that aren't in common are likely namespace exports,
+          // or third party deps (date fns)
+          externals.push({
+            id: fn,
+            name: `${fn}`,
+            common: true,
+            kind: 'external',
+            scope: 'global',
+            source: '@openfn/language-common',
+          });
         }
       }
     });
