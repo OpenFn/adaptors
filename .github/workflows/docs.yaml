@@ -1,12 +1,12 @@
 name: Build & deploy adaptor documentation
 
-on: push
-#   workflow_run:
-#     workflows: [Publish]
-#     types:
-#       - completed
-#   push:
-#     branches: [main]
+on:
+  workflow_run:
+    workflows: [Publish]
+    types:
+      - completed
+  push:
+    branches: [main]
 
 jobs:
   build:
