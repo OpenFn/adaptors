@@ -1,21 +1,7 @@
-/**
- * This is our new generator function
- *
- * It'll take a path to an adaptor on disk
- *
- * It'll run the doc build tool
- * (or maybe doc build will call this - the key is that the logic is shared)
- *
- * For now it'll return the verbatim raw output, plus a signature
- *
- * Later it'll massage the data a bit more
- *
- * One of the big jobs here is to also include common docs
- */
-
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { rimraf } from 'rimraf';
 import path from 'node:path';
+// @ts-ignore
 import { eachLimit } from 'async-es';
 // @ts-ignore
 import FileSet from 'file-set';
@@ -229,7 +215,7 @@ const fetchFilesList = async (
 };
 
 const fetchFiles = async (files: string[], output: string) => {
-  return eachLimit(files, 5, async f => {
+  return eachLimit(files, 5, async (f: { url: string; path: string }) => {
     const res = await fetch(f.url);
     const src = await res.text();
     await mkdir(path.join(output, path.dirname(f.path)), { recursive: true });
@@ -248,7 +234,7 @@ export const preinstallAdaptor = async (
   const { name, version } = getNameAndVersion(specifier);
   const shortName = name.split('@openfn/language-')[1];
 
-  const installDir = getInstallDir();
+  const installDir = getInstallDir(targetDir);
   const outputDir = `${installDir}/${shortName}@${version}`;
 
   try {

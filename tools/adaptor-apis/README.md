@@ -92,7 +92,7 @@ const specifier = "kobotoolbox@4.2.7" // Version MUST be specified!
 const outputDir = ".adaptors" // optional!
 
 const {
-  content, // the docs JSON
+  docs, // the docs JSON
   path,    // the dir that docs are written to
 } = await installAndGen(specifier, outputDir)
 ```

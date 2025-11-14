@@ -2,7 +2,7 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import process from 'node:process';
-import gen, { installAndGen } from './gen';
+import { installAndGen } from './gen';
 
 export const cmd = yargs(hideBin(process.argv))
   .command(
