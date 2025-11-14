@@ -22,6 +22,8 @@
     "jsdoc"
   ],
   "dependencies": {
+    "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
+    "@babel/preset-typescript": "^7.26.0",
     "@types/jsdoc-to-markdown": "^7.0.3",
     "acorn": "^8.15.0",
     "async-es": "^3.2.6",
