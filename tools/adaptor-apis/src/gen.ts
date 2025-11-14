@@ -167,11 +167,6 @@ const findExternalFunctions = async (
   return externals;
 };
 
-// Install node modules through npm - probably the easiest way, if a little inefficient?
-// Oh, but major hurdle is that the modules include no source, and so have no docs
-// So the only way this will work is to checkout the adaptors repo and the tag
-
-// Recursively fetch all .js and .ts files from a GitHub directory
 const fetchFilesList = async (
   specifier: string,
   dir: string,
@@ -231,10 +226,6 @@ const fetchFiles = async (files: string[], output: string) => {
   });
 };
 
-// New plan:
-// call github and fetch the directory (with ref and tag)
-// optionally cache files locally
-// download all js and ts files in the listing
 export const preinstallAdaptor = async (
   specifier: string,
   targetDir?: string
