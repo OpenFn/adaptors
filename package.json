@@ -33,6 +33,7 @@
     "@openfn/generate-fhir": "workspace:^",
     "@openfn/metadata": "workspace:^1.0.1",
     "@openfn/parse-jsdoc": "workspace:^1.0.0",
+    "@openfn/adaptor-apis": "workspace:*",
     "chokidar-cli": "^3.0.0",
     "eslint": "8.26.0",
     "lodash": "^4.17.21",
