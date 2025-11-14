@@ -21,7 +21,7 @@ import FileSet from 'file-set';
 import { parse } from './parse';
 import extractExports from './util/extract-exports';
 import getNameAndVersion from './util/get-name-and-version';
-import { serialize } from 'node:v8';
+import loadPkg from './util/load-pkg';
 
 const loadActualPackageJson = async (specifier: string) => {
   // call unpkg for a production package json
@@ -67,8 +67,10 @@ const gen = async (root: string, { serialize = false, common }: any = {}) => {
   // for any external @openfn export, build its docs
   // add all new functions
 
+  const pkg = await loadPkg(root);
+
   let externals: any[] = [];
-  if (!root.endsWith('common')) {
+  if (pkg.name !== '@openfn/language-common') {
     externals = await findExternalFunctions(root, common);
     functions.push(...externals);
   }
@@ -167,7 +169,16 @@ const fetchFilesList = async (
   filterDir: string[] = []
 ): Promise<any[]> => {
   const url = `https://api.github.com/repos/openfn/adaptors/contents/${dir}?ref=${specifier}`;
-  const res = await fetch(url);
+  const headers: HeadersInit = {
+    Accept: 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+  };
+
+  if (process.env.GITHUB_TOKEN) {
+    headers['Authorization'] = `token ${process.env.GITHUB_TOKEN}`;
+  }
+
+  const res = await fetch(url, { headers });
   if (res.status !== 200) {
     // error!
     // Most likely means the adaptor doesn't exist or we don't have that tag in the monorepo
