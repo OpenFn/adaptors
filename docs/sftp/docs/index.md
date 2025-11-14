@@ -15,7 +15,7 @@
 This adaptor exports the following from common:
 <dl>
 <dt>
-    <a href="/adaptors/packages/common-docs#alterstate">alterState()</a>
+    <a href="/adaptors/packages/common-docs#alterstate">alterState</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#chunk">chunk()</a>
