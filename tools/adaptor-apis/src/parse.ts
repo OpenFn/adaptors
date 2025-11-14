@@ -1,13 +1,11 @@
 import jsdoc2md from 'jsdoc-to-markdown';
 import path from 'node:path';
+import loadPkg from './util/load-pkg';
 
 // does all the jsdoc to markdown parsing
 
 export const parse = async (rootDir: string) => {
-  const pkg: any = await import(`${rootDir}/package.json`, {
-    // @ts-ignore
-    with: { type: 'json' },
-  });
+  const pkg = loadPkg(rootDir);
 
   let templateData = await jsdoc2md.getTemplateData({
     files: `${rootDir}/src/**/*.(js|ts)`,
