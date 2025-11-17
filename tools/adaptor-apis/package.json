@@ -1,6 +1,6 @@
 {
   "name": "@openfn/adaptor-apis",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Describes OpenFn Adaptor APIs",
   "type": "module",
   "scripts": {
