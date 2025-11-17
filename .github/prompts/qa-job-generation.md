@@ -214,7 +214,7 @@ Configuration Needed:
   // ... other fields
 }
 
-Output File: qa-<adaptor-name>.js (root directory)
+Output File: qa-<adaptor-name>.js (write it in packages/<adaptor-name>/tmp/qa-<adaptor-name>.js)
 
 Questions/Clarifications:
 - <any unknowns>
@@ -320,7 +320,7 @@ START: Check adaptor structure
 
 ### Step 3: Generate QA Job Code
 
-After approval, generate file: **`qa-<adaptor-name>.js`** in root directory
+After approval, generate file: **`qa-<adaptor-name>.js`** in packages/<adaptor-name>/tmp/qa-<adaptor-name>.js
 
 Follow this template:
 ```javascript
@@ -1167,10 +1167,10 @@ operation3();
 
 ## Output File Location
 
-Generate file in **root directory**: `qa-<adaptor-name>.js`
+Generate file in **adaptor directory as packages/<adaptor-name>/tmp/qa-<adaptor-name>.js**: `qa-<adaptor-name>.js`
 
 Example paths:
-- `qa-fhir.js`
+- `packages/fhir/tmp/qa-fhir.js`
 - `qa-dhis2.js`
 - `qa-commcare.js`
 
@@ -1191,7 +1191,7 @@ Example paths:
 - [ ] Resource types and fields identified
 - [ ] Pagination approach known (if applicable)
 - [ ] Error response formats documented
-- [ ] **Output file name**: `qa-<adaptor-name>.js` in root
+- [ ] **Output file name**: `qa-<adaptor-name>.js` in packages/<adaptor-name>/tmp/qa-<adaptor-name>.js
 
 ---
 

@@ -137,7 +137,7 @@ User requests with phrases like:
 1. **Analyze adaptor** - Identify all exported functions from the adaptor code
 2. **Output QA PLAN** - Following template in `.github/prompts/qa-job-generation.md`
 3. **Wait for APPROVED:**
-4. **Generate test code** - Save to root as `qa-<adaptor-name>.js`
+4. **Generate test code** - Save to `packages/<adaptor-name>/tmp/qa-<adaptor-name>.js`
 
 ### Important: Platform-Specific Code
 
@@ -147,7 +147,7 @@ Generated QA code runs on **app.openfn.org** (not locally):
 - ✅ Configuration via platform UI (not in code)
 - ✅ Results viewed in Inspector tab
 - ✅ Copy/paste ready workflow
-- ✅ Save to root directory: `qa-<adaptor-name>.js`
+- ✅ Save to adaptor's tmp directory: `packages/<adaptor-name>/tmp/qa-<adaptor-name>.js`
 
 **See:** `.github/prompts/qa-job-generation.md` for complete template and instructions.
 
@@ -163,7 +163,7 @@ Functions: getPractitioners, getPractitioner, createPractitioner, updatePractiti
 Test coverage: 15 tests (5 positive, 7 negative, 3 edge cases)
 Seed data: test-practitioner-001, test-practitioner-002
 Configuration needed: { baseUrl, username, password }
-Output file: qa-fhir.js (root directory)
+Output file: packages/fhir/tmp/qa-fhir.js
 <<<END QA PLAN>>>
 ```
 
@@ -210,10 +210,10 @@ Generated code must:
 - Use ✓/✗/⚠ indicators for results
 - Include data seeding, tests, and cleanup
 - Document required credential fields
-- **Save to root directory as `qa-<adaptor-name>.js`**
+- **Save to adaptor's tmp directory: `packages/<adaptor-name>/tmp/qa-<adaptor-name>.js`**
 
 **Do NOT:**
 - Add import statements
 - Use local npm/pnpm commands
 - Reference local installation
-- Save to `packages/` or other subdirectories
+- Save to root directory or other locations outside the adaptor package
