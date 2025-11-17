@@ -1,6 +1,7 @@
 import jsdoc2md from 'jsdoc-to-markdown';
 import path from 'node:path';
 import loadPkg from './util/load-pkg';
+import generateSignature from './util/generate-signature';
 
 // does all the jsdoc to markdown parsing
 
@@ -49,6 +50,12 @@ export const parse = async (rootDir: string) => {
     // Set scope to be the file name
     else if (data.meta?.filename && !data.meta.filename.includes('Adaptor.')) {
       data.scope = data.meta.filename.split('.')[0];
+    }
+
+    // add a signature field
+    const sig = generateSignature(data);
+    if (sig && sig.length) {
+      data.signature = sig;
     }
   });
 
