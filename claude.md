@@ -150,3 +150,37 @@ Questions: None
 **Human:** APPROVED: proceed
 
 **Claude:** _[generates files]_
+
+### Generating QA Tests
+
+**User:** "Generate QA job code for this adaptor"
+
+**Claude:** [Reads `.github/prompts/qa-job-generation.md` first]
+```
+<<<QA PLAN>>>
+Adaptor: @openfn/example-api
+Functions: getData
+Test coverage: 5 tests (2 positive, 2 negative, 1 edge case)
+Seed data: test-item-001, test-item-002
+Configuration needed: { baseUrl, apiKey }
+Output file: qa-example-api.js (root directory)
+<<<END QA PLAN>>>
+```
+
+**User:** "APPROVED: proceed"
+
+**Claude:** [Generates `qa-example-api.js` in root directory using template from qa-job-generation.md]
+
+---
+
+## Critical Reminders
+
+- Always read `./docs/*.md` before generating adaptor code
+- Always read `.github/prompts/qa-job-generation.md` before generating QA code
+- Wait for APPROVED: before generating any code
+- Unit tests use MockAgent (no live network)
+- QA tests run on app.openfn.org (live system)
+- QA files use promise chaining syntax: `.then().catch()`
+- QA files saved to root directory: `qa-<adaptor-name>.js`
+- Never rename `request` functions in Utils.js or Adaptors.js
+- One function + one test is default unless operations specified
