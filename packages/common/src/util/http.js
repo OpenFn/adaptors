@@ -7,7 +7,7 @@ import { encode } from './base64.js';
 import { MockAgent, Agent, interceptors } from 'undici';
 import _ from 'lodash';
 
-// Maps undici dispatchers to keys (where a key is the base url + encoded options)
+// this saves dispatchers by
 const agents = new Map();
 
 export const makeBasicAuthHeader = (username, password) => {
@@ -66,11 +66,23 @@ export const generateAgentKey = (baseUrl, agentOpts = {}) => {
   return baseUrl;
 };
 
+let useMockAgent = true;
+
+const createAgent = args => {
+  if (useMockAgent) {
+    args.connections = 1;
+    const agent = new MockAgent(args);
+    agent.disableNetConnect();
+    return agent;
+  }
+  return new Agent(args);
+};
+
 const getDispatcher = (origin, options = {}) => {
   const { tls = {}, defaultContentType, ...agentOpts } = options;
   const key = generateAgentKey(origin, options);
   if (!agents.has(key)) {
-    const agent = new Agent({
+    const agent = createAgent({
       connect: tls,
       ...agentOpts,
     }).compose(
@@ -92,6 +104,10 @@ const getDispatcher = (origin, options = {}) => {
 // Note that when testing adaptors, options like maxRedirections
 // MUST be set or else the mock agent will not be used!
 export const enableMockClient = (baseUrl, options = {}) => {
+  useMockAgent = true;
+
+  // hmm
+  return new MockAgent({ connections: 1 }).get(baseUrl);
   const {
     defaultContentType = 'application/json',
     tls = {},
@@ -99,7 +115,6 @@ export const enableMockClient = (baseUrl, options = {}) => {
   } = options;
 
   const mockAgent = new MockAgent({ connections: 1 });
-  mockAgent.disableNetConnect();
 
   const key = generateAgentKey(baseUrl, {
     ...agentOpts,
