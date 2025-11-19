@@ -21,7 +21,12 @@ export const cmd = yargs(hideBin(process.argv))
   })
   .parse();
 
-installAndGen(cmd.adaptor, cmd.dir, cmd.clean).then(({ path }) => {
-  console.log('See docs at ', path);
-  console.log('✅ Done!');
-});
+installAndGen(cmd.adaptor, cmd.dir, cmd.clean)
+  .then(({ path }) => {
+    console.log('See docs at ', path);
+    console.log('✅ Done!');
+  })
+  .catch(e => {
+    console.error('❌ Error!');
+    console.error(e.message);
+  });
