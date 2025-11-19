@@ -7,8 +7,21 @@ const testServer = enableMockClient('https://fake.dagu.com');
 
 const configuration = {
   baseUrl: 'https://fake.dagu.com',
-  apiToken: 'abcdefghijkl'
+  username: 'abcdefghijkl',
+  password: '12154545'
 }
+
+// Mock login before each test
+beforeEach(() => {
+  testServer
+    .intercept({
+      path: '/account/login',
+      method: 'POST',
+    })
+    .reply(200, testData.login.response);
+});
+
+
 
 describe('request', () => {
   it('makes a successful POST request', async () => {
