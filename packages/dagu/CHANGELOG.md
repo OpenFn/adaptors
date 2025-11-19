@@ -1,4 +1,4 @@
-# @openfn/language-eapts
+# @openfn/language-dagu
 
 ## 2.0.2 - 12 November 2025
 
@@ -18,7 +18,7 @@
 
 ### Major Changes
 
-- b9e21c6: New eAPTS adaptor
+- b9e21c6: New dagu adaptor
 
 ## 1.0.0
 

@@ -492,7 +492,7 @@ importers:
         specifier: ^1.17.2
         version: 1.17.7
 
-  packages/eapts:
+  packages/dagu:
     dependencies:
       '@openfn/language-common':
         specifier: workspace:*
