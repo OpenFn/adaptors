@@ -26,42 +26,50 @@ export const installAndGen = async (
   cacheDir?: string,
   clean?: boolean
 ) => {
-  if (!specifier.startsWith('@openfn/language-')) {
-    specifier = '@openfn/language-' + specifier;
+  try {
+    if (!specifier.startsWith('@openfn/language-')) {
+      specifier = '@openfn/language-' + specifier;
+    }
+
+    if (clean) {
+      console.log('Cleaning install dir');
+      await rimraf(getInstallDir(cacheDir));
+    }
+
+    console.log(' installing adaptor');
+    const root = await preinstallAdaptor(specifier, cacheDir);
+    const pkg = await loadActualPackageJson(specifier);
+    console.log('✅ adaptor ready');
+
+    // Difficulty: how do we know which version of common this package depends on?
+    // The source build does not help us
+    let commonDocs;
+    const commonVersion = pkg.dependencies['@openfn/language-common'];
+    if (commonVersion) {
+      console.log(' Preparing common adaptor docs');
+      try {
+        const commonPath = await preinstallAdaptor(
+          `@openfn/language-common@${commonVersion}`,
+          cacheDir
+        );
+        commonDocs = await gen(commonPath, { serialize: true });
+        console.log('✅ common ready');
+      } catch (e) {
+        console.log('❌ error loading common');
+      }
+    }
+    const docs = await gen(root, { serialize: true, common: commonDocs });
+
+    return { docs, path: path.join(root, 'docs', 'raw.json') };
+  } catch (e: any) {
+    console.log('Error installing adaptor docs');
+    throw { message: e.message };
   }
-
-  if (clean) {
-    console.log('Cleaning install dir');
-    await rimraf(getInstallDir(cacheDir));
-  }
-
-  console.log(' installing adaptor');
-  const root = await preinstallAdaptor(specifier, cacheDir);
-  const pkg = await loadActualPackageJson(specifier);
-  console.log('✅ adaptor ready');
-
-  // Difficulty: how do we know which version of common this package depends on?
-  // The source build does not help us
-  let commonDocs;
-  const commonVersion = pkg.dependencies['@openfn/language-common'];
-  if (commonVersion) {
-    console.log(' Preparing common adaptor docs');
-    const commonPath = await preinstallAdaptor(
-      `@openfn/language-common@${commonVersion}`,
-      cacheDir
-    );
-    commonDocs = await gen(commonPath, { serialize: true });
-    console.log('✅ common ready');
-  }
-  const docs = await gen(root, { serialize: true, common: commonDocs });
-
-  return { docs, path: path.join(root, 'docs', 'raw.json') };
 };
 
 const gen = async (root: string, { serialize = false, common }: any = {}) => {
   // first we parse the adaptor
   const functions = await parse(root);
-
   // now find all it's external exports
   // for any external @openfn export, build its docs
   // add all new functions
@@ -187,7 +195,8 @@ const fetchFilesList = async (
     // error!
     // Most likely means the adaptor doesn't exist or we don't have that tag in the monorepo
     console.warn(`WARNING: error ${res.status} fetching ${url}`);
-    return [];
+    const err = await res.json();
+    throw new Error('Adaptor not found: ' + err.message);
   }
   const items = await res.json();
 
@@ -246,7 +255,9 @@ export const preinstallAdaptor = async (
     const files = await fetchFilesList(specifier, `packages/${shortName}`, [
       'src',
     ]);
-    await fetchFiles(files, outputDir);
+    if (files) {
+      await fetchFiles(files, outputDir);
+    }
   }
 
   return outputDir;

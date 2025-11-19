@@ -9,7 +9,7 @@ import generateSignature from './util/generate-signature';
 // the main adaptor should be public only
 // but right now, temporarily, the common stuff should include private
 export const parse = async (rootDir: string) => {
-  const pkg = loadPkg(rootDir);
+  const pkg = await loadPkg(rootDir);
 
   let templateData = await jsdoc2md.getTemplateData({
     files: `${rootDir}/src/**/*.(js|ts)`,
