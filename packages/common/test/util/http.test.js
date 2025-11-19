@@ -273,7 +273,7 @@ describe('logResponse', () => {
 });
 
 describe('request function', () => {
-  it.only('should make a successful arbitary request', async () => {
+  it('should make a successful arbitary request', async () => {
     client
       .intercept({
         path: '/api',
