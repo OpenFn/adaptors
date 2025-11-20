@@ -16,17 +16,26 @@
       "minLength": 1,
       "examples": ["https://example.com"]
     },
-    "apiToken": {
-      "title": "Api Token",
+    "username": {
+      "title": "username",
       "type": "string",
-      "description": "The API token for authenticating requests to eAPTS",
+      "description": "Dagu account username",
       "writeOnly": true,
       "examples": [
-        "sk_test_53iburgn5yb3u4nfufg477365gbvrnv348r475gf4bf485845gbrf"
+        "admin"
+      ]
+    },
+    "password": {
+      "title": "password",
+      "type": "string",
+      "description": "Dagu account password",
+      "writeOnly": true,
+      "examples": [
+        "passowrd"
       ]
     }
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["baseUrl", "apiToken"]
+  "required": ["baseUrl", "username", "password"]
 }
