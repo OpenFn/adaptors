@@ -1,11 +1,13 @@
+import pg from 'pg';
+import format from 'pg-format';
 import {
   execute as commonExecute,
   composeNextState,
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import pg from 'pg';
-import format from 'pg-format';
+import { queryHandler, handleOptions, handleValues } from './util.js';
 
+let client = null;
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for postgresql.
@@ -27,32 +29,30 @@ export function execute(...operations) {
 
   return state => {
     return commonExecute(
-      createClient,
-      connect,
+      newClient,
       ...operations,
-      disconnect,
-      cleanupState
+      endClient
     )({ ...initialState, ...state }).catch(e => {
+      endClient(state);
       console.error(e);
-      console.error('Unhandled error in the operations. Exiting process.');
-      process.exit(1);
+      throw e;
     });
   };
 }
 
-function createClient(state) {
+function newClient(state) {
   const {
+    ca,
+    ssl,
+    key,
     host,
     port,
+    user,
+    cert,
     database,
     password,
-    user,
-    ssl,
     allowSelfSignedCert,
-    ca,
-    key,
-    cert,
-  } = state.configuration;
+  } = state.configuration || {};
 
   // Allowing or blocking self signed certificate
   // https://node-postgres.com/features/ssl
@@ -61,94 +61,20 @@ function createClient(state) {
     : false;
 
   // setup client config
-  var config = { host, port, database, user, password, ssl: sslOptions };
+  const config = { host, port, database, user, password, ssl: sslOptions };
 
   // instantiate a new client
-  var client = new pg.Client(config);
-
-  return { ...state, client: client };
-}
-
-function connect(state) {
-  let { client } = state;
+  client = new pg.Client(config);
   client.connect();
-  return { ...state, client: client };
+  return state;
 }
 
-function disconnect(state) {
-  let { client } = state;
+function endClient(state) {
   client.end();
   return state;
 }
-
-function cleanupState(state) {
-  delete state.client;
-  return state;
-}
-
-function escapeRegExp(string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
-}
-
-function handleValues(sqlString, nullString) {
-  let sql = sqlString;
-  if (nullString == false) {
-    return sqlString;
-  } else if (Array.isArray(nullString)) {
-    nullString.forEach(ns => {
-      const re = new RegExp(escapeRegExp(ns), 'g');
-      sql = sql.replace(re, 'NULL');
-    });
-    return sql;
-  } else if (typeof nullString === 'object') {
-    throw 'setNull must be a string or an array of strings.';
-  }
-  const re = new RegExp(escapeRegExp(nullString), 'g');
-  return sqlString.replace(re, 'NULL');
-}
-
-function handleOptions(options) {
-  if (options && options.setNull === false) {
-    return false;
-  }
-  return (options && options.setNull) || "'undefined'";
-}
-
-function queryHandler(state, query, options, callback) {
-  const { client } = state;
-  return new Promise((resolve, reject) => {
-    if (options) {
-      if (options.writeSql) {
-        console.log('Adding prepared SQL to state.queries array.');
-        state.queries.push(query);
-      }
-
-      if (options.execute === false) {
-        console.log('Not executing query; options.execute === false');
-        resolve('Query not executed.');
-        return state;
-      }
-    }
-
-    client.query(query, (err, result) => {
-      if (err) {
-        reject(err);
-        client.end();
-      } else {
-        console.log(
-          `${result.command} succeeded, rowCount: ${result.rowCount}`
-        );
-        resolve(result);
-      }
-    });
-  }).then(response => {
-    const nextState = {
-      ...composeNextState(state, response.rows),
-      response,
-    };
-    if (callback) return callback(nextState);
-    return nextState;
-  });
+export function setMockClient(mockClient) {
+  client = mockClient;
 }
 
 /**
@@ -157,29 +83,34 @@ function queryHandler(state, query, options, callback) {
  * @example
  * sql(state => `select(*) from ${state.data.tableName};`, { writeSql: true })
  * @function
- * @param {string} sqlQuery - The SQL query as a string.
+ * @param {object} sqlQuery - The query config object.
+ * @param {string} sqlQuery.text - The SQL query as a string.
+ * @param {object} [sqlQuery.values] - Optional values argument
  * @param {object} [options] - Optional options argument
  * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
  * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
- * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function sql(sqlQuery, options, callback) {
-  return state => {
-    const { client } = state;
-
+export function sql(sqlQuery, options) {
+  return async state => {
     const [resolvedSqlQuery, resolvedOptions] = expandReferences(
       state,
       sqlQuery,
       options
     );
-    try {
-      console.log('Preparing to execute sql statement');
-      return queryHandler(state, resolvedSqlQuery, resolvedOptions, callback);
-    } catch (e) {
-      client.end();
-      throw e;
+    if (resolvedOptions?.writeSql) {
+      console.log('Adding prepared SQL to state.queries array.');
+      state.queries.push(resolvedSqlQuery);
     }
+
+    if (resolvedOptions?.execute === false) {
+      console.log('Not executing query; options.execute === false');
+      return state;
+    }
+    const res = await client.query(resolvedSqlQuery);
+    console.log(`${res.command} succeeded, rowCount: ${res.rowCount}`);
+
+    return composeNextState(state, res.rows);
   };
 }
 
@@ -203,8 +134,6 @@ export function sql(sqlQuery, options, callback) {
  */
 export function findValue(filter) {
   return state => {
-    const { client } = state;
-
     const [resolvedFilter] = expandReferences(state, filter);
     const {
       uuid,
@@ -272,7 +201,6 @@ export function findValue(filter) {
  */
 export function insert(table, record, options, callback) {
   return state => {
-    const { client } = state;
     const [resolvedTable, resolvedRecord, resolvedOptions] = expandReferences(
       state,
       table,
@@ -322,7 +250,6 @@ export function insert(table, record, options, callback) {
  */
 export function insertMany(table, records, options, callback) {
   return state => {
-    let { client } = state;
     const [resolvedTable, resolvedRecords, resolvedOptions] = expandReferences(
       state,
       table,
@@ -385,8 +312,6 @@ export function insertMany(table, records, options, callback) {
  */
 export function upsert(table, uuid, record, options, callback) {
   return state => {
-    const { client } = state;
-
     const [resolvedTable, resolvedUuid, resolvedRecord, resolvedOptions] =
       expandReferences(state, table, uuid, record, options);
     try {
@@ -454,8 +379,6 @@ export function upsert(table, uuid, record, options, callback) {
  */
 export function upsertIf(logical, table, uuid, record, options, callback) {
   return state => {
-    const { client } = state;
-
     const [
       resolvedLogic,
       resolvedTable,
@@ -539,7 +462,6 @@ export function upsertIf(logical, table, uuid, record, options, callback) {
  */
 export function upsertMany(table, uuid, data, options, callback) {
   return state => {
-    const { client } = state;
     const [resolvedTable, resolvedUuid, resolvedData, resolvedOptions] =
       expandReferences(state, table, uuid, data, options);
 
@@ -606,7 +528,6 @@ export function upsertMany(table, uuid, data, options, callback) {
  */
 export function describeTable(tableName, options, callback) {
   return state => {
-    const { client } = state;
     const [resolvedTableName, resolvedOptions] = expandReferences(
       state,
       tableName,
@@ -650,7 +571,6 @@ export function describeTable(tableName, options, callback) {
  */
 export function insertTable(tableName, columns, options, callback) {
   return state => {
-    const { client } = state;
     const [resolvedTableName, resolvedColumns, resolvedOptions] =
       expandReferences(state, tableName, columns, options);
 
@@ -714,7 +634,6 @@ export function insertTable(tableName, columns, options, callback) {
  */
 export function modifyTable(tableName, columns, options, callback) {
   return state => {
-    const { client } = state;
     const [resolvedTableName, resolvedColumns, resolvedOptions] =
       expandReferences(state, tableName, columns, options);
 
@@ -753,6 +672,15 @@ export function modifyTable(tableName, columns, options, callback) {
   };
 }
 
+/**
+ * Expose the pg-format utility library
+ * @public
+ * @function
+ * @example
+ * util.format('Hello %s', 'world')
+ */
+export const util = { format };
+
 export {
   alterState,
   arrayToString,
@@ -760,6 +688,8 @@ export {
   dataPath,
   dataValue,
   dateFns,
+  cursor,
+  assert,
   each,
   field,
   fields,
