@@ -4,8 +4,7 @@
       "name": "sql",
       "params": [
         "sqlQuery",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Execute an SQL statement",
@@ -26,12 +25,33 @@
           },
           {
             "title": "param",
+            "description": "The query config object.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "sqlQuery"
+          },
+          {
+            "title": "param",
             "description": "The SQL query as a string.",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "sqlQuery"
+            "name": "sqlQuery.text"
+          },
+          {
+            "title": "param",
+            "description": "Optional values argument",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "sqlQuery.values"
           },
           {
             "title": "param",
@@ -68,15 +88,6 @@
               }
             },
             "name": "options.execute"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -1133,6 +1144,30 @@
         ]
       },
       "valid": false
+    },
+    {
+      "name": "util",
+      "params": {},
+      "docs": {
+        "description": "Expose the pg-format utility library",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "util.format('Hello %s', 'world')"
+          }
+        ]
+      },
+      "valid": false
     }
   ],
   "exports": [],
@@ -1790,6 +1825,145 @@
             "type": {
               "type": "NameExpression",
               "name": "string"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "cursor",
+      "params": [
+        "value",
+        "options"
+      ],
+      "docs": {
+        "description": "Sets a cursor property on state.\nSupports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\nwhich will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones\nare not yet supported.\nYou can provide a formatter to customise the final cursor value, which is useful for normalising\ndifferent inputs. The custom formatter runs after natural language date conversion.\nSee the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "cursor($.cursor, { defaultValue: 'today' })",
+            "caption": "Use a cursor from state if present, or else use the default value"
+          },
+          {
+            "title": "example",
+            "description": "cursor(22)",
+            "caption": "Use a pagination cursor"
+          },
+          {
+            "title": "param",
+            "description": "the cursor value. Usually an ISO date, natural language date, or page number",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "value"
+          },
+          {
+            "title": "param",
+            "description": "options to control the cursor.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "set the cursor key. Will persist through the whole run.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "options.key"
+          },
+          {
+            "title": "param",
+            "description": "the value to use if value is falsy",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "options.defaultValue"
+          },
+          {
+            "title": "param",
+            "description": "custom formatter for the final cursor value",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "options.format"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "assert",
+      "params": [
+        "expression",
+        "errorMessage"
+      ],
+      "docs": {
+        "description": "Asserts the given expression or function resolves to `true`, or else throws an exception. Optionally accepts and error message.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "assert('a' === 'b', '\"a\" is not equal to \"b\"')"
+          },
+          {
+            "title": "param",
+            "description": "The expression or function to be evaluated.",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "expression"
+          },
+          {
+            "title": "param",
+            "description": "The error message thrown in case of a failed state.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "errorMessage"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "operation"
             }
           }
         ]
