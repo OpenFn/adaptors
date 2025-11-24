@@ -1,13 +1,3 @@
-import { composeNextState } from '@openfn/language-common';
-// function connect(state) {
-//   client.connect();
-//   return state;
-// }
-
-// function disconnect(state) {
-//   client.end();
-//   return state;
-// }
 export function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
@@ -36,36 +26,15 @@ export function handleOptions(options) {
   return (options && options.setNull) || "'undefined'";
 }
 
-export function queryHandler(state, query, options, client) {
-  return new Promise((resolve, reject) => {
-    if (options?.writeSql) {
-      console.log('Adding prepared SQL to state.queries array.');
-      state.queries.push(query);
-    }
+export function checkOptions(state, options) {
+  if (options?.writeSql) {
+    console.log('Adding prepared SQL to state.queries array.');
+    state.queries.push(query);
+  }
 
-    if (options?.execute === false) {
-      console.log('Not executing query; options.execute === false');
-      resolve('Query not executed.');
-      return state;
-    }
-
-    client.query(query, (err, result) => {
-      if (err) {
-        reject(err);
-        client.end();
-      } else {
-        console.log(
-          `${result.command} succeeded, rowCount: ${result.rowCount}`
-        );
-        resolve(result);
-      }
-    });
-  }).then(response => {
-    const nextState = {
-      ...composeNextState(state, response.rows),
-      response,
-    };
-
-    return nextState;
-  });
+  if (options?.execute === false) {
+    console.log('Not executing query; options.execute === false');
+    resolve('Query not executed.');
+    return state;
+  }
 }
