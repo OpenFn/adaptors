@@ -625,7 +625,7 @@ export function modifyTable(tableName, columns, options) {
 
     if (!resolvedColumns || resolvedColumns.length === 0) {
       console.log('No columns provided; skipping table modification.');
-      resolve(state);
+      return state;
     }
     const structureData = resolvedColumns
       .map(
