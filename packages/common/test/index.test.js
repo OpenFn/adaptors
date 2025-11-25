@@ -35,7 +35,7 @@ import {
   map,
   as,
 } from '../src/Adaptor.js';
-import { startOfToday } from 'date-fns';
+import { startOfToday,format } from 'date-fns';
 
 const mockAgent = new MockAgent();
 setGlobalDispatcher(mockAgent);
@@ -1010,6 +1010,15 @@ describe('cursor', () => {
     const date = new Date().toDateString();
     const result = cursor('today', {
       format: c => c.toDateString(),
+    })(state);
+    expect(result.cursor).to.eql(date);
+  });
+
+   it('should format "now"', () => {
+    const state = {};
+    const date = format(new Date(), 'HH:mm d MMM yyyy (OOO)');
+    const result = cursor('now',{
+      format: c => format(new Date(c), 'HH:mm d MMM yyyy (OOO)'),
     })(state);
     expect(result.cursor).to.eql(date);
   });

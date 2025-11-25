@@ -889,7 +889,7 @@ export function cursor(value, options = {}) {
           : // If no custom formatter is provided,
             // Log the converted date in a very international, human-friendly format
             // See https://date-fns.org/v3.6.0/docs/format
-            dateFns.format(date, 'HH:MM d MMM yyyy (OOO)');
+            dateFns.format(date, 'HH:mm d MMM yyyy (OOO)');
 
         console.log(`Setting ${cursorKey} "${cursor}" to: ${formatted}`);
         return state;
