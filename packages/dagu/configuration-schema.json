@@ -31,7 +31,7 @@
       "description": "Dagu account password",
       "writeOnly": true,
       "examples": [
-        "passowrd"
+        "password"
       ]
     }
   },
