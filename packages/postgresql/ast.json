@@ -200,8 +200,7 @@
       "params": [
         "table",
         "record",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Insert a record",
@@ -299,15 +298,6 @@
             "name": "options.execute"
           },
           {
-            "title": "param",
-            "description": "(Optional) callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -324,8 +314,7 @@
       "params": [
         "table",
         "records",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Insert many records, using the keys of the first as the column template",
@@ -423,15 +412,6 @@
             "name": "options.execute"
           },
           {
-            "title": "param",
-            "description": "(Optional) callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -449,8 +429,7 @@
         "table",
         "uuid",
         "record",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Insert or update a record using ON CONFLICT UPDATE",
@@ -555,15 +534,6 @@
               }
             },
             "name": "options.logValues"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -701,15 +671,6 @@
             "name": "options.logValues"
           },
           {
-            "title": "param",
-            "description": "(Optional) callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -727,8 +688,7 @@
         "table",
         "uuid",
         "data",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Insert or update multiple records using ON CONFLICT UPDATE and excluded",
@@ -835,15 +795,6 @@
             "name": "options.logValues"
           },
           {
-            "title": "param",
-            "description": "(Optional) callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -859,8 +810,7 @@
       "name": "describeTable",
       "params": [
         "tableName",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "List the columns of a table in a database.",
@@ -950,8 +900,7 @@
       "params": [
         "tableName",
         "columns",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Create a table in database when given an array of columns and a table_name.",
@@ -1025,15 +974,6 @@
             "name": "options.execute"
           },
           {
-            "title": "param",
-            "description": "(Optional) callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -1050,8 +990,7 @@
       "params": [
         "tableName",
         "columns",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Alter an existing table in the database.",
@@ -1123,15 +1062,6 @@
               }
             },
             "name": "options.execute"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
