@@ -20,21 +20,21 @@ export function handleValues(sqlString, nullString) {
 }
 
 export function handleOptions(options) {
-  if (options && options.setNull === false) {
+  if (options?.setNull === false) {
     return false;
   }
-  return (options && options.setNull) || "'undefined'";
+  return options?.setNull || "'undefined'";
 }
 
-export function checkOptions(state, options) {
-  if (options?.writeSql) {
+export function processQueryOptions(state, query, options) {
+  if (options?.writeSql === true) {
     console.log('Adding prepared SQL to state.queries array.');
     state.queries.push(query);
   }
 
   if (options?.execute === false) {
     console.log('Not executing query; options.execute === false');
-    resolve('Query not executed.');
+    console.log('Query not executed.');
     return state;
   }
 }

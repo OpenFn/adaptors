@@ -5,7 +5,7 @@ import {
   composeNextState,
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { handleOptions, handleValues, checkOptions } from './util.js';
+import { handleOptions, handleValues, processQueryOptions } from './util.js';
 
 let client = null;
 /**
@@ -103,7 +103,7 @@ export function sql(sqlQuery, options) {
       sqlQuery,
       options
     );
-    checkOptions(state, resolvedOptions);
+    processQueryOptions(state, resolvedSqlQuery, resolvedOptions);
     const response = await queryHandler(resolvedSqlQuery);
     return { ...composeNextState(state, response.rows), response };
   };
@@ -205,7 +205,7 @@ export function insert(table, record, options) {
 
     const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
     console.log('Preparing to insert via:', queryToLog);
-    checkOptions(state, resolvedOptions);
+    processQueryOptions(state, query, resolvedOptions);
     const response = await queryHandler(query);
     return { ...composeNextState(state, response.rows), response };
   };
@@ -256,7 +256,7 @@ export function insertMany(table, records, options) {
 
     const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
     console.log('Preparing to insertMany via:', queryToLog);
-    checkOptions(state, resolvedOptions);
+    processQueryOptions(state, query, resolvedOptions);
     const response = await queryHandler(query);
     return { ...composeNextState(state, response.rows), response };
   };
@@ -318,7 +318,7 @@ export function upsert(table, uuid, record, options) {
 
     const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
     console.log('Preparing to upsert via:', queryToLog);
-    checkOptions(state, resolvedOptions);
+    processQueryOptions(state, query, resolvedOptions);
     const response = await queryHandler(query);
     return { ...composeNextState(state, response.rows), response };
   };
@@ -392,7 +392,7 @@ export function upsertIf(logical, table, uuid, record, options, callback) {
     const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
     console.log('Preparing to upsert via:', queryToLog);
 
-    checkOptions(state, resolvedOptions);
+    processQueryOptions(state, query, resolvedOptions);
     const response = await queryHandler(query);
     return { ...composeNextState(state, response.rows), response };
   };
@@ -462,7 +462,7 @@ export function upsertMany(table, uuid, data, options) {
 
     const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
     console.log('Preparing to upsert via:', queryToLog);
-    checkOptions(state, resolvedOptions);
+    processQueryOptions(state, query, resolvedOptions);
     const response = await queryHandler(query);
     return { ...composeNextState(state, response.rows), response };
   };
@@ -494,7 +494,7 @@ export function describeTable(tableName, options) {
         WHERE table_name='${resolvedTableName}';`;
 
     console.log('Preparing to describe table via:', query);
-    checkOptions(state, resolvedOptions);
+    processQueryOptions(state, query, resolvedOptions);
     const response = await queryHandler(query);
     return { ...composeNextState(state, response.rows), response };
   };
@@ -551,9 +551,8 @@ export function insertTable(tableName, columns, options) {
       );`;
 
     console.log('Preparing to create table via:', query);
-    resolve(queryHandler(state, query, resolvedOptions, callback));
 
-    checkOptions(state, resolvedOptions);
+    processQueryOptions(state, query, resolvedOptions);
     const response = await queryHandler(query);
     return { ...composeNextState(state, response.rows), response };
   };
@@ -579,7 +578,7 @@ export function insertTable(tableName, columns, options) {
  * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
  * @returns {Operation}
  */
-export function modifyTable(tableName, columns, options, callback) {
+export function modifyTable(tableName, columns, options) {
   return async state => {
     const [resolvedTableName, resolvedColumns, resolvedOptions] =
       expandReferences(state, tableName, columns, options);
@@ -608,7 +607,7 @@ export function modifyTable(tableName, columns, options, callback) {
     const query = `ALTER TABLE ${resolvedTableName} ${structureData};`;
 
     console.log('Preparing to modify table via:', query);
-    checkOptions(state, resolvedOptions);
+    processQueryOptions(state, query, resolvedOptions);
     const response = await queryHandler(query);
     return { ...composeNextState(state, response.rows), response };
   };
