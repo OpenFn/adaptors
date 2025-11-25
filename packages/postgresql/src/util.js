@@ -19,14 +19,14 @@ export function handleValues(sqlString, nullString) {
   return sqlString.replace(re, 'NULL');
 }
 
-export function handleOptions(options) {
+export function handleSetNull(options) {
   if (options?.setNull === false) {
     return false;
   }
   return options?.setNull || "'undefined'";
 }
 
-export function processQueryOptions(state, query, options) {
+export function handleQueryOptions(state, query, options) {
   if (options?.writeSql === true) {
     console.log('Adding prepared SQL to state.queries array.');
     state.queries.push(query);

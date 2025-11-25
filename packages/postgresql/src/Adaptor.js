@@ -5,9 +5,18 @@ import {
   composeNextState,
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { handleOptions, handleValues, processQueryOptions } from './util.js';
+import { handleSetNull, handleValues, handleQueryOptions } from './util.js';
 
 let client = null;
+
+/**
+ * State object
+ * @typedef {Object} PostgresState
+ * @property data - the parsed result rows
+ * @property result - the result from a successful query
+ * @property references - an array of all previous data objects used in the Job
+ * @private
+ **/
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for postgresql.
@@ -74,9 +83,9 @@ function endClient(state) {
   return state;
 }
 async function queryHandler(query) {
-  const response = await client.query(query);
-  console.log(`${response.command} succeeded, rowCount: ${response.rowCount}`);
-  return response;
+  const result = await client.query(query);
+  console.log(`${result.command} succeeded, rowCount: ${result.rowCount}`);
+  return result;
 }
 export function setMockClient(mockClient) {
   client = mockClient;
@@ -103,9 +112,13 @@ export function sql(sqlQuery, options) {
       sqlQuery,
       options
     );
-    processQueryOptions(state, resolvedSqlQuery, resolvedOptions);
-    const response = await queryHandler(resolvedSqlQuery);
-    return { ...composeNextState(state, response.rows), response };
+    handleQueryOptions(state, resolvedSqlQuery, resolvedOptions);
+    const result = await queryHandler(resolvedSqlQuery);
+    const nextState = {
+      ...composeNextState(state, result.rows),
+      result,
+    };
+    return nextState;
   };
 }
 
@@ -153,9 +166,9 @@ export function findValue(filter) {
     console.log('Preparing to execute sql statement');
     let returnValue = null;
 
-    const response = await queryHandler(body);
-    if (response.rows.length > 0) {
-      returnValue = response.rows[0][uuid];
+    const result = await queryHandler(body);
+    if (result.rows.length > 0) {
+      returnValue = result.rows[0][uuid];
     }
     const nextState = {
       ...composeNextState(state, returnValue),
@@ -198,16 +211,20 @@ export function insert(table, record, options) {
         `INSERT INTO ${resolvedTable} (${columnsList}) VALUES (%L);`,
         values
       ),
-      handleOptions(resolvedOptions)
+      handleSetNull(resolvedOptions)
     );
 
     const safeQuery = `INSERT INTO ${resolvedTable} (${columnsList}) VALUES [--REDACTED--]];`;
 
     const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
     console.log('Preparing to insert via:', queryToLog);
-    processQueryOptions(state, query, resolvedOptions);
-    const response = await queryHandler(query);
-    return { ...composeNextState(state, response.rows), response };
+    handleQueryOptions(state, query, resolvedOptions);
+    const result = await queryHandler(query);
+    const nextState = {
+      ...composeNextState(state, result.rows),
+      result,
+    };
+    return nextState;
   };
 }
 
@@ -249,16 +266,20 @@ export function insertMany(table, records, options) {
         `INSERT INTO ${resolvedTable} (${columnsList}) VALUES %L;`,
         valueSets
       ),
-      handleOptions(resolvedOptions)
+      handleSetNull(resolvedOptions)
     );
 
     const safeQuery = `INSERT INTO ${resolvedTable} (${columnsList}) VALUES [--REDACTED--]];`;
 
     const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
     console.log('Preparing to insertMany via:', queryToLog);
-    processQueryOptions(state, query, resolvedOptions);
-    const response = await queryHandler(query);
-    return { ...composeNextState(state, response.rows), response };
+    handleQueryOptions(state, query, resolvedOptions);
+    const result = await queryHandler(query);
+    const nextState = {
+      ...composeNextState(state, result.rows),
+      result,
+    };
+    return nextState;
   };
 }
 
@@ -309,7 +330,7 @@ export function upsert(table, uuid, record, options) {
       `${insertValues}
         ON CONFLICT ${conflict}
         DO UPDATE SET ${updateValues};`,
-      handleOptions(resolvedOptions)
+      handleSetNull(resolvedOptions)
     );
 
     const safeQuery = `INSERT INTO ${resolvedTable} (${columnsList}) VALUES [--REDACTED--]
@@ -318,9 +339,13 @@ export function upsert(table, uuid, record, options) {
 
     const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
     console.log('Preparing to upsert via:', queryToLog);
-    processQueryOptions(state, query, resolvedOptions);
-    const response = await queryHandler(query);
-    return { ...composeNextState(state, response.rows), response };
+    handleQueryOptions(state, query, resolvedOptions);
+    const result = await queryHandler(query);
+    const nextState = {
+      ...composeNextState(state, result.rows),
+      result,
+    };
+    return nextState;
   };
 }
 
@@ -347,7 +372,7 @@ export function upsert(table, uuid, record, options) {
  * @param {boolean} [options.logValues] - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
  * @returns {Operation}
  */
-export function upsertIf(logical, table, uuid, record, options, callback) {
+export function upsertIf(logical, table, uuid, record, options) {
   return async state => {
     const [
       resolvedLogic,
@@ -382,7 +407,7 @@ export function upsertIf(logical, table, uuid, record, options, callback) {
       `${insertValues}
         ON CONFLICT ${conflict}
         DO UPDATE SET ${updateValues};`,
-      handleOptions(resolvedOptions)
+      handleSetNull(resolvedOptions)
     );
 
     const safeQuery = `INSERT INTO ${resolvedTable} (${columnsList}) VALUES [--REDACTED--]
@@ -392,9 +417,13 @@ export function upsertIf(logical, table, uuid, record, options, callback) {
     const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
     console.log('Preparing to upsert via:', queryToLog);
 
-    processQueryOptions(state, query, resolvedOptions);
-    const response = await queryHandler(query);
-    return { ...composeNextState(state, response.rows), response };
+    handleQueryOptions(state, query, resolvedOptions);
+    const result = await queryHandler(query);
+    const nextState = {
+      ...composeNextState(state, result.rows),
+      result,
+    };
+    return nextState;
   };
 }
 
@@ -453,7 +482,7 @@ export function upsertMany(table, uuid, data, options) {
       `${insertValues}
         ON CONFLICT ${conflict}
         DO UPDATE SET ${updateValues};`,
-      handleOptions(resolvedOptions)
+      handleSetNull(resolvedOptions)
     );
 
     const safeQuery = `INSERT INTO ${resolvedTable} (${columnsList}) VALUES [--REDACTED--]
@@ -462,9 +491,13 @@ export function upsertMany(table, uuid, data, options) {
 
     const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
     console.log('Preparing to upsert via:', queryToLog);
-    processQueryOptions(state, query, resolvedOptions);
-    const response = await queryHandler(query);
-    return { ...composeNextState(state, response.rows), response };
+    handleQueryOptions(state, query, resolvedOptions);
+    const result = await queryHandler(query);
+    const nextState = {
+      ...composeNextState(state, result.rows),
+      result,
+    };
+    return nextState;
   };
 }
 
@@ -478,7 +511,6 @@ export function upsertMany(table, uuid, data, options) {
  * @param {object} [options] - Optional options argument
  * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
  * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
- * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
 export function describeTable(tableName, options) {
@@ -494,9 +526,13 @@ export function describeTable(tableName, options) {
         WHERE table_name='${resolvedTableName}';`;
 
     console.log('Preparing to describe table via:', query);
-    processQueryOptions(state, query, resolvedOptions);
-    const response = await queryHandler(query);
-    return { ...composeNextState(state, response.rows), response };
+    handleQueryOptions(state, query, resolvedOptions);
+    const result = await queryHandler(query);
+    const nextState = {
+      ...composeNextState(state, result.rows),
+      result,
+    };
+    return nextState;
   };
 }
 
@@ -552,9 +588,13 @@ export function insertTable(tableName, columns, options) {
 
     console.log('Preparing to create table via:', query);
 
-    processQueryOptions(state, query, resolvedOptions);
-    const response = await queryHandler(query);
-    return { ...composeNextState(state, response.rows), response };
+    handleQueryOptions(state, query, resolvedOptions);
+    const result = await queryHandler(query);
+    const nextState = {
+      ...composeNextState(state, result.rows),
+      result,
+    };
+    return nextState;
   };
 }
 
@@ -607,9 +647,13 @@ export function modifyTable(tableName, columns, options) {
     const query = `ALTER TABLE ${resolvedTableName} ${structureData};`;
 
     console.log('Preparing to modify table via:', query);
-    processQueryOptions(state, query, resolvedOptions);
-    const response = await queryHandler(query);
-    return { ...composeNextState(state, response.rows), response };
+    handleQueryOptions(state, query, resolvedOptions);
+    const result = await queryHandler(query);
+    const nextState = {
+      ...composeNextState(state, result.rows),
+      result,
+    };
+    return nextState;
   };
 }
 
