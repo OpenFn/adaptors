@@ -29,7 +29,8 @@ describe('sql', () => {
   });
   it('should return a query result', async () => {
     setMockClient({
-      query: () => {
+      query: (...args) => {
+        console.log('query called with args:', args);
         return mockQueryResult;
       },
     });

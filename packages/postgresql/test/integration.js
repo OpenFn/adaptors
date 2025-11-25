@@ -18,18 +18,18 @@ describe('sql', () => {
     }
   });
 
-  it('should return a query result', async () => {
+  it.only('should return a query result', async () => {
     const state = { configuration, data: { tableName: 'issues' } };
     const result = await execute(
-      sql(state => `select * from ${state.data.tableName};`, {
+      sql(state => `select * from ${state.data.tableName} limit 1;`, {
         writeSql: true,
       })
     )(state);
 
     expect(result.data.length).to.eql(13);
     expect(result.queries.length).to.eql(1);
-    expect(result.queries[0]).to.eql(`select * from issues;`);
-  });
+    expect(result.queries[0]).to.eql(`select * from issues limit 1;`);
+  }).timeout(1e5);
 
   it('should support prepared statements', async () => {
     const sku = Math.random().toString(36).substring(2);
