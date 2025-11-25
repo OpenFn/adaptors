@@ -554,8 +554,7 @@
         "table",
         "uuid",
         "record",
-        "options",
-        "callback"
+        "options"
       ],
       "docs": {
         "description": "Insert or update a record based on a logical condition using ON CONFLICT UPDATE",
@@ -873,15 +872,6 @@
               }
             },
             "name": "options.execute"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
