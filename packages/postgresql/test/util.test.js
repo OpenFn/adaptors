@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { util } from '../src/index.js';
+import * as util from '../src/util.js';
 
 describe('util.format', () => {
   it('should escape identifiers and literals', async () => {

@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
-import { execute, sql, util } from '../src/index.js';
+import { execute, sql, util, fn, findValue } from '../src/index.js';
 import configuration from '../tmp/creds.json' with { type: 'json' };
 
 describe('sql', () => {
@@ -18,7 +18,7 @@ describe('sql', () => {
     }
   });
 
-  it.only('should return a query result', async () => {
+  it('should return a query result', async () => {
     const state = { configuration, data: { tableName: 'issues' } };
     const result = await execute(
       sql(state => `select * from ${state.data.tableName} limit 1;`, {
@@ -61,15 +61,41 @@ describe('util.format', () => {
       configuration,
       data: { userInput: 'users; DROP TABLE users; --' },
     };
-    const queryString = util.format('select * from %I', state.data.userInput);
 
     try {
-      await execute(sql(queryString))(state);
+      await execute(
+        fn(state => {
+          state.queryString = util.format(
+            'select * from %I',
+            state.data.userInput
+          );
+          return state;
+        }),
+        sql(state => state.queryString)
+      )(state);
     } catch (error) {
       expect(error.code).to.eq('42P01');
       expect(error.message).to.eq(
         'relation "users; DROP TABLE users; --" does not exist'
       );
     }
+  });
+});
+
+describe('findValue', () => {
+  it('should throw error if unexpected query is executed', async () => {
+    const state = { configuration, references: [] };
+
+    await execute(
+      findValue({
+        uuid: 'id',
+        relation: 'wrong_table', // Wrong table!
+        where: { name: 'test' },
+      })
+    )(state).catch(error => {
+      expect(error.code).to.eq('42P01');
+      expect(error.message).to.include('relation "wrong_table" does not exist');
+    });
+
   });
 });
