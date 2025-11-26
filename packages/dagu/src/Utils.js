@@ -21,12 +21,13 @@ export const prepareNextState = (state, response) => {
   };
 };
 
-export const getAccessToken = async (configuration) => {
+export const getAccessToken = async (configuration, headers) => {
   const { username, password, baseUrl } = configuration;
 
   const { body } = await commonRequest('POST', '/account/login', {
     headers: {
       'content-type': 'application/json',
+      ...headers
     },
     baseUrl,
     parseAs: 'json',
@@ -43,7 +44,7 @@ export const request = async (configuration = {}, method, path, options) => {
   const { baseUrl  } = configuration;
 
   if(!access_token)
-      access_token = await getAccessToken(configuration)
+      access_token = await getAccessToken(configuration, options.headers)
 
   const { query = {}, body = {} } = options;
 

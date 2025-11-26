@@ -11,19 +11,77 @@ const configuration = {
   password: '12154545'
 }
 
-// Mock login before each test
-beforeEach(() => {
-  testServer
-    .intercept({
-      path: '/account/login',
-      method: 'POST',
-    })
-    .reply(200, testData.login.response);
+// Keep this describe block at the start to make sure it runs without a stale access token existing in util.js 
+describe('request with custom headers', () => {
+  it('should pass custom headers through getAccessToken to login', async () => {
+    let loginHeaders;
+    let requestHeaders;
+
+    testServer
+      .intercept({
+        path: '/account/login',
+        method: 'POST',
+      })
+      .reply(200, (req) => {
+        loginHeaders = req.headers;
+        return testData.login.response;
+      });
+
+    testServer
+      .intercept({
+        path: '/DispensingUnit/Dashboard/StockOutReport',
+        method: 'GET',
+      })
+      .reply(200, (req) => {
+        requestHeaders = req.headers;
+        return testData.stockOutReport.response;
+      });
+
+    const state = {
+      configuration,
+    };
+
+    const customHeaders = {
+      'Host': 'api.dagu.com',
+    };
+
+    await get('DispensingUnit/Dashboard/StockOutReport', {
+      headers: customHeaders
+    })(state);
+
+    expect(loginHeaders['Host']).to.equal('api.dagu.com');
+    expect(requestHeaders['Host']).to.equal('api.dagu.com');
+  });
+
+  it('should handle requests without custom headers', async () => {
+    testServer
+      .intercept({
+        path: '/DispensingUnit/Dashboard/StockOutReport',
+        method: 'GET',
+      })
+      .reply(200, testData.stockOutReport.response);
+
+    const state = {
+      configuration,
+    };
+
+    const finalState = await get('DispensingUnit/Dashboard/StockOutReport')(state);
+
+    expect(finalState.data).to.eql(testData.stockOutReport.response);
+  });
 });
 
-
-
 describe('request', () => {
+  beforeEach(() => {
+    testServer
+      .intercept({
+        path: '/account/login',
+        method: 'POST',
+      })
+      .reply(200, testData.login.response);
+  });
+
+
   it('makes a successful POST request', async () => {
     testServer
       .intercept({
@@ -32,22 +90,22 @@ describe('request', () => {
       })
       .reply(200, testData.request.response);
 
-      const state = {
-        configuration
-      }
+    const state = {
+      configuration
+    }
 
 
-      const finalState = await request("POST", "DispensingUnit/Request/History", { "search": {} })(state);
+    const finalState = await request("POST", "DispensingUnit/Request/History", { "search": {} })(state);
 
-      expect(finalState.data).to.eql(testData.request.response);
+    expect(finalState.data).to.eql(testData.request.response);
   });
   it('makes a successful GET request', async () => {
     testServer
       .intercept({
-      path: '/DispensingUnit/Dashboard/StockOutReport',
-      method: 'GET'
-    })
-    .reply(200, testData.stockOutReport.response);
+        path: '/DispensingUnit/Dashboard/StockOutReport',
+        method: 'GET'
+      })
+      .reply(200, testData.stockOutReport.response);
 
     const state = {
       configuration
@@ -60,6 +118,15 @@ describe('request', () => {
 });
 
 describe('get', () => {
+  beforeEach(() => {
+    testServer
+      .intercept({
+        path: '/account/login',
+        method: 'POST',
+      })
+      .reply(200, testData.login.response);
+  });
+
   it('successfully gets a stockout report', async () => {
     testServer
       .intercept({
@@ -80,6 +147,15 @@ describe('get', () => {
 
 
 describe('post', () => {
+  beforeEach(() => {
+    testServer
+      .intercept({
+        path: '/account/login',
+        method: 'POST',
+      })
+      .reply(200, testData.login.response);
+  });
+
   it('successfuly gets the dispensing unit history', async () => {
     testServer
       .intercept({
@@ -88,13 +164,13 @@ describe('post', () => {
       })
       .reply(200, testData.request.response);
 
-      const state = {
-        configuration
-      }
+    const state = {
+      configuration
+    }
 
 
-      const finalState = await post("DispensingUnit/Request/History", { "search": {} })(state);
+    const finalState = await post("DispensingUnit/Request/History", { "search": {} })(state);
 
-      expect(finalState.data).to.eql(testData.request.response);
+    expect(finalState.data).to.eql(testData.request.response);
+  })
 });
-})
