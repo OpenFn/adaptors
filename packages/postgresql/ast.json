@@ -1064,30 +1064,6 @@
         ]
       },
       "valid": false
-    },
-    {
-      "name": "util",
-      "params": {},
-      "docs": {
-        "description": "Expose the pg-format utility library",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "example",
-            "description": "util.format('Hello %s', 'world')"
-          }
-        ]
-      },
-      "valid": false
     }
   ],
   "exports": [],
