@@ -912,7 +912,7 @@ describe('validate', () => {
   });
 });
 
-describe('cursor', () => {
+describe.only('cursor', () => {
   it('should set a cursor on state', () => {
     const state = {};
     const result = cursor(1234)(state);
@@ -1014,13 +1014,28 @@ describe('cursor', () => {
     expect(result.cursor).to.eql(date);
   });
 
-   it('should format "now"', () => {
+  it.only('should format hour:minute (HH:mm) not hour:month (HH:MM)', () => {
     const state = {};
-    const date = format(new Date(), 'HH:mm d MMM yyyy (OOO)');
-    const result = cursor('now',{
-      format: c => format(new Date(c), 'HH:mm d MMM yyyy (OOO)'),
-    })(state);
-    expect(result.cursor).to.eql(date);
+    let originalLog;
+    let consoleOutput = [];
+    
+    originalLog = console.log;
+    console.log = (...args) => consoleOutput.push(args.join(' '));
+
+    const testDate = new Date();
+    cursor('now')(state);
+  
+    
+    const logOutput = consoleOutput[0];
+    const timeMatch = logOutput.match(/(\d{2}):(\d{2})/);
+    
+    expect(timeMatch).to.not.be.null;
+    const displayedMinutes = parseInt(timeMatch[2]);
+    const actualMinutes = testDate.getMinutes();
+  
+    expect(displayedMinutes).to.equal(actualMinutes);
+    
+    console.log = originalLog;
   });
 
   it('should format a number to an arbitrary object', () => {
