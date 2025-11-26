@@ -49,10 +49,7 @@ describe('request with custom headers', () => {
       headers: customHeaders
     })(state);
 
-    // Custom header should be passed to login
     expect(loginHeaders['x-trace-id']).to.equal('trace-123');
-
-    // Custom header should also be in the actual request
     expect(requestHeaders['x-trace-id']).to.equal('trace-123');
   });
 
