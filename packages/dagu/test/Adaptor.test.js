@@ -42,15 +42,15 @@ describe('request with custom headers', () => {
     };
 
     const customHeaders = {
-      'x-trace-id': 'trace-123',
+      'Host': 'api.dagu.com',
     };
 
     await get('DispensingUnit/Dashboard/StockOutReport', {
       headers: customHeaders
     })(state);
 
-    expect(loginHeaders['x-trace-id']).to.equal('trace-123');
-    expect(requestHeaders['x-trace-id']).to.equal('trace-123');
+    expect(loginHeaders['Host']).to.equal('api.dagu.com');
+    expect(requestHeaders['Host']).to.equal('api.dagu.com');
   });
 
   it('should handle requests without custom headers', async () => {
