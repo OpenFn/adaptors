@@ -1,11 +1,16 @@
 import pg from 'pg';
-import format from 'pg-format';
+import { format } from './util.js';
 import {
   execute as commonExecute,
   composeNextState,
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { handleSetNull, handleValues, handleQueryOptions } from './util.js';
+import {
+  handleSetNull,
+  handleValues,
+  handleQueryOptions,
+  findValueQuery,
+} from './builders.js';
 
 let client = null;
 
@@ -150,23 +155,12 @@ export function findValue(filter) {
       operator: operatorData,
     } = resolvedFilter;
 
-    let conditionsArray = [];
-    for (let key in whereData)
-      conditionsArray.push(
-        `${key} ${operatorData ? operatorData[key] : '='} '${whereData[key]}'`
-      );
-
-    const condition =
-      conditionsArray.length > 0
-        ? `where ${conditionsArray.join(' and ')}`
-        : ''; // In a near future the 'and' can live in the filter.
-
-    const body = `select ${uuid} from ${relation} ${condition}`;
+    const queryStr = findValueQuery(uuid, relation, whereData, operatorData);
 
     console.log('Preparing to execute sql statement');
     let returnValue = null;
 
-    const result = await queryHandler(body);
+    const result = await queryHandler(queryStr);
     if (result.rows.length > 0) {
       returnValue = result.rows[0][uuid];
     }
@@ -656,15 +650,6 @@ export function modifyTable(tableName, columns, options) {
     return nextState;
   };
 }
-
-/**
- * Expose the pg-format utility library
- * @public
- * @function
- * @example
- * util.format('Hello %s', 'world')
- */
-export const util = { format };
 
 export {
   alterState,
