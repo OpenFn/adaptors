@@ -9,6 +9,11 @@ import {
   insert,
   insertMany,
   upsert,
+  upsertIf,
+  upsertMany,
+  describeTable,
+  insertTable,
+  modifyTable,
 } from '../src/index.js';
 import configuration from '../tmp/creds.json' with { type: 'json' };
 
@@ -171,7 +176,6 @@ describe('insertMany', () => {
   });
 });
 
-
 describe('upsert', () => {
   it('should upsert a row', async () => {
     const state = {
@@ -191,5 +195,149 @@ describe('upsert', () => {
     )(state);
 
     expect(result.data).to.eql([]);
+  });
+});
+
+describe('upsertIf', () => {
+  it('should upsert a row conditionally', async () => {
+    const state = {
+      configuration,
+      data: {
+        name: 'Elodie',
+        sku: '123',
+        price: 3000.0,
+      },
+    };
+    const result = await execute(
+      upsertIf(
+        state => state.data.sku,
+        'products',
+        'sku',
+        state => ({
+          name: state.data.name,
+          sku: state.data.sku,
+          price: state.data.price,
+        })
+      )
+    )(state);
+
+    expect(result.data).to.eql([]);
+  });
+});
+
+describe('upsertMany', () => {
+  it('should upsert multiple rows', async () => {
+    const state = {
+      configuration,
+      data: [
+        { name: 'Red Birkin', sku: '123', price: 5000.0 },
+        { name: 'Blue Birkin', sku: '456', price: 4000.0 },
+      ],
+    };
+
+    const result = await execute(
+      upsertMany('products', 'sku', state => state.data, {
+        writeSql: true,
+      })
+    )(state);
+
+    expect(result.data).to.eql([]);
+    expect(result.result.rowCount).to.eql(2);
+    expect(result.queries.length).to.eql(1);
+    expect(result.queries[0]).to.eql(
+      "INSERT INTO products (name, sku, price) VALUES ('Red Birkin', '123', '5000'), ('Blue Birkin', '456', '4000')\n" +
+        '        ON CONFLICT (sku)\n' +
+        '        DO UPDATE SET name=excluded.name, sku=excluded.sku, price=excluded.price;'
+    );
+  });
+});
+
+describe('describeTable', () => {
+  it('should describe a table', async () => {
+    const state = { configuration, data: { tableName: 'products' } };
+    const result = await execute(
+      describeTable(state.data.tableName, { writeSql: true })
+    )(state);
+
+    expect(result.result.rowCount).to.eql(1);
+    expect(result.data.length).to.eql(5);
+    expect(result.data[0]).to.eql({
+      column_name: 'id',
+      udt_name: 'int4',
+      is_nullable: 'NO',
+    });
+    expect(result.queries.length).to.eql(1);
+    expect(result.queries[0]).to.eql(
+      'SELECT column_name, udt_name, is_nullable\n' +
+        '        FROM information_schema.columns\n' +
+        "        WHERE table_name='products';"
+    );
+  });
+});
+
+describe('insertTable', () => {
+  it('should insert a table', async () => {
+    const state = {
+      configuration,
+      data: [
+        {
+          name: 'summmary',
+          type: 'text',
+          required: true,
+          unique: false,
+          identity: false,
+        },
+        {
+          name: 'sku',
+          type: 'varchar',
+          required: true,
+          unique: false,
+          identity: false,
+        },
+        {
+          name: 'price',
+          type: 'numeric',
+          required: true,
+          unique: false,
+          identity: false,
+        },
+      ],
+    };
+
+    const result = await execute(
+      insertTable('test_table', state => state.data, {
+        writeSql: true,
+      })
+    )(state);
+
+    
+    expect(result.data).to.eql([]);
+  });
+});
+
+describe('modifyTable', () => {
+  it('should modify a table', async () => {
+    const state = {
+      configuration,
+      data: [
+        {
+          name: 'name',
+          type: 'varchar',
+          required: true,
+          unique: false,
+          identity: false,
+        },
+      ],
+    };
+
+    const result = await execute(
+      modifyTable('test_table', state => state.data, {
+        writeSql: true,
+      }),
+      sql("ALTER TABLE test_table DROP COLUMN name;") // Clean up after test
+    )(state);
+    expect(result.queries.length).to.eql(1);
+    expect(result.queries[0]).to.eql('ALTER TABLE test_table ADD COLUMN name varchar   NOT NULL;')
+    
   });
 });
