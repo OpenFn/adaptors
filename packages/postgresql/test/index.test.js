@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { setMockClient, sql, findValue, insert } from '../src/index.js';
+import { setMockClient, sql, findValue, insert, upsert } from '../src/index.js';
 
 describe('sql', () => {
   const mockQueryResult = {
@@ -269,5 +269,25 @@ describe('insert', () => {
     }))(state);
 
     expect(result.data).to.eql([{ id: 1 }]);
+  });
+});
+
+describe('upsert', () => {
+  it.skip('should upsert a row', async () => {
+    setMockClient({
+      query: async () => mockQueryResult,
+    });
+    const state = {
+      data: {
+        name: 'Elodie',
+        id: 7,
+      },
+    };
+    const result = await upsert('users', state => ({
+      name: state.data.name,
+      id: state.data.id,
+    }))(state);
+
+    expect(result.data).to.eql([{ id: 7 }]);
   });
 });
