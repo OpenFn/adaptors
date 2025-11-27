@@ -42,4 +42,33 @@ describe('util.format', () => {
       `SELECT * FROM "users; DROP TABLE orders; --" WHERE "name); DELETE FROM users; --" = ''' OR 1=1; --'`
     );
   });
+  it('should support nested arrays parameters', async () => {
+    const sqlStr = util.format('INSERT INTO t (name, age) VALUES %L', [
+      ['a', 1],
+      ['b', 2],
+    ]);
+    expect(sqlStr).to.eql(
+      "INSERT INTO t (name, age) VALUES ('a', '1'), ('b', '2')"
+    );
+  });
+  it('should support arrays and objects as parameters', async () => {
+    const sqlStr = util.format(
+      'SELECT * FROM t WHERE c1 IN (%L) AND c2 = %L',
+      [1, 2, 3],
+      JSON.stringify({ a: 1, b: 2 })
+    );
+    expect(sqlStr).to.eql(
+      `SELECT * FROM t WHERE c1 IN ('1','2','3') AND c2 = '{"a":1,"b":2}'`
+    );
+  });
+  it('should auto cast objects parameters to jsonb', async () => {
+    const sqlStr = util.format(
+      'SELECT * FROM t WHERE c1 IN (%L) AND c2 = %L',
+      [1, 2, 3],
+      { a: 1, b: 2 }
+    );
+    expect(sqlStr).to.eql(
+      `SELECT * FROM t WHERE c1 IN ('1','2','3') AND c2 = '{"a":1,"b":2}'::jsonb`
+    );
+  });
 });
