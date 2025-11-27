@@ -29,12 +29,13 @@ export function handleSetNull(options) {
 }
 
 export function handleQueryOptions(state, query, options) {
-  if (options?.writeSql === true) {
+  const { writeSql = false, execute = true } = options || {};
+  if (writeSql === true) {
     console.log('Adding prepared SQL to state.queries array.');
     state.queries.push(query);
   }
 
-  if (options?.execute === false) {
+  if (execute === false) {
     console.log('Not executing query; options.execute === false');
     console.log('Query not executed.');
     return state;
