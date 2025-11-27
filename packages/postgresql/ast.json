@@ -159,7 +159,8 @@
           },
           {
             "title": "example",
-            "description": "insert('users', { name: 'Elodie', id: 7 }, { setNull: \"'NaN'\", logValues: true });"
+            "description": "insert('users', { name: 'Elodie', id: 7 }, { setNull: \"'NaN'\", logValues: true });",
+            "caption": "Insert a record"
           },
           {
             "title": "function",
@@ -229,7 +230,8 @@
           },
           {
             "title": "example",
-            "description": "insertMany('users', state => state.data.recordArray, { setNull: \"'undefined'\", logValues: true });"
+            "description": "insertMany('users', state => state.data.recordArray, { setNull: \"'undefined'\", logValues: true });",
+            "caption": "Insert many records"
           },
           {
             "title": "function",
@@ -300,7 +302,8 @@
           },
           {
             "title": "example",
-            "description": "upsert(\n  'users', // the DB table\n  'ON CONSTRAINT users_pkey', // a DB column with a unique constraint OR a CONSTRAINT NAME\n  { name: 'Elodie', id: 7 },\n  { setNull: [\"''\", \"'undefined'\"], writeSql:true, execute: true, logValues: true }\n)"
+            "description": "upsert(\n  \"users\", // the DB table\n  \"ON CONSTRAINT users_pkey\", // a DB column with a unique constraint OR a CONSTRAINT NAME\n  { name: \"Elodie\", id: 7 },\n  {\n    setNull: [\"''\", \"'undefined'\"],\n    writeSql: true,\n    logValues: true,\n  }\n);",
+            "caption": "Insert or update a record"
           },
           {
             "title": "function",
@@ -381,7 +384,8 @@
           },
           {
             "title": "example",
-            "description": "upsertIf(\n  $.data.name,\n  'users', // the DB table\n  'ON CONSTRAINT users_pkey', // a DB column with a unique constraint OR a CONSTRAINT NAME\n  { name: 'Elodie', id: 7 },\n  { writeSql:true, execute: true }\n)"
+            "description": "upsertIf(\n  $.data.name,\n  \"users\", // the DB table\n  \"ON CONSTRAINT users_pkey\", // a DB column with a unique constraint OR a CONSTRAINT NAME\n  { name: \"Elodie\", id: 7 },\n  { writeSql: true }\n);",
+            "caption": "Insert or update a record conditionally"
           },
           {
             "title": "function",
@@ -470,7 +474,8 @@
           },
           {
             "title": "example",
-            "description": "upsertMany(\n  'users', // the DB table\n  'email', // a DB column with a unique constraint OR a CONSTRAINT NAME\n  [\n    { name: 'one', email: 'one@openfn.org' },\n    { name: 'two', email: 'two@openfn.org' },\n  ]\n { logValues: true }\n)"
+            "description": "upsertMany(\n  'users', // the DB table\n  'email', // a DB column with a unique constraint OR a CONSTRAINT NAME\n  [\n    { name: 'one', email: 'one@openfn.org' },\n    { name: 'two', email: 'two@openfn.org' },\n  ]\n)",
+            "caption": "Insert or update multiple records"
           },
           {
             "title": "function",
@@ -548,7 +553,8 @@
           },
           {
             "title": "example",
-            "description": "describeTable('clinic_visits')"
+            "description": "describeTable('clinic_visits')",
+            "caption": "Describe a table"
           },
           {
             "title": "function",

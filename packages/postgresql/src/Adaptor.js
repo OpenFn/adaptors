@@ -225,7 +225,7 @@ export function findValue(filter) {
 /**
  * Insert a record
  * @public
- * @example
+ * @example <caption>Insert a record</caption>
  * insert('users', { name: 'Elodie', id: 7 }, { setNull: "'NaN'", logValues: true });
  * @function
  * @param {string} table - The target table
@@ -272,7 +272,7 @@ export function insert(table, record, options) {
 /**
  * Insert many records, using the keys of the first as the column template
  * @public
- * @example
+ * @example <caption>Insert many records</caption>
  * insertMany('users', state => state.data.recordArray, { setNull: "'undefined'", logValues: true });
  * @function
  * @param {string} table - The target table
@@ -324,13 +324,17 @@ export function insertMany(table, records, options) {
 /**
  * Insert or update a record using ON CONFLICT UPDATE
  * @public
- * @example
+ * @example <caption>Insert or update a record</caption>
  * upsert(
- *   'users', // the DB table
- *   'ON CONSTRAINT users_pkey', // a DB column with a unique constraint OR a CONSTRAINT NAME
- *   { name: 'Elodie', id: 7 },
- *   { setNull: ["''", "'undefined'"], writeSql:true, execute: true, logValues: true }
- * )
+ *   "users", // the DB table
+ *   "ON CONSTRAINT users_pkey", // a DB column with a unique constraint OR a CONSTRAINT NAME
+ *   { name: "Elodie", id: 7 },
+ *   {
+ *     setNull: ["''", "'undefined'"],
+ *     writeSql: true,
+ *     logValues: true,
+ *   }
+ * );
  * @function
  * @param {string} table - The target table
  * @param {string} uuid - The uuid column to determine a matching/existing record
@@ -387,14 +391,14 @@ export function upsert(table, uuid, record, options) {
 /**
  * Insert or update a record based on a logical condition using ON CONFLICT UPDATE
  * @public
- * @example
+ * @example <caption>Insert or update a record conditionally</caption>
  * upsertIf(
  *   $.data.name,
- *   'users', // the DB table
- *   'ON CONSTRAINT users_pkey', // a DB column with a unique constraint OR a CONSTRAINT NAME
- *   { name: 'Elodie', id: 7 },
- *   { writeSql:true, execute: true }
- * )
+ *   "users", // the DB table
+ *   "ON CONSTRAINT users_pkey", // a DB column with a unique constraint OR a CONSTRAINT NAME
+ *   { name: "Elodie", id: 7 },
+ *   { writeSql: true }
+ * );
  * @function
  * @param {string} logical - a data to check existing value for.
  * @param {string} table - The target table
@@ -462,7 +466,7 @@ export function upsertIf(logical, table, uuid, record, options) {
 /**
  * Insert or update multiple records using ON CONFLICT UPDATE and excluded
  * @public
- * @example
+ * @example <caption>Insert or update multiple records</caption>
  * upsertMany(
  *   'users', // the DB table
  *   'email', // a DB column with a unique constraint OR a CONSTRAINT NAME
@@ -470,7 +474,6 @@ export function upsertIf(logical, table, uuid, record, options) {
  *     { name: 'one', email: 'one@openfn.org' },
  *     { name: 'two', email: 'two@openfn.org' },
  *   ]
- *  { logValues: true }
  * )
  * @function
  * @param {string} table - The target table
@@ -533,7 +536,7 @@ export function upsertMany(table, uuid, data, options) {
 /**
  * List the columns of a table in a database.
  * @public
- * @example
+ * @example <caption>Describe a table</caption>
  * describeTable('clinic_visits')
  * @function
  * @param {string} tableName - The name of the table to describe
