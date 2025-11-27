@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { setMockClient, sql, findValue } from '../src/index.js';
+import { setMockClient, sql, findValue, insert } from '../src/index.js';
 
 describe('sql', () => {
   const mockQueryResult = {
@@ -241,5 +241,33 @@ describe('findValue', () => {
     })(state);
 
     expect(result.data).to.equal('all-records-id');
+  });
+});
+
+describe('insert', () => {
+  it('should insert a record to a table', async () => {
+    setMockClient({
+      query: (...qstr) => {
+        expect(qstr).to.eql([
+          `INSERT INTO products (name, price, sku) VALUES ('Blue Birkin','4000','y9w9ysvs83r');`,
+        ]);
+        return {
+          command: 'INSERT',
+          rowCount: 1,
+          rows: [{ id: 1 }],
+        };
+      },
+    });
+
+    const state = {
+      data: { name: 'Blue Birkin', sku: 'y9w9ysvs83r', price: 4000.0 },
+    };
+    const result = await insert('products', state => ({
+      name: state.data.name,
+      sku: state.data.sku,
+      price: state.data.price,
+    }))(state);
+
+    expect(result.data).to.eql([{ id: 1 }]);
   });
 });

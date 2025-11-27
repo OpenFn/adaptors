@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
-import { execute, sql, util, fn, findValue } from '../src/index.js';
+import { execute, sql, util, fn, findValue, insert } from '../src/index.js';
 import configuration from '../tmp/creds.json' with { type: 'json' };
 
 describe('sql', () => {
@@ -83,6 +83,18 @@ describe('util.format', () => {
 });
 
 describe('findValue', () => {
+  it('should find a value ', async () => {
+    const state = { configuration, references: [] };
+
+    const result = await execute(
+      findValue({
+        uuid: 'name',
+        relation: 'products',
+        where: { id: 3 },
+      })
+    )(state);
+    expect(result.data).to.eq('test');
+  });
   it('should throw error if unexpected query is executed', async () => {
     const state = { configuration, references: [] };
 
@@ -96,6 +108,35 @@ describe('findValue', () => {
       expect(error.code).to.eq('42P01');
       expect(error.message).to.include('relation "wrong_table" does not exist');
     });
+  });
+});
 
+describe('insert', () => {
+  it('should insert a record to a table', async () => {
+    const sku = Math.random().toString(36).substring(2);
+    const state = {
+      configuration,
+      data: { name: 'Blue Birkin', sku, price: 4000.0 },
+    };
+    const result = await execute(
+      insert(
+        'products',
+        state => ({
+          name: state.data.name,
+          sku: state.data.sku,
+          price: state.data.price
+        }),
+        {
+          writeSql: true,
+          logValues: true,
+        }
+      )
+    )(state);
+
+    expect(result.data).to.eql([]);
+    expect(result.queries.length).to.eql(1);
+    expect(result.queries[0]).to.eql(
+      `INSERT INTO products (name, price, sku) VALUES ('Blue Birkin','4000','${sku}');`
+    );
   });
 });
