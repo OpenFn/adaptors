@@ -1,6 +1,15 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
-import { execute, sql, util, fn, findValue, insert } from '../src/index.js';
+import {
+  execute,
+  sql,
+  util,
+  fn,
+  findValue,
+  insert,
+  insertMany,
+  upsert,
+} from '../src/index.js';
 import configuration from '../tmp/creds.json' with { type: 'json' };
 
 describe('sql', () => {
@@ -124,7 +133,7 @@ describe('insert', () => {
         state => ({
           name: state.data.name,
           sku: state.data.sku,
-          price: state.data.price
+          price: state.data.price,
         }),
         {
           writeSql: true,
@@ -138,5 +147,49 @@ describe('insert', () => {
     expect(result.queries[0]).to.eql(
       `INSERT INTO products (name, price, sku) VALUES ('Blue Birkin','4000','${sku}');`
     );
+  });
+});
+
+describe('insertMany', () => {
+  it('should insert multiple records to a table', async () => {
+    const sku = Math.random().toString(36).substring(2);
+    const state = {
+      configuration,
+      data: [{ name: 'Red Birkin', sku, price: 5000.0 }],
+    };
+    const result = await execute(
+      insertMany('products', state => state.data, {
+        writeSql: true,
+      })
+    )(state);
+
+    expect(result.data).to.eql([]);
+    expect(result.queries.length).to.eql(1);
+    expect(result.queries[0]).to.eql(
+      `INSERT INTO products (name, sku, price) VALUES ('Red Birkin', '${sku}', '5000');`
+    );
+  });
+});
+
+
+describe('upsert', () => {
+  it('should upsert a row', async () => {
+    const state = {
+      configuration,
+      data: {
+        name: 'Elodie',
+        sku: '123',
+        price: 2500.0,
+      },
+    };
+    const result = await execute(
+      upsert('products', 'sku', state => ({
+        name: state.data.name,
+        sku: state.data.sku,
+        price: state.data.price,
+      }))
+    )(state);
+
+    expect(result.data).to.eql([]);
   });
 });
