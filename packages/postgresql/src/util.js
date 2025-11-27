@@ -1,9 +1,9 @@
 import format from 'pg-format';
 /**
- * Expose the pg-format utility library
+ * Safely create dynamic SQL queries. SQL identifiers and literals are escaped to help prevent SQL injection.
  * @public
  * @function
- * @example
+ * @example <caption>Safely escape identifiers and literals</caption>
  * util.format('Hello %s', 'world')
  */
 export { format };
