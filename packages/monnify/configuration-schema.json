@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The base URL",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://sandbox.monnify.com"]
+    },
+    "apiKey": {
+      "title": "API Key",
+      "type": "string",
+      "description": "This is required together with your secret key to generate your bearer token",
+      "examples": ["MK_TEST_YRP3AJ7RQ2"]
+    },
+    "secretKey": {
+      "title": "Secret key",
+      "type": "string",
+      "description": "The secret key is used to authorize all your API calls on Monnify.",
+      "writeOnly": true,
+      "examples": ["JKML52W7XQ43L02VRFDNQ8KLAU459W8B"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["baseUrl","password", "username"]
+}
