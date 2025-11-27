@@ -16,7 +16,28 @@
           },
           {
             "title": "example",
-            "description": "sql(state => `select(*) from ${state.data.tableName};`, { writeSql: true })"
+            "description": "sql('SELECT * FROM users;');",
+            "caption": "Text-only Query"
+          },
+          {
+            "title": "example",
+            "description": "sql(\"select id from users where first_name = 'Mamadou'\", { writeSql: true });",
+            "caption": "Text-only Query with writeSql option"
+          },
+          {
+            "title": "example",
+            "description": "sql({\n  text: 'INSERT INTO users(name, age) VALUES ($1, $2);',\n  values: ['Alice', 25],\n});",
+            "caption": "Parameterized Query"
+          },
+          {
+            "title": "example",
+            "description": "sql(util.format('INSERT INTO users(name, age) VALUES (%L, %L);', 'Alice', 25));",
+            "caption": "Format query with util.format"
+          },
+          {
+            "title": "example",
+            "description": "sql({\n  // give the query a unique name\n  name: \"fetch-user\",\n  text: \"SELECT * FROM user WHERE id = $1\",\n  values: [1],\n});",
+            "caption": "Prepared Statements"
           },
           {
             "title": "function",
@@ -25,69 +46,37 @@
           },
           {
             "title": "param",
-            "description": "The query config object.",
+            "description": "SQL query string or a query config object.",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "SqlQueryConfig"
+                }
+              ]
             },
             "name": "sqlQuery"
           },
           {
             "title": "param",
-            "description": "The SQL query as a string.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "sqlQuery.text"
-          },
-          {
-            "title": "param",
-            "description": "Optional values argument",
+            "description": "Execution options. (OpenFn only)",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "object"
-              }
-            },
-            "name": "sqlQuery.values"
-          },
-          {
-            "title": "param",
-            "description": "Optional options argument",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "object"
+                "name": "ExecutionOptions"
               }
             },
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "A boolean value that specifies whether to log the generated SQL statement. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.writeSql"
-          },
-          {
-            "title": "param",
-            "description": "A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.execute"
+            "title": "state",
+            "description": "{PostgresState}"
           },
           {
             "title": "returns",
@@ -99,7 +88,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "findValue",
@@ -116,7 +105,8 @@
           },
           {
             "title": "example",
-            "description": "findValue({\n   uuid: 'id',\n   relation: 'users',\n   where: { first_name: 'Mamadou' },\n   operator: { first_name: 'like' }\n })"
+            "description": "findValue({\n   uuid: 'id',\n   relation: 'users',\n   where: { first_name: 'Mamadou' },\n   operator: { first_name: 'like' }\n })",
+            "caption": "Find a user by first name"
           },
           {
             "title": "function",
@@ -127,73 +117,30 @@
             "title": "param",
             "description": "A filter object with the lookup table, a uuid and the condition",
             "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "object"
-              }
+              "type": "NameExpression",
+              "name": "FindValueFilter"
             },
             "name": "filter"
           },
           {
-            "title": "param",
-            "description": "The uuid value to search for in the specified relation.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "filter.uuid"
+            "title": "state",
+            "description": "{PostgresState}"
           },
           {
-            "title": "param",
-            "description": "The name of the relation to search for the uuid value.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "filter.relation"
-          },
-          {
-            "title": "param",
-            "description": "An object that contains key-value pairs to filter the search results.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "object"
-              }
-            },
-            "name": "filter.where"
-          },
-          {
-            "title": "param",
-            "description": "An object that contains key-value pairs to specify the type of comparison to perform on the where clause.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "object"
-              }
-            },
-            "name": "filter.operator"
+            "title": "state",
+            "description": "data - the value of the found uuid"
           },
           {
             "title": "returns",
             "description": null,
             "type": {
               "type": "NameExpression",
-              "name": "value"
+              "name": "Operation"
             }
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "insert",
@@ -239,63 +186,19 @@
           },
           {
             "title": "param",
-            "description": "Optional options argument",
+            "description": "Shared options. (OpenFn only)",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "object"
+                "name": "GeneralOptions"
               }
             },
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "A string value that specifies the behavior for inserting null values.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "options.setNull"
-          },
-          {
-            "title": "param",
-            "description": "A boolean value that specifies whether to log the inserted values to the console. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.logValues"
-          },
-          {
-            "title": "param",
-            "description": "A boolean value that specifies whether to log the generated SQL statement. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.writeSql"
-          },
-          {
-            "title": "param",
-            "description": "A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.execute"
+            "title": "state",
+            "description": "{PostgresState}"
           },
           {
             "title": "returns",
@@ -307,7 +210,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "insertMany",
@@ -353,63 +256,19 @@
           },
           {
             "title": "param",
-            "description": "Optional options argument",
+            "description": "Shared options. (OpenFn only)",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "object"
+                "name": "GeneralOptions"
               }
             },
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "A string value that specifies the behavior for inserting null values.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "options.setNull"
-          },
-          {
-            "title": "param",
-            "description": "A boolean value that specifies whether to log the inserted values to the console. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.logValues"
-          },
-          {
-            "title": "param",
-            "description": "A boolean value that specifies whether to log the generated SQL statement. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.writeSql"
-          },
-          {
-            "title": "param",
-            "description": "A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.execute"
+            "title": "state",
+            "description": "{PostgresState}"
           },
           {
             "title": "returns",
@@ -421,7 +280,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "upsert",
@@ -477,63 +336,19 @@
           },
           {
             "title": "param",
-            "description": "Optional options argument",
+            "description": "Shared options. (OpenFn only)",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "object"
+                "name": "GeneralOptions"
               }
             },
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "A string value that specifies the behavior for inserting null values.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "options.setNull"
-          },
-          {
-            "title": "param",
-            "description": "A boolean value that specifies whether to log the generated SQL statement. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.writeSql"
-          },
-          {
-            "title": "param",
-            "description": "A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.execute"
-          },
-          {
-            "title": "param",
-            "description": "A boolean value that specifies whether to log the inserted values to the console. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.logValues"
+            "title": "state",
+            "description": "{PostgresState}"
           },
           {
             "title": "returns",
@@ -545,7 +360,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "upsertIf",
@@ -566,7 +381,7 @@
           },
           {
             "title": "example",
-            "description": "upsertIf(\n  dataValue('name'),\n  'users', // the DB table\n  'ON CONSTRAINT users_pkey', // a DB column with a unique constraint OR a CONSTRAINT NAME\n  { name: 'Elodie', id: 7 },\n  { writeSql:true, execute: true }\n)"
+            "description": "upsertIf(\n  $.data.name,\n  'users', // the DB table\n  'ON CONSTRAINT users_pkey', // a DB column with a unique constraint OR a CONSTRAINT NAME\n  { name: 'Elodie', id: 7 },\n  { writeSql:true, execute: true }\n)"
           },
           {
             "title": "function",
@@ -611,63 +426,19 @@
           },
           {
             "title": "param",
-            "description": "Optional options argument",
+            "description": "Shared options. (OpenFn only)",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "object"
+                "name": "GeneralOptions"
               }
             },
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "A string value that specifies the behavior for inserting null values.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "options.setNull"
-          },
-          {
-            "title": "param",
-            "description": "A boolean value that specifies whether to log the generated SQL statement. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.writeSql"
-          },
-          {
-            "title": "param",
-            "description": "A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.execute"
-          },
-          {
-            "title": "param",
-            "description": "A boolean value that specifies whether to log the inserted values to the console. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.logValues"
+            "title": "state",
+            "description": "{PostgresState}"
           },
           {
             "title": "returns",
@@ -679,7 +450,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "upsertMany",
@@ -735,63 +506,19 @@
           },
           {
             "title": "param",
-            "description": "Optional options argument",
+            "description": "Shared options. (OpenFn only)",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "object"
+                "name": "GeneralOptions"
               }
             },
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "A string value that specifies the behavior for inserting null values.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "options.setNull"
-          },
-          {
-            "title": "param",
-            "description": "A boolean value that specifies whether to log the generated SQL statement. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.writeSql"
-          },
-          {
-            "title": "param",
-            "description": "A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.execute"
-          },
-          {
-            "title": "param",
-            "description": "A boolean value that specifies whether to log the inserted values to the console. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.logValues"
+            "title": "state",
+            "description": "{PostgresState}"
           },
           {
             "title": "returns",
@@ -803,7 +530,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "describeTable",
@@ -839,39 +566,19 @@
           },
           {
             "title": "param",
-            "description": "Optional options argument",
+            "description": "Execution options. (OpenFn only)",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "object"
+                "name": "ExecutionOptions"
               }
             },
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "A boolean value that specifies whether to log the generated SQL statement. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.writeSql"
-          },
-          {
-            "title": "param",
-            "description": "A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.execute"
+            "title": "state",
+            "description": "{PostgresState}"
           },
           {
             "title": "returns",
@@ -883,7 +590,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "insertTable",
@@ -929,39 +636,19 @@
           },
           {
             "title": "param",
-            "description": "Optional options argument",
+            "description": "Execution options. (OpenFn only)",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "object"
+                "name": "ExecutionOptions"
               }
             },
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "A boolean value that specifies whether to log the generated SQL statement. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.writeSql"
-          },
-          {
-            "title": "param",
-            "description": "A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.execute"
+            "title": "state",
+            "description": "{PostgresState}"
           },
           {
             "title": "returns",
@@ -973,7 +660,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "modifyTable",
@@ -1019,39 +706,19 @@
           },
           {
             "title": "param",
-            "description": "Optional options argument",
+            "description": "Execution options. (OpenFn only)",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "object"
+                "name": "ExecutionOptions"
               }
             },
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "A boolean value that specifies whether to log the generated SQL statement. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.writeSql"
-          },
-          {
-            "title": "param",
-            "description": "A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.execute"
+            "title": "state",
+            "description": "{PostgresState}"
           },
           {
             "title": "returns",
@@ -1063,7 +730,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     }
   ],
   "exports": [],
