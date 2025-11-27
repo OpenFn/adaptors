@@ -19,9 +19,48 @@ let client = null;
  * @typedef {Object} PostgresState
  * @property data - the parsed result rows
  * @property result - the result from a successful query
- * @property references - an array of all previous data objects used in the Job
+ * @property references - an array of all previous data objects used in the job
  * @private
  **/
+
+/**
+ * Execution options
+ * @typedef {Object} ExecutionOptions
+ * @property {boolean} [writeSql=false] - Specifies whether to log the generated SQL statement. Defaults to false.
+ * @property {boolean} [execute=true] - Specifies whether to execute the SQL statement. Defaults to true.
+ * @private
+ */
+
+/**
+ * Shared options
+ * @typedef {Object} GeneralOptions
+ * @property {boolean} [execute=true] - Specifies whether to execute the SQL statement. Defaults to true.
+ * @property {boolean} [writeSql=false] - Specifies whether to log the generated SQL statement. Defaults to false.
+ * @property {boolean} [logValues=false] - Specifies whether to log the query values to the console. Defaults to false.
+ * @property {string} [setNull] - A string value that specifies the behavior for inserting null values.
+ * @private
+ * */
+
+/**
+ * SQL Query Configuration
+ * @typedef {Object} SqlQueryConfig
+ * @property {string} name - Prepared statement name for repeated queries.
+ * @property {string} text - SQL query text with optional placeholders for parameterized queries.
+ * @property {Array} [values] - An array of values to be used with parameterized queries.
+ * @property {string} [rowMode='array'] - Format of result rows ('array' or 'object').
+ * @private
+ */
+
+/**
+ * findValue filter object
+ * @typedef {Object} FindValueFilter
+ * @property {string} uuid - The uuid value to search for in the specified relation.
+ * @property {string} relation - The name of the relation to search for the uuid value.
+ * @property {object} where - An object that contains key-value pairs to filter the search results.
+ * @property {object} operator - An object that contains key-value pairs to specify the type of comparison to perform on the where clause.
+ * @private
+ */
+
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for postgresql.
@@ -99,15 +138,28 @@ export function setMockClient(mockClient) {
 /**
  * Execute an SQL statement
  * @public
- * @example
- * sql(state => `select(*) from ${state.data.tableName};`, { writeSql: true })
+ * @example <caption>Text-only Query</caption>
+ * sql('SELECT * FROM users;');
+ * @example <caption>Text-only Query with writeSql option</caption>
+ * sql("select id from users where first_name = 'Mamadou'", { writeSql: true });
+ * @example <caption>Parameterized Query</caption>
+ * sql({
+ *   text: 'INSERT INTO users(name, age) VALUES ($1, $2);',
+ *   values: ['Alice', 25],
+ * });
+ * @example <caption>Format query with util.format</caption>
+ * sql(util.format('INSERT INTO users(name, age) VALUES (%L, %L);', 'Alice', 25));
+ * @example <caption> Prepared Statements</caption>
+ * sql({
+ *   // give the query a unique name
+ *   name: "fetch-user",
+ *   text: "SELECT * FROM user WHERE id = $1",
+ *   values: [1],
+ * });
  * @function
- * @param {object} sqlQuery - The query config object.
- * @param {string} sqlQuery.text - The SQL query as a string.
- * @param {object} [sqlQuery.values] - Optional values argument
- * @param {object} [options] - Optional options argument
- * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
- * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
+ * @param {string|SqlQueryConfig} sqlQuery - SQL query string or a query config object.
+ * @param {ExecutionOptions} [options] - Execution options. (OpenFn only)
+ * @state {PostgresState}
  * @returns {Operation}
  */
 export function sql(sqlQuery, options) {
@@ -130,7 +182,7 @@ export function sql(sqlQuery, options) {
 /**
  * Fetch a uuid key given a condition
  * @public
- * @example
+ * @example <caption>Find a user by first name</caption>
  * findValue({
  *    uuid: 'id',
  *    relation: 'users',
@@ -138,12 +190,10 @@ export function sql(sqlQuery, options) {
  *    operator: { first_name: 'like' }
  *  })
  * @function
- * @param {object} [filter] - A filter object with the lookup table, a uuid and the condition
- * @param {string} [filter.uuid] - The uuid value to search for in the specified relation.
- * @param {string} [filter.relation] - The name of the relation to search for the uuid value.
- * @param {object} [filter.where] - An object that contains key-value pairs to filter the search results.
- * @param {object} [filter.operator] - An object that contains key-value pairs to specify the type of comparison to perform on the where clause.
- * @returns {value}
+ * @param {FindValueFilter} filter - A filter object with the lookup table, a uuid and the condition
+ * @state {PostgresState}
+ * @state data - the value of the found uuid
+ * @returns {Operation}
  */
 export function findValue(filter) {
   return async state => {
@@ -180,11 +230,8 @@ export function findValue(filter) {
  * @function
  * @param {string} table - The target table
  * @param {object} record - Payload data for the record as a JS object or function
- * @param {object} [options] - Optional options argument
- * @param {string} [options.setNull] - A string value that specifies the behavior for inserting null values.
- * @param {boolean} [options.logValues] - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
- * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
- * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
+ * @param {GeneralOptions} [options] - Shared options. (OpenFn only)
+ * @state {PostgresState}
  * @returns {Operation}
  */
 export function insert(table, record, options) {
@@ -230,11 +277,8 @@ export function insert(table, record, options) {
  * @function
  * @param {string} table - The target table
  * @param {array} records - An array or a function that takes state and returns an array
- * @param {object} [options] - Optional options argument
- * @param {string} [options.setNull] - A string value that specifies the behavior for inserting null values.
- * @param {boolean} [options.logValues] - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
- * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
- * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
+ * @param {GeneralOptions} [options] - Shared options. (OpenFn only)
+ * @state {PostgresState}
  * @returns {Operation}
  */
 export function insertMany(table, records, options) {
@@ -291,11 +335,8 @@ export function insertMany(table, records, options) {
  * @param {string} table - The target table
  * @param {string} uuid - The uuid column to determine a matching/existing record
  * @param {object} record - Payload data for the record as a JS object or function
- * @param {object} [options] - Optional options argument
- * @param {string} [options.setNull] - A string value that specifies the behavior for inserting null values.
- * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
- * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
- * @param {boolean} [options.logValues] - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
+ * @param {GeneralOptions} [options] - Shared options. (OpenFn only)
+ * @state {PostgresState}
  * @returns {Operation}
  */
 export function upsert(table, uuid, record, options) {
@@ -348,7 +389,7 @@ export function upsert(table, uuid, record, options) {
  * @public
  * @example
  * upsertIf(
- *   dataValue('name'),
+ *   $.data.name,
  *   'users', // the DB table
  *   'ON CONSTRAINT users_pkey', // a DB column with a unique constraint OR a CONSTRAINT NAME
  *   { name: 'Elodie', id: 7 },
@@ -359,11 +400,8 @@ export function upsert(table, uuid, record, options) {
  * @param {string} table - The target table
  * @param {string} uuid - The uuid column to determine a matching/existing record
  * @param {object} record - Payload data for the record as a JS object or function
- * @param {object} [options] - Optional options argument
- * @param {string} [options.setNull] - A string value that specifies the behavior for inserting null values.
- * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
- * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
- * @param {boolean} [options.logValues] - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
+ * @param {GeneralOptions} [options] - Shared options. (OpenFn only)
+ * @state {PostgresState}
  * @returns {Operation}
  */
 export function upsertIf(logical, table, uuid, record, options) {
@@ -438,11 +476,8 @@ export function upsertIf(logical, table, uuid, record, options) {
  * @param {string} table - The target table
  * @param {string} uuid - The uuid column to determine a matching/existing record
  * @param {array} data - An array of objects or a function that returns an array
- * @param {object} [options] - Optional options argument
- * @param {string} [options.setNull] - A string value that specifies the behavior for inserting null values.
- * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
- * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
- * @param {boolean} [options.logValues] - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
+ * @param {GeneralOptions} [options] - Shared options. (OpenFn only)
+ * @state {PostgresState}
  * @returns {Operation}
  */
 export function upsertMany(table, uuid, data, options) {
@@ -502,9 +537,8 @@ export function upsertMany(table, uuid, data, options) {
  * describeTable('clinic_visits')
  * @function
  * @param {string} tableName - The name of the table to describe
- * @param {object} [options] - Optional options argument
- * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
- * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
+ * @param {ExecutionOptions} [options] - Execution options. (OpenFn only)
+ * @state {PostgresState}
  * @returns {Operation}
  */
 export function describeTable(tableName, options) {
@@ -545,9 +579,8 @@ export function describeTable(tableName, options) {
  * @function
  * @param {string} tableName - The name of the table to create
  * @param {array} columns - An array of form columns
- * @param {object} [options] - Optional options argument
- * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
- * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
+ * @param {ExecutionOptions} [options] - Execution options. (OpenFn only)
+ * @state {PostgresState}
  * @returns {Operation}
  */
 export function insertTable(tableName, columns, options) {
@@ -607,9 +640,8 @@ export function insertTable(tableName, columns, options) {
  * @function
  * @param {string} tableName - The name of the table to alter
  * @param {array} columns - An array of form columns
- * @param {object} [options] - Optional options argument
- * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
- * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
+ * @param {ExecutionOptions} [options] - Execution options. (OpenFn only)
+ * @state {PostgresState}
  * @returns {Operation}
  */
 export function modifyTable(tableName, columns, options) {
