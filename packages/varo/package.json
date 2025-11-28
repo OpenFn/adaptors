@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-varo",
   "label": "Varo",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "OpenFn varo adaptor for cold chain information",
   "type": "module",
   "exports": {

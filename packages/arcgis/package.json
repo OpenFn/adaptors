@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-arcgis",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "OpenFn arcgis adaptor",
   "type": "module",
   "exports": {
