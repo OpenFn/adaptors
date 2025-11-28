@@ -15,7 +15,7 @@
           },
           {
             "title": "example",
-            "description": "sql({ \n  query: 'SELECT * FROM users WHERE id = @id',\n})"
+            "description": "sql({\n  query: 'SELECT * FROM users WHERE id = @id',\n  options\n})"
           },
           {
             "title": "function",
