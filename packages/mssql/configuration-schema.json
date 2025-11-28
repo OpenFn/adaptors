@@ -57,9 +57,10 @@
     },
     "trustServerCertificate": {
       "type": "boolean",
-      "default": true,
+      "default": false,
+       "description": "Trust self-signed certificates (not recommended for production)",
       "examples": [
-        false
+        true
       ]
     }
   },
