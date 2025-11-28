@@ -8,3 +8,7 @@ packages:
   # exclude testing
   - '!packages/testing/**'
 minimumReleaseAge: 4320 # 3 days
+
+overrides:
+  request>form-data: '2.5.4'
+  # form-data: '^2.5.4'
