@@ -1,5 +1,12 @@
 # @openfn/language-wigal-sms
 
+## 0.1.17 - 28 November 2025
+
+### Patch Changes
+
+- Updated dependencies \[cfc66df]
+  - @openfn/language-common@3.2.1
+
 ## 0.1.16 - 12 November 2025
 
 ### Patch Changes

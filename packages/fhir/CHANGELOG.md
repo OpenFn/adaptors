@@ -1,5 +1,12 @@
 # @openfn/language-fhir
 
+## 5.0.13 - 28 November 2025
+
+### Patch Changes
+
+- Updated dependencies \[cfc66df]
+  - @openfn/language-common@3.2.1
+
 ## 5.0.12 - 12 November 2025
 
 ### Patch Changes

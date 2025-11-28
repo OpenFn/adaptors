@@ -1,5 +1,12 @@
 # @openfn/language-odk
 
+## 3.0.25 - 28 November 2025
+
+### Patch Changes
+
+- Updated dependencies \[cfc66df]
+  - @openfn/language-common@3.2.1
+
 ## 3.0.24 - 12 November 2025
 
 ### Patch Changes

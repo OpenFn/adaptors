@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-ghana-nia",
   "label": "Ghana NIA",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "OpenFn ghana-nia adaptor",
   "type": "module",
   "exports": {

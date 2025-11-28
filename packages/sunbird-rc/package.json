@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-sunbird-rc",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "OpenFn sunbird-rc adaptor",
   "type": "module",
   "exports": {
