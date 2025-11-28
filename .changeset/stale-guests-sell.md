@@ -11,6 +11,7 @@
 '@openfn/language-primero': patch
 '@openfn/language-resourcemap': patch
 '@openfn/language-vtiger': patch
+'@openfn/language-mysql': patch
 ---
 
 Security update
