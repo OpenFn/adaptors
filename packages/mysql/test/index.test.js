@@ -1,5 +1,11 @@
 import { expect } from 'chai';
-import { execute, sql, insert, setMockConnection } from '../src/Adaptor.js';
+import {
+  execute,
+  sql,
+  insert,
+  upsert,
+  setMockConnection,
+} from '../src/Adaptor.js';
 
 const configuration = {
   host: 'localhost',
@@ -82,6 +88,31 @@ describe('insert', () => {
     };
 
     const { data } = await execute(insert('users', state => state.data))(
+      fakeState
+    );
+    expect(data.result).to.eql({});
+    expect(data.fields).to.eql([]);
+  });
+});
+
+describe('upsert', () => {
+  it('should upsert a record', async () => {
+    setMockConnection({
+      end: () => {},
+      execute: async (sql, values) => {
+        // expect(sql).to.eql(
+        //   'INSERT INTO `users` (`address`, `name`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `address` = values(`address`)'
+        // );
+        // expect(values).to.eql(['Ave Dela Casta', 'Alice']);
+        return [{}, []];
+      },
+    });
+    const fakeState = {
+      configuration,
+      data: { address: "' OR '1'='1'; --", name: 'Alice' },
+    };
+
+    const { data } = await execute(upsert('users', state => state.data))(
       fakeState
     );
     expect(data.result).to.eql({});
