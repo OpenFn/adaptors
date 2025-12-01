@@ -32,5 +32,5 @@
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["baseUrl","password", "username"]
+  "required": ["baseUrl","apiKey", "secretKey"]
 }
