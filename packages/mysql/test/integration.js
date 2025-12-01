@@ -31,26 +31,26 @@ describe('sql', () => {
       })
     )(state);
 
-    expect(data.result).to.deep.equal([{ order_id: 123, location: 'New York' }]);
+    expect(data.result).to.deep.equal([
+      { order_id: 123, location: 'New York' },
+    ]);
     expect(data.fields.length).to.equal(2);
   });
-  it('should escape sqli inputs', async () => {
+  it('should safely handle sqli inputs', async () => {
     const state = {
       configuration,
-      data: { tableName: "' OR '1'='1'; --" },
+      data: { order_id: 'DROP TABLE users; --' },
     };
 
-    try {
-      await execute(
-        sql(`SELECT order_id,location FROM ?;`, {
-          values: state => [state.data.tableName],
-          writeSql: true,
-        })
-      )(state);
-    } catch (err) {
-      console.log('Caught error as expected:', err.message);
-      expect(err.message).to.contain('You have an error in your SQL syntax;');
-    }
+    const { data } = await execute(
+      sql(`SELECT order_id,location FROM test_order where order_id = ?;`, {
+        values: state => [state.data.order_id],
+        writeSql: true,
+      })
+    )(state);
+
+    expect(data.result).to.deep.equal([]);
+    expect(data.fields.length).to.equal(2);
   });
 });
 

@@ -41,14 +41,14 @@ describe('sql', () => {
   it('shoudld escape sqli inputs', async () => {
     setMockConnection({
       end: () => {},
-      execute: async sql => {
+      execute: async (sql, values) => {
+        console.log({ sql });
         expect(sql).to.eql(
-          "SELECT order_id,location FROM '\\' OR \\'1\\'=\\'1\\'; --';"
+          'SELECT order_id,location FROM test_order where order_id = ?;'
         );
+        expect(values).to.eql(["' OR '1'='1'; --"]);
 
-        throw new Error(
-          "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''' OR '1'='1'; --'' at line 1"
-        );
+        return [[], [{ name: 'order_id' }, { name: 'location' }]];
       },
     });
 
@@ -57,16 +57,15 @@ describe('sql', () => {
       data: { tableName: "' OR '1'='1'; --" },
     };
 
-    try {
-      await execute(
-        sql(`SELECT order_id,location FROM ?;`, {
-          values: state => [state.data.tableName],
-          writeSql: true,
-        })
-      )(state);
-    } catch (err) {
-      expect(err.message).to.contain('You have an error in your SQL syntax;');
-    }
+    const { data } = await execute(
+      sql(`SELECT order_id,location FROM test_order where order_id = ?;`, {
+        values: state => [state.data.tableName],
+        writeSql: true,
+      })
+    )(state);
+
+    expect(data.result).to.deep.equal([]);
+    expect(data.fields.length).to.equal(2);
   });
 });
 
