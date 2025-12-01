@@ -21,7 +21,7 @@ export const prepareNextState = (state, response) => {
 };
 
 export const getAccessToken = async (configuration, headers) => {
-  let { apiKey, secretKey, baseUrl } = configuration;
+  const { apiKey, secretKey, baseUrl } = configuration;
 
   const { body } = await commonRequest('POST', 'api/v1/auth/login', {
     headers: {
@@ -36,10 +36,13 @@ export const getAccessToken = async (configuration, headers) => {
 };
 
 export const request = async (configuration = {}, method, path, options) => {
-  let { baseUrl, access_token } = configuration;
+  // local variable for storing configuration. Using let due to reasssignment ops downstream.
+  let config = configuration
+
+  const { baseUrl, access_token } = config;
 
   if (!access_token)
-    configuration = await getAccessToken(configuration, options.headers)
+    config = await getAccessToken(config, options.headers)
 
   const { query = {}, body = {} } = options;
 
@@ -48,7 +51,7 @@ export const request = async (configuration = {}, method, path, options) => {
     baseUrl,
     headers: {
       'content-type': 'application/json',
-      Authorization: `Bearer ${configuration.access_token}`,
+      Authorization: `Bearer ${config.access_token}`,
       ...options.headers,
     },
     body,
