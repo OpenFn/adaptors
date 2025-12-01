@@ -71,6 +71,10 @@ export function execute(...operations) {
  * for guidelines
  * @example
  * sql(state => `select * from ${state.data.tableName};`, { writeSql: true })
+ * @example <caption>Prepared statements</caption>
+ * sql(state => `select * from ?? where id = ?;`, {
+ *   values: state => [state.data.tableName, state.data.id],
+ * });
  * @function
  * @public
  * @param {string|function} sqlQuery - The SQL query as a string or a function that returns a string using state.
@@ -88,13 +92,16 @@ export function sql(sqlQuery, options = {}) {
       options
     );
 
-    const { writeSql = false, execute = true, values = [] } = resolvedOptions;
+    const { writeSql = false, execute = true, values } = resolvedOptions;
+    const sqlString = mysql.format(resolvedSqlQuery, values);
+
     if (writeSql) {
-      console.log('Prepared SQL:', resolvedSqlQuery);
-      state.queries.push(resolvedSqlQuery);
+      console.log('Prepared SQL:', sqlString);
+      state.queries.push(sqlString);
     }
 
     if (!execute) {
+      console.log('Execution skipped, execute is false.');
       return {
         ...state,
         queries: [...state.queries, resolvedSqlQuery],
@@ -102,12 +109,12 @@ export function sql(sqlQuery, options = {}) {
     }
 
     try {
-      const [result, fields] = await connection.execute(
-        resolvedSqlQuery,
-        values
-      );
+      const [result, fields] = await connection.execute(sqlString);
       console.log('Query executed successfully.');
-      return composeNextState(state, { result, fields });
+      return composeNextState(state, {
+        result,
+        fields,
+      });
     } catch (err) {
       console.log('Error executing query.');
       throw err;
@@ -118,7 +125,7 @@ export function sql(sqlQuery, options = {}) {
 /**
  * Insert a record
  * @example <caption>Insert a record into the `users` table</caption>
- * insert("users", { name: (state) => state.data.name });
+ * insert("users", (state) => state.data);
  * @function
  * @public
  * @param {string} table - The target table
@@ -127,30 +134,30 @@ export function sql(sqlQuery, options = {}) {
  */
 export function insert(table, fields) {
   return async state => {
-    const [valuesObj] = expandReferences(state, fields);
+    const [resolvedTable, resolvedFields] = expandReferences(
+      state,
+      table,
+      fields
+    );
+    const keys = Object.keys(resolvedFields);
+    const values = Object.values(resolvedFields);
 
-    const squelMysql = squel.useFlavour('mysql');
+    const placeholders = keys.map(() => '?').join(', ');
+    const columns = keys.map(() => '??').join(', ');
 
-    var sqlParams = squelMysql
-      .insert({
-        autoQuoteFieldNames: true,
-      })
-      .into(table)
-      .setFields(valuesObj)
-      .toParam();
-
-    const sql = sqlParams.text;
-    const inserts = sqlParams.values;
-    const sqlString = mysql.format(sql, inserts);
-
-    console.log(`Executing MySQL query: ${sqlString}`);
-
+    const sqlString = mysql.format(
+      `INSERT INTO ?? (${columns}) VALUES (${placeholders})`,
+      [resolvedTable, ...keys]
+    );
     try {
-      const [result, fields] = await connection.execute(sqlString);
+      const [result, fields] = await connection.execute(sqlString, values);
       console.log('Success...');
-      return composeNextState(state, { result, fields });
+      return composeNextState(state, {
+        result,
+        fields,
+      });
     } catch (err) {
-      console.log('There is an error. Disconnecting from database.');
+      console.log('Error inserting record.');
       throw err;
     }
   };
@@ -159,7 +166,7 @@ export function insert(table, fields) {
 /**
  * Insert or Update a record if matched
  * @example <caption>Upsert a record</caption>
- * upsert("table", { name: (state) => state.data.name });
+ * upsert("users", { name: "Tuchi Dev" });
  * @function
  * @public
  * @param {string} table - The target table
