@@ -7,8 +7,6 @@ import {
 import nodepath from 'node:path';
 
 
-let access_token;
-
 export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
 
@@ -34,14 +32,14 @@ export const getAccessToken = async (configuration, headers) => {
     parseAs: 'json'
   });
 
-  return body.responseBody.accessToken;
+  return { ...configuration, access_token: body.responseBody.accessToken }
 };
 
 export const request = async (configuration = {}, method, path, options) => {
-  const { baseUrl  } = configuration;
+  const { baseUrl, access_token } = configuration;
 
-  if(!access_token)
-      access_token = await getAccessToken(configuration, options.headers)
+  if (!access_token)
+    configuration = await getAccessToken(configuration, options.headers)
 
   const { query = {}, body = {} } = options;
 
@@ -50,7 +48,7 @@ export const request = async (configuration = {}, method, path, options) => {
     baseUrl,
     headers: {
       'content-type': 'application/json',
-      Authorization: `Bearer ${access_token}`,
+      Authorization: `Bearer ${configuration.access_token}`,
       ...options.headers,
     },
     body,
