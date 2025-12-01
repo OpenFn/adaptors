@@ -24,8 +24,13 @@ describe('request', () => {
   it('makes a successful GET request', async () => {
     testServer
       .intercept({
-        path: '/api/v2/disbursements/search-transactions?pageNo=0&pageSize=10&sourceAccountNumber=4864192954',
+        path: '/api/v2/disbursements/search-transactions',
         method: 'GET',
+        query: {
+          pageNo: 0,
+          pageSize: 10,
+          sourceAccountNumber: 4864192954
+        }
       })
       .reply(200, testData.disbursements.response);
 
@@ -79,8 +84,13 @@ describe('get', () => {
   it('successfully gets disbursements', async () => {
     testServer
       .intercept({
-        path: '/api/v2/disbursements/search-transactions?pageNo=0&pageSize=10&sourceAccountNumber=4864192954',
-        method: 'GET'
+        path: '/api/v2/disbursements/search-transactions',
+        method: 'GET',
+        query: {
+          pageNo: 0,
+          pageSize: 10,
+          sourceAccountNumber: 4864192954
+        }
       })
       .reply(200, testData.disbursements.response);
 
