@@ -39,7 +39,7 @@ describe('sql', () => {
   it('should safely handle sqli inputs', async () => {
     const state = {
       configuration,
-      data: { order_id: 'DROP TABLE users; --' },
+      data: { order_id: 'DROP TABLE users; --' }, //TODO: If There is order_id of 0, it will be returned as a valid record??
     };
 
     const { data } = await execute(
@@ -92,7 +92,7 @@ describe('upsert', () => {
     const state = {
       configuration,
       data: {
-        order_id: 0,
+        order_id: 188,
         specimen_source: 'Blood',
         laterality: 'Right',
         clinical_history: 'Mild fever',
