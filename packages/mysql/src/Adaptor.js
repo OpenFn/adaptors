@@ -7,6 +7,7 @@ import mysql from 'mysql2/promise';
 import knex from 'knex';
 
 let connection;
+let knexInstance = knex({ client: 'mysql2' });
 
 async function connect(state) {
   if (connection) {
@@ -36,6 +37,7 @@ async function disconnect(state) {
     console.log('Disconected from database...');
     connection = null;
   }
+  knexInstance.destroy();
   return state;
 }
 
@@ -188,8 +190,6 @@ export function upsert(table, fields) {
       fields
     );
 
-    const knexInstance = knex({ client: 'mysql2' });
-
     const insertQuery = knexInstance(resolvedTable).insert(resolvedFields);
     const insertString = insertQuery.toString();
 
@@ -237,7 +237,6 @@ export function upsertMany(table, data) {
       return state;
     }
 
-    const knexInstance = knex({ client: 'mysql2' });
     const columns = Object.keys(resolvedData[0]);
 
     const insertQuery = knexInstance(resolvedTable).insert(resolvedData);
