@@ -218,7 +218,8 @@ export function sql(params) {
       dangerousPatterns.forEach(pattern => {
         if (pattern.test(query)) {
           throw new Error(
-            'Query blocked. Failed validation due to dangerous patterns.'
+            'SQL query contains potentially dangerous pattern. ' +
+              'Ensure this is intentional and from a trusted source.'
           );
         }
       });
