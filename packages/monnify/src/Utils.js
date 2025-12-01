@@ -21,7 +21,7 @@ export const prepareNextState = (state, response) => {
 };
 
 export const getAccessToken = async (configuration, headers) => {
-  const { apiKey, secretKey, baseUrl } = configuration;
+  let { apiKey, secretKey, baseUrl } = configuration;
 
   const { body } = await commonRequest('POST', 'api/v1/auth/login', {
     headers: {
@@ -36,7 +36,7 @@ export const getAccessToken = async (configuration, headers) => {
 };
 
 export const request = async (configuration = {}, method, path, options) => {
-  const { baseUrl, access_token } = configuration;
+  let { baseUrl, access_token } = configuration;
 
   if (!access_token)
     configuration = await getAccessToken(configuration, options.headers)
