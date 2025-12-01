@@ -4,7 +4,7 @@ import {
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 import mysql from 'mysql2/promise';
-import squel from 'squel';
+import knex from 'knex';
 
 let connection;
 
@@ -93,11 +93,14 @@ export function sql(sqlQuery, options = {}) {
     );
 
     const { writeSql = false, execute = true, values } = resolvedOptions;
-    const sqlString = mysql.format(resolvedSqlQuery, values);
 
     if (writeSql) {
-      console.log('Prepared SQL:', sqlString);
-      state.queries.push(sqlString);
+      console.log('Prepared SQL:', resolvedSqlQuery);
+      if (values) {
+        state.queries.push({ sql: resolvedSqlQuery, values });
+      } else {
+        state.queries.push(resolvedSqlQuery);
+      }
     }
 
     if (!execute) {
@@ -109,7 +112,10 @@ export function sql(sqlQuery, options = {}) {
     }
 
     try {
-      const [result, fields] = await connection.execute(sqlString);
+      const [result, fields] = await connection.execute(
+        resolvedSqlQuery,
+        values
+      );
       console.log('Query executed successfully.');
       return composeNextState(state, {
         result,
@@ -124,8 +130,8 @@ export function sql(sqlQuery, options = {}) {
 
 /**
  * Insert a record
- * @example <caption>Insert a record into the `users` table</caption>
- * insert("users", (state) => state.data);
+ * @example <caption>Insert a record into a table</caption>
+ * insert("users", { name: "one", email: "one@openfn.org" });
  * @function
  * @public
  * @param {string} table - The target table
@@ -149,6 +155,7 @@ export function insert(table, fields) {
       `INSERT INTO ?? (${columns}) VALUES (${placeholders})`,
       [resolvedTable, ...keys]
     );
+
     try {
       const [result, fields] = await connection.execute(sqlString, values);
       console.log('Success...');
@@ -165,7 +172,7 @@ export function insert(table, fields) {
 
 /**
  * Insert or Update a record if matched
- * @example <caption>Upsert a record</caption>
+ * @example <caption>Upsert a record into a table</caption>
  * upsert("users", { name: "Tuchi Dev" });
  * @function
  * @public
@@ -175,36 +182,23 @@ export function insert(table, fields) {
  */
 export function upsert(table, fields) {
   return async state => {
-    const [valuesObj] = expandReferences(state, fields);
+    const [resolvedTable, resolvedFields] = expandReferences(
+      state,
+      table,
+      fields
+    );
 
-    const squelMysql = squel.useFlavour('mysql');
+    const knexInstance = knex({ client: 'mysql2' });
 
-    var insertParams = squelMysql
-      .insert({
-        autoQuoteFieldNames: true,
-      })
-      .into(table)
-      .setFields(valuesObj)
-      .toParam();
+    const insertQuery = knexInstance(resolvedTable).insert(resolvedFields);
+    const insertString = insertQuery.toString();
 
-    var sql = insertParams.text;
-    var inserts = insertParams.values;
-    const insertString = mysql.format(sql, inserts);
+    const updateParts = Object.keys(resolvedFields).map(
+      key => `${knexInstance.ref(key)} = VALUES(${knexInstance.ref(key)})`
+    );
+    const updateClause = updateParts.join(', ');
 
-    var updateParams = squelMysql
-      .update({
-        autoQuoteFieldNames: true,
-      })
-      .table('')
-      .setFields(valuesObj)
-      .toParam();
-
-    var sql = updateParams.text;
-    var inserts = updateParams.values;
-    const updateString = mysql.format(sql, inserts);
-
-    const upsertString =
-      insertString + ` ON DUPLICATE KEY UPDATE ` + updateString.slice(10);
+    const upsertString = `${insertString} ON DUPLICATE KEY UPDATE ${updateClause}`;
 
     console.log('Executing MySQL query: ' + upsertString);
     try {
@@ -221,7 +215,7 @@ export function upsert(table, fields) {
 /**
  * Insert or update multiple records using ON DUPLICATE KEY
  * @public
- * @example <caption>Upsert multiple records</caption>
+ * @example <caption>Upsert multiple records into a table</caption>
  * upsertMany(
  *   "users", // the DB table
  *   [
@@ -237,21 +231,24 @@ export function upsert(table, fields) {
  */
 export function upsertMany(table, data) {
   return async state => {
-    const [rows] = expandReferences(state, data);
-    if (!rows || rows.length === 0) {
+    const [resolvedTable, resolvedData] = expandReferences(state, table, data);
+    if (!resolvedData || resolvedData.length === 0) {
       console.log('No records provided; skipping upsert.');
       return state;
     }
 
-    const squelMysql = squel.useFlavour('mysql');
-    const columns = Object.keys(rows[0]);
+    const knexInstance = knex({ client: 'mysql2' });
+    const columns = Object.keys(resolvedData[0]);
 
-    let upsertSql = squelMysql.insert().into(table).setFieldsRows(rows);
-    columns.map(c => {
-      upsertSql = upsertSql.onDupUpdate(`${c}=values(${c})`);
-    });
+    const insertQuery = knexInstance(resolvedTable).insert(resolvedData);
+    const insertString = insertQuery.toString();
 
-    const upsertString = upsertSql.toString();
+    const updateParts = columns.map(
+      c => `${knexInstance.ref(c)} = VALUES(${knexInstance.ref(c)})`
+    );
+    const updateClause = updateParts.join(', ');
+
+    const upsertString = `${insertString} ON DUPLICATE KEY UPDATE ${updateClause}`;
 
     try {
       const [result, fields] = await connection.execute(upsertString);
