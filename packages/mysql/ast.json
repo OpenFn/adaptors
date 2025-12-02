@@ -39,41 +39,15 @@
           },
           {
             "title": "param",
-            "description": "Optional options argument.",
+            "description": " The sql query options.",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "object"
+                "name": "sqlOptions"
               }
             },
             "name": "options"
-          },
-          {
-            "title": "param",
-            "description": "If true, logs the generated SQL statement. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.writeSql",
-            "default": "false"
-          },
-          {
-            "title": "param",
-            "description": "If false, does not execute the SQL, just logs it and adds to state.queries. Defaults to true.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.execute",
-            "default": "true"
           },
           {
             "title": "state",
@@ -89,7 +63,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "insert",
@@ -247,7 +221,7 @@
           },
           {
             "title": "param",
-            "description": "An array of objects or a function that returns an array",
+            "description": "An array of objects fields",
             "type": {
               "type": "NameExpression",
               "name": "array"
