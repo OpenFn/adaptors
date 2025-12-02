@@ -22,6 +22,9 @@ This adaptor exports the following from common:
     <a href="/adaptors/packages/common-docs#as">as()</a>
 </dt>
 <dt>
+    <a href="/adaptors/packages/common-docs#assert">assert()</a>
+</dt>
+<dt>
     <a href="/adaptors/packages/common-docs#combine">combine()</a>
 </dt>
 <dt>
@@ -74,10 +77,19 @@ Insert a record
 | table | <code>string</code> | The target table |
 | fields | <code>object</code> | A fields object |
 
+This operation writes the following keys to state:
 
-**Example:** Insert a record into the `users` table
+| State Key | Description |
+| --- | --- |
+| data | the query results object |
+| data.result | the query result rows |
+| data.fields | the query result fields |
+| queries | an array of queries executed. Queries are added if `options.writeSql` is true. |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** Insert a record into a table
 ```js
-insert("users", { name: (state) => state.data.name });
+insert("users", { name: "one", email: "one@openfn.org" });
 ```
 
 * * *
@@ -91,17 +103,30 @@ as this can be a vector for injection attacks. See [OWASP SQL Injection Preventi
 for guidelines
 
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| sqlQuery | <code>string</code> \| <code>function</code> |  | The SQL query as a string or a function that returns a string using state. |
-| [options] | <code>object</code> |  | Optional options argument. |
-| [options.writeSql] | <code>boolean</code> | <code>false</code> | If true, logs the generated SQL statement. Defaults to false. |
-| [options.execute] | <code>boolean</code> | <code>true</code> | If false, does not execute the SQL, just logs it and adds to state.queries. Defaults to true. |
+| Param | Type | Description |
+| --- | --- | --- |
+| sqlQuery | <code>string</code> | The sql query string. |
+| [options] | [<code>sqlOptions</code>](#sqloptions) | The sql query options. |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the query results object |
+| data.result | the query result rows |
+| data.fields | the query result fields |
+| queries | an array of queries executed. Queries are added if `options.writeSql` is true. |
+| references | an array of all previous data objects used in the Job |
 
 **Example**
 ```js
 sql(state => `select * from ${state.data.tableName};`, { writeSql: true })
+```
+**Example:** Prepared statements
+```js
+sql(state => `select * from ?? where id = ?;`, {
+  values: state => [state.data.tableName, state.data.id],
+});
 ```
 
 * * *
@@ -118,10 +143,19 @@ Insert or Update a record if matched
 | table | <code>string</code> | The target table |
 | fields | <code>object</code> | A fields object |
 
+This operation writes the following keys to state:
 
-**Example:** Upsert a record
+| State Key | Description |
+| --- | --- |
+| data | the query results object |
+| data.result | the query result rows |
+| data.fields | the query result fields |
+| queries | an array of queries executed. Queries are added if `options.writeSql` is true. |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** Upsert a record into a table
 ```js
-upsert("table", { name: (state) => state.data.name });
+upsert("users", { name: "Tuchi Dev" });
 ```
 
 * * *
@@ -136,20 +170,34 @@ Insert or update multiple records using ON DUPLICATE KEY
 | Param | Type | Description |
 | --- | --- | --- |
 | table | <code>string</code> | The target table |
-| data | <code>array</code> | An array of objects or a function that returns an array |
+| data | <code>array</code> | An array of objects fields |
 
+This operation writes the following keys to state:
 
-**Example:** Upsert multiple records
-```js
-upsertMany(
-  'users', // the DB table
-  [
-    { name: 'one', email: 'one@openfn.org' },
-    { name: 'two', email: 'two@openfn.org' },
-  ]
-)
-```
+| State Key | Description |
+| --- | --- |
+| data | the query results object |
+| data.result | the query result rows |
+| data.fields | the query result fields |
+| queries | an array of queries executed. Queries are added if `options.writeSql` is true. |
+| references | an array of all previous data objects used in the Job |
+
 
 * * *
 
+
+##  Interfaces
+
+### sqlOptions
+
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [values] | <code>array</code> |  | An array of values for prepared statements. |
+| [writeSql] | <code>boolean</code> | <code>false</code> | If true, logs the generated SQL statement. Defaults to false. |
+| [execute] | <code>boolean</code> | <code>true</code> | If false, does not execute the SQL, just logs it and adds to state.queries. Defaults to true. |
+
+
+* * *
 
