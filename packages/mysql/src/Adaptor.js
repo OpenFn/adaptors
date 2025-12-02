@@ -46,6 +46,16 @@ export function setMockConnection(mockConnection) {
 }
 
 /**
+ * State object
+ * @typedef {Object} MySQLState
+ * @property data - the query results object
+ * @property data.result - the query result rows
+ * @property data.fields - the query result fields
+ * @property queries - an array of queries executed. Queries are added if `options.writeSql` is true.
+ * @property references - an array of all previous data objects used in the Job
+ * @private
+ **/
+/**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for mysql.
  * @private
@@ -79,10 +89,11 @@ export function execute(...operations) {
  * });
  * @function
  * @public
- * @param {string|function} sqlQuery - The SQL query as a string or a function that returns a string using state.
+ * @param {string} sqlQuery - The sql query string.
  * @param {object} [options] - Optional options argument.
  * @param {boolean} [options.writeSql = false] - If true, logs the generated SQL statement. Defaults to false.
  * @param {boolean} [options.execute = true] - If false, does not execute the SQL, just logs it and adds to state.queries. Defaults to true.
+ * @state {MySQLState}
  * @returns {Operation}
  */
 
@@ -138,6 +149,7 @@ export function sql(sqlQuery, options = {}) {
  * @public
  * @param {string} table - The target table
  * @param {object} fields - A fields object
+ * @state {MySQLState}
  * @returns {Operation}
  */
 export function insert(table, fields) {
@@ -180,6 +192,7 @@ export function insert(table, fields) {
  * @public
  * @param {string} table - The target table
  * @param {object} fields - A fields object
+ * @state {MySQLState}
  * @returns {Operation}
  */
 export function upsert(table, fields) {
@@ -227,6 +240,7 @@ export function upsert(table, fields) {
  * @public
  * @param {string} table - The target table
  * @param {array} data - An array of objects or a function that returns an array
+ * @state {MySQLState}
  * @returns {Operation}
  */
 export function upsertMany(table, data) {

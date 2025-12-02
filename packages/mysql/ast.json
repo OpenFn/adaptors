@@ -30,19 +30,10 @@
           },
           {
             "title": "param",
-            "description": "The SQL query as a string or a function that returns a string using state.",
+            "description": "The sql query string.",
             "type": {
-              "type": "UnionType",
-              "elements": [
-                {
-                  "type": "NameExpression",
-                  "name": "string"
-                },
-                {
-                  "type": "NameExpression",
-                  "name": "function"
-                }
-              ]
+              "type": "NameExpression",
+              "name": "string"
             },
             "name": "sqlQuery"
           },
@@ -83,6 +74,10 @@
             },
             "name": "options.execute",
             "default": "true"
+          },
+          {
+            "title": "state",
+            "description": "{MySQLState}"
           },
           {
             "title": "returns",
@@ -139,6 +134,10 @@
             "name": "fields"
           },
           {
+            "title": "state",
+            "description": "{MySQLState}"
+          },
+          {
             "title": "returns",
             "description": null,
             "type": {
@@ -191,6 +190,10 @@
               "name": "object"
             },
             "name": "fields"
+          },
+          {
+            "title": "state",
+            "description": "{MySQLState}"
           },
           {
             "title": "returns",
@@ -250,6 +253,10 @@
               "name": "array"
             },
             "name": "data"
+          },
+          {
+            "title": "state",
+            "description": "{MySQLState}"
           },
           {
             "title": "returns",
