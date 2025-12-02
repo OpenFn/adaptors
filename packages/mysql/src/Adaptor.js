@@ -41,6 +41,35 @@ async function disconnect(state) {
   return state;
 }
 
+function formatFields(fields) {
+  if (!fields) return undefined;
+  return fields.map(field => ({
+    name: field.name,
+    type: field.type,
+    characterSet: field.characterSet,
+    table: field.orgTable,
+    schema: field.schema,
+    length: field.columnLength,
+    decimals: field.decimals,
+    flags: field.flags,
+    encoding: field.encoding,
+  }));
+}
+
+// Usage with your SQL execution function
+async function executeQueryAndFormat(sqlQuery, options = {}) {
+  try {
+    const [result, fields] = await connection.execute(sqlQuery, options.values);
+    const formattedFields = formatFields(fields);
+    return {
+      result,
+      fields: formattedFields,
+    };
+  } catch (err) {
+    console.error('Error executing query:', err);
+    throw err;
+  }
+}
 export function setMockConnection(mockConnection) {
   connection = mockConnection;
 }
@@ -55,6 +84,13 @@ export function setMockConnection(mockConnection) {
  * @property references - an array of all previous data objects used in the Job
  * @private
  **/
+
+/**
+ * @typedef {Object} sqlOptions
+ * @property {array} [values] - An array of values for prepared statements.
+ * @property {boolean} [writeSql = false] - If true, logs the generated SQL statement. Defaults to false.
+ * @property {boolean} [execute = true] - If false, does not execute the SQL, just logs it and adds to state.queries. Defaults to true.
+ * */
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for mysql.
@@ -90,9 +126,7 @@ export function execute(...operations) {
  * @function
  * @public
  * @param {string} sqlQuery - The sql query string.
- * @param {object} [options] - Optional options argument.
- * @param {boolean} [options.writeSql = false] - If true, logs the generated SQL statement. Defaults to false.
- * @param {boolean} [options.execute = true] - If false, does not execute the SQL, just logs it and adds to state.queries. Defaults to true.
+ * @param {sqlOptions} [options] -  The sql query options.
  * @state {MySQLState}
  * @returns {Operation}
  */
@@ -132,7 +166,7 @@ export function sql(sqlQuery, options = {}) {
       console.log('Query executed successfully.');
       return composeNextState(state, {
         result,
-        fields,
+        fields: formatFields(fields),
       });
     } catch (err) {
       console.log('Error executing query.');
@@ -160,8 +194,6 @@ export function insert(table, fields) {
       fields
     );
     const keys = Object.keys(resolvedFields);
-    const values = Object.values(resolvedFields);
-
     const placeholders = keys.map(() => '?').join(', ');
     const columns = keys.map(() => '??').join(', ');
 
@@ -171,11 +203,14 @@ export function insert(table, fields) {
     );
 
     try {
-      const [result, fields] = await connection.execute(sqlString, values);
+      const [result, fields] = await connection.execute(
+        sqlString,
+        Object.values(resolvedFields)
+      );
       console.log('Success...');
       return composeNextState(state, {
         result,
-        fields,
+        fields: formatFields(fields),
       });
     } catch (err) {
       console.log('Error inserting record.');
@@ -217,7 +252,7 @@ export function upsert(table, fields) {
     try {
       const [result, fields] = await connection.execute(upsertString);
       console.log('Success...');
-      return composeNextState(state, { result, fields });
+      return composeNextState(state, { result, fields: formatFields(fields) });
     } catch (err) {
       console.log("That's an error.");
       throw err;
@@ -228,7 +263,7 @@ export function upsert(table, fields) {
 /**
  * Insert or update multiple records using ON DUPLICATE KEY
  * @public
- * @example <caption>Upsert multiple records into a table</caption>
+ * @example<caption>Upsert multiple records into a table</caption>
  * upsertMany(
  *   "users", // the DB table
  *   [
@@ -239,7 +274,7 @@ export function upsert(table, fields) {
  * @function
  * @public
  * @param {string} table - The target table
- * @param {array} data - An array of objects or a function that returns an array
+ * @param {array} data - An array of objects fields
  * @state {MySQLState}
  * @returns {Operation}
  */
@@ -266,7 +301,7 @@ export function upsertMany(table, data) {
     try {
       const [result, fields] = await connection.execute(upsertString);
       console.log('Success...');
-      return composeNextState(state, { result, fields });
+      return composeNextState(state, { result, fields: formatFields(fields) });
     } catch (err) {
       console.log("That's an error.");
       throw err;
