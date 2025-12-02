@@ -259,7 +259,7 @@
               "type": "NameExpression",
               "name": "RequestOptions"
             },
-            "name": "options-null"
+            "name": "options"
           },
           {
             "title": "state",
@@ -275,7 +275,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "patch",
