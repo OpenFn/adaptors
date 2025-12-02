@@ -98,12 +98,21 @@ describe('upsert', () => {
   it('should upsert a record', async () => {
     setMockConnection({
       end: () => {},
-      execute: async (sql, values) => {
-        // expect(sql).to.eql(
-        //   'INSERT INTO `users` (`address`, `name`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `address` = values(`address`)'
-        // );
-        // expect(values).to.eql(['Ave Dela Casta', 'Alice']);
-        return [{}, []];
+      execute: async sql => {
+        expect(sql).to.eql(
+          "insert into `users` (`address`, `name`) values ('\\' OR \\'1\\'=\\'1\\'; --', 'Alice') ON DUPLICATE KEY UPDATE `address` = VALUES(`address`), `name` = VALUES(`name`)"
+        );
+        return [
+          {
+            fieldCount: 0,
+            affectedRows: 1,
+            insertId: 2,
+            info: '',
+            serverStatus: 2,
+            warningStatus: 0,
+            changedRows: 0,
+          },
+        ];
       },
     });
     const fakeState = {
@@ -114,7 +123,7 @@ describe('upsert', () => {
     const { data } = await execute(upsert('users', state => state.data))(
       fakeState
     );
-    expect(data.result).to.eql({});
-    expect(data.fields).to.eql([]);
+    expect(data.result.affectedRows).to.eql(1);
+    expect(data.fields).to.eql(undefined);
   });
 });

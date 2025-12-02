@@ -88,6 +88,35 @@ describe('insert', () => {
 });
 
 describe('upsert', () => {
+  it('should safely handle sqli inputs', async () => {
+    const state = {
+      configuration,
+      data: {
+        name: 'Alice',
+        address: "' OR '1'='1'; --",
+      },
+    };
+
+    const { data } = await execute(upsert('users', state => state.data))(state);
+    expect(data.result.affectedRows).to.eq(1);
+    expect(data.fields).to.eq(undefined);
+    const insertId = data.result.insertId;
+
+    const { data: fetchData } = await execute(
+      sql('SELECT name, address FROM users WHERE name = ? and id = ?', {
+        values: ["Alice", insertId],
+      })
+    )(state);
+
+    
+    expect(fetchData.result).to.deep.equal([
+      { name: 'Alice', address: "' OR '1'='1'; --" },
+    ]);
+
+    expect(fetchData.fields.length).to.equal(2);
+    expect(fetchData.fields[0].name).to.equal("name");
+    expect(fetchData.fields[1].name).to.equal("address");
+  });
   it('should upsert a record', async () => {
     const state = {
       configuration,
