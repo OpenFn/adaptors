@@ -14,6 +14,11 @@
             "description": "sql(state => `select * from ${state.data.tableName};`, { writeSql: true })"
           },
           {
+            "title": "example",
+            "description": "sql(state => `select * from ?? where id = ?;`, {\n  values: state => [state.data.tableName, state.data.id],\n});",
+            "caption": "Prepared statements"
+          },
+          {
             "title": "function",
             "description": null,
             "name": null
@@ -25,59 +30,28 @@
           },
           {
             "title": "param",
-            "description": "The SQL query as a string or a function that returns a string using state.",
+            "description": "The sql query string.",
             "type": {
-              "type": "UnionType",
-              "elements": [
-                {
-                  "type": "NameExpression",
-                  "name": "string"
-                },
-                {
-                  "type": "NameExpression",
-                  "name": "function"
-                }
-              ]
+              "type": "NameExpression",
+              "name": "string"
             },
             "name": "sqlQuery"
           },
           {
             "title": "param",
-            "description": "Optional options argument.",
+            "description": " The sql query options.",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "object"
+                "name": "sqlOptions"
               }
             },
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "If true, logs the generated SQL statement. Defaults to false.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.writeSql",
-            "default": "false"
-          },
-          {
-            "title": "param",
-            "description": "If false, does not execute the SQL, just logs it and adds to state.queries. Defaults to true.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "name": "options.execute",
-            "default": "true"
+            "title": "state",
+            "description": "{MySQLState}"
           },
           {
             "title": "returns",
@@ -89,7 +63,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "insert",
@@ -102,8 +76,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "insert(\"users\", { name: (state) => state.data.name });",
-            "caption": "Insert a record into the `users` table"
+            "description": "insert(\"users\", { name: \"one\", email: \"one@openfn.org\" });",
+            "caption": "Insert a record into a table"
           },
           {
             "title": "function",
@@ -132,6 +106,10 @@
               "name": "object"
             },
             "name": "fields"
+          },
+          {
+            "title": "state",
+            "description": "{MySQLState}"
           },
           {
             "title": "returns",
@@ -156,8 +134,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "upsert(\"table\", { name: (state) => state.data.name });",
-            "caption": "Upsert a record"
+            "description": "upsert(\"users\", { name: \"Tuchi Dev\" });",
+            "caption": "Upsert a record into a table"
           },
           {
             "title": "function",
@@ -186,6 +164,10 @@
               "name": "object"
             },
             "name": "fields"
+          },
+          {
+            "title": "state",
+            "description": "{MySQLState}"
           },
           {
             "title": "returns",
@@ -215,8 +197,8 @@
           },
           {
             "title": "example",
-            "description": "upsertMany(\n  'users', // the DB table\n  [\n    { name: 'one', email: 'one@openfn.org' },\n    { name: 'two', email: 'two@openfn.org' },\n  ]\n)",
-            "caption": "Upsert multiple records"
+            "description": "upsertMany(\n  \"users\", // the DB table\n  [\n    { name: \"one\", email: \"one@openfn.org\" },\n    { name: \"two\", email: \"two@openfn.org\" },\n  ]\n);",
+            "caption": "Upsert multiple records into a table"
           },
           {
             "title": "function",
@@ -239,12 +221,16 @@
           },
           {
             "title": "param",
-            "description": "An array of objects or a function that returns an array",
+            "description": "An array of objects fields",
             "type": {
               "type": "NameExpression",
               "name": "array"
             },
             "name": "data"
+          },
+          {
+            "title": "state",
+            "description": "{MySQLState}"
           },
           {
             "title": "returns",
@@ -928,6 +914,59 @@
         ]
       },
       "valid": false
+    },
+    {
+      "name": "assert",
+      "params": [
+        "expression",
+        "errorMessage"
+      ],
+      "docs": {
+        "description": "Asserts the given expression or function resolves to `true`, or else throws an exception. Optionally accepts and error message.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "assert('a' === 'b', '\"a\" is not equal to \"b\"')"
+          },
+          {
+            "title": "param",
+            "description": "The expression or function to be evaluated.",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "expression"
+          },
+          {
+            "title": "param",
+            "description": "The error message thrown in case of a failed state.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "errorMessage"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     },
     {
       "name": "as",

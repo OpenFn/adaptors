@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-mysql",
   "label": "MySQL",
-  "version": "3.0.6",
+  "version": "4.0.0",
   "description": "A MySQL Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "main": "dist/index.cjs",
@@ -11,8 +11,9 @@
   },
   "scripts": {
     "build": "pnpm clean && build-adaptor mysql",
-    "test": "mocha --experimental-specifier-resolution=node --no-warnings",
-    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
+    "test": "mocha --experimental-specifier-resolution=node --no-warnings --exclude test/integration.js --recursive",
+    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings --exclude test/integration.js --recursive",
+    "test:integration": "mocha --experimental-specifier-resolution=node --no-warnings test/integration.js",
     "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist",
     "lint": "eslint src"
@@ -27,10 +28,8 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "json-sql": "^0.3.10",
-    "mysql": "^2.13.0",
-    "squel": "^5.8.0",
-    "string-escape": "^0.3.0"
+    "knex": "^3.1.0",
+    "mysql2": "^3.15.3"
   },
   "devDependencies": {
     "assertion-error": "^1.0.1",
