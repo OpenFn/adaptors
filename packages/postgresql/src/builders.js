@@ -29,7 +29,8 @@ export function handleSetNull(options) {
 }
 
 export function handleQueryOptions(state, query, options) {
-  const { writeSql = false, execute = true } = options || {};
+  const { writeSql = false, execute = true, values } = options || {};
+  // TODO: Should we do something with values?
   if (writeSql === true) {
     console.log('Adding prepared SQL to state.queries array.');
     state.queries.push(query);

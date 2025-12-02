@@ -126,8 +126,8 @@ function endClient(state) {
   client.end();
   return state;
 }
-async function queryHandler(query) {
-  const result = await client.query(query);
+async function queryHandler(execute, values) {
+  const result = await client.query(query, values);
   console.log(`${result.command} succeeded, rowCount: ${result.rowCount}`);
   return result;
 }
@@ -143,10 +143,7 @@ export function setMockClient(mockClient) {
  * @example <caption>Text-only Query with writeSql option</caption>
  * sql("select id from users where first_name = 'Mamadou'", { writeSql: true });
  * @example <caption>Parameterized Query</caption>
- * sql({
- *   text: 'INSERT INTO users(name, age) VALUES ($1, $2);',
- *   values: ['Alice', 25],
- * });
+ * sql("INSERT INTO users(name, age) VALUES ($1, $2);", { values: ["Alice", 25]});
  * @example <caption>Format query with util.format</caption>
  * sql(util.format('INSERT INTO users(name, age) VALUES (%L, %L);', 'Alice', 25));
  * @example <caption> Prepared Statements</caption>
@@ -170,7 +167,10 @@ export function sql(sqlQuery, options) {
       options
     );
     handleQueryOptions(state, resolvedSqlQuery, resolvedOptions);
-    const result = await queryHandler(resolvedSqlQuery);
+    const result = await queryHandler(
+      resolvedSqlQuery,
+      resolvedOptions?.values
+    );
     const nextState = {
       ...composeNextState(state, result.rows),
       result,
