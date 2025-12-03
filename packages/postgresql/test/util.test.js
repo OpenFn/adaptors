@@ -1,0 +1,74 @@
+import { expect } from 'chai';
+import * as util from '../src/util.js';
+
+describe('util.format', () => {
+  it('should escape identifiers and literals', async () => {
+    const sqlStr = util.format(
+      'select * from %I where %I = %L;',
+      'foo',
+      'bar',
+      'baz'
+    );
+    expect(sqlStr).to.eql("select * from foo where bar = 'baz';");
+  });
+
+  it('should safely escape table names', async () => {
+    const state = { data: { userInput: 'users; DROP TABLE users; --' } };
+    const sqlStr = util.format('select * from %I', state.data.userInput);
+    expect(sqlStr).to.eql('select * from "users; DROP TABLE users; --"');
+  });
+
+  it('should escape column names', async () => {
+    const state = { data: { col: 'id; DROP TABLE users;' } };
+    const sqlStr = util.format('select %I from users;', state.data.col);
+    expect(sqlStr).to.eql('select "id; DROP TABLE users;" from users;');
+  });
+
+  it('should escape both columns and values', async () => {
+    const state = {
+      data: {
+        col: 'name); DELETE FROM users; --',
+        value: `' OR 1=1; --`,
+        table: `users; DROP TABLE orders; --`,
+      },
+    };
+    const sqlStr = util.format(
+      'SELECT * FROM %I WHERE %I = %L',
+      state.data.table,
+      state.data.col,
+      state.data.value
+    );
+    expect(sqlStr).to.eql(
+      `SELECT * FROM "users; DROP TABLE orders; --" WHERE "name); DELETE FROM users; --" = ''' OR 1=1; --'`
+    );
+  });
+  it('should support nested arrays parameters', async () => {
+    const sqlStr = util.format('INSERT INTO t (name, age) VALUES %L', [
+      ['a', 1],
+      ['b', 2],
+    ]);
+    expect(sqlStr).to.eql(
+      "INSERT INTO t (name, age) VALUES ('a', '1'), ('b', '2')"
+    );
+  });
+  it('should support arrays and objects as parameters', async () => {
+    const sqlStr = util.format(
+      'SELECT * FROM t WHERE c1 IN (%L) AND c2 = %L',
+      [1, 2, 3],
+      JSON.stringify({ a: 1, b: 2 })
+    );
+    expect(sqlStr).to.eql(
+      `SELECT * FROM t WHERE c1 IN ('1','2','3') AND c2 = '{"a":1,"b":2}'`
+    );
+  });
+  it('should auto cast objects parameters to jsonb', async () => {
+    const sqlStr = util.format(
+      'SELECT * FROM t WHERE c1 IN (%L) AND c2 = %L',
+      [1, 2, 3],
+      { a: 1, b: 2 }
+    );
+    expect(sqlStr).to.eql(
+      `SELECT * FROM t WHERE c1 IN ('1','2','3') AND c2 = '{"a":1,"b":2}'::jsonb`
+    );
+  });
+});

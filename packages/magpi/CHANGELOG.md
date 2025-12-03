@@ -1,5 +1,11 @@
 # @openfn/language-magpi
 
+## 1.2.7 - 02 December 2025
+
+### Patch Changes
+
+- 6aa9800: Security update
+
 ## 1.2.6 - 10 July 2025
 
 ### Patch Changes

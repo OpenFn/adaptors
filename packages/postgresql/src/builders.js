@@ -1,0 +1,59 @@
+import { format } from './util.js';
+
+export function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
+export function handleValues(sqlString, nullString) {
+  let sql = sqlString;
+  if (nullString == false) {
+    return sqlString;
+  } else if (Array.isArray(nullString)) {
+    nullString.forEach(ns => {
+      const re = new RegExp(escapeRegExp(ns), 'g');
+      sql = sql.replace(re, 'NULL');
+    });
+    return sql;
+  } else if (typeof nullString === 'object') {
+    throw 'setNull must be a string or an array of strings.';
+  }
+  const re = new RegExp(escapeRegExp(nullString), 'g');
+  return sqlString.replace(re, 'NULL');
+}
+
+export function handleSetNull(options) {
+  if (options?.setNull === false) {
+    return false;
+  }
+  return options?.setNull || "'undefined'";
+}
+
+export function handleQueryOptions(state, query, options) {
+  const { writeSql = false, execute = true } = options || {};
+  // TODO: Should we do something with options.values?
+  if (writeSql === true) {
+    console.log('Adding prepared SQL to state.queries array.');
+    state.queries.push(query);
+  }
+
+  if (execute === false) {
+    console.log('Not executing query; options.execute === false');
+    console.log('Query not executed.');
+    return state;
+  }
+}
+
+export function findValueQuery(uuid, relation, where, operator) {
+  let conditionsArray = [];
+  for (let key in where) {
+    const op = operator?.[key] || '=';
+    const value = where[key];
+    conditionsArray.push(format('%I %s %L', key, op, value));
+  }
+
+  const condition =
+    conditionsArray.length > 0 ? `where ${conditionsArray.join(' and ')}` : '';
+
+  const queryStr = format('select %I from %I %s', uuid, relation, condition);
+  return queryStr;
+}

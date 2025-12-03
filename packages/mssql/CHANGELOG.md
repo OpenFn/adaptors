@@ -1,5 +1,12 @@
 # @openfn/language-mssql
 
+## 7.0.0
+
+### Major Changes
+
+- c5c50a4: - Fix SQL injection vulnerabilities.
+  - Default `trustServerCertificate` to `false`
+
 ## 6.0.7 - 28 November 2025
 
 ### Patch Changes

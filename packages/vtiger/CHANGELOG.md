@@ -1,5 +1,11 @@
 # @openfn/language-vtiger
 
+## 1.3.25 - 02 December 2025
+
+### Patch Changes
+
+- 6aa9800: Security update
+
 ## 1.3.24 - 28 November 2025
 
 ### Patch Changes
