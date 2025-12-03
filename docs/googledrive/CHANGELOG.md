@@ -1,5 +1,11 @@
 # @openfn/language-googledrive
 
+## 2.0.7 - 02 December 2025
+
+### Patch Changes
+
+- e8f7f2d: Security update
+
 ## 2.0.6 - 28 November 2025
 
 ### Patch Changes

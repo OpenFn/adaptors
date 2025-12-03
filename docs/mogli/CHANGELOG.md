@@ -1,5 +1,11 @@
 v0.1.6
 
+## 0.6.9 - 02 December 2025
+
+### Patch Changes
+
+- 6aa9800: Security update
+
 ## 0.6.8 - 28 November 2025
 
 ### Patch Changes

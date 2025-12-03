@@ -10,7 +10,7 @@
 <dt>
     <a href="#post">post(path, data, options)</a></dt>
 <dt>
-    <a href="#put">put(path, data, options-)</a></dt>
+    <a href="#put">put(path, data, options)</a></dt>
 <dt>
     <a href="#request">request(method, path, options)</a></dt>
 </dl>
@@ -272,7 +272,7 @@ post('/patient', $.data, {
 
 ### put
 
-<p><code>put(path, data, options-) ⇒ Operation</code></p>
+<p><code>put(path, data, options) ⇒ Operation</code></p>
 
 Make a PUT request. If `configuration.baseUrl` is set, paths must be relative.
 
@@ -281,7 +281,7 @@ Make a PUT request. If `configuration.baseUrl` is set, paths must be relative.
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`. |
 | data | <code>object</code> | Body data to append to the request. JSON will be converted to a string. |
-| options- | [<code>RequestOptions</code>](#requestoptions) | Query, Headers and Auth parameters |
+| options | [<code>RequestOptions</code>](#requestoptions) | Query, Headers and Auth parameters |
 
 This operation writes the following keys to state:
 

@@ -221,17 +221,22 @@ modifyTable('table_name', state => state.data.map(
 
 <p><code>sql(params) ⇒ Operation</code></p>
 
-Execute an SQL statement
+Execute a raw SQL statement
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| params | <code>object</code> | Payload data for the message |
+| params | <code>object</code> | Payload data for the SQL query |
+| params.query | <code>string</code> | The SQL query to execute |
+| params.options | <code>object</code> | Optional query options |
 
 
 **Example**
 ```js
-sql({ query, options })
+sql({
+  query: 'SELECT * FROM users WHERE id = @id',
+  options
+})
 ```
 
 * * *
