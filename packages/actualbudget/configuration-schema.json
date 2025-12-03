@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "serverUrl": {
+      "title": "Actual Budget Server URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The Server URL (https://demo.actualbudget.com)",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://demo.actualbudget.com"]
+    },
+    "password": {
+      "title": "Password",
+      "type": "string",
+      "description": "Actual Server Password",
+      "writeOnly": true,
+      "examples": ["@some(!)Str0ngp4ss0w0rd"]
+    },
+    "budgetSyncId": {
+      "title": "Budget Sync ID",
+      "type": "string",
+      "description": "The budget sync ID",
+      "examples": ["demo-budget"]
+    },
+    "budgetPassword": {
+      "title": "Budget Password",
+      "type": "string",
+      "description": "Budget Password",
+      "writeOnly": true,
+      "examples": ["@some(!)Str0ngp4ss0w0rd"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["serverUrl", "password", "budgetSyncId"]
+}

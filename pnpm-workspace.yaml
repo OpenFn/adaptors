@@ -1,10 +1,18 @@
 packages:
-  # all packages in direct subdirs of packages/
-  - 'packages/*'
-  # all packages in subdirs of tools/
-  - 'tools/**'
-  # exclude packages that are inside test directories
+  - packages/*
+  - tools/**
   - '!**/test/**'
-  # exclude testing
   - '!packages/testing/**'
-minimumReleaseAge: 4320 # 3 days
+
+ignoredBuiltDependencies:
+  - '@swc/core'
+  - core-js
+  - cpu-features
+  - esbuild
+  - fsevents
+  - ssh2
+
+minimumReleaseAge: 4320
+
+onlyBuiltDependencies:
+  - better-sqlite3
