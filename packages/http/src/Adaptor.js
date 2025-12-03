@@ -122,7 +122,7 @@ export function post(path, data, options) {
  * @function
  * @param {string} path - Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`.
  * @param {object} data - Body data to append to the request. JSON will be converted to a string.
- * @param {RequestOptions} options- Query, Headers and Auth parameters
+ * @param {RequestOptions} options - Query, Headers and Auth parameters
  * @state {HttpState}
  * @returns {Operation}
  */
