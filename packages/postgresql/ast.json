@@ -26,7 +26,7 @@
           },
           {
             "title": "example",
-            "description": "sql({\n  text: 'INSERT INTO users(name, age) VALUES ($1, $2);',\n  values: ['Alice', 25],\n});",
+            "description": "sql(\"INSERT INTO users(name, age) VALUES ($1, $2);\", { values: [\"Alice\", 25]});",
             "caption": "Parameterized Query"
           },
           {
