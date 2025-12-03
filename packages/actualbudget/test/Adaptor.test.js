@@ -1,75 +1,43 @@
 import { expect } from 'chai';
-import { enableMockClient } from '@openfn/language-common/util';
+import { getBudgetMonth, setMockApi } from '../src/Adaptor.js';
 
-import { request, dataValue } from '../src/Adaptor.js';
+const state = {
+  configuration: {
+    serverUrl: 'https://actual.budget',
+    password: 'password',
+    budgetSyncId: 'budgetSyncId',
+  },
+};
 
-// This creates a mock client which acts like a fake server.
-// It enables pattern-matching on the request object and custom responses
-// For the full mock API see
-// https://undici.nodejs.org/#/docs/api/MockPool?id=mockpoolinterceptoptions
-const testServer = enableMockClient('https://fake.server.com');
+const mockBudgetMonth = month => {
+  if (month !== '2023-01') {
+    throw new Error('Invalid month');
+  }
+  return {
+    month: '2025-01',
+    incomeAvailable: -7634035745,
+    lastMonthOverspent: 0,
+    forNextMonth: 0,
+    totalBudgeted: -585000000,
+    toBudget: -8219035745,
+    fromLastMonth: -7634035745,
+    totalIncome: 0,
+    totalSpent: -265500000,
+    totalBalance: 7586744074,
+    categoryGroups: [],
+  };
+};
+const mockApi = {
+  getBudgetMonth: async month => {
+    return mockBudgetMonth(month);
+  },
+};
 
-describe('request', () => {
-  it('makes a post request to the right endpoint', async () => {
-    // Setup a mock endpoint
-    testServer
-      .intercept({
-        path: '/api/patients',
-        method: 'POST',
-        headers: {
-          Authorization: 'Basic aGVsbG86dGhlcmU=',
-        },
-      })
-      // Set the reply from this endpoint
-      // The body will be returned to state.data
-      .reply(200, { id: 7, fullName: 'Mamadou', gender: 'M' });
+setMockApi(mockApi);
 
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-      data: {
-        fullName: 'Mamadou',
-        gender: 'M',
-      },
-    };
-
-    const finalState = await request('POST', 'patients', {
-      name: state.data.fullName,
-      gender: state.data.gender,
-    })(state);
-
-    expect(finalState.data).to.eql({
-      fullName: 'Mamadou',
-      gender: 'M',
-      id: 7,
-    });
-  });
-
-  it('throws an error if the service returns 403', async () => {
-    testServer
-      .intercept({
-        path: '/api/noAccess',
-        method: 'POST',
-      })
-      .reply(403);
-
-    const state = {
-      configuration: {
-        baseUrl: 'https://fake.server.com',
-        username: 'hello',
-        password: 'there',
-      },
-    };
-
-    const error = await request('POST', 'noAccess', { name: 'taylor' })(
-      state
-    ).catch(error => {
-      return error;
-    });
-
-    expect(error.statusMessage).to.eql('Forbidden');
+describe('getBudgetMonth', () => {
+  it('should fetch the budget for the given month', async () => {
+    const result = await getBudgetMonth('2023-01')(state);
+    expect(result.data).to.be.an('array');
   });
 });

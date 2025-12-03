@@ -1,88 +1,138 @@
-import { expandReferences } from '@openfn/language-common/util';
-import * as util from './Utils';
+import {
+  execute as commonExecute,
+  composeNextState,
+} from '@openfn/language-common';
+import { expandReferences, throwError } from '@openfn/language-common/util';
+import * as actualBudgetApi from '@actual-app/api';
 
-/**
- * State object
- * @typedef {Object} HttpState
- * @property data - the parsed response body
- * @property response - the response from the HTTP server, including headers, statusCode, body, etc
- * @property references - an array of all previous data objects used in the Job
- **/
+let api = actualBudgetApi;
 
-/**
- * Options provided to the HTTP request
- * @typedef {Object} RequestOptions
- * @public
- * @property {object|string} body - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).
- * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
- * @property {object} form - Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body.
- * @property {object} query - An object of query parameters to be encoded into the URL.
- * @property {object} headers - An object of headers to append to the request.
- * @property {string} parseAs - Parse the response body as json, text or stream. By default will use the response headers.
- * @property {number} timeout - Request timeout in ms. Default: 300 seconds.
- * @property {object} tls - TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions
- */
+const init = async state => {
+  const { serverUrl, password, budgetSyncId, budgetPassword } =
+    state.configuration;
+  if (!serverUrl) {
+    throw new Error('serverUrl is required');
+  }
+  if (!password) {
+    throw new Error('password is required');
+  }
+  if (!budgetSyncId) {
+    throw new Error('budgetSyncId is required');
+  }
 
+  await api.init({
+    // Budget data will be cached locally here, in subdirectories for each file.
+    dataDir: '/tmp',
+    serverURL: serverUrl,
+    password,
+  });
+
+  if (budgetPassword) {
+    await api.setbudgetPassword(budgetSyncId, budgetPassword);
+  } else {
+    await api.downloadBudget(budgetSyncId);
+  }
+  return state;
+};
+
+const shutdown = async state => {
+  await api.shutdown();
+  return state;
+};
+
+export function setMockApi(mockApi) {
+  api = mockApi;
+}
 /**
- * Make a GET request
+ * Execute a sequence of operations
+ * Wraps `language-common/execute`, and prepends initial state for http.
  * @example
- * get("patients");
- * @function
- * @public
- * @param {string} path - Path to resource
- * @param {RequestOptions} options - Optional request options
+ * execute(
+ *   create('foo'),
+ *   delete('bar')
+ * )(state)
+ * @param {Operations} operations - Operations to be performed.
  * @returns {Operation}
- * @state {HttpState}
  */
-export function get(path, options) {
-  return request('GET', path, null, options);
+export function execute(...operations) {
+  const initialState = {
+    references: [],
+    data: null,
+  };
+
+  return state => {
+    return commonExecute(
+      init,
+      ...operations,
+      shutdown
+    )({ ...initialState, ...state });
+  };
 }
 
+const errorHandler = err => {
+  // console.error('ActualBudget Adaptor Error:', err);
+  const { type, message, meta } = err;
+  if (
+    type == 'PostError' &&
+    (message.includes('Not Allowed') || message.includes('network-failure'))
+  ) {
+    throwError(type, {
+      meta,
+      message,
+      fix: 'Error accessing Actual Server, check Actual Server url',
+    });
+  } else if (err.message.includes('Could not get remote files')) {
+    throwError(type, {
+      meta,
+      message,
+      fix: 'Error accessing Actual Server, check Actual Server password',
+    });
+  } else if (
+    message.includes('not found') ||
+    message.includes('No budget') ||
+    message.includes('Cannot destructure property')
+  ) {
+    throwError(type || 404, { message, meta });
+  } else if (
+    message.includes('Invalid month') ||
+    message.includes('required') ||
+    message.includes('Bad date format') ||
+    message.includes('does not exist on table') ||
+    message.includes('convert to integer') ||
+    message.includes('must be')
+  ) {
+    throwError(type || 400, { message, meta });
+  } else {
+    throwError(type, {
+      fix: 'Unknown error while interacting with Actual Api. See server logs for more information',
+      message,
+      meta,
+    });
+  }
+};
 /**
- * Make a POST request
- * @example
- * post("patient", { "name": "Bukayo" });
- * @function
+ * Get the monthly budget for a given month
  * @public
- * @param {string} path - Path to resource
- * @param {object} body - Object which will be attached to the POST body
- * @param {RequestOptions} options - Optional request options
- * @returns {Operation}
- * @state {HttpState}
- */
-export function post(path, body, options) {
-  return request('POST', path, body, options);
-}
-
-/**
- * Make a general HTTP request
- * @example
- * request("POST", "patient", { "name": "Bukayo" });
+ * @example <caption>Get the monthly budget for January 2023</caption>
+ * getBudgetMonth('2023-01');
  * @function
- * @public
- * @param {string} method - HTTP method to use
- * @param {string} path - Path to resource
- * @param {object} body - Object which will be attached to the POST body
- * @param {RequestOptions} options - Optional request options
+ * @param {string} month - The month to get the budget for, in YYYY-MM format.
+ * @state {ActualBudgetState}
  * @returns {Operation}
- * @state {HttpState}
  */
-export function request(method, path, body, options = {}) {
+export function getBudgetMonth(month) {
   return async state => {
-    const [resolvedMethod, resolvedPath, resolvedBody, resolvedoptions] =
-      expandReferences(state, method, path, body, options);
+    const [resolvedMonth] = expandReferences(state, month);
+    console.log(`Fetching budget for month ${resolvedMonth}`);
 
-    const response = await util.request(
-      state.configuration,
-      resolvedMethod,
-      resolvedPath,
-      {
-        body: resolvedBody,
-        ...resolvedoptions,
-      }
-    );
-
-    return util.prepareNextState(state, response);
+    try {
+      const budget = await api.getBudgetMonth(resolvedMonth);
+      console.log({ budget });
+      return composeNextState(state, budget);
+    } catch (err) {
+      console.log('Error fetching budget month:', err);
+      // errorHandler(err);
+    }
   };
 }
 
