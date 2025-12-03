@@ -127,7 +127,12 @@ function endClient(state) {
   return state;
 }
 async function queryHandler(query, values) {
-  const result = await client.query(query, values);
+  let result;
+  if (values) {
+    result = await client.query(query, values);
+  } else {
+    result = await client.query(query);
+  }
   console.log(`${result.command} succeeded, rowCount: ${result.rowCount}`);
   return result;
 }
