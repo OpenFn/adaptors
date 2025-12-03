@@ -1,5 +1,11 @@
 # @openfn/language-mysql
 
+## 4.0.1 - 02 December 2025
+
+### Patch Changes
+
+- 6aa9800: Security update
+
 ## 4.0.0
 
 ### Major Changes

@@ -1,5 +1,11 @@
 # @openfn/language-dynamics
 
+## 0.5.27 - 02 December 2025
+
+### Patch Changes
+
+- 6aa9800: Security update
+
 ## 0.5.26 - 28 November 2025
 
 ### Patch Changes
