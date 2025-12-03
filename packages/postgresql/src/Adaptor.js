@@ -126,7 +126,7 @@ function endClient(state) {
   client.end();
   return state;
 }
-async function queryHandler(execute, values) {
+async function queryHandler(query, values) {
   const result = await client.query(query, values);
   console.log(`${result.command} succeeded, rowCount: ${result.rowCount}`);
   return result;
