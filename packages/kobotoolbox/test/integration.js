@@ -1,6 +1,6 @@
 // For creds.json, See LP: OpenFn KoboToolBox Demo
 import { expect } from 'chai';
-import configuration from '../tmp/creds.json' assert { type: 'json' };
+import configuration from '../tmp/creds.json' with { type: 'json' };
 import {
   getDeploymentInfo,
   getSubmissions,
@@ -46,7 +46,7 @@ describe('Integration tests', () => {
 
       it('fetches submission data with a query', async () => {
         const { data } = await execute(
-          http.get('/assets/aUe2eV8pHK9DUEUxT9rCcs/data/', {
+          http.get('/assets/aDReHdA7UuNBYsiCXQBr43/data/', {
             query: {
               limit: 3,
             },
@@ -72,9 +72,9 @@ describe('Integration tests', () => {
 
   describe('getSubmissions', () => {
     it('should return the first submission', async () => {
-      const firstSubmissionUid = '7054126b-2b4e-4c8e-a48d-8c0f47c706e9';
+      const firstSubmissionUid = 'cc1ae15c-0795-4969-b21b-e673b6c0a29a';
       const { data } = await execute(
-        getSubmissions('aUe2eV8pHK9DUEUxT9rCcs', { start: 0, limit: 1 })
+        getSubmissions('aDReHdA7UuNBYsiCXQBr43', { start: 0, limit: 1 })
       )(state);
 
       expect(data[0]._uuid).to.eq(firstSubmissionUid);
@@ -82,7 +82,7 @@ describe('Integration tests', () => {
     });
     it('should get a list of submissions', async () => {
       const { data } = await execute(
-        getSubmissions('aUe2eV8pHK9DUEUxT9rCcs', { pageSize: 3 })
+        getSubmissions('aDReHdA7UuNBYsiCXQBr43', { pageSize: 3 })
       )(state);
 
       expect(data.length).to.greaterThan(3);
@@ -90,8 +90,8 @@ describe('Integration tests', () => {
 
     it('should get a list of submissions with a query', async () => {
       const { data } = await execute(
-        getSubmissions('aUe2eV8pHK9DUEUxT9rCcs', {
-          query: { _submission_time: { $gte: '2025-04-04T21:54:20' } },
+        getSubmissions('aDReHdA7UuNBYsiCXQBr43', {
+          query: { _submission_time: { $gte: '2022-04-12T21:54:20' } },
         })
       )(state);
       expect(data.length).to.greaterThan(0);
@@ -101,11 +101,11 @@ describe('Integration tests', () => {
   describe('getDeploymentInfo', () => {
     it('should get a list of deployment', async () => {
       const { data } = await execute(
-        getDeploymentInfo('aUe2eV8pHK9DUEUxT9rCcs')
+        getDeploymentInfo('aDReHdA7UuNBYsiCXQBr43')
       )(state);
 
       expect(data.asset.name).to.eq(
-        'Ghana Bed-nets Inventory Tracking Questionare'
+        'COVID 19 case registration'
       );
     }).timeout(5000);
   });

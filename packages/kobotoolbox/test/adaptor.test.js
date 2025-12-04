@@ -149,14 +149,14 @@ describe('getSubmissions', () => {
           ...jsonHeaders,
         }
       )
-      .times(3);
+      .times(10);
 
     const { data } = await execute(getSubmissions('aXecHjmbATuF6iGFmvBLBX'))(
       state
     );
 
-    expect(requestCount).to.eql(3);
-    expect(data.length).to.eql(3e4);
+    expect(requestCount).to.eql(10);
+    expect(data.length).to.eql(defaultLimit);
     expect(items.length).to.greaterThan(data.length);
   });
 
@@ -233,14 +233,14 @@ describe('getSubmissions', () => {
           ...jsonHeaders,
         }
       )
-      .times(4);
+      .times(11);
 
     const { data } = await getSubmissions('aXecHjmbATuF6iGFmvBLBX', {
       limit: 4e4,
     })(state);
 
-    expect(requestCount).to.eql(4);
-    expect(data.length).to.eql(3e4 + 2);
+    expect(requestCount).to.eql(11);
+    expect(data.length).to.eql(defaultLimit + 2);
     expect(data.length).to.greaterThan(defaultLimit);
   });
   it('should allow custom pageSize', async () => {
@@ -318,14 +318,14 @@ describe('getSubmissions', () => {
           ...jsonHeaders,
         }
       )
-      .times(4);
+      .times(11);
 
     const { data } = await getSubmissions('aXecHjmbATuF6iGFmvBLBX', {
       limit: Infinity,
     })(state);
 
-    expect(data.length).to.eql(3e4 + 1);
-    expect(requestCount).to.eql(4);
+    expect(data.length).to.eql(defaultLimit + 1);
+    expect(requestCount).to.eql(11);
   });
 
   afterEach(() => {
