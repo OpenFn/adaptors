@@ -2,7 +2,7 @@
 '@openfn/language-kobotoolbox': major
 ---
 
-Update default pagination limits to comply with new KoboToolbox API restrictions:
+Update default pagination limits to comply with new KoboToolbox API [restrictions](https://community.kobotoolbox.org/t/important-changes-to-api-v2-assets-uid-asset-data-result-limits/74610):
 - `DEFAULT_LIMIT`: Changed from 30,000 to 1,000 (maximum results per request)
 - `DEFAULT_PAGE_SIZE`: Changed from 10,000 to 100 (items per page)
 
@@ -34,14 +34,5 @@ getSubmissions('formId', { limit: Infinity });
 
 ```js
 getSubmissions('formId', { limit: 5000 }); // 
-```
-
-**Option 3 - Use pagination with start:**
-```js
-// First batch
-getSubmissions('formId', { limit: 1000 });
-
-// Next batch
-getSubmissions('formId', { start: 1000, limit: 1000 });
 ```
 
