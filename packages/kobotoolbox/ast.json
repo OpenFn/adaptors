@@ -154,7 +154,7 @@
           },
           {
             "title": "param",
-            "description": "Limits the size of each page of submissions. Maximum value is 30000.",
+            "description": "Limits the size of each page of submissions. Maximum value is 1000.",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -163,7 +163,7 @@
               }
             },
             "name": "options.pageSize",
-            "default": "10000"
+            "default": "1000"
           },
           {
             "title": "state",
