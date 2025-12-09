@@ -149,13 +149,13 @@ describe('getSubmissions', () => {
           ...jsonHeaders,
         }
       )
-      .times(10);
+      .times(30);
 
     const { data } = await execute(getSubmissions('aXecHjmbATuF6iGFmvBLBX'))(
       state
     );
 
-    expect(requestCount).to.eql(10);
+    expect(requestCount).to.eql(30);
     expect(data.length).to.eql(defaultLimit);
     expect(items.length).to.greaterThan(data.length);
   });
@@ -233,13 +233,13 @@ describe('getSubmissions', () => {
           ...jsonHeaders,
         }
       )
-      .times(11);
+      .times(31);
 
     const { data } = await getSubmissions('aXecHjmbATuF6iGFmvBLBX', {
       limit: 4e4,
     })(state);
 
-    expect(requestCount).to.eql(11);
+    expect(requestCount).to.eql(31);
     expect(data.length).to.eql(defaultLimit + 2);
     expect(data.length).to.greaterThan(defaultLimit);
   });
@@ -318,14 +318,14 @@ describe('getSubmissions', () => {
           ...jsonHeaders,
         }
       )
-      .times(11);
+      .times(31);
 
     const { data } = await getSubmissions('aXecHjmbATuF6iGFmvBLBX', {
       limit: Infinity,
     })(state);
 
     expect(data.length).to.eql(defaultLimit + 1);
-    expect(requestCount).to.eql(11);
+    expect(requestCount).to.eql(31);
   });
 
   afterEach(() => {

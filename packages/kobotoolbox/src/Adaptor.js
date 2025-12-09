@@ -72,8 +72,8 @@ export function getForms() {
  * @param {object} [options.sort] - Field and direction to sort submissions by.
  * @param {object} [options.query] - Query options to filter the submissions. See query operators {@link http://docs.mongodb.org/manual/reference/operator/query/.}
  * @param {number} [options.start=0] - The index of the first submission to return.
- * @param {number} [options.limit=1000] - Maximum number of submissions to fetch. Pass `Infinity` to disable the limit and download all submissions
- * @param {number} [options.pageSize=100] - Limits the size of each page of submissions. Maximum value is 1000.
+ * @param {number} [options.limit=30000] - Maximum number of submissions to fetch. Pass `Infinity` to disable the limit and download all submissions
+ * @param {number} [options.pageSize=1000] - Limits the size of each page of submissions. Maximum value is 30000.
  * @state data - an array of submission objects
  * @returns {Operation}
  */

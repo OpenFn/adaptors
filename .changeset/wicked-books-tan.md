@@ -1,38 +1,7 @@
 ---
-'@openfn/language-kobotoolbox': major
+'@openfn/language-kobotoolbox': patch
 ---
 
-Update default pagination limits to comply with new KoboToolbox API [restrictions](https://community.kobotoolbox.org/t/important-changes-to-api-v2-assets-uid-asset-data-result-limits/74610):
-- `DEFAULT_LIMIT`: Changed from 30,000 to 1,000 (maximum results per request)
-- `DEFAULT_PAGE_SIZE`: Changed from 10,000 to 100 (items per page)
+Update default pagination pagesize to comply with new KoboToolbox API [restrictions](https://community.kobotoolbox.org/t/important-changes-to-api-v2-assets-uid-asset-data-result-limits/74610):
 
-## Migration Guide
-
-If a workflow depends on fetching more than 1,000 submissions in a single call, then the code needs to be updated:
-
-### Before
-
-Previously fetched up to 30,000 items
-
-```js
-getSubmissions('formId'); 
-```
-
-### After
-
-**Option 1 - Fetch all submissions:**
-
-- Fetch all available submissions
-
-```js
-getSubmissions('formId', { limit: Infinity }); 
-```
-
-**Option 2 - Specify custom limit:**
-
-- Fetch up to 5,000 submissions
-
-```js
-getSubmissions('formId', { limit: 5000 }); // 
-```
 
