@@ -135,7 +135,7 @@ Get submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`
 | [options.query] | <code>object</code> |  | Query options to filter the submissions. See query operators [http://docs.mongodb.org/manual/reference/operator/query/.](http://docs.mongodb.org/manual/reference/operator/query/.) |
 | [options.start] | <code>number</code> | <code>0</code> | The index of the first submission to return. |
 | [options.limit] | <code>number</code> | <code>30000</code> | Maximum number of submissions to fetch. Pass `Infinity` to disable the limit and download all submissions |
-| [options.pageSize] | <code>number</code> | <code>10000</code> | Limits the size of each page of submissions. Maximum value is 30000. |
+| [options.pageSize] | <code>number</code> | <code>1000</code> | Limits the size of each page of submissions. Maximum value is 1000. |
 
 This operation writes the following keys to state:
 
