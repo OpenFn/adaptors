@@ -1,5 +1,12 @@
 # @openfn/language-kobotoolbox
 
+## 4.2.9 - 09 December 2025
+
+### Patch Changes
+
+- 39f91ad: Update default pagination pagesize to comply with new KoboToolbox API
+  [restrictions](https://community.kobotoolbox.org/t/important-changes-to-api-v2-assets-uid-asset-data-result-limits/74610):
+
 ## 4.2.8 - 28 November 2025
 
 ### Patch Changes
