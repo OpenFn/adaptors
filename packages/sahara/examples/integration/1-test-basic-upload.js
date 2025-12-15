@@ -15,7 +15,7 @@ uploadAudioFile({
   audio_file_blob: {
     // Option 1: If you have a local file, you can use fs to read it
     // Replace with actual path to an audio file (wav, mp3, etc.)
-    path: '/Users/mac/Downloads/adaptor_test_audios/Telehealth.mp3'
+    path: 'YOUR_AUDIO_FILE_PATH_HERE'
     
     // Option 2: If you have a URL to the audio file
     // url: 'https://example.com/audio.wav'
