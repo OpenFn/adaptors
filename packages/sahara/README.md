@@ -20,6 +20,12 @@ Sample configuration:
 }
 ```
 
+#### Local Testing Setup
+
+For local testing with the integration examples, see the [Integration Examples README](examples/integration/README.md) for detailed setup instructions.
+
+**Note:** In production (OpenFn platform), configure credentials through the platform's credential management system.
+
 ## Usage
 
 This adaptor enables integration between OpenFn workflows and Sahara's voice transcription API, allowing you to:
@@ -251,15 +257,19 @@ This is **acceptable** for Sahara's use case:
 - ✅ Real transcription retrieval: 700ms
 - ✅ Complete workflow tested
 
-Looking to replicate those end-to-end checks? The `examples/integration/` directory ships runnable OpenFn jobs that call the live Sahara API. Copy the template with:
+Looking to replicate those end-to-end checks? The `examples/integration/` directory ships runnable OpenFn jobs that call the live Sahara API. 
+
+**First, set up your state file** (see [Local Testing Setup](#local-testing-setup) in Configuration above), then run any of the example scripts:
 
 ```bash
-cd packages/sahara
-mkdir -p tmp
-cp examples/integration/state.template.json tmp/sahara-state.json
+# Example: Run basic upload test
+openfn examples/integration/1-test-basic-upload.js \
+  -ma sahara \
+  -s tmp/sahara-state.json \
+  -o tmp/output.json
 ```
 
-Edit the _copy_ at `tmp/sahara-state.json`, drop in your API key and audio paths, then run the script you need (for example `openfn examples/integration/3-test-telehealth-full.js ...`). Each script writes its output to the file you pass with `-o`, so you can inspect the full transcription payload afterward.
+Edit `tmp/sahara-state.json` to add your API key and update audio file paths in the script. Each script writes its output to the file you pass with `-o`, so you can inspect the full transcription payload afterward.
 
 ### Alternative: Upload with Curl
 
