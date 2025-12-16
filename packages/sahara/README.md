@@ -15,7 +15,8 @@ Sample configuration:
 ```json
 {
   "apiKey": "your-sahara-api-key",
-  "baseUrl": "https://infer.voice.intron.io"
+  "baseUrl": "https://infer.voice.intron.io",
+  "enableLogging": true
 }
 ```
 
@@ -39,6 +40,28 @@ uploadAudioFile({
 // Later, check the status (use the file_id from the upload response)
 getFileStatus(state.data.file_id);
 ```
+
+### File Processing Statuses
+
+When calling `getFileStatus()`, the API returns a `processing_status` field indicating the current state of your file. The adaptor recognizes and handles all Sahara API statuses:
+
+#### In Progress Statuses
+- **`FILE_QUEUED`** - File has been uploaded and is queued for processing
+- **`FILE_PENDING`** - File is pending processing
+- **`FILE_PROCESSING`** - File is currently being transcribed
+
+#### Success Status
+- **`FILE_TRANSCRIBED`** - ✅ Transcription completed successfully (results are available)
+
+#### Error Statuses
+- **`FILE_INVALID`** - File format is invalid
+- **`FILE_INVALID_SIZE`** - File exceeds maximum size (100MB limit)
+- **`FILE_INVALID_DURATION`** - Audio duration exceeds maximum (10 minutes limit)
+- **`FILE_PROCESSING_FAILED`** - Processing failed due to an error
+- **`FILE_PROCESSING_TIMEOUT`** - Processing timed out
+- **`FILE_PROCESSING_CANCELLED`** - Processing was cancelled
+
+**Note:** The `uploadAndWaitForTranscription()` function automatically continues polling for `FILE_QUEUED`, `FILE_PENDING`, and `FILE_PROCESSING` statuses, and will throw an error if any of the error statuses are encountered.
 
 ### Healthcare/Telehealth Example
 
@@ -376,6 +399,30 @@ The adaptor provides detailed logging for:
 - ✅ Success after retries
 - ✅ Error details (status code, duration, URL)
 - ✅ File processing status updates
+
+**Logging is configurable** - you can enable or disable info/warning logs via configuration or environment variable (see below). Error logs are always enabled.
+
+#### Controlling Log Output
+
+Logging can be enabled or disabled via configuration or environment variable:
+
+**Option 1: Configuration (recommended)**
+```json
+{
+  "configuration": {
+    "apiKey": "your-key",
+    "baseUrl": "https://infer.voice.intron.io",
+    "enableLogging": false  // Disable all info/warning logs
+  }
+}
+```
+
+**Option 2: Environment Variable**
+```bash
+ENABLE_LOGGING=false  # Disable all info/warning logs
+```
+
+**Note:** Error logs (`console.error`) are always enabled regardless of the toggle setting, as they indicate critical issues that need attention.
 
 ## API Limits
 
