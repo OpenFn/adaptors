@@ -1,5 +1,6 @@
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
+import { logger } from './Utils.js';
 
 /**
  * State object
@@ -90,7 +91,7 @@ export function uploadAudioFile(uploadData, options = {}) {
       throw new Error('audio_file_blob is required');
     }
 
-    console.log(`Uploading audio file: ${audio_file_name}`);
+    logger.log(state.configuration, `Uploading audio file: ${audio_file_name}`);
 
     const formData = {
       audio_file_name,
@@ -112,7 +113,8 @@ export function uploadAudioFile(uploadData, options = {}) {
       retryOptions
     );
 
-    console.log(
+    logger.log(
+      state.configuration,
       `File queued successfully. File ID: ${response.body?.data?.file_id}`
     );
 
@@ -147,7 +149,7 @@ export function getFileStatus(fileId, options = {}) {
       throw new Error('fileId is required');
     }
 
-    console.log(`Fetching status for file ID: ${resolvedFileId}`);
+    logger.log(state.configuration, `Fetching status for file ID: ${resolvedFileId}`);
 
     const queryParams = {};
     if (resolvedOptions.get_structured_post_processing) {
@@ -165,14 +167,28 @@ export function getFileStatus(fileId, options = {}) {
     );
 
     const processingStatus = response.body?.data?.processing_status;
-    console.log(`File processing status: ${processingStatus}`);
+    logger.log(state.configuration, `File processing status: ${processingStatus}`);
 
-    if (processingStatus === 'FILE_TRANSCRIBED') {
-      console.log('✓ Transcription completed successfully');
-    } else if (processingStatus === 'PROCESSING') {
-      console.log('⏳ File is still being processed');
-    } else if (processingStatus === 'QUEUED') {
-      console.log('⏳ File is queued for processing');
+    if (processingStatus === 'FILE_QUEUED') {
+      logger.log(state.configuration, '⏳ File is queued for processing');
+    } else if (processingStatus === 'FILE_PENDING') {
+      logger.log(state.configuration, '⏳ File is pending processing');
+    } else if (processingStatus === 'FILE_PROCESSING') {
+      logger.log(state.configuration, '⏳ File is still being processed');
+    } else if (processingStatus === 'FILE_TRANSCRIBED') {
+      logger.log(state.configuration, '✓ Transcription completed successfully');
+    } else if (processingStatus === 'FILE_INVALID') {
+      logger.log(state.configuration, '✗ File is invalid');
+    } else if (processingStatus === 'FILE_INVALID_SIZE') {
+      logger.log(state.configuration, '✗ File size is invalid');
+    } else if (processingStatus === 'FILE_INVALID_DURATION') {
+      logger.log(state.configuration, '✗ File duration is invalid');
+    } else if (processingStatus === 'FILE_PROCESSING_FAILED') {
+      logger.log(state.configuration, '✗ File processing failed');
+    } else if (processingStatus === 'FILE_PROCESSING_TIMEOUT') {
+      logger.log(state.configuration, '✗ File processing timed out');
+    } else if (processingStatus === 'FILE_PROCESSING_CANCELLED') {
+      logger.log(state.configuration, '✗ File processing was cancelled');
     }
 
     return util.prepareNextState(state, response);
@@ -211,11 +227,11 @@ export function uploadAndWaitForTranscription(uploadData, waitOptions = {}) {
     const fileId = uploadState.data?.data?.file_id || uploadState.data?.file_id;
 
     if (!fileId) {
-      console.error('Upload state structure:', JSON.stringify(uploadState.data, null, 2));
+      logger.error('Upload state structure:', JSON.stringify(uploadState.data, null, 2));
       throw new Error('Failed to get file_id from upload response');
     }
 
-    console.log(`Waiting for transcription to complete (polling every ${pollInterval}ms)...`);
+    logger.log(state.configuration, `Waiting for transcription to complete (polling every ${pollInterval}ms)...`);
 
     // Poll for completion
     let attempts = 0;
@@ -235,14 +251,23 @@ export function uploadAndWaitForTranscription(uploadData, waitOptions = {}) {
         statusState.data?.processing_status;
 
       if (processingStatus === 'FILE_TRANSCRIBED') {
-        console.log(`✓ Transcription completed after ${attempts} attempts`);
+        logger.log(state.configuration, `✓ Transcription completed after ${attempts} attempts`);
         completed = true;
         finalState = statusState;
-      } else if (processingStatus === 'FAILED' || processingStatus === 'ERROR') {
+      } else if (
+        processingStatus === 'FILE_INVALID' ||
+        processingStatus === 'FILE_INVALID_SIZE' ||
+        processingStatus === 'FILE_INVALID_DURATION' ||
+        processingStatus === 'FILE_PROCESSING_FAILED' ||
+        processingStatus === 'FILE_PROCESSING_TIMEOUT' ||
+        processingStatus === 'FILE_PROCESSING_CANCELLED'
+      ) {
         throw new Error(`Transcription failed with status: ${processingStatus}`);
       } else {
+        // Continue polling for any other status (FILE_QUEUED, FILE_PENDING, FILE_PROCESSING, or unknown)
         finalState = statusState;
-        console.log(
+        logger.log(
+          state.configuration,
           `Attempt ${attempts}/${maxAttempts}: Status is ${processingStatus || 'UNKNOWN'}`
         );
       }

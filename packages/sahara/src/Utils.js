@@ -16,6 +16,60 @@ import FormData from 'form-data';
  */
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
+/**
+ * Logging utility with toggle support
+ * Set ENABLE_LOGGING=false in environment or pass enableLogging: false in configuration to disable
+ */
+export const logger = {
+  /**
+   * Check if logging is enabled
+   * @param {object} configuration - Optional configuration object
+   * @returns {boolean}
+   */
+  isEnabled: (configuration = {}) => {
+    // Check environment variable first
+    if (process.env.ENABLE_LOGGING === 'false') {
+      return false;
+    }
+    // Then check configuration
+    if (configuration.enableLogging === false) {
+      return false;
+    }
+    // Default to enabled
+    return true;
+  },
+
+  /**
+   * Log a message (console.log)
+   * @param {object} configuration - Optional configuration object
+   * @param {...any} args - Arguments to log
+   */
+  log: (configuration = {}, ...args) => {
+    if (logger.isEnabled(configuration)) {
+      console.log(...args);
+    }
+  },
+
+  /**
+   * Log a warning (console.warn)
+   * @param {object} configuration - Optional configuration object
+   * @param {...any} args - Arguments to log
+   */
+  warn: (configuration = {}, ...args) => {
+    if (logger.isEnabled(configuration)) {
+      console.warn(...args);
+    }
+  },
+
+  /**
+   * Log an error (console.error) - always enabled
+   * @param {...any} args - Arguments to log
+   */
+  error: (...args) => {
+    console.error(...args);
+  },
+};
+
 export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
 
@@ -102,7 +156,7 @@ export const request = async (
       const response = await commonRequest(method, safePath, opts);
       
       if (attempt > 0) {
-        console.log(`✓ Request succeeded after ${attempt} retry attempt(s)`);
+        logger.log(configuration, `✓ Request succeeded after ${attempt} retry attempt(s)`);
       }
       
       return response;
@@ -118,7 +172,8 @@ export const request = async (
 
       if (shouldRetry) {
         const delay = retryDelay * Math.pow(2, attempt);
-        console.warn(
+        logger.warn(
+          configuration,
           `Request failed (${error.statusCode || error.code}). Retrying in ${delay}ms... (attempt ${attempt + 1}/${maxRetries})`
         );
         await sleep(delay);
@@ -229,7 +284,7 @@ export const uploadFile = async (
     }
   }
 
-  console.log('Uploading file with axios...');
+  logger.log(configuration, 'Uploading file with axios...');
 
   const url = `${baseUrl}${path}`;
   const startTime = Date.now();
@@ -261,10 +316,10 @@ export const uploadFile = async (
       const duration = Date.now() - startTime;
       
       if (attempt > 0) {
-        console.log(`✓ File upload succeeded after ${attempt} retry attempt(s)`);
+        logger.log(configuration, `✓ File upload succeeded after ${attempt} retry attempt(s)`);
       }
       
-      console.log(`POST ${url} - ${response.status} in ${duration}ms`);
+      logger.log(configuration, `POST ${url} - ${response.status} in ${duration}ms`);
       
       // Return in common request format for compatibility
       return {
@@ -289,7 +344,8 @@ export const uploadFile = async (
 
       if (shouldRetry) {
         const delay = retryDelay * Math.pow(2, attempt);
-        console.warn(
+        logger.warn(
+          configuration,
           `File upload failed (${statusCode || error.code}). Retrying in ${delay}ms... (attempt ${attempt + 1}/${maxRetries})`
         );
         await sleep(delay);

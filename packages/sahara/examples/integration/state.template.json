@@ -2,6 +2,7 @@
   "configuration": {
     "apiKey": "YOUR_SAHARA_API_KEY",
     "baseUrl": "https://infer.voice.intron.io",
+    "enableLogging": true,
     "tls": {
       "rejectUnauthorized": false
     }
