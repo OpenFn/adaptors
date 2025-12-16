@@ -10,7 +10,7 @@
  * - transcript_summary: "..." (if get_summary was used)
  */
 
-getFileStatus('a1bde500-02da-4366-b22d-bd9accf389d5', {
+getFileStatus('YOUR_FILE_ID_HERE', {
   // Optional: Get structured JSON output instead of markdown
   get_structured_post_processing: 't'
 });
