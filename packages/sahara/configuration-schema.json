@@ -17,6 +17,26 @@
       "writeOnly": true,
       "minLength": 1,
       "examples": ["your-api-key-here"]
+    },
+    "enableLogging": {
+      "title": "Enable Logging",
+      "type": "boolean",
+      "description": "Enable or disable info/warning logs. Error logs are always enabled. Defaults to true.",
+      "default": true,
+      "examples": [true, false]
+    },
+    "tls": {
+      "title": "TLS Configuration",
+      "type": "object",
+      "description": "TLS/SSL configuration options. Use { \"rejectUnauthorized\": false } to bypass SSL certificate validation (required due to Sahara's SSL certificate mismatch).",
+      "properties": {
+        "rejectUnauthorized": {
+          "type": "boolean",
+          "description": "Set to false to bypass SSL certificate validation",
+          "default": true
+        }
+      },
+      "additionalProperties": true
     }
   },
   "type": "object",
