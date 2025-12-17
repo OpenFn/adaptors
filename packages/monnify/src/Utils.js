@@ -35,9 +35,56 @@ export const getAccessToken = async (configuration, headers) => {
   return { ...configuration, access_token: body.responseBody.accessToken }
 };
 
+export const requestWithPagination = async (configuration = {}, method, path, options = {}) => {
+  const { query = {} } = options;
+  let { pageSize, pageNo } = query;
+
+  const hasPagination = pageSize !== undefined || pageNo !== undefined;
+
+  if (pageSize && pageSize > 1000) {
+    console.log('Warning: PageSize cannot exceed 1000, reducing to 1000');
+    pageSize = 1000;
+  }
+
+  const allContent = [];
+  let currentPage = pageNo !== undefined ? pageNo : 0;
+  let isLastPage = false;
+
+  do {
+    const response = await request(configuration, method, path, {
+      ...options,
+      query: { ...query, pageSize: pageSize || 100, pageNo: currentPage }
+    });
+
+    if (hasPagination) return response;
+
+    const { body: { responseBody } } = response;
+
+    if (responseBody.content?.length) {
+      allContent.push(...responseBody.content);
+    }
+
+    isLastPage = responseBody.last === true;
+    currentPage++;
+  } while (!isLastPage);
+
+  return {
+    body: {
+      requestSuccessful: true,
+      responseMessage: 'success',
+      responseCode: '0',
+      responseBody: {
+        content: allContent,
+        totalElements: allContent.length,
+        allPagesFetched: true
+      }
+    }
+  };
+};
+
 export const request = async (configuration = {}, method, path, options) => {
   // local variable for storing configuration. Using let due to reasssignment ops downstream.
-  let config = configuration
+  let config = configuration;
 
   const { baseUrl, access_token } = config;
 

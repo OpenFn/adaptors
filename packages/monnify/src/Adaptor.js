@@ -30,8 +30,22 @@ import * as util from './Utils.js';
  * @returns {Operation}
  * @state {HttpState}
  */
-export function get(path, options) {
-  return request('GET', path, null, options);
+export function get(path, options = {}) {
+  return async state => {
+    const [resolvedPath, resolvedoptions] =
+      expandReferences(state, path, options);
+
+    const response = await util.requestWithPagination(
+      state.configuration,
+      'GET',
+      resolvedPath,
+      {
+        ...resolvedoptions,
+      }
+    );
+
+    return util.prepareNextState(state, response);
+  };
 }
 
 /**
