@@ -1,5 +1,19 @@
 # @openfn/language-ocl
 
+## 1.2.25 - 28 November 2025
+
+### Patch Changes
+
+- Updated dependencies \[cfc66df]
+  - @openfn/language-common@3.2.1
+
+## 1.2.24 - 12 November 2025
+
+### Patch Changes
+
+- Updated dependencies \[4d7a833]
+  - @openfn/language-common@3.2.0
+
 ## 1.2.23 - 04 November 2025
 
 ### Patch Changes

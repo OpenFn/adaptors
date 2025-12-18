@@ -44,6 +44,7 @@ export const request = (configuration = {}, method, path, options = {}) => {
     body,
     query,
     ...options,
+    throwOnUnhandledRedirect: false,
   };
 
   const safePath = nodepath.join(path);

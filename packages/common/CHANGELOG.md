@@ -1,5 +1,17 @@
 ## 3.0.1 - 11 July 2025
 
+## 3.2.1 - 28 November 2025
+
+### Patch Changes
+
+- cfc66df: Fix cursor date formatting
+
+## 3.2.0 - 12 November 2025
+
+### Minor Changes
+
+- 4d7a833: warn if there is redirect
+
 ## 3.1.2 - 04 November 2025
 
 ### Patch Changes

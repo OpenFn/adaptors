@@ -1,5 +1,25 @@
 # @openfn/language-primero
 
+## 4.0.7 - 02 December 2025
+
+### Patch Changes
+
+- 6aa9800: Security update
+
+## 4.0.6 - 28 November 2025
+
+### Patch Changes
+
+- Updated dependencies \[cfc66df]
+  - @openfn/language-common@3.2.1
+
+## 4.0.5 - 12 November 2025
+
+### Patch Changes
+
+- Updated dependencies \[4d7a833]
+  - @openfn/language-common@3.2.0
+
 ## 4.0.4 - 04 November 2025
 
 ### Patch Changes

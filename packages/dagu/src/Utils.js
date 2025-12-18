@@ -5,6 +5,9 @@ import {
 } from '@openfn/language-common/util';
 import nodepath from 'node:path';
 
+
+let access_token;
+
 export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
 
@@ -18,22 +21,40 @@ export const prepareNextState = (state, response) => {
   };
 };
 
-export const request = (configuration = {}, method, path, options) => {
-  const {
+export const getAccessToken = async (configuration, headers) => {
+  const { username, password, baseUrl } = configuration;
+
+  const { body } = await commonRequest('POST', '/account/login', {
+    headers: {
+      'content-type': 'application/json',
+      ...headers
+    },
     baseUrl,
-    apiToken,
-  } = configuration;
-  const headers = {
-    Authorization: `Bearer ${apiToken}`,
-  };
+    parseAs: 'json',
+    body: {
+      username,
+      password,
+    },
+  });
+
+  return body.token.access_token;
+};
+
+export const request = async (configuration = {}, method, path, options) => {
+  const { baseUrl  } = configuration;
+
+  if(!access_token)
+      access_token = await getAccessToken(configuration, options.headers)
 
   const { query = {}, body = {} } = options;
+
   const opts = {
     parseAs: 'json',
     baseUrl,
     headers: {
       'content-type': 'application/json',
-      ...headers,
+      Authorization: `Bearer ${access_token}`,
+      ...options.headers,
     },
     body,
     query,

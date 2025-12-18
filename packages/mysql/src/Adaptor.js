@@ -1,57 +1,96 @@
-import { execute as commonExecute } from '@openfn/language-common';
+import {
+  execute as commonExecute,
+  composeNextState,
+} from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import mysql from 'mysql';
-import squel from 'squel';
+import mysql from 'mysql2/promise';
+import knex from 'knex';
 
-/**
- * Execute a SQL statement. Take care when inserting values from state directly into a query,
- * as this can be a vector for injection attacks. See [OWASP SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)
- * for guidelines
- * @example
- * sql(state => `select * from ${state.data.tableName};`, { writeSql: true })
- * @function
- * @public
- * @param {string|function} sqlQuery - The SQL query as a string or a function that returns a string using state.
- * @param {object} [options] - Optional options argument.
- * @param {boolean} [options.writeSql = false] - If true, logs the generated SQL statement. Defaults to false.
- * @param {boolean} [options.execute = true] - If false, does not execute the SQL, just logs it and adds to state.queries. Defaults to true.
- * @returns {Operation}
- */
+let connection;
+let knexInstance = knex({ client: 'mysql2' });
 
-export function sql(sqlQuery, options = {}) {
-  return state => {
-    const { connection } = state;
-    const [resolvedSqlQuery, resolvedOptions] = expandReferences(
-      state,
-      sqlQuery,
-      options
-    );
+async function connect(state) {
+  if (connection) {
+    return state;
+  }
+  const { host, port, database, password, user } = state.configuration || {};
 
-    const { writeSql = false, execute = true } = resolvedOptions;
-    if (writeSql) {
-      console.log('Prepared SQL:', resolvedSqlQuery);
-    }
-
-    if (!execute) {
-      return {
-        ...state,
-        queries: [...(state.queries || []), resolvedSqlQuery],
-      };
-    }
-
-    return new Promise((resolve, reject) => {
-      connection.query(resolvedSqlQuery, (err, results, fields) => {
-        if (err) {
-          console.log('Error executing query. Disconnecting from database.');
-          connection.end();
-          return reject(err);
-        }
-        resolve({ ...state, response: { body: results, fields } });
-      });
+  try {
+    connection = await mysql.createConnection({
+      host,
+      user,
+      password,
+      database,
+      port,
     });
-  };
+    console.log('Connected to database...');
+  } catch (error) {
+    console.log(error);
+    throw new Error('Unable to connect to database.');
+  }
+  return state;
 }
 
+async function disconnect(state) {
+  if (connection) {
+    await connection.end();
+    console.log('Disconected from database...');
+    connection = null;
+  }
+  knexInstance.destroy();
+  return state;
+}
+
+function formatFields(fields) {
+  if (!fields) return undefined;
+  return fields.map(field => ({
+    name: field.name,
+    type: field.type,
+    characterSet: field.characterSet,
+    table: field.orgTable,
+    schema: field.schema,
+    length: field.columnLength,
+    decimals: field.decimals,
+    flags: field.flags,
+    encoding: field.encoding,
+  }));
+}
+
+// Usage with your SQL execution function
+async function executeQueryAndFormat(sqlQuery, options = {}) {
+  try {
+    const [result, fields] = await connection.execute(sqlQuery, options.values);
+    const formattedFields = formatFields(fields);
+    return {
+      result,
+      fields: formattedFields,
+    };
+  } catch (err) {
+    console.error('Error executing query:', err);
+    throw err;
+  }
+}
+export function setMockConnection(mockConnection) {
+  connection = mockConnection;
+}
+
+/**
+ * State object
+ * @typedef {Object} MySQLState
+ * @property data - the query results object
+ * @property data.result - the query result rows
+ * @property data.fields - the query result fields
+ * @property queries - an array of queries executed. Queries are added if `options.writeSql` is true.
+ * @property references - an array of all previous data objects used in the Job
+ * @private
+ **/
+
+/**
+ * @typedef {Object} sqlOptions
+ * @property {array} [values] - An array of values for prepared statements.
+ * @property {boolean} [writeSql = false] - If true, logs the generated SQL statement. Defaults to false.
+ * @property {boolean} [execute = true] - If false, does not execute the SQL, just logs it and adds to state.queries. Defaults to true.
+ * */
 /**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for mysql.
@@ -62,230 +101,211 @@ export function sql(sqlQuery, options = {}) {
 
 export function execute(...operations) {
   const initialState = {
-    references: [],
-    data: null,
+    queries: [],
   };
 
   return state => {
     return commonExecute(
       connect,
       ...operations,
-      disconnect,
-      cleanupState
+      disconnect
     )({ ...initialState, ...state });
   };
 }
 
-function connect(state) {
-  const { host, port, database, password, user } = state.configuration;
+/**
+ * Execute a SQL statement. Take care when inserting values from state directly into a query,
+ * as this can be a vector for injection attacks. See [OWASP SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)
+ * for guidelines
+ * @example
+ * sql(state => `select * from ${state.data.tableName};`, { writeSql: true })
+ * @example <caption>Prepared statements</caption>
+ * sql(state => `select * from ?? where id = ?;`, {
+ *   values: state => [state.data.tableName, state.data.id],
+ * });
+ * @function
+ * @public
+ * @param {string} sqlQuery - The sql query string.
+ * @param {sqlOptions} [options] -  The sql query options.
+ * @state {MySQLState}
+ * @returns {Operation}
+ */
 
-  var connection = mysql.createConnection({
-    host: host,
-    user: user,
-    password: password,
-    database: database,
-    port: port,
-  });
+export function sql(sqlQuery, options = {}) {
+  return async state => {
+    const [resolvedSqlQuery, resolvedOptions] = expandReferences(
+      state,
+      sqlQuery,
+      options
+    );
 
-  connection.connect();
-  console.log(`Preparing to query "` + database + `"...`);
-  return { ...state, connection: connection };
-}
+    const { writeSql = false, execute = true, values } = resolvedOptions;
 
-function disconnect(state) {
-  state.connection.end();
-  return state;
-}
+    if (writeSql) {
+      console.log('Prepared SQL:', resolvedSqlQuery);
+      if (values) {
+        state.queries.push({ sql: resolvedSqlQuery, values });
+      } else {
+        state.queries.push(resolvedSqlQuery);
+      }
+    }
 
-function cleanupState(state) {
-  delete state.connection;
-  return state;
+    if (!execute) {
+      console.log('Execution skipped, execute is false.');
+      return {
+        ...state,
+        queries: [...state.queries, resolvedSqlQuery],
+      };
+    }
+
+    try {
+      const [result, fields] = await connection.execute(
+        resolvedSqlQuery,
+        values
+      );
+      console.log('Query executed successfully.');
+      return composeNextState(state, {
+        result,
+        fields: formatFields(fields),
+      });
+    } catch (err) {
+      console.log('Error executing query.');
+      throw err;
+    }
+  };
 }
 
 /**
  * Insert a record
- * @example <caption>Insert a record into the `users` table</caption>
- * insert("users", { name: (state) => state.data.name });
+ * @example <caption>Insert a record into a table</caption>
+ * insert("users", { name: "one", email: "one@openfn.org" });
  * @function
  * @public
  * @param {string} table - The target table
  * @param {object} fields - A fields object
+ * @state {MySQLState}
  * @returns {Operation}
  */
 export function insert(table, fields) {
-  return state => {
-    let { connection } = state;
+  return async state => {
+    const [resolvedTable, resolvedFields] = expandReferences(
+      state,
+      table,
+      fields
+    );
+    const keys = Object.keys(resolvedFields);
+    const placeholders = keys.map(() => '?').join(', ');
+    const columns = keys.map(() => '??').join(', ');
 
-    const [valuesObj] = expandReferences(state, fields);
+    const sqlString = mysql.format(
+      `INSERT INTO ?? (${columns}) VALUES (${placeholders})`,
+      [resolvedTable, ...keys]
+    );
 
-    const squelMysql = squel.useFlavour('mysql');
-
-    var sqlParams = squelMysql
-      .insert({
-        autoQuoteFieldNames: true,
-      })
-      .into(table)
-      .setFields(valuesObj)
-      .toParam();
-
-    const sql = sqlParams.text;
-    const inserts = sqlParams.values;
-    const sqlString = mysql.format(sql, inserts);
-
-    console.log(`Executing MySQL query: ${sqlString}`);
-
-    return new Promise((resolve, reject) => {
-      // execute a query on our database
-
-      // TODO: figure out how to escape the string.
-
-      connection.query(sqlString, function (err, results, fields) {
-        if (err) {
-          reject(err);
-          // Disconnect if there's an error.
-          console.log('There is an error. Disconnecting from database.');
-          connection.end();
-        } else {
-          console.log('Success...');
-          console.log(results);
-          console.log(fields);
-          resolve(results);
-        }
+    try {
+      const [result, fields] = await connection.execute(
+        sqlString,
+        Object.values(resolvedFields)
+      );
+      console.log('Success...');
+      return composeNextState(state, {
+        result,
+        fields: formatFields(fields),
       });
-    }).then(data => {
-      const nextState = { ...state, response: { body: data } };
-      return nextState;
-    });
+    } catch (err) {
+      console.log('Error inserting record.');
+      throw err;
+    }
   };
 }
 
 /**
  * Insert or Update a record if matched
- * @example <caption>Upsert a record</caption>
- * upsert("table", { name: (state) => state.data.name });
+ * @example <caption>Upsert a record into a table</caption>
+ * upsert("users", { name: "Tuchi Dev" });
  * @function
  * @public
  * @param {string} table - The target table
  * @param {object} fields - A fields object
+ * @state {MySQLState}
  * @returns {Operation}
  */
 export function upsert(table, fields) {
-  return state => {
-    let { connection } = state;
+  return async state => {
+    const [resolvedTable, resolvedFields] = expandReferences(
+      state,
+      table,
+      fields
+    );
 
-    const [valuesObj] = expandReferences(state, fields);
+    const insertQuery = knexInstance(resolvedTable).insert(resolvedFields);
+    const insertString = insertQuery.toString();
 
-    const squelMysql = squel.useFlavour('mysql');
+    const updateParts = Object.keys(resolvedFields).map(
+      key => `${knexInstance.ref(key)} = VALUES(${knexInstance.ref(key)})`
+    );
+    const updateClause = updateParts.join(', ');
 
-    var insertParams = squelMysql
-      .insert({
-        autoQuoteFieldNames: true,
-      })
-      .into(table)
-      .setFields(valuesObj)
-      .toParam();
-
-    var sql = insertParams.text;
-    var inserts = insertParams.values;
-    const insertString = mysql.format(sql, inserts);
-
-    var updateParams = squelMysql
-      .update({
-        autoQuoteFieldNames: true,
-      })
-      .table('')
-      .setFields(valuesObj)
-      .toParam();
-
-    var sql = updateParams.text;
-    var inserts = updateParams.values;
-    const updateString = mysql.format(sql, inserts);
-
-    const upsertString =
-      insertString + ` ON DUPLICATE KEY UPDATE ` + updateString.slice(10);
+    const upsertString = `${insertString} ON DUPLICATE KEY UPDATE ${updateClause}`;
 
     console.log('Executing MySQL query: ' + upsertString);
-
-    return new Promise((resolve, reject) => {
-      // execute a query on our database
-
-      // TODO: figure out how to escape the string.
-
-      connection.query(upsertString, function (err, results, fields) {
-        if (err) {
-          reject(err);
-          // Disconnect if there's an error.
-          console.log("That's an error. Disconnecting from database.");
-          connection.end();
-        } else {
-          console.log('Success...');
-          console.log(results);
-          console.log(fields);
-          resolve(results);
-        }
-      });
-    }).then(data => {
-      const nextState = { ...state, response: { body: data } };
-      return nextState;
-    });
+    try {
+      const [result, fields] = await connection.execute(upsertString);
+      console.log('Success...');
+      return composeNextState(state, { result, fields: formatFields(fields) });
+    } catch (err) {
+      console.log("That's an error.");
+      throw err;
+    }
   };
 }
 
 /**
  * Insert or update multiple records using ON DUPLICATE KEY
  * @public
- * @example <caption>Upsert multiple records</caption>
+ * @example<caption>Upsert multiple records into a table</caption>
  * upsertMany(
- *   'users', // the DB table
+ *   "users", // the DB table
  *   [
- *     { name: 'one', email: 'one@openfn.org' },
- *     { name: 'two', email: 'two@openfn.org' },
+ *     { name: "one", email: "one@openfn.org" },
+ *     { name: "two", email: "two@openfn.org" },
  *   ]
- * )
+ * );
  * @function
  * @public
  * @param {string} table - The target table
- * @param {array} data - An array of objects or a function that returns an array
+ * @param {array} data - An array of objects fields
+ * @state {MySQLState}
  * @returns {Operation}
  */
 export function upsertMany(table, data) {
-  return function (state) {
-    return new Promise(function (resolve, reject) {
-      const [rows] = expandReferences(state, data);
+  return async state => {
+    const [resolvedTable, resolvedData] = expandReferences(state, table, data);
+    if (!resolvedData || resolvedData.length === 0) {
+      console.log('No records provided; skipping upsert.');
+      return state;
+    }
 
-      if (!rows || rows.length === 0) {
-        console.log('No records provided; skipping upsert.');
-        resolve(state);
-      }
+    const columns = Object.keys(resolvedData[0]);
 
-      const squelMysql = squel.useFlavour('mysql');
-      const columns = Object.keys(rows[0]);
+    const insertQuery = knexInstance(resolvedTable).insert(resolvedData);
+    const insertString = insertQuery.toString();
 
-      let upsertSql = squelMysql.insert().into(table).setFieldsRows(rows);
-      columns.map(c => {
-        upsertSql = upsertSql.onDupUpdate(`${c}=values(${c})`);
-      });
+    const updateParts = columns.map(
+      c => `${knexInstance.ref(c)} = VALUES(${knexInstance.ref(c)})`
+    );
+    const updateClause = updateParts.join(', ');
 
-      const upsertString = upsertSql.toString();
+    const upsertString = `${insertString} ON DUPLICATE KEY UPDATE ${updateClause}`;
 
-      let { connection } = state;
-      connection.query(upsertString, function (err, results, fields) {
-        if (err) {
-          reject(err); // Disconnect if there's an error.
-
-          console.log("That's an error. Disconnecting from database.");
-          connection.end();
-        } else {
-          console.log('Success...');
-          console.log(results);
-          console.log(fields);
-          resolve(results);
-        }
-      });
-    }).then(function (data) {
-      const nextState = { ...state, response: { body: data } };
-      return nextState;
-    });
+    try {
+      const [result, fields] = await connection.execute(upsertString);
+      console.log('Success...');
+      return composeNextState(state, { result, fields: formatFields(fields) });
+    } catch (err) {
+      console.log("That's an error.");
+      throw err;
+    }
   };
 }
 
@@ -296,6 +316,7 @@ export {
   merge,
   field,
   fields,
+  assert,
   cursor,
   dateFns,
   combine,

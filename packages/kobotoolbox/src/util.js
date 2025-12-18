@@ -6,7 +6,7 @@ import {
 } from '@openfn/language-common/util';
 
 export const DEFAULT_LIMIT = 3e4;
-export const DEFAULT_PAGE_SIZE = 1e4;
+export const DEFAULT_PAGE_SIZE = 1000;
 
 export function prepareNextState(state, response) {
   const { body, ...responseWithoutBody } = response;

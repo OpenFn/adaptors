@@ -36,5 +36,12 @@
         }
       ]
     }
+  },
+  "login":{
+    "response": {
+      "token": {
+        "access_token": "454212415454"
+      }
+    }
   }
 }

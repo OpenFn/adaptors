@@ -11,7 +11,7 @@
 //            --name sqledge \
 //            -d mcr.microsoft.com/azure-sql-edge
 
-import { execute, sql, findValue, insert, insertMany } from '../src/Adaptor';
+import { execute, sql, findValue, insert, insertMany } from '../src/Adaptor.js';
 import { expect } from 'chai';
 
 describe('MSSQL Integration Tests', () => {
@@ -22,8 +22,28 @@ describe('MSSQL Integration Tests', () => {
       password: 'YourStrong@Passw0rd',
       database: 'master',
       port: 1433,
+      trustServerCertificate: true, // Required for local development with self-signed certs
     },
   };
+
+  before(async () => {
+    // Create test table once before all tests
+    await execute(
+      sql({
+        query: `
+          IF EXISTS (SELECT * FROM sys.tables WHERE name = 'test_users')
+            DROP TABLE test_users;
+          
+          CREATE TABLE test_users (
+            id INT PRIMARY KEY IDENTITY(1,1),
+            name NVARCHAR(100),
+            email NVARCHAR(100),
+            created_at DATETIME DEFAULT GETDATE()
+          );
+        `,
+      })
+    )(state);
+  });
 
   beforeEach(() => {
     // Reset state before each test
@@ -34,28 +54,14 @@ describe('MSSQL Integration Tests', () => {
         password: 'YourStrong@Passw0rd',
         database: 'master',
         port: 1433,
+        trustServerCertificate: true, // Required for local development with self-signed certs
       },
     };
   });
 
-  it('should create a test table and seed data', async () => {
-    // Create test table
+  it('should seed test data', async () => {
+    // Insert test data using raw SQL
     await execute(
-      sql({
-        query: `
-          IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'test_users')
-          CREATE TABLE test_users (
-            id INT PRIMARY KEY IDENTITY(1,1),
-            name NVARCHAR(100),
-            email NVARCHAR(100),
-            created_at DATETIME DEFAULT GETDATE()
-          )
-        `,
-      })
-    )(state);
-
-    // Insert test data
-    const insertResult = await execute(
       sql({
         query: `
           INSERT INTO test_users (name, email)
@@ -182,7 +188,7 @@ describe('MSSQL Integration Tests', () => {
     const result = await execute(
       insert('test_users', { name: 'John Doe', email: 'john@example.com' })
     )(state);
-    expect(result).to.equal(1);
+    expect(result.rowCount).to.equal(1);
   });
   it('should insert multiple records', async () => {
     const result = await execute(
@@ -191,7 +197,7 @@ describe('MSSQL Integration Tests', () => {
         { name: 'Jane Smith', email: 'jane@example.com' },
       ])
     )(state);
-    expect(result).to.equal(2);
+    expect(result.rowCount).to.equal(2);
   });
 
   after(async () => {

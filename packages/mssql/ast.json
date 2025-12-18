@@ -6,7 +6,7 @@
         "params"
       ],
       "docs": {
-        "description": "Execute an SQL statement",
+        "description": "Execute a raw SQL statement",
         "tags": [
           {
             "title": "public",
@@ -15,7 +15,7 @@
           },
           {
             "title": "example",
-            "description": "sql({ query, options })"
+            "description": "sql({\n  query: 'SELECT * FROM users WHERE id = @id',\n  options\n})"
           },
           {
             "title": "function",
@@ -24,12 +24,30 @@
           },
           {
             "title": "param",
-            "description": "Payload data for the message",
+            "description": "Payload data for the SQL query",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
             "name": "params"
+          },
+          {
+            "title": "param",
+            "description": "The SQL query to execute",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "params.query"
+          },
+          {
+            "title": "param",
+            "description": "Optional query options",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "params.options"
           },
           {
             "title": "returns",
@@ -41,7 +59,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "findValue",

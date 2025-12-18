@@ -1,10 +1,65 @@
+import pg from 'pg';
+import { format } from './util.js';
 import {
   execute as commonExecute,
   composeNextState,
 } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import pg from 'pg';
-import format from 'pg-format';
+import {
+  handleSetNull,
+  handleValues,
+  handleQueryOptions,
+  findValueQuery,
+} from './builders.js';
+
+let client = null;
+
+/**
+ * State object
+ * @typedef {Object} PostgresState
+ * @property data - the parsed result rows
+ * @property result - the result from a successful query
+ * @property references - an array of all previous data objects used in the job
+ * @private
+ **/
+
+/**
+ * Execution options
+ * @typedef {Object} ExecutionOptions
+ * @property {boolean} [writeSql=false] - Specifies whether to log the generated SQL statement. Defaults to false.
+ * @property {boolean} [execute=true] - Specifies whether to execute the SQL statement. Defaults to true.
+ * @private
+ */
+
+/**
+ * Shared options
+ * @typedef {Object} GeneralOptions
+ * @property {boolean} [execute=true] - Specifies whether to execute the SQL statement. Defaults to true.
+ * @property {boolean} [writeSql=false] - Specifies whether to log the generated SQL statement. Defaults to false.
+ * @property {boolean} [logValues=false] - Specifies whether to log the query values to the console. Defaults to false.
+ * @property {string} [setNull] - A string value that specifies the behavior for inserting null values.
+ * @private
+ * */
+
+/**
+ * SQL Query Configuration
+ * @typedef {Object} SqlQueryConfig
+ * @property {string} name - Prepared statement name for repeated queries.
+ * @property {string} text - SQL query text with optional placeholders for parameterized queries.
+ * @property {Array} [values] - An array of values to be used with parameterized queries.
+ * @property {string} [rowMode='array'] - Format of result rows ('array' or 'object').
+ * @private
+ */
+
+/**
+ * findValue filter object
+ * @typedef {Object} FindValueFilter
+ * @property {string} uuid - The uuid value to search for in the specified relation.
+ * @property {string} relation - The name of the relation to search for the uuid value.
+ * @property {object} where - An object that contains key-value pairs to filter the search results.
+ * @property {object} operator - An object that contains key-value pairs to specify the type of comparison to perform on the where clause.
+ * @private
+ */
 
 /**
  * Execute a sequence of operations.
@@ -27,32 +82,30 @@ export function execute(...operations) {
 
   return state => {
     return commonExecute(
-      createClient,
-      connect,
+      newClient,
       ...operations,
-      disconnect,
-      cleanupState
+      endClient
     )({ ...initialState, ...state }).catch(e => {
+      endClient(state);
       console.error(e);
-      console.error('Unhandled error in the operations. Exiting process.');
-      process.exit(1);
+      throw e;
     });
   };
 }
 
-function createClient(state) {
+function newClient(state) {
   const {
+    ca,
+    ssl,
+    key,
     host,
     port,
+    user,
+    cert,
     database,
     password,
-    user,
-    ssl,
     allowSelfSignedCert,
-    ca,
-    key,
-    cert,
-  } = state.configuration;
+  } = state.configuration || {};
 
   // Allowing or blocking self signed certificate
   // https://node-postgres.com/features/ssl
@@ -61,132 +114,80 @@ function createClient(state) {
     : false;
 
   // setup client config
-  var config = { host, port, database, user, password, ssl: sslOptions };
+  const config = { host, port, database, user, password, ssl: sslOptions };
 
   // instantiate a new client
-  var client = new pg.Client(config);
-
-  return { ...state, client: client };
-}
-
-function connect(state) {
-  let { client } = state;
+  client = new pg.Client(config);
   client.connect();
-  return { ...state, client: client };
+  return state;
 }
 
-function disconnect(state) {
-  let { client } = state;
+function endClient(state) {
   client.end();
   return state;
 }
-
-function cleanupState(state) {
-  delete state.client;
-  return state;
-}
-
-function escapeRegExp(string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
-}
-
-function handleValues(sqlString, nullString) {
-  let sql = sqlString;
-  if (nullString == false) {
-    return sqlString;
-  } else if (Array.isArray(nullString)) {
-    nullString.forEach(ns => {
-      const re = new RegExp(escapeRegExp(ns), 'g');
-      sql = sql.replace(re, 'NULL');
-    });
-    return sql;
-  } else if (typeof nullString === 'object') {
-    throw 'setNull must be a string or an array of strings.';
+async function queryHandler(query, values) {
+  let result;
+  if (values) {
+    result = await client.query(query, values);
+  } else {
+    result = await client.query(query);
   }
-  const re = new RegExp(escapeRegExp(nullString), 'g');
-  return sqlString.replace(re, 'NULL');
+  console.log(`${result.command} succeeded, rowCount: ${result.rowCount}`);
+  return result;
 }
-
-function handleOptions(options) {
-  if (options && options.setNull === false) {
-    return false;
-  }
-  return (options && options.setNull) || "'undefined'";
-}
-
-function queryHandler(state, query, options, callback) {
-  const { client } = state;
-  return new Promise((resolve, reject) => {
-    if (options) {
-      if (options.writeSql) {
-        console.log('Adding prepared SQL to state.queries array.');
-        state.queries.push(query);
-      }
-
-      if (options.execute === false) {
-        console.log('Not executing query; options.execute === false');
-        resolve('Query not executed.');
-        return state;
-      }
-    }
-
-    client.query(query, (err, result) => {
-      if (err) {
-        reject(err);
-        client.end();
-      } else {
-        console.log(
-          `${result.command} succeeded, rowCount: ${result.rowCount}`
-        );
-        resolve(result);
-      }
-    });
-  }).then(response => {
-    const nextState = {
-      ...composeNextState(state, response.rows),
-      response,
-    };
-    if (callback) return callback(nextState);
-    return nextState;
-  });
+export function setMockClient(mockClient) {
+  client = mockClient;
 }
 
 /**
  * Execute an SQL statement
  * @public
- * @example
- * sql(state => `select(*) from ${state.data.tableName};`, { writeSql: true })
+ * @example <caption>Text-only Query</caption>
+ * sql('SELECT * FROM users;');
+ * @example <caption>Text-only Query with writeSql option</caption>
+ * sql("select id from users where first_name = 'Mamadou'", { writeSql: true });
+ * @example <caption>Parameterized Query</caption>
+ * sql("INSERT INTO users(name, age) VALUES ($1, $2);", { values: ["Alice", 25]});
+ * @example <caption>Format query with util.format</caption>
+ * sql(util.format('INSERT INTO users(name, age) VALUES (%L, %L);', 'Alice', 25));
+ * @example <caption> Prepared Statements</caption>
+ * sql({
+ *   // give the query a unique name
+ *   name: "fetch-user",
+ *   text: "SELECT * FROM user WHERE id = $1",
+ *   values: [1],
+ * });
  * @function
- * @param {string} sqlQuery - The SQL query as a string.
- * @param {object} [options] - Optional options argument
- * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
- * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
- * @param {function} callback - (Optional) callback function
+ * @param {string|SqlQueryConfig} sqlQuery - SQL query string or a query config object.
+ * @param {ExecutionOptions} [options] - Execution options. (OpenFn only)
+ * @state {PostgresState}
  * @returns {Operation}
  */
-export function sql(sqlQuery, options, callback) {
-  return state => {
-    const { client } = state;
-
+export function sql(sqlQuery, options) {
+  return async state => {
     const [resolvedSqlQuery, resolvedOptions] = expandReferences(
       state,
       sqlQuery,
       options
     );
-    try {
-      console.log('Preparing to execute sql statement');
-      return queryHandler(state, resolvedSqlQuery, resolvedOptions, callback);
-    } catch (e) {
-      client.end();
-      throw e;
-    }
+    handleQueryOptions(state, resolvedSqlQuery, resolvedOptions);
+    const result = await queryHandler(
+      resolvedSqlQuery,
+      resolvedOptions?.values
+    );
+    const nextState = {
+      ...composeNextState(state, result.rows),
+      result,
+    };
+    return nextState;
   };
 }
 
 /**
  * Fetch a uuid key given a condition
  * @public
- * @example
+ * @example <caption>Find a user by first name</caption>
  * findValue({
  *    uuid: 'id',
  *    relation: 'users',
@@ -194,17 +195,13 @@ export function sql(sqlQuery, options, callback) {
  *    operator: { first_name: 'like' }
  *  })
  * @function
- * @param {object} [filter] - A filter object with the lookup table, a uuid and the condition
- * @param {string} [filter.uuid] - The uuid value to search for in the specified relation.
- * @param {string} [filter.relation] - The name of the relation to search for the uuid value.
- * @param {object} [filter.where] - An object that contains key-value pairs to filter the search results.
- * @param {object} [filter.operator] - An object that contains key-value pairs to specify the type of comparison to perform on the where clause.
- * @returns {value}
+ * @param {FindValueFilter} filter - A filter object with the lookup table, a uuid and the condition
+ * @state {PostgresState}
+ * @state data - the value of the found uuid
+ * @returns {Operation}
  */
 export function findValue(filter) {
-  return state => {
-    const { client } = state;
-
+  return async state => {
     const [resolvedFilter] = expandReferences(state, filter);
     const {
       uuid,
@@ -213,249 +210,211 @@ export function findValue(filter) {
       operator: operatorData,
     } = resolvedFilter;
 
-    let conditionsArray = [];
-    for (let key in whereData)
-      conditionsArray.push(
-        `${key} ${operatorData ? operatorData[key] : '='} '${whereData[key]}'`
-      );
+    const queryStr = findValueQuery(uuid, relation, whereData, operatorData);
 
-    const condition =
-      conditionsArray.length > 0
-        ? `where ${conditionsArray.join(' and ')}`
-        : ''; // In a near future the 'and' can live in the filter.
+    console.log('Preparing to execute sql statement');
+    let returnValue = null;
 
-    try {
-      const body = `select ${uuid} from ${relation} ${condition}`;
-
-      console.log('Preparing to execute sql statement');
-      let returnValue = null;
-
-      return new Promise((resolve, reject) => {
-        client.query(body, (err, result) => {
-          if (err) {
-            console.log(err);
-            reject(err);
-            client.end();
-          } else {
-            if (result.rows.length > 0) {
-              returnValue = result.rows[0][uuid];
-            }
-            const nextState = {
-              ...composeNextState(state, returnValue),
-              result: returnValue,
-            };
-            resolve(nextState);
-          }
-        });
-      });
-    } catch (e) {
-      throw e;
+    const result = await queryHandler(queryStr);
+    if (result.rows.length > 0) {
+      returnValue = result.rows[0][uuid];
     }
+    const nextState = {
+      ...composeNextState(state, returnValue),
+      result: returnValue,
+    };
+    return nextState;
   };
 }
 
 /**
  * Insert a record
  * @public
- * @example
+ * @example <caption>Insert a record</caption>
  * insert('users', { name: 'Elodie', id: 7 }, { setNull: "'NaN'", logValues: true });
  * @function
  * @param {string} table - The target table
  * @param {object} record - Payload data for the record as a JS object or function
- * @param {object} [options] - Optional options argument
- * @param {string} [options.setNull] - A string value that specifies the behavior for inserting null values.
- * @param {boolean} [options.logValues] - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
- * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
- * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
- * @param {function} callback - (Optional) callback function
+ * @param {GeneralOptions} [options] - Shared options. (OpenFn only)
+ * @state {PostgresState}
  * @returns {Operation}
  */
-export function insert(table, record, options, callback) {
-  return state => {
-    const { client } = state;
+export function insert(table, record, options) {
+  return async state => {
     const [resolvedTable, resolvedRecord, resolvedOptions] = expandReferences(
       state,
       table,
       record,
       options
     );
-    try {
-      const columns = Object.keys(resolvedRecord).sort();
-      const columnsList = columns.join(', ');
-      const values = columns.map(key => resolvedRecord[key]);
 
-      const query = handleValues(
-        format(
-          `INSERT INTO ${resolvedTable} (${columnsList}) VALUES (%L);`,
-          values
-        ),
-        handleOptions(resolvedOptions)
-      );
+    const columns = Object.keys(resolvedRecord).sort();
+    const columnsList = columns.join(', ');
+    const values = columns.map(key => resolvedRecord[key]);
 
-      const safeQuery = `INSERT INTO ${resolvedTable} (${columnsList}) VALUES [--REDACTED--]];`;
+    const query = handleValues(
+      format(
+        `INSERT INTO ${resolvedTable} (${columnsList}) VALUES (%L);`,
+        values
+      ),
+      handleSetNull(resolvedOptions)
+    );
 
-      const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
-      console.log('Preparing to insert via:', queryToLog);
-      return queryHandler(state, query, resolvedOptions, callback);
-    } catch (e) {
-      client.end();
-      throw e;
-    }
+    const safeQuery = `INSERT INTO ${resolvedTable} (${columnsList}) VALUES [--REDACTED--]];`;
+
+    const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
+    console.log('Preparing to insert via:', queryToLog);
+    handleQueryOptions(state, query, resolvedOptions);
+    const result = await queryHandler(query);
+    const nextState = {
+      ...composeNextState(state, result.rows),
+      result,
+    };
+    return nextState;
   };
 }
 
 /**
  * Insert many records, using the keys of the first as the column template
  * @public
- * @example
+ * @example <caption>Insert many records</caption>
  * insertMany('users', state => state.data.recordArray, { setNull: "'undefined'", logValues: true });
  * @function
  * @param {string} table - The target table
  * @param {array} records - An array or a function that takes state and returns an array
- * @param {object} [options] - Optional options argument
- * @param {string} [options.setNull] - A string value that specifies the behavior for inserting null values.
- * @param {boolean} [options.logValues] - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
- * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
- * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
- * @param {function} callback - (Optional) callback function
+ * @param {GeneralOptions} [options] - Shared options. (OpenFn only)
+ * @state {PostgresState}
  * @returns {Operation}
  */
-export function insertMany(table, records, options, callback) {
-  return state => {
-    let { client } = state;
+export function insertMany(table, records, options) {
+  return async state => {
     const [resolvedTable, resolvedRecords, resolvedOptions] = expandReferences(
       state,
       table,
       records,
       options
     );
-    try {
-      return new Promise((resolve, reject) => {
-        if (!resolvedRecords || resolvedRecords.length === 0) {
-          console.log('No records provided; skipping insert.');
-          resolve(state);
-        }
-        // Note: we select the keys of the FIRST object as the canonical template.
-        const columns = Object.keys(resolvedRecords[0]);
-        const columnsList = columns.join(', ');
-        const valueSets = resolvedRecords.map(x => Object.values(x));
 
-        const query = handleValues(
-          format(
-            `INSERT INTO ${resolvedTable} (${columnsList}) VALUES %L;`,
-            valueSets
-          ),
-          handleOptions(resolvedOptions)
-        );
-
-        const safeQuery = `INSERT INTO ${resolvedTable} (${columnsList}) VALUES [--REDACTED--]];`;
-
-        const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
-        console.log('Preparing to insertMany via:', queryToLog);
-        resolve(queryHandler(state, query, resolvedOptions, callback));
-      });
-    } catch (e) {
-      client.end();
-      throw e;
+    if (!resolvedRecords || resolvedRecords.length === 0) {
+      console.log('No records provided; skipping insert.');
+      return state;
     }
+    // Note: we select the keys of the FIRST object as the canonical template.
+    const columns = Object.keys(resolvedRecords[0]);
+    const columnsList = columns.join(', ');
+    const valueSets = resolvedRecords.map(x => Object.values(x));
+
+    const query = handleValues(
+      format(
+        `INSERT INTO ${resolvedTable} (${columnsList}) VALUES %L;`,
+        valueSets
+      ),
+      handleSetNull(resolvedOptions)
+    );
+
+    const safeQuery = `INSERT INTO ${resolvedTable} (${columnsList}) VALUES [--REDACTED--]];`;
+
+    const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
+    console.log('Preparing to insertMany via:', queryToLog);
+    handleQueryOptions(state, query, resolvedOptions);
+    const result = await queryHandler(query);
+    const nextState = {
+      ...composeNextState(state, result.rows),
+      result,
+    };
+    return nextState;
   };
 }
 
 /**
  * Insert or update a record using ON CONFLICT UPDATE
  * @public
- * @example
+ * @example <caption>Insert or update a record</caption>
  * upsert(
- *   'users', // the DB table
- *   'ON CONSTRAINT users_pkey', // a DB column with a unique constraint OR a CONSTRAINT NAME
- *   { name: 'Elodie', id: 7 },
- *   { setNull: ["''", "'undefined'"], writeSql:true, execute: true, logValues: true }
- * )
+ *   "users", // the DB table
+ *   "ON CONSTRAINT users_pkey", // a DB column with a unique constraint OR a CONSTRAINT NAME
+ *   { name: "Elodie", id: 7 },
+ *   {
+ *     setNull: ["''", "'undefined'"],
+ *     writeSql: true,
+ *     logValues: true,
+ *   }
+ * );
  * @function
  * @param {string} table - The target table
  * @param {string} uuid - The uuid column to determine a matching/existing record
  * @param {object} record - Payload data for the record as a JS object or function
- * @param {object} [options] - Optional options argument
- * @param {string} [options.setNull] - A string value that specifies the behavior for inserting null values.
- * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
- * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
- * @param {boolean} [options.logValues] - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
- * @param {function} callback - (Optional) callback function
+ * @param {GeneralOptions} [options] - Shared options. (OpenFn only)
+ * @state {PostgresState}
  * @returns {Operation}
  */
-export function upsert(table, uuid, record, options, callback) {
-  return state => {
-    const { client } = state;
-
+export function upsert(table, uuid, record, options) {
+  return async state => {
     const [resolvedTable, resolvedUuid, resolvedRecord, resolvedOptions] =
       expandReferences(state, table, uuid, record, options);
-    try {
-      const columns = Object.keys(resolvedRecord).sort();
-      const columnsList = columns.join(', ');
-      const values = columns.map(key => resolvedRecord[key]);
-      const conflict =
-        resolvedUuid.split(' ').length > 1 ? resolvedUuid : `(${resolvedUuid})`;
 
-      const updateValues = columns
-        .map(key => {
-          return `${key}=excluded.${key}`;
-        })
-        .join(', ');
+    const columns = Object.keys(resolvedRecord).sort();
+    const columnsList = columns.join(', ');
+    const values = columns.map(key => resolvedRecord[key]);
+    const conflict =
+      resolvedUuid.split(' ').length > 1 ? resolvedUuid : `(${resolvedUuid})`;
 
-      const insertValues = format(
-        `INSERT INTO ${resolvedTable} (${columnsList}) VALUES (%L)`,
-        values
-      );
+    const updateValues = columns
+      .map(key => {
+        return `${key}=excluded.${key}`;
+      })
+      .join(', ');
 
-      const query = handleValues(
-        `${insertValues}
+    const insertValues = format(
+      `INSERT INTO ${resolvedTable} (${columnsList}) VALUES (%L)`,
+      values
+    );
+
+    const query = handleValues(
+      `${insertValues}
         ON CONFLICT ${conflict}
         DO UPDATE SET ${updateValues};`,
-        handleOptions(resolvedOptions)
-      );
+      handleSetNull(resolvedOptions)
+    );
 
-      const safeQuery = `INSERT INTO ${resolvedTable} (${columnsList}) VALUES [--REDACTED--]
+    const safeQuery = `INSERT INTO ${resolvedTable} (${columnsList}) VALUES [--REDACTED--]
         ON CONFLICT ${conflict}
         DO UPDATE SET ${updateValues};`;
 
-      const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
-      console.log('Preparing to upsert via:', queryToLog);
-      return queryHandler(state, query, resolvedOptions, callback);
-    } catch (e) {
-      client.end();
-      throw e;
-    }
+    const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
+    console.log('Preparing to upsert via:', queryToLog);
+    handleQueryOptions(state, query, resolvedOptions);
+    const result = await queryHandler(query);
+    const nextState = {
+      ...composeNextState(state, result.rows),
+      result,
+    };
+    return nextState;
   };
 }
 
 /**
  * Insert or update a record based on a logical condition using ON CONFLICT UPDATE
  * @public
- * @example
+ * @example <caption>Insert or update a record conditionally</caption>
  * upsertIf(
- *   dataValue('name'),
- *   'users', // the DB table
- *   'ON CONSTRAINT users_pkey', // a DB column with a unique constraint OR a CONSTRAINT NAME
- *   { name: 'Elodie', id: 7 },
- *   { writeSql:true, execute: true }
- * )
+ *   $.data.name,
+ *   "users", // the DB table
+ *   "ON CONSTRAINT users_pkey", // a DB column with a unique constraint OR a CONSTRAINT NAME
+ *   { name: "Elodie", id: 7 },
+ *   { writeSql: true }
+ * );
  * @function
  * @param {string} logical - a data to check existing value for.
  * @param {string} table - The target table
  * @param {string} uuid - The uuid column to determine a matching/existing record
  * @param {object} record - Payload data for the record as a JS object or function
- * @param {object} [options] - Optional options argument
- * @param {string} [options.setNull] - A string value that specifies the behavior for inserting null values.
- * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
- * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
- * @param {boolean} [options.logValues] - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
- * @param {function} callback - (Optional) callback function
+ * @param {GeneralOptions} [options] - Shared options. (OpenFn only)
+ * @state {PostgresState}
  * @returns {Operation}
  */
-export function upsertIf(logical, table, uuid, record, options, callback) {
-  return state => {
-    const { client } = state;
-
+export function upsertIf(logical, table, uuid, record, options) {
+  return async state => {
     const [
       resolvedLogic,
       resolvedTable,
@@ -464,58 +423,55 @@ export function upsertIf(logical, table, uuid, record, options, callback) {
       resolvedOptions,
     ] = expandReferences(state, logical, table, uuid, record, options);
 
-    try {
-      return new Promise((resolve, reject) => {
-        if (!resolvedLogic) {
-          console.log(`Skipping upsert for ${resolvedUuid}.`);
-          resolve(state);
-          return state;
-        }
-        const columns = Object.keys(resolvedRecord).sort();
-        const columnsList = columns.join(', ');
-        const values = columns.map(key => resolvedRecord[key]);
-        const conflict =
-          resolvedUuid.split(' ').length > 1
-            ? resolvedUuid
-            : `(${resolvedUuid})`;
+    if (!resolvedLogic) {
+      console.log(`Skipping upsert for ${resolvedUuid}.`);
+      return state;
+    }
+    const columns = Object.keys(resolvedRecord).sort();
+    const columnsList = columns.join(', ');
+    const values = columns.map(key => resolvedRecord[key]);
+    const conflict =
+      resolvedUuid.split(' ').length > 1 ? resolvedUuid : `(${resolvedUuid})`;
 
-        const updateValues = columns
-          .map(key => {
-            return `${key}=excluded.${key}`;
-          })
-          .join(', ');
+    const updateValues = columns
+      .map(key => {
+        return `${key}=excluded.${key}`;
+      })
+      .join(', ');
 
-        const insertValues = format(
-          `INSERT INTO ${resolvedTable} (${columnsList}) VALUES (%L)`,
-          values
-        );
+    const insertValues = format(
+      `INSERT INTO ${resolvedTable} (${columnsList}) VALUES (%L)`,
+      values
+    );
 
-        const query = handleValues(
-          `${insertValues}
+    const query = handleValues(
+      `${insertValues}
         ON CONFLICT ${conflict}
         DO UPDATE SET ${updateValues};`,
-          handleOptions(resolvedOptions)
-        );
+      handleSetNull(resolvedOptions)
+    );
 
-        const safeQuery = `INSERT INTO ${resolvedTable} (${columnsList}) VALUES [--REDACTED--]
+    const safeQuery = `INSERT INTO ${resolvedTable} (${columnsList}) VALUES [--REDACTED--]
         ON CONFLICT ${conflict}
         DO UPDATE SET ${updateValues};`;
 
-        const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
-        console.log('Preparing to upsert via:', queryToLog);
-        resolve(queryHandler(state, query, resolvedOptions, callback));
-      });
-    } catch (e) {
-      client.end();
-      throw e;
-    }
+    const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
+    console.log('Preparing to upsert via:', queryToLog);
+
+    handleQueryOptions(state, query, resolvedOptions);
+    const result = await queryHandler(query);
+    const nextState = {
+      ...composeNextState(state, result.rows),
+      result,
+    };
+    return nextState;
   };
 }
 
 /**
  * Insert or update multiple records using ON CONFLICT UPDATE and excluded
  * @public
- * @example
+ * @example <caption>Insert or update multiple records</caption>
  * upsertMany(
  *   'users', // the DB table
  *   'email', // a DB column with a unique constraint OR a CONSTRAINT NAME
@@ -523,107 +479,96 @@ export function upsertIf(logical, table, uuid, record, options, callback) {
  *     { name: 'one', email: 'one@openfn.org' },
  *     { name: 'two', email: 'two@openfn.org' },
  *   ]
- *  { logValues: true }
  * )
  * @function
  * @param {string} table - The target table
  * @param {string} uuid - The uuid column to determine a matching/existing record
  * @param {array} data - An array of objects or a function that returns an array
- * @param {object} [options] - Optional options argument
- * @param {string} [options.setNull] - A string value that specifies the behavior for inserting null values.
- * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
- * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
- * @param {boolean} [options.logValues] - A boolean value that specifies whether to log the inserted values to the console. Defaults to false.
- * @param {function} callback - (Optional) callback function
+ * @param {GeneralOptions} [options] - Shared options. (OpenFn only)
+ * @state {PostgresState}
  * @returns {Operation}
  */
-export function upsertMany(table, uuid, data, options, callback) {
-  return state => {
-    const { client } = state;
+export function upsertMany(table, uuid, data, options) {
+  return async state => {
     const [resolvedTable, resolvedUuid, resolvedData, resolvedOptions] =
       expandReferences(state, table, uuid, data, options);
 
-    try {
-      return new Promise((resolve, reject) => {
-        if (!resolvedData || resolvedData.length === 0) {
-          console.log('No records provided; skipping upsert.');
-          resolve(state);
-        }
+    if (!resolvedData || resolvedData.length === 0) {
+      console.log('No records provided; skipping upsert.');
+      return state;
+    }
 
-        const columns = Object.keys(resolvedData[0]);
-        const columnsList = columns.join(', ');
-        const values = resolvedData.map(x => Object.values(x));
-        const conflict =
-          resolvedUuid.split(' ').length > 1
-            ? resolvedUuid
-            : `(${resolvedUuid})`;
+    const columns = Object.keys(resolvedData[0]);
+    const columnsList = columns.join(', ');
+    const values = resolvedData.map(x => Object.values(x));
+    const conflict =
+      resolvedUuid.split(' ').length > 1 ? resolvedUuid : `(${resolvedUuid})`;
 
-        const updateValues = columns
-          .map(key => {
-            return `${key}=excluded.${key}`;
-          })
-          .join(', ');
+    const updateValues = columns
+      .map(key => {
+        return `${key}=excluded.${key}`;
+      })
+      .join(', ');
 
-        const insertValues = format(
-          `INSERT INTO ${resolvedTable} (${columnsList}) VALUES %L`,
-          values
-        );
+    const insertValues = format(
+      `INSERT INTO ${resolvedTable} (${columnsList}) VALUES %L`,
+      values
+    );
 
-        const query = handleValues(
-          `${insertValues}
+    const query = handleValues(
+      `${insertValues}
         ON CONFLICT ${conflict}
         DO UPDATE SET ${updateValues};`,
-          handleOptions(resolvedOptions)
-        );
+      handleSetNull(resolvedOptions)
+    );
 
-        const safeQuery = `INSERT INTO ${resolvedTable} (${columnsList}) VALUES [--REDACTED--]
+    const safeQuery = `INSERT INTO ${resolvedTable} (${columnsList}) VALUES [--REDACTED--]
         ON CONFLICT ${conflict}
         DO UPDATE SET ${updateValues};`;
 
-        const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
-        console.log('Preparing to upsert via:', queryToLog);
-        resolve(queryHandler(state, query, resolvedOptions, callback));
-      });
-    } catch (e) {
-      client.end();
-      throw e;
-    }
+    const queryToLog = resolvedOptions?.logValues ? query : safeQuery;
+    console.log('Preparing to upsert via:', queryToLog);
+    handleQueryOptions(state, query, resolvedOptions);
+    const result = await queryHandler(query);
+    const nextState = {
+      ...composeNextState(state, result.rows),
+      result,
+    };
+    return nextState;
   };
 }
 
 /**
  * List the columns of a table in a database.
  * @public
- * @example
+ * @example <caption>Describe a table</caption>
  * describeTable('clinic_visits')
  * @function
  * @param {string} tableName - The name of the table to describe
- * @param {object} [options] - Optional options argument
- * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
- * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
- * @param {function} callback - (Optional) callback function
+ * @param {ExecutionOptions} [options] - Execution options. (OpenFn only)
+ * @state {PostgresState}
  * @returns {Operation}
  */
-export function describeTable(tableName, options, callback) {
-  return state => {
-    const { client } = state;
+export function describeTable(tableName, options) {
+  return async state => {
     const [resolvedTableName, resolvedOptions] = expandReferences(
       state,
       tableName,
       options
     );
 
-    try {
-      const query = `SELECT column_name, udt_name, is_nullable
+    const query = `SELECT column_name, udt_name, is_nullable
         FROM information_schema.columns
         WHERE table_name='${resolvedTableName}';`;
 
-      console.log('Preparing to describe table via:', query);
-      return queryHandler(state, query, resolvedOptions, callback);
-    } catch (e) {
-      client.end();
-      throw e;
-    }
+    console.log('Preparing to describe table via:', query);
+    handleQueryOptions(state, query, resolvedOptions);
+    const result = await queryHandler(query);
+    const nextState = {
+      ...composeNextState(state, result.rows),
+      result,
+    };
+    return nextState;
   };
 }
 
@@ -642,52 +587,49 @@ export function describeTable(tableName, options, callback) {
  * @function
  * @param {string} tableName - The name of the table to create
  * @param {array} columns - An array of form columns
- * @param {object} [options] - Optional options argument
- * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
- * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
- * @param {function} callback - (Optional) callback function
+ * @param {ExecutionOptions} [options] - Execution options. (OpenFn only)
+ * @state {PostgresState}
  * @returns {Operation}
  */
-export function insertTable(tableName, columns, options, callback) {
-  return state => {
-    const { client } = state;
+export function insertTable(tableName, columns, options) {
+  return async state => {
     const [resolvedTableName, resolvedColumns, resolvedOptions] =
       expandReferences(state, tableName, columns, options);
 
-    try {
-      return new Promise((resolve, reject) => {
-        if (!resolvedColumns || resolvedColumns.length === 0) {
-          console.log('No columns provided; skipping table creation.');
-          resolve(state);
-        }
-        const structureData = resolvedColumns
-          .map(
-            x =>
-              `${x.name} ${x.type} ${
-                x.hasOwnProperty('default')
-                  ? x.type.includes('varchar') ||
-                    x.type.includes('text') ||
-                    x.type.includes('BIT')
-                    ? `DEFAULT '${x.default}'`
-                    : `DEFAULT ${x.default}`
-                  : ''
-              } ${x.unique ? 'UNIQUE' : ''} ${
-                x.identity ? 'GENERATED BY DEFAULT AS IDENTITY' : ''
-              } ${x.required ? 'NOT NULL' : ''}`
-          )
-          .join(', ');
+    if (!resolvedColumns || resolvedColumns.length === 0) {
+      console.log('No columns provided; skipping table creation.');
+      return state;
+    }
+    const structureData = resolvedColumns
+      .map(
+        x =>
+          `${x.name} ${x.type} ${
+            x.hasOwnProperty('default')
+              ? x.type.includes('varchar') ||
+                x.type.includes('text') ||
+                x.type.includes('BIT')
+                ? `DEFAULT '${x.default}'`
+                : `DEFAULT ${x.default}`
+              : ''
+          } ${x.unique ? 'UNIQUE' : ''} ${
+            x.identity ? 'GENERATED BY DEFAULT AS IDENTITY' : ''
+          } ${x.required ? 'NOT NULL' : ''}`
+      )
+      .join(', ');
 
-        const query = `CREATE TABLE ${resolvedTableName} (
+    const query = `CREATE TABLE ${resolvedTableName} (
         ${structureData}
       );`;
 
-        console.log('Preparing to create table via:', query);
-        resolve(queryHandler(state, query, resolvedOptions, callback));
-      });
-    } catch (e) {
-      client.end();
-      throw e;
-    }
+    console.log('Preparing to create table via:', query);
+
+    handleQueryOptions(state, query, resolvedOptions);
+    const result = await queryHandler(query);
+    const nextState = {
+      ...composeNextState(state, result.rows),
+      result,
+    };
+    return nextState;
   };
 }
 
@@ -706,50 +648,46 @@ export function insertTable(tableName, columns, options, callback) {
  * @function
  * @param {string} tableName - The name of the table to alter
  * @param {array} columns - An array of form columns
- * @param {object} [options] - Optional options argument
- * @param {boolean} [options.writeSql] - A boolean value that specifies whether to log the generated SQL statement. Defaults to false.
- * @param {boolean} [options.execute] - A boolean value that specifies whether to execute the generated SQL statement. Defaults to false.
- * @param {function} callback - (Optional) callback function
+ * @param {ExecutionOptions} [options] - Execution options. (OpenFn only)
+ * @state {PostgresState}
  * @returns {Operation}
  */
-export function modifyTable(tableName, columns, options, callback) {
-  return state => {
-    const { client } = state;
+export function modifyTable(tableName, columns, options) {
+  return async state => {
     const [resolvedTableName, resolvedColumns, resolvedOptions] =
       expandReferences(state, tableName, columns, options);
 
-    try {
-      return new Promise((resolve, reject) => {
-        if (!resolvedColumns || resolvedColumns.length === 0) {
-          console.log('No columns provided; skipping table modification.');
-          resolve(state);
-        }
-        const structureData = resolvedColumns
-          .map(
-            x =>
-              `ADD COLUMN ${x.name} ${x.type} ${
-                x.hasOwnProperty('default')
-                  ? x.type.includes('varchar') ||
-                    x.type.includes('text') ||
-                    x.type.includes('BIT')
-                    ? `DEFAULT '${x.default}'`
-                    : `DEFAULT ${x.default}`
-                  : ''
-              } ${x.identity ? 'GENERATED BY DEFAULT AS IDENTITY' : ''} ${
-                x.required ? 'NOT NULL' : ''
-              }`
-          )
-          .join(', ');
-
-        const query = `ALTER TABLE ${resolvedTableName} ${structureData};`;
-
-        console.log('Preparing to modify table via:', query);
-        resolve(queryHandler(state, query, resolvedOptions, callback));
-      });
-    } catch (e) {
-      client.end();
-      throw e;
+    if (!resolvedColumns || resolvedColumns.length === 0) {
+      console.log('No columns provided; skipping table modification.');
+      return state;
     }
+    const structureData = resolvedColumns
+      .map(
+        x =>
+          `ADD COLUMN ${x.name} ${x.type} ${
+            x.hasOwnProperty('default')
+              ? x.type.includes('varchar') ||
+                x.type.includes('text') ||
+                x.type.includes('BIT')
+                ? `DEFAULT '${x.default}'`
+                : `DEFAULT ${x.default}`
+              : ''
+          } ${x.identity ? 'GENERATED BY DEFAULT AS IDENTITY' : ''} ${
+            x.required ? 'NOT NULL' : ''
+          }`
+      )
+      .join(', ');
+
+    const query = `ALTER TABLE ${resolvedTableName} ${structureData};`;
+
+    console.log('Preparing to modify table via:', query);
+    handleQueryOptions(state, query, resolvedOptions);
+    const result = await queryHandler(query);
+    const nextState = {
+      ...composeNextState(state, result.rows),
+      result,
+    };
+    return nextState;
   };
 }
 
@@ -760,6 +698,8 @@ export {
   dataPath,
   dataValue,
   dateFns,
+  cursor,
+  assert,
   each,
   field,
   fields,

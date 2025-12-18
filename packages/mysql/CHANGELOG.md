@@ -1,5 +1,75 @@
 # @openfn/language-mysql
 
+## 4.0.1 - 02 December 2025
+
+### Patch Changes
+
+- 6aa9800: Security update
+
+## 4.0.0
+
+### Major Changes
+
+- e6486ad: - Query results write to `state.data` instead of `state.response`,
+  for consistency with other adaptors
+
+  - Add support for prepared statements in `sql` function.
+
+  # Migration Guide:
+
+  Transitioning from `state.response` to `state.data`
+
+  ### Accessing Query Results
+
+  - **Old Way:** -
+    ```js
+    sql(state => `select id, name from patients limit 10`);
+    log($.response.body);
+    log($.response.fields);
+    ```
+  - **New Way:**
+    ```js
+    sql(state => `select id, name from patients limit 10`);
+    log($.data.result);
+    log($.data.fields);
+    ```
+
+  ### Use Prepared Statements
+
+  Use prepared statements to avoid SQL injection
+
+  **Un-Prepared SQL**
+
+  ```javascript
+  // Bad
+  sql(state => `select * from users where id =${state.data.userId};`);
+  // Potential SQL injection
+  ```
+
+  **Prepared SQL**
+
+  ```javascript
+  // Good
+  sql(`select * from users where id = ?;`, {
+    values: $.data.userId,
+  });
+  // Safe from SQL injection
+  ```
+
+## 3.0.6 - 28 November 2025
+
+### Patch Changes
+
+- Updated dependencies \[cfc66df]
+  - @openfn/language-common@3.2.1
+
+## 3.0.5 - 12 November 2025
+
+### Patch Changes
+
+- Updated dependencies \[4d7a833]
+  - @openfn/language-common@3.2.0
+
 ## 3.0.4 - 04 November 2025
 
 ### Patch Changes

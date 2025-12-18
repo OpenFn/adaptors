@@ -37,6 +37,8 @@ jobs:
           GH_EMAIL: ${{ secrets.GH_EMAIL }}
       - name: Installing packages
         run: pnpm install --frozen-lockfile
+      - name: Build Tools
+        run: pnpm build:tools
       - name: Build docs
         run: pnpm build:adaptors docs
       - name: Generate docs.json

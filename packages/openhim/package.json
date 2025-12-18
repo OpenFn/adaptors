@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-openhim",
   "label": "OpenHIM",
-  "version": "2.0.4",
+  "version": "2.0.6",
   "description": "OpenFn adaptor for OpenHIM",
   "main": "dist/index.cjs",
   "scripts": {

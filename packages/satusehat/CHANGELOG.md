@@ -1,5 +1,19 @@
 # @openfn/language-satusehat
 
+## 3.0.7 - 28 November 2025
+
+### Patch Changes
+
+- Updated dependencies \[cfc66df]
+  - @openfn/language-common@3.2.1
+
+## 3.0.6 - 12 November 2025
+
+### Patch Changes
+
+- Updated dependencies \[4d7a833]
+  - @openfn/language-common@3.2.0
+
 ## 3.0.5 - 04 November 2025
 
 ### Patch Changes

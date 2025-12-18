@@ -28,7 +28,8 @@
   "author": "Open Function Group",
   "license": "ISC",
   "devDependencies": {
-    "@changesets/cli": "2.27.5",
+    "@changesets/cli": "^2.29.8",
+    "@openfn/adaptor-apis": "workspace:*",
     "@openfn/buildtools": "workspace:^1.0.2",
     "@openfn/generate-fhir": "workspace:^",
     "@openfn/metadata": "workspace:^1.0.1",

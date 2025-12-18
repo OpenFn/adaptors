@@ -35,7 +35,7 @@ import {
   map,
   as,
 } from '../src/Adaptor.js';
-import { startOfToday } from 'date-fns';
+import { startOfToday,format } from 'date-fns';
 
 const mockAgent = new MockAgent();
 setGlobalDispatcher(mockAgent);
@@ -1012,6 +1012,30 @@ describe('cursor', () => {
       format: c => c.toDateString(),
     })(state);
     expect(result.cursor).to.eql(date);
+  });
+
+  it('should format hour:minute (HH:mm) not hour:month (HH:MM)', () => {
+    const state = {};
+    let originalLog;
+    let consoleOutput = [];
+    
+    originalLog = console.log;
+    console.log = (...args) => consoleOutput.push(args.join(' '));
+
+    const testDate = new Date();
+    cursor('now')(state);
+  
+    
+    const logOutput = consoleOutput[0];
+    const timeMatch = logOutput.match(/(\d{2}):(\d{2})/);
+    
+    expect(timeMatch).to.not.be.null;
+    const displayedMinutes = parseInt(timeMatch[2]);
+    const actualMinutes = testDate.getMinutes();
+  
+    expect(displayedMinutes).to.equal(actualMinutes);
+    
+    console.log = originalLog;
   });
 
   it('should format a number to an arbitrary object', () => {

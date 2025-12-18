@@ -1,5 +1,25 @@
 # @openfn/language-gmail
 
+## 2.0.8 - 02 December 2025
+
+### Patch Changes
+
+- e8f7f2d: Security update
+
+## 2.0.7 - 28 November 2025
+
+### Patch Changes
+
+- Updated dependencies \[cfc66df]
+  - @openfn/language-common@3.2.1
+
+## 2.0.6 - 12 November 2025
+
+### Patch Changes
+
+- Updated dependencies \[4d7a833]
+  - @openfn/language-common@3.2.0
+
 ## 2.0.5 - 04 November 2025
 
 ### Patch Changes

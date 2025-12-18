@@ -1,5 +1,25 @@
 # @openfn/language-resourcemap
 
+## 0.4.26 - 02 December 2025
+
+### Patch Changes
+
+- 6aa9800: Security update
+
+## 0.4.25 - 28 November 2025
+
+### Patch Changes
+
+- Updated dependencies \[cfc66df]
+  - @openfn/language-common@3.2.1
+
+## 0.4.24 - 12 November 2025
+
+### Patch Changes
+
+- Updated dependencies \[4d7a833]
+  - @openfn/language-common@3.2.0
+
 ## 0.4.23 - 04 November 2025
 
 ### Patch Changes
