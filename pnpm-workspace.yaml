@@ -7,6 +7,5 @@ packages:
 minimumReleaseAge: 1440
 
 overrides:
-  '=': link:../../../.local/share/pnpm/global/5/node_modules/=
   node-forge: 1.3.2
   request>form-data: ^2.5.5
