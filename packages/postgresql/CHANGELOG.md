@@ -1,6 +1,6 @@
 # @openfn/language-postgresql
 
-## 8.0.0
+## 8.0.0 - 30 December 2025
 
 ### Major Changes
 

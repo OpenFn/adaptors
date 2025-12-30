@@ -1,5 +1,11 @@
 # @openfn/language-collections
 
+## 0.8.0 - 30 December 2025
+
+### Minor Changes
+
+- 6aeb1d1: Expose mock API
+
 ## 0.7.19 - 28 November 2025
 
 ### Patch Changes
