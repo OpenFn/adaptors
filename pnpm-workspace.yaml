@@ -1,11 +1,14 @@
 packages:
-  - packages/*
-  - tools/**
+  # all packages in direct subdirs of packages/
+  - 'packages/*'
+  # all packages in subdirs of tools/
+  - 'tools/**'
+  # exclude packages that are inside test directories
   - '!**/test/**'
+  # exclude testing
   - '!packages/testing/**'
-
-minimumReleaseAge: 1440
+minimumReleaseAge: 1440 # 1 day
 
 overrides:
+  request>form-data: '^2.5.5'
   node-forge: 1.3.2
-  request>form-data: ^2.5.5
