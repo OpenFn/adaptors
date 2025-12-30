@@ -40,8 +40,5 @@
     "mocha": "^10.7.3",
     "tsx": "^4.19.2",
     "typescript": "4.8.4"
-  },
-  "dependencies": {
-    "=": "link:../../../.local/share/pnpm/global/5/node_modules/="
   }
 }
