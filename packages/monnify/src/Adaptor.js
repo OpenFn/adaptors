@@ -48,7 +48,7 @@ export function get(path, options = {}) {
 
 /**
  * Make a POST request
- * @example
+ * @example <caption>Resend all failed notifications over a time period</caption>
  * post("/api/v1/transaction-notification/resend-failed-notifications", {
     "startDate": "2021-01-16T13:56:39.492",
     "endDate": "2021-10-16T13:56:39.492"
