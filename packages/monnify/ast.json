@@ -70,7 +70,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "post(\"/api/v1/transaction-notification/resend-failed-notifications\", {\n\"startDate\": \"2021-01-16T13:56:39.492\",\n\"endDate\": \"2021-10-16T13:56:39.492\"\n});"
+            "description": "post(\"/api/v1/transaction-notification/resend-failed-notifications\", {\n\"startDate\": \"2021-01-16T13:56:39.492\",\n\"endDate\": \"2021-10-16T13:56:39.492\"\n});",
+            "caption": "Resend all failed notifications over a time period"
           },
           {
             "title": "function",
