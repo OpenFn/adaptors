@@ -13,12 +13,8 @@ Add technical details of what you've changed (and why).
 Please disclose how you've used AI in this work (it's cool, we just want to
 know!):
 
-- [ ] Code generation (copilot but not intellisense)
-- [ ] Learning or fact checking
-- [ ] Strategy / design
-- [ ] Optimisation / refactoring
-- [ ] Translation / spellchecking / doc gen
-- [ ] Other
+- [ ] I have used Claude Code
+- [ ] I have used another model
 - [ ] I have not used AI
 
 You can read more details in our
