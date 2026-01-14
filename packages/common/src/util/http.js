@@ -239,7 +239,19 @@ export const parseUrl = (pathOrUrl = '', baseUrl) => {
     //       Ie it may be https://example.com/api/v1
     //       Doing new URl(path, base) will chop off the "base path" so to speak, and break stuff
     //       Technically path.join will produce an invalid URL, but the URL parser handles it safely
-    fullUrl = new URL(path.join(baseUrl, pathOrUrl));
+    // use posix join to ensure forward slashes
+    // Fix for issue where path.posix.join combined with new URL() logic on Windows/Mock environments
+    // produced paths that mismatched expectations (e.g., losing double slashes or protocol malformation)
+    if (baseUrl && /^https?:\/\//.test(baseUrl)) {
+      // If baseUrl is a proper URL, avoid path.join which treats it as a file system path
+      // This preserves protocol slashes and handles joining robustly
+      const base = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+      const sub = pathOrUrl.startsWith('/') ? pathOrUrl.slice(1) : pathOrUrl;
+      fullUrl = new URL(sub, base);
+    } else {
+      // Fallback for when baseUrl is just a path segment
+      fullUrl = new URL(path.posix.join(baseUrl, pathOrUrl));
+    }
   } else {
     // let this throw
     new URL(pathOrUrl);

@@ -3,7 +3,7 @@ import { parse } from 'csv-parse';
 import { Readable } from 'node:stream';
 
 import { request } from 'undici';
-import dateFns from 'date-fns';
+import * as dateFns from 'date-fns';
 import _ from 'lodash';
 
 import { expandReferences, parseDate } from './util/index.js';
