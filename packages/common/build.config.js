@@ -1,8 +1,15 @@
+import { join } from 'node:path';
+
 // override build config with an extra entry point
 export default path => ({
   entry: {
-    index: `${path}/src/index.js`,
-    metadata: `${path}/src/metadata.js`,
-    util: `${path}/src/util/index.js`,
+    index: join(path, 'src/index.js'),
+    metadata: join(path, 'src/metadata.js'),
+    util: join(path, 'src/util/index.js'),
   },
+  splitting: true,
+  shims: false,
+  external: ['undici'],
 });
+
+

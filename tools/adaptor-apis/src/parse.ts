@@ -1,5 +1,6 @@
 import jsdoc2md from 'jsdoc-to-markdown';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url'; // ADDED
 import loadPkg from './util/load-pkg';
 import generateSignature from './util/generate-signature';
 

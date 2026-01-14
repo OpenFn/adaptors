@@ -6,4 +6,4 @@ import path from 'node:path';
  */
 export default (lang: string): string =>
   // need to resolve from repo base..
-  path.resolve(`../../packages/${lang}`);
+  path.resolve(process.cwd(), `packages/${lang}`);
