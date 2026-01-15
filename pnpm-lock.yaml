@@ -14,7 +14,7 @@ importers:
     devDependencies:
       '@changesets/cli':
         specifier: ^2.29.8
-        version: 2.29.8(@types/node@22.19.5)
+        version: 2.29.8(@types/node@18.17.5)
       '@openfn/adaptor-apis':
         specifier: workspace:*
         version: link:tools/adaptor-apis
@@ -659,7 +659,7 @@ importers:
         version: 3.0.2
       ts-node:
         specifier: 10.9.1
-        version: 10.9.1(@swc/core@1.10.9)(@types/node@22.19.5)(typescript@5.9.2)
+        version: 10.9.1(@swc/core@1.10.9)(@types/node@18.17.5)(typescript@5.9.2)
       typescript:
         specifier: 5.9.2
         version: 5.9.2
@@ -770,7 +770,7 @@ importers:
         version: 3.0.2
       ts-node:
         specifier: 10.9.1
-        version: 10.9.1(@swc/core@1.10.9)(@types/node@22.19.5)(typescript@5.9.2)
+        version: 10.9.1(@swc/core@1.10.9)(@types/node@18.17.5)(typescript@5.9.2)
       typescript:
         specifier: 5.9.2
         version: 5.9.2
@@ -2376,31 +2376,6 @@ importers:
         specifier: ^1.12.0
         version: 1.12.0
 
-  packages/test-app:
-    dependencies:
-      '@openfn/language-common':
-        specifier: workspace:*
-        version: link:../common
-    devDependencies:
-      assertion-error:
-        specifier: 2.0.0
-        version: 2.0.0
-      chai:
-        specifier: 4.3.6
-        version: 4.3.6
-      deep-eql:
-        specifier: 4.1.1
-        version: 4.1.1
-      mocha:
-        specifier: ^10.7.3
-        version: 10.8.2
-      rimraf:
-        specifier: 3.0.2
-        version: 3.0.2
-      undici:
-        specifier: ^5.22.1
-        version: 5.29.0
-
   packages/twilio:
     dependencies:
       '@openfn/language-common':
@@ -2619,7 +2594,7 @@ importers:
         version: 6.1.0
       ts-node:
         specifier: 10.9.1
-        version: 10.9.1(@swc/core@1.10.9)(@types/node@22.19.5)(typescript@4.8.4)
+        version: 10.9.1(@swc/core@1.10.9)(@types/node@18.17.5)(typescript@4.8.4)
       tsup:
         specifier: 8.5.0
         version: 8.5.0(@swc/core@1.10.9)(tsx@4.19.2)(typescript@4.8.4)
@@ -2714,17 +2689,17 @@ importers:
   tools/generate:
     dependencies:
       '@types/node':
-        specifier: ^22.0.0
-        version: 22.19.5
+        specifier: 18.17.5
+        version: 18.17.5
       inquirer:
         specifier: ^9.2.15
         version: 9.2.15
       ts-node:
         specifier: 10.9.1
-        version: 10.9.1(@swc/core@1.10.9)(@types/node@22.19.5)(typescript@4.8.4)
+        version: 10.9.1(@swc/core@1.10.9)(@types/node@18.17.5)(typescript@4.8.4)
       tsup:
         specifier: 6.3.0
-        version: 6.3.0(@swc/core@1.10.9)(ts-node@10.9.1(@swc/core@1.10.9)(@types/node@22.19.5)(typescript@4.8.4))(typescript@4.8.4)
+        version: 6.3.0(@swc/core@1.10.9)(ts-node@10.9.1(@swc/core@1.10.9)(@types/node@18.17.5)(typescript@4.8.4))(typescript@4.8.4)
       typescript:
         specifier: 4.8.4
         version: 4.8.4
@@ -4674,9 +4649,6 @@ packages:
 
   '@types/node@18.17.5':
     resolution: {integrity: sha512-xNbS75FxH6P4UXTPUJp/zNPq6/xsfdJKussCWNOnz4aULWIRwMgP1LgaB5RiBnMX1DPCYenuqGZfnIAx5mbFLA==}
-
-  '@types/node@22.19.5':
-    resolution: {integrity: sha512-HfF8+mYcHPcPypui3w3mvzuIErlNOh2OAG+BCeBZCEwyiD5ls2SiCwEyT47OELtf7M3nHxBdu0FsmzdKxkN52Q==}
 
   '@types/node@8.10.66':
     resolution: {integrity: sha512-tktOkFUA4kXx2hhhrB8bIFb5TbwzS4uOhKEmwiD+NoiL0qtP2OQ9mFldbgD4dV1djrlBYP6eBuQZiWjuHUpqFw==}
@@ -10444,9 +10416,6 @@ packages:
   underscore@1.8.2:
     resolution: {integrity: sha512-CHzhycUy6eSLBV/Yksw4nSDIcsNAsdAExaSILTOSvZkfmymBxxrvnrUGoFJSYEUJvEe8C/p8a5Cs844mtwgNOw==}
 
-  undici-types@6.21.0:
-    resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
-
   undici@5.29.0:
     resolution: {integrity: sha512-raqeBD6NQK4SkWhQzeYKd1KmIG6dllBOTt55Rmkt4HtI9mwdWtJljnrXjAFUBLTSN67HWrOIZ3EPF4kjUw80Bg==}
     engines: {node: '>=14.0'}
@@ -11850,7 +11819,7 @@ snapshots:
     dependencies:
       '@changesets/types': 6.1.0
 
-  '@changesets/cli@2.29.8(@types/node@22.19.5)':
+  '@changesets/cli@2.29.8(@types/node@18.17.5)':
     dependencies:
       '@changesets/apply-release-plan': 7.0.14
       '@changesets/assemble-release-plan': 6.0.9
@@ -11866,7 +11835,7 @@ snapshots:
       '@changesets/should-skip-package': 0.1.2
       '@changesets/types': 6.1.0
       '@changesets/write': 0.4.0
-      '@inquirer/external-editor': 1.0.3(@types/node@22.19.5)
+      '@inquirer/external-editor': 1.0.3(@types/node@18.17.5)
       '@manypkg/get-packages': 1.1.3
       ansi-colors: 4.1.3
       ci-info: 3.9.0
@@ -12288,12 +12257,12 @@ snapshots:
 
   '@humanwhocodes/object-schema@2.0.3': {}
 
-  '@inquirer/external-editor@1.0.3(@types/node@22.19.5)':
+  '@inquirer/external-editor@1.0.3(@types/node@18.17.5)':
     dependencies:
       chardet: 2.1.1
       iconv-lite: 0.7.0
     optionalDependencies:
-      '@types/node': 22.19.5
+      '@types/node': 18.17.5
 
   '@isaacs/balanced-match@4.0.1': {}
 
@@ -12657,7 +12626,7 @@ snapshots:
 
   '@slack/logger@3.0.0':
     dependencies:
-      '@types/node': 22.19.5
+      '@types/node': 18.17.5
 
   '@slack/types@2.16.0': {}
 
@@ -12666,7 +12635,7 @@ snapshots:
       '@slack/logger': 3.0.0
       '@slack/types': 2.16.0
       '@types/is-stream': 1.1.0
-      '@types/node': 22.19.5
+      '@types/node': 18.17.5
       axios: 0.27.2
       eventemitter3: 3.1.2
       form-data: 2.5.4
@@ -12747,7 +12716,7 @@ snapshots:
 
   '@types/concat-stream@1.6.1':
     dependencies:
-      '@types/node': 22.19.5
+      '@types/node': 18.17.5
 
   '@types/cookiejar@2.1.5': {}
 
@@ -12775,11 +12744,11 @@ snapshots:
 
   '@types/form-data@0.0.33':
     dependencies:
-      '@types/node': 22.19.5
+      '@types/node': 18.17.5
 
   '@types/is-stream@1.1.0':
     dependencies:
-      '@types/node': 22.19.5
+      '@types/node': 18.17.5
 
   '@types/jsdoc-to-markdown@7.0.3': {}
 
@@ -12806,7 +12775,7 @@ snapshots:
 
   '@types/node-fetch@2.6.13':
     dependencies:
-      '@types/node': 22.19.5
+      '@types/node': 18.17.5
       form-data: 4.0.5
 
   '@types/node@10.17.60': {}
@@ -12815,28 +12784,24 @@ snapshots:
 
   '@types/node@18.17.5': {}
 
-  '@types/node@22.19.5':
-    dependencies:
-      undici-types: 6.21.0
-
   '@types/node@8.10.66': {}
 
   '@types/qs@6.14.0': {}
 
   '@types/readable-stream@4.0.21':
     dependencies:
-      '@types/node': 22.19.5
+      '@types/node': 18.17.5
 
   '@types/retry@0.12.0': {}
 
   '@types/superagent@3.8.7':
     dependencies:
       '@types/cookiejar': 2.1.5
-      '@types/node': 22.19.5
+      '@types/node': 18.17.5
 
   '@types/tunnel@0.0.3':
     dependencies:
-      '@types/node': 22.19.5
+      '@types/node': 18.17.5
 
   '@types/unist@3.0.3': {}
 
@@ -16584,7 +16549,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 22.19.5
+      '@types/node': 18.17.5
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -18095,13 +18060,6 @@ snapshots:
     optionalDependencies:
       ts-node: 10.9.1(@swc/core@1.10.9)(@types/node@18.17.5)(typescript@4.8.4)
 
-  postcss-load-config@3.1.4(ts-node@10.9.1(@swc/core@1.10.9)(@types/node@22.19.5)(typescript@4.8.4)):
-    dependencies:
-      lilconfig: 2.1.0
-      yaml: 1.10.2
-    optionalDependencies:
-      ts-node: 10.9.1(@swc/core@1.10.9)(@types/node@22.19.5)(typescript@4.8.4)
-
   postcss-load-config@6.0.1(tsx@4.19.2):
     dependencies:
       lilconfig: 3.1.3
@@ -19452,46 +19410,6 @@ snapshots:
     optionalDependencies:
       '@swc/core': 1.10.9
 
-  ts-node@10.9.1(@swc/core@1.10.9)(@types/node@22.19.5)(typescript@4.8.4):
-    dependencies:
-      '@cspotcode/source-map-support': 0.8.1
-      '@tsconfig/node10': 1.0.11
-      '@tsconfig/node12': 1.0.11
-      '@tsconfig/node14': 1.0.3
-      '@tsconfig/node16': 1.0.4
-      '@types/node': 22.19.5
-      acorn: 8.15.0
-      acorn-walk: 8.3.4
-      arg: 4.1.3
-      create-require: 1.1.1
-      diff: 4.0.2
-      make-error: 1.3.6
-      typescript: 4.8.4
-      v8-compile-cache-lib: 3.0.1
-      yn: 3.1.1
-    optionalDependencies:
-      '@swc/core': 1.10.9
-
-  ts-node@10.9.1(@swc/core@1.10.9)(@types/node@22.19.5)(typescript@5.9.2):
-    dependencies:
-      '@cspotcode/source-map-support': 0.8.1
-      '@tsconfig/node10': 1.0.11
-      '@tsconfig/node12': 1.0.11
-      '@tsconfig/node14': 1.0.3
-      '@tsconfig/node16': 1.0.4
-      '@types/node': 22.19.5
-      acorn: 8.15.0
-      acorn-walk: 8.3.4
-      arg: 4.1.3
-      create-require: 1.1.1
-      diff: 4.0.2
-      make-error: 1.3.6
-      typescript: 5.9.2
-      v8-compile-cache-lib: 3.0.1
-      yn: 3.1.1
-    optionalDependencies:
-      '@swc/core': 1.10.9
-
   tsconfig-paths@3.15.0:
     dependencies:
       '@types/json5': 0.0.29
@@ -19514,29 +19432,6 @@ snapshots:
       globby: 11.1.0
       joycon: 3.1.1
       postcss-load-config: 3.1.4(ts-node@10.9.1(@swc/core@1.10.9)(@types/node@18.17.5)(typescript@4.8.4))
-      resolve-from: 5.0.0
-      rollup: 2.79.2
-      source-map: 0.8.0-beta.0
-      sucrase: 3.35.0
-      tree-kill: 1.2.2
-    optionalDependencies:
-      '@swc/core': 1.10.9
-      typescript: 4.8.4
-    transitivePeerDependencies:
-      - supports-color
-      - ts-node
-
-  tsup@6.3.0(@swc/core@1.10.9)(ts-node@10.9.1(@swc/core@1.10.9)(@types/node@22.19.5)(typescript@4.8.4))(typescript@4.8.4):
-    dependencies:
-      bundle-require: 3.1.2(esbuild@0.15.18)
-      cac: 6.7.14
-      chokidar: 3.6.0
-      debug: 4.4.3(supports-color@8.1.1)
-      esbuild: 0.15.18
-      execa: 5.1.1
-      globby: 11.1.0
-      joycon: 3.1.1
-      postcss-load-config: 3.1.4(ts-node@10.9.1(@swc/core@1.10.9)(@types/node@22.19.5)(typescript@4.8.4))
       resolve-from: 5.0.0
       rollup: 2.79.2
       source-map: 0.8.0-beta.0
@@ -19721,8 +19616,6 @@ snapshots:
   underscore@1.13.7: {}
 
   underscore@1.8.2: {}
-
-  undici-types@6.21.0: {}
 
   undici@5.29.0:
     dependencies:
