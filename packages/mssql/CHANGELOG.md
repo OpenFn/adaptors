@@ -1,6 +1,6 @@
 # @openfn/language-mssql
 
-## 7.0.0
+## 7.0.0 - 30 December 2025
 
 ### Major Changes
 

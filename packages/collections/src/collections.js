@@ -3,9 +3,9 @@ import undici from 'undici';
 import { throwError, expandReferences } from '@openfn/language-common/util';
 import parser from 'stream-json';
 
-import { createServer } from './mock.js';
+import { createServer, API } from './mock.js';
 
-export { createServer as createMockServer };
+export { createServer as createMockServer, API as createMockAPI };
 
 let client;
 

@@ -32,6 +32,8 @@ communicate with external systems. These adaptors are used by
 - [asdf](https://github.com/asdf-vm/asdf) installed globally
 - `Node.js` and `pnpm` managed via asdf
 
+
+
 ### Setup
 
 ```bash
@@ -45,6 +47,22 @@ pnpm install
 pnpm build
 pnpm run setup
 ```
+
+### Alternative: Using nvm instead of asdf
+
+If you prefer managing Node.js with [nvm](https://github.com/nvm-sh/nvm), this project includes a `.nvmrc` file for node version switching:
+
+```bash
+# Use the Node.js version specified in .nvmrc
+nvm install
+nvm use
+
+# Install dependencies and build
+pnpm install
+pnpm build
+pnpm run setup
+```
+
 
 ## Using Adaptors
 
