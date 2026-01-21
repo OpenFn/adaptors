@@ -1,0 +1,256 @@
+import {
+  GoogleGenAI,
+  HarmCategory,
+  HarmBlockThreshold,
+  GenerateContentResponse,
+} from '@google/genai';
+import {
+  composeNextState,
+  commonExecute,
+  expandReferences,
+} from './Utils';
+
+/**
+ * Options provided to the Prompt function
+ * @typedef {Object} PromptOptions
+ * @public
+ * @property {string} model - Which model to use, e.g., 'gemini-1.5-flash'.
+ * @property {object} generationConfig - Configuration for generation (temperature, topK, etc.)
+ * @property {object} safetySettings - Safety settings for the model.
+ */
+
+// Placeholder for DeepResearchOptions
+/**
+ * Options provided to the Deep Research function
+ * @typedef {Object} DeepResearchOptions
+ * @public
+ * @property {string} model - Which model to use.
+ * @property {object} tools - Tools configuration (e.g., googleSearch).
+ */
+
+let client: GoogleGenAI;
+
+const GEMINIMODEL = [
+  'gemini-3-pro-preview',
+  'gemini-3-flash-preview',
+  'gemini-2.5-pro',
+  'gemini-2.5-flash',
+  'gemini-2.5-flash-lite',
+  'gemini-2.0-flash',
+  'gemini-2.0-flash-lite',
+]as const
+
+type GeminiModel = typeof GEMINIMODEL[number];
+
+const GEMINIIMAGE = [
+  'gemini-3-pro-image-preview',
+  'gemini-2.5-flash-image',
+] as const
+
+type GeminiImageModel = typeof GEMINIIMAGE[number];
+
+/**
+ * Creates a Gemini client
+ * @param state
+ * @returns {state}
+ */
+export function createClient(state: any) {
+  const { apiKey } = state.configuration;
+  client = new GoogleGenAI({
+    apiKey,
+  });
+  return state;
+}
+
+/**
+ * Executes a series of operations.
+ * @private
+ * @param operations
+ * @returns {operation}
+ */
+export function execute(...operations: any[]) {
+  const initialState = {
+    references: [],
+    data: null,
+  };
+
+  return (state: any) => {
+    return (commonExecute(
+      createClient,
+      ...operations
+    ) as any)({
+      ...initialState,
+      ...state,
+    });
+  };
+}
+
+
+
+/**
+ * Prompt the Gemini interface to respond
+ * @example
+ * prompt(`Summarize this text: ${JSON.stringify($.data)}`);
+ * @public
+ * @function
+ * @param {string} message - The prompt
+ * @param {PromptOptions} options - Model and other parameters
+ * @returns {operation}
+ */
+export function prompt(message: string, options: any = {}) {
+  return async (state: any) => {
+    const [resolvedMessage, resolvedOpts] = expandReferences(
+      state,
+      message,
+      options
+    );
+    const modelName: GeminiModel = resolvedOpts.model || 'gemini-2.5-flash-lite'; //GEMINIMODEL[4];
+
+    const msg = await client.models.generateContent({
+      model: modelName,
+      contents: resolvedMessage,
+    }); 
+    const text = msg.text;
+
+    console.log('√ Prompt operation completed');
+    return composeNextState(state, { text, response: msg });
+  };
+}
+
+/**
+ * Prompt Gemini deep research (using Google Search grounding)
+ * @example
+ * deepResearch(`Find recent news about OpenFn`);
+ * @public
+ * @function
+ * @param {string} message - The research query
+ * @param {DeepResearchOptions} options - Model and tools
+ * @returns {operation}
+ */
+export function deepResearch(message: string, options: any = {}) {
+  return async (state: any) => {
+    const [resolvedMessage, resolvedOpts] = expandReferences(
+      state,
+      message,
+      options
+    );
+
+    const modelName: GeminiModel = resolvedOpts.model || GEMINIMODEL[4];
+    
+    const tools = resolvedOpts.tools || [{ googleSearch: {} }];
+
+     const msg = await client.models.generateContent({
+      model: modelName,
+      contents: resolvedMessage,
+      config:{
+        tools:tools
+      }
+    }); 
+    
+    const text = msg.text;
+    const grabCitation = (response : GenerateContentResponse) => {
+      let text =  response.text;
+      const supports = response.candidates[0]?.groundingMetadata?.groundingSupports;
+      const chunks = response.candidates[0]?.groundingMetadata?.groundingChunks;
+
+
+    // Sort supports by end_index in descending order to avoid shifting issues when inserting.
+    const sortedSupports = [...supports].sort(
+        (a, b) => (b.segment?.endIndex ?? 0) - (a.segment?.endIndex ?? 0),
+    );
+
+    for (const support of sortedSupports) {
+        const endIndex = support.segment?.endIndex;
+        if (endIndex === undefined || !support.groundingChunkIndices?.length) {
+        continue;
+        }
+
+        const citationLinks = support.groundingChunkIndices
+        .map(i => {
+            const uri = chunks[i]?.web?.uri;
+            if (uri) {
+            return `[${i + 1}](${uri})`;
+            }
+            return null;
+        })
+        .filter(Boolean);
+
+        if (citationLinks.length > 0) {
+        const citationString = citationLinks.join(", ");
+        text = text.slice(0, endIndex) + citationString + text.slice(endIndex);
+        }
+    }
+
+    return text;
+    }
+
+    const citations = grabCitation(msg);  
+    // Candidates might contain grounding metadata
+
+    console.log('√ Deep research operation completed');
+    return composeNextState(state, { text, response: {msg, citations} });
+  };
+}
+
+/**
+ * Generate an image using Gemini/Imagen
+ * @example
+ * generateImage("A futuristic city skyline");
+ * @public
+ * @function
+ * @param {string} promptText - The image prompt
+ * @param {object} options - Model and generation options
+ * @returns {operation}
+ */
+export function generateImage(promptText: string, options: any = {}) {
+  return async (state: any) => {
+     const [resolvedPrompt, resolvedOpts] = expandReferences(
+      state,
+      promptText,
+      options
+    );
+    
+    const modelName: GeminiImageModel = resolvedOpts.model || GEMINIIMAGE[0];
+
+    const result = await client.models.generateContent({
+      model: modelName,
+      contents: resolvedPrompt,
+      config:{
+        imageConfig:{
+          aspectRatio: resolvedOpts.aspectRatio || '1:1',
+          imageSize: resolvedOpts.imageSize || '1K',
+          
+        }
+      }
+    })
+
+    let buffer;
+    
+    for (const part of result.candidates[0].content.parts) {
+    if (part.text) {
+      console.log(part.text);
+    } else if (part.inlineData) {
+      const imageData = part.inlineData.data;
+      buffer = Buffer.from(imageData, "base64");
+    }
+    // Assuming result handling for image
+    
+    console.log('√ Generate image operation completed');
+    return composeNextState(state, {result, buffer});
+  };
+}
+}
+
+export {
+  dataPath,
+  dataValue,
+  dateFns,
+  cursor,
+  each,
+  field,
+  fields,
+  fn,
+  lastReferenceValue,
+  merge,
+  sourceValue,
+} from '@openfn/language-common';

@@ -1,0 +1,12 @@
+{
+  "workflow": {
+    "steps": [  
+      {
+        "id": "deep_research",
+        "expression": "workflows/deep_research.js",
+        "adaptor": "gemini",
+        "configuration": "tmp/gemini-creds.json"
+      }
+    ]
+  }
+}
