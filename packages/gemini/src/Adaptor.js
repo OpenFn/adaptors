@@ -73,7 +73,7 @@ export function execute(...operations) {
 export function prompt(message, options = {}) {
     return async (state) => {
         const [resolvedMessage, resolvedOpts] = expandReferences(state, message, options);
-        const modelName = resolvedOpts.model || GEMINIMODEL[6];
+        const modelName = resolvedOpts.model || 'gemini-2.5-flash-lite';
         const msg = await client.models.generateContent({
             model: modelName,
             contents: resolvedMessage,
@@ -96,17 +96,8 @@ export function prompt(message, options = {}) {
 export function deepResearch(message, options = {}) {
     return async (state) => {
         const [resolvedMessage, resolvedOpts] = expandReferences(state, message, options);
-        // Assuming deep research uses a specific model or tool config
-        // For now, implementing with googleSearch tool if available in SDK or passing it through
-        const modelName = resolvedOpts.model || GEMINIMODEL[6];
-        // Check if tools are provided or default to googleSearch retrieval tool if supported
-        // Note: Actual implementation depends on specific SDK capabilities for "deep research"
-        // Here we assume utilizing tools for grounding.
+        const modelName = resolvedOpts.model || 'gemini-2.5-flash-lite';
         const tools = resolvedOpts.tools || [{ googleSearch: {} }];
-        // const model = client.models.ge({
-        //   model: modelName,
-        //   tools: tools,
-        // });
         const msg = await client.models.generateContent({
             model: modelName,
             contents: resolvedMessage,
@@ -161,12 +152,7 @@ export function deepResearch(message, options = {}) {
 export function generateImage(promptText, options = {}) {
     return async (state) => {
         const [resolvedPrompt, resolvedOpts] = expandReferences(state, promptText, options);
-        // Note: Image generation via GoogleGenerativeAI SDK might vary. 
-        // Usually uses 'imagen-3.0-generate-001' or similar models.
-        const modelName = resolvedOpts.model || GEMINIIMAGE[0];
-        // This is a placeholder as the unified SDK usage for image generation might differ slightly
-        // or require a different method than generateContent depending on version.
-        // Assuming generateContent returns a blob or uri for image models.
+        const modelName = resolvedOpts.model || 'gemini-3-pro-image-preview';
         const result = await client.models.generateContent({
             model: modelName,
             contents: resolvedPrompt,
@@ -193,5 +179,4 @@ export function generateImage(promptText, options = {}) {
         ;
     };
 }
-1;
 export { dataPath, dataValue, dateFns, cursor, each, field, fields, fn, lastReferenceValue, merge, sourceValue, } from '@openfn/language-common';

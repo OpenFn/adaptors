@@ -14,18 +14,28 @@ import {
  * Options provided to the Prompt function
  * @typedef {Object} PromptOptions
  * @public
- * @property {string} model - Which model to use, e.g., 'gemini-1.5-flash'.
- * @property {object} generationConfig - Configuration for generation (temperature, topK, etc.)
- * @property {object} safetySettings - Safety settings for the model.
+ * @property {string} model - Which model to use, defaults to 'gemini-2.5-flash-lite'
+ * @property {object} generationConfig - Configuration for generation (temperature, topK, etc.) see the options here: https://docs.cloud.google.com/vertex-ai/generative-ai/docs/multimodal/content-generation-parameters#googlegenaisdk_textgen_config_with_txt-nodejs_genai_sdk
  */
 
-// Placeholder for DeepResearchOptions
 /**
  * Options provided to the Deep Research function
  * @typedef {Object} DeepResearchOptions
  * @public
- * @property {string} model - Which model to use.
- * @property {object} tools - Tools configuration (e.g., googleSearch).
+ * @property {string} model - Which model to use, defaults to 'gemini-2.5-flash-lite'
+ * @property {object} tools - Tools configuration (e.g., googleSearch) shortcut to add tools in generationConfig use any of the following tools: https://ai.google.dev/gemini-api/docs/tools
+ * @property {object} generationConfig - Configuration for generation (temperature, topK, etc.) see the options here: https://docs.cloud.google.com/vertex-ai/generative-ai/docs/multimodal/content-generation-parameters#googlegenaisdk_textgen_config_with_txt-nodejs_genai_sdk
+ */
+
+
+/**
+ * Options provided to the Generate Image function
+ * @typedef {Object} GenerateImageOptions
+ * @public
+ * @property {string} model - Which model to use, defaults to ' 'gemini-3-pro-image-preview'
+ * @property {string} imageSize - Size of the image to generate, defaults to '1k'
+ * @property {string} aspectRatio - Aspect ratio of the image to generate, defaults to '1:1' 
+ * @property {object} generationConfig - Configuration for generation (temperature, topK, etc.) see the options here: https://docs.cloud.google.com/vertex-ai/generative-ai/docs/multimodal/content-generation-parameters#googlegenaisdk_textgen_config_with_txt-nodejs_genai_sdk
  */
 
 let client: GoogleGenAI;
@@ -104,11 +114,13 @@ export function prompt(message: string, options: any = {}) {
       message,
       options
     );
-    const modelName: GeminiModel = resolvedOpts.model || 'gemini-2.5-flash-lite'; //GEMINIMODEL[4];
+    const modelName: GeminiModel = resolvedOpts.model || 'gemini-2.5-flash-lite'; 
 
     const msg = await client.models.generateContent({
       model: modelName,
       contents: resolvedMessage,
+      config: resolvedOpts.config,
+   
     }); 
     const text = msg.text;
 
@@ -143,7 +155,8 @@ export function deepResearch(message: string, options: any = {}) {
       model: modelName,
       contents: resolvedMessage,
       config:{
-        tools:tools
+        tools:tools,
+        ...resolvedOpts.config
       }
     }); 
     
@@ -219,7 +232,8 @@ export function generateImage(promptText: string, options: any = {}) {
         imageConfig:{
           aspectRatio: resolvedOpts.aspectRatio || '1:1',
           imageSize: resolvedOpts.imageSize || '1K',
-        }
+        },
+        ...resolvedOpts.config,
       }
     })
 
