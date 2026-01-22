@@ -6,7 +6,7 @@
         "operations"
       ],
       "docs": {
-        "description": "Execute a sequence of operations.\nMain outer API for executing expressions.",
+        "description": "Execute a sequence of operations.\r\nMain outer API for executing expressions.",
         "tags": [
           {
             "title": "public",
@@ -15,7 +15,7 @@
           },
           {
             "title": "example",
-            "description": "execute(\n   create('foo'),\n   delete('bar')\n )"
+            "description": "execute(\r\n   create('foo'),\r\n   delete('bar')\r\n )"
           },
           {
             "title": "private",
@@ -63,7 +63,7 @@
           },
           {
             "title": "example",
-            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
+            "description": "fn(state => {\r\n  // do some things to state\r\n  return state;\r\n});"
           },
           {
             "title": "param",
@@ -146,7 +146,7 @@
         "path"
       ],
       "docs": {
-        "description": "Picks out a single value from a JSON object.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+        "description": "Picks out a single value from a JSON object.\r\nIf a JSONPath returns more than one value for the reference, the first\r\nitem will be returned.",
         "tags": [
           {
             "title": "public",
@@ -198,7 +198,7 @@
         "path"
       ],
       "docs": {
-        "description": "Picks out a single value from source data.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+        "description": "Picks out a single value from source data.\r\nIf a JSONPath returns more than one value for the reference, the first\r\nitem will be returned.",
         "tags": [
           {
             "title": "public",
@@ -241,7 +241,7 @@
         "path"
       ],
       "docs": {
-        "description": "Picks out a value from source data.\nWill return whatever JSONPath returns, which will always be an array.\nIf you need a single value use `sourceValue` instead.",
+        "description": "Picks out a value from source data.\r\nWill return whatever JSONPath returns, which will always be an array.\r\nIf you need a single value use `sourceValue` instead.",
         "tags": [
           {
             "title": "public",
@@ -345,7 +345,7 @@
         "path"
       ],
       "docs": {
-        "description": "Picks out a single value from the source data object—usually `state.data`.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+        "description": "Picks out a single value from the source data object—usually `state.data`.\r\nIf a JSONPath returns more than one value for the reference, the first\r\nitem will be returned.",
         "tags": [
           {
             "title": "public",
@@ -475,7 +475,7 @@
         "state"
       ],
       "docs": {
-        "description": "Simple switcher allowing other expressions to use either a JSONPath or\nobject literals as a data source.\n- JSONPath referencing a point in `state`\n- Object Literal of the data itself.\n- Function to be called with state.",
+        "description": "Simple switcher allowing other expressions to use either a JSONPath or\r\nobject literals as a data source.\r\n- JSONPath referencing a point in `state`\r\n- Object Literal of the data itself.\r\n- Function to be called with state.",
         "tags": [
           {
             "title": "public",
@@ -541,7 +541,7 @@
         "operation"
       ],
       "docs": {
-        "description": "Iterates over an array of items and invokes an operation upon each one, where the state\nobject is _scoped_ so that state.data is the item under iteration.\nThe rest of the state object is untouched and can be referenced as usual.\nYou can pass an array directly, or use lazy state or a JSONPath string to\nreference a slice of state.",
+        "description": "Iterates over an array of items and invokes an operation upon each one, where the state\r\nobject is _scoped_ so that state.data is the item under iteration.\r\nThe rest of the state object is untouched and can be referenced as usual.\r\nYou can pass an array directly, or use lazy state or a JSONPath string to\r\nreference a slice of state.",
         "tags": [
           {
             "title": "public",
@@ -555,17 +555,17 @@
           },
           {
             "title": "example",
-            "description": "each(\n  $.data,\n  // Inside the callback operation, `$.data` is scoped to the item under iteration\n  insert(\"patient\", {\n    patient_name: $.data.properties.case_name,\n    patient_id: $.data.case_id,\n  })\n);",
+            "description": "each(\r\n  $.data,\r\n  // Inside the callback operation, `$.data` is scoped to the item under iteration\r\n  insert(\"patient\", {\r\n    patient_name: $.data.properties.case_name,\r\n    patient_id: $.data.case_id,\r\n  })\r\n);",
             "caption": "Using lazy state ($) to iterate over items in state.data and pass each into an \"insert\" operation"
           },
           {
             "title": "example",
-            "description": "each(\n  $.data,\n  insert(\"patient\", (state) => ({\n    patient_id: state.data.case_id,\n    ...state.data\n  }))\n);",
+            "description": "each(\r\n  $.data,\r\n  insert(\"patient\", (state) => ({\r\n    patient_id: state.data.case_id,\r\n    ...state.data\r\n  }))\r\n);",
             "caption": "Iterate over items in state.data and pass each one into an \"insert\" operation"
           },
           {
             "title": "example",
-            "description": "each(\n  \"$.data[*]\",\n  insert(\"patient\", (state) => ({\n    patient_name: state.data.properties.case_name,\n    patient_id: state.data.case_id,\n  }))\n);",
+            "description": "each(\r\n  \"$.data[*]\",\r\n  insert(\"patient\", (state) => ({\r\n    patient_name: state.data.properties.case_name,\r\n    patient_id: state.data.case_id,\r\n  }))\r\n);",
             "caption": "Using JSON path to iterate over items in state.data and pass each one into an \"insert\" operation"
           },
           {
@@ -618,7 +618,7 @@
           },
           {
             "title": "example",
-            "description": "combine(\n  create('foo'),\n  delete('bar')\n)"
+            "description": "combine(\r\n  create('foo'),\r\n  delete('bar')\r\n)"
           },
           {
             "title": "param",
@@ -816,7 +816,7 @@
           },
           {
             "title": "example",
-            "description": "merge(\n  \"$.books[*]\",\n  fields(\n    field( \"publisher\", sourceValue(\"$.publisher\") )\n  )\n)"
+            "description": "merge(\r\n  \"$.books[*]\",\r\n  fields(\r\n    field( \"publisher\", sourceValue(\"$.publisher\") )\r\n  )\r\n)"
           },
           {
             "title": "function",
@@ -875,7 +875,7 @@
           },
           {
             "title": "example",
-            "description": "const users = [\n  { name: 'Alice', age: 25, city: 'New York' },\n  { name: 'Bob', age: 30, city: 'San Francisco' },\n  { name: 'Charlie', age: 25, city: 'New York' },\n  { name: 'David', age: 30, city: 'San Francisco' }\n];\ngroup(users, 'city');\n// state is { data: { 'New York': [/Alice, Charlie/], 'San Francisco': [ /Bob, David / ] }"
+            "description": "const users = [\r\n  { name: 'Alice', age: 25, city: 'New York' },\r\n  { name: 'Bob', age: 30, city: 'San Francisco' },\r\n  { name: 'Charlie', age: 25, city: 'New York' },\r\n  { name: 'David', age: 30, city: 'San Francisco' }\r\n];\r\ngroup(users, 'city');\r\n// state is { data: { 'New York': [/Alice, Charlie/], 'San Francisco': [ /Bob, David / ] }"
           },
           {
             "title": "function",
@@ -939,7 +939,7 @@
       "name": "index",
       "params": [],
       "docs": {
-        "description": "Returns the index of the current array being iterated.\nTo be used with `each` as a data source.",
+        "description": "Returns the index of the current array being iterated.\r\nTo be used with `each` as a data source.",
         "tags": [
           {
             "title": "public",
@@ -988,7 +988,7 @@
           },
           {
             "title": "example",
-            "description": "field(\"destination_string__c\", function(state) {\n  return arrayToString(dataValue(\"path_of_array\")(state), ', ')\n})"
+            "description": "field(\"destination_string__c\", function(state) {\r\n  return arrayToString(dataValue(\"path_of_array\")(state), ', ')\r\n})"
           },
           {
             "title": "param",
@@ -1026,7 +1026,7 @@
         "arg"
       ],
       "docs": {
-        "description": "Ensures primitive data types are wrapped in an array.\nDoes not affect array objects.",
+        "description": "Ensures primitive data types are wrapped in an array.\r\nDoes not affect array objects.",
         "tags": [
           {
             "title": "public",
@@ -1040,7 +1040,7 @@
           },
           {
             "title": "example",
-            "description": "each(function(state) {\n  return toArray( dataValue(\"path_of_array\")(state) )\n}, ...)"
+            "description": "each(function(state) {\r\n  return toArray( dataValue(\"path_of_array\")(state) )\r\n}, ...)"
           },
           {
             "title": "param",
@@ -1166,7 +1166,7 @@
         "keys"
       ],
       "docs": {
-        "description": "Splits an object into two objects based on a list of keys.\nThe first object contains the keys that are not in the list,\nand the second contains the keys that are.",
+        "description": "Splits an object into two objects based on a list of keys.\r\nThe first object contains the keys that are not in the list,\r\nand the second contains the keys that are.",
         "tags": [
           {
             "title": "public",
@@ -1340,7 +1340,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Takes a CSV file string or stream and parsing options as input, and returns a promise that\nresolves to the parsed CSV data as an array of objects.\nOptions for `parsingOptions` include:\n- `delimiter` {string/Buffer/[string/Buffer]} - Defines the character(s) used to delineate the fields inside a record. Default: `','`\n- `quote` {string/Buffer/[string/Buffer]} - Defines the characters used to surround a field. Default: `'\"'`\n- `escape` {Buffer/string/null/boolean} - Set the escape character as one character/byte only. Default: `\"`\n- `columns` {boolean / array / function} - Generates record in the form of object literals. Default: `true`\n- `bom` {boolean} - Strips the {@link https://en.wikipedia.org/wiki/Byte_order_mark byte order mark (BOM)} from the input string or buffer. Default: `true`\n- `trim` {boolean} - Ignore whitespace characters immediately around the `delimiter`. Default: `true`\n- `ltrim` {boolean} - Ignore whitespace characters from the left side of a CSV field. Default: `true`\n- `rtrim` {boolean} - Ignore whitespace characters from the right side of a CSV field. Default: `true`\n- `chunkSize` {number} - The size of each chunk of CSV data. Default: `Infinity`\n- `skip_empty_lines` {boolean} - Ignore empty lines in the CSV file. Default: `true`",
+        "description": "Takes a CSV file string or stream and parsing options as input, and returns a promise that\r\nresolves to the parsed CSV data as an array of objects.\r\nOptions for `parsingOptions` include:\r\n- `delimiter` {string/Buffer/[string/Buffer]} - Defines the character(s) used to delineate the fields inside a record. Default: `','`\r\n- `quote` {string/Buffer/[string/Buffer]} - Defines the characters used to surround a field. Default: `'\"'`\r\n- `escape` {Buffer/string/null/boolean} - Set the escape character as one character/byte only. Default: `\"`\r\n- `columns` {boolean / array / function} - Generates record in the form of object literals. Default: `true`\r\n- `bom` {boolean} - Strips the {@link https://en.wikipedia.org/wiki/Byte_order_mark byte order mark (BOM)} from the input string or buffer. Default: `true`\r\n- `trim` {boolean} - Ignore whitespace characters immediately around the `delimiter`. Default: `true`\r\n- `ltrim` {boolean} - Ignore whitespace characters from the left side of a CSV field. Default: `true`\r\n- `rtrim` {boolean} - Ignore whitespace characters from the right side of a CSV field. Default: `true`\r\n- `chunkSize` {number} - The size of each chunk of CSV data. Default: `Infinity`\r\n- `skip_empty_lines` {boolean} - Ignore empty lines in the CSV file. Default: `true`",
         "tags": [
           {
             "title": "public",
@@ -1413,7 +1413,7 @@
         "data"
       ],
       "docs": {
-        "description": "Validate against a JSON schema. Any errors are written to an array at `state.validationErrors`.\nSchema can be passed directly, loaded as a JSON path from state, or loaded from a URL\nData can be passed directly or loaded as a JSON path from state.\nBy default, schema is loaded from `state.schema` and data from `state.data`.",
+        "description": "Validate against a JSON schema. Any errors are written to an array at `state.validationErrors`.\r\nSchema can be passed directly, loaded as a JSON path from state, or loaded from a URL\r\nData can be passed directly or loaded as a JSON path from state.\r\nBy default, schema is loaded from `state.schema` and data from `state.data`.",
         "tags": [
           {
             "title": "public",
@@ -1495,7 +1495,7 @@
         "options"
       ],
       "docs": {
-        "description": "Sets a cursor property on state.\nSupports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\nwhich will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones\nare not yet supported.\nYou can provide a formatter to customise the final cursor value, which is useful for normalising\ndifferent inputs. The custom formatter runs after natural language date conversion.\nSee the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
+        "description": "Sets a cursor property on state.\r\nSupports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\r\nwhich will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones\r\nare not yet supported.\r\nYou can provide a formatter to customise the final cursor value, which is useful for normalising\r\ndifferent inputs. The custom formatter runs after natural language date conversion.\r\nSee the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
         "tags": [
           {
             "title": "public",
@@ -1652,7 +1652,7 @@
           },
           {
             "title": "example",
-            "description": "fn((state) => {\n  console.log(state.data);\n  return state;\n})",
+            "description": "fn((state) => {\r\n  console.log(state.data);\r\n  return state;\r\n})",
             "caption": "Use console.log inside a callback or fn block"
           },
           {
@@ -1701,7 +1701,7 @@
           },
           {
             "title": "example",
-            "description": "fn((state) => {\n  console.debug(state.data);\n  return state;\n})",
+            "description": "fn((state) => {\r\n  console.debug(state.data);\r\n  return state;\r\n})",
             "caption": "Use console.debug inside a callback or fn block"
           },
           {
@@ -1783,7 +1783,7 @@
       "name": "map",
       "params": {},
       "docs": {
-        "description": "Iterates over a collection of items and returns a new array of mapped values,\nlike Javascript's `Array.map()` function.\n\nEach item in the source array will be passed into the callback function. The returned value\nwill be added to the new array. The callback is passed the original item, the current index\nin the source array (ie, the nth item number), and the state object.\n\nWrites a new array to `state.data` with transformed values.c array.",
+        "description": "Iterates over a collection of items and returns a new array of mapped values,\r\nlike Javascript's `Array.map()` function.\r\n\r\nEach item in the source array will be passed into the callback function. The returned value\r\nwill be added to the new array. The callback is passed the original item, the current index\r\nin the source array (ie, the nth item number), and the state object.\r\n\r\nWrites a new array to `state.data` with transformed values.c array.",
         "tags": [
           {
             "title": "public",
@@ -1797,12 +1797,12 @@
           },
           {
             "title": "example",
-            "description": "map($.items', (data, index, state) => {\n  return {\n    id: index + 1,\n    name: data.name,\n    createdAt: state.cursor,\n  };\n});",
+            "description": "map($.items', (data, index, state) => {\r\n  return {\r\n    id: index + 1,\r\n    name: data.name,\r\n    createdAt: state.cursor,\r\n  };\r\n});",
             "caption": "Transform an array of items in state"
           },
           {
             "title": "example",
-            "description": "map($.items, async (data, index, state) => {\n  const userInfo = await fetchUserInfo(data.userId);\n  return {\n    id: index + 1,\n    name: data.name,\n    extra: userInfo,\n  };\n});",
+            "description": "map($.items, async (data, index, state) => {\r\n  const userInfo = await fetchUserInfo(data.userId);\r\n  return {\r\n    id: index + 1,\r\n    name: data.name,\r\n    extra: userInfo,\r\n  };\r\n});",
             "caption": "Map items asynchronously (e.g. fetch extra info)"
           },
           {

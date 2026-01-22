@@ -9,7 +9,7 @@
     "url": "https://github.com/openfn/adaptors.git"
   },
   "scripts": {
-    "build": "pnpm clean && build-adaptor common",
+    "build": "pnpm clean && tsx ../../tools/build/src/cli.ts common",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings --recursive",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings --recursive",
     "clean": "rimraf dist types docs",
