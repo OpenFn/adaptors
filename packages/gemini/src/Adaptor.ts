@@ -135,7 +135,7 @@ export function deepResearch(message: string, options: any = {}) {
       options
     );
 
-    const modelName: GeminiModel = resolvedOpts.model || GEMINIMODEL[4];
+    const modelName: GeminiModel = resolvedOpts.model || 'gemini-2.5-flash-lite';
     
     const tools = resolvedOpts.tools || [{ googleSearch: {} }];
 
@@ -210,7 +210,7 @@ export function generateImage(promptText: string, options: any = {}) {
       options
     );
     
-    const modelName: GeminiImageModel = resolvedOpts.model || GEMINIIMAGE[0];
+    const modelName: GeminiImageModel = resolvedOpts.model || 'gemini-3-pro-image-preview'
 
     const result = await client.models.generateContent({
       model: modelName,
