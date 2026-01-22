@@ -219,7 +219,6 @@ export function generateImage(promptText: string, options: any = {}) {
         imageConfig:{
           aspectRatio: resolvedOpts.aspectRatio || '1:1',
           imageSize: resolvedOpts.imageSize || '1K',
-          
         }
       }
     })
