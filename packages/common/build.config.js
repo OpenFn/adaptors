@@ -10,6 +10,7 @@ export default path => ({
   splitting: true,
   shims: false,
   external: ['undici'],
+  root: path, // Ensure the root path is correctly set
 });
 
 
