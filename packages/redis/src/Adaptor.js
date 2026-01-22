@@ -155,25 +155,6 @@ export function mGet(keys) {
   };
 }
 
-/**
- * Get string values of multiple keys at once.
- * @example <caption>Get values of patient and doctor keys</caption>
- * mGetString(['patient', 'doctor']);
- * @function
- * @public
- * @param {string[]} keys - The keys to fetch
- * @state {RedisState}
- * @returns {Operation}
- */
-export function mGetString(keys) {
-  return async state => {
-    const [resolvedKeys] = expandReferences(state, keys);
-    console.log(`Fetching string values for ${resolvedKeys.length} keys`);
-
-    const results = await client.mGet(resolvedKeys); // Redis native MGET
-    return composeNextState(state, results);
-  };
-}
 
 
 
@@ -220,26 +201,6 @@ export function set(key, value) {
     await client.set(resolvedKey, resolvedValue);
     console.log(`Set value for ${resolvedKey} key successfully`);
 
-    return state;
-  };
-}
-/**
- * Set multiple string keys at once.
- * @example <caption>Set values for patient and doctor keys</caption>
- * mSetString({ patient: 'John', doctor: 'Alice' });
- * @function
- * @public
- * @param {Record<string, string>} values - Key-value pairs to set
- * @state {RedisState}
- * @returns {Operation}
- */
-export function mSetString(values) {
-  return async state => {
-    const [resolvedValues] = expandReferences(state, values);
-    console.log(`Setting string values for ${Object.keys(resolvedValues).length} keys`);
-
-    const entries = Object.entries(resolvedValues).flat(); // [key1, value1, key2, value2,...]
-    await client.mSet(entries); // Redis native MSET
     return state;
   };
 }
