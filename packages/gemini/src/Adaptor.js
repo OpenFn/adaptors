@@ -102,6 +102,7 @@ export function prompt(message, options = {}) {
  * @param {DeepResearchOptions} options - Model and tools
  * @returns {operation}
  */
+// May actually want to replace this with the actual deep research function
 export function deepResearch(message, options = {}) {
     return async (state) => {
         const [resolvedMessage, resolvedOpts] = expandReferences(state, message, options);
@@ -116,38 +117,69 @@ export function deepResearch(message, options = {}) {
             }
         });
         const text = msg.text;
-        const grabCitation = (response) => {
-            let text = response.text;
-            const supports = response.candidates[0]?.groundingMetadata?.groundingSupports;
-            const chunks = response.candidates[0]?.groundingMetadata?.groundingChunks;
-            // Sort supports by end_index in descending order to avoid shifting issues when inserting.
-            const sortedSupports = [...supports].sort((a, b) => (b.segment?.endIndex ?? 0) - (a.segment?.endIndex ?? 0));
-            for (const support of sortedSupports) {
-                const endIndex = support.segment?.endIndex;
-                if (endIndex === undefined || !support.groundingChunkIndices?.length) {
-                    continue;
-                }
-                const citationLinks = support.groundingChunkIndices
-                    .map(i => {
-                    const uri = chunks[i]?.web?.uri;
-                    if (uri) {
-                        return `[${i + 1}](${uri})`;
-                    }
-                    return null;
-                })
-                    .filter(Boolean);
-                if (citationLinks.length > 0) {
-                    const citationString = citationLinks.join(", ");
-                    text = text.slice(0, endIndex) + citationString + text.slice(endIndex);
-                }
-            }
-            return text;
-        };
-        const citations = grabCitation(msg);
+        // const grabCitation = (response : GenerateContentResponse) => {
+        //   let text =  response.text;
+        //   const supports = response.candidates[0]?.groundingMetadata?.groundingSupports;
+        //   const chunks = response.candidates[0]?.groundingMetadata?.groundingChunks;
+        // // Sort supports by end_index in descending order to avoid shifting issues when inserting.
+        // const sortedSupports = [...supports].sort(
+        //     (a, b) => (b.segment?.endIndex ?? 0) - (a.segment?.endIndex ?? 0),
+        // );
+        // for (const support of sortedSupports) {
+        //     const endIndex = support.segment?.endIndex;
+        //     if (endIndex === undefined || !support.groundingChunkIndices?.length) {
+        //     continue;
+        //     }
+        //     const citationLinks = support.groundingChunkIndices
+        //     .map(i => {
+        //         const uri = chunks[i]?.web?.uri;
+        //         if (uri) {
+        //         return `[${i + 1}](${uri})`;
+        //         }
+        //         return null;
+        //     })
+        //     .filter(Boolean);
+        //     if (citationLinks.length > 0) {
+        //     const citationString = citationLinks.join(", ");
+        //     text = text.slice(0, endIndex) + citationString + text.slice(endIndex);
+        //     }
+        // }
+        // return text;
+        // }
+        const citations = extractCitations(msg);
         // Candidates might contain grounding metadata
         console.log('√ Deep research operation completed');
-        return composeNextState(state, { text, response: { msg, citations } });
+        return composeNextState(state, { text, response: { msg, citations: msg.candidates[0]?.groundingMetadata?.groundingSupports, groundingChunks: msg.candidates[0]?.groundingMetadata?.groundingChunks } });
     };
+}
+function extractCitations(response) {
+    const citations = [];
+    const supports = response.candidates[0]?.groundingMetadata?.groundingSupports;
+    const chunks = response.candidates[0]?.groundingMetadata?.groundingChunks;
+    supports?.forEach((support, index) => {
+        const endIndex = support.segment?.endIndex;
+        if (endIndex === undefined || !support.groundingChunkIndices?.length) {
+            return;
+        }
+        const citationLinks = support.groundingChunkIndices
+            .map(i => {
+            const uri = chunks[i]?.web?.uri;
+            if (uri) {
+                return `[${i + 1}](${uri})`;
+            }
+            return null;
+        })
+            .filter(Boolean);
+        if (citationLinks.length > 0) {
+            const citationString = citationLinks.join(", ");
+            citations.push({
+                text: citationString,
+                indicies: support.groundingChunkIndices,
+                reference: citationLinks,
+            });
+        }
+    });
+    return citations;
 }
 /**
  * Generate an image using Gemini/Imagen

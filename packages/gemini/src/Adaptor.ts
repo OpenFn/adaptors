@@ -139,6 +139,8 @@ export function prompt(message: string, options: any = {}) {
  * @param {DeepResearchOptions} options - Model and tools
  * @returns {operation}
  */
+
+// May actually want to replace this with the actual deep research function
 export function deepResearch(message: string, options: any = {}) {
   return async (state: any) => {
     const [resolvedMessage, resolvedOpts] = expandReferences(
@@ -161,49 +163,13 @@ export function deepResearch(message: string, options: any = {}) {
     }); 
     
     const text = msg.text;
-    const grabCitation = (response : GenerateContentResponse) => {
-      let text =  response.text;
-      const supports = response.candidates[0]?.groundingMetadata?.groundingSupports;
-      const chunks = response.candidates[0]?.groundingMetadata?.groundingChunks;
-
-
-    // Sort supports by end_index in descending order to avoid shifting issues when inserting.
-    const sortedSupports = [...supports].sort(
-        (a, b) => (b.segment?.endIndex ?? 0) - (a.segment?.endIndex ?? 0),
-    );
-
-    for (const support of sortedSupports) {
-        const endIndex = support.segment?.endIndex;
-        if (endIndex === undefined || !support.groundingChunkIndices?.length) {
-        continue;
-        }
-
-        const citationLinks = support.groundingChunkIndices
-        .map(i => {
-            const uri = chunks[i]?.web?.uri;
-            if (uri) {
-            return `[${i + 1}](${uri})`;
-            }
-            return null;
-        })
-        .filter(Boolean);
-
-        if (citationLinks.length > 0) {
-        const citationString = citationLinks.join(", ");
-        text = text.slice(0, endIndex) + citationString + text.slice(endIndex);
-        }
-    }
-
-    return text;
-    }
-
-    const citations = grabCitation(msg);  
     // Candidates might contain grounding metadata
 
     console.log('√ Deep research operation completed');
-    return composeNextState(state, { text, response: {msg, citations} });
+    return composeNextState(state, { text, response: {msg, citations: msg.candidates[0]?.groundingMetadata?.groundingSupports, groundingChunks: msg.candidates[0]?.groundingMetadata?.groundingChunks} });
   };
 }
+
 
 /**
  * Generate an image using Gemini/Imagen
