@@ -69,16 +69,7 @@ export const requestWithPagination = async (configuration = {}, method, path, op
   } while (!isLastPage);
 
   return {
-    body: {
-      requestSuccessful: true,
-      responseMessage: 'success',
-      responseCode: '0',
-      responseBody: {
-        content: allContent,
-        totalElements: allContent.length,
-        allPagesFetched: true
-      }
-    }
+    body: response.body
   };
 };
 

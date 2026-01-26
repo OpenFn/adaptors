@@ -33,6 +33,35 @@ export function get(path, options = {}) {
     const [resolvedPath, resolvedoptions] =
       expandReferences(state, path, options);
 
+    const response = await util.request(
+      state.configuration,
+      'GET',
+      resolvedPath,
+      {
+        ...resolvedoptions,
+      }
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}
+
+/**
+ * Make a paginated GET request
+ * @example <caption>Get all transactions</caption>
+ * list('/api/v1/transactions/search');
+ * @function
+ * @public
+ * @param {string} path - Path to resource
+ * @param {RequestOptions} options - Optional request options
+ * @returns {Operation}
+ * @state {HttpState}
+ */
+export function list(path, options = {}) {
+  return async state => {
+    const [resolvedPath, resolvedoptions] =
+      expandReferences(state, path, options);
+
     const response = await util.requestWithPagination(
       state.configuration,
       'GET',
