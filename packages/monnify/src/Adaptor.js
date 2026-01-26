@@ -107,7 +107,6 @@ export function list(path, query = {}) {
  * @function
  * @public
  * @param {string} path - Path to resource
- * @param {object} body - Object which will be attached to the POST body
  * @param {RequestOptions} options - Optional request options
  * @returns {Operation}
  * @state {HttpState}
