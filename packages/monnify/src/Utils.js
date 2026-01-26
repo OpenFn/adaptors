@@ -55,10 +55,10 @@ export const requestWithPagination = async (configuration = {}, method, path, op
       ...options,
       query: { ...query, pageSize: pageSize || 100, pageNo: currentPage }
     });
-
-    if (hasPagination) return response;
-
     const { body: { responseBody } } = response;
+
+    if (hasPagination) return { body: responseBody.content } || response
+
 
     if (responseBody.content?.length) {
       allContent.push(...responseBody.content);
@@ -69,12 +69,12 @@ export const requestWithPagination = async (configuration = {}, method, path, op
   } while (!isLastPage);
 
   return {
-    body: response.body
+    body: allContent
   };
 };
 
 export const request = async (configuration = {}, method, path, options) => {
-  // local variable for storing configuration. Using let due to reasssignment ops downstream.
+
   let config = configuration;
 
   const { baseUrl, access_token } = config;

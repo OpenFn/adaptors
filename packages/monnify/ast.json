@@ -59,10 +59,67 @@
       "valid": true
     },
     {
+      "name": "list",
+      "params": [
+        "path",
+        "query"
+      ],
+      "docs": {
+        "description": "Fetch a list of items.",
+        "tags": [
+          {
+            "title": "example",
+            "description": "list('/api/v2/disbursements/search-transactions', {\n  query: {\n    sourceAccountNumber: 4864192954,\n  }\n});\n * @example <caption>Get all transactions fo a specific page and page number</caption>\nlist('/api/v2/disbursements/search-transactions', {\n  query: {\n    sourceAccountNumber: 4864192954,\n    pageNo: 1,\n    pageSize: 10\n  }\n});",
+            "caption": "Get all transactions"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Query options.",
+            "type": {
+              "type": "NameExpression",
+              "name": "ListQueryOptions"
+            },
+            "name": "query"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "post",
       "params": [
         "path",
-        "body",
         "options"
       ],
       "docs": {
@@ -124,18 +181,17 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "request",
       "params": [
         "method",
         "path",
-        "body",
         "options"
       ],
       "docs": {
-        "description": "",
+        "description": "Make a generic request",
         "tags": [
           {
             "title": "example",
@@ -169,15 +225,6 @@
               "name": "string"
             },
             "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "Object which will be attached to the POST body",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "body"
           },
           {
             "title": "param",

@@ -10,12 +10,22 @@ import * as util from './Utils.js';
  **/
 
 /**
+ * Query option for the `list` helper function
+ * @typedef {Object} ListQueryOptions
+ * @property {Number} pageNo - The page number. Please note that Monnify pagination starts at 0 not 1. (Default: 0)
+ * @property {Number} pageSize - The page size. (Default: 100)
+ * @property {Record<string, any>} [otherOptions] - Additional options.
+ **/
+
+
+/**
  * Options provided to the HTTP request
  * @typedef {Object} RequestOptions
  * @public
  * @property {object|string} body - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).
  * @property {object} query - An object of query parameters to be encoded into the URL.
  */
+
 
 /**
  * Make a GET request
@@ -37,9 +47,7 @@ export function get(path, options = {}) {
       state.configuration,
       'GET',
       resolvedPath,
-      {
-        ...resolvedoptions,
-      }
+      resolvedoptions
     );
 
     return util.prepareNextState(state, response);
@@ -47,28 +55,42 @@ export function get(path, options = {}) {
 }
 
 /**
- * Make a paginated GET request
+ * Fetch a list of items.
  * @example <caption>Get all transactions</caption>
- * list('/api/v1/transactions/search');
+ * list('/api/v2/disbursements/search-transactions', {
+ *   query: {
+ *     sourceAccountNumber: 4864192954,
+ *   }
+ * });
+ * 
+ * @example <caption>Get all transactions for a specific page and page number.</caption>
+ * list('/api/v2/disbursements/search-transactions', {
+ *   query: {
+ *     sourceAccountNumber: 4864192954,
+ *     pageNo: 0,
+ *     pageSize: 10
+ *   }
+ * });
  * @function
  * @public
  * @param {string} path - Path to resource
- * @param {RequestOptions} options - Optional request options
+ * @param {ListQueryOptions} query - Query options.
  * @returns {Operation}
  * @state {HttpState}
  */
-export function list(path, options = {}) {
+export function list(path, query = {}) {
   return async state => {
-    const [resolvedPath, resolvedoptions] =
-      expandReferences(state, path, options);
+    const [resolvedPath, resolvedQuery] =
+      expandReferences(state, path, query);
 
     const response = await util.requestWithPagination(
       state.configuration,
       'GET',
       resolvedPath,
       {
-        ...resolvedoptions,
-      }
+        query: resolvedQuery
+      },
+
     );
 
     return util.prepareNextState(state, response);
@@ -90,11 +112,23 @@ export function list(path, options = {}) {
  * @returns {Operation}
  * @state {HttpState}
  */
-export function post(path, body, options) {
-  return request('POST', path, body, options);
+export function post(path, options = {}) {
+  return async state => {
+    const [resolvedPath, resolvedOptions] = expandReferences(state, path, options);
+
+    const response = await util.request(
+      state.configuration,
+      'POST',
+      resolvedPath,
+      resolvedOptions
+    );
+
+    return util.prepareNextState(state, response);
+  }
 }
 
 /**
+ * Make a generic request
  * @example <caption>Get disbursements from a wallet</caption>
  * request(
  *  'GET', 
@@ -112,12 +146,11 @@ export function post(path, body, options) {
  * @public
  * @param {string} method - HTTP method to use
  * @param {string} path - Path to resource
- * @param {object} body - Object which will be attached to the POST body
  * @param {RequestOptions} options - Optional request options
  * @returns {Operation}
  * @state {HttpState}
  */
-export function request(method, path, body, options = {}) {
+export function request(method, path, options = {}) {
   return async state => {
     const [resolvedMethod, resolvedPath, resolvedBody, resolvedoptions] =
       expandReferences(state, method, path, body, options);
@@ -126,10 +159,7 @@ export function request(method, path, body, options = {}) {
       state.configuration,
       resolvedMethod,
       resolvedPath,
-      {
-        body: resolvedBody,
-        ...resolvedoptions,
-      }
+      resolvedoptions,
     );
 
     return util.prepareNextState(state, response);
