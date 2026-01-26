@@ -150,19 +150,19 @@ export function generateImage(promptText, options = {}) {
                 ...resolvedOpts.config,
             }
         });
-        let buffer;
+        let base64;
         for (const part of result.candidates[0].content.parts) {
             if (part.text) {
                 console.log(part.text);
             }
             else if (part.inlineData) {
-                const imageData = part.inlineData.data;
-                buffer = Buffer.from(imageData, "base64");
+                base64 = part.inlineData.data;
+                // buffer = Buffer.from(imageData, "base64");
             }
             // Assuming result handling for image
             console.log('√ Generate image operation completed');
             return composeNextState(state, {
-                response: buffer
+                base64
             });
         }
         ;
