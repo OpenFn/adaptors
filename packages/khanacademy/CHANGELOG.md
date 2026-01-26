@@ -1,5 +1,11 @@
 # @openfn/language-khanacademy
 
+## 0.5.26
+
+### Patch Changes
+
+- a4bb56a: security fixes
+
 ## 0.5.25 - 02 December 2025
 
 ### Patch Changes

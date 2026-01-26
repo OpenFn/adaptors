@@ -1,5 +1,11 @@
 # @openfn/language-surveycto
 
+## 3.0.5
+
+### Patch Changes
+
+- a4bb56a: security fixes
+
 ## 3.0.4 - 28 November 2025
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @openfn/language-bigquery
 
+## 4.0.8
+
+### Patch Changes
+
+- a4bb56a: security fixes
+
 ## 4.0.7 - 02 December 2025
 
 ### Patch Changes
