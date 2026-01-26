@@ -151,7 +151,7 @@ export function post(path, options = {}) {
  */
 export function request(method, path, options = {}) {
   return async state => {
-    const [resolvedMethod, resolvedPath, resolvedBody, resolvedoptions] =
+    const [resolvedMethod, resolvedPath, resolvedoptions] =
       expandReferences(state, method, path, body, options);
 
     const response = await util.request(
