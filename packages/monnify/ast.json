@@ -69,8 +69,13 @@
         "tags": [
           {
             "title": "example",
-            "description": "list('/api/v2/disbursements/search-transactions', {\n  query: {\n    sourceAccountNumber: 4864192954,\n  }\n});\n * @example <caption>Get all transactions fo a specific page and page number</caption>\nlist('/api/v2/disbursements/search-transactions', {\n  query: {\n    sourceAccountNumber: 4864192954,\n    pageNo: 1,\n    pageSize: 10\n  }\n});",
+            "description": "list('/api/v2/disbursements/search-transactions', {\n  query: {\n    sourceAccountNumber: 4864192954,\n  }\n});",
             "caption": "Get all transactions"
+          },
+          {
+            "title": "example",
+            "description": "list('/api/v2/disbursements/search-transactions', {\n  query: {\n    sourceAccountNumber: 4864192954,\n    pageNo: 0,\n    pageSize: 10\n  }\n});",
+            "caption": "Get all transactions for a specific page and page number."
           },
           {
             "title": "function",
@@ -151,15 +156,6 @@
           },
           {
             "title": "param",
-            "description": "Object which will be attached to the POST body",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "body"
-          },
-          {
-            "title": "param",
             "description": "Optional request options",
             "type": {
               "type": "NameExpression",
@@ -181,7 +177,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "request",
