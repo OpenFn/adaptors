@@ -125,7 +125,7 @@ export function prompt(message: string, options: any = {}) {
     const text = msg.text;
 
     console.log('√ Prompt operation completed');
-    return composeNextState(state, { text, response: msg });
+    return composeNextState(state, { response: msg.text });
   };
 }
 
@@ -163,10 +163,15 @@ export function deepResearch(message: string, options: any = {}) {
     }); 
     
     const text = msg.text;
-    // Candidates might contain grounding metadata
 
+      
     console.log('√ Deep research operation completed');
-    return composeNextState(state, { text, response: {msg, citations: msg.candidates[0]?.groundingMetadata?.groundingSupports, groundingChunks: msg.candidates[0]?.groundingMetadata?.groundingChunks} });
+    return composeNextState(state, { 
+        response:msg.text, 
+        citations: msg.candidates[msg.candidates.length-1]?.groundingMetadata?.groundingSupports, 
+        groundingChunks: msg.candidates[msg.candidates.length-1]?.groundingMetadata?.groundingChunks
+      } 
+      );
   };
 }
 
@@ -215,7 +220,9 @@ export function generateImage(promptText: string, options: any = {}) {
     // Assuming result handling for image
     
     console.log('√ Generate image operation completed');
-    return composeNextState(state, {result, buffer});
+    return composeNextState(state, {
+      response: buffer
+    });
   };
 }
 }
