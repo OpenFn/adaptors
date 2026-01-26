@@ -1,5 +1,11 @@
 # @openfn/language-gmail
 
+## 2.0.9
+
+### Patch Changes
+
+- a4bb56a: security fixes
+
 ## 2.0.8 - 02 December 2025
 
 ### Patch Changes
