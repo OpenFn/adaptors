@@ -58,18 +58,14 @@ export function get(path, options = {}) {
  * Fetch a list of items.
  * @example <caption>Get all transactions</caption>
  * list('/api/v2/disbursements/search-transactions', {
- *   query: {
- *     sourceAccountNumber: 4864192954,
- *   }
+ *     sourceAccountNumber: 4864192954
  * });
  * 
  * @example <caption>Get all transactions for a specific page and page number.</caption>
- * list('/api/v2/disbursements/search-transactions', {
- *   query: {
+ * list('/api/v2/disbursements/search-transactions', { 
  *     sourceAccountNumber: 4864192954,
  *     pageNo: 0,
  *     pageSize: 10
- *   }
  * });
  * @function
  * @public
@@ -152,7 +148,7 @@ export function post(path, options = {}) {
 export function request(method, path, options = {}) {
   return async state => {
     const [resolvedMethod, resolvedPath, resolvedoptions] =
-      expandReferences(state, method, path, body, options);
+      expandReferences(state, method, path, options);
 
     const response = await util.request(
       state.configuration,

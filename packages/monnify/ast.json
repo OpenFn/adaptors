@@ -69,12 +69,12 @@
         "tags": [
           {
             "title": "example",
-            "description": "list('/api/v2/disbursements/search-transactions', {\n  query: {\n    sourceAccountNumber: 4864192954,\n  }\n});",
+            "description": "list('/api/v2/disbursements/search-transactions', {\n    sourceAccountNumber: 4864192954\n});",
             "caption": "Get all transactions"
           },
           {
             "title": "example",
-            "description": "list('/api/v2/disbursements/search-transactions', {\n  query: {\n    sourceAccountNumber: 4864192954,\n    pageNo: 0,\n    pageSize: 10\n  }\n});",
+            "description": "list('/api/v2/disbursements/search-transactions', { \n    sourceAccountNumber: 4864192954,\n    pageNo: 0,\n    pageSize: 10\n});",
             "caption": "Get all transactions for a specific page and page number."
           },
           {
