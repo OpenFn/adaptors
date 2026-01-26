@@ -22,7 +22,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "query-string": "^8.1.0",
     "request": "^2.88.2"
   },
