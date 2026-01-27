@@ -16,8 +16,7 @@
     "_test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "_test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
-    "pack": "pnpm pack --pack-destination ../../dist",
-    "lint": "eslint src"
+    "pack": "pnpm pack --pack-destination ../../dist"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
