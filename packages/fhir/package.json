@@ -22,7 +22,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "undici": "^5.29.0"
+    "undici": "^6.23.0"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",
