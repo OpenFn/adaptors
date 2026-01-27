@@ -13,8 +13,8 @@
   },
   "scripts": {
     "build": "pnpm clean && tsc && build-adaptor gemini",
-    "test": "mocha --experimental-specifier-resolution=node --no-warnings",
-    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
+    "_test": "mocha --experimental-specifier-resolution=node --no-warnings",
+    "_test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist",
     "lint": "eslint src"
@@ -36,8 +36,7 @@
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
     "mocha": "^10.7.3",
-    "rimraf": "3.0.2",
-    "undici": "^5.22.1"
+    "rimraf": "3.0.2"
   },
   "repository": {
     "type": "git",
