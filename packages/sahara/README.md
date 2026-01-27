@@ -4,19 +4,18 @@ An OpenFn **_adaptor_** for building integration jobs for use with the Sahara (I
 
 ## Documentation
 
-View the [docs site](https://docs.openfn.org/adaptors/packages/sahara-docs) for full technical documentation.
+View the [docs site](https://docs.voice.intron.io) for full technical documentation.
 
 ### Configuration
 
-View the [configuration-schema](https://docs.openfn.org/adaptors/packages/sahara-configuration-schema/) for required and optional `configuration` properties.
+View the [configuration-schema](configuration-schema.json) for required and optional `configuration` properties.
 
 Sample configuration:
 
 ```json
 {
   "apiKey": "your-sahara-api-key",
-  "baseUrl": "https://infer.voice.intron.io",
-  "enableLogging": true
+  "baseUrl": "https://infer.voice.intron.io"
 }
 ```
 
@@ -294,8 +293,6 @@ echo "File ID: $FILE_ID"
 getFileStatus("$FILE_ID", { get_structured_post_processing: "t" });
 ```
 
-**Note:** The `-k` flag bypasses SSL certificate verification (needed due to SSL cert mismatch on Sahara's server).
-
 ### Alternative Integration Pattern
 
 The most common pattern in production:
@@ -335,26 +332,6 @@ createEncounterNote({
   icdCodes: state.data.data.transcript_icd_codes
 });
 ```
-
-### 🔍 SSL Certificate Note
-
-Sahara's server has an SSL certificate mismatch (cert is for `*.intron.health` but endpoint is `infer.voice.intron.io`). Add this to your configuration:
-
-```json
-{
-  "configuration": {
-    "apiKey": "your-key",
-    "baseUrl": "https://infer.voice.intron.io",
-    "tls": {
-      "rejectUnauthorized": false
-    }
-  }
-}
-```
-
-### 📌 Status
-
-This limitation is documented and tracked. The `getFileStatus()` operation is fully functional and handles the critical integration use case of retrieving and processing Sahara's AI-generated transcription data.
 
 ## Automatic Retry & Error Handling
 
@@ -402,38 +379,6 @@ uploadAudioFile(
 getFileStatus(fileId, { maxRetries: 0 });
 ```
 
-### Logging
-
-The adaptor provides detailed logging for:
-- ✅ Request attempts and retries
-- ✅ Success after retries
-- ✅ Error details (status code, duration, URL)
-- ✅ File processing status updates
-
-**Logging is configurable** - you can enable or disable info/warning logs via configuration or environment variable (see below). Error logs are always enabled.
-
-#### Controlling Log Output
-
-Logging can be enabled or disabled via configuration or environment variable:
-
-**Option 1: Configuration (recommended)**
-```json
-{
-  "configuration": {
-    "apiKey": "your-key",
-    "baseUrl": "https://infer.voice.intron.io",
-    "enableLogging": false  // Disable all info/warning logs
-  }
-}
-```
-
-**Option 2: Environment Variable**
-```bash
-ENABLE_LOGGING=false  # Disable all info/warning logs
-```
-
-**Note:** Error logs (`console.error`) are always enabled regardless of the toggle setting, as they indicate critical issues that need attention.
-
 ## API Limits
 
 - Maximum file size: 100MB
@@ -451,7 +396,7 @@ Run tests using `pnpm run test` or `pnpm run test:watch`
 
 Build the project using `pnpm build`.
 
-To build _only_ the docs run `pnpm build docs`.
+To build _only_ the docs run `pnpm build docs` after running `pnpm clean`.
 
 ## About Sahara (Intron Health)
 

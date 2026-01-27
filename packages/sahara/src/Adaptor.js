@@ -1,6 +1,5 @@
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
-import { logger } from './Utils.js';
 
 /**
  * State object
@@ -11,51 +10,23 @@ import { logger } from './Utils.js';
  **/
 
 /**
- * Options for file upload
+ * Options for file upload. For a complete list of available options including post-processing parameters, see [Sahara Docs](https://docs.voice.intron.io).
  * @typedef {Object} UploadOptions
  * @public
  * @property {string} audio_file_name - Name for the uploaded audio file (required)
  * @property {object} audio_file_blob - The audio file to upload (required)
- * @property {string} use_category - Category of post-processing (file_category_general, file_category_telehealth, file_category_procedure, file_category_call_center, file_category_legal, file_category_meeting_notes)
- * @property {string} use_diarization - Enable speaker diarization ("TRUE" or "FALSE")
- * @property {string} use_template_id - Custom prompt template ID
- * @property {string} get_summary - Get summary of transcript ("TRUE" or "FALSE")
- * @property {string} get_soap_note - Get SOAP note (telehealth category only)
- * @property {string} get_entity_list - Get extracted entities
- * @property {string} get_treatment_plan - Get treatment plan
- * @property {string} get_clerking - Get clerking notes
- * @property {string} get_icd_codes - Get ICD/billing codes
- * @property {string} get_suggestions - Get suggestions
- * @property {string} get_differential_diagnosis - Get differential diagnosis
- * @property {string} get_followup_instructions - Get follow-up instructions
- * @property {string} get_practice_guidelines - Get practice guidelines
- * @property {string} get_op_note - Get operation note (procedure category only)
- * @property {string} get_call_center_results - Get call center results
- * @property {string} get_call_center_agent_score - Get agent score
- * @property {string} get_call_center_agent_score_category - Get agent score category
- * @property {string} get_call_center_product_info - Get product info
- * @property {string} get_call_center_product_insights - Get product insights
- * @property {string} get_call_center_compliance - Get compliance check
- * @property {string} get_call_center_feedback - Get feedback
- * @property {string} get_call_center_sentiment - Get sentiment analysis
- * @property {string} get_legal_court_hearing - Get court hearing format (legal category only)
- * @property {string} get_meeting_notes_participants - Get meeting participants
- * @property {string} get_meeting_notes_decisions - Get meeting decisions
- * @property {string} get_meeting_notes_action_items - Get action items
- * @property {string} get_meeting_notes_key_topics - Get key topics
- * @property {string} get_meeting_notes_next_steps - Get next steps
  */
 
 /**
- * Upload an audio file for transcription
+ * Upload an audio file for transcription. For available post-processing options, see [Sahara Docs](https://docs.voice.intron.io).
  * @public
  * @function
- * @example Upload a basic audio file
+ * @example <caption>Upload a basic audio file</caption>
  * uploadAudioFile({ 
  *   audio_file_name: "patient_consultation_1",
  *   audio_file_blob: state.data.audioFile
  * });
- * @example Upload with telehealth category and post-processing
+ * @example <caption>Upload with telehealth category and post-processing</caption>
  * uploadAudioFile({ 
  *   audio_file_name: "doctor_visit",
  *   audio_file_blob: state.data.audioFile,
@@ -64,7 +35,7 @@ import { logger } from './Utils.js';
  *   get_summary: "TRUE",
  *   get_icd_codes: "TRUE"
  * });
- * @param {UploadOptions} uploadData - The upload options including file and metadata
+ * @param {UploadOptions} uploadData - The upload options including file and metadata. See [Sahara Docs](https://docs.voice.intron.io) for all available options.
  * @param {object} options - Optional retry configuration (maxRetries, retryDelay, retryOn429)
  * @returns {Operation}
  * @state {SaharaState}
@@ -91,7 +62,7 @@ export function uploadAudioFile(uploadData, options = {}) {
       throw new Error('audio_file_blob is required');
     }
 
-    logger.log(state.configuration, `Uploading audio file: ${audio_file_name}`);
+    console.log(`Uploading audio file: ${audio_file_name}`);
 
     const formData = {
       audio_file_name,
@@ -113,8 +84,7 @@ export function uploadAudioFile(uploadData, options = {}) {
       retryOptions
     );
 
-    logger.log(
-      state.configuration,
+    console.log(
       `File queued successfully. File ID: ${response.body?.data?.file_id}`
     );
 
@@ -149,7 +119,7 @@ export function getFileStatus(fileId, options = {}) {
       throw new Error('fileId is required');
     }
 
-    logger.log(state.configuration, `Fetching status for file ID: ${resolvedFileId}`);
+    console.log(`Fetching status for file ID: ${resolvedFileId}`);
 
     const queryParams = {};
     if (resolvedOptions.get_structured_post_processing) {
@@ -167,28 +137,28 @@ export function getFileStatus(fileId, options = {}) {
     );
 
     const processingStatus = response.body?.data?.processing_status;
-    logger.log(state.configuration, `File processing status: ${processingStatus}`);
+    console.log(`File processing status: ${processingStatus}`);
 
     if (processingStatus === 'FILE_QUEUED') {
-      logger.log(state.configuration, '⏳ File is queued for processing');
+      console.log('⏳ File is queued for processing');
     } else if (processingStatus === 'FILE_PENDING') {
-      logger.log(state.configuration, '⏳ File is pending processing');
+      console.log('⏳ File is pending processing');
     } else if (processingStatus === 'FILE_PROCESSING') {
-      logger.log(state.configuration, '⏳ File is still being processed');
+      console.log('⏳ File is still being processed');
     } else if (processingStatus === 'FILE_TRANSCRIBED') {
-      logger.log(state.configuration, '✓ Transcription completed successfully');
+      console.log('✓ Transcription completed successfully');
     } else if (processingStatus === 'FILE_INVALID') {
-      logger.log(state.configuration, '✗ File is invalid');
+      console.log('✗ File is invalid');
     } else if (processingStatus === 'FILE_INVALID_SIZE') {
-      logger.log(state.configuration, '✗ File size is invalid');
+      console.log('✗ File size is invalid');
     } else if (processingStatus === 'FILE_INVALID_DURATION') {
-      logger.log(state.configuration, '✗ File duration is invalid');
+      console.log('✗ File duration is invalid');
     } else if (processingStatus === 'FILE_PROCESSING_FAILED') {
-      logger.log(state.configuration, '✗ File processing failed');
+      console.log('✗ File processing failed');
     } else if (processingStatus === 'FILE_PROCESSING_TIMEOUT') {
-      logger.log(state.configuration, '✗ File processing timed out');
+      console.log('✗ File processing timed out');
     } else if (processingStatus === 'FILE_PROCESSING_CANCELLED') {
-      logger.log(state.configuration, '✗ File processing was cancelled');
+      console.log('✗ File processing was cancelled');
     }
 
     return util.prepareNextState(state, response);
@@ -227,11 +197,11 @@ export function uploadAndWaitForTranscription(uploadData, waitOptions = {}) {
     const fileId = uploadState.data?.data?.file_id || uploadState.data?.file_id;
 
     if (!fileId) {
-      logger.error('Upload state structure:', JSON.stringify(uploadState.data, null, 2));
+      console.error('Upload state structure:', JSON.stringify(uploadState.data, null, 2));
       throw new Error('Failed to get file_id from upload response');
     }
 
-    logger.log(state.configuration, `Waiting for transcription to complete (polling every ${pollInterval}ms)...`);
+    console.log(`Waiting for transcription to complete (polling every ${pollInterval}ms)...`);
 
     // Poll for completion
     let attempts = 0;
@@ -251,7 +221,7 @@ export function uploadAndWaitForTranscription(uploadData, waitOptions = {}) {
         statusState.data?.processing_status;
 
       if (processingStatus === 'FILE_TRANSCRIBED') {
-        logger.log(state.configuration, `✓ Transcription completed after ${attempts} attempts`);
+        console.log(`✓ Transcription completed after ${attempts} attempts`);
         completed = true;
         finalState = statusState;
       } else if (
@@ -266,8 +236,7 @@ export function uploadAndWaitForTranscription(uploadData, waitOptions = {}) {
       } else {
         // Continue polling for any other status (FILE_QUEUED, FILE_PENDING, FILE_PROCESSING, or unknown)
         finalState = statusState;
-        logger.log(
-          state.configuration,
+        console.log(
           `Attempt ${attempts}/${maxAttempts}: Status is ${processingStatus || 'UNKNOWN'}`
         );
       }

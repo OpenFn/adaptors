@@ -1,13 +1,7 @@
 {
   "configuration": {
     "apiKey": "YOUR_SAHARA_API_KEY",
-    "baseUrl": "https://infer.voice.intron.io",
-    "enableLogging": true,
-    "tls": {
-      "rejectUnauthorized": false
-    }
+    "baseUrl": "https://infer.voice.intron.io"
   },
-  "data": {
-    "note": "TLS verification disabled because the sandbox certificate is issued for *.intron.health while the API lives at infer.voice.intron.io. Remove tls.rejectUnauthorized if your certs validate."
-  }
+  "data": {}
 }
