@@ -16,60 +16,6 @@ import FormData from 'form-data';
  */
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-/**
- * Logging utility with toggle support
- * Set ENABLE_LOGGING=false in environment or pass enableLogging: false in configuration to disable
- */
-export const logger = {
-  /**
-   * Check if logging is enabled
-   * @param {object} configuration - Optional configuration object
-   * @returns {boolean}
-   */
-  isEnabled: (configuration = {}) => {
-    // Check environment variable first
-    if (process.env.ENABLE_LOGGING === 'false') {
-      return false;
-    }
-    // Then check configuration
-    if (configuration.enableLogging === false) {
-      return false;
-    }
-    // Default to enabled
-    return true;
-  },
-
-  /**
-   * Log a message (console.log)
-   * @param {object} configuration - Optional configuration object
-   * @param {...any} args - Arguments to log
-   */
-  log: (configuration = {}, ...args) => {
-    if (logger.isEnabled(configuration)) {
-      console.log(...args);
-    }
-  },
-
-  /**
-   * Log a warning (console.warn)
-   * @param {object} configuration - Optional configuration object
-   * @param {...any} args - Arguments to log
-   */
-  warn: (configuration = {}, ...args) => {
-    if (logger.isEnabled(configuration)) {
-      console.warn(...args);
-    }
-  },
-
-  /**
-   * Log an error (console.error) - always enabled
-   * @param {...any} args - Arguments to log
-   */
-  error: (...args) => {
-    console.error(...args);
-  },
-};
-
 export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
 
@@ -156,7 +102,7 @@ export const request = async (
       const response = await commonRequest(method, safePath, opts);
       
       if (attempt > 0) {
-        logger.log(configuration, `✓ Request succeeded after ${attempt} retry attempt(s)`);
+        console.log(`✓ Request succeeded after ${attempt} retry attempt(s)`);
       }
       
       return response;
@@ -172,8 +118,7 @@ export const request = async (
 
       if (shouldRetry) {
         const delay = retryDelay * Math.pow(2, attempt);
-        logger.warn(
-          configuration,
+        console.warn(
           `Request failed (${error.statusCode || error.code}). Retrying in ${delay}ms... (attempt ${attempt + 1}/${maxRetries})`
         );
         await sleep(delay);
@@ -190,14 +135,6 @@ export const request = async (
  * Helper function to upload files to Sahara API using axios
  * 
  * Note: Uses axios instead of undici due to FormData compatibility issues in undici v6 and v7.
- * Undici has known bugs with File/Blob serialization in multipart/form-data requests that cause
- * "TypeError: Cannot read properties of null (reading 'byteLength')" or "source.on is not a function".
- * 
- * Axios provides:
- * - Reliable multipart/form-data uploads via form-data package
- * - Efficient streaming with fs.createReadStream (no memory buffering of large files)
- * - Consistent error handling and retry logic
- * - Performance: ~1.3 MB/s (44-72s for 57MB files, acceptable for Sahara's max 100MB limit)
  * 
  * @param {object} configuration - The configuration object
  * @param {string} path - API endpoint path
@@ -284,7 +221,7 @@ export const uploadFile = async (
     }
   }
 
-  logger.log(configuration, 'Uploading file with axios...');
+  console.log('Uploading file with axios...');
 
   const url = `${baseUrl}${path}`;
   const startTime = Date.now();
@@ -316,10 +253,10 @@ export const uploadFile = async (
       const duration = Date.now() - startTime;
       
       if (attempt > 0) {
-        logger.log(configuration, `✓ File upload succeeded after ${attempt} retry attempt(s)`);
+        console.log(`✓ File upload succeeded after ${attempt} retry attempt(s)`);
       }
       
-      logger.log(configuration, `POST ${url} - ${response.status} in ${duration}ms`);
+      console.log(`POST ${url} - ${response.status} in ${duration}ms`);
       
       // Return in common request format for compatibility
       return {
@@ -344,8 +281,7 @@ export const uploadFile = async (
 
       if (shouldRetry) {
         const delay = retryDelay * Math.pow(2, attempt);
-        logger.warn(
-          configuration,
+        console.warn(
           `File upload failed (${statusCode || error.code}). Retrying in ${delay}ms... (attempt ${attempt + 1}/${maxRetries})`
         );
         await sleep(delay);

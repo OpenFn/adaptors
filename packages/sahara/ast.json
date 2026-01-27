@@ -7,7 +7,7 @@
         "options"
       ],
       "docs": {
-        "description": "Upload an audio file for transcription",
+        "description": "Upload an audio file for transcription. For available post-processing options, see [Sahara Docs](https://docs.voice.intron.io).",
         "tags": [
           {
             "title": "public",
@@ -21,15 +21,17 @@
           },
           {
             "title": "example",
-            "description": "Upload a basic audio file\nuploadAudioFile({ \n  audio_file_name: \"patient_consultation_1\",\n  audio_file_blob: state.data.audioFile\n});"
+            "description": "uploadAudioFile({ \n  audio_file_name: \"patient_consultation_1\",\n  audio_file_blob: state.data.audioFile\n});",
+            "caption": "Upload a basic audio file"
           },
           {
             "title": "example",
-            "description": "Upload with telehealth category and post-processing\nuploadAudioFile({ \n  audio_file_name: \"doctor_visit\",\n  audio_file_blob: state.data.audioFile,\n  use_category: \"file_category_telehealth\",\n  get_soap_note: \"TRUE\",\n  get_summary: \"TRUE\",\n  get_icd_codes: \"TRUE\"\n});"
+            "description": "uploadAudioFile({ \n  audio_file_name: \"doctor_visit\",\n  audio_file_blob: state.data.audioFile,\n  use_category: \"file_category_telehealth\",\n  get_soap_note: \"TRUE\",\n  get_summary: \"TRUE\",\n  get_icd_codes: \"TRUE\"\n});",
+            "caption": "Upload with telehealth category and post-processing"
           },
           {
             "title": "param",
-            "description": "The upload options including file and metadata",
+            "description": "The upload options including file and metadata. See [Sahara Docs](https://docs.voice.intron.io) for all available options.",
             "type": {
               "type": "NameExpression",
               "name": "UploadOptions"

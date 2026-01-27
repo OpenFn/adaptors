@@ -13,9 +13,6 @@ describe('Sahara Adaptor', () => {
     configuration: {
       baseUrl: 'https://infer.voice.intron.io',
       apiKey: 'test-api-key-12345',
-      tls: {
-        rejectUnauthorized: false,
-      },
     },
     data: {},
   };
