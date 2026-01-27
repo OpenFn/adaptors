@@ -1,4 +1,13 @@
 {
+  "walletBalance": {
+  "requestSuccessful": true,
+  "responseMessage": "success",
+  "responseCode": "0",
+  "responseBody": {
+    "availableBalance": "4919798101.36",
+    "ledgerBalance": "4919798101.36"
+  }
+  },
   "disbursements": {
     "response": {
       "requestSuccessful": true,
