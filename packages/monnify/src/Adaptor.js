@@ -132,7 +132,6 @@ export function post(path, body,options = {}) {
  * request(
  *  'GET', 
  *  '/api/v2/disbursements/search-transactions', 
- *  {}, 
  *  {
  *    query: {
  *      sourceAccountNumber: 4864192954,
