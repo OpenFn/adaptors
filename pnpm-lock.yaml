@@ -799,9 +799,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.22.1
-        version: 5.29.0
 
   packages/ghana-bdr:
     dependencies:
@@ -16113,7 +16110,7 @@ snapshots:
       gcp-metadata: 8.1.2
       google-logging-utils: 1.1.3
       gtoken: 8.0.0
-      jws: 4.0.0
+      jws: 4.0.1
     transitivePeerDependencies:
       - supports-color
 
@@ -16178,7 +16175,7 @@ snapshots:
   gtoken@8.0.0:
     dependencies:
       gaxios: 7.1.3
-      jws: 4.0.0
+      jws: 4.0.1
     transitivePeerDependencies:
       - supports-color
 
