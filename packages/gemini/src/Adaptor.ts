@@ -1,14 +1,5 @@
-import {
-  GoogleGenAI,
-  HarmCategory,
-  HarmBlockThreshold,
-  GenerateContentResponse,
-} from '@google/genai';
-import {
-  composeNextState,
-  commonExecute,
-  expandReferences,
-} from './Utils';
+import { GoogleGenAI } from '@google/genai';
+import { composeNextState, commonExecute, expandReferences } from './Utils';
 
 /**
  * Options provided to the Prompt function
@@ -27,14 +18,13 @@ import {
  * @property {object} generationConfig - Configuration for generation (temperature, topK, etc.) see the options here: https://docs.cloud.google.com/vertex-ai/generative-ai/docs/multimodal/content-generation-parameters#googlegenaisdk_textgen_config_with_txt-nodejs_genai_sdk
  */
 
-
 /**
  * Options provided to the Generate Image function
  * @typedef {Object} GenerateImageOptions
  * @public
  * @property {string} model - Which model to use, defaults to ' 'gemini-3-pro-image-preview'
  * @property {string} imageSize - Size of the image to generate, defaults to '1k'
- * @property {string} aspectRatio - Aspect ratio of the image to generate, defaults to '1:1' 
+ * @property {string} aspectRatio - Aspect ratio of the image to generate, defaults to '1:1'
  * @property {object} generationConfig - Configuration for generation (temperature, topK, etc.) see the options here: https://docs.cloud.google.com/vertex-ai/generative-ai/docs/multimodal/content-generation-parameters#googlegenaisdk_textgen_config_with_txt-nodejs_genai_sdk
  */
 
@@ -48,16 +38,16 @@ const GEMINIMODEL = [
   'gemini-2.5-flash-lite',
   'gemini-2.0-flash',
   'gemini-2.0-flash-lite',
-]as const
+] as const;
 
-type GeminiModel = typeof GEMINIMODEL[number];
+type GeminiModel = (typeof GEMINIMODEL)[number];
 
 const GEMINIIMAGE = [
   'gemini-3-pro-image-preview',
   'gemini-2.5-flash-image',
-] as const
+] as const;
 
-type GeminiImageModel = typeof GEMINIIMAGE[number];
+type GeminiImageModel = (typeof GEMINIIMAGE)[number];
 
 /**
  * Creates a Gemini client
@@ -85,17 +75,12 @@ export function execute(...operations: any[]) {
   };
 
   return (state: any) => {
-    return (commonExecute(
-      createClient,
-      ...operations
-    ) as any)({
+    return (commonExecute(createClient, ...operations) as any)({
       ...initialState,
       ...state,
     });
   };
 }
-
-
 
 /**
  * Prompt the Gemini interface to respond
@@ -112,16 +97,16 @@ export function prompt(message: string, options: any = {}) {
     const [resolvedMessage, resolvedOpts] = expandReferences(
       state,
       message,
-      options
+      options,
     );
-    const modelName: GeminiModel = resolvedOpts.model || 'gemini-2.5-flash-lite'; 
+    const modelName: GeminiModel =
+      resolvedOpts.model || 'gemini-2.5-flash-lite';
 
     const msg = await client.models.generateContent({
       model: modelName,
       contents: resolvedMessage,
       config: resolvedOpts.config,
-   
-    }); 
+    });
     const text = msg.text;
 
     console.log('√ Prompt operation completed');
@@ -146,35 +131,37 @@ export function deepResearch(message: string, options: any = {}) {
     const [resolvedMessage, resolvedOpts] = expandReferences(
       state,
       message,
-      options
+      options,
     );
 
-    const modelName: GeminiModel = resolvedOpts.model || 'gemini-2.5-flash-lite';
-    
+    const modelName: GeminiModel =
+      resolvedOpts.model || 'gemini-2.5-flash-lite';
+
     const tools = resolvedOpts.tools || [{ googleSearch: {} }];
 
-     const msg = await client.models.generateContent({
+    const msg = await client.models.generateContent({
       model: modelName,
       contents: resolvedMessage,
-      config:{
-        tools:tools,
-        ...resolvedOpts.config
-      }
-    }); 
-    
+      config: {
+        tools: tools,
+        ...resolvedOpts.config,
+      },
+    });
+
     const text = msg.text;
 
-      
     console.log('√ Deep research operation completed');
-    return composeNextState(state, { 
-        response:msg.text, 
-        citations: msg.candidates[msg.candidates.length-1]?.groundingMetadata?.groundingSupports, 
-        groundingChunks: msg.candidates[msg.candidates.length-1]?.groundingMetadata?.groundingChunks
-      } 
-      );
+    return composeNextState(state, {
+      response: msg.text,
+      citations:
+        msg.candidates[msg.candidates.length - 1]?.groundingMetadata
+          ?.groundingSupports,
+      groundingChunks:
+        msg.candidates[msg.candidates.length - 1]?.groundingMetadata
+          ?.groundingChunks,
+    });
   };
 }
-
 
 /**
  * Generate an image using Gemini/Imagen
@@ -188,43 +175,42 @@ export function deepResearch(message: string, options: any = {}) {
  */
 export function generateImage(promptText: string, options: any = {}) {
   return async (state: any) => {
-     const [resolvedPrompt, resolvedOpts] = expandReferences(
+    const [resolvedPrompt, resolvedOpts] = expandReferences(
       state,
       promptText,
-      options
+      options,
     );
-    
-    const modelName: GeminiImageModel = resolvedOpts.model || 'gemini-3-pro-image-preview'
+
+    const modelName: GeminiImageModel =
+      resolvedOpts.model || 'gemini-3-pro-image-preview';
 
     const result = await client.models.generateContent({
       model: modelName,
       contents: resolvedPrompt,
-      config:{
-        imageConfig:{
+      config: {
+        imageConfig: {
           aspectRatio: resolvedOpts.aspectRatio || '1:1',
           imageSize: resolvedOpts.imageSize || '1K',
         },
         ...resolvedOpts.config,
-      }
-    })
+      },
+    });
 
     let base64;
-    
-    for (const part of result.candidates[0].content.parts) {
-    if (part.text) {
-      console.log(part.text);
-    } else if (part.inlineData) {
-      base64 = part.inlineData.data;
-      
-    }
 
-    
-    console.log('√ Generate image operation completed');
-    return composeNextState(state, {
-      base64
-    });
+    for (const part of result.candidates[0].content.parts) {
+      if (part.text) {
+        console.log(part.text);
+      } else if (part.inlineData) {
+        base64 = part.inlineData.data;
+      }
+
+      console.log('√ Generate image operation completed');
+      return composeNextState(state, {
+        base64,
+      });
+    }
   };
-}
 }
 
 export {

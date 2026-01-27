@@ -1,6 +1,7 @@
 import generate from '@openfn/simple-ast';
 import resolvePath from '../util/resolve-path';
 import type { Options } from '../pipeline';
+import fs from 'fs';
 
 export default (lang: string, options: Options) => {
   const root = resolvePath(lang);
@@ -12,8 +13,11 @@ export default (lang: string, options: Options) => {
     try {
       const dest = `${root}/ast.json`;
 
-      // TODO adaptor.js is a problem
-      const result = generate(`${root}/src/Adaptor.js`, dest);
+      const tsPath = `${root}/src/Adaptor.ts`;
+      const jsPath = `${root}/src/Adaptor.js`;
+      const adaptorPath = fs.existsSync(tsPath) ? tsPath : jsPath;
+
+      const result = generate(adaptorPath, dest);
 
       console.log('... done!', dest);
 
