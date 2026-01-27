@@ -82,17 +82,13 @@ describe('request', () => {
 
 
 describe('get', () => {
-  it('successfully gets disbursements', async () => {
+  it('successfully gets wallet balance', async () => {
     testServer
       .intercept({
-        path: '/api/v2/disbursements/search-transactions',
-        method: 'GET',
-        query: {
-          pageNo: 0,
-          pageSize: 10
-        }
+        path: 'api/v2/disbursements/wallet-balance',
+        method: 'GET'
       })
-      .reply(200, testData.disbursements.response);
+      .reply(200, testData.walletBalance);
 
     const state = {
       configuration: {
@@ -101,43 +97,9 @@ describe('get', () => {
       }
     };
 
-    const finalState = await get("/api/v2/disbursements/search-transactions", {
-      query: {
-        pageNo: 0,
-        pageSize: 10
-      }
-    })(state);
+    const finalState = await get("api/v2/disbursements/wallet-balance")(state);
 
-    expect(finalState.data).to.eql(testData.disbursements.response)
-  });
-
-  it('respects pagination params', async () => {
-    testServer
-      .intercept({
-        path: '/api/v2/disbursements/search-transactions',
-        method: 'GET',
-        query: {
-          sourceAccountNumber: 4864192954,
-          pageNo: 0,
-          offset: 0,
-          pageSize: 10
-        }
-      }).reply(200, testData.disbursements.paginated_response);
-
-    const state = {
-      configuration
-    };
-
-    const finalState = await get("/api/v2/disbursements/search-transactions", {
-      query: {
-        sourceAccountNumber: 4864192954,
-        pageNo: 0,
-        offset: 0,
-        pageSize: 10
-      }
-    })(state);
-
-    expect(finalState.data).to.eql(testData.disbursements.paginated_response);
+    expect(finalState.data).to.eql(testData.walletBalance)
   });
 
 });
@@ -156,10 +118,8 @@ describe('post', () => {
     };
 
     const finalState = await post("/api/v1/transaction-notification/resend-failed-notifications", {
-      body: {
         "startDate": "2021-01-16T13:56:39.492",
         "endDate": "2021-10-16T13:56:39.492"
-      }
     })(state);
 
     expect(finalState.data).to.eql(testData.disbursements.response)

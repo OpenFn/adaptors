@@ -103,19 +103,23 @@ export function list(path, query = {}) {
  * @function
  * @public
  * @param {string} path - Path to resource
+ * @param {object} body - The Post request body
  * @param {RequestOptions} options - Optional request options
  * @returns {Operation}
  * @state {HttpState}
  */
-export function post(path, options = {}) {
+export function post(path, body,options = {}) {
   return async state => {
-    const [resolvedPath, resolvedOptions] = expandReferences(state, path, options);
+    const [resolvedPath,resolvedBody, resolvedOptions] = expandReferences(state, path,body, options);
 
     const response = await util.request(
       state.configuration,
       'POST',
       resolvedPath,
-      resolvedOptions
+      {
+        body: resolvedBody,
+        ...resolvedOptions
+      }
     );
 
     return util.prepareNextState(state, response);

@@ -125,6 +125,7 @@
       "name": "post",
       "params": [
         "path",
+        "body",
         "options"
       ],
       "docs": {
@@ -153,6 +154,15 @@
               "name": "string"
             },
             "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "The Post request body",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "body"
           },
           {
             "title": "param",
