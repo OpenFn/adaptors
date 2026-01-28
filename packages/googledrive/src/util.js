@@ -9,10 +9,11 @@ export const getFileById = async (fileId, client) => {
     client.files.get({
       fileId: fileId,
       fields: 'id, name, mimeType, modifiedTime, size',
+      supportsAllDrives: true,
     }),
     client.files.get(
-      { fileId: fileId, alt: 'media' },
-      { responseType: 'arraybuffer' }
+      { fileId: fileId, alt: 'media', supportsAllDrives: true },
+      { responseType: 'arraybuffer' },
     ),
   ]);
 
@@ -46,6 +47,7 @@ export const searchFile = async (searchQuery, client) => {
     fields: 'files(id, name, mimeType, modifiedTime, size)',
     spaces: 'drive',
     pageSize: 10, // Limit results, adjust as needed
+    allowAllDrives: true,
   });
 
   const files = response.data.files;
