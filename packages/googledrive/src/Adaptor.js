@@ -173,7 +173,8 @@ export function list(options) {
       fields: fields || 'files(id, name, mimeType, createdTime, modifiedTime)',
       pageSize: limit ?? undefined
     })
-    return composeNextState(state, response.data);
+    const files = response?.data?.files || []
+    return composeNextState(state, files);
   };
 }
 
