@@ -1,33 +1,42 @@
-import assert from 'assert';
-import nock from 'nock';
-import { initiatePayment } from '../src/Adaptor.js';
+import { expect } from 'chai';
+import { enableMockClient } from '@openfn/language-common/util';
+import { initiatePayment, createCustomer } from '../src/Adaptor.js';
+import testData from './fixtures.json' assert { type: 'json' };
 
-nock.disableNetConnect();
+const testServer = enableMockClient('https://developersandbox-api.flutterwave.com');
 
-describe('Flutterwave Adaptor', () => {
-  beforeEach(() => {
-    nock('https://api.flutterwave.com')
-      .post('/payments') // match the path your adaptor currently uses
-      .reply(200, { status: 'success', message: 'Payment initiated' });
-  });
+let state = {
+  configuration: {
+    baseUrl: 'https://developersandbox-api.flutterwave.com',
+    secretKey: 'nw85KTmsZP0CWqh7FYoFEXzxk68AQQju',
+  }
+}
 
-  afterEach(() => {
-    nock.cleanAll();
-  });
+describe('Create Customer', () => {
+  it('creates a customer successfully', async () => {
+    testServer
+      .intercept({
+        path: '/customers',
+        method: 'POST'
+      })
+      .reply(200, testData.createCustomer.response);
 
-  it('should initiate a payment successfully', async () => {
-    const state = {
-      configuration: {
-        baseUrl: 'https://api.flutterwave.com',
-        secretKey: 'test_key',
-      },
-    };
-
-    const result = await initiatePayment({
-      amount: 100,
-      currency: 'RWF',
-    })(state);
-
-    assert.equal(result, state);
+    const { data } = await createCustomer(testData.createCustomer.request)(state);
+    expect(data).to.eql(testData.createCustomer.response);
   });
 });
+
+describe('Initiate Payment', () => {
+  it('initiates a payment successfully', async () => {
+     testServer
+      .intercept({
+        path: '/charges',
+        method: 'POST'
+      })
+      .reply(200, testData.initiatePayment.response);
+
+    const { data } = await initiatePayment(testData.initiatePayment.request)(state);
+    expect(data).to.eql(testData.initiatePayment.response);
+  });
+});
+
