@@ -212,6 +212,18 @@
             "name": "options.limit"
           },
           {
+            "title": "param",
+            "description": "Order in which to sort the results. Defaults to 'modifiedTime desc'.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "options.orderBy"
+          },
+          {
             "title": "state",
             "description": "{DriveState}"
           },

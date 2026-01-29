@@ -162,7 +162,12 @@ export function get(fileIdOrName) {
 export function list(options) {
   return async state => {
     const [listOptions] = expandReferences(state, options || {});
-    const { folderId, fields, query, limit, orderBy } = listOptions;
+    const { folderId, fields, query, limit, orderBy, pageToken } = listOptions;
+
+
+    let final_fields = ["id", "name", "mimeType", "createdTime", "modifiedTime"];
+    if (Array.isArray(fields)) final_fields = fields;
+    else if (typeof fields === "string") final_fields = fields.split(",").map(v => v.trim())
 
     // generate final query
     const queries = [];
@@ -171,9 +176,10 @@ export function list(options) {
 
     const response = await client.files.list({
       q: queries.join(' and '),
-      fields: fields || 'files(id, name, mimeType, createdTime, modifiedTime)',
+      fields: `nextPageToken, incompleteSearch, kind, files(${final_fields.join(",")})`,
       pageSize: limit ?? undefined,
-      orderBy: orderBy || 'modifiedTime desc'
+      orderBy: orderBy || 'modifiedTime desc',
+      pageToken: pageToken ?? undefined,
     })
     const files = response?.data?.files || []
     return composeNextState(state, files);
