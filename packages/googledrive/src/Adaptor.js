@@ -160,7 +160,7 @@ export function get(fileIdOrName) {
  */
 export function list(options) {
   return async state => {
-    const [listOptions] = expandReferences(state, options);
+    const [listOptions] = expandReferences(state, options || {});
     const { folderId, fields, query, limit } = listOptions;
 
     // generate final query
