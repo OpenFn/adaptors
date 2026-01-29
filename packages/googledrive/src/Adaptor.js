@@ -182,6 +182,7 @@ export function list(options) {
       pageToken: pageToken ?? undefined,
     })
     const files = response?.data?.files || []
+    state.response = { nextPageToken: response?.data?.nextPageToken };
     return composeNextState(state, files);
   };
 }

@@ -41,7 +41,7 @@ describe('Google Drive Adapter', () => {
               createdTime: '2024-01-02T00:00:00.000Z',
               modifiedTime: '2024-01-02T00:00:00.000Z',
             },
-          ],
+          ]
         },
       }),
     };
@@ -100,10 +100,9 @@ describe('Google Drive Adapter', () => {
 
       const result = await execute(list({}))(state);
       expect(mockFiles.list.calledOnce).to.be.true;
-      expect(result.data).to.have.property('files');
-      expect(result.data.files).to.be.an('array').with.lengthOf(2);
-      expect(result.data.files[0]).to.have.property('id', 'file123');
-      expect(result.data.files[0]).to.have.property('name', 'test.txt');
+      expect(result.data).to.be.an('array').with.lengthOf(2);
+      expect(result.data[0]).to.have.property('id', 'file123');
+      expect(result.data[0]).to.have.property('name', 'test.txt');
     });
 
     it('should list files with folderId option', async () => {
@@ -115,7 +114,7 @@ describe('Google Drive Adapter', () => {
 
       const callArgs = mockFiles.list.getCall(0).args[0];
       expect(callArgs.q).to.include("'folder123' in parents");
-      expect(result.data.files).to.be.an('array');
+      expect(result.data).to.be.an('array');
     });
   });
 });
