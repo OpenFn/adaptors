@@ -144,6 +144,35 @@ export function get(fileIdOrName) {
 }
 
 /**
+ * Lists files from a directory or root.
+ * @public
+ * @example <caption>List files of a directory</caption>
+ * list({folderId: '<id-of-folder-here>'})
+ * @example <caption>List files at the root of google drive</caption>
+ * list()
+ * @param {object} query - An object 
+ * @state {DriveState}
+ * @returns {Operation} An operation that retrieves the file as a base64 string.
+ */
+export function list(query) {
+  return async state => {
+    const [resolvedQuery] = expandReferences(state, query);
+
+    const queries = [];
+    const folderId = resolvedQuery?.folderId;
+    let uQuery = resolvedQuery?.query;
+    if (uQuery) queries.push(uQuery);
+    if (folderId) queries.push(`'${folderId}' in parents`);
+
+    const response = await client.files.list({
+      q: queries.join(' and '),
+      fields: 'files(id, name, mimeType)'
+    })
+    return composeNextState(state, response.data);
+  };
+}
+
+/**
  * Updates an existing file in Google Drive.
  * @public
  * @example <caption>Update a file</caption>
