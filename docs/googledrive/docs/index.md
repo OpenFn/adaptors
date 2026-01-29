@@ -4,6 +4,8 @@
 <dt>
     <a href="#get">get(fileIdOrName)</a></dt>
 <dt>
+    <a href="#list">list([options])</a></dt>
+<dt>
     <a href="#update">update(fileId, content)</a></dt>
 </dl>
 
@@ -129,6 +131,41 @@ get('1B1dHwY2uLgm_-U96LNl9zFsRYq8953jL')
 **Example:** Download a file by name
 ```js
 get('hello-world.txt')
+```
+
+* * *
+
+### list
+
+<p><code>list([options]) ⇒ Operation</code></p>
+
+Lists files from a directory or root.
+
+**Returns**: <code>Operation</code> - An operation that retrieves a list of files.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [options] | <code>Object</code> | Options for listing files. |
+| [options.folderId] | <code>string</code> | ID of the folder to list files from. If not provided, lists files from the root. |
+| [options.fields] | <code>string</code> | Fields to return in the response. Defaults to 'files(id, name, mimeType, createdTime, modifiedTime)'. |
+| [options.query] | <code>string</code> | Custom query string for filtering files (see Google Drive API query syntax). |
+| [options.limit] | <code>number</code> | Maximum number of files to return |
+| [options.orderBy] | <code>string</code> | Order in which to sort the results. Defaults to 'modifiedTime desc'. |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** List files of a directory
+```js
+list({folderId: '<id-of-folder-here>'})
+```
+**Example:** List files at the root of google drive
+```js
+list()
 ```
 
 * * *
