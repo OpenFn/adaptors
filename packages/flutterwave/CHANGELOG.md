@@ -1,8 +1,6 @@
 # @openfn/language-flutterwave
 
-## [1.0.0] - 2025-01-29
+## 1.0.0 - 29 January 2026
 
-### Added
-- Initial release of the Flutterwave adaptor.
-- implemented `initiatePayment` operation.
+New Flutterwave adaptor that allows to `initiate payments` and `create customers`.
 

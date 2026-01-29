@@ -30,8 +30,8 @@ export const request = (configuration = {}, method, path, options) => {
 
   // TODO This example adds basic auth from config data
   //       you may need to support other auth strategies
-  const { baseUrl, username, password } = configuration;
-  const headers = makeBasicAuthHeader(username, password);
+  const { baseUrl, secretKey } = configuration;
+  const headers = { Authorization: `Bearer ${secretKey}` };
 
   // TODO You can define custom error messages here
   //      The request function will throw if it receives
@@ -61,8 +61,9 @@ export const request = (configuration = {}, method, path, options) => {
 
   // TODO you may want to add a prefix to the path
   // use path.join to build the path safely
-  const safePath = nodepath.join(path);
+  // const safePath = path;
 
   // Make the actual request
-  return commonRequest(method, safePath, opts);
+  const url = new URL(path, baseUrl).toString();
+  return commonRequest(method, url, opts);
 };

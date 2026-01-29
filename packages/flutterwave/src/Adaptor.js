@@ -33,13 +33,41 @@ import * as util from './Utils.js';
 export function initiatePayment(paymentData) {
   return async state => {
     const resolvedPaymentData = expandReferences(state, paymentData);
+    const body = Array.isArray(resolvedPaymentData)
+      ? resolvedPaymentData[0]
+      : resolvedPaymentData;
 
     const response = await util.request(
       state.configuration,
       'POST',
-      '/payments',
+      '/charges',
       {
-        body: JSON.stringify(resolvedPaymentData), // Serialize the body
+        body: JSON.stringify(body), // Serialize the body
+      }
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}
+
+/**
+ * Create a new customer in Flutterwave.
+ * @function
+ * @public
+ * @param {Object} customerData - The customer details (email, name, phone, etc.).
+ * @returns {Function} - A function that takes the state and performs the operation.
+ */
+export function createCustomer(customerData) {
+  return async state => {
+    const resolvedData = expandReferences(state, customerData);
+    const body = Array.isArray(resolvedData) ? resolvedData[0] : resolvedData;
+
+    const response = await util.request(
+      state.configuration,
+      'POST',
+      '/customers',
+      {
+        body: JSON.stringify(body),
       }
     );
 
