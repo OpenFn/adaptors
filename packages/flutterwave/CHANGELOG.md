@@ -1,5 +1,8 @@
 # @openfn/language-flutterwave
 
-## 1.0.0
+## [1.0.0] - 2025-01-29
 
-Initial release.
+### Added
+- Initial release of the Flutterwave adaptor.
+- implemented `initiatePayment` operation.
+
