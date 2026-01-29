@@ -2202,6 +2202,40 @@ importers:
         specifier: ^1.12.0
         version: 1.12.0
 
+  packages/sahara:
+    dependencies:
+      '@openfn/language-common':
+        specifier: workspace:*
+        version: link:../common
+      axios:
+        specifier: ^1.13.1
+        version: 1.13.2
+      form-data:
+        specifier: ^4.0.4
+        version: 4.0.5
+    devDependencies:
+      assertion-error:
+        specifier: 2.0.0
+        version: 2.0.0
+      chai:
+        specifier: 4.3.6
+        version: 4.3.6
+      deep-eql:
+        specifier: 4.1.1
+        version: 4.1.1
+      mocha:
+        specifier: ^10.7.3
+        version: 10.8.2
+      nock:
+        specifier: ^14.0.10
+        version: 14.0.10
+      rimraf:
+        specifier: 3.0.2
+        version: 3.0.2
+      undici:
+        specifier: 6.20.1
+        version: 6.20.1
+
   packages/salesforce:
     dependencies:
       '@jsforce/jsforce-node':
@@ -4186,6 +4220,10 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  '@mswjs/interceptors@0.39.8':
+    resolution: {integrity: sha512-2+BzZbjRO7Ct61k8fMNHEtoKjeWI9pIlHFTqBwZ5icHpqszIgEZbjb1MW5Z0+bITTCTl3gk4PDBxs9tA/csXvA==}
+    engines: {node: '>=18'}
+
   '@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3':
     resolution: {integrity: sha512-s88O1aVtXftvp5bCPB7WnmXc5IwOZZ7YPuwNPt+GtOOXpPvad1LfbmjYv+qII7zP6RU2QGnqve27dnLycEnyEQ==}
 
@@ -4204,6 +4242,15 @@ packages:
   '@nodelib/fs.walk@1.2.8':
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
+
+  '@open-draft/deferred-promise@2.2.0':
+    resolution: {integrity: sha512-CecwLWx3rhxVQF6V4bAgPS5t+So2sTbPgAzafKkVizyi7tlwpcFpdFqq+wqF2OwNBmqFuu6tOyouTuxgpMfzmA==}
+
+  '@open-draft/logger@0.3.0':
+    resolution: {integrity: sha512-X2g45fzhxH238HKO4xbSr7+wBS8Fvw6ixhTDuvLd5mqh6bJJCFAPwU9mPDxbcrRtfxv4u5IHCEH77BmxvXmmxQ==}
+
+  '@open-draft/until@2.1.0':
+    resolution: {integrity: sha512-U69T3ItWHvLwGg5eJ0n3I62nWuE6ilHlmz7zM0npLBRvPRd7e6NYmg54vvRtP5mZG7kZqZCFVdsTWo7BPtBujg==}
 
   '@opengovsg/formsg-sdk@0.15.0':
     resolution: {integrity: sha512-TOfeu4U8h0jZNEPZGzdotgOVSZCPDbc27cU6heTe4KmdUg8uUwL8W1KEGQlxHBB1phLC+D/9bZu2/Ga8X1/TNg==}
@@ -5144,6 +5191,9 @@ packages:
 
   axios@1.12.2:
     resolution: {integrity: sha512-vMJzPewAlRyOgxV2dU0Cuz2O8zzzx9VYtbJOaBgXFeLc4IV/Eg50n4LowmehOOR61S8ZMpc2K5Sa7g6A4jfkUw==}
+
+  axios@1.13.2:
+    resolution: {integrity: sha512-VPk9ebNqPcy5lRGuSlKx752IlDatOjT9paPlm8A7yOuW2Fbvp4X3JznJtT4f0GzGLLiWE9W8onz51SqLYwzGaA==}
 
   axios@1.8.2:
     resolution: {integrity: sha512-ls4GYBm5aig9vWx8AWDSGLpnpDQRtWAfrjU+EuytuODrFBkqesN2RkOQCBzrA1RQNHw1SmRMSDDDSwzNAYQ6Rg==}
@@ -7689,6 +7739,9 @@ packages:
     resolution: {integrity: sha512-5KoIu2Ngpyek75jXodFvnafB6DJgr3u8uuK0LEZJjrU19DrMD3EVERaR8sjz8CCGgpZvxPl9SuE1GMVPFHx1mw==}
     engines: {node: '>= 0.4'}
 
+  is-node-process@1.2.0:
+    resolution: {integrity: sha512-Vg4o6/fqPxIjtxgUH5QLJhwZ7gW5diGCVlXpuUfELC62CuxM1iHcRe51f2W1FDy04Ai4KJkagKjx3XaqyfRKXw==}
+
   is-number-object@1.1.1:
     resolution: {integrity: sha512-lZhclumE1G6VYD8VHe35wFaIif+CTy5SJIi5+3y4psDgWu4wPDoBhF8NxUOinEc7pHgiTsT6MaBb92rKhhD+Xw==}
     engines: {node: '>= 0.4'}
@@ -8725,6 +8778,10 @@ packages:
     resolution: {integrity: sha512-1+XfJNYF1cjGB+TKMWi29eZ0b82QOvQs2YoLNzbpWGqFMtRQHTa57osqdGj4FrFPgkO4D4AZinzUJR9VvW3QUA==}
     engines: {node: '>= 10.13'}
 
+  nock@14.0.10:
+    resolution: {integrity: sha512-Q7HjkpyPeLa0ZVZC5qpxBt5EyLczFJ91MEewQiIi9taWuA0KB/MDJlUWtON+7dGouVdADTQsf9RA7TZk6D8VMw==}
+    engines: {node: '>=18.20.0 <20 || >=20.12.1'}
+
   nock@8.0.0:
     resolution: {integrity: sha512-8rmXaGoEGKCYIzzhGLGbI7mt1cAURdWLny7AgMXWjaTn22h2TfDIqES0ABdMvnN0imX/HOTrOBgvZs4ejgeMcg==}
     engines: {'0': node >= 0.10.0}
@@ -8917,6 +8974,9 @@ packages:
 
   output-file-sync@1.1.2:
     resolution: {integrity: sha512-uQLlclru4xpCi+tfs80l3QF24KL81X57ELNMy7W/dox+JTtxUf1bLyQ8968fFCmSqqbokjW0kn+WBIlO+rSkNg==}
+
+  outvariant@1.4.3:
+    resolution: {integrity: sha512-+Sl2UErvtsoajRDKCE5/dBz4DIvHXQQnAxtQTF04OJxY0+DyZXSo5P5Bb7XYWOh81syohlYL24hbDwxedPUJCA==}
 
   own-keys@1.0.1:
     resolution: {integrity: sha512-qFOyK5PjiWZd+QQIh+1jhdb9LpxTF0qs7Pm8o5QHYZ0M3vKqSqzsZaEB6oWlxZ+q2sJBMI/Ktgd2N5ZwQoRHfg==}
@@ -9996,6 +10056,9 @@ packages:
     resolution: {integrity: sha512-DBp0lSvX5G9KGRDTkR/R+a29H+Wk2xItOF+MpZLLNDWbEV9tGPnqLPxHEYjmiz8xGtJHRIqmI+hCjmNzqoA4nQ==}
     engines: {node: '>=0.10.0'}
 
+  strict-event-emitter@0.5.1:
+    resolution: {integrity: sha512-vMgjE/GGEPEFnhFub6pa4FmJBRBVOLpIII2hvCZ8Kzb7K0hlHo7mQv6xYrBvCL2LtAIBwFUK8wvuJgTVSQ5MFQ==}
+
   string-width@1.0.2:
     resolution: {integrity: sha512-0XsVpQLnVCXHJfyEs8tC0zpTVIr5PKKsQtkT29IwupnPTjtPmQ3xT/4yCREF9hYkV/3M3kzcUTSAZT6a6h81tw==}
     engines: {node: '>=0.10.0'}
@@ -10525,6 +10588,10 @@ packages:
   undici@5.29.0:
     resolution: {integrity: sha512-raqeBD6NQK4SkWhQzeYKd1KmIG6dllBOTt55Rmkt4HtI9mwdWtJljnrXjAFUBLTSN67HWrOIZ3EPF4kjUw80Bg==}
     engines: {node: '>=14.0'}
+
+  undici@6.20.1:
+    resolution: {integrity: sha512-AjQF1QsmqfJys+LXfGTNum+qw4S88CojRInG/6t31W/1fk6G59s92bnAvGz5Cmur+kQv2SURXEvvudLmbrE8QA==}
+    engines: {node: '>=18.17'}
 
   undici@7.16.0:
     resolution: {integrity: sha512-QEg3HPMll0o3t2ourKwOeUAZ159Kn9mx5pnzHRQO8+Wixmh88YdZRiIwat0iNzNNXn0yoEtXJqFpyW7eM8BV7g==}
@@ -12495,6 +12562,15 @@ snapshots:
       - encoding
       - supports-color
 
+  '@mswjs/interceptors@0.39.8':
+    dependencies:
+      '@open-draft/deferred-promise': 2.2.0
+      '@open-draft/logger': 0.3.0
+      '@open-draft/until': 2.1.0
+      is-node-process: 1.2.0
+      outvariant: 1.4.3
+      strict-event-emitter: 0.5.1
+
   '@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3':
     optional: true
 
@@ -12511,6 +12587,15 @@ snapshots:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
+
+  '@open-draft/deferred-promise@2.2.0': {}
+
+  '@open-draft/logger@0.3.0':
+    dependencies:
+      is-node-process: 1.2.0
+      outvariant: 1.4.3
+
+  '@open-draft/until@2.1.0': {}
 
   '@opengovsg/formsg-sdk@0.15.0':
     dependencies:
@@ -12774,7 +12859,7 @@ snapshots:
       '@types/node': 18.17.5
       axios: 0.27.2
       eventemitter3: 3.1.2
-      form-data: 2.5.4
+      form-data: 2.5.5
       is-electron: 2.2.0
       is-stream: 1.1.0
       p-queue: 6.6.2
@@ -13434,6 +13519,14 @@ snapshots:
       - debug
 
   axios@1.12.2:
+    dependencies:
+      follow-redirects: 1.15.11
+      form-data: 4.0.5
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+
+  axios@1.13.2:
     dependencies:
       follow-redirects: 1.15.11
       form-data: 4.0.5
@@ -16592,6 +16685,8 @@ snapshots:
 
   is-negative-zero@2.0.3: {}
 
+  is-node-process@1.2.0: {}
+
   is-number-object@1.1.1:
     dependencies:
       call-bound: 1.0.4
@@ -17792,6 +17887,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  nock@14.0.10:
+    dependencies:
+      '@mswjs/interceptors': 0.39.8
+      json-stringify-safe: 5.0.1
+      propagate: 2.0.1
+
   nock@8.0.0:
     dependencies:
       chai: 3.5.0
@@ -18006,6 +18107,8 @@ snapshots:
       graceful-fs: 4.2.11
       mkdirp: 0.5.6
       object-assign: 4.1.1
+
+  outvariant@1.4.3: {}
 
   own-keys@1.0.1:
     dependencies:
@@ -19158,6 +19261,8 @@ snapshots:
 
   stream-via@1.0.4: {}
 
+  strict-event-emitter@0.5.1: {}
+
   string-width@1.0.2:
     dependencies:
       code-point-at: 1.1.0
@@ -19309,7 +19414,7 @@ snapshots:
       cookiejar: 2.1.4
       debug: 3.2.7
       extend: 3.0.2
-      form-data: 2.5.4
+      form-data: 2.5.5
       formidable: 1.2.6
       methods: 1.1.2
       mime: 1.6.0
@@ -19324,7 +19429,7 @@ snapshots:
       cookiejar: 2.1.4
       debug: 3.2.7
       extend: 3.0.2
-      form-data: 2.5.4
+      form-data: 2.5.5
       formidable: 1.2.6
       methods: 1.1.2
       mime: 1.6.0
@@ -19478,7 +19583,7 @@ snapshots:
       '@types/qs': 6.14.0
       caseless: 0.12.0
       concat-stream: 1.6.2
-      form-data: 2.5.4
+      form-data: 2.5.5
       http-basic: 8.1.3
       http-response-object: 3.0.2
       promise: 8.3.0
@@ -19838,6 +19943,8 @@ snapshots:
   undici@5.29.0:
     dependencies:
       '@fastify/busboy': 2.1.1
+
+  undici@6.20.1: {}
 
   undici@7.16.0: {}
 

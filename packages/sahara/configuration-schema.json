@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "type": "string",
+      "description": "The Sahara API base URL",
+      "format": "uri",
+      "minLength": 1,
+      "default": "https://infer.voice.intron.io",
+      "examples": ["https://infer.voice.intron.io"]
+    },
+    "apiKey": {
+      "title": "API Key",
+      "type": "string",
+      "description": "Your Sahara API key for authentication",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": ["your-api-key-here"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["apiKey"]
+} 
