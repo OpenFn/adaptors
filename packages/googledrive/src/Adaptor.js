@@ -150,23 +150,24 @@ export function get(fileIdOrName) {
  * list({folderId: '<id-of-folder-here>'})
  * @example <caption>List files at the root of google drive</caption>
  * list()
- * @param {object} query - An object 
+ * @param {object} options - An object 
  * @state {DriveState}
  * @returns {Operation} An operation that retrieves the file as a base64 string.
  */
-export function list(query) {
+export function list(options) {
   return async state => {
-    const [resolvedQuery] = expandReferences(state, query);
+    const [listOptions] = expandReferences(state, options);
+    const { folderId, fields, query, limit } = listOptions;
 
+    // generate final query
     const queries = [];
-    const folderId = resolvedQuery?.folderId;
-    let uQuery = resolvedQuery?.query;
-    if (uQuery) queries.push(uQuery);
+    if (query) queries.push(query);
     if (folderId) queries.push(`'${folderId}' in parents`);
 
     const response = await client.files.list({
       q: queries.join(' and '),
-      fields: 'files(id, name, mimeType)'
+      fields: fields || 'files(id, name, mimeType)',
+      pageSize: limit || 100
     })
     return composeNextState(state, response.data);
   };
