@@ -1,5 +1,11 @@
 # @openfn/language-googledrive
 
+## 2.1.0
+
+### Minor Changes
+
+- 15dc2e4: add list method for listing files in a directory
+
 ## 2.0.8
 
 ### Patch Changes
