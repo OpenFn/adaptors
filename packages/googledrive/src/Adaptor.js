@@ -155,13 +155,14 @@ export function get(fileIdOrName) {
  * @param {string} [options.fields] - Fields to return in the response. Defaults to 'files(id, name, mimeType, createdTime, modifiedTime)'.
  * @param {string} [options.query] - Custom query string for filtering files (see Google Drive API query syntax).
  * @param {number} [options.limit] - Maximum number of files to return
+ * @param {string} [options.orderBy] - Order in which to sort the results. Defaults to 'modifiedTime desc'.
  * @state {DriveState}
  * @returns {Operation} An operation that retrieves a list of files.
  */
 export function list(options) {
   return async state => {
     const [listOptions] = expandReferences(state, options || {});
-    const { folderId, fields, query, limit } = listOptions;
+    const { folderId, fields, query, limit, orderBy } = listOptions;
 
     // generate final query
     const queries = [];
@@ -171,7 +172,8 @@ export function list(options) {
     const response = await client.files.list({
       q: queries.join(' and '),
       fields: fields || 'files(id, name, mimeType, createdTime, modifiedTime)',
-      pageSize: limit ?? undefined
+      pageSize: limit ?? undefined,
+      orderBy: orderBy || 'modifiedTime desc'
     })
     const files = response?.data?.files || []
     return composeNextState(state, files);
