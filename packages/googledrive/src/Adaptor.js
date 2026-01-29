@@ -150,9 +150,13 @@ export function get(fileIdOrName) {
  * list({folderId: '<id-of-folder-here>'})
  * @example <caption>List files at the root of google drive</caption>
  * list()
- * @param {object} options - An object 
+ * @param {Object} [options] - Options for listing files.
+ * @param {string} [options.folderId] - ID of the folder to list files from. If not provided, lists files from the root.
+ * @param {string} [options.fields] - Fields to return in the response. Defaults to 'files(id, name, mimeType, createdTime, modifiedTime)'.
+ * @param {string} [options.query] - Custom query string for filtering files (see Google Drive API query syntax).
+ * @param {number} [options.limit] - Maximum number of files to return
  * @state {DriveState}
- * @returns {Operation} An operation that retrieves the file as a base64 string.
+ * @returns {Operation} An operation that retrieves a list of files.
  */
 export function list(options) {
   return async state => {
@@ -166,8 +170,8 @@ export function list(options) {
 
     const response = await client.files.list({
       q: queries.join(' and '),
-      fields: fields || 'files(id, name, mimeType)',
-      pageSize: limit || 100
+      fields: fields || 'files(id, name, mimeType, createdTime, modifiedTime)',
+      pageSize: limit ?? undefined
     })
     return composeNextState(state, response.data);
   };
