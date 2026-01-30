@@ -51,6 +51,9 @@ importers:
       typescript:
         specifier: 4.8.4
         version: 4.8.4
+      undici:
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/arcgis:
     dependencies:
@@ -73,9 +76,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.22.1
-        version: 5.29.0
 
   packages/asana:
     dependencies:
@@ -117,9 +117,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/beyonic:
     dependencies:
@@ -250,9 +247,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/cht:
     dependencies:
@@ -272,9 +266,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/claude:
     dependencies:
@@ -300,9 +291,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/collections:
     dependencies:
@@ -312,9 +300,6 @@ importers:
       stream-json:
         specifier: ^1.8.0
         version: 1.8.0
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -384,8 +369,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       undici:
-        specifier: ^7.15.0
-        version: 7.16.0
+        specifier: ^7.19.2
+        version: 7.19.2
     devDependencies:
       chai:
         specifier: 4.3.6
@@ -430,9 +415,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.22.1
-        version: 5.29.0
 
   packages/dhis2:
     dependencies:
@@ -489,9 +471,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/dynamics:
     dependencies:
@@ -545,9 +524,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.22.1
-        version: 5.29.0
 
   packages/et-mfr:
     dependencies:
@@ -604,9 +580,6 @@ importers:
       '@openfn/language-common':
         specifier: workspace:*
         version: link:../common
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -666,9 +639,6 @@ importers:
       typescript:
         specifier: 5.9.2
         version: 5.9.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/fhir-fr:
     dependencies:
@@ -694,9 +664,6 @@ importers:
       typescript:
         specifier: 4.8.4
         version: 4.8.4
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/fhir-ndr-et:
     dependencies:
@@ -737,9 +704,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/formsg:
     dependencies:
@@ -811,9 +775,6 @@ importers:
       ajv:
         specifier: ^6.12.6
         version: 6.12.6
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -839,9 +800,6 @@ importers:
       ajv:
         specifier: '6'
         version: 6.12.6
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -886,9 +844,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/godata:
     dependencies:
@@ -945,9 +900,6 @@ importers:
       sinon:
         specifier: ^19.0.4
         version: 19.0.4
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/googlehealthcare:
     dependencies:
@@ -967,9 +919,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/googlesheets:
     dependencies:
@@ -1064,9 +1013,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/ihris:
     dependencies:
@@ -1092,9 +1038,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.22.1
-        version: 5.29.0
 
   packages/inform:
     dependencies:
@@ -1117,9 +1060,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/intuit:
     dependencies:
@@ -1142,9 +1082,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/khanacademy:
     dependencies:
@@ -1247,9 +1184,6 @@ importers:
       md5:
         specifier: ^2.3.0
         version: 2.3.0
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
     devDependencies:
       assertion-error:
         specifier: ^1.1.0
@@ -1452,9 +1386,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/mongodb:
     dependencies:
@@ -1502,9 +1433,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.22.1
-        version: 5.29.0
 
   packages/motherduck:
     dependencies:
@@ -1533,9 +1461,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.22.1
-        version: 5.29.0
 
   packages/mpesa:
     dependencies:
@@ -1558,18 +1483,12 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/msgraph:
     dependencies:
       '@openfn/language-common':
         specifier: workspace:*
         version: link:../common
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
       xlsx:
         specifier: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
         version: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
@@ -1633,9 +1552,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/mtn-momo:
     dependencies:
@@ -1658,9 +1574,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/mysql:
     dependencies:
@@ -1730,9 +1643,6 @@ importers:
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/odk:
     dependencies:
@@ -1752,9 +1662,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/odoo:
     dependencies:
@@ -1780,9 +1687,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/openboxes:
     dependencies:
@@ -1805,9 +1709,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/opencrvs:
     dependencies:
@@ -1833,9 +1734,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.22.1
-        version: 5.29.0
 
   packages/openfn:
     dependencies:
@@ -1936,9 +1834,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/openmrs:
     dependencies:
@@ -1983,9 +1878,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/pdfshift:
     dependencies:
@@ -2008,9 +1900,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.22.1
-        version: 5.29.0
 
   packages/pesapal:
     dependencies:
@@ -2033,9 +1922,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/postgresql:
     dependencies:
@@ -2138,9 +2024,6 @@ importers:
       '@openfn/language-common':
         specifier: workspace:*
         version: link:../common
-      undici:
-        specifier: ^7.8.0
-        version: 7.8.0
     devDependencies:
       chai:
         specifier: ^3.4.0
@@ -2257,9 +2140,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/senaite:
     dependencies:
@@ -2282,9 +2162,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/sftp:
     dependencies:
@@ -2344,9 +2221,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.22.1
-        version: 5.29.0
 
   packages/sunbird-rc:
     dependencies:
@@ -2369,9 +2243,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.22.1
-        version: 5.29.0
 
   packages/surveycto:
     dependencies:
@@ -2475,9 +2346,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
 
   packages/vtiger:
     dependencies:
@@ -2534,18 +2402,12 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.22.1
-        version: 5.29.0
 
   packages/wigal-sms:
     dependencies:
       '@openfn/language-common':
         specifier: workspace:*
         version: link:../common
-      undici:
-        specifier: ^5.29.0
-        version: 5.29.0
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -2584,9 +2446,6 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
-      undici:
-        specifier: ^5.22.1
-        version: 5.29.0
 
   packages/zoho:
     dependencies:
@@ -4087,10 +3946,6 @@ packages:
   '@eslint/plugin-kit@0.2.8':
     resolution: {integrity: sha512-ZAoA40rNMPwSm+AeHpCq8STiNAwzWLJuP8Xv4CHIc9wv/PSuExjMrmjfYNj682vW0OOiZ1HKxzvjQr9XZIisQA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@fastify/busboy@2.1.1':
-    resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
-    engines: {node: '>=14'}
 
   '@google-cloud/bigquery@5.12.0':
     resolution: {integrity: sha512-UaIvvuKpyJhCRBkxEJXnJwvxOxkGoZHvSs9IsS0MNUS4YphcbWYOyzRMufV5gxdsr7XNSd+36Nj/n/7vyZiCqQ==}
@@ -6481,8 +6336,8 @@ packages:
   electron-to-chromium@1.5.230:
     resolution: {integrity: sha512-A6A6Fd3+gMdaed9wX83CvHYJb4UuapPD5X5SLq72VZJzxHSY0/LUweGXRWmQlh2ln7KV7iw7jnwXK7dlPoOnHQ==}
 
-  electron-to-chromium@1.5.279:
-    resolution: {integrity: sha512-0bblUU5UNdOt5G7XqGiJtpZMONma6WAfq9vsFmtn9x1+joAObr6x1chfqyxFSDCAFwFhCQDrqeAr6MYdpwJ9Hg==}
+  electron-to-chromium@1.5.282:
+    resolution: {integrity: sha512-FCPkJtpst28UmFzd903iU7PdeVTfY0KAeJy+Lk0GLZRwgwYHn/irRcaCbQQOmr5Vytc/7rcavsYLvTM8RiHYhQ==}
 
   emittery@1.2.0:
     resolution: {integrity: sha512-KxdRyyFcS85pH3dnU8Y5yFUm2YJdaHwcBZWrfG8o89ZY9a13/f9itbN+YG3ELbBo9Pg5zvIozstmuV8bX13q6g==}
@@ -10697,16 +10552,8 @@ packages:
   underscore@1.8.2:
     resolution: {integrity: sha512-CHzhycUy6eSLBV/Yksw4nSDIcsNAsdAExaSILTOSvZkfmymBxxrvnrUGoFJSYEUJvEe8C/p8a5Cs844mtwgNOw==}
 
-  undici@5.29.0:
-    resolution: {integrity: sha512-raqeBD6NQK4SkWhQzeYKd1KmIG6dllBOTt55Rmkt4HtI9mwdWtJljnrXjAFUBLTSN67HWrOIZ3EPF4kjUw80Bg==}
-    engines: {node: '>=14.0'}
-
-  undici@7.16.0:
-    resolution: {integrity: sha512-QEg3HPMll0o3t2ourKwOeUAZ159Kn9mx5pnzHRQO8+Wixmh88YdZRiIwat0iNzNNXn0yoEtXJqFpyW7eM8BV7g==}
-    engines: {node: '>=20.18.1'}
-
-  undici@7.8.0:
-    resolution: {integrity: sha512-vFv1GA99b7eKO1HG/4RPu2Is3FBTWBrmzqzO0mz+rLxN3yXkE4mqRcb8g8fHxzX4blEysrNZLqg5RbJLqX5buA==}
+  undici@7.19.2:
+    resolution: {integrity: sha512-4VQSpGEGsWzk0VYxyB/wVX/Q7qf9t5znLRgs0dzszr9w9Fej/8RVNQ+S20vdXSAyra/bJ7ZQfGv6ZMj7UEbzSg==}
     engines: {node: '>=20.18.1'}
 
   unicode-canonical-property-names-ecmascript@2.0.1:
@@ -12520,8 +12367,6 @@ snapshots:
     dependencies:
       '@eslint/core': 0.13.0
       levn: 0.4.1
-
-  '@fastify/busboy@2.1.1': {}
 
   '@google-cloud/bigquery@5.12.0':
     dependencies:
@@ -14427,7 +14272,7 @@ snapshots:
     dependencies:
       baseline-browser-mapping: 2.9.19
       caniuse-lite: 1.0.30001766
-      electron-to-chromium: 1.5.279
+      electron-to-chromium: 1.5.282
       node-releases: 2.0.27
       update-browserslist-db: 1.2.3(browserslist@4.28.1)
 
@@ -15316,7 +15161,7 @@ snapshots:
 
   electron-to-chromium@1.5.230: {}
 
-  electron-to-chromium@1.5.279: {}
+  electron-to-chromium@1.5.282: {}
 
   emittery@1.2.0: {}
 
@@ -20219,13 +20064,7 @@ snapshots:
 
   underscore@1.8.2: {}
 
-  undici@5.29.0:
-    dependencies:
-      '@fastify/busboy': 2.1.1
-
-  undici@7.16.0: {}
-
-  undici@7.8.0: {}
+  undici@7.19.2: {}
 
   unicode-canonical-property-names-ecmascript@2.0.1: {}
 
