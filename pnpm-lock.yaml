@@ -40,8 +40,8 @@ importers:
         specifier: ^17.2.0
         version: 17.2.0
       lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^4.17.23
+        version: 4.17.23
       mocha:
         specifier: ^10.7.3
         version: 10.8.2
@@ -381,8 +381,8 @@ importers:
         specifier: ^10.3.0
         version: 10.3.0
       lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^4.17.23
+        version: 4.17.23
       undici:
         specifier: ^7.15.0
         version: 7.16.0
@@ -443,8 +443,8 @@ importers:
         specifier: ^1.8.2
         version: 1.8.2
       lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^4.17.23
+        version: 4.17.23
       qs:
         specifier: ^6.14.1
         version: 6.14.1
@@ -713,8 +713,8 @@ importers:
         specifier: ^0.14.2
         version: 0.14.2
       lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^4.17.23
+        version: 4.17.23
       recast:
         specifier: ^0.23.9
         version: 0.23.9
@@ -1347,8 +1347,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^4.17.23
+        version: 4.17.23
       query-string:
         specifier: ^8.1.0
         version: 8.1.0
@@ -1515,8 +1515,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^4.17.23
+        version: 4.17.23
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -2292,8 +2292,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^4.17.23
+        version: 4.17.23
       ssh2-sftp-client:
         specifier: 9.0.4
         version: 9.0.4
@@ -2778,8 +2778,8 @@ importers:
         specifier: ^9.2.15
         version: 9.2.15
       lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^4.17.23
+        version: 4.17.23
       recast:
         specifier: ^0.23.9
         version: 0.23.9
@@ -2832,8 +2832,8 @@ importers:
         specifier: 18.17.5
         version: 18.17.5
       lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^4.17.23
+        version: 4.17.23
       ts-node:
         specifier: 10.9.1
         version: 10.9.1(@swc/core@1.10.9)(@types/node@18.17.5)(typescript@4.8.4)
@@ -8429,9 +8429,6 @@ packages:
   lodash.throttle@4.1.1:
     resolution: {integrity: sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==}
 
-  lodash@4.17.21:
-    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-
   lodash@4.17.23:
     resolution: {integrity: sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==}
 
@@ -9510,14 +9507,12 @@ packages:
     engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
     deprecated: |-
       You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
-
       (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   q@2.0.3:
     resolution: {integrity: sha512-gv6vLGcmAOg96/fgo3d9tvA4dJNZL3fMyBqVRrGxQ+Q/o4k9QzbJ3NQF9cOO/71wRodoXhaPgphvMFU68qVAJQ==}
     deprecated: |-
       You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
-
       (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   qs@2.3.3:
@@ -13712,7 +13707,7 @@ snapshots:
       convert-source-map: 1.9.0
       fs-readdir-recursive: 1.1.0
       glob: 7.2.3
-      lodash: 4.17.21
+      lodash: 4.17.23
       output-file-sync: 1.1.2
       path-is-absolute: 1.0.1
       slash: 1.0.0
@@ -13744,7 +13739,7 @@ snapshots:
       convert-source-map: 1.9.0
       debug: 2.6.9
       json5: 0.5.1
-      lodash: 4.17.21
+      lodash: 4.17.23
       minimatch: 3.1.2
       path-is-absolute: 1.0.1
       private: 0.1.8
@@ -16747,7 +16742,7 @@ snapshots:
       cli-width: 4.1.0
       external-editor: 3.1.0
       figures: 3.2.0
-      lodash: 4.17.21
+      lodash: 4.17.23
       mute-stream: 1.0.0
       ora: 5.4.1
       run-async: 3.0.0
@@ -17140,7 +17135,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.28.4
       jsdoc-regex: 1.0.1
-      lodash: 4.17.21
+      lodash: 4.17.23
 
   jsdoc-parse@6.2.5:
     dependencies:
@@ -17392,7 +17387,7 @@ snapshots:
       get-package-type: 0.1.0
       getopts: 2.3.0
       interpret: 2.2.0
-      lodash: 4.17.21
+      lodash: 4.17.23
       pg-connection-string: 2.6.2
       rechoir: 0.8.0
       resolve-from: 5.0.0
@@ -17525,8 +17520,6 @@ snapshots:
   lodash.startcase@4.4.0: {}
 
   lodash.throttle@4.1.1: {}
-
-  lodash@4.17.21: {}
 
   lodash@4.17.23: {}
 
@@ -18120,7 +18113,7 @@ snapshots:
     dependencies:
       debug: 4.4.3(supports-color@8.1.1)
       json-stringify-safe: 5.0.1
-      lodash: 4.17.21
+      lodash: 4.17.23
       propagate: 2.0.1
     transitivePeerDependencies:
       - supports-color
@@ -18140,7 +18133,7 @@ snapshots:
       debug: 2.6.9
       deep-equal: 1.1.2
       json-stringify-safe: 5.0.1
-      lodash: 4.17.21
+      lodash: 4.17.23
       mkdirp: 0.5.6
       propagate: 0.4.0
       qs: 6.14.1
@@ -20109,7 +20102,7 @@ snapshots:
       dayjs: 1.11.18
       https-proxy-agent: 5.0.1
       jsonwebtoken: 8.5.1
-      lodash: 4.17.21
+      lodash: 4.17.23
       q: 2.0.3
       qs: 6.14.1
       rootpath: 0.1.2
