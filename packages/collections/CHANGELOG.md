@@ -1,5 +1,26 @@
 # @openfn/language-collections
 
+## 0.8.1
+
+### Patch Changes
+
+- 8ad6b98: fix: use posix path joining for url paths to support windows
+
+  Note: Updated tests and URL construction to use `path.posix.join` to avoid
+  `MockNotMatchedError` caused by backslashes on Windows.
+
+  ```
+  ---
+  "@openfn/language-collections": patch
+  ---
+
+  fix: use posix path joining for url paths to support windows
+  ```
+
+- Updated dependencies [8ad6b98]
+- Updated dependencies [8ad6b98]
+  - @openfn/language-common@3.2.2
+
 ## 0.8.0 - 30 December 2025
 
 ### Minor Changes

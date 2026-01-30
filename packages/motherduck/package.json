@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-motherduck",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "OpenFn MotherDuck cloud database adaptor",
   "type": "module",
   "exports": {
@@ -30,7 +30,7 @@
   "dependencies": {
     "@duckdb/node-api": "^1.3.2-alpha.25",
     "@openfn/language-common": "workspace:*",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.23"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",

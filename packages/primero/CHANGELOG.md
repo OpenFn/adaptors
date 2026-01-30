@@ -1,5 +1,13 @@
 # @openfn/language-primero
 
+## 4.0.8
+
+### Patch Changes
+
+- Updated dependencies [8ad6b98]
+- Updated dependencies [8ad6b98]
+  - @openfn/language-common@3.2.2
+
 ## 4.0.7 - 02 December 2025
 
 ### Patch Changes

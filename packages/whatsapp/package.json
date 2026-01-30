@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-whatsapp",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "OpenFn whatsapp adaptor",
   "type": "module",
   "exports": {

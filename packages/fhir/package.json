@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-fhir",
   "label": "FHIR",
-  "version": "5.0.13",
+  "version": "5.0.14",
   "description": "A FHIR adaptor for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {

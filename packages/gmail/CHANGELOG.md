@@ -1,5 +1,13 @@
 # @openfn/language-gmail
 
+## 2.0.10
+
+### Patch Changes
+
+- Updated dependencies [8ad6b98]
+- Updated dependencies [8ad6b98]
+  - @openfn/language-common@3.2.2
+
 ## 2.0.9
 
 ### Patch Changes

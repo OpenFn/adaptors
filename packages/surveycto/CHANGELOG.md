@@ -1,5 +1,13 @@
 # @openfn/language-surveycto
 
+## 3.0.6
+
+### Patch Changes
+
+- Updated dependencies [8ad6b98]
+- Updated dependencies [8ad6b98]
+  - @openfn/language-common@3.2.2
+
 ## 3.0.5
 
 ### Patch Changes

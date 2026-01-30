@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-mongodb",
   "label": "MongoDB",
-  "version": "2.1.25",
+  "version": "2.1.26",
   "description": "A language package for working with MongoDb",
   "main": "dist/index.cjs",
   "scripts": {
