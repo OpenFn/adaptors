@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The Ping base URL",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://msawe-primes-ping-bau-uat-apimgmt.azure-api.net"]
+    },
+    "username": {
+      "title": "Username",
+      "type": "string",
+      "description": "Your Ping Username",
+      "examples": ["test@openfn.org"]
+    },
+    "password": {
+      "title": "Password",
+      "type": "string",
+      "description": "Your Ping Password",
+      "writeOnly": true,
+      "examples": ["@some(!)Str0ngp4ss0w0rd"]
+    },
+    "accessToken": {
+      "title": "Access Token",
+      "type": "string",
+      "description": "Your Ping Access Token"
+    },
+    "clientId": {
+      "title": "Client ID",
+      "type": "string",
+      "description": "Your Ping Client ID",
+      "examples": ["1234567890"]
+    },
+    "tokenUrl": {
+      "title": "Token URL",
+      "type": "string",
+      "description": "The Ping Token URL",
+      "format": "uri",
+      "default":"https://primespingb2cuat.b2clogin.com",
+      "examples": ["https://primespingb2cuat.b2clogin.com"]
+    },
+    "scope": {
+      "title": "Scope",
+      "type": "string",
+      "description": "Your Ping scope",
+      "default":"https://primespingb2cuat.onmicrosoft.com/apimurls/API.Read",
+      "examples": ["https://primespingb2cuat.onmicrosoft.com/apimurls/API.Read"]
+    },
+    "subscriptionKey": {
+      "title": "Subscription Key",
+      "type": "string",
+      "description": "Your Ping Subscription Key",
+      "examples": ["1234567890abcdef"]
+    }
+
+    
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["password", "username", "baseUrl", "clientId", "scope", "subscriptionKey"]
+}
