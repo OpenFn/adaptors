@@ -2,4 +2,4 @@
 
 ## 1.0.0
 
-Implement `post` and `request` functions for the PING adaptor
+Implement `post` function for the PING adaptor
