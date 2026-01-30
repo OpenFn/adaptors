@@ -93,7 +93,7 @@ export const request = (path, options) => {
     } = resolvedoptions;
 
     const safePath = resolvedPath
-      ? nodepath.join(basePath, resolvedPath)
+      ? nodepath.posix.join(basePath, resolvedPath)
       : basePath;
 
     const args = {
