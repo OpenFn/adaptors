@@ -6,35 +6,8 @@
 
 - 8ad6b98: fix: correct url construction on windows to prevent protocol
   normalization issues
-
-  Note: Replace `path.join` with `path.posix.join` or manual posix-style
-  concatenation when constructing URLs to avoid backslashes on Windows.
-
-  ```
-  ---
-  "@openfn/language-common": patch
-  ---
-
-  fix: correct url construction on windows to prevent protocol normalization issues
-  ```
-
-- 8ad6b98: fix: compatibility with Windows for build tools and documentation
-  generation fix(common): resolve invalid URL scheme error on Windows
-
-  Note: Use `pathToFileURL` for dynamic imports to avoid
-  `ERR_UNSUPPORTED_ESM_URL_SCHEME` on Windows; build tooling entry paths were
-  normalized and now handle missing `build.config.js` gracefully.
-
-  ```
-
-  ---
-  "@openfn/language-common": patch
-  "@openfn/adaptor-apis": patch
-  ---
-
-  fix: compatibility with Windows for build tools and documentation generation
-  fix(common): resolve invalid URL scheme error on Windows
-  ```
+- fix: compatibility with Windows for build tools and documentation generation
+- fix(common): resolve invalid URL scheme error on Windows
 
 ## 3.2.1 - 28 November 2025
 
@@ -120,7 +93,7 @@ You must do this instead:
 ```js
 each(
   '$.[*]',
-  create('SObject', field('FirstName', sourceValue('$.firstName')))
+  create('SObject', field('FirstName', sourceValue('$.firstName'))),
 );
 ```
 
@@ -452,7 +425,8 @@ Bumped all package versions to their latest.
   Allowing you to join an array of string'able primitives (strings and integers)
   into a string.
 - Added `toArray` helper.\
-  This can be used to coerce certain types of data into an array, this can be useful
-  when the source data has an ambiguous format. For example a given key in the data
-  may have an object as it's value (when there is only one item), and an array of
-  objects when there is more than one. `toArray` can be used to reconcile this inconsistency.
+  This can be used to coerce certain types of data into an array, this can be
+  useful when the source data has an ambiguous format. For example a given key
+  in the data may have an object as it's value (when there is only one item),
+  and an array of objects when there is more than one. `toArray` can be used to
+  reconcile this inconsistency.
