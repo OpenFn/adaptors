@@ -1,5 +1,13 @@
 # @openfn/language-msgraph
 
+## 0.8.10
+
+### Patch Changes
+
+- Updated dependencies [8ad6b98]
+- Updated dependencies [8ad6b98]
+  - @openfn/language-common@3.2.2
+
 ## 0.8.9
 
 ### Patch Changes

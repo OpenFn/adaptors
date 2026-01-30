@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-maximo",
   "label": "Maximo",
-  "version": "0.5.27",
+  "version": "0.5.28",
   "description": "OpenFn adaptor for IBM Maximo EAM",
   "main": "dist/index.cjs",
   "scripts": {

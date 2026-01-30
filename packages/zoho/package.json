@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-zoho",
   "label": "Zoho",
-  "version": "0.4.23",
+  "version": "0.4.24",
   "description": "OpenFn adaptor for Zoho",
   "main": "dist/index.cjs",
   "scripts": {

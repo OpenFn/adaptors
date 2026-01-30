@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-inform",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "OpenFn inform adaptor for UNICEF InForm platform operations",
   "type": "module",
   "exports": {
