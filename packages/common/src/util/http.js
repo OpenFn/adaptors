@@ -77,7 +77,7 @@ const getDispatcher = (origin, options = {}) => {
       interceptors.redirect({
         maxRedirections: agentOpts.maxRedirections,
       }),
-      interceptors.decompress()
+      interceptors.decompress(),
     );
 
     agents.set(key, agent);
@@ -119,7 +119,7 @@ export const enableMockClient = (baseUrl, options = {}) => {
 
       const ensureJsonHeader = (headers = {}) => {
         const hasJsonHeader = Object.keys(headers).find(k =>
-          /content-type/i.test(k)
+          /content-type/i.test(k),
         );
         if (!hasJsonHeader) {
           headers['content-type'] = defaultContentType;
@@ -239,12 +239,11 @@ export const parseUrl = (pathOrUrl = '', baseUrl) => {
     //       Ie it may be https://example.com/api/v1
     //       Doing new URl(path, base) will chop off the "base path" so to speak, and break stuff
     //       Technically path.join will produce an invalid URL, but the URL parser handles it safely
-    fullUrl = new URL(path.join(baseUrl, pathOrUrl));
+    fullUrl = new URL(path.posix.join(baseUrl, pathOrUrl));
   } else {
     // let this throw
     new URL(pathOrUrl);
   }
-
   return {
     url: fullUrl.toString(),
     baseUrl: fullUrl.origin,
@@ -315,7 +314,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
 
   // redirect codes https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status#redirection_messages
   const hasRedirectStatus = [300, 301, 302, 303, 304, 305, 307, 308].includes(
-    response.statusCode
+    response.statusCode,
   );
 
   if (

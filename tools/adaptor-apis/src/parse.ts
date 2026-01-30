@@ -19,7 +19,7 @@ export const parse = async (rootDir: string) => {
 
   // Filter items which are not marked as @public
   templateData = templateData.filter(
-    (data: any) => data.kind === 'typedef' || data.access === 'public'
+    (data: any) => data.kind === 'typedef' || data.access === 'public',
   );
 
   // sort template data
