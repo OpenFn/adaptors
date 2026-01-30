@@ -1,8 +1,7 @@
 {
-  "name": "@openfn/language-googledrive",
-  "label": "Google Drive",
-  "version": "2.1.0",
-  "description": "OpenFn Google Drive adaptor",
+  "name": "@openfn/language-gemini",
+  "version": "1.0.0",
+  "description": "OpenFn gemini adaptor",
   "type": "module",
   "exports": {
     ".": {
@@ -13,12 +12,11 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "pnpm clean && build-adaptor googledrive",
-    "test": "mocha --experimental-specifier-resolution=node --no-warnings",
-    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
+    "build": "pnpm clean && build-adaptor gemini",
+    "_test": "mocha --experimental-specifier-resolution=node --no-warnings",
+    "_test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
-    "pack": "pnpm pack --pack-destination ../../dist",
-    "lint": "eslint src"
+    "pack": "pnpm pack --pack-destination ../../dist"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
@@ -29,17 +27,15 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:*",
-    "googleapis": "100.0.0"
+    "@google/genai": "^1.37.0",
+    "@openfn/language-common": "workspace:*"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
     "mocha": "^10.7.3",
-    "rimraf": "3.0.2",
-    "sinon": "^19.0.4",
-    "undici": "^5.29.0"
+    "rimraf": "3.0.2"
   },
   "repository": {
     "type": "git",

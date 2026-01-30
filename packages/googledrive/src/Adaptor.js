@@ -144,6 +144,50 @@ export function get(fileIdOrName) {
 }
 
 /**
+ * Lists files from a directory or root.
+ * @public
+ * @example <caption>List files of a directory</caption>
+ * list({folderId: '<id-of-folder-here>'})
+ * @example <caption>List files at the root of google drive</caption>
+ * list()
+ * @param {Object} [options] - Options for listing files.
+ * @param {string} [options.folderId] - ID of the folder to list files from. If not provided, lists files from the root.
+ * @param {string} [options.fields] - Fields to return in the response. Defaults to 'files(id, name, mimeType, createdTime, modifiedTime)'.
+ * @param {string} [options.query] - Custom query string for filtering files (see Google Drive API query syntax).
+ * @param {number} [options.limit] - Maximum number of files to return
+ * @param {string} [options.orderBy] - Order in which to sort the results. Defaults to 'modifiedTime desc'.
+ * @state {DriveState}
+ * @returns {Operation} An operation that retrieves a list of files.
+ */
+export function list(options) {
+  return async state => {
+    const [listOptions] = expandReferences(state, options || {});
+    const { folderId, fields, query, limit, orderBy, pageToken } = listOptions;
+
+
+    let final_fields = ["id", "name", "mimeType", "createdTime", "modifiedTime"];
+    if (Array.isArray(fields)) final_fields = fields;
+    else if (typeof fields === "string") final_fields = fields.split(",").map(v => v.trim())
+
+    // generate final query
+    const queries = [];
+    if (query) queries.push(query);
+    if (folderId) queries.push(`'${folderId}' in parents`);
+
+    const response = await client.files.list({
+      q: queries.join(' and '),
+      fields: `nextPageToken, incompleteSearch, kind, files(${final_fields.join(",")})`,
+      pageSize: limit ?? undefined,
+      orderBy: orderBy || 'modifiedTime desc',
+      pageToken: pageToken ?? undefined,
+    })
+    const files = response?.data?.files || []
+    state.response = { nextPageToken: response?.data?.nextPageToken };
+    return composeNextState(state, files);
+  };
+}
+
+/**
  * Updates an existing file in Google Drive.
  * @public
  * @example <caption>Update a file</caption>

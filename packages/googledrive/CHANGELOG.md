@@ -1,5 +1,18 @@
 # @openfn/language-googledrive
 
+## 2.1.0
+
+### Minor Changes
+
+- 15dc2e4: add list method for listing files in a directory
+
+## 2.0.8
+
+### Patch Changes
+
+- f076142: Set `supportsAllDrives` flag to allow credentials to access shared
+  drives
+
 ## 2.0.7 - 02 December 2025
 
 ### Patch Changes

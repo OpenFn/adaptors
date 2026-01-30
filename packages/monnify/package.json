@@ -1,8 +1,7 @@
 {
-  "name": "@openfn/language-googledrive",
-  "label": "Google Drive",
-  "version": "2.1.0",
-  "description": "OpenFn Google Drive adaptor",
+  "name": "@openfn/language-monnify",
+  "version": "1.0.0",
+  "description": "OpenFn monnify adaptor",
   "type": "module",
   "exports": {
     ".": {
@@ -13,7 +12,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "pnpm clean && build-adaptor googledrive",
+    "build": "pnpm clean && build-adaptor monnify",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
@@ -29,8 +28,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:*",
-    "googleapis": "100.0.0"
+    "@openfn/language-common": "workspace:*"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",
@@ -38,8 +36,7 @@
     "deep-eql": "4.1.1",
     "mocha": "^10.7.3",
     "rimraf": "3.0.2",
-    "sinon": "^19.0.4",
-    "undici": "^5.29.0"
+    "undici": "^5.22.1"
   },
   "repository": {
     "type": "git",

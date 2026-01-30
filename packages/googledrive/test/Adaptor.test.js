@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { google } from 'googleapis';
-import { execute, create, get, update } from '../src/index.js';
+import { execute, create, get, update, list } from '../src/index.js';
 
 describe('Google Drive Adapter', () => {
   let sandbox;
@@ -24,6 +24,26 @@ describe('Google Drive Adapter', () => {
       update: sandbox
         .stub()
         .resolves({ data: { id: 'file123', name: 'updated.txt' } }),
+      list: sandbox.stub().resolves({
+        data: {
+          files: [
+            {
+              id: 'file123',
+              name: 'test.txt',
+              mimeType: 'text/plain',
+              createdTime: '2024-01-01T00:00:00.000Z',
+              modifiedTime: '2024-01-01T00:00:00.000Z',
+            },
+            {
+              id: 'file456',
+              name: 'test2.txt',
+              mimeType: 'text/plain',
+              createdTime: '2024-01-02T00:00:00.000Z',
+              modifiedTime: '2024-01-02T00:00:00.000Z',
+            },
+          ]
+        },
+      }),
     };
     mockDrive = { files: mockFiles };
     sandbox.stub(google, 'drive').returns(mockDrive);
@@ -71,6 +91,30 @@ describe('Google Drive Adapter', () => {
       const result = await execute(update(fileId, content, fileName))(state);
       expect(mockFiles.update.calledOnce).to.be.true;
       expect(result.data).to.have.property('name', 'updated.txt');
+    });
+  });
+
+  describe('list()', () => {
+    it('should list files successfully', async () => {
+      const state = { configuration: { access_token: 'mockToken' } };
+
+      const result = await execute(list({}))(state);
+      expect(mockFiles.list.calledOnce).to.be.true;
+      expect(result.data).to.be.an('array').with.lengthOf(2);
+      expect(result.data[0]).to.have.property('id', 'file123');
+      expect(result.data[0]).to.have.property('name', 'test.txt');
+    });
+
+    it('should list files with folderId option', async () => {
+      const state = { configuration: { access_token: 'mockToken' } };
+      const options = { folderId: 'folder123' };
+
+      const result = await execute(list(options))(state);
+      expect(mockFiles.list.calledOnce).to.be.true;
+
+      const callArgs = mockFiles.list.getCall(0).args[0];
+      expect(callArgs.q).to.include("'folder123' in parents");
+      expect(result.data).to.be.an('array');
     });
   });
 });

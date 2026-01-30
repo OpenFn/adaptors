@@ -1,0 +1,230 @@
+{
+  "walletBalance": {
+  "requestSuccessful": true,
+  "responseMessage": "success",
+  "responseCode": "0",
+  "responseBody": {
+    "availableBalance": "4919798101.36",
+    "ledgerBalance": "4919798101.36"
+  }
+  },
+  "disbursements": {
+    "response": {
+      "requestSuccessful": true,
+      "responseMessage": "success",
+      "responseCode": "0",
+      "responseBody": {
+        "content": [
+          {
+            "amount": 2000.0,
+            "reference": "MFDS85120251127113652004293VGU9PY",
+            "narration": "My narration",
+            "currency": "NGN",
+            "fee": 0.0,
+            "twoFaEnabled": false,
+            "status": "SUCCESS",
+            "transactionDescription": "Transaction successful",
+            "transactionReference": "MFDS85120251127113652004293VGU9PY",
+            "createdOn": "2025-11-27T10:36:53.000+00:00",
+            "sourceAccountNumber": "4864192954",
+            "destinationAccountNumber": "9964840075",
+            "destinationBankCode": "101",
+            "destinationBankName": "Providus Bank"
+          }
+        ],
+        "pageable": {
+          "sort": {
+            "sorted": true,
+            "unsorted": false,
+            "empty": false
+          },
+          "pageNumber": 0,
+          "pageSize": 10,
+          "offset": 0,
+          "unpaged": false,
+          "paged": true
+        },
+        "last": true,
+        "totalElements": 1,
+        "totalPages": 1,
+        "sort": {
+          "sorted": true,
+          "unsorted": false,
+          "empty": false
+        },
+        "first": true,
+        "numberOfElements": 1,
+        "size": 10,
+        "number": 0,
+        "empty": false
+      }
+    },
+    "paginated_response": {
+      "requestSuccessful": true,
+      "responseMessage": "success",
+      "responseCode": "0",
+      "responseBody": {
+        "content": [
+          {
+            "amount": 2000.0,
+            "reference": "MFDS85120251127113652004293VGU9PY",
+            "narration": "My narration",
+            "currency": "NGN",
+            "fee": 0.0,
+            "twoFaEnabled": false,
+            "status": "SUCCESS",
+            "transactionDescription": "Transaction successful",
+            "transactionReference": "MFDS85120251127113652004293VGU9PY",
+            "createdOn": "2025-11-27T10:36:53.000+00:00",
+            "sourceAccountNumber": "4864192954",
+            "destinationAccountNumber": "9964840075",
+            "destinationBankCode": "101",
+            "destinationBankName": "Providus Bank"
+          },
+          {
+            "amount": 2000.0,
+            "reference": "MFDS85120251127113652004293VGU9PY",
+            "narration": "My narration",
+            "currency": "NGN",
+            "fee": 0.0,
+            "twoFaEnabled": false,
+            "status": "SUCCESS",
+            "transactionDescription": "Transaction successful",
+            "transactionReference": "MFDS85120251127113652004293VGU9PY",
+            "createdOn": "2025-11-27T10:36:53.000+00:00",
+            "sourceAccountNumber": "4864192954",
+            "destinationAccountNumber": "9964840075",
+            "destinationBankCode": "101",
+            "destinationBankName": "Providus Bank"
+          },
+          {
+            "amount": 2000.0,
+            "reference": "MFDS85120251127113652004293VGU9PY",
+            "narration": "My narration",
+            "currency": "NGN",
+            "fee": 0.0,
+            "twoFaEnabled": false,
+            "status": "SUCCESS",
+            "transactionDescription": "Transaction successful",
+            "transactionReference": "MFDS85120251127113652004293VGU9PY",
+            "createdOn": "2025-11-27T10:36:53.000+00:00",
+            "sourceAccountNumber": "4864192954",
+            "destinationAccountNumber": "9964840075",
+            "destinationBankCode": "101",
+            "destinationBankName": "Providus Bank"
+          }
+        ],
+        "pageable": {
+          "sort": {
+            "sorted": true,
+            "unsorted": false,
+            "empty": false
+          },
+          "pageNumber": 0,
+          "pageSize": 3,
+          "offset": 0,
+          "unpaged": false,
+          "paged": true
+        },
+        "last": true,
+        "totalElements": 1,
+        "totalPages": 1,
+        "sort": {
+          "sorted": true,
+          "unsorted": false,
+          "empty": false
+        },
+        "first": true,
+        "numberOfElements": 1,
+        "size": 10,
+        "number": 0,
+        "empty": false
+      }
+    }
+  },
+  "login": {
+    "response": {
+      "requestSuccessful": true,
+      "responseMessage": "success",
+      "responseCode": "0",
+      "responseBody": {
+        "accessToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9",
+        "expiresIn": 266
+      }
+    }
+  },
+  "notifications": {
+    "response": {
+      "requestSuccessful": true,
+      "responseMessage": "success",
+      "responseCode": "0",
+      "responseBody": {
+        "recordsFound": 32
+      }
+    }
+  },
+  "pagination": {
+    "page1": {
+      "requestSuccessful": true,
+      "responseMessage": "success",
+      "responseCode": "0",
+      "responseBody": {
+        "content": [
+          {"id": 1, "amount": 1000},
+          {"id": 2, "amount": 2000}
+        ],
+        "pageable": {
+          "pageNumber": 0,
+          "pageSize": 2,
+          "offset": 0
+        },
+        "last": false,
+        "totalElements": 5,
+        "totalPages": 3,
+        "first": true,
+        "numberOfElements": 2
+      }
+    },
+    "page2": {
+      "requestSuccessful": true,
+      "responseMessage": "success",
+      "responseCode": "0",
+      "responseBody": {
+        "content": [
+          {"id": 3, "amount": 3000},
+          {"id": 4, "amount": 4000}
+        ],
+        "pageable": {
+          "pageNumber": 1,
+          "pageSize": 2,
+          "offset": 2
+        },
+        "last": false,
+        "totalElements": 5,
+        "totalPages": 3,
+        "first": false,
+        "numberOfElements": 2
+      }
+    },
+    "page3": {
+      "requestSuccessful": true,
+      "responseMessage": "success",
+      "responseCode": "0",
+      "responseBody": {
+        "content": [
+          {"id": 5, "amount": 5000}
+        ],
+        "pageable": {
+          "pageNumber": 2,
+          "pageSize": 2,
+          "offset": 4
+        },
+        "last": true,
+        "totalElements": 5,
+        "totalPages": 3,
+        "first": false,
+        "numberOfElements": 1
+      }
+    }
+  }
+}
