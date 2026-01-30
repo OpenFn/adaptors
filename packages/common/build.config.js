@@ -7,10 +7,6 @@ export default path => ({
     metadata: join(path, 'src/metadata.js'),
     util: join(path, 'src/util/index.js'),
   },
-  splitting: true,
-  shims: false,
   external: ['undici'],
   root: path, // Ensure the root path is correctly set
 });
-
-
