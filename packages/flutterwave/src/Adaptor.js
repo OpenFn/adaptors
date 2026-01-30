@@ -74,3 +74,76 @@ export function createCustomer(customerData) {
     return util.prepareNextState(state, response);
   };
 }
+
+/**
+ * List all customers or search.
+ * @function
+ * @public
+ * @param {Object} query - Query parameters (from, to, page, etc.).
+ * @returns {Function} - A function that takes the state and performs the operation.
+ */
+export function listCustomers(queryParams) {
+  return async state => {
+    const resolvedParams = expandReferences(state, queryParams);
+    const query = Array.isArray(resolvedParams) ? resolvedParams[0] : resolvedParams;
+
+    const response = await util.request(
+        state.configuration,
+        'GET',
+        '/customers',
+        {
+          query: query,
+        }
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}
+
+/**
+ * Get a single customer by ID.
+ * @function
+ * @public
+ * @param {string|number} id - The customer's ID or email.
+ * @returns {Function} - A function that takes the state and performs the operation.
+ */
+export function getCustomer(id) {
+  return async state => {
+    const resolvedId = expandReferences(state, id);
+
+    const response = await util.request(
+        state.configuration,
+        'GET',
+        `/customers/${resolvedId}`
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}
+
+/**
+ * Update a customer's details.
+ * @function
+ * @public
+ * @param {string|number} id - The customer's ID.
+ * @param {Object} data - The data to update.
+ * @returns {Function} - A function that takes the state and performs the operation.
+ */
+export function updateCustomer(id, data) {
+  return async state => {
+    const resolvedId = expandReferences(state, id);
+    const resolvedData = expandReferences(state, data);
+    const body = Array.isArray(resolvedData) ? resolvedData[0] : resolvedData;
+
+    const response = await util.request(
+        state.configuration,
+        'PUT',
+        `/customers/${resolvedId}`,
+        {
+          body: JSON.stringify(body),
+        }
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}

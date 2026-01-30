@@ -72,5 +72,60 @@
         "id": 123
       }
     }
+  },
+  "listCustomers": {
+    "request": {
+      "query": {
+        "from": "2023-01-01",
+        "to": "2023-12-31"
+      }
+    },
+    "response": {
+      "status": "success",
+      "message": "Customers retrieved",
+      "data": [
+        {
+          "id": 123,
+          "email": "customer@example.com",
+          "name": "John Doe",
+          "phone_number": "1234567890",
+          "created_at": "2023-01-01T00:00:00.000Z"
+        }
+      ]
+    }
+  },
+   "getCustomer": {
+    "request": {
+      "id": 123
+    },
+    "response": {
+      "status": "success",
+      "message": "Customer retrieved",
+      "data": {
+        "id": 123,
+        "email": "customer@example.com",
+        "name": "John Doe",
+        "phone_number": "1234567890",
+        "created_at": "2023-01-01T00:00:00.000Z"
+      }
+    }
+  },
+   "updateCustomer": {
+    "request": {
+      "id": 123,
+      "email": "newemail@example.com",
+      "phone_number": "0987654321"
+    },
+    "response": {
+      "status": "success",
+      "message": "Customer updated",
+      "data": {
+        "id": 123,
+        "email": "newemail@example.com",
+        "name": "John Doe",
+        "phone_number": "0987654321",
+        "created_at": "2023-01-01T00:00:00.000Z"
+      }
+    }
   }
 }

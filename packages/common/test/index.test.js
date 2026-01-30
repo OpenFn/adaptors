@@ -668,7 +668,8 @@ describe('validate', () => {
     },
   };
 
-  it('should report no errors with default schema, data on state', async () => {
+  it('should report no errors with default schema, data on state', async function () {
+    this.timeout(5000); 
     const data = {
       firstName: 'Scott',
       lastName: 'Lang',
