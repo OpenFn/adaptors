@@ -19,6 +19,7 @@ export default function generate(filename, outputPath) {
   console.log(`Parsing ${filename}`);
   const ast = babylon.parse(file, {
     sourceType: 'module',
+    plugins: ['typescript'],
   }).program.body;
 
   // TODO: how can we pluck out things like 'axios' and give users a link to the axios module docs?
@@ -73,7 +74,7 @@ export default function generate(filename, outputPath) {
     if (docs.length > 1) {
       console.log(
         '\x1b[31m%s\x1b[0m',
-        `Warning: Multiple leading comment blocks found. Discarding all but first:`
+        `Warning: Multiple leading comment blocks found. Discarding all but first:`,
       );
       item.leadingComments.map(function (item) {
         console.log(item.value);
@@ -105,8 +106,8 @@ export default function generate(filename, outputPath) {
         '\x1b[33m%s\x1b[0m',
         `Warning: Invalid documentation for ${name} ✗`,
         `Stated params are '${statedParams}', but detected params are '${JSON.stringify(
-          params
-        )}'.`
+          params,
+        )}'.`,
       );
       return false;
     }
@@ -115,63 +116,62 @@ export default function generate(filename, outputPath) {
   // Format them for use on OpenFn...
   function format(exp) {
     const countFuncs = exp.exportedFunctions.length;
-    const formattedFunctions = exp.exportedFunctions.map(function (
-      item,
-      index
-    ) {
-      const last = countFuncs === index + 1;
-      const name = item.declaration.id.name;
-      const params = item.declaration.params.map(i => {
-        switch (i.type) {
-          case 'RestElement':
-            return i.argument.name;
+    const formattedFunctions = exp.exportedFunctions.map(
+      function (item, index) {
+        const last = countFuncs === index + 1;
+        const name = item.declaration.id.name;
+        const params = item.declaration.params.map(i => {
+          switch (i.type) {
+            case 'RestElement':
+              return i.argument.name;
 
-          case 'AssignmentPattern':
-            return i.left.name;
+            case 'AssignmentPattern':
+              return i.left.name;
 
-          default:
-            return i.name;
-        }
-      });
-      const docs = parseDocs(item);
-      const valid = checkDocs(name, docs, params, last);
+            default:
+              return i.name;
+          }
+        });
+        const docs = parseDocs(item);
+        const valid = checkDocs(name, docs, params, last);
 
-      return {
-        name,
-        params,
-        docs,
-        valid,
-      };
-    });
+        return {
+          name,
+          params,
+          docs,
+          valid,
+        };
+      },
+    );
 
     const countVars = exp.exportedVariables.length;
 
-    const formattedVariables = exp.exportedVariables.map(function (
-      item,
-      index
-    ) {
-      const last = countVars === index + 1;
-      const name = item.declaration.declarations[0].id.name;
+    const formattedVariables = exp.exportedVariables.map(
+      function (item, index) {
+        const last = countVars === index + 1;
+        const name = item.declaration.declarations[0].id.name;
 
-      let params = {};
-      if (item.declaration.declarations[0].init.arguments) {
-        params = item.declaration.declarations[0].init.arguments[0].params.map(
-          item => {
-            return item.name;
-          }
-        );
-      }
+        let params = {};
+        if (item.declaration.declarations[0].init.arguments) {
+          params =
+            item.declaration.declarations[0].init.arguments[0].params.map(
+              item => {
+                return item.name;
+              },
+            );
+        }
 
-      const docs = parseDocs(item);
-      const valid = checkDocs(name, docs, params, last);
+        const docs = parseDocs(item);
+        const valid = checkDocs(name, docs, params, last);
 
-      return {
-        name,
-        params,
-        docs,
-        valid,
-      };
-    });
+        return {
+          name,
+          params,
+          docs,
+          valid,
+        };
+      },
+    );
 
     return { formattedFunctions, formattedVariables };
   }
@@ -190,7 +190,7 @@ export default function generate(filename, outputPath) {
       if (isPublic && !op.valid) {
         console.log(
           '\x1b[31m%s\x1b[0m',
-          ` ✗ operations tagged as @public must be properly documented; please double-check: "${op.name}"`
+          ` ✗ operations tagged as @public must be properly documented; please double-check: "${op.name}"`,
         );
         errors.push(`${op.name} may have invalid documentation`);
       }
@@ -214,7 +214,7 @@ export default function generate(filename, outputPath) {
     .map(function (item) {
       return path.resolve(
         dirname,
-        item.declarations[0].init.arguments[0].value + '.js'
+        item.declarations[0].init.arguments[0].value + '.js',
       );
     });
 
@@ -223,6 +223,7 @@ export default function generate(filename, outputPath) {
     console.log(`Parsing ${item}`);
     const astExport = babylon.parse(exportsFile, {
       sourceType: 'module',
+      plugins: ['typescript'],
     }).program.body;
     return selectExports(astExport);
   });
@@ -237,12 +238,12 @@ export default function generate(filename, outputPath) {
     console.log('Gathering documentation for language-common');
     const commonPath = path.resolve(
       filename,
-      '../../node_modules/language-common/ast.json'
+      '../../node_modules/language-common/ast.json',
     );
 
     const newCommonPath = path.resolve(
       filename,
-      '../../node_modules/@openfn/language-common/ast.json'
+      '../../node_modules/@openfn/language-common/ast.json',
     );
 
     let commonFile;
@@ -277,7 +278,7 @@ export default function generate(filename, outputPath) {
         if (isPublic && !p.valid) {
           console.log(
             '\x1b[31m%s\x1b[0m',
-            ` ✗ functions tagged as @public must be properly documented; please double-check: "${p.name}"`
+            ` ✗ functions tagged as @public must be properly documented; please double-check: "${p.name}"`,
           );
           errors.push(`${p.name} may have invalid documentation`);
         }
@@ -288,7 +289,7 @@ export default function generate(filename, outputPath) {
 
   // Checks for exported functions from language-common
   const commons = commonAst.filter(i =>
-    adaptorAst.externalFunctions.includes(i.name)
+    adaptorAst.externalFunctions.includes(i.name),
   );
 
   if (commons.length > 0) {
@@ -297,8 +298,8 @@ export default function generate(filename, outputPath) {
       JSON.stringify(
         commons.map(i => i.name),
         null,
-        2
-      )
+        2,
+      ),
     );
   } else if (!filename.includes('language-common')) {
     console.log('\x1b[31m%s\x1b[0m', ` ✗ No common exports documented.`);
@@ -318,7 +319,7 @@ export default function generate(filename, outputPath) {
       console.log(JSON.stringify(errors, null, 2));
       console.log(
         '\x1b[33m%s\x1b[0m',
-        "Please make sure you know what you're doing if you publish this as is. 🤔"
+        "Please make sure you know what you're doing if you publish this as is. 🤔",
       );
     } else {
       console.log('The AST has been written.');

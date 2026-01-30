@@ -1,127 +1,52 @@
 {
   "operations": [
     {
-      "name": "create",
+      "name": "prompt",
       "params": [
-        "content",
-        "fileName",
+        "message",
         "options"
       ],
       "docs": {
-        "description": "Uploads a file to Google Drive.",
+        "description": "Prompt the Gemini interface to respond",
         "tags": [
+          {
+            "title": "example",
+            "description": "prompt(`Summarize this text: ${JSON.stringify($.data)}`);"
+          },
           {
             "title": "public",
             "description": null,
             "type": null
           },
           {
-            "title": "example",
-            "description": "create(\"SGVsbG8gV29ybGQ=\", \"hello-world.txt\");",
-            "caption": "Upload a file to a root folder"
-          },
-          {
-            "title": "example",
-            "description": "create(\"SGVsbG8gV29ybGQ=\", \"hello-world.txt\", {\n  folderId: \"15tLwRj0lmr4mGIslEm5QEAS8YJ1EAXep\",\n});",
-            "caption": "Upload a file to a specificfolder"
+            "title": "function",
+            "description": null,
+            "name": null
           },
           {
             "title": "param",
-            "description": "Base64 encoded file content.",
+            "description": "The prompt",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "content"
+            "name": "message"
           },
           {
             "title": "param",
-            "description": "Name for the uploaded file.",
+            "description": "Model and other parameters",
             "type": {
               "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "fileName"
-          },
-          {
-            "title": "param",
-            "description": "File upload parameters.",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
+              "name": "PromptOptions"
             },
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "ID of the parent folder.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "options.folderId"
-          },
-          {
-            "title": "state",
-            "description": "{DriveState}"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
               "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": false
-    },
-    {
-      "name": "get",
-      "params": [
-        "fileIdOrName"
-      ],
-      "docs": {
-        "description": "Downloads a file from Google Drive.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "get('1B1dHwY2uLgm_-U96LNl9zFsRYq8953jL')",
-            "caption": "Download a file"
-          },
-          {
-            "title": "example",
-            "description": "get('hello-world.txt')",
-            "caption": "Download a file by name"
-          },
-          {
-            "title": "param",
-            "description": "ID of the file or its name to download.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "fileIdOrName"
-          },
-          {
-            "title": "state",
-            "description": "{DriveState}"
-          },
-          {
-            "title": "returns",
-            "description": "An operation that retrieves the file as a base64 string.",
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
+              "name": "operation"
             }
           }
         ]
@@ -129,163 +54,105 @@
       "valid": true
     },
     {
-      "name": "list",
+      "name": "deepResearch",
       "params": [
+        "message",
         "options"
       ],
       "docs": {
-        "description": "Lists files from a directory or root.",
+        "description": "Prompt Gemini deep research (using Google Search grounding)",
         "tags": [
+          {
+            "title": "example",
+            "description": "deepResearch(`Find recent news about OpenFn`);"
+          },
           {
             "title": "public",
             "description": null,
             "type": null
           },
           {
-            "title": "example",
-            "description": "list({folderId: '<id-of-folder-here>'})",
-            "caption": "List files of a directory"
-          },
-          {
-            "title": "example",
-            "description": "list()",
-            "caption": "List files at the root of google drive"
+            "title": "function",
+            "description": null,
+            "name": null
           },
           {
             "title": "param",
-            "description": "Options for listing files.",
+            "description": "The research query",
             "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "Object"
-              }
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "message"
+          },
+          {
+            "title": "param",
+            "description": "Model and tools",
+            "type": {
+              "type": "NameExpression",
+              "name": "DeepResearchOptions"
             },
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "ID of the folder to list files from. If not provided, lists files from the root.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "options.folderId"
-          },
-          {
-            "title": "param",
-            "description": "Fields to return in the response. Defaults to 'files(id, name, mimeType, createdTime, modifiedTime)'.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "options.fields"
-          },
-          {
-            "title": "param",
-            "description": "Custom query string for filtering files (see Google Drive API query syntax).",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "options.query"
-          },
-          {
-            "title": "param",
-            "description": "Maximum number of files to return",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "number"
-              }
-            },
-            "name": "options.limit"
-          },
-          {
-            "title": "param",
-            "description": "Order in which to sort the results. Defaults to 'modifiedTime desc'.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "options.orderBy"
-          },
-          {
-            "title": "state",
-            "description": "{DriveState}"
-          },
-          {
             "title": "returns",
-            "description": "An operation that retrieves a list of files.",
+            "description": null,
             "type": {
               "type": "NameExpression",
-              "name": "Operation"
+              "name": "operation"
             }
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
-      "name": "update",
+      "name": "generateImage",
       "params": [
-        "fileId",
-        "content"
+        "promptText",
+        "options"
       ],
       "docs": {
-        "description": "Updates an existing file in Google Drive.",
+        "description": "Generate an image using Gemini/Imagen",
         "tags": [
+          {
+            "title": "example",
+            "description": "generateImage(\"A futuristic city skyline\");"
+          },
           {
             "title": "public",
             "description": null,
             "type": null
           },
           {
-            "title": "example",
-            "description": "update('1B1dHwY2uLgm_-U96LNl9zFsRYq8953jL', 'SGVsbG8gTWlrZQ==');",
-            "caption": "Update a file"
+            "title": "function",
+            "description": null,
+            "name": null
           },
           {
             "title": "param",
-            "description": "ID of the file to update.",
+            "description": "The image prompt",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "fileId"
+            "name": "promptText"
           },
           {
             "title": "param",
-            "description": "Base64 encoded new content.",
+            "description": "Model and generation options",
             "type": {
               "type": "NameExpression",
-              "name": "string"
+              "name": "object"
             },
-            "name": "content"
-          },
-          {
-            "title": "state",
-            "description": "{DriveState}"
+            "name": "options"
           },
           {
             "title": "returns",
             "description": null,
             "type": {
               "type": "NameExpression",
-              "name": "Operation"
+              "name": "operation"
             }
           }
         ]
@@ -325,59 +192,6 @@
               "name": "Function"
             },
             "name": "func"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "fnIf",
-      "params": [
-        "condition",
-        "operation"
-      ],
-      "docs": {
-        "description": "Execute a function only when the condition returns true",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "example",
-            "description": "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
-          },
-          {
-            "title": "param",
-            "description": "The condition that returns true",
-            "type": {
-              "type": "NameExpression",
-              "name": "Boolean"
-            },
-            "name": "condition"
-          },
-          {
-            "title": "param",
-            "description": "The operation needed to be executed.",
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            },
-            "name": "operation"
           },
           {
             "title": "returns",
@@ -628,49 +442,6 @@
       "valid": true
     },
     {
-      "name": "combine",
-      "params": [
-        "operations"
-      ],
-      "docs": {
-        "description": "Combines two operations into one",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "example",
-            "description": "combine(\n  create('foo'),\n  delete('bar')\n)"
-          },
-          {
-            "title": "param",
-            "description": "Operations to be performed.",
-            "type": {
-              "type": "NameExpression",
-              "name": "Operations"
-            },
-            "name": "operations"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "field",
       "params": [
         "key",
@@ -825,186 +596,6 @@
       "valid": true
     },
     {
-      "name": "arrayToString",
-      "params": [
-        "arr",
-        "separator"
-      ],
-      "docs": {
-        "description": "Turns an array into a string, separated by X.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "example",
-            "description": "field(\"destination_string__c\", function(state) {\n  return arrayToString(dataValue(\"path_of_array\")(state), ', ')\n})"
-          },
-          {
-            "title": "param",
-            "description": "Array of toString'able primatives.",
-            "type": {
-              "type": "NameExpression",
-              "name": "array"
-            },
-            "name": "arr"
-          },
-          {
-            "title": "param",
-            "description": "Separator string.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "separator"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "chunk",
-      "params": [
-        "array",
-        "chunkSize"
-      ],
-      "docs": {
-        "description": "Chunks an array into an array of arrays, each with no more than a certain size.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "example",
-            "description": "chunk([1,2,3,4,5], 2)"
-          },
-          {
-            "title": "param",
-            "description": "Array to be chunked",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "array"
-          },
-          {
-            "title": "param",
-            "description": "The maxiumum size of each chunks",
-            "type": {
-              "type": "NameExpression",
-              "name": "Integer"
-            },
-            "name": "chunkSize"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "parseCsv",
-      "params": [
-        "csvData",
-        "parsingOptions",
-        "callback"
-      ],
-      "docs": {
-        "description": "Takes a CSV file string or stream and parsing options as input, and returns a promise that\nresolves to the parsed CSV data as an array of objects.\nOptions for `parsingOptions` include:\n- `delimiter` {string/Buffer/[string/Buffer]} - Defines the character(s) used to delineate the fields inside a record. Default: `','`\n- `quote` {string/Buffer/[string/Buffer]} - Defines the characters used to surround a field. Default: `'\"'`\n- `escape` {Buffer/string/null/boolean} - Set the escape character as one character/byte only. Default: `\"`\n- `columns` {boolean / array / function} - Generates record in the form of object literals. Default: `true`\n- `bom` {boolean} - Strips the {@link https://en.wikipedia.org/wiki/Byte_order_mark byte order mark (BOM)} from the input string or buffer. Default: `true`\n- `trim` {boolean} - Ignore whitespace characters immediately around the `delimiter`. Default: `true`\n- `ltrim` {boolean} - Ignore whitespace characters from the left side of a CSV field. Default: `true`\n- `rtrim` {boolean} - Ignore whitespace characters from the right side of a CSV field. Default: `true`\n- `chunkSize` {number} - The size of each chunk of CSV data. Default: `Infinity`\n- `skip_empty_lines` {boolean} - Ignore empty lines in the CSV file. Default: `true`",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "A CSV string or a readable stream",
-            "type": {
-              "type": "UnionType",
-              "elements": [
-                {
-                  "type": "NameExpression",
-                  "name": "String"
-                },
-                {
-                  "type": "NameExpression",
-                  "name": "Stream"
-                }
-              ]
-            },
-            "name": "csvData"
-          },
-          {
-            "title": "param",
-            "description": "Optional. Parsing options for converting CSV to JSON.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "Object"
-              }
-            },
-            "name": "parsingOptions"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) callback function. If used it will be called state and an array of rows.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "function"
-              }
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": "The function returns a Promise that resolves to the result of parsing a CSV `stringOrStream`.",
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "cursor",
       "params": [
         "value",
@@ -1089,60 +680,6 @@
         ]
       },
       "valid": false
-    },
-    {
-      "name": "as",
-      "params": [
-        "key",
-        "operation"
-      ],
-      "docs": {
-        "description": "Run an operation and save the result to a custom key in state instead of overwriting state.data.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "example",
-            "description": "as('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));",
-            "caption": "Fetch cce-data from collections and store them under state.cceData"
-          },
-          {
-            "title": "param",
-            "description": "The state key to assign the result of the operation to.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "key"
-          },
-          {
-            "title": "param",
-            "description": " An operation that returns a new state object with a `data` property",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "operation"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
     }
   ]
 }
