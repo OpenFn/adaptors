@@ -1,7 +1,8 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import { execute, request, post } from '../src/Adaptor.js';
+import { execute} from '../src/Adaptor.js';
+import { request, post } from '../src/http.js';
 
 const tokenUrl = 'https://primespingb2cuat.b2clogin.com'
 
