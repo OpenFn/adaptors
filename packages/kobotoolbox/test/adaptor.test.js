@@ -65,13 +65,13 @@ describe('getSubmissions', () => {
             },
             {
               url: `${origin}${path}`,
-            }
+            },
           );
           return results;
         },
         {
           ...jsonHeaders,
-        }
+        },
       )
       .times(6);
 
@@ -104,13 +104,13 @@ describe('getSubmissions', () => {
             },
             {
               url: `${origin}${path}`,
-            }
+            },
           );
           return results;
         },
         {
           ...jsonHeaders,
-        }
+        },
       );
     const { data } = await getSubmissions('aXecHjmbATuF6iGFmvBLBX', {
       start: 2,
@@ -141,18 +141,18 @@ describe('getSubmissions', () => {
             },
             {
               url: `${origin}${path}`,
-            }
+            },
           );
           return results;
         },
         {
           ...jsonHeaders,
-        }
+        },
       )
       .times(30);
 
     const { data } = await execute(getSubmissions('aXecHjmbATuF6iGFmvBLBX'))(
-      state
+      state,
     );
 
     expect(requestCount).to.eql(30);
@@ -183,18 +183,18 @@ describe('getSubmissions', () => {
             },
             {
               url: `${origin}${path}`,
-            }
+            },
           );
           return results;
         },
         {
           ...jsonHeaders,
-        }
+        },
       )
       .times(1);
 
     const { data } = await execute(
-      getSubmissions('aXecHjmbATuF6iGFmvBLBX', { limit })
+      getSubmissions('aXecHjmbATuF6iGFmvBLBX', { limit }),
     )(state);
 
     expect(data).to.eql(mockData);
@@ -226,12 +226,12 @@ describe('getSubmissions', () => {
             },
             {
               url: `${origin}${path}`,
-            }
+            },
           );
         },
         {
           ...jsonHeaders,
-        }
+        },
       )
       .times(31);
 
@@ -270,12 +270,12 @@ describe('getSubmissions', () => {
             {
               url: `${origin}${path}`,
               defaultLimit: 1,
-            }
+            },
           );
         },
         {
           ...jsonHeaders,
-        }
+        },
       )
       .times(10);
 
@@ -311,12 +311,12 @@ describe('getSubmissions', () => {
             },
             {
               url: `${origin}${path}`,
-            }
+            },
           );
         },
         {
           ...jsonHeaders,
-        }
+        },
       )
       .times(31);
 
@@ -344,7 +344,7 @@ describe('getForms', () => {
       .reply(
         200,
         { results: [{ name: 'Feedback Survey Test', asset_type: 'survey' }] },
-        { ...jsonHeaders }
+        { ...jsonHeaders },
       );
   });
 
@@ -368,7 +368,7 @@ describe('getDeploymentInfo', () => {
       .reply(
         200,
         { asset: { name: 'Feedback Survey Test', asset_type: 'survey' } },
-        { ...jsonHeaders }
+        { ...jsonHeaders },
       );
   });
 
