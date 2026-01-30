@@ -66,7 +66,7 @@ export function execute(...operations) {
     return commonExecute(
       createConnection,
       ...operations,
-      removeConnection
+      removeConnection,
     )({
       ...initialState,
       ...state,
@@ -164,10 +164,16 @@ export function list(options) {
     const [listOptions] = expandReferences(state, options || {});
     const { folderId, fields, query, limit, orderBy, pageToken } = listOptions;
 
-
-    let final_fields = ["id", "name", "mimeType", "createdTime", "modifiedTime"];
+    let final_fields = [
+      'id',
+      'name',
+      'mimeType',
+      'createdTime',
+      'modifiedTime',
+    ];
     if (Array.isArray(fields)) final_fields = fields;
-    else if (typeof fields === "string") final_fields = fields.split(",").map(v => v.trim())
+    else if (typeof fields === 'string')
+      final_fields = fields.split(',').map(v => v.trim());
 
     // generate final query
     const queries = [];
@@ -176,12 +182,13 @@ export function list(options) {
 
     const response = await client.files.list({
       q: queries.join(' and '),
-      fields: `nextPageToken, incompleteSearch, kind, files(${final_fields.join(",")})`,
+      fields: `nextPageToken, incompleteSearch, kind, files(${final_fields.join(',')})`,
       pageSize: limit ?? undefined,
       orderBy: orderBy || 'modifiedTime desc',
       pageToken: pageToken ?? undefined,
-    })
-    const files = response?.data?.files || []
+      supportsAllDrives: true,
+    });
+    const files = response?.data?.files || [];
     state.response = { nextPageToken: response?.data?.nextPageToken };
     return composeNextState(state, files);
   };
@@ -202,7 +209,7 @@ export function update(fileId, content) {
     const [resolvedFileId, resolvedContent] = expandReferences(
       state,
       fileId,
-      content
+      content,
     );
 
     const media = {

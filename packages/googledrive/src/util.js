@@ -47,7 +47,7 @@ export const searchFile = async (searchQuery, client) => {
     fields: 'files(id, name, mimeType, modifiedTime, size)',
     spaces: 'drive',
     pageSize: 10, // Limit results, adjust as needed
-    allowAllDrives: true,
+    supportsAllDrives: true,
   });
 
   const files = response.data.files;
