@@ -1,5 +1,14 @@
 # @openfn/language-googledrive
 
+## 2.1.1
+
+### Patch Changes
+
+- aa56385: Set supportsAllDrives on list()
+- Updated dependencies [8ad6b98]
+- Updated dependencies [8ad6b98]
+  - @openfn/language-common@3.2.2
+
 ## 2.1.0
 
 ### Minor Changes

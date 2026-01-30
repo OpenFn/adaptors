@@ -1,5 +1,13 @@
 # @openfn/language-whatsapp
 
+## 1.0.10
+
+### Patch Changes
+
+- Updated dependencies [8ad6b98]
+- Updated dependencies [8ad6b98]
+  - @openfn/language-common@3.2.2
+
 ## 1.0.9 - 28 November 2025
 
 ### Patch Changes

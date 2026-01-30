@@ -1,5 +1,14 @@
 ## 3.0.1 - 11 July 2025
 
+## 3.2.2
+
+### Patch Changes
+
+- 8ad6b98: fix: correct url construction on windows to prevent protocol
+  normalization issues
+- fix: compatibility with Windows for build tools and documentation generation
+- fix(common): resolve invalid URL scheme error on Windows
+
 ## 3.2.1 - 28 November 2025
 
 ### Patch Changes
@@ -84,7 +93,7 @@ You must do this instead:
 ```js
 each(
   '$.[*]',
-  create('SObject', field('FirstName', sourceValue('$.firstName')))
+  create('SObject', field('FirstName', sourceValue('$.firstName'))),
 );
 ```
 
@@ -353,7 +362,7 @@ content type to JSON.
 ### Minor Changes
 
 - aad9549: Ensure that standard OAuth2 credentials with snake-cased
-  "access\_token" keys can be used for OAuth2-reliant adaptors
+  "access_token" keys can be used for OAuth2-reliant adaptors
 
 ## 1.9.0 - 23 June 2023
 
@@ -416,7 +425,8 @@ Bumped all package versions to their latest.
   Allowing you to join an array of string'able primitives (strings and integers)
   into a string.
 - Added `toArray` helper.\
-  This can be used to coerce certain types of data into an array, this can be useful
-  when the source data has an ambiguous format. For example a given key in the data
-  may have an object as it's value (when there is only one item), and an array of
-  objects when there is more than one. `toArray` can be used to reconcile this inconsistency.
+  This can be used to coerce certain types of data into an array, this can be
+  useful when the source data has an ambiguous format. For example a given key
+  in the data may have an object as it's value (when there is only one item),
+  and an array of objects when there is more than one. `toArray` can be used to
+  reconcile this inconsistency.

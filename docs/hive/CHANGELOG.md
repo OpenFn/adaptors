@@ -1,5 +1,13 @@
 # @openfn/language-hive
 
+## 0.3.25
+
+### Patch Changes
+
+- Updated dependencies [8ad6b98]
+- Updated dependencies [8ad6b98]
+  - @openfn/language-common@3.2.2
+
 ## 0.3.24 - 28 November 2025
 
 ### Patch Changes
