@@ -155,9 +155,6 @@ export function mGet(keys) {
   };
 }
 
-
-
-
 /**
  * Get all fields and values of a hash, as an object, for a specified key.
  * @example <caption>Get the hash obejct at the noderedis:animals:1 key</caption>
@@ -357,7 +354,4 @@ export {
   lastReferenceValue,
   merge,
   sourceValue,
- 
 } from '@openfn/language-common';
-
-

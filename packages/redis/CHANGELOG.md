@@ -1,12 +1,5 @@
 # @openfn/language-redis
 
-## 22 January 2026
-
-
-### Patch Changes
-
-- Add Windows compatibility notes: prefer `path.posix.join` for URL construction, use `pathToFileURL` for dynamic imports to avoid `ERR_UNSUPPORTED_ESM_URL_SCHEME`, and normalize build-tool entry paths to avoid backslash-related failures on Windows.
-
 ## 1.3.14 - 28 November 2025
 
 ### Patch Changes
