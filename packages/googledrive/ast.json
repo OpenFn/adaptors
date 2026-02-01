@@ -225,7 +225,7 @@
           },
           {
             "title": "param",
-            "description": "Scope of files to list. Use \"mine\" for files owned by the user, \"all\" for files from all drives (including shared drives), or provide a specific shared drive ID.",
+            "description": "Scope of files to list. Use \"my-drive\" for files owned by the user, \"all\" for files from all drives (including shared drives), or provide a specific shared drive ID.",
             "type": {
               "type": "OptionalType",
               "expression": {
