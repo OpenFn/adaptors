@@ -1,5 +1,11 @@
 # @openfn/language-googledrive
 
+## 2.1.2
+
+### Patch Changes
+
+- add drive option to googledrive list operation
+
 ## 2.1.1
 
 ### Patch Changes
