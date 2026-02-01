@@ -156,13 +156,21 @@ export function get(fileIdOrName) {
  * @param {string} [options.query] - Custom query string for filtering files (see Google Drive API query syntax).
  * @param {number} [options.limit] - Maximum number of files to return
  * @param {string} [options.orderBy] - Order in which to sort the results. Defaults to 'modifiedTime desc'.
+ * @param {string} [options.drive="all"] - Scope of files to list. Use "mine" for files owned by the user, "all" for files from all drives (including shared drives), or provide a specific shared drive ID.
  * @state {DriveState}
  * @returns {Operation} An operation that retrieves a list of files.
  */
 export function list(options) {
   return async state => {
     const [listOptions] = expandReferences(state, options || {});
-    const { folderId, fields, query, limit, orderBy, pageToken } = listOptions;
+    const { folderId, fields, query, limit, orderBy, pageToken, drive = "all" } = listOptions;
+
+    const driveProps =
+      drive === "mine"
+        ? {}
+        : drive === "all"
+          ? { supportsAllDrives: true, includeItemsFromAllDrives: true }
+          : { supportsAllDrives: true, includeItemsFromAllDrives: true, corpora: "drive", driveId: drive };
 
     let final_fields = [
       'id',
@@ -186,7 +194,7 @@ export function list(options) {
       pageSize: limit ?? undefined,
       orderBy: orderBy || 'modifiedTime desc',
       pageToken: pageToken ?? undefined,
-      supportsAllDrives: true,
+      ...driveProps
     });
     const files = response?.data?.files || [];
     state.response = { nextPageToken: response?.data?.nextPageToken };
