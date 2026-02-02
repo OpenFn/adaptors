@@ -19,51 +19,26 @@ export const prepareNextState = (state, response) => {
   };
 };
 
-// This helper function will call out to the backend service
-// and add authorisation headers
-// Refer to the common request function for options and details
 export const request = (configuration = {}, method, path, options) => {
-  // You might want to check that the path is not an absolute URL before
-  // appending credentials commonRequest will do this for you if you
-  // pass a baseURL to it and you don't need to build a path here
-  // assertRelativeUrl(path);
-
-  // TODO This example adds basic auth from config data
-  //       you may need to support other auth strategies
   const { baseUrl, secretKey } = configuration;
   const headers = { Authorization: `Bearer ${secretKey}` };
 
-  // TODO You can define custom error messages here
-  //      The request function will throw if it receives
-  //      an error code (<=400), terminating the workflow
   const errors = {
     404: 'Page not found',
   };
 
   const opts = {
-    // Force the response to be parsed as JSON
     parseAs: 'json',
-
-    // Include the error map
     errors,
-
-    // Set the baseUrl from the config object
     baseUrl,
 
     ...options,
-
-    // You can add extra headers here if you want to
     headers: {
       'content-type': 'application/json',
       ...headers,
     },
   };
 
-  // TODO you may want to add a prefix to the path
-  // use path.join to build the path safely
-  // const safePath = path;
-
-  // Make the actual request
   const url = new URL(path, baseUrl).toString();
   return commonRequest(method, url, opts);
 };
