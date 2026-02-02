@@ -42,7 +42,7 @@ describe('Create Customer', () => {
             postal_code: '10001',
             state: 'New York'
           },
-          email: 'medvideva@jonsjav.cc',
+          email: 'kingleo@jonsjav.cc',
           name: {
             first: 'King',
             middle: 'Leo',
@@ -60,7 +60,7 @@ describe('Create Customer', () => {
       });
 
     const { data } = await createCustomer({
-      email: 'medvideva@jonsjav.cc',
+      email: 'kingleo@jonsjav.cc',
       name: {
         first: 'King',
         middle: 'Leo',

@@ -1,10 +1,6 @@
 # @openfn/language-flutterwave
 
-## 1.0.0 - 29 January 2026
-
-New Flutterwave adaptor that allows to `initiate payments` and `create customers`.
-
-## Unreleased - 2026-02-02
+## 1.0.1 Unreleased - 2026-02-02
 
 - Add `createPaymentMethod` operation and tests.
 - Fix request header merging so caller-provided headers (`X-Trace-Id`, `X-Idempotency-Key`) are preserved.
@@ -15,3 +11,6 @@ New Flutterwave adaptor that allows to `initiate payments` and `create customers
 - Add debug logging temporarily to help diagnose mock matching and response shapes (can be removed before release).
 
 
+## 1.0.0 - 29 January 2026
+
+New Flutterwave adaptor that allows to `initiate payments` and `create customers`.
