@@ -95,10 +95,10 @@ describe('Google Drive Adapter', () => {
   });
 
   describe('list()', () => {
-    it('should list files successfully', async () => {
+    it('should list files successfully with folderId', async () => {
       const state = { configuration: { access_token: 'mockToken' } };
 
-      const result = await execute(list({}))(state);
+      const result = await execute(list({ folderId: 'folder123' }))(state);
       expect(mockFiles.list.calledOnce).to.be.true;
       expect(result.data).to.be.an('array').with.lengthOf(2);
       expect(result.data[0]).to.have.property('id', 'file123');
@@ -115,6 +115,39 @@ describe('Google Drive Adapter', () => {
       const callArgs = mockFiles.list.getCall(0).args[0];
       expect(callArgs.q).to.include("'folder123' in parents");
       expect(result.data).to.be.an('array');
+    });
+
+    it('should throw an error when folderId is missing', async () => {
+      const state = { configuration: { access_token: 'mockToken' } };
+
+      try {
+        await execute(list({}))(state);
+        expect.fail('Should have thrown an error');
+      } catch (error) {
+        expect(error.message).to.include('options.folderId is required');
+      }
+    });
+
+    it('should throw an error when folderId is not a string', async () => {
+      const state = { configuration: { access_token: 'mockToken' } };
+
+      try {
+        await execute(list({ folderId: 123 }))(state);
+        expect.fail('Should have thrown an error');
+      } catch (error) {
+        expect(error.message).to.include('options.folderId is required');
+      }
+    });
+
+    it('should throw an error when folderId is null', async () => {
+      const state = { configuration: { access_token: 'mockToken' } };
+
+      try {
+        await execute(list({ folderId: null }))(state);
+        expect.fail('Should have thrown an error');
+      } catch (error) {
+        expect(error.message).to.include('options.folderId is required');
+      }
     });
   });
 });
