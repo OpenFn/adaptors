@@ -16,21 +16,14 @@
       "minLength": 1,
       "examples": ["https://example.com"]
     },
-    "username": {
-      "title": "Username",
+    "secretKey": {
+      "title": "Secret Key",
       "type": "string",
-      "description": "Username",
-      "examples": ["test@openfn.org"]
-    },
-    "password": {
-      "title": "Password",
-      "type": "string",
-      "description": "Password",
-      "writeOnly": true,
-      "examples": ["@some(!)Str0ngp4ss0w0rd"]
+      "description": "The secret key used for authentication",
+      "examples": ["sk_test_4eC39HqLyjWDarjtT1zdp7dc"]
     }
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["password", "username"]
+  "required": ["secretKey"]
 }
