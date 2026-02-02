@@ -24,25 +24,25 @@ import * as util from './Utils.js';
  */
 
 /**
- * Initiate a payment request to the Flutterwave API.
+ * Create a new customer in Flutterwave.
  * @function
  * @public
- * @param {Object} paymentData - The payment details to send to Flutterwave.
- * @returns {Function} - A function that takes the state and performs the operation.
+ * @param {Object} customerData 
+ * @returns {Function} 
  */
-export function initiatePayment(paymentData) {
+export function createCustomer(customerData) {
   return async state => {
-    const resolvedPaymentData = expandReferences(state, paymentData);
-    const body = Array.isArray(resolvedPaymentData)
-      ? resolvedPaymentData[0]
-      : resolvedPaymentData;
+    if (typeof customerData !== 'object' || Array.isArray(customerData)) {
+      throw new Error('Invalid input: customerData must be a single object.');
+    }
 
+    const resolvedData = expandReferences(state, customerData);
     const response = await util.request(
       state.configuration,
       'POST',
-      '/charges',
+      '/customers',
       {
-        body: JSON.stringify(body), // Serialize the body
+        body: JSON.stringify(resolvedData),
       }
     );
 
@@ -51,23 +51,25 @@ export function initiatePayment(paymentData) {
 }
 
 /**
- * Create a new customer in Flutterwave.
+ * Initiate a payment request to the Flutterwave API.
  * @function
  * @public
- * @param {Object} customerData - The customer details (email, name, phone, etc.).
+ * @param {Object} paymentData - The payment details to send to Flutterwave.
  * @returns {Function} - A function that takes the state and performs the operation.
  */
-export function createCustomer(customerData) {
+export function initiatePayment(paymentData) {
   return async state => {
-    const resolvedData = expandReferences(state, customerData);
-    const body = Array.isArray(resolvedData) ? resolvedData[0] : resolvedData;
+    if (typeof paymentData !== 'object' || Array.isArray(paymentData)) {
+      throw new Error('Invalid input: paymentData must be a single object.');
+    }
 
+    const resolvedPaymentData = expandReferences(state, paymentData);
     const response = await util.request(
       state.configuration,
       'POST',
-      '/customers',
+      '/charges',
       {
-        body: JSON.stringify(body),
+        body: JSON.stringify(resolvedPaymentData),
       }
     );
 

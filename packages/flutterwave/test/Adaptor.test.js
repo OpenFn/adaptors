@@ -24,11 +24,16 @@ describe('Create Customer', () => {
     const { data } = await createCustomer(testData.createCustomer.request)(state);
     expect(data).to.eql(testData.createCustomer.response);
   });
+
+  it('throws an error for invalid input', async () => {
+    await expect(createCustomer([])(state)).to.be.rejectedWith('Invalid input: customerData must be a single object.');
+    await expect(createCustomer(null)(state)).to.be.rejectedWith('Invalid input: customerData must be a single object.');
+  });
 });
 
 describe('Initiate Payment', () => {
   it('initiates a payment successfully', async () => {
-     testServer
+    testServer
       .intercept({
         path: '/charges',
         method: 'POST'
@@ -37,6 +42,11 @@ describe('Initiate Payment', () => {
 
     const { data } = await initiatePayment(testData.initiatePayment.request)(state);
     expect(data).to.eql(testData.initiatePayment.response);
+  });
+
+  it('throws an error for invalid input', async () => {
+    await expect(initiatePayment([])(state)).to.be.rejectedWith('Invalid input: paymentData must be a single object.');
+    await expect(initiatePayment(null)(state)).to.be.rejectedWith('Invalid input: paymentData must be a single object.');
   });
 });
 
