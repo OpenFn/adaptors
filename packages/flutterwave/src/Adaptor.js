@@ -30,20 +30,23 @@ import * as util from './Utils.js';
  * @param {Object} customerData 
  * @returns {Function} 
  */
-export function createCustomer(customerData) {
+export function createCustomer(customerData, options = {}) {
   return async state => {
-    if (typeof customerData !== 'object' || Array.isArray(customerData)) {
+    if (customerData === null || typeof customerData !== 'object' || Array.isArray(customerData)) {
       throw new Error('Invalid input: customerData must be a single object.');
     }
 
-    const resolvedData = expandReferences(state, customerData);
+    const [resolvedData] = expandReferences(state, customerData);
+    const requestOptions = {
+      ...(options || {}),
+      body: JSON.stringify(resolvedData),
+    };
+
     const response = await util.request(
       state.configuration,
       'POST',
       '/customers',
-      {
-        body: JSON.stringify(resolvedData),
-      }
+      requestOptions
     );
 
     return util.prepareNextState(state, response);
@@ -57,20 +60,23 @@ export function createCustomer(customerData) {
  * @param {Object} paymentData - The payment details to send to Flutterwave.
  * @returns {Function} - A function that takes the state and performs the operation.
  */
-export function initiatePayment(paymentData) {
+export function initiatePayment(paymentData, options = {}) {
   return async state => {
-    if (typeof paymentData !== 'object' || Array.isArray(paymentData)) {
+    if (paymentData === null || typeof paymentData !== 'object' || Array.isArray(paymentData)) {
       throw new Error('Invalid input: paymentData must be a single object.');
     }
 
-    const resolvedPaymentData = expandReferences(state, paymentData);
+    const [resolvedPaymentData] = expandReferences(state, paymentData);
+    const requestOptions = {
+      ...(options || {}),
+      body: JSON.stringify(resolvedPaymentData),
+    };
+
     const response = await util.request(
       state.configuration,
       'POST',
       '/charges',
-      {
-        body: JSON.stringify(resolvedPaymentData),
-      }
+      requestOptions
     );
 
     return util.prepareNextState(state, response);
@@ -84,24 +90,23 @@ export function initiatePayment(paymentData) {
  * @param {Object} paymentMethodData - The payment method details to send to Flutterwave.
  * @returns {Function} - A function that takes the state and performs the operation.
  */
-export function createPaymentMethod(paymentMethodData) {
+export function createPaymentMethod(paymentMethodData, options = {}) {
   return async state => {
-    if (typeof paymentMethodData !== 'object' || Array.isArray(paymentMethodData)) {
+    if (paymentMethodData === null || typeof paymentMethodData !== 'object' || Array.isArray(paymentMethodData)) {
       throw new Error('Invalid input: paymentMethodData must be a single object.');
     }
 
-    const resolvedPaymentMethodData = expandReferences(state, paymentMethodData);
+    const [resolvedPaymentMethodData] = expandReferences(state, paymentMethodData);
+    const requestOptions = {
+      ...(options || {}),
+      body: JSON.stringify(resolvedPaymentMethodData),
+    };
+
     const response = await util.request(
       state.configuration,
       'POST',
       '/payment-methods',
-      {
-        body: JSON.stringify(resolvedPaymentMethodData),
-        headers: {
-          'X-Trace-Id': resolvedPaymentMethodData.traceId,
-          'X-Idempotency-Key': resolvedPaymentMethodData.idempotencyKey
-        }
-      }
+      requestOptions
     );
 
     return util.prepareNextState(state, response);

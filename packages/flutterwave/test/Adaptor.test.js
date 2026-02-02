@@ -18,7 +18,6 @@ let state = {
 // Added logging to capture actual requests
 
 describe('Create Customer', () => {
-  const testServer = enableMockClient('https://developersandbox-api.flutterwave.com');
 
   it('creates a customer successfully', async () => {
     testServer
@@ -105,7 +104,6 @@ describe('Create Customer', () => {
 });
 
 describe('Initiate Payment', () => {
-  const testServer = enableMockClient('https://developersandbox-api.flutterwave.com');
 
   it('initiates a payment successfully', async () => {
     testServer
@@ -154,7 +152,6 @@ describe('Validation Logic', () => {
 // Updated mock configuration for createPaymentMethod
 
 describe('Create Payment Method', () => {
-  const testServer = enableMockClient('https://developersandbox-api.flutterwave.com');
 
   it('creates a payment method successfully', async () => {
     testServer

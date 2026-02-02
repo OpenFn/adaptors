@@ -13,8 +13,18 @@ export const prepareNextState = (state, response) => {
     state.references = [];
   }
 
+  try {
+    console.log('HTTP Response ->', response);
+  } catch (e) {}
+
+  const payload = response && response.body && Object.prototype.hasOwnProperty.call(response.body, 'data') ? response.body.data : response.body;
+  const composed = composeNextState(state, payload);
+  try {
+    console.log('Composed next state ->', composed);
+  } catch (e) {}
+
   return {
-    ...composeNextState(state, response.body),
+    ...composed,
     response: responseWithoutBody,
   };
 };
@@ -27,16 +37,18 @@ export const request = (configuration = {}, method, path, options) => {
     404: 'Page not found',
   };
 
+  const mergedHeaders = {
+    'content-type': 'application/json',
+    ...headers,
+    ...(options && options.headers ? options.headers : {}),
+  };
+
   const opts = {
     parseAs: 'json',
     errors,
     baseUrl,
-
     ...options,
-    headers: {
-      'content-type': 'application/json',
-      ...headers,
-    },
+    headers: mergedHeaders,
   };
 
   const url = new URL(path, baseUrl).toString();
