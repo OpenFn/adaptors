@@ -40,5 +40,13 @@ export const request = (configuration = {}, method, path, options) => {
   };
 
   const url = new URL(path, baseUrl).toString();
+  // Debug logging to help mock matching failures
+  try {
+    console.log('HTTP Request ->', method, url);
+    console.log('Headers ->', opts.headers);
+    if (opts.body) console.log('Body ->', opts.body);
+  } catch (e) {
+    // ignore logging errors
+  }
   return commonRequest(method, url, opts);
 };

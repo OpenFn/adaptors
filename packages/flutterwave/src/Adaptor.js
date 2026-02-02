@@ -76,3 +76,34 @@ export function initiatePayment(paymentData) {
     return util.prepareNextState(state, response);
   };
 }
+
+/**
+ * Create a new payment method in Flutterwave.
+ * @function
+ * @public
+ * @param {Object} paymentMethodData - The payment method details to send to Flutterwave.
+ * @returns {Function} - A function that takes the state and performs the operation.
+ */
+export function createPaymentMethod(paymentMethodData) {
+  return async state => {
+    if (typeof paymentMethodData !== 'object' || Array.isArray(paymentMethodData)) {
+      throw new Error('Invalid input: paymentMethodData must be a single object.');
+    }
+
+    const resolvedPaymentMethodData = expandReferences(state, paymentMethodData);
+    const response = await util.request(
+      state.configuration,
+      'POST',
+      '/payment-methods',
+      {
+        body: JSON.stringify(resolvedPaymentMethodData),
+        headers: {
+          'X-Trace-Id': resolvedPaymentMethodData.traceId,
+          'X-Idempotency-Key': resolvedPaymentMethodData.idempotencyKey
+        }
+      }
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}
