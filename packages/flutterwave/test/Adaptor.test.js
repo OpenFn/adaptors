@@ -15,7 +15,6 @@ let state = {
   }
 }
 
-// Added logging to capture actual requests
 
 describe('Create Customer', () => {
 
@@ -28,7 +27,7 @@ describe('Create Customer', () => {
           'X-Trace-Id': 'unique-trace-id-12345',
           'X-Idempotency-Key': 'unique-idempotency-key-12345'
         },
-        // Accept any body for this intercept to avoid strict serialization mismatches
+
       })
       .reply(201, {
         status: 'success',
@@ -43,7 +42,7 @@ describe('Create Customer', () => {
             postal_code: '10001',
             state: 'New York'
           },
-          email: 'cornelius@gmail.com',
+          email: 'medvideva@jonsjav.cc',
           name: {
             first: 'King',
             middle: 'Leo',
@@ -61,7 +60,7 @@ describe('Create Customer', () => {
       });
 
     const { data } = await createCustomer({
-      email: 'cornelius@gmail.com',
+      email: 'medvideva@jonsjav.cc',
       name: {
         first: 'King',
         middle: 'Leo',
@@ -110,7 +109,7 @@ describe('Initiate Payment', () => {
       .intercept({
         path: '/charges',
         method: 'POST',
-        // Accept any body for this intercept to avoid strict serialization mismatches
+
       })
       .reply(201, {
         status: 'success',
@@ -149,7 +148,7 @@ describe('Validation Logic', () => {
   });
 });
 
-// Updated mock configuration for createPaymentMethod
+
 
 describe('Create Payment Method', () => {
 
@@ -162,7 +161,7 @@ describe('Create Payment Method', () => {
           'X-Trace-Id': 'unique-trace-id-67890',
           'X-Idempotency-Key': 'unique-idempotency-key-67890'
         },
-        // Accept any body for this intercept to avoid strict serialization mismatches
+
       })
       .reply(201, {
         status: 'success',
