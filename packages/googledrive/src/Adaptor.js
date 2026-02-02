@@ -151,26 +151,22 @@ export function get(fileIdOrName) {
  * @example <caption>List files at the root of google drive</caption>
  * list()
  * @param {Object} [options] - Options for listing files.
- * @param {string} [options.folderId] - ID of the folder to list files from. If not provided, lists files from the root.
+ * @param {string} options.folderId - ID of the folder to list files from. If not provided, lists files from the root.
  * @param {string} [options.fields] - Fields to return in the response. Defaults to 'files(id, name, mimeType, createdTime, modifiedTime)'.
  * @param {string} [options.query] - Custom query string for filtering files (see Google Drive API query syntax).
  * @param {number} [options.limit] - Maximum number of files to return
  * @param {string} [options.orderBy] - Order in which to sort the results. Defaults to 'modifiedTime desc'.
- * @param {string} [options.drive="all"] - Scope of files to list. Use "my-drive" for files owned by the user, "all" for files from all drives (including shared drives), or provide a specific shared drive ID.
  * @state {DriveState}
  * @returns {Operation} An operation that retrieves a list of files.
  */
 export function list(options) {
   return async state => {
     const [listOptions] = expandReferences(state, options || {});
-    const { folderId, fields, query, limit, orderBy, pageToken, drive = "all" } = listOptions;
+    const { folderId, fields, query, limit, orderBy, pageToken} = listOptions;
 
-    const driveProps =
-      drive === "my-drive"
-        ? {}
-        : drive === "all"
-          ? { supportsAllDrives: true, includeItemsFromAllDrives: true }
-          : { supportsAllDrives: true, includeItemsFromAllDrives: true, corpora: "drive", driveId: drive };
+    if (!folderId || typeof folderId !== "string") {
+      throw Error("options.folderId is required. You need to provide id of the folder to list from.");
+    }
 
     let final_fields = [
       'id',
@@ -194,7 +190,8 @@ export function list(options) {
       pageSize: limit ?? undefined,
       orderBy: orderBy || 'modifiedTime desc',
       pageToken: pageToken ?? undefined,
-      ...driveProps
+      supportsAllDrives: true,
+      includeItemsFromAllDrives: true
     });
     const files = response?.data?.files || [];
     state.response = { nextPageToken: response?.data?.nextPageToken };

@@ -167,11 +167,8 @@
             "title": "param",
             "description": "ID of the folder to list files from. If not provided, lists files from the root.",
             "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
+              "type": "NameExpression",
+              "name": "string"
             },
             "name": "options.folderId"
           },
@@ -222,19 +219,6 @@
               }
             },
             "name": "options.orderBy"
-          },
-          {
-            "title": "param",
-            "description": "Scope of files to list. Use \"my-drive\" for files owned by the user, \"all\" for files from all drives (including shared drives), or provide a specific shared drive ID.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "options.drive",
-            "default": "\"all\""
           },
           {
             "title": "state",
