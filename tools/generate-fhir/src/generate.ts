@@ -128,7 +128,24 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   }
 
   let fhirTypes = {};
-  if (!base) {
+  if (base) {
+    // if a base adaptor is provided, we need to load the base type definitions from there
+    // TODO need to generate this list based on the base adaptor
+    // may need to cross-reference to only use types that are NOT defined in the IG
+    fhirTypes = {
+      Address: 1,
+      Attachment: 1,
+      BackboneElement: 1,
+      CodeableConcept: 1,
+      ContactPoint: 1,
+      Extension: 1,
+      HumanName: 1,
+      Identifier: 1,
+      Meta: 1,
+      Narrative: 1,
+      Reference: 1,
+    };
+  } else {
     try {
       await access(specPath);
       console.log('Generating datatype schemas');
@@ -154,6 +171,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   const src = generateCode(schema, mappings, {
     simpleSignatures: simpleBuilders,
     fhirTypes,
+    base,
   });
 
   const srcPath = path.resolve(adaptorPath, 'src/builders.ts');
@@ -237,8 +255,12 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
         recursive: true,
         force: true,
       });
-      await rm(path.resolve(adaptorPath, 'types', 'fhir.d.ts'));
-      await rm(path.resolve(adaptorPath, 'types', 'datatypes.d.ts'));
+      await rm(path.resolve(adaptorPath, 'types', 'fhir.d.ts'), {
+        force: true,
+      });
+      await rm(path.resolve(adaptorPath, 'types', 'datatypes.d.ts'), {
+        force: true,
+      });
     },
   );
 };

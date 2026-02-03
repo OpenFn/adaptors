@@ -15,13 +15,20 @@ import { generateType } from './generate-types';
 const RESOURCE_NAME = 'resource';
 const INPUT_NAME = 'props';
 
+type Options = {
+  simpleSignatures?: boolean;
+
+  /** List of type definitions which can be imported from FHIR */
+  fhirTypes?: Record<string, true>;
+
+  /** base adaptor name to generate types and builders from */
+  base?: string;
+};
+
 const generateCode = (
   schema: Record<string, Schema[]>,
   mappings: MappingSpec = {},
-  options: {
-    simpleSignatures?: boolean;
-    fhirTypes?: Record<string, true>;
-  } = {}
+  options: Options = {},
 ): { builders: string; profiles: Record<string, string> } => {
   const statements: n.Statement[] = [];
 
@@ -30,6 +37,11 @@ const generateCode = (
   const imports: n.Statement[] = [];
 
   const profiles = {};
+
+  // This tells us where to load FHIR types from
+  const fhirImportPath = options.base
+    ? `@openfn/language-${options.base}`
+    : '../fhir';
 
   // generate a builder for each profile
   const orderedResources = Object.keys(schema).sort();
@@ -46,8 +58,8 @@ const generateCode = (
             b.importDefaultSpecifier(b.identifier(name)),
             b.importSpecifier(b.identifier(iface)),
           ],
-          b.stringLiteral(`./profiles/${profile.id}`)
-        )
+          b.stringLiteral(`./profiles/${profile.id}`),
+        ),
       );
 
       profiles[profile.id] = generateProfile(
@@ -57,9 +69,11 @@ const generateCode = (
             initialiser: mappings.initialiser,
             typeShorthands: mappings.typeShorthands,
           },
-          mappings.overrides?.[resourceType]
+          mappings.overrides?.[resourceType],
         ),
-        options.fhirTypes
+        options.fhirTypes,
+        fhirImportPath,
+        options.base,
       );
 
       // Generate an entrypoint function
@@ -69,8 +83,8 @@ const generateCode = (
           resourceType,
           schema[resourceType],
           options.simpleSignatures,
-          mappings.propsToIgnoreInDocs
-        )
+          mappings.propsToIgnoreInDocs,
+        ),
       );
     }
   }
@@ -82,10 +96,19 @@ const generateCode = (
   return { builders, profiles };
 };
 
+// TODO maybe I need this
+type FhirImports = {
+  types: Record<string, true>;
+  path: string;
+  // datatypes: any;
+};
+
 const generateProfile = (
   profile: Schema,
   mappings: MappingSpec,
-  fhirTypes: Record<string, true> = {}
+  fhirTypes: Record<string, true> = {},
+  fhirImport = '../fhir',
+  base?: string,
 ) => {
   const statements = [];
 
@@ -93,34 +116,55 @@ const generateProfile = (
 
   statements.push(
     b.importDeclaration(
-      [b.importNamespaceSpecifier(b.identifier('dt'))],
-      b.stringLiteral('../datatypes')
-    )
-  );
-  statements.push(
-    b.importDeclaration(
       [b.importDefaultSpecifier(b.identifier('_'))],
-      b.stringLiteral('lodash')
-    )
+      b.stringLiteral('lodash'),
+    ),
   );
-  statements.push(
-    b.importDeclaration(
-      [b.importNamespaceSpecifier(b.identifier('FHIR'))],
-      b.stringLiteral('../fhir')
-    )
-  );
+
+  // TODO this import isn't so nice
+  // Maybe we ONLY take base here and the rest is derived?
+  if (base) {
+    statements.push(
+      b.importDeclaration(
+        [b.importSpecifier(b.identifier('b'), b.identifier('dt'))],
+        b.stringLiteral(`@openfn/language-${base}`),
+      ),
+    );
+    statements.push(
+      b.importDeclaration(
+        [b.importSpecifier(b.identifier('builders'), b.identifier('FHIR'))],
+        b.stringLiteral(fhirImport),
+        'type',
+      ),
+    );
+  } else {
+    statements.push(
+      b.importDeclaration(
+        [b.importNamespaceSpecifier(b.identifier('dt'))],
+        b.stringLiteral('../datatypes'),
+      ),
+    );
+
+    statements.push(
+      b.importDeclaration(
+        [b.importNamespaceSpecifier(b.identifier('FHIR'))],
+        b.stringLiteral(fhirImport),
+        'type',
+      ),
+    );
+  }
 
   // TODO It would be better to define this once and import it,
   // but that's a bit harder to work out with Lightning I think?
-  statements.push(
-    b.tsTypeAliasDeclaration(
-      b.identifier('MaybeArray<T>'),
-      b.tsUnionType([
-        b.tsTypeReference(b.identifier('T')),
-        b.tsTypeReference(b.identifier('T[]')),
-      ])
-    )
-  );
+  // statements.push(
+  //   b.tsTypeAliasDeclaration(
+  //     b.identifier('MaybeArray<T>'),
+  //     b.tsUnionType([
+  //       b.tsTypeReference(b.identifier('T')),
+  //       b.tsTypeReference(b.identifier('T[]')),
+  //     ]),
+  //   ),
+  // );
 
   const typedef = generateType(
     profile.type,
@@ -129,7 +173,7 @@ const generateProfile = (
       ...mappings,
       overrides,
     },
-    fhirTypes
+    fhirTypes,
   );
 
   statements.push(typedef);
@@ -153,7 +197,7 @@ const generateJsDocs = (schema: Schema[], ignore: string[] = []) => {
   // TODO for now, just generate for the first schema
   const profile = schema[0];
   const validProps = Object.keys(profile.props).filter(
-    p => !ignore.includes(p)
+    p => !ignore.includes(p),
   );
   for (const propName of validProps) {
     const prop = profile.props[propName];
@@ -169,7 +213,7 @@ const generateEntry = (
   resourceType: string,
   variants: Schema[],
   simpleSignatures?: boolean,
-  propsToIgnoreInDocs: string[] = []
+  propsToIgnoreInDocs: string[] = [],
 ) => {
   const declarations = [];
 
@@ -191,9 +235,9 @@ ${generateJsDocs(variants, propsToIgnoreInDocs)}
       b.identifier('mappings'),
       b.objectExpression(
         variants.map(schema =>
-          b.objectProperty(b.stringLiteral(schema.id), b.identifier(name))
-        )
-      )
+          b.objectProperty(b.stringLiteral(schema.id), b.identifier(name)),
+        ),
+      ),
     ),
   ]);
   statements.push(map);
@@ -207,17 +251,17 @@ ${generateJsDocs(variants, propsToIgnoreInDocs)}
         b.identifier.from({
           name: 'type',
           typeAnnotation: b.tsTypeAnnotation(b.tsStringKeyword()),
-        })
+        }),
       ),
       b.tsParameterProperty(
         b.identifier.from({
           name: INPUT_NAME,
           typeAnnotation: b.tsTypeAnnotation(
-            b.tsTypeReference(b.identifier(getInterfaceName(variants[0])))
+            b.tsTypeReference(b.identifier(getInterfaceName(variants[0]))),
           ),
-        })
+        }),
       ),
-    ])
+    ]),
   );
   declarations.push(signature);
 
@@ -240,15 +284,15 @@ ${generateJsDocs(variants, propsToIgnoreInDocs)}
             b.identifier.from({
               name: INPUT_NAME,
               typeAnnotation: b.tsTypeAnnotation(
-                b.tsTypeReference(b.identifier(getInterfaceName(variants[0])))
+                b.tsTypeReference(b.identifier(getInterfaceName(variants[0]))),
               ),
-            })
+            }),
           ),
-        ]
+        ],
         // What is the return type?
         // It's not the same as our props - it's a fhir object
         // b.tsTypeAnnotation(b.tsTypeReference(b.identifier('Patient')))
-      )
+      ),
     );
 
     declarations.push(override);
@@ -271,7 +315,7 @@ ${generateJsDocs(variants, propsToIgnoreInDocs)}
           b.identifier.from({
             name: 'type',
             typeAnnotation: b.tsTypeAnnotation(b.tsAnyKeyword()),
-          })
+          }),
         ),
         b.tsParameterProperty(
           // TODO need a full type for this. Where do we get it?
@@ -279,11 +323,11 @@ ${generateJsDocs(variants, propsToIgnoreInDocs)}
             name: INPUT_NAME,
             typeAnnotation: b.tsTypeAnnotation(b.tsAnyKeyword()),
             optional: true,
-          })
+          }),
         ),
       ],
-      b.blockStatement(statements)
-    )
+      b.blockStatement(statements),
+    ),
   );
   declarations.push(impl);
 
@@ -326,12 +370,12 @@ const generateBuilder = (schema, mappings, initialiser: (r: any) => void) => {
             b.identifier('Partial'),
             b.tsTypeParameterInstantiation([
               b.tsTypeReference(b.identifier(`${schema.type}_Props`)),
-            ])
-          )
+            ]),
+          ),
         ),
       }),
     ],
-    b.blockStatement(body)
+    b.blockStatement(body),
   );
 
   return fn;
@@ -354,7 +398,10 @@ const mapProps = (schema, mappings) => {
         props.push(mapComposite(key, mappings[key], spec));
       } else if (spec.typeDef) {
         props.push(mapTypeDef(key, mappings[key], spec));
-      } else if (spec.type.includes('Code') || spec.type.includes('CodeableConcept')) {
+      } else if (
+        spec.type.includes('Code') ||
+        spec.type.includes('CodeableConcept')
+      ) {
         props.push(mapCodeableConcept(key, mappings[key], spec));
       } else {
         // TODO what happens if the type is like `reference | identifier`? Such contrasting types?
@@ -396,24 +443,24 @@ const ifPropInInput = (
   prop: string,
   statements: StatementKind[],
   alts?: StatementKind[],
-  inputName = INPUT_NAME
+  inputName = INPUT_NAME,
 ) =>
   b.ifStatement(
     b.unaryExpression(
       '!',
       b.callExpression(
         b.memberExpression(b.identifier('_'), b.identifier('isNil')),
-        [safelyRefProp(inputName, prop)]
-      )
+        [safelyRefProp(inputName, prop)],
+      ),
     ),
     b.blockStatement(statements),
-    alts ? b.blockStatement(alts) : null
+    alts ? b.blockStatement(alts) : null,
   );
 
 // assigns SOMETHING to a prop on the input
 const assignToInput = (prop: string, rhs) =>
   b.expressionStatement(
-    b.assignmentExpression('=', safelyRefProp(RESOURCE_NAME, prop), rhs)
+    b.assignmentExpression('=', safelyRefProp(RESOURCE_NAME, prop), rhs),
   );
 
 // this generates a statement to add the default
@@ -423,7 +470,7 @@ const addDefaults = (propName: string, mapping: Mapping, schema: Schema) => {
     // generate an assignment statement using the mappings
     const parsed = parse(
       `${RESOURCE_NAME}.${propName} = ${JSON.stringify(defaults)};`,
-      {}
+      {},
     );
     return parsed.program.body;
   }
@@ -435,7 +482,7 @@ const mapSimpleProp = (propName: string, mapping: Mapping, schema: Schema) => {
   // This is the actual assignment
   const assignProp = assignToInput(
     propName,
-    b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))
+    b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName)),
   );
 
   const elseStatement = addDefaults(propName, mapping, schema);
@@ -453,9 +500,9 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
     b.variableDeclaration('let', [
       b.variableDeclarator(
         b.identifier('src'),
-        b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))
+        b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName)),
       ),
-    ])
+    ]),
   );
 
   // Map the property name into an underscore var so it's always save
@@ -473,20 +520,20 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
           '=',
           b.memberExpression(
             b.identifier(RESOURCE_NAME),
-            b.identifier(propName)
+            b.identifier(propName),
           ),
-          b.arrayExpression([])
-        )
-      )
+          b.arrayExpression([]),
+        ),
+      ),
     );
   } else {
     statements.push(
       b.variableDeclaration('let', [
         b.variableDeclarator(
           b.identifier(safePropName),
-          b.objectExpression([b.spreadProperty(b.identifier('item'))])
+          b.objectExpression([b.spreadProperty(b.identifier('item'))]),
         ),
-      ])
+      ]),
     );
   }
 
@@ -506,15 +553,15 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
           b.callExpression(
             b.memberExpression(
               b.identifier('dt'),
-              b.identifier('addExtension')
+              b.identifier('addExtension'),
             ),
             [
               b.identifier(safePropName),
               b.stringLiteral(spec.extension.url),
               sourceValue,
-            ]
-          )
-        )
+            ],
+          ),
+        ),
       );
       assignments.push(ifPropInInput(prop, body, alts, inputName));
     } else {
@@ -531,10 +578,10 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
           b.identifier(safePropName),
           b.callExpression(
             b.memberExpression(b.identifier('dt'), b.identifier('mapSystems')),
-            [b.identifier(safePropName)]
-          )
-        )
-      )
+            [b.identifier(safePropName)],
+          ),
+        ),
+      ),
     );
   }
 
@@ -545,9 +592,9 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
       b.variableDeclaration('let', [
         b.variableDeclarator(
           b.identifier(safePropName),
-          b.objectExpression([b.spreadProperty(b.identifier('item'))])
+          b.objectExpression([b.spreadProperty(b.identifier('item'))]),
         ),
-      ])
+      ]),
     );
     assignments.push(
       b.expressionStatement(
@@ -555,20 +602,20 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
           b.memberExpression(
             b.memberExpression(
               b.identifier(RESOURCE_NAME),
-              b.identifier(propName)
+              b.identifier(propName),
             ),
-            b.identifier('push')
+            b.identifier('push'),
           ),
-          [b.identifier(safePropName)]
-        )
-      )
+          [b.identifier(safePropName)],
+        ),
+      ),
     );
     statements.push(
       b.forOfStatement(
         b.variableDeclaration('let', [b.identifier('item')]),
         b.identifier('src'),
-        b.blockStatement(assignments)
-      )
+        b.blockStatement(assignments),
+      ),
     );
   } else {
     statements.push(...assignments);
@@ -578,11 +625,11 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
           '=',
           b.memberExpression(
             b.identifier(RESOURCE_NAME),
-            b.identifier(propName)
+            b.identifier(propName),
           ),
-          b.identifier(safePropName)
-        )
-      )
+          b.identifier(safePropName),
+        ),
+      ),
     );
   }
 
@@ -598,7 +645,7 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
 const mapCodeableConcept = (
   propName: string,
   mapping: Mapping,
-  schema: Schema
+  schema: Schema,
 ) => {
   const statements: StatementKind[] = [];
 
@@ -610,7 +657,7 @@ const mapCodeableConcept = (
 
   const callBuilder = b.callExpression(
     b.memberExpression(b.identifier('dt'), b.identifier('concept')),
-    [b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))]
+    [b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))],
   );
 
   statements.push(assignToInput(propName, callBuilder));
@@ -634,8 +681,8 @@ const mapExtension = (propName: string, mapping: Mapping) => {
         b.identifier(RESOURCE_NAME),
         b.stringLiteral(mapping.extension),
         b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName)),
-      ]
-    )
+      ],
+    ),
   );
 
   return ifPropInInput(propName, [callBuilder]);
@@ -652,7 +699,7 @@ const mapReference = (propName: string, _mapping: Mapping, schema: Schema) => {
 
   const callBuilder = b.callExpression(
     b.memberExpression(b.identifier('dt'), b.identifier('reference')),
-    [b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))]
+    [b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))],
   );
 
   statements.push(assignToInput(propName, callBuilder));
@@ -663,7 +710,7 @@ const mapReference = (propName: string, _mapping: Mapping, schema: Schema) => {
 const mapComposite = (propName: string, _mapping: Mapping, _schema: Schema) => {
   const deleteKey = b.unaryExpression(
     'delete',
-    b.memberExpression(b.identifier(RESOURCE_NAME), b.identifier(propName))
+    b.memberExpression(b.identifier(RESOURCE_NAME), b.identifier(propName)),
   );
   const callBuilder = b.callExpression(
     b.memberExpression(b.identifier('dt'), b.identifier('composite')),
@@ -672,12 +719,12 @@ const mapComposite = (propName: string, _mapping: Mapping, _schema: Schema) => {
       b.identifier(RESOURCE_NAME),
       b.stringLiteral(propName),
       b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName)),
-    ]
+    ],
   );
 
   return ifPropInInput(
     propName,
-    [deleteKey, callBuilder].map(b.expressionStatement)
+    [deleteKey, callBuilder].map(b.expressionStatement),
   );
 };
 
@@ -691,7 +738,7 @@ const mapIdentifier = (name: string, _mapping: Mapping, schema: Schema) => {
     [
       b.memberExpression(b.identifier(INPUT_NAME), b.identifier(name)),
       defaultSystem && b.stringLiteral(defaultSystem),
-    ].filter(ast => ast)
+    ].filter(ast => ast),
   );
   if (schema.isArray) {
     // if this is an array type, we should force the input to be an array
@@ -709,13 +756,13 @@ const mapIdentifier = (name: string, _mapping: Mapping, schema: Schema) => {
 const initResource = (resourceType: string) => {
   const rt = b.objectProperty(
     b.identifier('resourceType'),
-    b.stringLiteral(resourceType)
+    b.stringLiteral(resourceType),
   );
 
   return b.variableDeclaration('const', [
     b.variableDeclarator(
       b.identifier(RESOURCE_NAME),
-      b.objectExpression([rt, b.spreadProperty(b.identifier(INPUT_NAME))])
+      b.objectExpression([rt, b.spreadProperty(b.identifier(INPUT_NAME))]),
     ),
   ]);
 };

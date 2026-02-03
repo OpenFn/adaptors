@@ -1,5 +1,12 @@
-import { fr_core_patient_Props } from "./profiles/fr-core-patient";
+
+// THIS FILE WAS AUTO-GENERATED
+// DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
+// SEE THE README FILE FOR DETAILS
+
+import Patient_fr_core_patient, { fr_core_patient_Props } from "./profiles/fr-core-patient";
+import Patient_fr_core_patient_ins, { fr_core_patient_ins_Props } from "./profiles/fr-core-patient-ins";
 export * from "./datatypes";
+
 /**
   * Create a FHIR Patient resource.
   * @public
@@ -31,7 +38,20 @@ export * from "./datatypes";
   * @param {Reference} [props.managingOrganization] - Organization that is the custodian of the patient record
   * @param {BackboneElement} [props.link] - Link to another patient resource that concerns the same actual person
  */
-export declare function patient(type: string, props: fr_core_patient_Props): any;
+export function patient(type: string, props: fr_core_patient_Props);
+
+export function patient(type: any, props?: any) {
+    const mappings = {
+        "fr-core-patient": Patient_fr_core_patient,
+        "fr-core-patient-ins": Patient_fr_core_patient
+    };
+
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
+}
+
 /**
   * Create a FHIR Patient resource.
   * @public
@@ -63,4 +83,16 @@ export declare function patient(type: string, props: fr_core_patient_Props): any
   * @param {Reference} [props.managingOrganization] - Organization that is the custodian of the patient record
   * @param {BackboneElement} [props.link] - Link to another patient resource that concerns the same actual person
  */
-export declare function patient(type: string, props: fr_core_patient_Props): any;
+export function patient(type: string, props: fr_core_patient_Props);
+
+export function patient(type: any, props?: any) {
+    const mappings = {
+        "fr-core-patient": Patient_fr_core_patient_ins,
+        "fr-core-patient-ins": Patient_fr_core_patient_ins
+    };
+
+    if (type in mappings) {
+        return mappings[type](props)
+    }
+    throw new Error(`Error: profile "${type}" not recognised`)
+}
