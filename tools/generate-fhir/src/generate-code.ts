@@ -15,20 +15,13 @@ import { generateType } from './generate-types';
 const RESOURCE_NAME = 'resource';
 const INPUT_NAME = 'props';
 
-type Options = {
-  simpleSignatures?: boolean;
-
-  /** List of type definitions which can be imported from FHIR */
-  fhirTypes?: Record<string, true>;
-
-  /** base adaptor name to generate types and builders from */
-  base?: string;
-};
-
 const generateCode = (
   schema: Record<string, Schema[]>,
   mappings: MappingSpec = {},
-  options: Options = {},
+  options: {
+    simpleSignatures?: boolean;
+    fhirTypes?: Record<string, true>;
+  } = {},
 ): { builders: string; profiles: Record<string, string> } => {
   const statements: n.Statement[] = [];
 
@@ -37,11 +30,6 @@ const generateCode = (
   const imports: n.Statement[] = [];
 
   const profiles = {};
-
-  // This tells us where to load FHIR types from
-  const fhirImportPath = options.base
-    ? `@openfn/language-${options.base}`
-    : '../fhir';
 
   // generate a builder for each profile
   const orderedResources = Object.keys(schema).sort();
@@ -72,8 +60,6 @@ const generateCode = (
           mappings.overrides?.[resourceType],
         ),
         options.fhirTypes,
-        fhirImportPath,
-        options.base,
       );
 
       // Generate an entrypoint function
@@ -96,19 +82,10 @@ const generateCode = (
   return { builders, profiles };
 };
 
-// TODO maybe I need this
-type FhirImports = {
-  types: Record<string, true>;
-  path: string;
-  // datatypes: any;
-};
-
 const generateProfile = (
   profile: Schema,
   mappings: MappingSpec,
   fhirTypes: Record<string, true> = {},
-  fhirImport = '../fhir',
-  base?: string,
 ) => {
   const statements = [];
 
@@ -116,55 +93,34 @@ const generateProfile = (
 
   statements.push(
     b.importDeclaration(
+      [b.importNamespaceSpecifier(b.identifier('dt'))],
+      b.stringLiteral('../datatypes'),
+    ),
+  );
+  statements.push(
+    b.importDeclaration(
       [b.importDefaultSpecifier(b.identifier('_'))],
       b.stringLiteral('lodash'),
     ),
   );
-
-  // TODO this import isn't so nice
-  // Maybe we ONLY take base here and the rest is derived?
-  if (base) {
-    statements.push(
-      b.importDeclaration(
-        [b.importSpecifier(b.identifier('b'), b.identifier('dt'))],
-        b.stringLiteral(`@openfn/language-${base}`),
-      ),
-    );
-    statements.push(
-      b.importDeclaration(
-        [b.importSpecifier(b.identifier('builders'), b.identifier('FHIR'))],
-        b.stringLiteral(fhirImport),
-        'type',
-      ),
-    );
-  } else {
-    statements.push(
-      b.importDeclaration(
-        [b.importNamespaceSpecifier(b.identifier('dt'))],
-        b.stringLiteral('../datatypes'),
-      ),
-    );
-
-    statements.push(
-      b.importDeclaration(
-        [b.importNamespaceSpecifier(b.identifier('FHIR'))],
-        b.stringLiteral(fhirImport),
-        'type',
-      ),
-    );
-  }
+  statements.push(
+    b.importDeclaration(
+      [b.importNamespaceSpecifier(b.identifier('FHIR'))],
+      b.stringLiteral('../fhir'),
+    ),
+  );
 
   // TODO It would be better to define this once and import it,
   // but that's a bit harder to work out with Lightning I think?
-  // statements.push(
-  //   b.tsTypeAliasDeclaration(
-  //     b.identifier('MaybeArray<T>'),
-  //     b.tsUnionType([
-  //       b.tsTypeReference(b.identifier('T')),
-  //       b.tsTypeReference(b.identifier('T[]')),
-  //     ]),
-  //   ),
-  // );
+  statements.push(
+    b.tsTypeAliasDeclaration(
+      b.identifier('MaybeArray<T>'),
+      b.tsUnionType([
+        b.tsTypeReference(b.identifier('T')),
+        b.tsTypeReference(b.identifier('T[]')),
+      ]),
+    ),
+  );
 
   const typedef = generateType(
     profile.type,
