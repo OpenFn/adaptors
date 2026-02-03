@@ -11,7 +11,7 @@
 - Add debug logging temporarily to help diagnose mock matching and response shapes (can be removed before release).
 - Refactor tests to use `test/fixtures.json` for request bodies, mock responses, and expected values — removes large inline objects and reduces duplication.
 - Add `createPaymentMethod` fixture and align `Adaptor.test.js` to use fixture-driven mocks and assertions.
-- Keep `chai-as-promised` as a devDependency and use it for concise promise-based assertions (e.g. `.to.be.rejectedWith`).
+- Remove `chai-as-promised` from devDependencies — tests refactored to use explicit try/catch assertions and fixture-driven error checks.
 - Tests for the package were run locally after the refactor: `7 passing`.
 
 
