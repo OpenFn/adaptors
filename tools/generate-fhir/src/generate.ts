@@ -225,6 +225,15 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
       }, {}),
   });
 
+  // If base provided, ensure there's a dependency
+  if (base) {
+    const baseName = `@openfn/language-${base}`;
+    if (!pkg.dependencies[baseName]) {
+      pkg.dependencies[baseName] = 'workspace:*';
+      await writePkg(pkg);
+    }
+  }
+
   const pathToEntry = path.resolve(adaptorPath, 'src', 'index.ts');
 
   // Now build typings for index and utils
