@@ -1,7 +1,8 @@
 import chai, { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 import { initiatePayment, createCustomer, createPaymentMethod } from '../src/Adaptor.js';
-import testData from './fixtures.json' assert { type: 'json' };
+import { readFileSync } from 'fs';
+const testData = JSON.parse(readFileSync(new URL('./fixtures.json', import.meta.url), 'utf8'));
 
 const testServer = enableMockClient('https://developersandbox-api.flutterwave.com');
 
