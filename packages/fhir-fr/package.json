@@ -22,13 +22,14 @@
     "webUrl": "https://hl7.fr/ig/fhir/core",
     "specDate": "2024-03-25",
     "specUrl": "https://hl7.fr/ig/fhir/core/2.0.0/definitions.json.zip",
-    "adaptorGeneratedDate": "2026-02-03T17:43:46.269Z",
+    "adaptorGeneratedDate": "2026-02-03T17:48:57.177Z",
     "generatorVersion": "0.4.2",
     "options": {}
   },
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "@openfn/language-fhir-4": "workspace:*"
+    "@openfn/language-fhir-4": "workspace:*",
+    "lodash": "^4.17.23"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",

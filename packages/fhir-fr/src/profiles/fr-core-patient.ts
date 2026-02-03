@@ -7,7 +7,7 @@ import _ from "lodash";
 import { b as dt } from "@openfn/language-fhir-4";
 import type { builders as FHIR } from "@openfn/language-fhir-4";
 
-export type Patient_Props = {
+export type Patient_fr_core_patient_Props = {
     active?: boolean;
     address?: FHIR.Address[];
     birthDate?: string;
@@ -35,7 +35,7 @@ export type Patient_Props = {
     [key: string]: any;
 };
 
-export default function(props: Partial<Patient_Props>) {
+export default function(props: Partial<Patient_fr_core_patient_Props>) {
     const resource = {
         resourceType: "Patient",
         ...props

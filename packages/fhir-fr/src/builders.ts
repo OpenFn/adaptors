@@ -3,8 +3,8 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import Patient_fr_core_patient, { fr_core_patient_Props } from "./profiles/fr-core-patient";
-import Patient_fr_core_patient_ins, { fr_core_patient_ins_Props } from "./profiles/fr-core-patient-ins";
+import Patient_fr_core_patient, { Patient_fr_core_patient_Props } from "./profiles/fr-core-patient";
+import Patient_fr_core_patient_ins, { Patient_fr_core_patient_ins_Props } from "./profiles/fr-core-patient-ins";
 
 /**
   * Create a Patient resource.
@@ -37,9 +37,9 @@ import Patient_fr_core_patient_ins, { fr_core_patient_ins_Props } from "./profil
   * @param {Reference} [props.managingOrganization] - Organization that is the custodian of the patient record
   * @param {BackboneElement} [props.link] - Link to another patient resource that concerns the same actual person
   */
-export function patient(type: "fr-core-patient", props: fr_core_patient_Props);
+export function patient(type: "fr-core-patient", props: Patient_fr_core_patient_Props);
 
-export function patient(type: "fr-core-patient-ins", props: fr_core_patient_ins_Props);
+export function patient(type: "fr-core-patient-ins", props: Patient_fr_core_patient_ins_Props);
 
 export function patient(type: any, props?: any) {
     const mappings = {

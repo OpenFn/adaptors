@@ -396,7 +396,7 @@ const generateBuilder = (schema, mappings, initialiser: (r: any) => void) => {
           b.tsTypeReference(
             b.identifier('Partial'),
             b.tsTypeParameterInstantiation([
-              b.tsTypeReference(b.identifier(`${schema.type}_Props`)),
+              b.tsTypeReference(b.identifier(getInterfaceName(schema))),
             ]),
           ),
         ),

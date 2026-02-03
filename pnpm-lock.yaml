@@ -678,6 +678,9 @@ importers:
       '@openfn/language-fhir-4':
         specifier: workspace:*
         version: link:../fhir-4
+      lodash:
+        specifier: ^4.17.23
+        version: 4.17.23
     devDependencies:
       assertion-error:
         specifier: 2.0.0
