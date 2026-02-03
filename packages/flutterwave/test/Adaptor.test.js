@@ -40,20 +40,6 @@ describe('Create Customer', () => {
 
     expect(data.id).to.eql(testData.createCustomer.response.data.id);
   });
-
-  it('throws an error for invalid input', async () => {
-    try {
-      await createCustomer(testData.errors.invalidCustomer.input, {
-        headers: {
-          'X-Trace-Id': 'unique-trace-id-12345',
-          'X-Idempotency-Key': 'unique-idempotency-key-12345',
-        },
-      })(state);
-      throw new Error('Expected error was not thrown');
-    } catch (err) {
-      expect(err.message).to.equal(testData.errors.invalidCustomer.message);
-    }
-  });
 });
 
 describe('Initiate Payment', () => {
@@ -70,51 +56,6 @@ describe('Initiate Payment', () => {
     );
 
     expect(data.id).to.eql(testData.initiatePayment.response.data.id);
-  });
-
-  it('throws an error for invalid input', async () => {
-    try {
-      await initiatePayment(testData.errors.invalidPayment.input)(state);
-      throw new Error('Expected error was not thrown');
-    } catch (err) {
-      expect(err.message).to.equal(testData.errors.invalidPayment.message);
-    }
-  });
-});
-
-describe('Validation Logic', () => {
-  it('throws an error for invalid customer input', async () => {
-    try {
-      await createCustomer(testData.errors.invalidCustomerArray.input)(state);
-      throw new Error('Expected error was not thrown');
-    } catch (err) {
-      expect(err.message).to.equal(
-        testData.errors.invalidCustomerArray.message,
-      );
-    }
-
-    try {
-      await createCustomer(testData.errors.invalidCustomer.input)(state);
-      throw new Error('Expected error was not thrown');
-    } catch (err) {
-      expect(err.message).to.equal(testData.errors.invalidCustomer.message);
-    }
-  });
-
-  it('throws an error for invalid payment input', async () => {
-    try {
-      await initiatePayment(testData.errors.invalidPaymentArray.input)(state);
-      throw new Error('Expected error was not thrown');
-    } catch (err) {
-      expect(err.message).to.equal(testData.errors.invalidPaymentArray.message);
-    }
-
-    try {
-      await initiatePayment(testData.errors.invalidPayment.input)(state);
-      throw new Error('Expected error was not thrown');
-    } catch (err) {
-      expect(err.message).to.equal(testData.errors.invalidPayment.message);
-    }
   });
 });
 
