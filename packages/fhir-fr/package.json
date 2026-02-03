@@ -5,7 +5,7 @@
   "description": "OpenFn fhir-fr adaptor",
   "scripts": {
     "build": "pnpm clean && build-adaptor fhir-fr src ast docs",
-    "build:src": "pnpm generate-fhir fhir-fr",
+    "build:src": "pnpm generate-fhir fhir-fr --base fhir-4",
     "build:spec": "pnpm generate-fhir fhir-fr --respec",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
@@ -22,8 +22,9 @@
     "webUrl": "https://hl7.fr/ig/fhir/core",
     "specDate": "2024-03-25",
     "specUrl": "https://hl7.fr/ig/fhir/core/2.0.0/definitions.json.zip",
-    "adaptorGeneratedDate": "2024-12-01T15:19:38.395Z",
-    "generatorVersion": "0.2.1"
+    "adaptorGeneratedDate": "2026-02-03T11:37:12.364Z",
+    "generatorVersion": "0.4.2",
+    "options": {}
   },
   "dependencies": {
     "@openfn/language-common": "workspace:*"

@@ -122,27 +122,29 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   } catch (e) {
     console.log('Error loading spec.json!');
     console.log(
-      `You may need to redownload the spec with "pnpm generate-fhir ${adaptorName} --respec"`
+      `You may need to redownload the spec with "pnpm generate-fhir ${adaptorName} --respec"`,
     );
     console.log(e);
   }
 
   let fhirTypes = {};
-  try {
-    await access(specPath);
-    console.log('Generating datatype schemas');
-    const dtSpecPath = path.resolve(adaptorPath, 'spec', 'spec-types.json');
-    // Note: when generating datatypes we ignore the user's mappings and generate everything
-    // maybe we need to take a different mappings object?
-    const dtSchema = await generateSchema(dtSpecPath);
-    const { src, index } = generateDataTypes(dtSchema, mappings);
-    fhirTypes = index;
-    const dtsPath = path.resolve(adaptorPath, 'src/fhir.ts');
-    console.log('Writing datatype schemas to ', dtsPath);
-    await writeFile(dtsPath, withDisclaimer(src));
-  } catch (e) {
-    console.log('Skipping datatype generation');
-    console.log(e);
+  if (!base) {
+    try {
+      await access(specPath);
+      console.log('Generating datatype schemas');
+      const dtSpecPath = path.resolve(adaptorPath, 'spec', 'spec-types.json');
+      // Note: when generating datatypes we ignore the user's mappings and generate everything
+      // maybe we need to take a different mappings object?
+      const dtSchema = await generateSchema(dtSpecPath);
+      const { src, index } = generateDataTypes(dtSchema, mappings);
+      fhirTypes = index;
+      const dtsPath = path.resolve(adaptorPath, 'src/fhir.ts');
+      console.log('Writing datatype schemas to ', dtsPath);
+      await writeFile(dtsPath, withDisclaimer(src));
+    } catch (e) {
+      console.log('Skipping datatype generation');
+      console.log(e);
+    }
   }
 
   console.log('Generating resource schemas');
@@ -161,7 +163,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   for (const profile in src.profiles) {
     await writeFile(
       path.resolve(adaptorPath, 'src/profiles', `${profile}.ts`),
-      withDisclaimer(src.profiles[profile])
+      withDisclaimer(src.profiles[profile]),
     );
   }
 
@@ -227,7 +229,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
 
       await writeFile(
         path.resolve(adaptorPath, 'types', 'builders.d.ts'),
-        withDisclaimer(dtsBundle.output[0].code)
+        withDisclaimer(dtsBundle.output[0].code),
       );
 
       // finally remove the profiles and core fhir types
@@ -237,7 +239,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
       });
       await rm(path.resolve(adaptorPath, 'types', 'fhir.d.ts'));
       await rm(path.resolve(adaptorPath, 'types', 'datatypes.d.ts'));
-    }
+    },
   );
 };
 
