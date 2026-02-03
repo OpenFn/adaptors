@@ -1090,7 +1090,6 @@ interface xhtml {
     value?: string;
 }
 
-type MaybeArray$1E<T> = T | T[];
 type Account_Props = {
     contained?: any[];
     coverage?: BackboneElement[];
@@ -1098,7 +1097,7 @@ type Account_Props = {
     extension?: Extension[];
     guarantor?: BackboneElement[];
     id?: string;
-    identifier?: MaybeArray$1E<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
@@ -1108,17 +1107,16 @@ type Account_Props = {
     partOf?: string | Reference;
     servicePeriod?: Period;
     status?: string;
-    subject?: MaybeArray$1E<string | Reference>;
+    subject?: MaybeArray<string | Reference>;
     text?: Narrative;
     type?: string[] | CodeableConcept;
     [key: string]: any;
 };
 
-type MaybeArray$1D<T> = T | T[];
 type ActivityDefinition_Props = {
     approvalDate?: string;
     author?: ContactDetail[];
-    bodySite?: MaybeArray$1D<string[] | CodeableConcept>;
+    bodySite?: MaybeArray<string[] | CodeableConcept>;
     code?: string[] | CodeableConcept;
     contact?: ContactDetail[];
     contained?: any[];
@@ -1134,10 +1132,10 @@ type ActivityDefinition_Props = {
     experimental?: boolean;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$1D<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     intent?: string;
-    jurisdiction?: MaybeArray$1D<string[] | CodeableConcept>;
+    jurisdiction?: MaybeArray<string[] | CodeableConcept>;
     kind?: string;
     language?: string;
     lastReviewDate?: string;
@@ -1146,8 +1144,8 @@ type ActivityDefinition_Props = {
     meta?: Meta;
     modifierExtension?: Extension[];
     name?: string;
-    observationRequirement?: MaybeArray$1D<string | Reference>;
-    observationResultRequirement?: MaybeArray$1D<string | Reference>;
+    observationRequirement?: MaybeArray<string | Reference>;
+    observationResultRequirement?: MaybeArray<string | Reference>;
     participant?: BackboneElement[];
     priority?: string;
     product?: string | Reference | string[] | CodeableConcept;
@@ -1157,14 +1155,14 @@ type ActivityDefinition_Props = {
     quantity?: Quantity;
     relatedArtifact?: RelatedArtifact[];
     reviewer?: ContactDetail[];
-    specimenRequirement?: MaybeArray$1D<string | Reference>;
+    specimenRequirement?: MaybeArray<string | Reference>;
     status?: string;
     subject?: string[] | CodeableConcept | string | Reference | any;
     subtitle?: string;
     text?: Narrative;
     timing?: Timing | string | Age | Period | Range | Duration;
     title?: string;
-    topic?: MaybeArray$1D<string[] | CodeableConcept>;
+    topic?: MaybeArray<string[] | CodeableConcept>;
     transform?: any;
     url?: string;
     usage?: string;
@@ -1173,21 +1171,20 @@ type ActivityDefinition_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1C<T> = T | T[];
 type AdministrableProductDefinition_Props = {
     administrableDoseForm?: string[] | CodeableConcept;
     contained?: any[];
     device?: string | Reference;
     extension?: Extension[];
-    formOf?: MaybeArray$1C<string | Reference>;
+    formOf?: MaybeArray<string | Reference>;
     id?: string;
-    identifier?: MaybeArray$1C<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
-    ingredient?: MaybeArray$1C<string[] | CodeableConcept>;
+    ingredient?: MaybeArray<string[] | CodeableConcept>;
     language?: string;
     meta?: Meta;
     modifierExtension?: Extension[];
-    producedFrom?: MaybeArray$1C<string | Reference>;
+    producedFrom?: MaybeArray<string | Reference>;
     property?: BackboneElement[];
     routeOfAdministration?: BackboneElement[];
     status?: string;
@@ -1196,12 +1193,11 @@ type AdministrableProductDefinition_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1B<T> = T | T[];
 type AdverseEvent_Props = {
     actuality?: string;
-    category?: MaybeArray$1B<string[] | CodeableConcept>;
+    category?: MaybeArray<string[] | CodeableConcept>;
     contained?: any[];
-    contributor?: MaybeArray$1B<string | Reference>;
+    contributor?: MaybeArray<string | Reference>;
     date?: string;
     detected?: string;
     encounter?: string | Reference;
@@ -1217,19 +1213,18 @@ type AdverseEvent_Props = {
     outcome?: string[] | CodeableConcept;
     recordedDate?: string;
     recorder?: string | Reference;
-    referenceDocument?: MaybeArray$1B<string | Reference>;
-    resultingCondition?: MaybeArray$1B<string | Reference>;
+    referenceDocument?: MaybeArray<string | Reference>;
+    resultingCondition?: MaybeArray<string | Reference>;
     seriousness?: string[] | CodeableConcept;
     severity?: string[] | CodeableConcept;
-    study?: MaybeArray$1B<string | Reference>;
+    study?: MaybeArray<string | Reference>;
     subject?: string | Reference;
-    subjectMedicalHistory?: MaybeArray$1B<string | Reference>;
+    subjectMedicalHistory?: MaybeArray<string | Reference>;
     suspectEntity?: BackboneElement[];
     text?: Narrative;
     [key: string]: any;
 };
 
-type MaybeArray$1A<T> = T | T[];
 type AllergyIntolerance_Props = {
     asserter?: string | Reference;
     category?: string[];
@@ -1240,7 +1235,7 @@ type AllergyIntolerance_Props = {
     encounter?: string | Reference;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$1A<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     lastOccurrence?: string;
@@ -1258,10 +1253,9 @@ type AllergyIntolerance_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1z<T> = T | T[];
 type Appointment_Props = {
     appointmentType?: string[] | CodeableConcept;
-    basedOn?: MaybeArray$1z<string | Reference>;
+    basedOn?: MaybeArray<string | Reference>;
     cancelationReason?: string[] | CodeableConcept;
     comment?: string;
     contained?: any[];
@@ -1270,7 +1264,7 @@ type Appointment_Props = {
     end?: string;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$1z<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
@@ -1279,21 +1273,20 @@ type Appointment_Props = {
     participant?: BackboneElement[];
     patientInstruction?: string;
     priority?: number;
-    reasonCode?: MaybeArray$1z<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$1z<string | Reference>;
+    reasonCode?: MaybeArray<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray<string | Reference>;
     requestedPeriod?: Period[];
-    serviceCategory?: MaybeArray$1z<string[] | CodeableConcept>;
-    serviceType?: MaybeArray$1z<string[] | CodeableConcept>;
-    slot?: MaybeArray$1z<string | Reference>;
-    specialty?: MaybeArray$1z<string[] | CodeableConcept>;
+    serviceCategory?: MaybeArray<string[] | CodeableConcept>;
+    serviceType?: MaybeArray<string[] | CodeableConcept>;
+    slot?: MaybeArray<string | Reference>;
+    specialty?: MaybeArray<string[] | CodeableConcept>;
     start?: string;
     status?: string;
-    supportingInformation?: MaybeArray$1z<string | Reference>;
+    supportingInformation?: MaybeArray<string | Reference>;
     text?: Narrative;
     [key: string]: any;
 };
 
-type MaybeArray$1y<T> = T | T[];
 type AppointmentResponse_Props = {
     actor?: string | Reference;
     appointment?: string | Reference;
@@ -1302,55 +1295,53 @@ type AppointmentResponse_Props = {
     end?: string;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$1y<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
     modifierExtension?: Extension[];
     participantStatus?: string;
-    participantType?: MaybeArray$1y<string[] | CodeableConcept>;
+    participantType?: MaybeArray<string[] | CodeableConcept>;
     start?: string;
     text?: Narrative;
     [key: string]: any;
 };
 
-type MaybeArray$1x<T> = T | T[];
 type BiologicallyDerivedProduct_Props = {
     collection?: BackboneElement;
     contained?: any[];
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$1x<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     manipulation?: BackboneElement;
     meta?: Meta;
     modifierExtension?: Extension[];
-    parent?: MaybeArray$1x<string | Reference>;
+    parent?: MaybeArray<string | Reference>;
     processing?: BackboneElement[];
     productCategory?: string;
     productCode?: string[] | CodeableConcept;
     quantity?: number;
-    request?: MaybeArray$1x<string | Reference>;
+    request?: MaybeArray<string | Reference>;
     status?: string;
     storage?: BackboneElement[];
     text?: Narrative;
     [key: string]: any;
 };
 
-type MaybeArray$1w<T> = T | T[];
 type BodyStructure_Props = {
     active?: boolean;
     contained?: any[];
     description?: string;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$1w<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     image?: Attachment[];
     implicitRules?: string;
     language?: string;
     location?: string[] | CodeableConcept;
-    locationQualifier?: MaybeArray$1w<string[] | CodeableConcept>;
+    locationQualifier?: MaybeArray<string[] | CodeableConcept>;
     meta?: Meta;
     modifierExtension?: Extension[];
     morphology?: string[] | CodeableConcept;
@@ -1359,23 +1350,22 @@ type BodyStructure_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1v<T> = T | T[];
 type CarePlan_Props = {
     activity?: BackboneElement[];
-    addresses?: MaybeArray$1v<string | Reference>;
+    addresses?: MaybeArray<string | Reference>;
     author?: string | Reference;
-    basedOn?: MaybeArray$1v<string | Reference>;
-    careTeam?: MaybeArray$1v<string | Reference>;
-    category?: MaybeArray$1v<string[] | CodeableConcept>;
+    basedOn?: MaybeArray<string | Reference>;
+    careTeam?: MaybeArray<string | Reference>;
+    category?: MaybeArray<string[] | CodeableConcept>;
     contained?: any[];
-    contributor?: MaybeArray$1v<string | Reference>;
+    contributor?: MaybeArray<string | Reference>;
     created?: string;
     description?: string;
     encounter?: string | Reference;
     extension?: Extension[];
-    goal?: MaybeArray$1v<string | Reference>;
+    goal?: MaybeArray<string | Reference>;
     id?: string;
-    identifier?: MaybeArray$1v<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
@@ -1384,36 +1374,35 @@ type CarePlan_Props = {
     meta?: Meta;
     modifierExtension?: Extension[];
     note?: Annotation[];
-    partOf?: MaybeArray$1v<string | Reference>;
+    partOf?: MaybeArray<string | Reference>;
     period?: Period;
-    replaces?: MaybeArray$1v<string | Reference>;
+    replaces?: MaybeArray<string | Reference>;
     status?: string;
     subject?: string | Reference;
-    supportingInfo?: MaybeArray$1v<string | Reference>;
+    supportingInfo?: MaybeArray<string | Reference>;
     text?: Narrative;
     title?: string;
     [key: string]: any;
 };
 
-type MaybeArray$1u<T> = T | T[];
 type CareTeam_Props = {
-    category?: MaybeArray$1u<string[] | CodeableConcept>;
+    category?: MaybeArray<string[] | CodeableConcept>;
     contained?: any[];
     encounter?: string | Reference;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$1u<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
-    managingOrganization?: MaybeArray$1u<string | Reference>;
+    managingOrganization?: MaybeArray<string | Reference>;
     meta?: Meta;
     modifierExtension?: Extension[];
     name?: string;
     note?: Annotation[];
     participant?: BackboneElement[];
     period?: Period;
-    reasonCode?: MaybeArray$1u<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$1u<string | Reference>;
+    reasonCode?: MaybeArray<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray<string | Reference>;
     status?: string;
     subject?: string | Reference;
     telecom?: ContactPoint[];
@@ -1421,10 +1410,9 @@ type CareTeam_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1t<T> = T | T[];
 type ChargeItem_Props = {
-    account?: MaybeArray$1t<string | Reference>;
-    bodysite?: MaybeArray$1t<string[] | CodeableConcept>;
+    account?: MaybeArray<string | Reference>;
+    bodysite?: MaybeArray<string[] | CodeableConcept>;
     code?: string[] | CodeableConcept;
     contained?: any[];
     context?: string | Reference;
@@ -1436,7 +1424,7 @@ type ChargeItem_Props = {
     extension?: Extension[];
     factorOverride?: number;
     id?: string;
-    identifier?: MaybeArray$1t<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
@@ -1444,23 +1432,22 @@ type ChargeItem_Props = {
     note?: Annotation[];
     occurrence?: string | Period | Timing;
     overrideReason?: string;
-    partOf?: MaybeArray$1t<string | Reference>;
+    partOf?: MaybeArray<string | Reference>;
     performer?: BackboneElement[];
     performingOrganization?: string | Reference;
     priceOverride?: Money;
     product?: string | Reference | string[] | CodeableConcept;
     quantity?: Quantity;
-    reason?: MaybeArray$1t<string[] | CodeableConcept>;
+    reason?: MaybeArray<string[] | CodeableConcept>;
     requestingOrganization?: string | Reference;
-    service?: MaybeArray$1t<string | Reference>;
+    service?: MaybeArray<string | Reference>;
     status?: string;
     subject?: string | Reference;
-    supportingInformation?: MaybeArray$1t<string | Reference>;
+    supportingInformation?: MaybeArray<string | Reference>;
     text?: Narrative;
     [key: string]: any;
 };
 
-type MaybeArray$1s<T> = T | T[];
 type ChargeItemDefinition_Props = {
     applicability?: BackboneElement[];
     approvalDate?: string;
@@ -1475,10 +1462,10 @@ type ChargeItemDefinition_Props = {
     experimental?: boolean;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$1s<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
-    instance?: MaybeArray$1s<string | Reference>;
-    jurisdiction?: MaybeArray$1s<string[] | CodeableConcept>;
+    instance?: MaybeArray<string | Reference>;
+    jurisdiction?: MaybeArray<string[] | CodeableConcept>;
     language?: string;
     lastReviewDate?: string;
     meta?: Meta;
@@ -1496,7 +1483,6 @@ type ChargeItemDefinition_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1r<T> = T | T[];
 type Citation_Props = {
     approvalDate?: string;
     author?: ContactDetail[];
@@ -1505,7 +1491,7 @@ type Citation_Props = {
     contact?: ContactDetail[];
     contained?: any[];
     copyright?: markdown;
-    currentState?: MaybeArray$1r<string[] | CodeableConcept>;
+    currentState?: MaybeArray<string[] | CodeableConcept>;
     date?: string;
     description?: markdown;
     editor?: ContactDetail[];
@@ -1514,9 +1500,9 @@ type Citation_Props = {
     experimental?: boolean;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$1r<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
-    jurisdiction?: MaybeArray$1r<string[] | CodeableConcept>;
+    jurisdiction?: MaybeArray<string[] | CodeableConcept>;
     language?: string;
     lastReviewDate?: string;
     meta?: Meta;
@@ -1538,7 +1524,6 @@ type Citation_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1q<T> = T | T[];
 type Claim_Props = {
     accident?: BackboneElement;
     billablePeriod?: Period;
@@ -1551,7 +1536,7 @@ type Claim_Props = {
     facility?: string | Reference;
     fundsReserve?: string[] | CodeableConcept;
     id?: string;
-    identifier?: MaybeArray$1q<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     insurance?: BackboneElement[];
     insurer?: string | Reference;
@@ -1578,11 +1563,10 @@ type Claim_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1p<T> = T | T[];
 type ClaimResponse_Props = {
     addItem?: BackboneElement[];
     adjudication?: any[];
-    communicationRequest?: MaybeArray$1p<string | Reference>;
+    communicationRequest?: MaybeArray<string | Reference>;
     contained?: any[];
     created?: string;
     disposition?: string;
@@ -1592,7 +1576,7 @@ type ClaimResponse_Props = {
     formCode?: string[] | CodeableConcept;
     fundsReserve?: string[] | CodeableConcept;
     id?: string;
-    identifier?: MaybeArray$1p<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     insurance?: BackboneElement[];
     insurer?: string | Reference;
@@ -1618,7 +1602,6 @@ type ClaimResponse_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1o<T> = T | T[];
 type ClinicalImpression_Props = {
     assessor?: string | Reference;
     code?: string[] | CodeableConcept;
@@ -1630,7 +1613,7 @@ type ClinicalImpression_Props = {
     extension?: Extension[];
     finding?: BackboneElement[];
     id?: string;
-    identifier?: MaybeArray$1o<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     investigation?: BackboneElement[];
     language?: string;
@@ -1638,36 +1621,35 @@ type ClinicalImpression_Props = {
     modifierExtension?: Extension[];
     note?: Annotation[];
     previous?: string | Reference;
-    problem?: MaybeArray$1o<string | Reference>;
-    prognosisCodeableConcept?: MaybeArray$1o<string[] | CodeableConcept>;
-    prognosisReference?: MaybeArray$1o<string | Reference>;
+    problem?: MaybeArray<string | Reference>;
+    prognosisCodeableConcept?: MaybeArray<string[] | CodeableConcept>;
+    prognosisReference?: MaybeArray<string | Reference>;
     protocol?: string[];
     status?: string;
     statusReason?: string[] | CodeableConcept;
     subject?: string | Reference;
     summary?: string;
-    supportingInfo?: MaybeArray$1o<string | Reference>;
+    supportingInfo?: MaybeArray<string | Reference>;
     text?: Narrative;
     [key: string]: any;
 };
 
-type MaybeArray$1n<T> = T | T[];
 type ClinicalUseDefinition_Props = {
-    category?: MaybeArray$1n<string[] | CodeableConcept>;
+    category?: MaybeArray<string[] | CodeableConcept>;
     contained?: any[];
     contraindication?: BackboneElement;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$1n<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     indication?: BackboneElement;
     interaction?: BackboneElement;
     language?: string;
     meta?: Meta;
     modifierExtension?: Extension[];
-    population?: MaybeArray$1n<string | Reference>;
+    population?: MaybeArray<string | Reference>;
     status?: string[] | CodeableConcept;
-    subject?: MaybeArray$1n<string | Reference>;
+    subject?: MaybeArray<string | Reference>;
     text?: Narrative;
     type?: string;
     undesirableEffect?: BackboneElement;
@@ -1675,32 +1657,31 @@ type ClinicalUseDefinition_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1m<T> = T | T[];
 type Communication_Props = {
-    about?: MaybeArray$1m<string | Reference>;
-    basedOn?: MaybeArray$1m<string | Reference>;
-    category?: MaybeArray$1m<string[] | CodeableConcept>;
+    about?: MaybeArray<string | Reference>;
+    basedOn?: MaybeArray<string | Reference>;
+    category?: MaybeArray<string[] | CodeableConcept>;
     contained?: any[];
     encounter?: string | Reference;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$1m<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
-    inResponseTo?: MaybeArray$1m<string | Reference>;
+    inResponseTo?: MaybeArray<string | Reference>;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
     language?: string;
-    medium?: MaybeArray$1m<string[] | CodeableConcept>;
+    medium?: MaybeArray<string[] | CodeableConcept>;
     meta?: Meta;
     modifierExtension?: Extension[];
     note?: Annotation[];
-    partOf?: MaybeArray$1m<string | Reference>;
+    partOf?: MaybeArray<string | Reference>;
     payload?: BackboneElement[];
     priority?: string;
-    reasonCode?: MaybeArray$1m<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$1m<string | Reference>;
+    reasonCode?: MaybeArray<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray<string | Reference>;
     received?: string;
-    recipient?: MaybeArray$1m<string | Reference>;
+    recipient?: MaybeArray<string | Reference>;
     sender?: string | Reference;
     sent?: string;
     status?: string;
@@ -1711,32 +1692,31 @@ type Communication_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1l<T> = T | T[];
 type CommunicationRequest_Props = {
-    about?: MaybeArray$1l<string | Reference>;
+    about?: MaybeArray<string | Reference>;
     authoredOn?: string;
-    basedOn?: MaybeArray$1l<string | Reference>;
-    category?: MaybeArray$1l<string[] | CodeableConcept>;
+    basedOn?: MaybeArray<string | Reference>;
+    category?: MaybeArray<string[] | CodeableConcept>;
     contained?: any[];
     doNotPerform?: boolean;
     encounter?: string | Reference;
     extension?: Extension[];
     groupIdentifier?: string | Identifier;
     id?: string;
-    identifier?: MaybeArray$1l<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
-    medium?: MaybeArray$1l<string[] | CodeableConcept>;
+    medium?: MaybeArray<string[] | CodeableConcept>;
     meta?: Meta;
     modifierExtension?: Extension[];
     note?: Annotation[];
     occurrence?: string | Period;
     payload?: BackboneElement[];
     priority?: string;
-    reasonCode?: MaybeArray$1l<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$1l<string | Reference>;
-    recipient?: MaybeArray$1l<string | Reference>;
-    replaces?: MaybeArray$1l<string | Reference>;
+    reasonCode?: MaybeArray<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray<string | Reference>;
+    recipient?: MaybeArray<string | Reference>;
+    replaces?: MaybeArray<string | Reference>;
     requester?: string | Reference;
     sender?: string | Reference;
     status?: string;
@@ -1746,21 +1726,20 @@ type CommunicationRequest_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1k<T> = T | T[];
 type Contract_Props = {
     alias?: string[];
     applies?: Period;
     author?: string | Reference;
-    authority?: MaybeArray$1k<string | Reference>;
+    authority?: MaybeArray<string | Reference>;
     contained?: any[];
     contentDefinition?: BackboneElement;
     contentDerivative?: string[] | CodeableConcept;
-    domain?: MaybeArray$1k<string | Reference>;
+    domain?: MaybeArray<string | Reference>;
     expirationType?: string[] | CodeableConcept;
     extension?: Extension[];
     friendly?: BackboneElement[];
     id?: string;
-    identifier?: MaybeArray$1k<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     instantiatesCanonical?: string | Reference;
     instantiatesUri?: string;
@@ -1772,16 +1751,16 @@ type Contract_Props = {
     meta?: Meta;
     modifierExtension?: Extension[];
     name?: string;
-    relevantHistory?: MaybeArray$1k<string | Reference>;
+    relevantHistory?: MaybeArray<string | Reference>;
     rule?: BackboneElement[];
     scope?: string[] | CodeableConcept;
     signer?: BackboneElement[];
-    site?: MaybeArray$1k<string | Reference>;
+    site?: MaybeArray<string | Reference>;
     status?: string;
-    subType?: MaybeArray$1k<string[] | CodeableConcept>;
-    subject?: MaybeArray$1k<string | Reference>;
+    subType?: MaybeArray<string[] | CodeableConcept>;
+    subject?: MaybeArray<string | Reference>;
     subtitle?: string;
-    supportingInfo?: MaybeArray$1k<string | Reference>;
+    supportingInfo?: MaybeArray<string | Reference>;
     term?: BackboneElement[];
     text?: Narrative;
     title?: string;
@@ -1792,24 +1771,23 @@ type Contract_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1j<T> = T | T[];
 type Coverage_Props = {
     beneficiary?: string | Reference;
     class?: BackboneElement[];
     contained?: any[];
-    contract?: MaybeArray$1j<string | Reference>;
+    contract?: MaybeArray<string | Reference>;
     costToBeneficiary?: BackboneElement[];
     dependent?: string;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$1j<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
     modifierExtension?: Extension[];
     network?: string;
     order?: number;
-    payor?: MaybeArray$1j<string | Reference>;
+    payor?: MaybeArray<string | Reference>;
     period?: Period;
     policyHolder?: string | Reference;
     relationship?: string[] | CodeableConcept;
@@ -1822,7 +1800,6 @@ type Coverage_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1i<T> = T | T[];
 type CoverageEligibilityRequest_Props = {
     contained?: any[];
     created?: string;
@@ -1830,7 +1807,7 @@ type CoverageEligibilityRequest_Props = {
     extension?: Extension[];
     facility?: string | Reference;
     id?: string;
-    identifier?: MaybeArray$1i<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     insurance?: BackboneElement[];
     insurer?: string | Reference;
@@ -1849,7 +1826,6 @@ type CoverageEligibilityRequest_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1h<T> = T | T[];
 type CoverageEligibilityResponse_Props = {
     contained?: any[];
     created?: string;
@@ -1858,7 +1834,7 @@ type CoverageEligibilityResponse_Props = {
     extension?: Extension[];
     form?: string[] | CodeableConcept;
     id?: string;
-    identifier?: MaybeArray$1h<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     insurance?: BackboneElement[];
     insurer?: string | Reference;
@@ -1877,7 +1853,6 @@ type CoverageEligibilityResponse_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1g<T> = T | T[];
 type DetectedIssue_Props = {
     author?: string | Reference;
     code?: string[] | CodeableConcept;
@@ -1887,8 +1862,8 @@ type DetectedIssue_Props = {
     extension?: Extension[];
     id?: string;
     identified?: string | Period;
-    identifier?: MaybeArray$1g<string | Identifier>;
-    implicated?: MaybeArray$1g<string | Reference>;
+    identifier?: MaybeArray<string | Identifier>;
+    implicated?: MaybeArray<string | Reference>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
@@ -1902,7 +1877,6 @@ type DetectedIssue_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1f<T> = T | T[];
 type Device_Props = {
     contact?: ContactPoint[];
     contained?: any[];
@@ -1912,7 +1886,7 @@ type Device_Props = {
     expirationDate?: string;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$1f<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     location?: string | Reference;
@@ -1928,11 +1902,11 @@ type Device_Props = {
     partNumber?: string;
     patient?: string | Reference;
     property?: BackboneElement[];
-    safety?: MaybeArray$1f<string[] | CodeableConcept>;
+    safety?: MaybeArray<string[] | CodeableConcept>;
     serialNumber?: string;
     specialization?: BackboneElement[];
     status?: string;
-    statusReason?: MaybeArray$1f<string[] | CodeableConcept>;
+    statusReason?: MaybeArray<string[] | CodeableConcept>;
     text?: Narrative;
     type?: string[] | CodeableConcept;
     udiCarrier?: BackboneElement[];
@@ -1941,7 +1915,6 @@ type Device_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1e<T> = T | T[];
 type DeviceDefinition_Props = {
     capability?: BackboneElement[];
     contact?: ContactPoint[];
@@ -1949,10 +1922,10 @@ type DeviceDefinition_Props = {
     deviceName?: BackboneElement[];
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$1e<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
-    languageCode?: MaybeArray$1e<string[] | CodeableConcept>;
+    languageCode?: MaybeArray<string[] | CodeableConcept>;
     manufacturer?: string | string | Reference;
     material?: BackboneElement[];
     meta?: Meta;
@@ -1965,7 +1938,7 @@ type DeviceDefinition_Props = {
     physicalCharacteristics?: ProdCharacteristic;
     property?: BackboneElement[];
     quantity?: Quantity;
-    safety?: MaybeArray$1e<string[] | CodeableConcept>;
+    safety?: MaybeArray<string[] | CodeableConcept>;
     shelfLifeStorage?: ProductShelfLife[];
     specialization?: BackboneElement[];
     text?: Narrative;
@@ -1976,7 +1949,6 @@ type DeviceDefinition_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1d<T> = T | T[];
 type DeviceMetric_Props = {
     calibration?: BackboneElement[];
     category?: string;
@@ -1984,7 +1956,7 @@ type DeviceMetric_Props = {
     contained?: any[];
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$1d<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     measurementPeriod?: Timing;
@@ -1999,21 +1971,20 @@ type DeviceMetric_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1c<T> = T | T[];
 type DeviceRequest_Props = {
     authoredOn?: string;
-    basedOn?: MaybeArray$1c<string | Reference>;
+    basedOn?: MaybeArray<string | Reference>;
     code?: string | Reference | string[] | CodeableConcept;
     contained?: any[];
     encounter?: string | Reference;
     extension?: Extension[];
     groupIdentifier?: string | Identifier;
     id?: string;
-    identifier?: MaybeArray$1c<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
-    insurance?: MaybeArray$1c<string | Reference>;
+    insurance?: MaybeArray<string | Reference>;
     intent?: string;
     language?: string;
     meta?: Meta;
@@ -2023,36 +1994,35 @@ type DeviceRequest_Props = {
     parameter?: BackboneElement[];
     performer?: string | Reference;
     performerType?: string[] | CodeableConcept;
-    priorRequest?: MaybeArray$1c<string | Reference>;
+    priorRequest?: MaybeArray<string | Reference>;
     priority?: string;
-    reasonCode?: MaybeArray$1c<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$1c<string | Reference>;
-    relevantHistory?: MaybeArray$1c<string | Reference>;
+    reasonCode?: MaybeArray<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray<string | Reference>;
+    relevantHistory?: MaybeArray<string | Reference>;
     requester?: string | Reference;
     status?: string;
     subject?: string | Reference;
-    supportingInfo?: MaybeArray$1c<string | Reference>;
+    supportingInfo?: MaybeArray<string | Reference>;
     text?: Narrative;
     [key: string]: any;
 };
 
-type MaybeArray$1b<T> = T | T[];
 type DeviceUseStatement_Props = {
-    basedOn?: MaybeArray$1b<string | Reference>;
+    basedOn?: MaybeArray<string | Reference>;
     bodySite?: string[] | CodeableConcept;
     contained?: any[];
-    derivedFrom?: MaybeArray$1b<string | Reference>;
+    derivedFrom?: MaybeArray<string | Reference>;
     device?: string | Reference;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$1b<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
     modifierExtension?: Extension[];
     note?: Annotation[];
-    reasonCode?: MaybeArray$1b<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$1b<string | Reference>;
+    reasonCode?: MaybeArray<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray<string | Reference>;
     recordedOn?: string;
     source?: string | Reference;
     status?: string;
@@ -2062,31 +2032,30 @@ type DeviceUseStatement_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1a<T> = T | T[];
 type DiagnosticReport_Props = {
-    basedOn?: MaybeArray$1a<string | Reference>;
-    category?: MaybeArray$1a<string[] | CodeableConcept>;
+    basedOn?: MaybeArray<string | Reference>;
+    category?: MaybeArray<string[] | CodeableConcept>;
     code?: string[] | CodeableConcept;
     conclusion?: string;
-    conclusionCode?: MaybeArray$1a<string[] | CodeableConcept>;
+    conclusionCode?: MaybeArray<string[] | CodeableConcept>;
     contained?: any[];
     effective?: string | Period;
     encounter?: string | Reference;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$1a<string | Identifier>;
-    imagingStudy?: MaybeArray$1a<string | Reference>;
+    identifier?: MaybeArray<string | Identifier>;
+    imagingStudy?: MaybeArray<string | Reference>;
     implicitRules?: string;
     issued?: string;
     language?: string;
     media?: BackboneElement[];
     meta?: Meta;
     modifierExtension?: Extension[];
-    performer?: MaybeArray$1a<string | Reference>;
+    performer?: MaybeArray<string | Reference>;
     presentedForm?: Attachment[];
-    result?: MaybeArray$1a<string | Reference>;
-    resultsInterpreter?: MaybeArray$1a<string | Reference>;
-    specimen?: MaybeArray$1a<string | Reference>;
+    result?: MaybeArray<string | Reference>;
+    resultsInterpreter?: MaybeArray<string | Reference>;
+    specimen?: MaybeArray<string | Reference>;
     status?: string;
     subject?: string | Reference;
     text?: Narrative;
@@ -2105,20 +2074,19 @@ type DomainResource_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$19<T> = T | T[];
 type Encounter_Props = {
-    account?: MaybeArray$19<string | Reference>;
-    appointment?: MaybeArray$19<string | Reference>;
-    basedOn?: MaybeArray$19<string | Reference>;
+    account?: MaybeArray<string | Reference>;
+    appointment?: MaybeArray<string | Reference>;
+    basedOn?: MaybeArray<string | Reference>;
     class?: Coding;
     classHistory?: BackboneElement[];
     contained?: any[];
     diagnosis?: BackboneElement[];
-    episodeOfCare?: MaybeArray$19<string | Reference>;
+    episodeOfCare?: MaybeArray<string | Reference>;
     extension?: Extension[];
     hospitalization?: BackboneElement;
     id?: string;
-    identifier?: MaybeArray$19<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     length?: Duration;
@@ -2129,19 +2097,18 @@ type Encounter_Props = {
     participant?: BackboneElement[];
     period?: Period;
     priority?: string[] | CodeableConcept;
-    reasonCode?: MaybeArray$19<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$19<string | Reference>;
+    reasonCode?: MaybeArray<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray<string | Reference>;
     serviceProvider?: string | Reference;
     serviceType?: string[] | CodeableConcept;
     status?: string;
     statusHistory?: BackboneElement[];
     subject?: string | Reference;
     text?: Narrative;
-    type?: MaybeArray$19<string[] | CodeableConcept>;
+    type?: MaybeArray<string[] | CodeableConcept>;
     [key: string]: any;
 };
 
-type MaybeArray$18<T> = T | T[];
 type EnrollmentRequest_Props = {
     candidate?: string | Reference;
     contained?: any[];
@@ -2149,7 +2116,7 @@ type EnrollmentRequest_Props = {
     created?: string;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$18<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     insurer?: string | Reference;
     language?: string;
@@ -2161,14 +2128,13 @@ type EnrollmentRequest_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$17<T> = T | T[];
 type EnrollmentResponse_Props = {
     contained?: any[];
     created?: string;
     disposition?: string;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$17<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
@@ -2182,15 +2148,14 @@ type EnrollmentResponse_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$16<T> = T | T[];
 type EpisodeOfCare_Props = {
-    account?: MaybeArray$16<string | Reference>;
+    account?: MaybeArray<string | Reference>;
     careManager?: string | Reference;
     contained?: any[];
     diagnosis?: BackboneElement[];
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$16<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     managingOrganization?: string | Reference;
@@ -2198,16 +2163,15 @@ type EpisodeOfCare_Props = {
     modifierExtension?: Extension[];
     patient?: string | Reference;
     period?: Period;
-    referralRequest?: MaybeArray$16<string | Reference>;
+    referralRequest?: MaybeArray<string | Reference>;
     status?: string;
     statusHistory?: BackboneElement[];
-    team?: MaybeArray$16<string | Reference>;
+    team?: MaybeArray<string | Reference>;
     text?: Narrative;
-    type?: MaybeArray$16<string[] | CodeableConcept>;
+    type?: MaybeArray<string[] | CodeableConcept>;
     [key: string]: any;
 };
 
-type MaybeArray$15<T> = T | T[];
 type EventDefinition_Props = {
     approvalDate?: string;
     author?: ContactDetail[];
@@ -2222,9 +2186,9 @@ type EventDefinition_Props = {
     experimental?: boolean;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$15<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
-    jurisdiction?: MaybeArray$15<string[] | CodeableConcept>;
+    jurisdiction?: MaybeArray<string[] | CodeableConcept>;
     language?: string;
     lastReviewDate?: string;
     meta?: Meta;
@@ -2239,7 +2203,7 @@ type EventDefinition_Props = {
     subtitle?: string;
     text?: Narrative;
     title?: string;
-    topic?: MaybeArray$15<string[] | CodeableConcept>;
+    topic?: MaybeArray<string[] | CodeableConcept>;
     trigger?: TriggerDefinition[];
     url?: string;
     usage?: string;
@@ -2248,7 +2212,6 @@ type EventDefinition_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$14<T> = T | T[];
 type Evidence_Props = {
     approvalDate?: string;
     assertion?: markdown;
@@ -2263,7 +2226,7 @@ type Evidence_Props = {
     endorser?: ContactDetail[];
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$14<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     lastReviewDate?: string;
@@ -2286,7 +2249,6 @@ type Evidence_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$13<T> = T | T[];
 type EvidenceReport_Props = {
     author?: ContactDetail[];
     citeAs?: string | Reference | markdown;
@@ -2296,7 +2258,7 @@ type EvidenceReport_Props = {
     endorser?: ContactDetail[];
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$13<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
@@ -2304,7 +2266,7 @@ type EvidenceReport_Props = {
     note?: Annotation[];
     publisher?: string;
     relatedArtifact?: RelatedArtifact[];
-    relatedIdentifier?: MaybeArray$13<string | Identifier>;
+    relatedIdentifier?: MaybeArray<string | Identifier>;
     relatesTo?: BackboneElement[];
     reviewer?: ContactDetail[];
     section?: BackboneElement[];
@@ -2317,7 +2279,6 @@ type EvidenceReport_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$12<T> = T | T[];
 type EvidenceVariable_Props = {
     actual?: boolean;
     author?: ContactDetail[];
@@ -2333,7 +2294,7 @@ type EvidenceVariable_Props = {
     extension?: Extension[];
     handling?: string;
     id?: string;
-    identifier?: MaybeArray$12<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
@@ -2354,7 +2315,6 @@ type EvidenceVariable_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$11<T> = T | T[];
 type ExplanationOfBenefit_Props = {
     accident?: BackboneElement;
     addItem?: BackboneElement[];
@@ -2377,7 +2337,7 @@ type ExplanationOfBenefit_Props = {
     fundsReserve?: string[] | CodeableConcept;
     fundsReserveRequested?: string[] | CodeableConcept;
     id?: string;
-    identifier?: MaybeArray$11<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     insurance?: BackboneElement[];
     insurer?: string | Reference;
@@ -2410,7 +2370,6 @@ type ExplanationOfBenefit_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$10<T> = T | T[];
 type FamilyMemberHistory_Props = {
     age?: Age | Range | string;
     born?: Period | string;
@@ -2422,7 +2381,7 @@ type FamilyMemberHistory_Props = {
     estimatedAge?: boolean;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$10<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
@@ -2432,8 +2391,8 @@ type FamilyMemberHistory_Props = {
     name?: string;
     note?: Annotation[];
     patient?: string | Reference;
-    reasonCode?: MaybeArray$10<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$10<string | Reference>;
+    reasonCode?: MaybeArray<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray<string | Reference>;
     relationship?: string[] | CodeableConcept;
     sex?: string[] | CodeableConcept;
     status?: string;
@@ -2441,16 +2400,15 @@ type FamilyMemberHistory_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$$<T> = T | T[];
 type Flag_Props = {
     author?: string | Reference;
-    category?: MaybeArray$$<string[] | CodeableConcept>;
+    category?: MaybeArray<string[] | CodeableConcept>;
     code?: string[] | CodeableConcept;
     contained?: any[];
     encounter?: string | Reference;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$$<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
@@ -2462,25 +2420,24 @@ type Flag_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$_<T> = T | T[];
 type Goal_Props = {
     achievementStatus?: string[] | CodeableConcept;
-    addresses?: MaybeArray$_<string | Reference>;
-    category?: MaybeArray$_<string[] | CodeableConcept>;
+    addresses?: MaybeArray<string | Reference>;
+    category?: MaybeArray<string[] | CodeableConcept>;
     contained?: any[];
     description?: string[] | CodeableConcept;
     expressedBy?: string | Reference;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$_<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     lifecycleStatus?: string;
     meta?: Meta;
     modifierExtension?: Extension[];
     note?: Annotation[];
-    outcomeCode?: MaybeArray$_<string[] | CodeableConcept>;
-    outcomeReference?: MaybeArray$_<string | Reference>;
+    outcomeCode?: MaybeArray<string[] | CodeableConcept>;
+    outcomeReference?: MaybeArray<string | Reference>;
     priority?: string[] | CodeableConcept;
     start?: string | string[] | CodeableConcept;
     statusDate?: string;
@@ -2491,7 +2448,6 @@ type Goal_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$Z<T> = T | T[];
 type Group_Props = {
     active?: boolean;
     actual?: boolean;
@@ -2500,7 +2456,7 @@ type Group_Props = {
     contained?: any[];
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$Z<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     managingEntity?: string | Reference;
@@ -2514,15 +2470,14 @@ type Group_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$Y<T> = T | T[];
 type GuidanceResponse_Props = {
     contained?: any[];
     dataRequirement?: DataRequirement[];
     encounter?: string | Reference;
-    evaluationMessage?: MaybeArray$Y<string | Reference>;
+    evaluationMessage?: MaybeArray<string | Reference>;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$Y<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
@@ -2532,8 +2487,8 @@ type GuidanceResponse_Props = {
     occurrenceDateTime?: string;
     outputParameters?: string | Reference;
     performer?: string | Reference;
-    reasonCode?: MaybeArray$Y<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$Y<string | Reference>;
+    reasonCode?: MaybeArray<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray<string | Reference>;
     requestIdentifier?: string | Identifier;
     result?: string | Reference;
     status?: string;
@@ -2542,55 +2497,53 @@ type GuidanceResponse_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$X<T> = T | T[];
 type HealthcareService_Props = {
     active?: boolean;
     appointmentRequired?: boolean;
     availabilityExceptions?: string;
     availableTime?: BackboneElement[];
-    category?: MaybeArray$X<string[] | CodeableConcept>;
-    characteristic?: MaybeArray$X<string[] | CodeableConcept>;
+    category?: MaybeArray<string[] | CodeableConcept>;
+    characteristic?: MaybeArray<string[] | CodeableConcept>;
     comment?: string;
-    communication?: MaybeArray$X<string[] | CodeableConcept>;
+    communication?: MaybeArray<string[] | CodeableConcept>;
     contained?: any[];
-    coverageArea?: MaybeArray$X<string | Reference>;
+    coverageArea?: MaybeArray<string | Reference>;
     eligibility?: BackboneElement[];
-    endpoint?: MaybeArray$X<string | Reference>;
+    endpoint?: MaybeArray<string | Reference>;
     extension?: Extension[];
     extraDetails?: markdown;
     id?: string;
-    identifier?: MaybeArray$X<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
-    location?: MaybeArray$X<string | Reference>;
+    location?: MaybeArray<string | Reference>;
     meta?: Meta;
     modifierExtension?: Extension[];
     name?: string;
     notAvailable?: BackboneElement[];
     photo?: Attachment;
-    program?: MaybeArray$X<string[] | CodeableConcept>;
+    program?: MaybeArray<string[] | CodeableConcept>;
     providedBy?: string | Reference;
-    referralMethod?: MaybeArray$X<string[] | CodeableConcept>;
-    serviceProvisionCode?: MaybeArray$X<string[] | CodeableConcept>;
-    specialty?: MaybeArray$X<string[] | CodeableConcept>;
+    referralMethod?: MaybeArray<string[] | CodeableConcept>;
+    serviceProvisionCode?: MaybeArray<string[] | CodeableConcept>;
+    specialty?: MaybeArray<string[] | CodeableConcept>;
     telecom?: ContactPoint[];
     text?: Narrative;
-    type?: MaybeArray$X<string[] | CodeableConcept>;
+    type?: MaybeArray<string[] | CodeableConcept>;
     [key: string]: any;
 };
 
-type MaybeArray$W<T> = T | T[];
 type ImagingStudy_Props = {
-    basedOn?: MaybeArray$W<string | Reference>;
+    basedOn?: MaybeArray<string | Reference>;
     contained?: any[];
     description?: string;
     encounter?: string | Reference;
-    endpoint?: MaybeArray$W<string | Reference>;
+    endpoint?: MaybeArray<string | Reference>;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$W<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
-    interpreter?: MaybeArray$W<string | Reference>;
+    interpreter?: MaybeArray<string | Reference>;
     language?: string;
     location?: string | Reference;
     meta?: Meta;
@@ -2599,10 +2552,10 @@ type ImagingStudy_Props = {
     note?: Annotation[];
     numberOfInstances?: number;
     numberOfSeries?: number;
-    procedureCode?: MaybeArray$W<string[] | CodeableConcept>;
+    procedureCode?: MaybeArray<string[] | CodeableConcept>;
     procedureReference?: string | Reference;
-    reasonCode?: MaybeArray$W<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$W<string | Reference>;
+    reasonCode?: MaybeArray<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray<string | Reference>;
     referrer?: string | Reference;
     series?: BackboneElement[];
     started?: string;
@@ -2612,7 +2565,6 @@ type ImagingStudy_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$V<T> = T | T[];
 type Immunization_Props = {
     contained?: any[];
     doseQuantity?: Quantity;
@@ -2622,7 +2574,7 @@ type Immunization_Props = {
     extension?: Extension[];
     fundingSource?: string[] | CodeableConcept;
     id?: string;
-    identifier?: MaybeArray$V<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     isSubpotent?: boolean;
     language?: string;
@@ -2636,24 +2588,23 @@ type Immunization_Props = {
     patient?: string | Reference;
     performer?: BackboneElement[];
     primarySource?: boolean;
-    programEligibility?: MaybeArray$V<string[] | CodeableConcept>;
+    programEligibility?: MaybeArray<string[] | CodeableConcept>;
     protocolApplied?: BackboneElement[];
     reaction?: BackboneElement[];
-    reasonCode?: MaybeArray$V<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$V<string | Reference>;
+    reasonCode?: MaybeArray<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray<string | Reference>;
     recorded?: string;
     reportOrigin?: string[] | CodeableConcept;
     route?: string[] | CodeableConcept;
     site?: string[] | CodeableConcept;
     status?: string;
     statusReason?: string[] | CodeableConcept;
-    subpotentReason?: MaybeArray$V<string[] | CodeableConcept>;
+    subpotentReason?: MaybeArray<string[] | CodeableConcept>;
     text?: Narrative;
     vaccineCode?: string[] | CodeableConcept;
     [key: string]: any;
 };
 
-type MaybeArray$U<T> = T | T[];
 type ImmunizationEvaluation_Props = {
     authority?: string | Reference;
     contained?: any[];
@@ -2661,10 +2612,10 @@ type ImmunizationEvaluation_Props = {
     description?: string;
     doseNumber?: number | string;
     doseStatus?: string[] | CodeableConcept;
-    doseStatusReason?: MaybeArray$U<string[] | CodeableConcept>;
+    doseStatusReason?: MaybeArray<string[] | CodeableConcept>;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$U<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     immunizationEvent?: string | Reference;
     implicitRules?: string;
     language?: string;
@@ -2679,14 +2630,13 @@ type ImmunizationEvaluation_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$T<T> = T | T[];
 type ImmunizationRecommendation_Props = {
     authority?: string | Reference;
     contained?: any[];
     date?: string;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$T<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
@@ -2697,13 +2647,12 @@ type ImmunizationRecommendation_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$S<T> = T | T[];
 type Ingredient_Props = {
     allergenicIndicator?: boolean;
     contained?: any[];
     extension?: Extension[];
-    for?: MaybeArray$S<string | Reference>;
-    function?: MaybeArray$S<string[] | CodeableConcept>;
+    for?: MaybeArray<string | Reference>;
+    function?: MaybeArray<string[] | CodeableConcept>;
     id?: string;
     identifier?: string | Identifier;
     implicitRules?: string;
@@ -2718,34 +2667,32 @@ type Ingredient_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$R<T> = T | T[];
 type InsurancePlan_Props = {
     administeredBy?: string | Reference;
     alias?: string[];
     contact?: BackboneElement[];
     contained?: any[];
     coverage?: BackboneElement[];
-    coverageArea?: MaybeArray$R<string | Reference>;
-    endpoint?: MaybeArray$R<string | Reference>;
+    coverageArea?: MaybeArray<string | Reference>;
+    endpoint?: MaybeArray<string | Reference>;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$R<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
     modifierExtension?: Extension[];
     name?: string;
-    network?: MaybeArray$R<string | Reference>;
+    network?: MaybeArray<string | Reference>;
     ownedBy?: string | Reference;
     period?: Period;
     plan?: BackboneElement[];
     status?: string;
     text?: Narrative;
-    type?: MaybeArray$R<string[] | CodeableConcept>;
+    type?: MaybeArray<string[] | CodeableConcept>;
     [key: string]: any;
 };
 
-type MaybeArray$Q<T> = T | T[];
 type Invoice_Props = {
     account?: string | Reference;
     cancelledReason?: string;
@@ -2753,7 +2700,7 @@ type Invoice_Props = {
     date?: string;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$Q<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     issuer?: string | Reference;
     language?: string;
@@ -2774,7 +2721,6 @@ type Invoice_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$P<T> = T | T[];
 type Library_Props = {
     approvalDate?: string;
     author?: ContactDetail[];
@@ -2791,9 +2737,9 @@ type Library_Props = {
     experimental?: boolean;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$P<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
-    jurisdiction?: MaybeArray$P<string[] | CodeableConcept>;
+    jurisdiction?: MaybeArray<string[] | CodeableConcept>;
     language?: string;
     lastReviewDate?: string;
     meta?: Meta;
@@ -2809,7 +2755,7 @@ type Library_Props = {
     subtitle?: string;
     text?: Narrative;
     title?: string;
-    topic?: MaybeArray$P<string[] | CodeableConcept>;
+    topic?: MaybeArray<string[] | CodeableConcept>;
     type?: string[] | CodeableConcept;
     url?: string;
     usage?: string;
@@ -2818,7 +2764,6 @@ type Library_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$O<T> = T | T[];
 type List_Props = {
     code?: string[] | CodeableConcept;
     contained?: any[];
@@ -2828,7 +2773,7 @@ type List_Props = {
     entry?: BackboneElement[];
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$O<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
@@ -2844,18 +2789,17 @@ type List_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$N<T> = T | T[];
 type Location_Props = {
     address?: Address;
     alias?: string[];
     availabilityExceptions?: string;
     contained?: any[];
     description?: string;
-    endpoint?: MaybeArray$N<string | Reference>;
+    endpoint?: MaybeArray<string | Reference>;
     extension?: Extension[];
     hoursOfOperation?: BackboneElement[];
     id?: string;
-    identifier?: MaybeArray$N<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     managingOrganization?: string | Reference;
@@ -2870,21 +2814,20 @@ type Location_Props = {
     status?: string;
     telecom?: ContactPoint[];
     text?: Narrative;
-    type?: MaybeArray$N<string[] | CodeableConcept>;
+    type?: MaybeArray<string[] | CodeableConcept>;
     [key: string]: any;
 };
 
-type MaybeArray$M<T> = T | T[];
 type ManufacturedItemDefinition_Props = {
     contained?: any[];
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$M<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
-    ingredient?: MaybeArray$M<string[] | CodeableConcept>;
+    ingredient?: MaybeArray<string[] | CodeableConcept>;
     language?: string;
     manufacturedDoseForm?: string[] | CodeableConcept;
-    manufacturer?: MaybeArray$M<string | Reference>;
+    manufacturer?: MaybeArray<string | Reference>;
     meta?: Meta;
     modifierExtension?: Extension[];
     property?: BackboneElement[];
@@ -2894,7 +2837,6 @@ type ManufacturedItemDefinition_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$L<T> = T | T[];
 type Measure_Props = {
     approvalDate?: string;
     author?: ContactDetail[];
@@ -2915,10 +2857,10 @@ type Measure_Props = {
     group?: BackboneElement[];
     guidance?: markdown;
     id?: string;
-    identifier?: MaybeArray$L<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     improvementNotation?: string[] | CodeableConcept;
-    jurisdiction?: MaybeArray$L<string[] | CodeableConcept>;
+    jurisdiction?: MaybeArray<string[] | CodeableConcept>;
     language?: string;
     lastReviewDate?: string;
     library?: any[];
@@ -2939,8 +2881,8 @@ type Measure_Props = {
     supplementalData?: BackboneElement[];
     text?: Narrative;
     title?: string;
-    topic?: MaybeArray$L<string[] | CodeableConcept>;
-    type?: MaybeArray$L<string[] | CodeableConcept>;
+    topic?: MaybeArray<string[] | CodeableConcept>;
+    type?: MaybeArray<string[] | CodeableConcept>;
     url?: string;
     usage?: string;
     useContext?: UsageContext[];
@@ -2948,15 +2890,14 @@ type Measure_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$K<T> = T | T[];
 type MeasureReport_Props = {
     contained?: any[];
     date?: string;
-    evaluatedResource?: MaybeArray$K<string | Reference>;
+    evaluatedResource?: MaybeArray<string | Reference>;
     extension?: Extension[];
     group?: BackboneElement[];
     id?: string;
-    identifier?: MaybeArray$K<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     improvementNotation?: string[] | CodeableConcept;
     language?: string;
@@ -2972,9 +2913,8 @@ type MeasureReport_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$J<T> = T | T[];
 type Media_Props = {
-    basedOn?: MaybeArray$J<string | Reference>;
+    basedOn?: MaybeArray<string | Reference>;
     bodySite?: string[] | CodeableConcept;
     contained?: any[];
     content?: Attachment;
@@ -2987,7 +2927,7 @@ type Media_Props = {
     frames?: number;
     height?: number;
     id?: string;
-    identifier?: MaybeArray$J<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     issued?: string;
     language?: string;
@@ -2996,8 +2936,8 @@ type Media_Props = {
     modifierExtension?: Extension[];
     note?: Annotation[];
     operator?: string | Reference;
-    partOf?: MaybeArray$J<string | Reference>;
-    reasonCode?: MaybeArray$J<string[] | CodeableConcept>;
+    partOf?: MaybeArray<string | Reference>;
+    reasonCode?: MaybeArray<string[] | CodeableConcept>;
     status?: string;
     subject?: string | Reference;
     text?: Narrative;
@@ -3007,7 +2947,6 @@ type Media_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$I<T> = T | T[];
 type Medication_Props = {
     amount?: Ratio;
     batch?: BackboneElement;
@@ -3016,7 +2955,7 @@ type Medication_Props = {
     extension?: Extension[];
     form?: string[] | CodeableConcept;
     id?: string;
-    identifier?: MaybeArray$I<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     ingredient?: BackboneElement[];
     language?: string;
@@ -3028,18 +2967,17 @@ type Medication_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$H<T> = T | T[];
 type MedicationAdministration_Props = {
     category?: string[] | CodeableConcept;
     contained?: any[];
     context?: string | Reference;
-    device?: MaybeArray$H<string | Reference>;
+    device?: MaybeArray<string | Reference>;
     dosage?: BackboneElement;
     effective?: string | Period;
-    eventHistory?: MaybeArray$H<string | Reference>;
+    eventHistory?: MaybeArray<string | Reference>;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$H<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     instantiates?: string[];
     language?: string;
@@ -3047,33 +2985,32 @@ type MedicationAdministration_Props = {
     meta?: Meta;
     modifierExtension?: Extension[];
     note?: Annotation[];
-    partOf?: MaybeArray$H<string | Reference>;
+    partOf?: MaybeArray<string | Reference>;
     performer?: BackboneElement[];
-    reasonCode?: MaybeArray$H<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$H<string | Reference>;
+    reasonCode?: MaybeArray<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray<string | Reference>;
     request?: string | Reference;
     status?: string;
-    statusReason?: MaybeArray$H<string[] | CodeableConcept>;
+    statusReason?: MaybeArray<string[] | CodeableConcept>;
     subject?: string | Reference;
-    supportingInformation?: MaybeArray$H<string | Reference>;
+    supportingInformation?: MaybeArray<string | Reference>;
     text?: Narrative;
     [key: string]: any;
 };
 
-type MaybeArray$G<T> = T | T[];
 type MedicationDispense_Props = {
-    authorizingPrescription?: MaybeArray$G<string | Reference>;
+    authorizingPrescription?: MaybeArray<string | Reference>;
     category?: string[] | CodeableConcept;
     contained?: any[];
     context?: string | Reference;
     daysSupply?: Quantity;
     destination?: string | Reference;
-    detectedIssue?: MaybeArray$G<string | Reference>;
+    detectedIssue?: MaybeArray<string | Reference>;
     dosageInstruction?: Dosage[];
-    eventHistory?: MaybeArray$G<string | Reference>;
+    eventHistory?: MaybeArray<string | Reference>;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$G<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     location?: string | Reference;
@@ -3081,15 +3018,15 @@ type MedicationDispense_Props = {
     meta?: Meta;
     modifierExtension?: Extension[];
     note?: Annotation[];
-    partOf?: MaybeArray$G<string | Reference>;
+    partOf?: MaybeArray<string | Reference>;
     performer?: BackboneElement[];
     quantity?: Quantity;
-    receiver?: MaybeArray$G<string | Reference>;
+    receiver?: MaybeArray<string | Reference>;
     status?: string;
     statusReason?: string[] | CodeableConcept | string | Reference;
     subject?: string | Reference;
     substitution?: BackboneElement;
-    supportingInformation?: MaybeArray$G<string | Reference>;
+    supportingInformation?: MaybeArray<string | Reference>;
     text?: Narrative;
     type?: string[] | CodeableConcept;
     whenHandedOver?: string;
@@ -3097,14 +3034,13 @@ type MedicationDispense_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$F<T> = T | T[];
 type MedicationKnowledge_Props = {
     administrationGuidelines?: BackboneElement[];
     amount?: Quantity;
-    associatedMedication?: MaybeArray$F<string | Reference>;
+    associatedMedication?: MaybeArray<string | Reference>;
     code?: string[] | CodeableConcept;
     contained?: any[];
-    contraindication?: MaybeArray$F<string | Reference>;
+    contraindication?: MaybeArray<string | Reference>;
     cost?: BackboneElement[];
     doseForm?: string[] | CodeableConcept;
     drugCharacteristic?: BackboneElement[];
@@ -3112,7 +3048,7 @@ type MedicationKnowledge_Props = {
     id?: string;
     implicitRules?: string;
     ingredient?: BackboneElement[];
-    intendedRoute?: MaybeArray$F<string[] | CodeableConcept>;
+    intendedRoute?: MaybeArray<string[] | CodeableConcept>;
     kinetics?: BackboneElement[];
     language?: string;
     manufacturer?: string | Reference;
@@ -3123,7 +3059,7 @@ type MedicationKnowledge_Props = {
     monograph?: BackboneElement[];
     packaging?: BackboneElement;
     preparationInstruction?: markdown;
-    productType?: MaybeArray$F<string[] | CodeableConcept>;
+    productType?: MaybeArray<string[] | CodeableConcept>;
     regulatory?: BackboneElement[];
     relatedMedicationKnowledge?: BackboneElement[];
     status?: string;
@@ -3132,27 +3068,26 @@ type MedicationKnowledge_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$E<T> = T | T[];
 type MedicationRequest_Props = {
     authoredOn?: string;
-    basedOn?: MaybeArray$E<string | Reference>;
-    category?: MaybeArray$E<string[] | CodeableConcept>;
+    basedOn?: MaybeArray<string | Reference>;
+    category?: MaybeArray<string[] | CodeableConcept>;
     contained?: any[];
     courseOfTherapyType?: string[] | CodeableConcept;
-    detectedIssue?: MaybeArray$E<string | Reference>;
+    detectedIssue?: MaybeArray<string | Reference>;
     dispenseRequest?: BackboneElement;
     doNotPerform?: boolean;
     dosageInstruction?: Dosage[];
     encounter?: string | Reference;
-    eventHistory?: MaybeArray$E<string | Reference>;
+    eventHistory?: MaybeArray<string | Reference>;
     extension?: Extension[];
     groupIdentifier?: string | Identifier;
     id?: string;
-    identifier?: MaybeArray$E<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
-    insurance?: MaybeArray$E<string | Reference>;
+    insurance?: MaybeArray<string | Reference>;
     intent?: string;
     language?: string;
     medication?: string[] | CodeableConcept | string | Reference;
@@ -3163,8 +3098,8 @@ type MedicationRequest_Props = {
     performerType?: string[] | CodeableConcept;
     priorPrescription?: string | Reference;
     priority?: string;
-    reasonCode?: MaybeArray$E<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$E<string | Reference>;
+    reasonCode?: MaybeArray<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray<string | Reference>;
     recorder?: string | Reference;
     reported?: boolean | string | Reference;
     requester?: string | Reference;
@@ -3172,24 +3107,23 @@ type MedicationRequest_Props = {
     statusReason?: string[] | CodeableConcept;
     subject?: string | Reference;
     substitution?: BackboneElement;
-    supportingInformation?: MaybeArray$E<string | Reference>;
+    supportingInformation?: MaybeArray<string | Reference>;
     text?: Narrative;
     [key: string]: any;
 };
 
-type MaybeArray$D<T> = T | T[];
 type MedicationStatement_Props = {
-    basedOn?: MaybeArray$D<string | Reference>;
+    basedOn?: MaybeArray<string | Reference>;
     category?: string[] | CodeableConcept;
     contained?: any[];
     context?: string | Reference;
     dateAsserted?: string;
-    derivedFrom?: MaybeArray$D<string | Reference>;
+    derivedFrom?: MaybeArray<string | Reference>;
     dosage?: Dosage[];
     effective?: string | Period;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$D<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     informationSource?: string | Reference;
     language?: string;
@@ -3197,23 +3131,22 @@ type MedicationStatement_Props = {
     meta?: Meta;
     modifierExtension?: Extension[];
     note?: Annotation[];
-    partOf?: MaybeArray$D<string | Reference>;
-    reasonCode?: MaybeArray$D<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$D<string | Reference>;
+    partOf?: MaybeArray<string | Reference>;
+    reasonCode?: MaybeArray<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray<string | Reference>;
     status?: string;
-    statusReason?: MaybeArray$D<string[] | CodeableConcept>;
+    statusReason?: MaybeArray<string[] | CodeableConcept>;
     subject?: string | Reference;
     text?: Narrative;
     [key: string]: any;
 };
 
-type MaybeArray$C<T> = T | T[];
 type MedicinalProductDefinition_Props = {
     additionalMonitoringIndicator?: string[] | CodeableConcept;
-    attachedDocument?: MaybeArray$C<string | Reference>;
+    attachedDocument?: MaybeArray<string | Reference>;
     characteristic?: BackboneElement[];
-    classification?: MaybeArray$C<string[] | CodeableConcept>;
-    clinicalTrial?: MaybeArray$C<string | Reference>;
+    classification?: MaybeArray<string[] | CodeableConcept>;
+    clinicalTrial?: MaybeArray<string | Reference>;
     code?: Coding[];
     combinedPharmaceuticalDoseForm?: string[] | CodeableConcept;
     contact?: BackboneElement[];
@@ -3223,23 +3156,23 @@ type MedicinalProductDefinition_Props = {
     domain?: string[] | CodeableConcept;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$C<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     impurity?: CodeableReference[];
     indication?: markdown;
-    ingredient?: MaybeArray$C<string[] | CodeableConcept>;
+    ingredient?: MaybeArray<string[] | CodeableConcept>;
     language?: string;
     legalStatusOfSupply?: string[] | CodeableConcept;
     marketingStatus?: MarketingStatus[];
-    masterFile?: MaybeArray$C<string | Reference>;
+    masterFile?: MaybeArray<string | Reference>;
     meta?: Meta;
     modifierExtension?: Extension[];
     name?: BackboneElement[];
     operation?: BackboneElement[];
-    packagedMedicinalProduct?: MaybeArray$C<string[] | CodeableConcept>;
+    packagedMedicinalProduct?: MaybeArray<string[] | CodeableConcept>;
     pediatricUseIndicator?: string[] | CodeableConcept;
-    route?: MaybeArray$C<string[] | CodeableConcept>;
-    specialMeasures?: MaybeArray$C<string[] | CodeableConcept>;
+    route?: MaybeArray<string[] | CodeableConcept>;
+    specialMeasures?: MaybeArray<string[] | CodeableConcept>;
     status?: string[] | CodeableConcept;
     statusDate?: string;
     text?: Narrative;
@@ -3248,14 +3181,13 @@ type MedicinalProductDefinition_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$B<T> = T | T[];
 type MolecularSequence_Props = {
     contained?: any[];
     coordinateSystem?: number;
     device?: string | Reference;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$B<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
@@ -3263,7 +3195,7 @@ type MolecularSequence_Props = {
     observedSeq?: string;
     patient?: string | Reference;
     performer?: string | Reference;
-    pointer?: MaybeArray$B<string | Reference>;
+    pointer?: MaybeArray<string | Reference>;
     quality?: BackboneElement[];
     quantity?: Quantity;
     readCoverage?: number;
@@ -3277,18 +3209,17 @@ type MolecularSequence_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$A<T> = T | T[];
 type NutritionOrder_Props = {
-    allergyIntolerance?: MaybeArray$A<string | Reference>;
+    allergyIntolerance?: MaybeArray<string | Reference>;
     contained?: any[];
     dateTime?: string;
     encounter?: string | Reference;
     enteralFormula?: BackboneElement;
-    excludeFoodModifier?: MaybeArray$A<string[] | CodeableConcept>;
+    excludeFoodModifier?: MaybeArray<string[] | CodeableConcept>;
     extension?: Extension[];
-    foodPreferenceModifier?: MaybeArray$A<string[] | CodeableConcept>;
+    foodPreferenceModifier?: MaybeArray<string[] | CodeableConcept>;
     id?: string;
-    identifier?: MaybeArray$A<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     instantiates?: string[];
     instantiatesCanonical?: any[];
@@ -3307,9 +3238,8 @@ type NutritionOrder_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$z<T> = T | T[];
 type NutritionProduct_Props = {
-    category?: MaybeArray$z<string[] | CodeableConcept>;
+    category?: MaybeArray<string[] | CodeableConcept>;
     code?: string[] | CodeableConcept;
     contained?: any[];
     extension?: Extension[];
@@ -3319,7 +3249,7 @@ type NutritionProduct_Props = {
     instance?: BackboneElement;
     knownAllergen?: CodeableReference[];
     language?: string;
-    manufacturer?: MaybeArray$z<string | Reference>;
+    manufacturer?: MaybeArray<string | Reference>;
     meta?: Meta;
     modifierExtension?: Extension[];
     note?: Annotation[];
@@ -3330,34 +3260,33 @@ type NutritionProduct_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$y<T> = T | T[];
 type Observation_Props = {
-    basedOn?: MaybeArray$y<string | Reference>;
+    basedOn?: MaybeArray<string | Reference>;
     bodySite?: string[] | CodeableConcept;
-    category?: MaybeArray$y<string[] | CodeableConcept>;
+    category?: MaybeArray<string[] | CodeableConcept>;
     code?: string[] | CodeableConcept;
     component?: BackboneElement[];
     contained?: any[];
     dataAbsentReason?: string[] | CodeableConcept;
-    derivedFrom?: MaybeArray$y<string | Reference>;
+    derivedFrom?: MaybeArray<string | Reference>;
     device?: string | Reference;
     effective?: string | Period | Timing;
     encounter?: string | Reference;
     extension?: Extension[];
-    focus?: MaybeArray$y<string | Reference>;
-    hasMember?: MaybeArray$y<string | Reference>;
+    focus?: MaybeArray<string | Reference>;
+    hasMember?: MaybeArray<string | Reference>;
     id?: string;
-    identifier?: MaybeArray$y<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
-    interpretation?: MaybeArray$y<string[] | CodeableConcept>;
+    interpretation?: MaybeArray<string[] | CodeableConcept>;
     issued?: string;
     language?: string;
     meta?: Meta;
     method?: string[] | CodeableConcept;
     modifierExtension?: Extension[];
     note?: Annotation[];
-    partOf?: MaybeArray$y<string | Reference>;
-    performer?: MaybeArray$y<string | Reference>;
+    partOf?: MaybeArray<string | Reference>;
+    performer?: MaybeArray<string | Reference>;
     referenceRange?: BackboneElement[];
     specimen?: string | Reference;
     status?: string;
@@ -3367,16 +3296,15 @@ type Observation_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$x<T> = T | T[];
 type ObservationDefinition_Props = {
     abnormalCodedValueSet?: string | Reference;
-    category?: MaybeArray$x<string[] | CodeableConcept>;
+    category?: MaybeArray<string[] | CodeableConcept>;
     code?: string[] | CodeableConcept;
     contained?: any[];
     criticalCodedValueSet?: string | Reference;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$x<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
@@ -3393,17 +3321,16 @@ type ObservationDefinition_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$w<T> = T | T[];
 type Organization_Props = {
     active?: boolean;
     address?: Address[];
     alias?: string[];
     contact?: BackboneElement[];
     contained?: any[];
-    endpoint?: MaybeArray$w<string | Reference>;
+    endpoint?: MaybeArray<string | Reference>;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$w<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
@@ -3412,55 +3339,53 @@ type Organization_Props = {
     partOf?: string | Reference;
     telecom?: ContactPoint[];
     text?: Narrative;
-    type?: MaybeArray$w<string[] | CodeableConcept>;
+    type?: MaybeArray<string[] | CodeableConcept>;
     [key: string]: any;
 };
 
-type MaybeArray$v<T> = T | T[];
 type OrganizationAffiliation_Props = {
     active?: boolean;
-    code?: MaybeArray$v<string[] | CodeableConcept>;
+    code?: MaybeArray<string[] | CodeableConcept>;
     contained?: any[];
-    endpoint?: MaybeArray$v<string | Reference>;
+    endpoint?: MaybeArray<string | Reference>;
     extension?: Extension[];
-    healthcareService?: MaybeArray$v<string | Reference>;
+    healthcareService?: MaybeArray<string | Reference>;
     id?: string;
-    identifier?: MaybeArray$v<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
-    location?: MaybeArray$v<string | Reference>;
+    location?: MaybeArray<string | Reference>;
     meta?: Meta;
     modifierExtension?: Extension[];
-    network?: MaybeArray$v<string | Reference>;
+    network?: MaybeArray<string | Reference>;
     organization?: string | Reference;
     participatingOrganization?: string | Reference;
     period?: Period;
-    specialty?: MaybeArray$v<string[] | CodeableConcept>;
+    specialty?: MaybeArray<string[] | CodeableConcept>;
     telecom?: ContactPoint[];
     text?: Narrative;
     [key: string]: any;
 };
 
-type MaybeArray$u<T> = T | T[];
 type PackagedProductDefinition_Props = {
-    characteristic?: MaybeArray$u<string[] | CodeableConcept>;
+    characteristic?: MaybeArray<string[] | CodeableConcept>;
     contained?: any[];
     containedItemQuantity?: Quantity[];
     copackagedIndicator?: boolean;
     description?: markdown;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$u<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     legalStatusOfSupply?: BackboneElement[];
-    manufacturer?: MaybeArray$u<string | Reference>;
+    manufacturer?: MaybeArray<string | Reference>;
     marketingStatus?: MarketingStatus[];
     meta?: Meta;
     modifierExtension?: Extension[];
     name?: string;
     package?: BackboneElement;
-    packageFor?: MaybeArray$u<string | Reference>;
+    packageFor?: MaybeArray<string | Reference>;
     status?: string[] | CodeableConcept;
     statusDate?: string;
     text?: Narrative;
@@ -3468,7 +3393,6 @@ type PackagedProductDefinition_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$t<T> = T | T[];
 type Patient_Props = {
     active?: boolean;
     address?: Address[];
@@ -3479,9 +3403,9 @@ type Patient_Props = {
     deceased?: boolean | string;
     extension?: Extension[];
     gender?: string;
-    generalPractitioner?: MaybeArray$t<string | Reference>;
+    generalPractitioner?: MaybeArray<string | Reference>;
     id?: string;
-    identifier?: MaybeArray$t<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     link?: BackboneElement[];
@@ -3497,14 +3421,13 @@ type Patient_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$s<T> = T | T[];
 type PaymentNotice_Props = {
     amount?: Money;
     contained?: any[];
     created?: string;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$s<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
@@ -3522,7 +3445,6 @@ type PaymentNotice_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$r<T> = T | T[];
 type PaymentReconciliation_Props = {
     contained?: any[];
     created?: string;
@@ -3531,7 +3453,7 @@ type PaymentReconciliation_Props = {
     extension?: Extension[];
     formCode?: string[] | CodeableConcept;
     id?: string;
-    identifier?: MaybeArray$r<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
@@ -3550,7 +3472,6 @@ type PaymentReconciliation_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$q<T> = T | T[];
 type Person_Props = {
     active?: boolean;
     address?: Address[];
@@ -3559,7 +3480,7 @@ type Person_Props = {
     extension?: Extension[];
     gender?: string;
     id?: string;
-    identifier?: MaybeArray$q<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     link?: BackboneElement[];
@@ -3573,7 +3494,6 @@ type Person_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$p<T> = T | T[];
 type PlanDefinition_Props = {
     action?: BackboneElement[];
     approvalDate?: string;
@@ -3590,9 +3510,9 @@ type PlanDefinition_Props = {
     extension?: Extension[];
     goal?: BackboneElement[];
     id?: string;
-    identifier?: MaybeArray$p<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
-    jurisdiction?: MaybeArray$p<string[] | CodeableConcept>;
+    jurisdiction?: MaybeArray<string[] | CodeableConcept>;
     language?: string;
     lastReviewDate?: string;
     library?: any[];
@@ -3608,7 +3528,7 @@ type PlanDefinition_Props = {
     subtitle?: string;
     text?: Narrative;
     title?: string;
-    topic?: MaybeArray$p<string[] | CodeableConcept>;
+    topic?: MaybeArray<string[] | CodeableConcept>;
     type?: string[] | CodeableConcept;
     url?: string;
     usage?: string;
@@ -3617,17 +3537,16 @@ type PlanDefinition_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$o<T> = T | T[];
 type Practitioner_Props = {
     active?: boolean;
     address?: Address[];
     birthDate?: string;
-    communication?: MaybeArray$o<string[] | CodeableConcept>;
+    communication?: MaybeArray<string[] | CodeableConcept>;
     contained?: any[];
     extension?: Extension[];
     gender?: string;
     id?: string;
-    identifier?: MaybeArray$o<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
@@ -3640,49 +3559,47 @@ type Practitioner_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$n<T> = T | T[];
 type PractitionerRole_Props = {
     active?: boolean;
     availabilityExceptions?: string;
     availableTime?: BackboneElement[];
-    code?: MaybeArray$n<string[] | CodeableConcept>;
+    code?: MaybeArray<string[] | CodeableConcept>;
     contained?: any[];
-    endpoint?: MaybeArray$n<string | Reference>;
+    endpoint?: MaybeArray<string | Reference>;
     extension?: Extension[];
-    healthcareService?: MaybeArray$n<string | Reference>;
+    healthcareService?: MaybeArray<string | Reference>;
     id?: string;
-    identifier?: MaybeArray$n<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
-    location?: MaybeArray$n<string | Reference>;
+    location?: MaybeArray<string | Reference>;
     meta?: Meta;
     modifierExtension?: Extension[];
     notAvailable?: BackboneElement[];
     organization?: string | Reference;
     period?: Period;
     practitioner?: string | Reference;
-    specialty?: MaybeArray$n<string[] | CodeableConcept>;
+    specialty?: MaybeArray<string[] | CodeableConcept>;
     telecom?: ContactPoint[];
     text?: Narrative;
     [key: string]: any;
 };
 
-type MaybeArray$m<T> = T | T[];
 type Procedure_Props = {
     asserter?: string | Reference;
-    basedOn?: MaybeArray$m<string | Reference>;
-    bodySite?: MaybeArray$m<string[] | CodeableConcept>;
+    basedOn?: MaybeArray<string | Reference>;
+    bodySite?: MaybeArray<string[] | CodeableConcept>;
     category?: string[] | CodeableConcept;
     code?: string[] | CodeableConcept;
-    complication?: MaybeArray$m<string[] | CodeableConcept>;
-    complicationDetail?: MaybeArray$m<string | Reference>;
+    complication?: MaybeArray<string[] | CodeableConcept>;
+    complicationDetail?: MaybeArray<string | Reference>;
     contained?: any[];
     encounter?: string | Reference;
     extension?: Extension[];
     focalDevice?: BackboneElement[];
-    followUp?: MaybeArray$m<string[] | CodeableConcept>;
+    followUp?: MaybeArray<string[] | CodeableConcept>;
     id?: string;
-    identifier?: MaybeArray$m<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
@@ -3692,23 +3609,22 @@ type Procedure_Props = {
     modifierExtension?: Extension[];
     note?: Annotation[];
     outcome?: string[] | CodeableConcept;
-    partOf?: MaybeArray$m<string | Reference>;
+    partOf?: MaybeArray<string | Reference>;
     performed?: string | Period | Age | Range;
     performer?: BackboneElement[];
-    reasonCode?: MaybeArray$m<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$m<string | Reference>;
+    reasonCode?: MaybeArray<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray<string | Reference>;
     recorder?: string | Reference;
-    report?: MaybeArray$m<string | Reference>;
+    report?: MaybeArray<string | Reference>;
     status?: string;
     statusReason?: string[] | CodeableConcept;
     subject?: string | Reference;
     text?: Narrative;
-    usedCode?: MaybeArray$m<string[] | CodeableConcept>;
-    usedReference?: MaybeArray$m<string | Reference>;
+    usedCode?: MaybeArray<string[] | CodeableConcept>;
+    usedReference?: MaybeArray<string | Reference>;
     [key: string]: any;
 };
 
-type MaybeArray$l<T> = T | T[];
 type Questionnaire_Props = {
     approvalDate?: string;
     code?: Coding[];
@@ -3722,10 +3638,10 @@ type Questionnaire_Props = {
     experimental?: boolean;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$l<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     item?: BackboneElement[];
-    jurisdiction?: MaybeArray$l<string[] | CodeableConcept>;
+    jurisdiction?: MaybeArray<string[] | CodeableConcept>;
     language?: string;
     lastReviewDate?: string;
     meta?: Meta;
@@ -3743,11 +3659,10 @@ type Questionnaire_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$k<T> = T | T[];
 type QuestionnaireResponse_Props = {
     author?: string | Reference;
     authored?: string;
-    basedOn?: MaybeArray$k<string | Reference>;
+    basedOn?: MaybeArray<string | Reference>;
     contained?: any[];
     encounter?: string | Reference;
     extension?: Extension[];
@@ -3758,7 +3673,7 @@ type QuestionnaireResponse_Props = {
     language?: string;
     meta?: Meta;
     modifierExtension?: Extension[];
-    partOf?: MaybeArray$k<string | Reference>;
+    partOf?: MaybeArray<string | Reference>;
     questionnaire?: any;
     source?: string | Reference;
     status?: string;
@@ -3767,34 +3682,32 @@ type QuestionnaireResponse_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$j<T> = T | T[];
 type RegulatedAuthorization_Props = {
-    basis?: MaybeArray$j<string[] | CodeableConcept>;
+    basis?: MaybeArray<string[] | CodeableConcept>;
     case?: BackboneElement;
     contained?: any[];
     description?: markdown;
     extension?: Extension[];
     holder?: string | Reference;
     id?: string;
-    identifier?: MaybeArray$j<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     indication?: CodeableReference;
     intendedUse?: string[] | CodeableConcept;
     language?: string;
     meta?: Meta;
     modifierExtension?: Extension[];
-    region?: MaybeArray$j<string[] | CodeableConcept>;
+    region?: MaybeArray<string[] | CodeableConcept>;
     regulator?: string | Reference;
     status?: string[] | CodeableConcept;
     statusDate?: string;
-    subject?: MaybeArray$j<string | Reference>;
+    subject?: MaybeArray<string | Reference>;
     text?: Narrative;
     type?: string[] | CodeableConcept;
     validityPeriod?: Period;
     [key: string]: any;
 };
 
-type MaybeArray$i<T> = T | T[];
 type RelatedPerson_Props = {
     active?: boolean;
     address?: Address[];
@@ -3804,7 +3717,7 @@ type RelatedPerson_Props = {
     extension?: Extension[];
     gender?: string;
     id?: string;
-    identifier?: MaybeArray$i<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
@@ -3813,25 +3726,24 @@ type RelatedPerson_Props = {
     patient?: string | Reference;
     period?: Period;
     photo?: Attachment[];
-    relationship?: MaybeArray$i<string[] | CodeableConcept>;
+    relationship?: MaybeArray<string[] | CodeableConcept>;
     telecom?: ContactPoint[];
     text?: Narrative;
     [key: string]: any;
 };
 
-type MaybeArray$h<T> = T | T[];
 type RequestGroup_Props = {
     action?: BackboneElement[];
     author?: string | Reference;
     authoredOn?: string;
-    basedOn?: MaybeArray$h<string | Reference>;
+    basedOn?: MaybeArray<string | Reference>;
     code?: string[] | CodeableConcept;
     contained?: any[];
     encounter?: string | Reference;
     extension?: Extension[];
     groupIdentifier?: string | Identifier;
     id?: string;
-    identifier?: MaybeArray$h<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
@@ -3841,16 +3753,15 @@ type RequestGroup_Props = {
     modifierExtension?: Extension[];
     note?: Annotation[];
     priority?: string;
-    reasonCode?: MaybeArray$h<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$h<string | Reference>;
-    replaces?: MaybeArray$h<string | Reference>;
+    reasonCode?: MaybeArray<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray<string | Reference>;
+    replaces?: MaybeArray<string | Reference>;
     status?: string;
     subject?: string | Reference;
     text?: Narrative;
     [key: string]: any;
 };
 
-type MaybeArray$g<T> = T | T[];
 type ResearchDefinition_Props = {
     approvalDate?: string;
     author?: ContactDetail[];
@@ -3868,9 +3779,9 @@ type ResearchDefinition_Props = {
     exposureAlternative?: string | Reference;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$g<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
-    jurisdiction?: MaybeArray$g<string[] | CodeableConcept>;
+    jurisdiction?: MaybeArray<string[] | CodeableConcept>;
     language?: string;
     lastReviewDate?: string;
     library?: any[];
@@ -3889,7 +3800,7 @@ type ResearchDefinition_Props = {
     subtitle?: string;
     text?: Narrative;
     title?: string;
-    topic?: MaybeArray$g<string[] | CodeableConcept>;
+    topic?: MaybeArray<string[] | CodeableConcept>;
     url?: string;
     usage?: string;
     useContext?: UsageContext[];
@@ -3897,7 +3808,6 @@ type ResearchDefinition_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$f<T> = T | T[];
 type ResearchElementDefinition_Props = {
     approvalDate?: string;
     author?: ContactDetail[];
@@ -3914,9 +3824,9 @@ type ResearchElementDefinition_Props = {
     experimental?: boolean;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$f<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
-    jurisdiction?: MaybeArray$f<string[] | CodeableConcept>;
+    jurisdiction?: MaybeArray<string[] | CodeableConcept>;
     language?: string;
     lastReviewDate?: string;
     library?: any[];
@@ -3933,7 +3843,7 @@ type ResearchElementDefinition_Props = {
     subtitle?: string;
     text?: Narrative;
     title?: string;
-    topic?: MaybeArray$f<string[] | CodeableConcept>;
+    topic?: MaybeArray<string[] | CodeableConcept>;
     type?: string;
     url?: string;
     usage?: string;
@@ -3943,36 +3853,35 @@ type ResearchElementDefinition_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$e<T> = T | T[];
 type ResearchStudy_Props = {
     arm?: BackboneElement[];
-    category?: MaybeArray$e<string[] | CodeableConcept>;
-    condition?: MaybeArray$e<string[] | CodeableConcept>;
+    category?: MaybeArray<string[] | CodeableConcept>;
+    condition?: MaybeArray<string[] | CodeableConcept>;
     contact?: ContactDetail[];
     contained?: any[];
     description?: markdown;
-    enrollment?: MaybeArray$e<string | Reference>;
+    enrollment?: MaybeArray<string | Reference>;
     extension?: Extension[];
-    focus?: MaybeArray$e<string[] | CodeableConcept>;
+    focus?: MaybeArray<string[] | CodeableConcept>;
     id?: string;
-    identifier?: MaybeArray$e<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
-    keyword?: MaybeArray$e<string[] | CodeableConcept>;
+    keyword?: MaybeArray<string[] | CodeableConcept>;
     language?: string;
-    location?: MaybeArray$e<string[] | CodeableConcept>;
+    location?: MaybeArray<string[] | CodeableConcept>;
     meta?: Meta;
     modifierExtension?: Extension[];
     note?: Annotation[];
     objective?: BackboneElement[];
-    partOf?: MaybeArray$e<string | Reference>;
+    partOf?: MaybeArray<string | Reference>;
     period?: Period;
     phase?: string[] | CodeableConcept;
     primaryPurposeType?: string[] | CodeableConcept;
     principalInvestigator?: string | Reference;
-    protocol?: MaybeArray$e<string | Reference>;
+    protocol?: MaybeArray<string | Reference>;
     reasonStopped?: string[] | CodeableConcept;
     relatedArtifact?: RelatedArtifact[];
-    site?: MaybeArray$e<string | Reference>;
+    site?: MaybeArray<string | Reference>;
     sponsor?: string | Reference;
     status?: string;
     text?: Narrative;
@@ -3980,7 +3889,6 @@ type ResearchStudy_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$d<T> = T | T[];
 type ResearchSubject_Props = {
     actualArm?: string;
     assignedArm?: string;
@@ -3988,7 +3896,7 @@ type ResearchSubject_Props = {
     contained?: any[];
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$d<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     individual?: string | Reference;
     language?: string;
@@ -4001,17 +3909,16 @@ type ResearchSubject_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$c<T> = T | T[];
 type RiskAssessment_Props = {
     basedOn?: string | Reference;
-    basis?: MaybeArray$c<string | Reference>;
+    basis?: MaybeArray<string | Reference>;
     code?: string[] | CodeableConcept;
     condition?: string | Reference;
     contained?: any[];
     encounter?: string | Reference;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$c<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
@@ -4023,82 +3930,79 @@ type RiskAssessment_Props = {
     parent?: string | Reference;
     performer?: string | Reference;
     prediction?: BackboneElement[];
-    reasonCode?: MaybeArray$c<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$c<string | Reference>;
+    reasonCode?: MaybeArray<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray<string | Reference>;
     status?: string;
     subject?: string | Reference;
     text?: Narrative;
     [key: string]: any;
 };
 
-type MaybeArray$b<T> = T | T[];
 type Schedule_Props = {
     active?: boolean;
-    actor?: MaybeArray$b<string | Reference>;
+    actor?: MaybeArray<string | Reference>;
     comment?: string;
     contained?: any[];
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$b<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
     modifierExtension?: Extension[];
     planningHorizon?: Period;
-    serviceCategory?: MaybeArray$b<string[] | CodeableConcept>;
-    serviceType?: MaybeArray$b<string[] | CodeableConcept>;
-    specialty?: MaybeArray$b<string[] | CodeableConcept>;
+    serviceCategory?: MaybeArray<string[] | CodeableConcept>;
+    serviceType?: MaybeArray<string[] | CodeableConcept>;
+    specialty?: MaybeArray<string[] | CodeableConcept>;
     text?: Narrative;
     [key: string]: any;
 };
 
-type MaybeArray$a<T> = T | T[];
 type ServiceRequest_Props = {
     asNeeded?: boolean | string[] | CodeableConcept;
     authoredOn?: string;
-    basedOn?: MaybeArray$a<string | Reference>;
-    bodySite?: MaybeArray$a<string[] | CodeableConcept>;
-    category?: MaybeArray$a<string[] | CodeableConcept>;
+    basedOn?: MaybeArray<string | Reference>;
+    bodySite?: MaybeArray<string[] | CodeableConcept>;
+    category?: MaybeArray<string[] | CodeableConcept>;
     code?: string[] | CodeableConcept;
     contained?: any[];
     doNotPerform?: boolean;
     encounter?: string | Reference;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$a<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     instantiatesCanonical?: any[];
     instantiatesUri?: string[];
-    insurance?: MaybeArray$a<string | Reference>;
+    insurance?: MaybeArray<string | Reference>;
     intent?: string;
     language?: string;
-    locationCode?: MaybeArray$a<string[] | CodeableConcept>;
-    locationReference?: MaybeArray$a<string | Reference>;
+    locationCode?: MaybeArray<string[] | CodeableConcept>;
+    locationReference?: MaybeArray<string | Reference>;
     meta?: Meta;
     modifierExtension?: Extension[];
     note?: Annotation[];
     occurrence?: string | Period | Timing;
-    orderDetail?: MaybeArray$a<string[] | CodeableConcept>;
+    orderDetail?: MaybeArray<string[] | CodeableConcept>;
     patientInstruction?: string;
-    performer?: MaybeArray$a<string | Reference>;
+    performer?: MaybeArray<string | Reference>;
     performerType?: string[] | CodeableConcept;
     priority?: string;
     quantity?: Quantity | Ratio | Range;
-    reasonCode?: MaybeArray$a<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$a<string | Reference>;
-    relevantHistory?: MaybeArray$a<string | Reference>;
-    replaces?: MaybeArray$a<string | Reference>;
+    reasonCode?: MaybeArray<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray<string | Reference>;
+    relevantHistory?: MaybeArray<string | Reference>;
+    replaces?: MaybeArray<string | Reference>;
     requester?: string | Reference;
     requisition?: string | Identifier;
-    specimen?: MaybeArray$a<string | Reference>;
+    specimen?: MaybeArray<string | Reference>;
     status?: string;
     subject?: string | Reference;
-    supportingInfo?: MaybeArray$a<string | Reference>;
+    supportingInfo?: MaybeArray<string | Reference>;
     text?: Narrative;
     [key: string]: any;
 };
 
-type MaybeArray$9<T> = T | T[];
 type Slot_Props = {
     appointmentType?: string[] | CodeableConcept;
     comment?: string;
@@ -4106,41 +4010,40 @@ type Slot_Props = {
     end?: string;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$9<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
     modifierExtension?: Extension[];
     overbooked?: boolean;
     schedule?: string | Reference;
-    serviceCategory?: MaybeArray$9<string[] | CodeableConcept>;
-    serviceType?: MaybeArray$9<string[] | CodeableConcept>;
-    specialty?: MaybeArray$9<string[] | CodeableConcept>;
+    serviceCategory?: MaybeArray<string[] | CodeableConcept>;
+    serviceType?: MaybeArray<string[] | CodeableConcept>;
+    specialty?: MaybeArray<string[] | CodeableConcept>;
     start?: string;
     status?: string;
     text?: Narrative;
     [key: string]: any;
 };
 
-type MaybeArray$8<T> = T | T[];
 type Specimen_Props = {
     accessionIdentifier?: string | Identifier;
     collection?: BackboneElement;
-    condition?: MaybeArray$8<string[] | CodeableConcept>;
+    condition?: MaybeArray<string[] | CodeableConcept>;
     contained?: any[];
     container?: BackboneElement[];
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$8<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
     modifierExtension?: Extension[];
     note?: Annotation[];
-    parent?: MaybeArray$8<string | Reference>;
+    parent?: MaybeArray<string | Reference>;
     processing?: BackboneElement[];
     receivedTime?: string;
-    request?: MaybeArray$8<string | Reference>;
+    request?: MaybeArray<string | Reference>;
     status?: string;
     subject?: string | Reference;
     text?: Narrative;
@@ -4148,9 +4051,8 @@ type Specimen_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$7<T> = T | T[];
 type SpecimenDefinition_Props = {
-    collection?: MaybeArray$7<string[] | CodeableConcept>;
+    collection?: MaybeArray<string[] | CodeableConcept>;
     contained?: any[];
     extension?: Extension[];
     id?: string;
@@ -4159,7 +4061,7 @@ type SpecimenDefinition_Props = {
     language?: string;
     meta?: Meta;
     modifierExtension?: Extension[];
-    patientPreparation?: MaybeArray$7<string[] | CodeableConcept>;
+    patientPreparation?: MaybeArray<string[] | CodeableConcept>;
     text?: Narrative;
     timeAspect?: string;
     typeCollected?: string[] | CodeableConcept;
@@ -4167,15 +4069,14 @@ type SpecimenDefinition_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$6<T> = T | T[];
 type Substance_Props = {
-    category?: MaybeArray$6<string[] | CodeableConcept>;
+    category?: MaybeArray<string[] | CodeableConcept>;
     code?: string[] | CodeableConcept;
     contained?: any[];
     description?: string;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$6<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     ingredient?: BackboneElement[];
     instance?: BackboneElement[];
@@ -4187,21 +4088,20 @@ type Substance_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$5<T> = T | T[];
 type SubstanceDefinition_Props = {
-    classification?: MaybeArray$5<string[] | CodeableConcept>;
+    classification?: MaybeArray<string[] | CodeableConcept>;
     code?: BackboneElement[];
     contained?: any[];
     description?: markdown;
     domain?: string[] | CodeableConcept;
     extension?: Extension[];
-    grade?: MaybeArray$5<string[] | CodeableConcept>;
+    grade?: MaybeArray<string[] | CodeableConcept>;
     id?: string;
-    identifier?: MaybeArray$5<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
-    informationSource?: MaybeArray$5<string | Reference>;
+    informationSource?: MaybeArray<string | Reference>;
     language?: string;
-    manufacturer?: MaybeArray$5<string | Reference>;
+    manufacturer?: MaybeArray<string | Reference>;
     meta?: Meta;
     modifierExtension?: Extension[];
     moiety?: BackboneElement[];
@@ -4213,28 +4113,27 @@ type SubstanceDefinition_Props = {
     sourceMaterial?: BackboneElement;
     status?: string[] | CodeableConcept;
     structure?: BackboneElement;
-    supplier?: MaybeArray$5<string | Reference>;
+    supplier?: MaybeArray<string | Reference>;
     text?: Narrative;
     version?: string;
     [key: string]: any;
 };
 
-type MaybeArray$4<T> = T | T[];
 type SupplyDelivery_Props = {
-    basedOn?: MaybeArray$4<string | Reference>;
+    basedOn?: MaybeArray<string | Reference>;
     contained?: any[];
     destination?: string | Reference;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$4<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     language?: string;
     meta?: Meta;
     modifierExtension?: Extension[];
     occurrence?: string | Period | Timing;
-    partOf?: MaybeArray$4<string | Reference>;
+    partOf?: MaybeArray<string | Reference>;
     patient?: string | Reference;
-    receiver?: MaybeArray$4<string | Reference>;
+    receiver?: MaybeArray<string | Reference>;
     status?: string;
     suppliedItem?: BackboneElement;
     supplier?: string | Reference;
@@ -4243,7 +4142,6 @@ type SupplyDelivery_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$3<T> = T | T[];
 type SupplyRequest_Props = {
     authoredOn?: string;
     category?: string[] | CodeableConcept;
@@ -4252,7 +4150,7 @@ type SupplyRequest_Props = {
     deliverTo?: string | Reference;
     extension?: Extension[];
     id?: string;
-    identifier?: MaybeArray$3<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     item?: string[] | CodeableConcept | string | Reference;
     language?: string;
@@ -4262,19 +4160,18 @@ type SupplyRequest_Props = {
     parameter?: BackboneElement[];
     priority?: string;
     quantity?: Quantity;
-    reasonCode?: MaybeArray$3<string[] | CodeableConcept>;
-    reasonReference?: MaybeArray$3<string | Reference>;
+    reasonCode?: MaybeArray<string[] | CodeableConcept>;
+    reasonReference?: MaybeArray<string | Reference>;
     requester?: string | Reference;
     status?: string;
-    supplier?: MaybeArray$3<string | Reference>;
+    supplier?: MaybeArray<string | Reference>;
     text?: Narrative;
     [key: string]: any;
 };
 
-type MaybeArray$2<T> = T | T[];
 type Task_Props = {
     authoredOn?: string;
-    basedOn?: MaybeArray$2<string | Reference>;
+    basedOn?: MaybeArray<string | Reference>;
     businessStatus?: string[] | CodeableConcept;
     code?: string[] | CodeableConcept;
     contained?: any[];
@@ -4286,12 +4183,12 @@ type Task_Props = {
     for?: string | Reference;
     groupIdentifier?: string | Identifier;
     id?: string;
-    identifier?: MaybeArray$2<string | Identifier>;
+    identifier?: MaybeArray<string | Identifier>;
     implicitRules?: string;
     input?: BackboneElement[];
     instantiatesCanonical?: any;
     instantiatesUri?: string;
-    insurance?: MaybeArray$2<string | Reference>;
+    insurance?: MaybeArray<string | Reference>;
     intent?: string;
     language?: string;
     lastModified?: string;
@@ -4301,12 +4198,12 @@ type Task_Props = {
     note?: Annotation[];
     output?: BackboneElement[];
     owner?: string | Reference;
-    partOf?: MaybeArray$2<string | Reference>;
-    performerType?: MaybeArray$2<string[] | CodeableConcept>;
+    partOf?: MaybeArray<string | Reference>;
+    performerType?: MaybeArray<string[] | CodeableConcept>;
     priority?: string;
     reasonCode?: string[] | CodeableConcept;
     reasonReference?: string | Reference;
-    relevantHistory?: MaybeArray$2<string | Reference>;
+    relevantHistory?: MaybeArray<string | Reference>;
     requester?: string | Reference;
     restriction?: BackboneElement;
     status?: string;
@@ -4339,7 +4236,6 @@ type TestReport_Props = {
     [key: string]: any;
 };
 
-type MaybeArray$1<T> = T | T[];
 type VerificationResult_Props = {
     attestation?: BackboneElement;
     contained?: any[];
@@ -4357,16 +4253,15 @@ type VerificationResult_Props = {
     primarySource?: BackboneElement[];
     status?: string;
     statusDate?: string;
-    target?: MaybeArray$1<string | Reference>;
+    target?: MaybeArray<string | Reference>;
     targetLocation?: string[];
     text?: Narrative;
-    validationProcess?: MaybeArray$1<string[] | CodeableConcept>;
+    validationProcess?: MaybeArray<string[] | CodeableConcept>;
     validationType?: string[] | CodeableConcept;
     validator?: BackboneElement[];
     [key: string]: any;
 };
 
-type MaybeArray<T> = T | T[];
 type VisionPrescription_Props = {
     contained?: any[];
     created?: string;
@@ -4532,10 +4427,9 @@ declare const ref: (ref: any, opts?: {}) => any;
 declare const composite: (object: any, key: any, value: any) => void;
 
 /**
-  * Create a FHIR Account resource.
+  * Create a Account resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Account number
   * @param {string} [props.status] - active | inactive | entered-in-error | on-hold | unknown
@@ -4548,14 +4442,13 @@ declare const composite: (object: any, key: any, value: any) => void;
   * @param {string} [props.description] - Explanation of purpose/use
   * @param {BackboneElement} [props.guarantor] - The parties ultimately responsible for balancing the Account
   * @param {Reference} [props.partOf] - Reference to a parent Account
- */
-declare function account(type: string, props: Account_Props): any;
+  */
+declare function account(type: "Account", props: Account_Props): any;
 declare function account(props: Account_Props): any;
 /**
-  * Create a FHIR ActivityDefinition resource.
+  * Create a ActivityDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this activity definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the activity definition
@@ -4603,14 +4496,13 @@ declare function account(props: Account_Props): any;
   * @param {Reference} [props.observationResultRequirement] - What observations must be produced by this action
   * @param {canonical} [props.transform] - Transform to apply the template
   * @param {BackboneElement} [props.dynamicValue] - Dynamic aspects of the definition
- */
-declare function activityDefinition(type: string, props: ActivityDefinition_Props): any;
+  */
+declare function activityDefinition(type: "ActivityDefinition", props: ActivityDefinition_Props): any;
 declare function activityDefinition(props: ActivityDefinition_Props): any;
 /**
-  * Create a FHIR AdministrableProductDefinition resource.
+  * Create a AdministrableProductDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - An identifier for the administrable product
   * @param {string} [props.status] - draft | active | retired | unknown
@@ -4622,14 +4514,13 @@ declare function activityDefinition(props: ActivityDefinition_Props): any;
   * @param {Reference} [props.device] - A device that is integral to the medicinal product, in effect being considered as an "ingredient" of the medicinal product
   * @param {BackboneElement} [props.property] - Characteristics e.g. a product's onset of action
   * @param {BackboneElement} [props.routeOfAdministration] - The path by which the product is taken into or makes contact with the body
- */
-declare function administrableProductDefinition(type: string, props: AdministrableProductDefinition_Props): any;
+  */
+declare function administrableProductDefinition(type: "AdministrableProductDefinition", props: AdministrableProductDefinition_Props): any;
 declare function administrableProductDefinition(props: AdministrableProductDefinition_Props): any;
 /**
-  * Create a FHIR AdverseEvent resource.
+  * Create a AdverseEvent resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for the event
   * @param {string} [props.actuality] - actual | potential
@@ -4651,14 +4542,13 @@ declare function administrableProductDefinition(props: AdministrableProductDefin
   * @param {Reference} [props.subjectMedicalHistory] - AdverseEvent.subjectMedicalHistory
   * @param {Reference} [props.referenceDocument] - AdverseEvent.referenceDocument
   * @param {Reference} [props.study] - AdverseEvent.study
- */
-declare function adverseEvent(type: string, props: AdverseEvent_Props): any;
+  */
+declare function adverseEvent(type: "AdverseEvent", props: AdverseEvent_Props): any;
 declare function adverseEvent(props: AdverseEvent_Props): any;
 /**
-  * Create a FHIR AllergyIntolerance resource.
+  * Create a AllergyIntolerance resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External ids for this item
   * @param {CodeableConcept} [props.clinicalStatus] - active | inactive | resolved
@@ -4676,14 +4566,13 @@ declare function adverseEvent(props: AdverseEvent_Props): any;
   * @param {dateTime} [props.lastOccurrence] - Date(/time) of last known occurrence of a reaction
   * @param {Annotation} [props.note] - Additional text not captured in other fields
   * @param {BackboneElement} [props.reaction] - Adverse Reaction Events linked to exposure to substance
- */
-declare function allergyIntolerance(type: string, props: AllergyIntolerance_Props): any;
+  */
+declare function allergyIntolerance(type: "AllergyIntolerance", props: AllergyIntolerance_Props): any;
 declare function allergyIntolerance(props: AllergyIntolerance_Props): any;
 /**
-  * Create a FHIR Appointment resource.
+  * Create a Appointment resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this item
   * @param {string} [props.status] - proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error | checked-in | waitlist
@@ -4707,14 +4596,13 @@ declare function allergyIntolerance(props: AllergyIntolerance_Props): any;
   * @param {Reference} [props.basedOn] - The service request this appointment is allocated to assess
   * @param {BackboneElement} [props.participant] - Participants involved in appointment
   * @param {Period} [props.requestedPeriod] - Potential date/time interval(s) requested to allocate the appointment within
- */
-declare function appointment(type: string, props: Appointment_Props): any;
+  */
+declare function appointment(type: "Appointment", props: Appointment_Props): any;
 declare function appointment(props: Appointment_Props): any;
 /**
-  * Create a FHIR AppointmentResponse resource.
+  * Create a AppointmentResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this item
   * @param {Reference} [props.appointment] - Appointment this response relates to
@@ -4724,14 +4612,13 @@ declare function appointment(props: Appointment_Props): any;
   * @param {Reference} [props.actor] - Person, Location, HealthcareService, or Device
   * @param {string} [props.participantStatus] - accepted | declined | tentative | needs-action
   * @param {string} [props.comment] - Additional comments
- */
-declare function appointmentResponse(type: string, props: AppointmentResponse_Props): any;
+  */
+declare function appointmentResponse(type: "AppointmentResponse", props: AppointmentResponse_Props): any;
 declare function appointmentResponse(props: AppointmentResponse_Props): any;
 /**
-  * Create a FHIR BiologicallyDerivedProduct resource.
+  * Create a BiologicallyDerivedProduct resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External ids for this item
   * @param {string} [props.productCategory] - organ | tissue | fluid | cells | biologicalAgent
@@ -4744,14 +4631,13 @@ declare function appointmentResponse(props: AppointmentResponse_Props): any;
   * @param {BackboneElement} [props.processing] - Any processing of the product during collection
   * @param {BackboneElement} [props.manipulation] - Any manipulation of product post-collection
   * @param {BackboneElement} [props.storage] - Product storage
- */
-declare function biologicallyDerivedProduct(type: string, props: BiologicallyDerivedProduct_Props): any;
+  */
+declare function biologicallyDerivedProduct(type: "BiologicallyDerivedProduct", props: BiologicallyDerivedProduct_Props): any;
 declare function biologicallyDerivedProduct(props: BiologicallyDerivedProduct_Props): any;
 /**
-  * Create a FHIR BodyStructure resource.
+  * Create a BodyStructure resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Bodystructure identifier
   * @param {boolean} [props.active] - Whether this record is in active use
@@ -4761,14 +4647,13 @@ declare function biologicallyDerivedProduct(props: BiologicallyDerivedProduct_Pr
   * @param {string} [props.description] - Text description
   * @param {Attachment} [props.image] - Attached images
   * @param {Reference} [props.patient] - Who this is about
- */
-declare function bodyStructure(type: string, props: BodyStructure_Props): any;
+  */
+declare function bodyStructure(type: "BodyStructure", props: BodyStructure_Props): any;
 declare function bodyStructure(props: BodyStructure_Props): any;
 /**
-  * Create a FHIR CarePlan resource.
+  * Create a CarePlan resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this plan
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -4793,14 +4678,13 @@ declare function bodyStructure(props: BodyStructure_Props): any;
   * @param {Reference} [props.goal] - Desired outcome of plan
   * @param {BackboneElement} [props.activity] - Action to occur as part of plan
   * @param {Annotation} [props.note] - Comments about the plan
- */
-declare function carePlan(type: string, props: CarePlan_Props): any;
+  */
+declare function carePlan(type: "CarePlan", props: CarePlan_Props): any;
 declare function carePlan(props: CarePlan_Props): any;
 /**
-  * Create a FHIR CareTeam resource.
+  * Create a CareTeam resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this team
   * @param {string} [props.status] - proposed | active | suspended | inactive | entered-in-error
@@ -4815,14 +4699,13 @@ declare function carePlan(props: CarePlan_Props): any;
   * @param {Reference} [props.managingOrganization] - Organization responsible for the care team
   * @param {ContactPoint} [props.telecom] - A contact detail for the care team (that applies to all members)
   * @param {Annotation} [props.note] - Comments made about the CareTeam
- */
-declare function careTeam(type: string, props: CareTeam_Props): any;
+  */
+declare function careTeam(type: "CareTeam", props: CareTeam_Props): any;
 declare function careTeam(props: CareTeam_Props): any;
 /**
-  * Create a FHIR ChargeItem resource.
+  * Create a ChargeItem resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for item
   * @param {string} [props.definitionUri] - Defining information about the code of this charge item
@@ -4850,14 +4733,13 @@ declare function careTeam(props: CareTeam_Props): any;
   * @param {Reference} [props.account] - Account to place this charge
   * @param {Annotation} [props.note] - Comments made about the ChargeItem
   * @param {Reference} [props.supportingInformation] - Further information supporting this charge
- */
-declare function chargeItem(type: string, props: ChargeItem_Props): any;
+  */
+declare function chargeItem(type: "ChargeItem", props: ChargeItem_Props): any;
 declare function chargeItem(props: ChargeItem_Props): any;
 /**
-  * Create a FHIR ChargeItemDefinition resource.
+  * Create a ChargeItemDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this charge item definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the charge item definition
@@ -4882,14 +4764,13 @@ declare function chargeItem(props: ChargeItem_Props): any;
   * @param {Reference} [props.instance] - Instances this definition applies to
   * @param {BackboneElement} [props.applicability] - Whether or not the billing code is applicable
   * @param {BackboneElement} [props.propertyGroup] - Group of properties which are applicable under the same conditions
- */
-declare function chargeItemDefinition(type: string, props: ChargeItemDefinition_Props): any;
+  */
+declare function chargeItemDefinition(type: "ChargeItemDefinition", props: ChargeItemDefinition_Props): any;
 declare function chargeItemDefinition(props: ChargeItemDefinition_Props): any;
 /**
-  * Create a FHIR Citation resource.
+  * Create a Citation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this citation, represented as a globally unique URI
   * @param {Identifier} [props.identifier] - Identifier for the Citation resource itself
@@ -4920,14 +4801,13 @@ declare function chargeItemDefinition(props: ChargeItemDefinition_Props): any;
   * @param {BackboneElement} [props.statusDate] - An effective date or period for a status of the citation
   * @param {BackboneElement} [props.relatesTo] - Artifact related to the Citation Resource
   * @param {BackboneElement} [props.citedArtifact] - The article or artifact being described
- */
-declare function citation(type: string, props: Citation_Props): any;
+  */
+declare function citation(type: "Citation", props: Citation_Props): any;
 declare function citation(props: Citation_Props): any;
 /**
-  * Create a FHIR Claim resource.
+  * Create a Claim resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for claim
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -4956,14 +4836,13 @@ declare function citation(props: Citation_Props): any;
   * @param {BackboneElement} [props.accident] - Details of the event
   * @param {BackboneElement} [props.item] - Product or service provided
   * @param {Money} [props.total] - Total claim cost
- */
-declare function claim(type: string, props: Claim_Props): any;
+  */
+declare function claim(type: "Claim", props: Claim_Props): any;
 declare function claim(props: Claim_Props): any;
 /**
-  * Create a FHIR ClaimResponse resource.
+  * Create a ClaimResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for a claim response
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -4992,14 +4871,13 @@ declare function claim(props: Claim_Props): any;
   * @param {Reference} [props.communicationRequest] - Request for additional information
   * @param {BackboneElement} [props.insurance] - Patient insurance information
   * @param {BackboneElement} [props.error] - Processing errors
- */
-declare function claimResponse(type: string, props: ClaimResponse_Props): any;
+  */
+declare function claimResponse(type: "ClaimResponse", props: ClaimResponse_Props): any;
 declare function claimResponse(props: ClaimResponse_Props): any;
 /**
-  * Create a FHIR ClinicalImpression resource.
+  * Create a ClinicalImpression resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.status] - in-progress | completed | entered-in-error
@@ -5021,14 +4899,13 @@ declare function claimResponse(props: ClaimResponse_Props): any;
   * @param {Reference} [props.prognosisReference] - RiskAssessment expressing likely outcome
   * @param {Reference} [props.supportingInfo] - Information supporting the clinical impression
   * @param {Annotation} [props.note] - Comments made about the ClinicalImpression
- */
-declare function clinicalImpression(type: string, props: ClinicalImpression_Props): any;
+  */
+declare function clinicalImpression(type: "ClinicalImpression", props: ClinicalImpression_Props): any;
 declare function clinicalImpression(props: ClinicalImpression_Props): any;
 /**
-  * Create a FHIR ClinicalUseDefinition resource.
+  * Create a ClinicalUseDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for this issue
   * @param {string} [props.type] - indication | contraindication | interaction | undesirable-effect | warning
@@ -5041,14 +4918,13 @@ declare function clinicalImpression(props: ClinicalImpression_Props): any;
   * @param {Reference} [props.population] - The population group to which this applies
   * @param {BackboneElement} [props.undesirableEffect] - A possible negative outcome from the use of this treatment
   * @param {BackboneElement} [props.warning] - Critical environmental, health or physical risks or hazards. For example 'Do not operate heavy machinery', 'May cause drowsiness'
- */
-declare function clinicalUseDefinition(type: string, props: ClinicalUseDefinition_Props): any;
+  */
+declare function clinicalUseDefinition(type: "ClinicalUseDefinition", props: ClinicalUseDefinition_Props): any;
 declare function clinicalUseDefinition(props: ClinicalUseDefinition_Props): any;
 /**
-  * Create a FHIR Communication resource.
+  * Create a Communication resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique identifier
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -5073,14 +4949,13 @@ declare function clinicalUseDefinition(props: ClinicalUseDefinition_Props): any;
   * @param {Reference} [props.reasonReference] - Why was communication done?
   * @param {BackboneElement} [props.payload] - Message payload
   * @param {Annotation} [props.note] - Comments made about the communication
- */
-declare function communication(type: string, props: Communication_Props): any;
+  */
+declare function communication(type: "Communication", props: Communication_Props): any;
 declare function communication(props: Communication_Props): any;
 /**
-  * Create a FHIR CommunicationRequest resource.
+  * Create a CommunicationRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique identifier
   * @param {Reference} [props.basedOn] - Fulfills plan or proposal
@@ -5104,14 +4979,13 @@ declare function communication(props: Communication_Props): any;
   * @param {CodeableConcept} [props.reasonCode] - Why is communication needed?
   * @param {Reference} [props.reasonReference] - Why is communication needed?
   * @param {Annotation} [props.note] - Comments made about communication request
- */
-declare function communicationRequest(type: string, props: CommunicationRequest_Props): any;
+  */
+declare function communicationRequest(type: "CommunicationRequest", props: CommunicationRequest_Props): any;
 declare function communicationRequest(props: CommunicationRequest_Props): any;
 /**
-  * Create a FHIR Contract resource.
+  * Create a Contract resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Contract number
   * @param {string} [props.url] - Basal definition
@@ -5146,14 +5020,13 @@ declare function communicationRequest(props: CommunicationRequest_Props): any;
   * @param {BackboneElement} [props.legal] - Contract Legal Language
   * @param {BackboneElement} [props.rule] - Computable Contract Language
   * @param {Attachment|Reference} [props.legallyBinding] - Binding Contract
- */
-declare function contract(type: string, props: Contract_Props): any;
+  */
+declare function contract(type: "Contract", props: Contract_Props): any;
 declare function contract(props: Contract_Props): any;
 /**
-  * Create a FHIR Coverage resource.
+  * Create a Coverage resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for the coverage
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -5172,14 +5045,13 @@ declare function contract(props: Contract_Props): any;
   * @param {BackboneElement} [props.costToBeneficiary] - Patient payments for services/products
   * @param {boolean} [props.subrogation] - Reimbursement to insurer
   * @param {Reference} [props.contract] - Contract details
- */
-declare function coverage(type: string, props: Coverage_Props): any;
+  */
+declare function coverage(type: "Coverage", props: Coverage_Props): any;
 declare function coverage(props: Coverage_Props): any;
 /**
-  * Create a FHIR CoverageEligibilityRequest resource.
+  * Create a CoverageEligibilityRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for coverage eligiblity request
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -5195,14 +5067,13 @@ declare function coverage(props: Coverage_Props): any;
   * @param {BackboneElement} [props.supportingInfo] - Supporting information
   * @param {BackboneElement} [props.insurance] - Patient insurance information
   * @param {BackboneElement} [props.item] - Item to be evaluated for eligibiity
- */
-declare function coverageEligibilityRequest(type: string, props: CoverageEligibilityRequest_Props): any;
+  */
+declare function coverageEligibilityRequest(type: "CoverageEligibilityRequest", props: CoverageEligibilityRequest_Props): any;
 declare function coverageEligibilityRequest(props: CoverageEligibilityRequest_Props): any;
 /**
-  * Create a FHIR CoverageEligibilityResponse resource.
+  * Create a CoverageEligibilityResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for coverage eligiblity request
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -5219,14 +5090,13 @@ declare function coverageEligibilityRequest(props: CoverageEligibilityRequest_Pr
   * @param {string} [props.preAuthRef] - Preauthorization reference
   * @param {CodeableConcept} [props.form] - Printed form identifier
   * @param {BackboneElement} [props.error] - Processing errors
- */
-declare function coverageEligibilityResponse(type: string, props: CoverageEligibilityResponse_Props): any;
+  */
+declare function coverageEligibilityResponse(type: "CoverageEligibilityResponse", props: CoverageEligibilityResponse_Props): any;
 declare function coverageEligibilityResponse(props: CoverageEligibilityResponse_Props): any;
 /**
-  * Create a FHIR DetectedIssue resource.
+  * Create a DetectedIssue resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique id for the detected issue
   * @param {string} [props.status] - registered | preliminary | final | amended +
@@ -5240,14 +5110,13 @@ declare function coverageEligibilityResponse(props: CoverageEligibilityResponse_
   * @param {string} [props.detail] - Description and context
   * @param {string} [props.reference] - Authority for issue
   * @param {BackboneElement} [props.mitigation] - Step taken to address
- */
-declare function detectedIssue(type: string, props: DetectedIssue_Props): any;
+  */
+declare function detectedIssue(type: "DetectedIssue", props: DetectedIssue_Props): any;
 declare function detectedIssue(props: DetectedIssue_Props): any;
 /**
-  * Create a FHIR Device resource.
+  * Create a Device resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Instance identifier
   * @param {Reference} [props.definition] - The reference to the definition for the device
@@ -5275,14 +5144,13 @@ declare function detectedIssue(props: DetectedIssue_Props): any;
   * @param {Annotation} [props.note] - Device notes and comments
   * @param {CodeableConcept} [props.safety] - Safety Characteristics of Device
   * @param {Reference} [props.parent] - The device that this device is attached to or is part of
- */
-declare function device(type: string, props: Device_Props): any;
+  */
+declare function device(type: "Device", props: Device_Props): any;
 declare function device(props: Device_Props): any;
 /**
-  * Create a FHIR DeviceDefinition resource.
+  * Create a DeviceDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Instance identifier
   * @param {BackboneElement} [props.udiDeviceIdentifier] - Unique Device Identifier (UDI) Barcode string
@@ -5306,14 +5174,13 @@ declare function device(props: Device_Props): any;
   * @param {Quantity} [props.quantity] - The quantity of the device present in the packaging (e.g. the number of devices present in a pack, or the number of devices in the same package of the medicinal product)
   * @param {Reference} [props.parentDevice] - The parent device it can be part of
   * @param {BackboneElement} [props.material] - A substance used to create the material(s) of which the device is made
- */
-declare function deviceDefinition(type: string, props: DeviceDefinition_Props): any;
+  */
+declare function deviceDefinition(type: "DeviceDefinition", props: DeviceDefinition_Props): any;
 declare function deviceDefinition(props: DeviceDefinition_Props): any;
 /**
-  * Create a FHIR DeviceMetric resource.
+  * Create a DeviceMetric resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Instance identifier
   * @param {CodeableConcept} [props.type] - Identity of metric, for example Heart Rate or PEEP Setting
@@ -5325,14 +5192,13 @@ declare function deviceDefinition(props: DeviceDefinition_Props): any;
   * @param {string} [props.category] - measurement | setting | calculation | unspecified
   * @param {Timing} [props.measurementPeriod] - Describes the measurement repetition time
   * @param {BackboneElement} [props.calibration] - Describes the calibrations that have been performed or that are required to be performed
- */
-declare function deviceMetric(type: string, props: DeviceMetric_Props): any;
+  */
+declare function deviceMetric(type: "DeviceMetric", props: DeviceMetric_Props): any;
 declare function deviceMetric(props: DeviceMetric_Props): any;
 /**
-  * Create a FHIR DeviceRequest resource.
+  * Create a DeviceRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Request identifier
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -5358,14 +5224,13 @@ declare function deviceMetric(props: DeviceMetric_Props): any;
   * @param {Reference} [props.supportingInfo] - Additional clinical information
   * @param {Annotation} [props.note] - Notes or comments
   * @param {Reference} [props.relevantHistory] - Request provenance
- */
-declare function deviceRequest(type: string, props: DeviceRequest_Props): any;
+  */
+declare function deviceRequest(type: "DeviceRequest", props: DeviceRequest_Props): any;
 declare function deviceRequest(props: DeviceRequest_Props): any;
 /**
-  * Create a FHIR DeviceUseStatement resource.
+  * Create a DeviceUseStatement resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier for this record
   * @param {Reference} [props.basedOn] - Fulfills plan, proposal or order
@@ -5380,14 +5245,13 @@ declare function deviceRequest(props: DeviceRequest_Props): any;
   * @param {Reference} [props.reasonReference] - Why was DeviceUseStatement performed?
   * @param {CodeableConcept} [props.bodySite] - Target body site
   * @param {Annotation} [props.note] - Addition details (comments, instructions)
- */
-declare function deviceUseStatement(type: string, props: DeviceUseStatement_Props): any;
+  */
+declare function deviceUseStatement(type: "DeviceUseStatement", props: DeviceUseStatement_Props): any;
 declare function deviceUseStatement(props: DeviceUseStatement_Props): any;
 /**
-  * Create a FHIR DiagnosticReport resource.
+  * Create a DiagnosticReport resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for report
   * @param {Reference} [props.basedOn] - What was requested
@@ -5407,24 +5271,22 @@ declare function deviceUseStatement(props: DeviceUseStatement_Props): any;
   * @param {string} [props.conclusion] - Clinical conclusion (interpretation) of test results
   * @param {CodeableConcept} [props.conclusionCode] - Codes for the clinical conclusion of test results
   * @param {Attachment} [props.presentedForm] - Entire report as issued
- */
-declare function diagnosticReport(type: string, props: DiagnosticReport_Props): any;
+  */
+declare function diagnosticReport(type: "DiagnosticReport", props: DiagnosticReport_Props): any;
 declare function diagnosticReport(props: DiagnosticReport_Props): any;
 /**
-  * Create a FHIR DomainResource resource.
+  * Create a DomainResource resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
 
- */
-declare function domainResource(type: string, props: DomainResource_Props): any;
+  */
+declare function domainResource(type: "DomainResource", props: DomainResource_Props): any;
 declare function domainResource(props: DomainResource_Props): any;
 /**
-  * Create a FHIR Encounter resource.
+  * Create a Encounter resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifier(s) by which this encounter is known
   * @param {string} [props.status] - planned | arrived | triaged | in-progress | onleave | finished | cancelled +
@@ -5449,14 +5311,13 @@ declare function domainResource(props: DomainResource_Props): any;
   * @param {BackboneElement} [props.location] - List of locations where the patient has been
   * @param {Reference} [props.serviceProvider] - The organization (facility) responsible for this encounter
   * @param {Reference} [props.partOf] - Another Encounter this encounter is part of
- */
-declare function encounter(type: string, props: Encounter_Props): any;
+  */
+declare function encounter(type: "Encounter", props: Encounter_Props): any;
 declare function encounter(props: Encounter_Props): any;
 /**
-  * Create a FHIR EnrollmentRequest resource.
+  * Create a EnrollmentRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -5465,14 +5326,13 @@ declare function encounter(props: Encounter_Props): any;
   * @param {Reference} [props.provider] - Responsible practitioner
   * @param {Reference} [props.candidate] - The subject to be enrolled
   * @param {Reference} [props.coverage] - Insurance information
- */
-declare function enrollmentRequest(type: string, props: EnrollmentRequest_Props): any;
+  */
+declare function enrollmentRequest(type: "EnrollmentRequest", props: EnrollmentRequest_Props): any;
 declare function enrollmentRequest(props: EnrollmentRequest_Props): any;
 /**
-  * Create a FHIR EnrollmentResponse resource.
+  * Create a EnrollmentResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -5482,14 +5342,13 @@ declare function enrollmentRequest(props: EnrollmentRequest_Props): any;
   * @param {dateTime} [props.created] - Creation date
   * @param {Reference} [props.organization] - Insurer
   * @param {Reference} [props.requestProvider] - Responsible practitioner
- */
-declare function enrollmentResponse(type: string, props: EnrollmentResponse_Props): any;
+  */
+declare function enrollmentResponse(type: "EnrollmentResponse", props: EnrollmentResponse_Props): any;
 declare function enrollmentResponse(props: EnrollmentResponse_Props): any;
 /**
-  * Create a FHIR EpisodeOfCare resource.
+  * Create a EpisodeOfCare resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier(s) relevant for this EpisodeOfCare
   * @param {string} [props.status] - planned | waitlist | active | onhold | finished | cancelled | entered-in-error
@@ -5503,14 +5362,13 @@ declare function enrollmentResponse(props: EnrollmentResponse_Props): any;
   * @param {Reference} [props.careManager] - Care manager/care coordinator for the patient
   * @param {Reference} [props.team] - Other practitioners facilitating this episode of care
   * @param {Reference} [props.account] - The set of accounts that may be used for billing for this EpisodeOfCare
- */
-declare function episodeOfCare(type: string, props: EpisodeOfCare_Props): any;
+  */
+declare function episodeOfCare(type: "EpisodeOfCare", props: EpisodeOfCare_Props): any;
 declare function episodeOfCare(props: EpisodeOfCare_Props): any;
 /**
-  * Create a FHIR EventDefinition resource.
+  * Create a EventDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this event definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the event definition
@@ -5540,14 +5398,13 @@ declare function episodeOfCare(props: EpisodeOfCare_Props): any;
   * @param {ContactDetail} [props.endorser] - Who endorsed the content
   * @param {RelatedArtifact} [props.relatedArtifact] - Additional documentation, citations, etc.
   * @param {TriggerDefinition} [props.trigger] - "when" the event occurs (multiple = 'or')
- */
-declare function eventDefinition(type: string, props: EventDefinition_Props): any;
+  */
+declare function eventDefinition(type: "EventDefinition", props: EventDefinition_Props): any;
 declare function eventDefinition(props: EventDefinition_Props): any;
 /**
-  * Create a FHIR Evidence resource.
+  * Create a Evidence resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this evidence, represented as a globally unique URI
   * @param {Identifier} [props.identifier] - Additional identifier for the summary
@@ -5574,14 +5431,13 @@ declare function eventDefinition(props: EventDefinition_Props): any;
   * @param {CodeableConcept} [props.studyType] - The type of study that produced this evidence
   * @param {BackboneElement} [props.statistic] - Values and parameters for a single statistic
   * @param {BackboneElement} [props.certainty] - Certainty or quality of the evidence
- */
-declare function evidence(type: string, props: Evidence_Props): any;
+  */
+declare function evidence(type: "Evidence", props: Evidence_Props): any;
 declare function evidence(props: Evidence_Props): any;
 /**
-  * Create a FHIR EvidenceReport resource.
+  * Create a EvidenceReport resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this EvidenceReport, represented as a globally unique URI
   * @param {string} [props.status] - draft | active | retired | unknown
@@ -5601,14 +5457,13 @@ declare function evidence(props: Evidence_Props): any;
   * @param {ContactDetail} [props.endorser] - Who endorsed the content
   * @param {BackboneElement} [props.relatesTo] - Relationships to other compositions/documents
   * @param {BackboneElement} [props.section] - Composition is broken into sections
- */
-declare function evidenceReport(type: string, props: EvidenceReport_Props): any;
+  */
+declare function evidenceReport(type: "EvidenceReport", props: EvidenceReport_Props): any;
 declare function evidenceReport(props: EvidenceReport_Props): any;
 /**
-  * Create a FHIR EvidenceVariable resource.
+  * Create a EvidenceVariable resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this evidence variable, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the evidence variable
@@ -5634,14 +5489,13 @@ declare function evidenceReport(props: EvidenceReport_Props): any;
   * @param {BackboneElement} [props.characteristic] - What defines the members of the evidence element
   * @param {string} [props.handling] - continuous | dichotomous | ordinal | polychotomous
   * @param {BackboneElement} [props.category] - A grouping for ordinal or polychotomous variables
- */
-declare function evidenceVariable(type: string, props: EvidenceVariable_Props): any;
+  */
+declare function evidenceVariable(type: "EvidenceVariable", props: EvidenceVariable_Props): any;
 declare function evidenceVariable(props: EvidenceVariable_Props): any;
 /**
-  * Create a FHIR ExplanationOfBenefit resource.
+  * Create a ExplanationOfBenefit resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for the resource
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -5686,14 +5540,13 @@ declare function evidenceVariable(props: EvidenceVariable_Props): any;
   * @param {BackboneElement} [props.processNote] - Note concerning adjudication
   * @param {Period} [props.benefitPeriod] - When the benefits are applicable
   * @param {BackboneElement} [props.benefitBalance] - Balance by Benefit Category
- */
-declare function explanationOfBenefit(type: string, props: ExplanationOfBenefit_Props): any;
+  */
+declare function explanationOfBenefit(type: "ExplanationOfBenefit", props: ExplanationOfBenefit_Props): any;
 declare function explanationOfBenefit(props: ExplanationOfBenefit_Props): any;
 /**
-  * Create a FHIR FamilyMemberHistory resource.
+  * Create a FamilyMemberHistory resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Id(s) for this record
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -5713,14 +5566,13 @@ declare function explanationOfBenefit(props: ExplanationOfBenefit_Props): any;
   * @param {Reference} [props.reasonReference] - Why was family member history performed?
   * @param {Annotation} [props.note] - General note about related person
   * @param {BackboneElement} [props.condition] - Condition that the related person had
- */
-declare function familyMemberHistory(type: string, props: FamilyMemberHistory_Props): any;
+  */
+declare function familyMemberHistory(type: "FamilyMemberHistory", props: FamilyMemberHistory_Props): any;
 declare function familyMemberHistory(props: FamilyMemberHistory_Props): any;
 /**
-  * Create a FHIR Flag resource.
+  * Create a Flag resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.status] - active | inactive | entered-in-error
@@ -5730,14 +5582,13 @@ declare function familyMemberHistory(props: FamilyMemberHistory_Props): any;
   * @param {Period} [props.period] - Time period when flag is active
   * @param {Reference} [props.encounter] - Alert relevant during encounter
   * @param {Reference} [props.author] - Flag creator
- */
-declare function flag(type: string, props: Flag_Props): any;
+  */
+declare function flag(type: "Flag", props: Flag_Props): any;
 declare function flag(props: Flag_Props): any;
 /**
-  * Create a FHIR Goal resource.
+  * Create a Goal resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this goal
   * @param {string} [props.lifecycleStatus] - proposed | planned | accepted | active | on-hold | completed | cancelled | entered-in-error | rejected
@@ -5755,14 +5606,13 @@ declare function flag(props: Flag_Props): any;
   * @param {Annotation} [props.note] - Comments about the goal
   * @param {CodeableConcept} [props.outcomeCode] - What result was achieved regarding the goal?
   * @param {Reference} [props.outcomeReference] - Observation that resulted from goal
- */
-declare function goal(type: string, props: Goal_Props): any;
+  */
+declare function goal(type: "Goal", props: Goal_Props): any;
 declare function goal(props: Goal_Props): any;
 /**
-  * Create a FHIR Group resource.
+  * Create a Group resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique id
   * @param {boolean} [props.active] - Whether this group's record is in active use
@@ -5774,14 +5624,13 @@ declare function goal(props: Goal_Props): any;
   * @param {Reference} [props.managingEntity] - Entity that is the custodian of the Group's definition
   * @param {BackboneElement} [props.characteristic] - Include / Exclude group members by Trait
   * @param {BackboneElement} [props.member] - Who or what is in group
- */
-declare function group(type: string, props: Group_Props): any;
+  */
+declare function group(type: "Group", props: Group_Props): any;
 declare function group(props: Group_Props): any;
 /**
-  * Create a FHIR GuidanceResponse resource.
+  * Create a GuidanceResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.requestIdentifier] - The identifier of the request associated with this response, if any
   * @param {Identifier} [props.identifier] - Business identifier
@@ -5798,14 +5647,13 @@ declare function group(props: Group_Props): any;
   * @param {Reference} [props.outputParameters] - The output parameters of the evaluation, if any
   * @param {Reference} [props.result] - Proposed actions, if any
   * @param {DataRequirement} [props.dataRequirement] - Additional required data
- */
-declare function guidanceResponse(type: string, props: GuidanceResponse_Props): any;
+  */
+declare function guidanceResponse(type: "GuidanceResponse", props: GuidanceResponse_Props): any;
 declare function guidanceResponse(props: GuidanceResponse_Props): any;
 /**
-  * Create a FHIR HealthcareService resource.
+  * Create a HealthcareService resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifiers for this item
   * @param {boolean} [props.active] - Whether this HealthcareService record is in active use
@@ -5831,14 +5679,13 @@ declare function guidanceResponse(props: GuidanceResponse_Props): any;
   * @param {BackboneElement} [props.notAvailable] - Not available during this time due to provided reason
   * @param {string} [props.availabilityExceptions] - Description of availability exceptions
   * @param {Reference} [props.endpoint] - Technical endpoints providing access to electronic services operated for the healthcare service
- */
-declare function healthcareService(type: string, props: HealthcareService_Props): any;
+  */
+declare function healthcareService(type: "HealthcareService", props: HealthcareService_Props): any;
 declare function healthcareService(props: HealthcareService_Props): any;
 /**
-  * Create a FHIR ImagingStudy resource.
+  * Create a ImagingStudy resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifiers for the whole study
   * @param {string} [props.status] - registered | available | cancelled | entered-in-error | unknown
@@ -5860,14 +5707,13 @@ declare function healthcareService(props: HealthcareService_Props): any;
   * @param {Annotation} [props.note] - User-defined comments
   * @param {string} [props.description] - Institution-generated description
   * @param {BackboneElement} [props.series] - Each study has one or more series of instances
- */
-declare function imagingStudy(type: string, props: ImagingStudy_Props): any;
+  */
+declare function imagingStudy(type: "ImagingStudy", props: ImagingStudy_Props): any;
 declare function imagingStudy(props: ImagingStudy_Props): any;
 /**
-  * Create a FHIR Immunization resource.
+  * Create a Immunization resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.status] - completed | entered-in-error | not-done
@@ -5897,14 +5743,13 @@ declare function imagingStudy(props: ImagingStudy_Props): any;
   * @param {CodeableConcept} [props.fundingSource] - Funding source for the vaccine
   * @param {BackboneElement} [props.reaction] - Details of a reaction that follows immunization
   * @param {BackboneElement} [props.protocolApplied] - Protocol followed by the provider
- */
-declare function immunization(type: string, props: Immunization_Props): any;
+  */
+declare function immunization(type: "Immunization", props: Immunization_Props): any;
 declare function immunization(props: Immunization_Props): any;
 /**
-  * Create a FHIR ImmunizationEvaluation resource.
+  * Create a ImmunizationEvaluation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.status] - completed | entered-in-error
@@ -5919,28 +5764,26 @@ declare function immunization(props: Immunization_Props): any;
   * @param {string} [props.series] - Name of vaccine series
   * @param {number|string} [props.doseNumber] - Dose number within series
   * @param {number|string} [props.seriesDoses] - Recommended number of doses for immunity
- */
-declare function immunizationEvaluation(type: string, props: ImmunizationEvaluation_Props): any;
+  */
+declare function immunizationEvaluation(type: "ImmunizationEvaluation", props: ImmunizationEvaluation_Props): any;
 declare function immunizationEvaluation(props: ImmunizationEvaluation_Props): any;
 /**
-  * Create a FHIR ImmunizationRecommendation resource.
+  * Create a ImmunizationRecommendation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {Reference} [props.patient] - Who this profile is for
   * @param {dateTime} [props.date] - Date recommendation(s) created
   * @param {Reference} [props.authority] - Who is responsible for protocol
   * @param {BackboneElement} [props.recommendation] - Vaccine administration recommendations
- */
-declare function immunizationRecommendation(type: string, props: ImmunizationRecommendation_Props): any;
+  */
+declare function immunizationRecommendation(type: "ImmunizationRecommendation", props: ImmunizationRecommendation_Props): any;
 declare function immunizationRecommendation(props: ImmunizationRecommendation_Props): any;
 /**
-  * Create a FHIR Ingredient resource.
+  * Create a Ingredient resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - An identifier or code by which the ingredient can be referenced
   * @param {string} [props.status] - draft | active | retired | unknown
@@ -5950,14 +5793,13 @@ declare function immunizationRecommendation(props: ImmunizationRecommendation_Pr
   * @param {boolean} [props.allergenicIndicator] - If the ingredient is a known or suspected allergen
   * @param {BackboneElement} [props.manufacturer] - An organization that manufactures this ingredient
   * @param {BackboneElement} [props.substance] - The substance that comprises this ingredient
- */
-declare function ingredient(type: string, props: Ingredient_Props): any;
+  */
+declare function ingredient(type: "Ingredient", props: Ingredient_Props): any;
 declare function ingredient(props: Ingredient_Props): any;
 /**
-  * Create a FHIR InsurancePlan resource.
+  * Create a InsurancePlan resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for Product
   * @param {string} [props.status] - draft | active | retired | unknown
@@ -5973,14 +5815,13 @@ declare function ingredient(props: Ingredient_Props): any;
   * @param {Reference} [props.network] - What networks are Included
   * @param {BackboneElement} [props.coverage] - Coverage details
   * @param {BackboneElement} [props.plan] - Plan details
- */
-declare function insurancePlan(type: string, props: InsurancePlan_Props): any;
+  */
+declare function insurancePlan(type: "InsurancePlan", props: InsurancePlan_Props): any;
 declare function insurancePlan(props: InsurancePlan_Props): any;
 /**
-  * Create a FHIR Invoice resource.
+  * Create a Invoice resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for item
   * @param {string} [props.status] - draft | issued | balanced | cancelled | entered-in-error
@@ -5998,14 +5839,13 @@ declare function insurancePlan(props: InsurancePlan_Props): any;
   * @param {Money} [props.totalGross] - Gross total of this Invoice
   * @param {markdown} [props.paymentTerms] - Payment details
   * @param {Annotation} [props.note] - Comments made about the invoice
- */
-declare function invoice(type: string, props: Invoice_Props): any;
+  */
+declare function invoice(type: "Invoice", props: Invoice_Props): any;
 declare function invoice(props: Invoice_Props): any;
 /**
-  * Create a FHIR Library resource.
+  * Create a Library resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this library, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the library
@@ -6038,14 +5878,13 @@ declare function invoice(props: Invoice_Props): any;
   * @param {ParameterDefinition} [props.parameter] - Parameters defined by the library
   * @param {DataRequirement} [props.dataRequirement] - What data is referenced by this library
   * @param {Attachment} [props.content] - Contents of the library, either embedded or referenced
- */
-declare function library(type: string, props: Library_Props): any;
+  */
+declare function library(type: "Library", props: Library_Props): any;
 declare function library(props: Library_Props): any;
 /**
-  * Create a FHIR List resource.
+  * Create a List resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.status] - current | retired | entered-in-error
@@ -6060,14 +5899,13 @@ declare function library(props: Library_Props): any;
   * @param {Annotation} [props.note] - Comments about the list
   * @param {BackboneElement} [props.entry] - Entries in the list
   * @param {CodeableConcept} [props.emptyReason] - Why list is empty
- */
-declare function list(type: string, props: List_Props): any;
+  */
+declare function list(type: "List", props: List_Props): any;
 declare function list(props: List_Props): any;
 /**
-  * Create a FHIR Location resource.
+  * Create a Location resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique code or number identifying the location to its users
   * @param {string} [props.status] - active | suspended | inactive
@@ -6086,14 +5924,13 @@ declare function list(props: List_Props): any;
   * @param {BackboneElement} [props.hoursOfOperation] - What days/times during a week is this location usually open
   * @param {string} [props.availabilityExceptions] - Description of availability exceptions
   * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for the location
- */
-declare function location(type: string, props: Location_Props): any;
+  */
+declare function location(type: "Location", props: Location_Props): any;
 declare function location(props: Location_Props): any;
 /**
-  * Create a FHIR ManufacturedItemDefinition resource.
+  * Create a ManufacturedItemDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique identifier
   * @param {string} [props.status] - draft | active | retired | unknown
@@ -6102,14 +5939,13 @@ declare function location(props: Location_Props): any;
   * @param {Reference} [props.manufacturer] - Manufacturer of the item (Note that this should be named "manufacturer" but it currently causes technical issues)
   * @param {CodeableConcept} [props.ingredient] - The ingredients of this manufactured item. Only needed if these are not specified by incoming references from the Ingredient resource
   * @param {BackboneElement} [props.property] - General characteristics of this item
- */
-declare function manufacturedItemDefinition(type: string, props: ManufacturedItemDefinition_Props): any;
+  */
+declare function manufacturedItemDefinition(type: "ManufacturedItemDefinition", props: ManufacturedItemDefinition_Props): any;
 declare function manufacturedItemDefinition(props: ManufacturedItemDefinition_Props): any;
 /**
-  * Create a FHIR Measure resource.
+  * Create a Measure resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this measure, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the measure
@@ -6152,14 +5988,13 @@ declare function manufacturedItemDefinition(props: ManufacturedItemDefinition_Pr
   * @param {markdown} [props.guidance] - Additional guidance for implementers
   * @param {BackboneElement} [props.group] - Population criteria group
   * @param {BackboneElement} [props.supplementalData] - What other data should be reported with the measure
- */
-declare function measure(type: string, props: Measure_Props): any;
+  */
+declare function measure(type: "Measure", props: Measure_Props): any;
 declare function measure(props: Measure_Props): any;
 /**
-  * Create a FHIR MeasureReport resource.
+  * Create a MeasureReport resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Additional identifier for the MeasureReport
   * @param {string} [props.status] - complete | pending | error
@@ -6172,14 +6007,13 @@ declare function measure(props: Measure_Props): any;
   * @param {CodeableConcept} [props.improvementNotation] - increase | decrease
   * @param {BackboneElement} [props.group] - Measure results for each group
   * @param {Reference} [props.evaluatedResource] - What data was used to calculate the measure score
- */
-declare function measureReport(type: string, props: MeasureReport_Props): any;
+  */
+declare function measureReport(type: "MeasureReport", props: MeasureReport_Props): any;
 declare function measureReport(props: MeasureReport_Props): any;
 /**
-  * Create a FHIR Media resource.
+  * Create a Media resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifier(s) for the image
   * @param {Reference} [props.basedOn] - Procedure that caused this media to be created
@@ -6203,14 +6037,13 @@ declare function measureReport(props: MeasureReport_Props): any;
   * @param {decimal} [props.duration] - Length in seconds (audio / video)
   * @param {Attachment} [props.content] - Actual Media - reference or data
   * @param {Annotation} [props.note] - Comments made about the media
- */
-declare function media(type: string, props: Media_Props): any;
+  */
+declare function media(type: "Media", props: Media_Props): any;
 declare function media(props: Media_Props): any;
 /**
-  * Create a FHIR Medication resource.
+  * Create a Medication resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for this medication
   * @param {CodeableConcept} [props.code] - Codes that identify this medication
@@ -6220,14 +6053,13 @@ declare function media(props: Media_Props): any;
   * @param {Ratio} [props.amount] - Amount of drug in package
   * @param {BackboneElement} [props.ingredient] - Active or inactive ingredient
   * @param {BackboneElement} [props.batch] - Details about packaged medications
- */
-declare function medication(type: string, props: Medication_Props): any;
+  */
+declare function medication(type: "Medication", props: Medication_Props): any;
 declare function medication(props: Medication_Props): any;
 /**
-  * Create a FHIR MedicationAdministration resource.
+  * Create a MedicationAdministration resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier
   * @param {string} [props.instantiates] - Instantiates protocol or definition
@@ -6248,14 +6080,13 @@ declare function medication(props: Medication_Props): any;
   * @param {Annotation} [props.note] - Information about the administration
   * @param {BackboneElement} [props.dosage] - Details of how medication was taken
   * @param {Reference} [props.eventHistory] - A list of events of interest in the lifecycle
- */
-declare function medicationAdministration(type: string, props: MedicationAdministration_Props): any;
+  */
+declare function medicationAdministration(type: "MedicationAdministration", props: MedicationAdministration_Props): any;
 declare function medicationAdministration(props: MedicationAdministration_Props): any;
 /**
-  * Create a FHIR MedicationDispense resource.
+  * Create a MedicationDispense resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier
   * @param {Reference} [props.partOf] - Event that dispense is part of
@@ -6281,14 +6112,13 @@ declare function medicationAdministration(props: MedicationAdministration_Props)
   * @param {BackboneElement} [props.substitution] - Whether a substitution was performed on the dispense
   * @param {Reference} [props.detectedIssue] - Clinical issue with action
   * @param {Reference} [props.eventHistory] - A list of relevant lifecycle events
- */
-declare function medicationDispense(type: string, props: MedicationDispense_Props): any;
+  */
+declare function medicationDispense(type: "MedicationDispense", props: MedicationDispense_Props): any;
 declare function medicationDispense(props: MedicationDispense_Props): any;
 /**
-  * Create a FHIR MedicationKnowledge resource.
+  * Create a MedicationKnowledge resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {CodeableConcept} [props.code] - Code that identifies this medication
   * @param {string} [props.status] - active | inactive | entered-in-error
@@ -6312,14 +6142,13 @@ declare function medicationDispense(props: MedicationDispense_Props): any;
   * @param {Reference} [props.contraindication] - Potential clinical issue with or between medication(s)
   * @param {BackboneElement} [props.regulatory] - Regulatory information about a medication
   * @param {BackboneElement} [props.kinetics] - The time course of drug absorption, distribution, metabolism and excretion of a medication from the body
- */
-declare function medicationKnowledge(type: string, props: MedicationKnowledge_Props): any;
+  */
+declare function medicationKnowledge(type: "MedicationKnowledge", props: MedicationKnowledge_Props): any;
 declare function medicationKnowledge(props: MedicationKnowledge_Props): any;
 /**
-  * Create a FHIR MedicationRequest resource.
+  * Create a MedicationRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External ids for this request
   * @param {string} [props.status] - active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown
@@ -6353,14 +6182,13 @@ declare function medicationKnowledge(props: MedicationKnowledge_Props): any;
   * @param {Reference} [props.priorPrescription] - An order/prescription that is being replaced
   * @param {Reference} [props.detectedIssue] - Clinical Issue with action
   * @param {Reference} [props.eventHistory] - A list of events of interest in the lifecycle
- */
-declare function medicationRequest(type: string, props: MedicationRequest_Props): any;
+  */
+declare function medicationRequest(type: "MedicationRequest", props: MedicationRequest_Props): any;
 declare function medicationRequest(props: MedicationRequest_Props): any;
 /**
-  * Create a FHIR MedicationStatement resource.
+  * Create a MedicationStatement resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier
   * @param {Reference} [props.basedOn] - Fulfils plan, proposal or order
@@ -6379,14 +6207,13 @@ declare function medicationRequest(props: MedicationRequest_Props): any;
   * @param {Reference} [props.reasonReference] - Condition or observation that supports why the medication is being/was taken
   * @param {Annotation} [props.note] - Further information about the statement
   * @param {Dosage} [props.dosage] - Details of how medication is/was taken or should be taken
- */
-declare function medicationStatement(type: string, props: MedicationStatement_Props): any;
+  */
+declare function medicationStatement(type: "MedicationStatement", props: MedicationStatement_Props): any;
 declare function medicationStatement(props: MedicationStatement_Props): any;
 /**
-  * Create a FHIR MedicinalProductDefinition resource.
+  * Create a MedicinalProductDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for this product. Could be an MPID
   * @param {CodeableConcept} [props.type] - Regulatory type, e.g. Investigational or Authorized
@@ -6416,14 +6243,13 @@ declare function medicationStatement(props: MedicationStatement_Props): any;
   * @param {BackboneElement} [props.crossReference] - Reference to another product, e.g. for linking authorised to investigational product
   * @param {BackboneElement} [props.operation] - A manufacturing or administrative process for the medicinal product
   * @param {BackboneElement} [props.characteristic] - Key product features such as "sugar free", "modified release"
- */
-declare function medicinalProductDefinition(type: string, props: MedicinalProductDefinition_Props): any;
+  */
+declare function medicinalProductDefinition(type: "MedicinalProductDefinition", props: MedicinalProductDefinition_Props): any;
 declare function medicinalProductDefinition(props: MedicinalProductDefinition_Props): any;
 /**
-  * Create a FHIR MolecularSequence resource.
+  * Create a MolecularSequence resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique ID for this particular sequence. This is a FHIR-defined id
   * @param {string} [props.type] - aa | dna | rna
@@ -6441,14 +6267,13 @@ declare function medicinalProductDefinition(props: MedicinalProductDefinition_Pr
   * @param {BackboneElement} [props.repository] - External repository which contains detailed report related with observedSeq in this resource
   * @param {Reference} [props.pointer] - Pointer to next atomic sequence
   * @param {BackboneElement} [props.structureVariant] - Structural variant
- */
-declare function molecularSequence(type: string, props: MolecularSequence_Props): any;
+  */
+declare function molecularSequence(type: "MolecularSequence", props: MolecularSequence_Props): any;
 declare function molecularSequence(props: MolecularSequence_Props): any;
 /**
-  * Create a FHIR NutritionOrder resource.
+  * Create a NutritionOrder resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifiers assigned to this order
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -6467,14 +6292,13 @@ declare function molecularSequence(props: MolecularSequence_Props): any;
   * @param {BackboneElement} [props.supplement] - Supplement components
   * @param {BackboneElement} [props.enteralFormula] - Enteral formula components
   * @param {Annotation} [props.note] - Comments
- */
-declare function nutritionOrder(type: string, props: NutritionOrder_Props): any;
+  */
+declare function nutritionOrder(type: "NutritionOrder", props: NutritionOrder_Props): any;
 declare function nutritionOrder(props: NutritionOrder_Props): any;
 /**
-  * Create a FHIR NutritionProduct resource.
+  * Create a NutritionProduct resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.status] - active | inactive | entered-in-error
   * @param {CodeableConcept} [props.category] - A category or class of the nutrition product (halal, kosher, gluten free, vegan, etc)
@@ -6486,14 +6310,13 @@ declare function nutritionOrder(props: NutritionOrder_Props): any;
   * @param {BackboneElement} [props.productCharacteristic] - Specifies descriptive properties of the nutrition product
   * @param {BackboneElement} [props.instance] - One or several physical instances or occurrences of the nutrition product
   * @param {Annotation} [props.note] - Comments made about the product
- */
-declare function nutritionProduct(type: string, props: NutritionProduct_Props): any;
+  */
+declare function nutritionProduct(type: "NutritionProduct", props: NutritionProduct_Props): any;
 declare function nutritionProduct(props: NutritionProduct_Props): any;
 /**
-  * Create a FHIR Observation resource.
+  * Create a Observation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for observation
   * @param {Reference} [props.basedOn] - Fulfills plan, proposal or order
@@ -6519,14 +6342,13 @@ declare function nutritionProduct(props: NutritionProduct_Props): any;
   * @param {Reference} [props.hasMember] - Related resource that belongs to the Observation group
   * @param {Reference} [props.derivedFrom] - Related measurements the observation is made from
   * @param {BackboneElement} [props.component] - Component results
- */
-declare function observation(type: string, props: Observation_Props): any;
+  */
+declare function observation(type: "Observation", props: Observation_Props): any;
 declare function observation(props: Observation_Props): any;
 /**
-  * Create a FHIR ObservationDefinition resource.
+  * Create a ObservationDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {CodeableConcept} [props.category] - Category of observation
   * @param {CodeableConcept} [props.code] - Type of observation (code / type)
@@ -6541,14 +6363,13 @@ declare function observation(props: Observation_Props): any;
   * @param {Reference} [props.normalCodedValueSet] - Value set of normal coded values for the observations conforming to this ObservationDefinition
   * @param {Reference} [props.abnormalCodedValueSet] - Value set of abnormal coded values for the observations conforming to this ObservationDefinition
   * @param {Reference} [props.criticalCodedValueSet] - Value set of critical coded values for the observations conforming to this ObservationDefinition
- */
-declare function observationDefinition(type: string, props: ObservationDefinition_Props): any;
+  */
+declare function observationDefinition(type: "ObservationDefinition", props: ObservationDefinition_Props): any;
 declare function observationDefinition(props: ObservationDefinition_Props): any;
 /**
-  * Create a FHIR Organization resource.
+  * Create a Organization resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifies this organization  across multiple systems
   * @param {boolean} [props.active] - Whether the organization's record is still in active use
@@ -6560,14 +6381,13 @@ declare function observationDefinition(props: ObservationDefinition_Props): any;
   * @param {Reference} [props.partOf] - The organization of which this organization forms a part
   * @param {BackboneElement} [props.contact] - Contact for the organization for a certain purpose
   * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for the organization
- */
-declare function organization(type: string, props: Organization_Props): any;
+  */
+declare function organization(type: "Organization", props: Organization_Props): any;
 declare function organization(props: Organization_Props): any;
 /**
-  * Create a FHIR OrganizationAffiliation resource.
+  * Create a OrganizationAffiliation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifiers that are specific to this role
   * @param {boolean} [props.active] - Whether this organization affiliation record is in active use
@@ -6581,14 +6401,13 @@ declare function organization(props: Organization_Props): any;
   * @param {Reference} [props.healthcareService] - Healthcare services provided through the role
   * @param {ContactPoint} [props.telecom] - Contact details at the participatingOrganization relevant to this Affiliation
   * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for this role
- */
-declare function organizationAffiliation(type: string, props: OrganizationAffiliation_Props): any;
+  */
+declare function organizationAffiliation(type: "OrganizationAffiliation", props: OrganizationAffiliation_Props): any;
 declare function organizationAffiliation(props: OrganizationAffiliation_Props): any;
 /**
-  * Create a FHIR PackagedProductDefinition resource.
+  * Create a PackagedProductDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - A unique identifier for this package as whole
   * @param {string} [props.name] - A name for this package. Typically as listed in a drug formulary, catalogue, inventory etc
@@ -6604,14 +6423,13 @@ declare function organizationAffiliation(props: OrganizationAffiliation_Props): 
   * @param {boolean} [props.copackagedIndicator] - If the drug product is supplied with another item such as a diluent or adjuvant
   * @param {Reference} [props.manufacturer] - Manufacturer of this package type (multiple means these are all possible manufacturers)
   * @param {BackboneElement} [props.package] - A packaging item, as a container for medically related items, possibly with other packaging items within, or a packaging component, such as bottle cap
- */
-declare function packagedProductDefinition(type: string, props: PackagedProductDefinition_Props): any;
+  */
+declare function packagedProductDefinition(type: "PackagedProductDefinition", props: PackagedProductDefinition_Props): any;
 declare function packagedProductDefinition(props: PackagedProductDefinition_Props): any;
 /**
-  * Create a FHIR Patient resource.
+  * Create a Patient resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - An identifier for this patient
   * @param {boolean} [props.active] - Whether this patient's record is in active use
@@ -6629,14 +6447,13 @@ declare function packagedProductDefinition(props: PackagedProductDefinition_Prop
   * @param {Reference} [props.generalPractitioner] - Patient's nominated primary care provider
   * @param {Reference} [props.managingOrganization] - Organization that is the custodian of the patient record
   * @param {BackboneElement} [props.link] - Link to another patient resource that concerns the same actual person
- */
-declare function patient(type: string, props: Patient_Props): any;
+  */
+declare function patient(type: "Patient", props: Patient_Props): any;
 declare function patient(props: Patient_Props): any;
 /**
-  * Create a FHIR PaymentNotice resource.
+  * Create a PaymentNotice resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for the payment noctice
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -6650,14 +6467,13 @@ declare function patient(props: Patient_Props): any;
   * @param {Reference} [props.recipient] - Party being notified
   * @param {Money} [props.amount] - Monetary amount of the payment
   * @param {CodeableConcept} [props.paymentStatus] - Issued or cleared Status of the payment
- */
-declare function paymentNotice(type: string, props: PaymentNotice_Props): any;
+  */
+declare function paymentNotice(type: "PaymentNotice", props: PaymentNotice_Props): any;
 declare function paymentNotice(props: PaymentNotice_Props): any;
 /**
-  * Create a FHIR PaymentReconciliation resource.
+  * Create a PaymentReconciliation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for a payment reconciliation
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -6674,14 +6490,13 @@ declare function paymentNotice(props: PaymentNotice_Props): any;
   * @param {BackboneElement} [props.detail] - Settlement particulars
   * @param {CodeableConcept} [props.formCode] - Printed form identifier
   * @param {BackboneElement} [props.processNote] - Note concerning processing
- */
-declare function paymentReconciliation(type: string, props: PaymentReconciliation_Props): any;
+  */
+declare function paymentReconciliation(type: "PaymentReconciliation", props: PaymentReconciliation_Props): any;
 declare function paymentReconciliation(props: PaymentReconciliation_Props): any;
 /**
-  * Create a FHIR Person resource.
+  * Create a Person resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - A human identifier for this person
   * @param {HumanName} [props.name] - A name associated with the person
@@ -6693,14 +6508,13 @@ declare function paymentReconciliation(props: PaymentReconciliation_Props): any;
   * @param {Reference} [props.managingOrganization] - The organization that is the custodian of the person record
   * @param {boolean} [props.active] - This person's record is in active use
   * @param {BackboneElement} [props.link] - Link to a resource that concerns the same actual person
- */
-declare function person(type: string, props: Person_Props): any;
+  */
+declare function person(type: "Person", props: Person_Props): any;
 declare function person(props: Person_Props): any;
 /**
-  * Create a FHIR PlanDefinition resource.
+  * Create a PlanDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this plan definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the plan definition
@@ -6733,14 +6547,13 @@ declare function person(props: Person_Props): any;
   * @param {canonical} [props.library] - Logic used by the plan definition
   * @param {BackboneElement} [props.goal] - What the plan is trying to accomplish
   * @param {BackboneElement} [props.action] - Action defined by the plan
- */
-declare function planDefinition(type: string, props: PlanDefinition_Props): any;
+  */
+declare function planDefinition(type: "PlanDefinition", props: PlanDefinition_Props): any;
 declare function planDefinition(props: PlanDefinition_Props): any;
 /**
-  * Create a FHIR Practitioner resource.
+  * Create a Practitioner resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - An identifier for the person as this agent
   * @param {boolean} [props.active] - Whether this practitioner's record is in active use
@@ -6752,14 +6565,13 @@ declare function planDefinition(props: PlanDefinition_Props): any;
   * @param {Attachment} [props.photo] - Image of the person
   * @param {BackboneElement} [props.qualification] - Certification, licenses, or training pertaining to the provision of care
   * @param {CodeableConcept} [props.communication] - A language the practitioner can use in patient communication
- */
-declare function practitioner(type: string, props: Practitioner_Props): any;
+  */
+declare function practitioner(type: "Practitioner", props: Practitioner_Props): any;
 declare function practitioner(props: Practitioner_Props): any;
 /**
-  * Create a FHIR PractitionerRole resource.
+  * Create a PractitionerRole resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifiers that are specific to a role/location
   * @param {boolean} [props.active] - Whether this practitioner role record is in active use
@@ -6775,14 +6587,13 @@ declare function practitioner(props: Practitioner_Props): any;
   * @param {BackboneElement} [props.notAvailable] - Not available during this time due to provided reason
   * @param {string} [props.availabilityExceptions] - Description of availability exceptions
   * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for the practitioner with this role
- */
-declare function practitionerRole(type: string, props: PractitionerRole_Props): any;
+  */
+declare function practitionerRole(type: "PractitionerRole", props: PractitionerRole_Props): any;
 declare function practitionerRole(props: PractitionerRole_Props): any;
 /**
-  * Create a FHIR Procedure resource.
+  * Create a Procedure resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Identifiers for this procedure
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -6812,14 +6623,13 @@ declare function practitionerRole(props: PractitionerRole_Props): any;
   * @param {BackboneElement} [props.focalDevice] - Manipulated, implanted, or removed device
   * @param {Reference} [props.usedReference] - Items used during procedure
   * @param {CodeableConcept} [props.usedCode] - Coded items used during the procedure
- */
-declare function procedure(type: string, props: Procedure_Props): any;
+  */
+declare function procedure(type: "Procedure", props: Procedure_Props): any;
 declare function procedure(props: Procedure_Props): any;
 /**
-  * Create a FHIR Questionnaire resource.
+  * Create a Questionnaire resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this questionnaire, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the questionnaire
@@ -6843,14 +6653,13 @@ declare function procedure(props: Procedure_Props): any;
   * @param {Period} [props.effectivePeriod] - When the questionnaire is expected to be used
   * @param {Coding} [props.code] - Concept that represents the overall questionnaire
   * @param {BackboneElement} [props.item] - Questions and sections within the Questionnaire
- */
-declare function questionnaire(type: string, props: Questionnaire_Props): any;
+  */
+declare function questionnaire(type: "Questionnaire", props: Questionnaire_Props): any;
 declare function questionnaire(props: Questionnaire_Props): any;
 /**
-  * Create a FHIR QuestionnaireResponse resource.
+  * Create a QuestionnaireResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique id for this set of answers
   * @param {Reference} [props.basedOn] - Request fulfilled by this QuestionnaireResponse
@@ -6863,14 +6672,13 @@ declare function questionnaire(props: Questionnaire_Props): any;
   * @param {Reference} [props.author] - Person who received and recorded the answers
   * @param {Reference} [props.source] - The person who answered the questions
   * @param {BackboneElement} [props.item] - Groups and questions
- */
-declare function questionnaireResponse(type: string, props: QuestionnaireResponse_Props): any;
+  */
+declare function questionnaireResponse(type: "QuestionnaireResponse", props: QuestionnaireResponse_Props): any;
 declare function questionnaireResponse(props: QuestionnaireResponse_Props): any;
 /**
-  * Create a FHIR RegulatedAuthorization resource.
+  * Create a RegulatedAuthorization resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for the authorization, typically assigned by the authorizing body
   * @param {Reference} [props.subject] - The product type, treatment, facility or activity that is being authorized
@@ -6886,14 +6694,13 @@ declare function questionnaireResponse(props: QuestionnaireResponse_Props): any;
   * @param {Reference} [props.holder] - The organization that has been granted this authorization, by the regulator
   * @param {Reference} [props.regulator] - The regulatory authority or authorizing body granting the authorization
   * @param {BackboneElement} [props.case] - The case or regulatory procedure for granting or amending a regulated authorization. Note: This area is subject to ongoing review and the workgroup is seeking implementer feedback on its use (see link at bottom of page)
- */
-declare function regulatedAuthorization(type: string, props: RegulatedAuthorization_Props): any;
+  */
+declare function regulatedAuthorization(type: "RegulatedAuthorization", props: RegulatedAuthorization_Props): any;
 declare function regulatedAuthorization(props: RegulatedAuthorization_Props): any;
 /**
-  * Create a FHIR RelatedPerson resource.
+  * Create a RelatedPerson resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - A human identifier for this person
   * @param {boolean} [props.active] - Whether this related person's record is in active use
@@ -6907,14 +6714,13 @@ declare function regulatedAuthorization(props: RegulatedAuthorization_Props): an
   * @param {Attachment} [props.photo] - Image of the person
   * @param {Period} [props.period] - Period of time that this relationship is considered valid
   * @param {BackboneElement} [props.communication] - A language which may be used to communicate with about the patient's health
- */
-declare function relatedPerson(type: string, props: RelatedPerson_Props): any;
+  */
+declare function relatedPerson(type: "RelatedPerson", props: RelatedPerson_Props): any;
 declare function relatedPerson(props: RelatedPerson_Props): any;
 /**
-  * Create a FHIR RequestGroup resource.
+  * Create a RequestGroup resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -6934,14 +6740,13 @@ declare function relatedPerson(props: RelatedPerson_Props): any;
   * @param {Reference} [props.reasonReference] - Why the request group is needed
   * @param {Annotation} [props.note] - Additional notes about the response
   * @param {BackboneElement} [props.action] - Proposed actions, if any
- */
-declare function requestGroup(type: string, props: RequestGroup_Props): any;
+  */
+declare function requestGroup(type: "RequestGroup", props: RequestGroup_Props): any;
 declare function requestGroup(props: RequestGroup_Props): any;
 /**
-  * Create a FHIR ResearchDefinition resource.
+  * Create a ResearchDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this research definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the research definition
@@ -6977,14 +6782,13 @@ declare function requestGroup(props: RequestGroup_Props): any;
   * @param {Reference} [props.exposure] - What exposure?
   * @param {Reference} [props.exposureAlternative] - What alternative exposure state?
   * @param {Reference} [props.outcome] - What outcome?
- */
-declare function researchDefinition(type: string, props: ResearchDefinition_Props): any;
+  */
+declare function researchDefinition(type: "ResearchDefinition", props: ResearchDefinition_Props): any;
 declare function researchDefinition(props: ResearchDefinition_Props): any;
 /**
-  * Create a FHIR ResearchElementDefinition resource.
+  * Create a ResearchElementDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this research element definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the research element definition
@@ -7019,14 +6823,13 @@ declare function researchDefinition(props: ResearchDefinition_Props): any;
   * @param {string} [props.type] - population | exposure | outcome
   * @param {string} [props.variableType] - dichotomous | continuous | descriptive
   * @param {BackboneElement} [props.characteristic] - What defines the members of the research element
- */
-declare function researchElementDefinition(type: string, props: ResearchElementDefinition_Props): any;
+  */
+declare function researchElementDefinition(type: "ResearchElementDefinition", props: ResearchElementDefinition_Props): any;
 declare function researchElementDefinition(props: ResearchElementDefinition_Props): any;
 /**
-  * Create a FHIR ResearchStudy resource.
+  * Create a ResearchStudy resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for study
   * @param {string} [props.title] - Name for this study
@@ -7052,14 +6855,13 @@ declare function researchElementDefinition(props: ResearchElementDefinition_Prop
   * @param {Annotation} [props.note] - Comments made about the study
   * @param {BackboneElement} [props.arm] - Defined path through the study for a subject
   * @param {BackboneElement} [props.objective] - A goal for the study
- */
-declare function researchStudy(type: string, props: ResearchStudy_Props): any;
+  */
+declare function researchStudy(type: "ResearchStudy", props: ResearchStudy_Props): any;
 declare function researchStudy(props: ResearchStudy_Props): any;
 /**
-  * Create a FHIR ResearchSubject resource.
+  * Create a ResearchSubject resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for research subject in a study
   * @param {string} [props.status] - candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn
@@ -7069,14 +6871,13 @@ declare function researchStudy(props: ResearchStudy_Props): any;
   * @param {string} [props.assignedArm] - What path should be followed
   * @param {string} [props.actualArm] - What path was followed
   * @param {Reference} [props.consent] - Agreement to participate in study
- */
-declare function researchSubject(type: string, props: ResearchSubject_Props): any;
+  */
+declare function researchSubject(type: "ResearchSubject", props: ResearchSubject_Props): any;
 declare function researchSubject(props: ResearchSubject_Props): any;
 /**
-  * Create a FHIR RiskAssessment resource.
+  * Create a RiskAssessment resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique identifier for the assessment
   * @param {Reference} [props.basedOn] - Request fulfilled by this assessment
@@ -7095,14 +6896,13 @@ declare function researchSubject(props: ResearchSubject_Props): any;
   * @param {BackboneElement} [props.prediction] - Outcome predicted
   * @param {string} [props.mitigation] - How to reduce risk
   * @param {Annotation} [props.note] - Comments on the risk assessment
- */
-declare function riskAssessment(type: string, props: RiskAssessment_Props): any;
+  */
+declare function riskAssessment(type: "RiskAssessment", props: RiskAssessment_Props): any;
 declare function riskAssessment(props: RiskAssessment_Props): any;
 /**
-  * Create a FHIR Schedule resource.
+  * Create a Schedule resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this item
   * @param {boolean} [props.active] - Whether this schedule is in active use
@@ -7112,14 +6912,13 @@ declare function riskAssessment(props: RiskAssessment_Props): any;
   * @param {Reference} [props.actor] - Resource(s) that availability information is being provided for
   * @param {Period} [props.planningHorizon] - Period of time covered by schedule
   * @param {string} [props.comment] - Comments on availability
- */
-declare function schedule(type: string, props: Schedule_Props): any;
+  */
+declare function schedule(type: "Schedule", props: Schedule_Props): any;
 declare function schedule(props: Schedule_Props): any;
 /**
-  * Create a FHIR ServiceRequest resource.
+  * Create a ServiceRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifiers assigned to this order
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -7154,14 +6953,13 @@ declare function schedule(props: Schedule_Props): any;
   * @param {Annotation} [props.note] - Comments
   * @param {string} [props.patientInstruction] - Patient or consumer-oriented instructions
   * @param {Reference} [props.relevantHistory] - Request provenance
- */
-declare function serviceRequest(type: string, props: ServiceRequest_Props): any;
+  */
+declare function serviceRequest(type: "ServiceRequest", props: ServiceRequest_Props): any;
 declare function serviceRequest(props: ServiceRequest_Props): any;
 /**
-  * Create a FHIR Slot resource.
+  * Create a Slot resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this item
   * @param {CodeableConcept} [props.serviceCategory] - A broad categorization of the service that is to be performed during this appointment
@@ -7174,14 +6972,13 @@ declare function serviceRequest(props: ServiceRequest_Props): any;
   * @param {instant} [props.end] - Date/Time that the slot is to conclude
   * @param {boolean} [props.overbooked] - This slot has already been overbooked, appointments are unlikely to be accepted for this time
   * @param {string} [props.comment] - Comments on the slot to describe any extended information. Such as custom constraints on the slot
- */
-declare function slot(type: string, props: Slot_Props): any;
+  */
+declare function slot(type: "Slot", props: Slot_Props): any;
 declare function slot(props: Slot_Props): any;
 /**
-  * Create a FHIR Specimen resource.
+  * Create a Specimen resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Identifier
   * @param {Identifier} [props.accessionIdentifier] - Identifier assigned by the lab
@@ -7196,14 +6993,13 @@ declare function slot(props: Slot_Props): any;
   * @param {BackboneElement} [props.container] - Direct container of specimen (tube/slide, etc.)
   * @param {CodeableConcept} [props.condition] - State of the specimen
   * @param {Annotation} [props.note] - Comments
- */
-declare function specimen(type: string, props: Specimen_Props): any;
+  */
+declare function specimen(type: "Specimen", props: Specimen_Props): any;
 declare function specimen(props: Specimen_Props): any;
 /**
-  * Create a FHIR SpecimenDefinition resource.
+  * Create a SpecimenDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier of a kind of specimen
   * @param {CodeableConcept} [props.typeCollected] - Kind of material to collect
@@ -7211,14 +7007,13 @@ declare function specimen(props: Specimen_Props): any;
   * @param {string} [props.timeAspect] - Time aspect for collection
   * @param {CodeableConcept} [props.collection] - Specimen collection procedure
   * @param {BackboneElement} [props.typeTested] - Specimen in container intended for testing by lab
- */
-declare function specimenDefinition(type: string, props: SpecimenDefinition_Props): any;
+  */
+declare function specimenDefinition(type: "SpecimenDefinition", props: SpecimenDefinition_Props): any;
 declare function specimenDefinition(props: SpecimenDefinition_Props): any;
 /**
-  * Create a FHIR Substance resource.
+  * Create a Substance resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique identifier
   * @param {string} [props.status] - active | inactive | entered-in-error
@@ -7227,14 +7022,13 @@ declare function specimenDefinition(props: SpecimenDefinition_Props): any;
   * @param {string} [props.description] - Textual description of the substance, comments
   * @param {BackboneElement} [props.instance] - If this describes a specific package/container of the substance
   * @param {BackboneElement} [props.ingredient] - Composition information about the substance
- */
-declare function substance(type: string, props: Substance_Props): any;
+  */
+declare function substance(type: "Substance", props: Substance_Props): any;
 declare function substance(props: Substance_Props): any;
 /**
-  * Create a FHIR SubstanceDefinition resource.
+  * Create a SubstanceDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifier by which this substance is known
   * @param {string} [props.version] - A business level version identifier of the substance
@@ -7255,14 +7049,13 @@ declare function substance(props: Substance_Props): any;
   * @param {BackboneElement} [props.name] - Names applicable to this substance
   * @param {BackboneElement} [props.relationship] - A link between this substance and another
   * @param {BackboneElement} [props.sourceMaterial] - Material or taxonomic/anatomical source
- */
-declare function substanceDefinition(type: string, props: SubstanceDefinition_Props): any;
+  */
+declare function substanceDefinition(type: "SubstanceDefinition", props: SubstanceDefinition_Props): any;
 declare function substanceDefinition(props: SubstanceDefinition_Props): any;
 /**
-  * Create a FHIR SupplyDelivery resource.
+  * Create a SupplyDelivery resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier
   * @param {Reference} [props.basedOn] - Fulfills plan, proposal or order
@@ -7275,14 +7068,13 @@ declare function substanceDefinition(props: SubstanceDefinition_Props): any;
   * @param {Reference} [props.supplier] - Dispenser
   * @param {Reference} [props.destination] - Where the Supply was sent
   * @param {Reference} [props.receiver] - Who collected the Supply
- */
-declare function supplyDelivery(type: string, props: SupplyDelivery_Props): any;
+  */
+declare function supplyDelivery(type: "SupplyDelivery", props: SupplyDelivery_Props): any;
 declare function supplyDelivery(props: SupplyDelivery_Props): any;
 /**
-  * Create a FHIR SupplyRequest resource.
+  * Create a SupplyRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for SupplyRequest
   * @param {string} [props.status] - draft | active | suspended +
@@ -7299,14 +7091,13 @@ declare function supplyDelivery(props: SupplyDelivery_Props): any;
   * @param {Reference} [props.reasonReference] - The reason why the supply item was requested
   * @param {Reference} [props.deliverFrom] - The origin of the supply
   * @param {Reference} [props.deliverTo] - The destination of the supply
- */
-declare function supplyRequest(type: string, props: SupplyRequest_Props): any;
+  */
+declare function supplyRequest(type: "SupplyRequest", props: SupplyRequest_Props): any;
 declare function supplyRequest(props: SupplyRequest_Props): any;
 /**
-  * Create a FHIR Task resource.
+  * Create a Task resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Task Instance Identifier
   * @param {canonical} [props.instantiatesCanonical] - Formal definition of task
@@ -7339,14 +7130,13 @@ declare function supplyRequest(props: SupplyRequest_Props): any;
   * @param {BackboneElement} [props.restriction] - Constraints on fulfillment tasks
   * @param {BackboneElement} [props.input] - Information used to perform task
   * @param {BackboneElement} [props.output] - Information produced as part of task
- */
-declare function task(type: string, props: Task_Props): any;
+  */
+declare function task(type: "Task", props: Task_Props): any;
 declare function task(props: Task_Props): any;
 /**
-  * Create a FHIR TestReport resource.
+  * Create a TestReport resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier
   * @param {string} [props.name] - Informal name of the executed TestScript
@@ -7360,14 +7150,13 @@ declare function task(props: Task_Props): any;
   * @param {BackboneElement} [props.setup] - The results of the series of required setup operations before the tests were executed
   * @param {BackboneElement} [props.test] - A test executed from the test script
   * @param {BackboneElement} [props.teardown] - The results of running the series of required clean up steps
- */
-declare function testReport(type: string, props: TestReport_Props): any;
+  */
+declare function testReport(type: "TestReport", props: TestReport_Props): any;
 declare function testReport(props: TestReport_Props): any;
 /**
-  * Create a FHIR VerificationResult resource.
+  * Create a VerificationResult resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Reference} [props.target] - A resource that was validated
   * @param {string} [props.targetLocation] - The fhirpath location(s) within the resource that was validated
@@ -7383,14 +7172,13 @@ declare function testReport(props: TestReport_Props): any;
   * @param {BackboneElement} [props.primarySource] - Information about the primary source(s) involved in validation
   * @param {BackboneElement} [props.attestation] - Information about the entity attesting to information
   * @param {BackboneElement} [props.validator] - Information about the entity validating information
- */
-declare function verificationResult(type: string, props: VerificationResult_Props): any;
+  */
+declare function verificationResult(type: "VerificationResult", props: VerificationResult_Props): any;
 declare function verificationResult(props: VerificationResult_Props): any;
 /**
-  * Create a FHIR VisionPrescription resource.
+  * Create a VisionPrescription resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for vision prescription
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -7400,8 +7188,8 @@ declare function verificationResult(props: VerificationResult_Props): any;
   * @param {dateTime} [props.dateWritten] - When prescription was authorized
   * @param {Reference} [props.prescriber] - Who authorized the vision prescription
   * @param {BackboneElement} [props.lensSpecification] - Vision lens authorization
- */
-declare function visionPrescription(type: string, props: VisionPrescription_Props): any;
+  */
+declare function visionPrescription(type: "VisionPrescription", props: VisionPrescription_Props): any;
 declare function visionPrescription(props: VisionPrescription_Props): any;
 
 export { type Address, type Age, type Annotation, type Attachment, type BackboneElement, type CodeableConcept, type CodeableReference, type Coding, type ContactDetail, type ContactPoint, type Contributor, type Count, type DataRequirement, type Distance, type Dosage, type Duration, type Element, type ElementDefinition, type Expression, type Extension, type HumanName, type Identifier, type MarketingStatus, type Meta, type Money, type MoneyQuantity, type Narrative, type ParameterDefinition, type Period, type Population, type ProdCharacteristic, type ProductShelfLife, type Quantity, type Range, type Ratio, type RatioRange, type Reference, type RelatedArtifact, type SampledData, type Signature, type SimpleQuantity, type Timing, type TriggerDefinition, type UsageContext, account, activityDefinition, addExtension, administrableProductDefinition, adverseEvent, allergyIntolerance, appointment, appointmentResponse, type base64Binary, biologicallyDerivedProduct, bodyStructure, c, carePlan, careTeam, cc, chargeItem, chargeItemDefinition, citation, claim, claimResponse, clinicalImpression, clinicalUseDefinition, type code, coding, communication, communicationRequest, composite, concept, contract, coverage, coverageEligibilityRequest, coverageEligibilityResponse, detectedIssue, device, deviceDefinition, deviceMetric, deviceRequest, deviceUseStatement, diagnosticReport, domainResource, encounter, enrollmentRequest, enrollmentResponse, episodeOfCare, eventDefinition, evidence, evidenceReport, evidenceVariable, explanationOfBenefit, ext, extendSystemMap, extension, familyMemberHistory, findExtension, flag, goal, group, guidanceResponse, healthcareService, id, identifier, imagingStudy, immunization, immunizationEvaluation, immunizationRecommendation, ingredient, insurancePlan, invoice, library, list, location, manufacturedItemDefinition, mapSystems, type markdown, measure, measureReport, media, medication, medicationAdministration, medicationDispense, medicationKnowledge, medicationRequest, medicationStatement, medicinalProductDefinition, molecularSequence, nutritionOrder, nutritionProduct, observation, observationDefinition, type oid, organization, organizationAffiliation, packagedProductDefinition, patient, paymentNotice, paymentReconciliation, person, planDefinition, practitioner, practitionerRole, procedure, questionnaire, questionnaireResponse, ref, reference, regulatedAuthorization, relatedPerson, requestGroup, researchDefinition, researchElementDefinition, researchStudy, researchSubject, riskAssessment, schedule, serviceRequest, setSystemMap, slot, specimen, specimenDefinition, substance, substanceDefinition, supplyDelivery, supplyRequest, task, testReport, type url, type uuid, value, verificationResult, visionPrescription, type xhtml };
