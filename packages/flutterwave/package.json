@@ -33,7 +33,6 @@
   "devDependencies": {
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
-    "chai-as-promised": "^8.0.2",
     "deep-eql": "4.1.1",
     "mocha": "^10.7.3",
     "nock": "^14.0.10",

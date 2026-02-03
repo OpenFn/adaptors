@@ -753,9 +753,6 @@ importers:
       chai:
         specifier: 4.3.6
         version: 4.3.6
-      chai-as-promised:
-        specifier: ^8.0.2
-        version: 8.0.2(chai@4.3.6)
       deep-eql:
         specifier: 4.1.1
         version: 4.1.1
@@ -5819,11 +5816,6 @@ packages:
   cbor@8.1.0:
     resolution: {integrity: sha512-DwGjNW9omn6EwP70aXsn7FQJx5kO12tX0bZkaTjzdVFM6/7nhA4t0EENocKGx6D2Bch9PE2KzCUf5SceBdeijg==}
     engines: {node: '>=12.19'}
-
-  chai-as-promised@8.0.2:
-    resolution: {integrity: sha512-1GadL+sEJVLzDjcawPM4kjfnL+p/9vrxiEUonowKOAzvVg0PixJUdtuDzdkDeQhK3zfOE76GqGkZIQ7/Adcrqw==}
-    peerDependencies:
-      chai: '>= 2.1.2 < 7'
 
   chai-http@4.3.0:
     resolution: {integrity: sha512-zFTxlN7HLMv+7+SPXZdkd5wUlK+KxH6Q7bIEMiEx0FK3zuuMqL7cwICAQ0V1+yYRozBburYuxN1qZstgHpFZQg==}
@@ -14652,11 +14644,6 @@ snapshots:
   cbor@8.1.0:
     dependencies:
       nofilter: 3.1.0
-
-  chai-as-promised@8.0.2(chai@4.3.6):
-    dependencies:
-      chai: 4.3.6
-      check-error: 2.1.1
 
   chai-http@4.3.0:
     dependencies:
