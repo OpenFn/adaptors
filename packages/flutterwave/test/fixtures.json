@@ -139,4 +139,23 @@
       }
     }
   }
+  ,
+  "errors": {
+    "invalidCustomer": {
+      "input": null,
+      "message": "Invalid input: customerData must be a single object."
+    },
+    "invalidCustomerArray": {
+      "input": [],
+      "message": "Invalid input: customerData must be a single object."
+    },
+    "invalidPayment": {
+      "input": null,
+      "message": "Invalid input: paymentData must be a single object."
+    },
+    "invalidPaymentArray": {
+      "input": [],
+      "message": "Invalid input: paymentData must be a single object."
+    }
+  }
 }

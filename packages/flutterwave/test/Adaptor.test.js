@@ -1,5 +1,4 @@
 import chai, { expect } from 'chai';
-import chaiAsPromised from 'chai-as-promised';
 import { enableMockClient } from '@openfn/language-common/util';
 import {
   initiatePayment,
@@ -7,8 +6,6 @@ import {
   createPaymentMethod,
 } from '../src/Adaptor.js';
 import testData from './fixtures.json' with { type: 'json' };
-
-chai.use(chaiAsPromised);
 
 const testServer = enableMockClient(
   'https://developersandbox-api.flutterwave.com',
@@ -45,16 +42,17 @@ describe('Create Customer', () => {
   });
 
   it('throws an error for invalid input', async () => {
-    await expect(
-      createCustomer(null, {
+    try {
+      await createCustomer(testData.errors.invalidCustomer.input, {
         headers: {
           'X-Trace-Id': 'unique-trace-id-12345',
           'X-Idempotency-Key': 'unique-idempotency-key-12345',
         },
-      })(state),
-    ).to.be.rejectedWith(
-      'Invalid input: customerData must be a single object.',
-    );
+      })(state);
+      throw new Error('Expected error was not thrown');
+    } catch (err) {
+      expect(err.message).to.equal(testData.errors.invalidCustomer.message);
+    }
   });
 });
 
@@ -75,29 +73,48 @@ describe('Initiate Payment', () => {
   });
 
   it('throws an error for invalid input', async () => {
-    await expect(initiatePayment(null)(state)).to.be.rejectedWith(
-      'Invalid input: paymentData must be a single object.',
-    );
+    try {
+      await initiatePayment(testData.errors.invalidPayment.input)(state);
+      throw new Error('Expected error was not thrown');
+    } catch (err) {
+      expect(err.message).to.equal(testData.errors.invalidPayment.message);
+    }
   });
 });
 
 describe('Validation Logic', () => {
   it('throws an error for invalid customer input', async () => {
-    await expect(createCustomer([])(state)).to.be.rejectedWith(
-      'Invalid input: customerData must be a single object.',
-    );
-    await expect(createCustomer(null)(state)).to.be.rejectedWith(
-      'Invalid input: customerData must be a single object.',
-    );
+    try {
+      await createCustomer(testData.errors.invalidCustomerArray.input)(state);
+      throw new Error('Expected error was not thrown');
+    } catch (err) {
+      expect(err.message).to.equal(
+        testData.errors.invalidCustomerArray.message,
+      );
+    }
+
+    try {
+      await createCustomer(testData.errors.invalidCustomer.input)(state);
+      throw new Error('Expected error was not thrown');
+    } catch (err) {
+      expect(err.message).to.equal(testData.errors.invalidCustomer.message);
+    }
   });
 
   it('throws an error for invalid payment input', async () => {
-    await expect(initiatePayment([])(state)).to.be.rejectedWith(
-      'Invalid input: paymentData must be a single object.',
-    );
-    await expect(initiatePayment(null)(state)).to.be.rejectedWith(
-      'Invalid input: paymentData must be a single object.',
-    );
+    try {
+      await initiatePayment(testData.errors.invalidPaymentArray.input)(state);
+      throw new Error('Expected error was not thrown');
+    } catch (err) {
+      expect(err.message).to.equal(testData.errors.invalidPaymentArray.message);
+    }
+
+    try {
+      await initiatePayment(testData.errors.invalidPayment.input)(state);
+      throw new Error('Expected error was not thrown');
+    } catch (err) {
+      expect(err.message).to.equal(testData.errors.invalidPayment.message);
+    }
   });
 });
 
