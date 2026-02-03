@@ -15,21 +15,37 @@ import { generateType } from './generate-types';
 const RESOURCE_NAME = 'resource';
 const INPUT_NAME = 'props';
 
+type Options = {
+  simpleSignatures?: boolean;
+
+  /** List of type definitions which can be imported from FHIR */
+  fhirTypes?: Record<string, true>;
+
+  /** base adaptor name to generate types and builders from */
+  base?: string;
+};
+
 const generateCode = (
   schema: Record<string, Schema[]>,
   mappings: MappingSpec = {},
-  options: {
-    simpleSignatures?: boolean;
-    fhirTypes?: Record<string, true>;
-  } = {},
+  options: Options = {},
 ): { builders: string; profiles: Record<string, string> } => {
   const statements: n.Statement[] = [];
 
-  statements.push(b.exportAllDeclaration(b.stringLiteral('./datatypes'), null));
+  if (!options.base) {
+    statements.push(
+      b.exportAllDeclaration(b.stringLiteral('./datatypes'), null),
+    );
+  }
 
   const imports: n.Statement[] = [];
 
   const profiles = {};
+
+  // This tells us where to load FHIR types from
+  const fhirImportPath = options.base
+    ? `@openfn/language-${options.base}`
+    : '../fhir';
 
   // generate a builder for each profile
   const orderedResources = Object.keys(schema).sort();
@@ -60,19 +76,21 @@ const generateCode = (
           mappings.overrides?.[resourceType],
         ),
         options.fhirTypes,
-      );
-
-      // Generate an entrypoint function
-      statements.push(
-        ...generateEntry(
-          name,
-          resourceType,
-          schema[resourceType],
-          options.simpleSignatures,
-          mappings.propsToIgnoreInDocs,
-        ),
+        fhirImportPath,
+        options.base,
       );
     }
+
+    // Generate the signatures and entrypoint fucntion
+    statements.push(
+      ...generateEntry(
+        getTypeName(sortedProfiles[0]),
+        resourceType,
+        schema[resourceType],
+        options.simpleSignatures,
+        mappings.propsToIgnoreInDocs,
+      ),
+    );
   }
 
   const program = b.program([...imports, ...statements]);
@@ -82,10 +100,19 @@ const generateCode = (
   return { builders, profiles };
 };
 
+// TODO maybe I need this
+type FhirImports = {
+  types: Record<string, true>;
+  path: string;
+  // datatypes: any;
+};
+
 const generateProfile = (
   profile: Schema,
   mappings: MappingSpec,
   fhirTypes: Record<string, true> = {},
+  fhirImport = '../fhir',
+  base?: string,
 ) => {
   const statements = [];
 
@@ -93,34 +120,55 @@ const generateProfile = (
 
   statements.push(
     b.importDeclaration(
-      [b.importNamespaceSpecifier(b.identifier('dt'))],
-      b.stringLiteral('../datatypes'),
-    ),
-  );
-  statements.push(
-    b.importDeclaration(
       [b.importDefaultSpecifier(b.identifier('_'))],
       b.stringLiteral('lodash'),
     ),
   );
-  statements.push(
-    b.importDeclaration(
-      [b.importNamespaceSpecifier(b.identifier('FHIR'))],
-      b.stringLiteral('../fhir'),
-    ),
-  );
+
+  // TODO this import isn't so nice
+  // Maybe we ONLY take base here and the rest is derived?
+  if (base) {
+    statements.push(
+      b.importDeclaration(
+        [b.importSpecifier(b.identifier('b'), b.identifier('dt'))],
+        b.stringLiteral(`@openfn/language-${base}`),
+      ),
+    );
+    statements.push(
+      b.importDeclaration(
+        [b.importSpecifier(b.identifier('builders'), b.identifier('FHIR'))],
+        b.stringLiteral(fhirImport),
+        'type',
+      ),
+    );
+  } else {
+    statements.push(
+      b.importDeclaration(
+        [b.importNamespaceSpecifier(b.identifier('dt'))],
+        b.stringLiteral('../datatypes'),
+      ),
+    );
+
+    statements.push(
+      b.importDeclaration(
+        [b.importNamespaceSpecifier(b.identifier('FHIR'))],
+        b.stringLiteral(fhirImport),
+        'type',
+      ),
+    );
+  }
 
   // TODO It would be better to define this once and import it,
   // but that's a bit harder to work out with Lightning I think?
-  statements.push(
-    b.tsTypeAliasDeclaration(
-      b.identifier('MaybeArray<T>'),
-      b.tsUnionType([
-        b.tsTypeReference(b.identifier('T')),
-        b.tsTypeReference(b.identifier('T[]')),
-      ]),
-    ),
-  );
+  // statements.push(
+  //   b.tsTypeAliasDeclaration(
+  //     b.identifier('MaybeArray<T>'),
+  //     b.tsUnionType([
+  //       b.tsTypeReference(b.identifier('T')),
+  //       b.tsTypeReference(b.identifier('T[]')),
+  //     ]),
+  //   ),
+  // );
 
   const typedef = generateType(
     profile.type,
@@ -151,6 +199,7 @@ const generateJsDocs = (schema: Schema[], ignore: string[] = []) => {
   const props: string[] = [];
 
   // TODO for now, just generate for the first schema
+  // Later we have to generate a superset of all props and provide variations
   const profile = schema[0];
   const validProps = Object.keys(profile.props).filter(
     p => !ignore.includes(p),
@@ -164,69 +213,69 @@ const generateJsDocs = (schema: Schema[], ignore: string[] = []) => {
   return props.map(p => `  * @param ${p}`).join('\n');
 };
 
+// TODO this function is quite different depending on the number of profiles
+// if 1 profile, it's a simple function
+// if 2+ profiles, we need interfaces and a mapping
+// easiest way right now is probably to duplicate:
+// simple builder vs interfaced builder
 const generateEntry = (
   name: string,
   resourceType: string,
-  variants: Schema[],
+  profiles: Schema[],
   simpleSignatures?: boolean,
   propsToIgnoreInDocs: string[] = [],
 ) => {
   const declarations = [];
 
   const statements = [];
-  const comment = parse(`/**
-  * Create a FHIR ${resourceType} resource.
-  * @public
-  * @function
-  * @param {string} type - The profile id for the resource variant.${
-    simpleSignatures ? ' Optional.' : ''
+
+  // generate signatures for each profile
+  for (const profile of profiles) {
+    const signature = b.exportDeclaration(
+      false,
+      b.tsDeclareFunction(b.identifier(getBuilderName(resourceType)), [
+        b.tsParameterProperty(
+          b.identifier.from({
+            name: 'type',
+            typeAnnotation: b.tsTypeAnnotation(
+              b.tsLiteralType(b.stringLiteral(profile.id)),
+            ),
+          }),
+        ),
+        b.tsParameterProperty(
+          b.identifier.from({
+            name: INPUT_NAME,
+            typeAnnotation: b.tsTypeAnnotation(
+              b.tsTypeReference(b.identifier(getInterfaceName(profile))),
+            ),
+          }),
+        ),
+      ]),
+    );
+    declarations.push(signature);
   }
-  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
-${generateJsDocs(variants, propsToIgnoreInDocs)}
- */
-`);
 
   const map = b.variableDeclaration('const', [
     b.variableDeclarator(
       b.identifier('mappings'),
       b.objectExpression(
-        variants.map(schema =>
-          b.objectProperty(b.stringLiteral(schema.id), b.identifier(name)),
+        profiles.map(profile =>
+          b.objectProperty(
+            b.stringLiteral(profile.id),
+            b.identifier(getTypeName(profile)),
+          ),
         ),
       ),
     ),
   ]);
   statements.push(map);
 
-  // Generate the main tssignature
-  // Also push an override for the simple interface
-  const signature = b.exportDeclaration(
-    false,
-    b.tsDeclareFunction(b.identifier(getBuilderName(resourceType)), [
-      b.tsParameterProperty(
-        b.identifier.from({
-          name: 'type',
-          typeAnnotation: b.tsTypeAnnotation(b.tsStringKeyword()),
-        }),
-      ),
-      b.tsParameterProperty(
-        b.identifier.from({
-          name: INPUT_NAME,
-          typeAnnotation: b.tsTypeAnnotation(
-            b.tsTypeReference(b.identifier(getInterfaceName(variants[0]))),
-          ),
-        }),
-      ),
-    ]),
-  );
-  declarations.push(signature);
-
   if (simpleSignatures) {
     // TODO how do we know the default type?
     const handleOptionalType = parse(`// Handle optional type parameter
   if (typeof type !== "string") {
     props = type;
-    type = "${variants[0].id}";
+    type = "${profiles[0].id}";
   }`);
     statements.push(...handleOptionalType.program.body);
 
@@ -240,7 +289,7 @@ ${generateJsDocs(variants, propsToIgnoreInDocs)}
             b.identifier.from({
               name: INPUT_NAME,
               typeAnnotation: b.tsTypeAnnotation(
-                b.tsTypeReference(b.identifier(getInterfaceName(variants[0]))),
+                b.tsTypeReference(b.identifier(getInterfaceName(profiles[0]))),
               ),
             }),
           ),
@@ -267,12 +316,13 @@ ${generateJsDocs(variants, propsToIgnoreInDocs)}
     b.functionDeclaration(
       b.identifier(getBuilderName(resourceType)),
       [
-        b.tsParameterProperty(
-          b.identifier.from({
-            name: 'type',
-            typeAnnotation: b.tsTypeAnnotation(b.tsAnyKeyword()),
-          }),
-        ),
+        profiles.length > 1 &&
+          b.tsParameterProperty(
+            b.identifier.from({
+              name: 'type',
+              typeAnnotation: b.tsTypeAnnotation(b.tsAnyKeyword()),
+            }),
+          ),
         b.tsParameterProperty(
           // TODO need a full type for this. Where do we get it?
           b.identifier.from({
@@ -281,15 +331,36 @@ ${generateJsDocs(variants, propsToIgnoreInDocs)}
             optional: true,
           }),
         ),
-      ],
+      ].filter(Boolean),
       b.blockStatement(statements),
     ),
   );
-  declarations.push(impl);
 
-  // Add the comment to the first declaration
+  let comment;
+  if (profiles.length > 1) {
+    comment = parse(`/**
+  * Create a ${resourceType} resource.
+  * @public
+  * @function
+  * @param {string} type - A profile type: one of ${profiles.map(p => p.id).join(',')}
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
+${generateJsDocs(profiles, propsToIgnoreInDocs)}
+  */
+  `);
+  } else {
+    comment = parse(`/**
+  * Create a ${resourceType} resource.
+  * @public
+  * @function
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
+${generateJsDocs(profiles, propsToIgnoreInDocs)}
+  */
+  `);
+  }
   declarations[0].comments = comment.program.comments;
   declarations[0].comments![0].leading = true;
+
+  declarations.push(impl);
 
   return declarations;
 };
