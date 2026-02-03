@@ -1,0 +1,126 @@
+{
+  "operations": [
+    {
+      "name": "createCustomer",
+      "params": [
+        "customerData",
+        "options"
+      ],
+      "docs": {
+        "description": "Create a new customer in Flutterwave.",
+        "tags": [
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "customerData"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "initiatePayment",
+      "params": [
+        "paymentData",
+        "options"
+      ],
+      "docs": {
+        "description": "Initiate a payment request to the Flutterwave API.",
+        "tags": [
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The payment details to send to Flutterwave.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "paymentData"
+          },
+          {
+            "title": "returns",
+            "description": "A function that takes the state and performs the operation.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "createPaymentMethod",
+      "params": [
+        "paymentMethodData",
+        "options"
+      ],
+      "docs": {
+        "description": "Create a new payment method in Flutterwave.",
+        "tags": [
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The payment method details to send to Flutterwave.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "paymentMethodData"
+          },
+          {
+            "title": "returns",
+            "description": "A function that takes the state and performs the operation.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            }
+          }
+        ]
+      },
+      "valid": false
+    }
+  ],
+  "exports": [],
+  "common": []
+}
