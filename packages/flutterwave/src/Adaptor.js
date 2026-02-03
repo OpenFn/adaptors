@@ -60,7 +60,7 @@ export function initiatePayment(paymentData, options = {}) {
   return async state => {
     const [resolvedPaymentData] = expandReferences(state, paymentData);
     const requestOptions = {
-      ...(options || {}),
+      ...options,
       body: JSON.stringify(resolvedPaymentData),
     };
 
@@ -99,7 +99,7 @@ export function createPaymentMethod(paymentMethodData, options = {}) {
       paymentMethodData,
     );
     const requestOptions = {
-      ...(options || {}),
+      ...options,
       body: JSON.stringify(resolvedPaymentMethodData),
     };
 
