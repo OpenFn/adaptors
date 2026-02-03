@@ -1,27 +1,13 @@
 import { composeNextState } from '@openfn/language-common';
-import {
-  request as commonRequest,
-  makeBasicAuthHeader,
-  assertRelativeUrl,
-} from '@openfn/language-common/util';
-import nodepath from 'node:path';
+import { request as commonRequest } from '@openfn/language-common/util';
 
 export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
 
-  if (!state.references) {
-    state.references = [];
-  }
+  state.references ??= [];
 
-  try {
-    console.log('HTTP Response ->', response);
-  } catch (e) {}
-
-  const payload = response && response.body && Object.prototype.hasOwnProperty.call(response.body, 'data') ? response.body.data : response.body;
+  const payload = response?.body?.data ?? response.body;
   const composed = composeNextState(state, payload);
-  try {
-    console.log('Composed next state ->', composed);
-  } catch (e) {}
 
   return {
     ...composed,
@@ -53,12 +39,5 @@ export const request = (configuration = {}, method, path, options) => {
 
   const url = new URL(path, baseUrl).toString();
 
-  try {
-    console.log('HTTP Request ->', method, url);
-    console.log('Headers ->', opts.headers);
-    if (opts.body) console.log('Body ->', opts.body);
-  } catch (e) {
-
-  }
   return commonRequest(method, url, opts);
 };
