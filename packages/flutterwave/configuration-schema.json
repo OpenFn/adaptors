@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The base URL (http://www.example.com)",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://example.com"]
+    },
+    "secretKey": {
+      "title": "Secret Key",
+      "type": "string",
+      "description": "The secret key used for authentication",
+      "examples": ["sk_test_4eC39HqLyjWDarjtT1zdp7dc"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["secretKey"]
+}

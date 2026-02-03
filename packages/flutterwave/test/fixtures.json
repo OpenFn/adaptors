@@ -1,0 +1,76 @@
+{
+  "createCustomer": {
+    "request": {
+      "address": {
+        "city": "New York",
+        "country": "US",
+        "line1": "123 Main Street",
+        "line2": "Apt 4B",
+        "postal_code": "10001",
+        "state": "New York"
+      },
+      "email": "kingleo@jonsjav.cc",
+      "meta": {
+        "additionalProp": "string"
+      },
+      "name": {
+        "first": "King",
+        "middle": "Leo",
+        "last": "LeBron"
+      },
+      "phone": {
+        "country_code": "234",
+        "number": "08012345678"
+      }
+    },
+    "response": {
+      "status": "success",
+      "message": "Customer created",
+      "data": {
+        "id": "cus_3XarBILKQS",
+        "email": "kingleo@jonsjav.cc",
+        "name": {
+          "first": "King",
+          "middle": "Leo",
+          "last": "LeBron"
+        },
+        "address": {
+          "city": "New York",
+          "country": "US",
+          "line1": "123 Main Street",
+          "line2": "Apt 4B",
+          "postal_code": "10001",
+          "state": "New York"
+        },
+        "phone": {
+            "country_code": "234",
+            "number": "08012345678"
+        },
+        "meta": {
+          "additionalProp": "string"
+        },
+        "created_datetime": "2026-01-29T19:21:26.143Z"
+      }
+    }
+  },
+  "initiatePayment": {
+    "request": {
+      "reference": "YOUR_UNIQUE_REFERENCE",
+      "currency": "USD",
+      "customer_id": "cus_xxxxxxxx",
+      "payment_method_id": "pmd_xxxxxxxx",
+      "redirect_url": "https://your-redirect-url.com",
+      "amount": 123.45,
+      "meta": {
+        "note": "optional metadata"
+      }
+    },
+    "response": {
+      "status": "success",
+      "message": "Payment initiated",
+      "data": {
+        "id": 123
+      }
+    }
+  }
+}
