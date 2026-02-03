@@ -55,21 +55,87 @@
   },
   "initiatePayment": {
     "request": {
-      "reference": "YOUR_UNIQUE_REFERENCE",
-      "currency": "USD",
-      "customer_id": "cus_xxxxxxxx",
-      "payment_method_id": "pmd_xxxxxxxx",
-      "redirect_url": "https://your-redirect-url.com",
-      "amount": 123.45,
+      "reference": "unique_reference",
+      "currency": "GHS",
+      "customer_id": "cus_X0yJv3ZMpL",
+      "payment_method_id": "pmd_kwU1jeHpBC",
+      "amount": 200,
       "meta": {
         "note": "optional metadata"
       }
     },
     "response": {
       "status": "success",
-      "message": "Payment initiated",
+      "message": "Charge created",
       "data": {
-        "id": 123
+        "id": "chg_xdSlPfGXSp"
+      }
+    }
+  }
+  ,
+  "createPaymentMethod": {
+    "request": {
+      "type": "card",
+      "card": {
+        "expiry_month": "09",
+        "expiry_year": "32",
+        "first6": "123412",
+        "last4": "1234",
+        "network": "MASTERCARD",
+        "billing_address": {
+          "city": "New York",
+          "country": "US",
+          "line1": "123 Main Street",
+          "line2": "Apt 4B",
+          "postal_code": "10001",
+          "state": "New York"
+        },
+        "cof": {
+          "enabled": true,
+          "agreement_id": "Agreement00w02W1",
+          "recurring_amount_variability": "VARIABLE",
+          "agreement_type": "UNSCHEDULED",
+          "trace_id": "123456789"
+        },
+        "card_holder_name": "Alex James"
+      }
+    },
+    "response": {
+      "status": "success",
+      "message": "Payment method created",
+      "data": {
+        "type": "card",
+        "card": {
+          "expiry_month": "09",
+          "expiry_year": "32",
+          "first6": "123412",
+          "last4": "1234",
+          "network": "MASTERCARD",
+          "billing_address": {
+            "city": "New York",
+            "country": "US",
+            "line1": "123 Main Street",
+            "line2": "Apt 4B",
+            "postal_code": "10001",
+            "state": "New York"
+          },
+          "cof": {
+            "enabled": true,
+            "agreement_id": "Agreement00w02W1",
+            "recurring_amount_variability": "VARIABLE",
+            "agreement_type": "UNSCHEDULED",
+            "trace_id": "123456789"
+          },
+          "card_holder_name": "Alex James"
+        },
+        "id": "pmd_WRq7L4TM8p",
+        "customer_id": "cus_3XarBILKQS",
+        "meta": {
+          "additionalProp": "string"
+        },
+        "device_fingerprint": "62wd23423rq324323qew1",
+        "client_ip": "154.123.220.1",
+        "created_datetime": "2024-12-03T13:54:21.546559974Z"
       }
     }
   }

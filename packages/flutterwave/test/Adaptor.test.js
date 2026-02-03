@@ -32,69 +32,16 @@ describe('Create Customer', () => {
           'X-Idempotency-Key': 'unique-idempotency-key-12345',
         },
       })
-      .reply(201, {
-        status: 'success',
-        message: 'Customer created',
-        data: {
-          id: 'cus_3XarBILKQS',
-          address: {
-            city: 'New York',
-            country: 'US',
-            line1: '123 Main Street',
-            line2: 'Apt 4B',
-            postal_code: '10001',
-            state: 'New York',
-          },
-          email: 'kingleo@jonsjav.cc',
-          name: {
-            first: 'King',
-            middle: 'Leo',
-            last: 'LeBron',
-          },
-          phone: {
-            country_code: '234',
-            number: '08012345678',
-          },
-          meta: {
-            additionalProp: 'string',
-          },
-          created_datetime: '2026-02-02T13:56:28.010Z',
-        },
-      });
+      .reply(201, testData.createCustomer.response);
 
-    const { data } = await createCustomer(
-      {
-        email: 'kingleo@jonsjav.cc',
-        name: {
-          first: 'King',
-          middle: 'Leo',
-          last: 'LeBron',
-        },
-        phone: {
-          country_code: '234',
-          number: '08012345678',
-        },
-        address: {
-          city: 'New York',
-          country: 'US',
-          line1: '123 Main Street',
-          line2: 'Apt 4B',
-          postal_code: '10001',
-          state: 'New York',
-        },
-        meta: {
-          additionalProp: 'string',
-        },
+    const { data } = await createCustomer(testData.createCustomer.request, {
+      headers: {
+        'X-Trace-Id': 'unique-trace-id-12345',
+        'X-Idempotency-Key': 'unique-idempotency-key-12345',
       },
-      {
-        headers: {
-          'X-Trace-Id': 'unique-trace-id-12345',
-          'X-Idempotency-Key': 'unique-idempotency-key-12345',
-        },
-      },
-    )(state);
+    })(state);
 
-    expect(data.id).to.eql('cus_3XarBILKQS');
+    expect(data.id).to.eql(testData.createCustomer.response.data.id);
   });
 
   it('throws an error for invalid input', async () => {
@@ -118,23 +65,13 @@ describe('Initiate Payment', () => {
         path: '/charges',
         method: 'POST',
       })
-      .reply(201, {
-        status: 'success',
-        message: 'Charge created',
-        data: {
-          id: 'chg_xdSlPfGXSp',
-        },
-      });
+      .reply(201, testData.initiatePayment.response);
 
-    const { data } = await initiatePayment({
-      currency: 'GHS',
-      customer_id: 'cus_X0yJv3ZMpL',
-      payment_method_id: 'pmd_kwU1jeHpBC',
-      amount: 200,
-      reference: 'unique_reference',
-    })(state);
+    const { data } = await initiatePayment(testData.initiatePayment.request)(
+      state,
+    );
 
-    expect(data.id).to.eql('chg_xdSlPfGXSp');
+    expect(data.id).to.eql(testData.initiatePayment.response.data.id);
   });
 
   it('throws an error for invalid input', async () => {
@@ -175,72 +112,10 @@ describe('Create Payment Method', () => {
           'X-Idempotency-Key': 'unique-idempotency-key-67890',
         },
       })
-      .reply(201, {
-        status: 'success',
-        message: 'Payment method created',
-        data: {
-          type: 'card',
-          card: {
-            expiry_month: '09',
-            expiry_year: '32',
-            first6: '123412',
-            last4: '1234',
-            network: 'MASTERCARD',
-            billing_address: {
-              city: 'New York',
-              country: 'US',
-              line1: '123 Main Street',
-              line2: 'Apt 4B',
-              postal_code: '10001',
-              state: 'New York',
-            },
-            cof: {
-              enabled: true,
-              agreement_id: 'Agreement00w02W1',
-              recurring_amount_variability: 'VARIABLE',
-              agreement_type: 'UNSCHEDULED',
-              trace_id: '123456789',
-            },
-            card_holder_name: 'Alex James',
-          },
-          id: 'pmd_WRq7L4TM8p',
-          customer_id: 'cus_3XarBILKQS',
-          meta: {
-            additionalProp: 'string',
-          },
-          device_fingerprint: '62wd23423rq324323qew1',
-          client_ip: '154.123.220.1',
-          created_datetime: '2024-12-03T13:54:21.546559974Z',
-        },
-      });
+      .reply(201, testData.createPaymentMethod.response);
 
     const { data } = await createPaymentMethod(
-      {
-        type: 'card',
-        card: {
-          expiry_month: '09',
-          expiry_year: '32',
-          first6: '123412',
-          last4: '1234',
-          network: 'MASTERCARD',
-          billing_address: {
-            city: 'New York',
-            country: 'US',
-            line1: '123 Main Street',
-            line2: 'Apt 4B',
-            postal_code: '10001',
-            state: 'New York',
-          },
-          cof: {
-            enabled: true,
-            agreement_id: 'Agreement00w02W1',
-            recurring_amount_variability: 'VARIABLE',
-            agreement_type: 'UNSCHEDULED',
-            trace_id: '123456789',
-          },
-          card_holder_name: 'Alex James',
-        },
-      },
+      testData.createPaymentMethod.request,
       {
         headers: {
           'X-Trace-Id': 'unique-trace-id-67890',
@@ -249,6 +124,6 @@ describe('Create Payment Method', () => {
       },
     )(state);
 
-    expect(data.id).to.eql('pmd_WRq7L4TM8p');
+    expect(data.id).to.eql(testData.createPaymentMethod.response.data.id);
   });
 });
