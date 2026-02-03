@@ -27,15 +27,11 @@ import * as util from './Utils.js';
  * Create a new customer in Flutterwave.
  * @function
  * @public
- * @param {Object} customerData 
- * @returns {Function} 
+ * @param {Object} customerData
+ * @returns {Function}
  */
 export function createCustomer(customerData, options = {}) {
   return async state => {
-    if (customerData === null || typeof customerData !== 'object' || Array.isArray(customerData)) {
-      throw new Error('Invalid input: customerData must be a single object.');
-    }
-
     const [resolvedData] = expandReferences(state, customerData);
     const requestOptions = {
       ...(options || {}),
@@ -46,7 +42,7 @@ export function createCustomer(customerData, options = {}) {
       state.configuration,
       'POST',
       '/customers',
-      requestOptions
+      requestOptions,
     );
 
     return util.prepareNextState(state, response);
@@ -62,10 +58,6 @@ export function createCustomer(customerData, options = {}) {
  */
 export function initiatePayment(paymentData, options = {}) {
   return async state => {
-    if (paymentData === null || typeof paymentData !== 'object' || Array.isArray(paymentData)) {
-      throw new Error('Invalid input: paymentData must be a single object.');
-    }
-
     const [resolvedPaymentData] = expandReferences(state, paymentData);
     const requestOptions = {
       ...(options || {}),
@@ -76,7 +68,7 @@ export function initiatePayment(paymentData, options = {}) {
       state.configuration,
       'POST',
       '/charges',
-      requestOptions
+      requestOptions,
     );
 
     return util.prepareNextState(state, response);
@@ -92,11 +84,20 @@ export function initiatePayment(paymentData, options = {}) {
  */
 export function createPaymentMethod(paymentMethodData, options = {}) {
   return async state => {
-    if (paymentMethodData === null || typeof paymentMethodData !== 'object' || Array.isArray(paymentMethodData)) {
-      throw new Error('Invalid input: paymentMethodData must be a single object.');
+    if (
+      paymentMethodData === null ||
+      typeof paymentMethodData !== 'object' ||
+      Array.isArray(paymentMethodData)
+    ) {
+      throw new Error(
+        'Invalid input: paymentMethodData must be a single object.',
+      );
     }
 
-    const [resolvedPaymentMethodData] = expandReferences(state, paymentMethodData);
+    const [resolvedPaymentMethodData] = expandReferences(
+      state,
+      paymentMethodData,
+    );
     const requestOptions = {
       ...(options || {}),
       body: JSON.stringify(resolvedPaymentMethodData),
@@ -106,7 +107,7 @@ export function createPaymentMethod(paymentMethodData, options = {}) {
       state.configuration,
       'POST',
       '/payment-methods',
-      requestOptions
+      requestOptions,
     );
 
     return util.prepareNextState(state, response);
