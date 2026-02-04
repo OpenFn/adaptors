@@ -44,27 +44,37 @@ export const request = (configuration = {}, method, path, options) => {
   const safePath = nodepath.join(path);
   const wantsPdfBase64 = options && options.forcePdfBase64;
   if (wantsPdfBase64) {
-    opts.parseAs = 'arrayBuffer';
+    opts.parseAs = 'base64';
   }
 
   return commonRequest(method, safePath, opts).then(response => {
     try {
       const contentType = (response && response.headers && (response.headers['content-type'] || response.headers['Content-Type'])) || '';
       const isPdfContent = /application\/(pdf|octet-stream)/i.test(contentType);
+
       if (wantsPdfBase64 || isPdfContent) {
         const body = response.body;
         if (body) {
-          let buf;
-          if (Buffer.isBuffer(body)) buf = body;
-          else if (body instanceof ArrayBuffer) buf = Buffer.from(body);
-          else if (ArrayBuffer.isView(body)) buf = Buffer.from(body.buffer);
-          else if (typeof body === 'string') buf = Buffer.from(body, 'binary');
-          if (buf) {
-            response.body = { pdf: buf.toString('base64') };
+          // If commonRequest already returned a base64 string, use it directly
+          if (typeof body === 'string') {
+            const maybeBase64 = /^[A-Za-z0-9+/=\r\n]+$/.test(body);
+            if (maybeBase64) {
+              response.body = { pdf: body };
+            } else {
+              const buf = Buffer.from(body, 'binary');
+              response.body = { pdf: buf.toString('base64') };
+            }
+          } else if (Buffer.isBuffer(body)) {
+            response.body = { pdf: body.toString('base64') };
+          } else if (body instanceof ArrayBuffer) {
+            response.body = { pdf: Buffer.from(body).toString('base64') };
+          } else if (ArrayBuffer.isView(body)) {
+            response.body = { pdf: Buffer.from(body.buffer).toString('base64') };
           }
         }
       }
     } catch (err) {
+      // Don't fail the request if conversion fails; return original response
     }
 
     return response;
