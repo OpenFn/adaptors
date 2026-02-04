@@ -18,59 +18,55 @@ export const prepareNextState = (state, response) => {
     response: responseWithoutBody,
   };
 };
-
-// This helper function will call out to the backend service
-// and add authorisation headers
-// Refer to the common request function for options and details
 export const request = (configuration = {}, method, path, options) => {
-  // You might want to check that the path is not an absolute URL before
-  // appending credentials commonRequest will do this for you if you
-  // pass a baseURL to it and you don't need to build a path here
-  // assertRelativeUrl(path);
-
-  // TODO This example adds basic auth from config data
-  //       you may need to support other auth strategies
   const { baseUrl = 'https://production-sfo.browserless.io', username, password, token } = configuration;
   const headers = makeBasicAuthHeader(username, password);
-
-  // TODO You can define custom error messages here
-  //      The request function will throw if it receives
-  //      an error code (<=400), terminating the workflow
   const errors = {
     404: 'Page not found',
   };
 
   const opts = {
-    // Force the response to be parsed as JSON
-    parseAs: 'json',
-
-    // Include the error map
+      parseAs: 'json',
     errors,
-
-    // Set the baseUrl from the config object
     baseUrl,
-
-    // Merge provided options (query, body, headers, etc.)
     ...options,
-
-    // You can add extra headers here if you want to
     headers: {
       'content-type': 'application/json',
       ...headers,
       ...(options && options.headers ? options.headers : {}),
     },
   };
-
-  // Ensure token is passed as a query parameter if provided
   opts.query = {
     ...(opts.query || {}),
     ...(token ? { token } : {}),
   };
 
-  // TODO you may want to add a prefix to the path
-  // use path.join to build the path safely
   const safePath = nodepath.join(path);
+  const wantsPdfBase64 = options && options.forcePdfBase64;
+  if (wantsPdfBase64) {
+    opts.parseAs = 'arrayBuffer';
+  }
 
-  // Make the actual request
-  return commonRequest(method, safePath, opts);
+  return commonRequest(method, safePath, opts).then(response => {
+    try {
+      const contentType = (response && response.headers && (response.headers['content-type'] || response.headers['Content-Type'])) || '';
+      const isPdfContent = /application\/(pdf|octet-stream)/i.test(contentType);
+      if (wantsPdfBase64 || isPdfContent) {
+        const body = response.body;
+        if (body) {
+          let buf;
+          if (Buffer.isBuffer(body)) buf = body;
+          else if (body instanceof ArrayBuffer) buf = Buffer.from(body);
+          else if (ArrayBuffer.isView(body)) buf = Buffer.from(body.buffer);
+          else if (typeof body === 'string') buf = Buffer.from(body, 'binary');
+          if (buf) {
+            response.body = { pdf: buf.toString('base64') };
+          }
+        }
+      }
+    } catch (err) {
+    }
+
+    return response;
+  });
 };

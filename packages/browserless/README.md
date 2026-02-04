@@ -44,6 +44,10 @@ const state = {
 
 const result = await generatePdfFromHtml('<p>Hello</p>')(state);
 
+Normalization note:
+
+- When using the `/pdf` endpoint, this adaptor normalizes binary PDF responses to a base64 string and returns `{ pdf: '<base64>' }` by default. This ensures a consistent return shape across Browserless REST `/pdf`, BrowserQL, and Function APIs. If you prefer raw bytes or the original response, call the lower-level `request()` helper with `forcePdfBase64: false`.
+
 ```
 
 ## Development

@@ -88,7 +88,7 @@ export function convertUrlToPdf(url, options) {
  */
 export function generatePdfFromHtml(html, options) {
   return async state => {
-    const response = await request('POST', 'pdf', { html }, options)(state);
+    const response = await request('POST', 'pdf', { html }, { ...(options || {}), forcePdfBase64: true })(state);
     return response;
   };
 }
@@ -101,7 +101,7 @@ export function generatePdfFromHtml(html, options) {
  */
 export function generatePdfFromUrl(url, options) {
   return async state => {
-    const response = await request('POST', 'pdf', { url }, options)(state);
+    const response = await request('POST', 'pdf', { url }, { ...(options || {}), forcePdfBase64: true })(state);
     return response;
   };
 }
