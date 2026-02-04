@@ -9,7 +9,7 @@ import { generatePdfFromHtml, generatePdfFromUrl } from '../src/Adaptor.js';
 // It enables pattern-matching on the request object and custom responses
 // For the full mock API see
 // https://undici.nodejs.org/#/docs/api/MockPool?id=mockpoolinterceptoptions
-const testServer = enableMockClient('https://fake.server.com');
+const testServer = enableMockClient('https://production-sfo.browserless.io');
 
 describe('request', () => {
   it('makes a post request to the right endpoint', async () => {
@@ -28,7 +28,7 @@ describe('request', () => {
 
     const state = {
       configuration: {
-        baseUrl: 'https://fake.server.com',
+        baseUrl: 'https://production-sfo.browserless.io',
         username: 'hello',
         password: 'there',
       },
@@ -60,7 +60,7 @@ describe('request', () => {
 
     const state = {
       configuration: {
-        baseUrl: 'https://fake.server.com',
+        baseUrl: 'https://production-sfo.browserless.io',
         username: 'hello',
         password: 'there',
       },
@@ -83,7 +83,7 @@ describe('Browserless convert', () => {
       .reply(200, { pdf: 'base64-pdf-string' });
 
     const state = {
-      configuration: { baseUrl: 'https://fake.server.com', username: 'u', password: 'p' },
+      configuration: { baseUrl: 'https://production-sfo.browserless.io', username: 'u', password: 'p' },
     };
 
     const finalState = await convertHtmlToPdf('<p>Hello</p>') (state);
@@ -97,7 +97,7 @@ describe('Browserless convert', () => {
       .reply(200, { url: 'https://files.example.com/doc.pdf' });
 
     const state = {
-      configuration: { baseUrl: 'https://fake.server.com', username: 'u', password: 'p' },
+      configuration: { baseUrl: 'https://production-sfo.browserless.io', username: 'u', password: 'p' },
     };
 
     const finalState = await convertUrlToPdf('https://example.com') (state);
@@ -109,7 +109,7 @@ describe('Browserless convert', () => {
     const token = 'tk-123';
     testServer.intercept({ path: `/pdf?token=${token}`, method: 'POST' }).reply(200, { pdf: 'ok' });
 
-    const state = { configuration: { baseUrl: 'https://fake.server.com', token } };
+    const state = { configuration: { baseUrl: 'https://production-sfo.browserless.io', token } };
 
     const finalState = await generatePdfFromHtml('<p>Hello</p>')(state);
 
@@ -120,7 +120,7 @@ describe('Browserless convert', () => {
     const token = 'tk-xyz';
     testServer.intercept({ path: `/pdf?token=${token}`, method: 'POST' }).reply(200, { url: 'ok' });
 
-    const state = { configuration: { baseUrl: 'https://fake.server.com', token } };
+    const state = { configuration: { baseUrl: 'https://production-sfo.browserless.io', token } };
 
     const finalState = await generatePdfFromUrl('https://example.com')(state);
 
