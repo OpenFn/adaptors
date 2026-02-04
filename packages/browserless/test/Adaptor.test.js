@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
 import { request, dataValue } from '../src/Adaptor.js';
+import { convertHtmlToPdf, convertUrlToPdf } from '../src/Adaptor.js';
 
 // This creates a mock client which acts like a fake server.
 // It enables pattern-matching on the request object and custom responses
@@ -71,5 +72,35 @@ describe('request', () => {
     });
 
     expect(error.statusMessage).to.eql('Forbidden');
+  });
+});
+
+describe('Browserless convert', () => {
+  it('converts HTML to PDF (base64) using convertHtmlToPdf', async () => {
+    testServer
+      .intercept({ path: '/api/convert', method: 'POST' })
+      .reply(200, { pdf: 'base64-pdf-string' });
+
+    const state = {
+      configuration: { baseUrl: 'https://fake.server.com', username: 'u', password: 'p' },
+    };
+
+    const finalState = await convertHtmlToPdf('<p>Hello</p>') (state);
+
+    expect(finalState.data).to.eql({ pdf: 'base64-pdf-string' });
+  });
+
+  it('converts URL to PDF using convertUrlToPdf', async () => {
+    testServer
+      .intercept({ path: '/api/convert', method: 'POST' })
+      .reply(200, { url: 'https://files.example.com/doc.pdf' });
+
+    const state = {
+      configuration: { baseUrl: 'https://fake.server.com', username: 'u', password: 'p' },
+    };
+
+    const finalState = await convertUrlToPdf('https://example.com') (state);
+
+    expect(finalState.data).to.eql({ url: 'https://files.example.com/doc.pdf' });
   });
 });
