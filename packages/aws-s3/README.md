@@ -46,6 +46,27 @@ remove({ Bucket: 'my-bucket', Key: 'path/file.txt' })
 - `download` normalizes returned object bodies to base64 under
 	`state.data.base64` (and includes `contentType` and `contentLength`).
 
+## Scope
+
+This adaptor focuses on simple object-level operations and intentionally
+limits functionality in the initial release to keep the surface area small
+and easy to maintain.
+
+In scope:
+- `upload` — put an object into a bucket
+- `download` / `get` — retrieve an object; parsed as JSON when possible
+- `list` / `search` — list objects and optionally fetch each object's contents
+- `remove` — delete an object
+
+Out of scope for this initial version:
+- Multipart uploads
+- Presigned URLs
+- Bucket policy or ACL management
+- Streaming very large objects (the adaptor reads objects into memory for
+  parsing/base64 normalization)
+
+These features may be added incrementally in future releases as needed.
+
 ## Credentials & Test Environments
 
 - Demo / sandbox: For development and CI you can run a local S3-compatible
