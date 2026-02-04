@@ -35,7 +35,6 @@ import * as util from './Utils.js';
  * @state {HttpState}
  */
 /**
- * Upload an object to S3
  * @param {object} params - { Bucket, Key, Body, ContentType, ACL }
  */
 export function upload(params) {
@@ -48,8 +47,7 @@ export function upload(params) {
 }
 
 /**
- * Download an object from S3 and return base64-encoded body
- * @param {object} params - { Bucket, Key }
+ * @param {object} params 
  */
 export function download(params) {
   return async state => {
@@ -61,8 +59,7 @@ export function download(params) {
 }
 
 /**
- * Delete an object from S3
- * @param {object} params - { Bucket, Key }
+ * @param {object} params 
  */
 export function remove(params) {
   return async state => {
@@ -78,8 +75,7 @@ export function remove(params) {
 }
 
 /**
- * List objects in a bucket
- * @param {object} params - { Bucket, Prefix, MaxKeys }
+ * @param {object} params 
  */
 export function list(params) {
   return async state => {

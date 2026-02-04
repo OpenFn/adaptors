@@ -16,7 +16,6 @@ export const prepareNextState = (state, response) => {
   };
 };
 
-// Build an S3 client using configuration or default credential chain
 export const s3ClientFromConfig = (configuration = {}) => {
   const { accessKeyId, secretAccessKey, sessionToken, region } = configuration || {};
   const clientConfig = {};
@@ -59,7 +58,6 @@ export const listObjects = async (configuration = {}, params = {}) => {
   return client.send(cmd);
 };
 
-// Helper to read stream body to Buffer
 const streamToBuffer = async (stream) => {
   if (Buffer.isBuffer(stream)) return stream;
   if (typeof stream.arrayBuffer === 'function') {
@@ -75,7 +73,6 @@ const streamToBuffer = async (stream) => {
 };
 
 export const prepareS3GetResponse = async (response) => {
-  // response.Body can be a stream — convert to base64
   const bodyStream = response.Body;
   const buffer = await streamToBuffer(bodyStream);
   const base64 = buffer.toString('base64');
