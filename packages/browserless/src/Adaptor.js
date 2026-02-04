@@ -24,13 +24,13 @@ import * as util from './Utils.js';
  */
 
 /**
- * Make a GET request
+ * Making a GET request
  * @example
  * get("patients");
  * @function
  * @public
- * @param {string} path - Path to resource
- * @param {RequestOptions} options - Optional request options
+ * @param {string} path 
+ * @param {RequestOptions} options
  * @returns {Operation}
  * @state {HttpState}
  */
@@ -39,14 +39,14 @@ export function get(path, options) {
 }
 
 /**
- * Make a POST request
+ * Making a POST request
  * @example
  * post("patient", { "name": "Bukayo" });
  * @function
  * @public
- * @param {string} path - Path to resource
- * @param {object} body - Object which will be attached to the POST body
- * @param {RequestOptions} options - Optional request options
+ * @param {string} path 
+ * @param {object} body
+ * @param {RequestOptions} options 
  * @returns {Operation}
  * @state {HttpState}
  */
@@ -55,9 +55,8 @@ export function post(path, body, options) {
 }
 
 /**
- * Convert HTML string to PDF via Browserless
  * @public
- * @param {string} html - HTML content
+ * @param {string} html
  * @param {RequestOptions} options
  */
 export function convertHtmlToPdf(html, options) {
@@ -68,9 +67,8 @@ export function convertHtmlToPdf(html, options) {
 }
 
 /**
- * Convert a URL to PDF via Browserless
  * @public
- * @param {string} url - Target URL to convert
+ * @param {string} url 
  * @param {RequestOptions} options
  */
 export function convertUrlToPdf(url, options) {
@@ -81,7 +79,6 @@ export function convertUrlToPdf(url, options) {
 }
 
 /**
- * Generate PDF using Browserless `/pdf` endpoint from HTML
  * @public
  * @param {string} html
  * @param {RequestOptions} options
@@ -94,7 +91,6 @@ export function generatePdfFromHtml(html, options) {
 }
 
 /**
- * Generate PDF using Browserless `/pdf` endpoint from URL
  * @public
  * @param {string} url
  * @param {RequestOptions} options
@@ -107,7 +103,7 @@ export function generatePdfFromUrl(url, options) {
 }
 
 /**
- * Make a general HTTP request
+ * Making a general HTTP request
  * @example
  * request("POST", "patient", { "name": "Bukayo" });
  * @function
