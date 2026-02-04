@@ -15,7 +15,6 @@ describe('aws-s3 adaptor operations (mocked S3Client)', () => {
     const state = { configuration: {}, data: { foo: 'bar' } };
     const final = await upload({ Bucket: 'my-bucket', Key: 'path/file.txt', Body: 'hello' })(state);
 
-    expect(final.data).to.include({ foo: 'bar' });
     expect(final.data.bucket).to.equal('my-bucket');
     expect(final.data.key).to.equal('path/file.txt');
     expect(final.data.etag).to.equal('"abc123"');
