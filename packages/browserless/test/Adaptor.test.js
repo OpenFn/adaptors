@@ -10,21 +10,12 @@ const testServer = enableMockClient('https://production-sfo.browserless.io');
 describe('request', () => {
   it('makes a post request to convert HTML to PDF', async () => {
     testServer
-      .intercept({
-        path: '/convert',
-        method: 'POST',
-        headers: {
-          Authorization: 'Basic aGVsbG86dGhlcmU=',
-        },
-      })
-     
+      .intercept({ path: '/convert', method: 'POST' })
       .reply(200, { pdf: 'base64-pdf-string' });
 
     const state = {
       configuration: {
         baseUrl: 'https://production-sfo.browserless.io',
-        username: 'hello',
-        password: 'there',
       },
     };
 
@@ -46,8 +37,6 @@ describe('request', () => {
     const state = {
       configuration: {
         baseUrl: 'https://production-sfo.browserless.io',
-        username: 'hello',
-        password: 'there',
       },
     };
 
