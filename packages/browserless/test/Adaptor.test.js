@@ -111,4 +111,21 @@ describe('Browserless convert', () => {
 
     expect(finalState.data).to.eql({ url: 'ok' });
   });
+
+  it('normalizes binary PDF response (Content-Type: application/pdf) to base64', async () => {
+    const token = 'tk-binary';
+    const pdfBody = '%PDF-1.4\n%\xE2\xE3\xCF\xD3\n1 0 obj\n<<';
+
+    testServer.intercept({ path: `/pdf?token=${token}`, method: 'POST' }).reply(200, pdfBody, {
+      'content-type': 'application/pdf',
+    });
+
+    const state = { configuration: { baseUrl: 'https://production-sfo.browserless.io', token } };
+
+    const finalState = await generatePdfFromHtml('<p>Binary</p>')(state);
+
+    expect(finalState.data).to.have.property('pdf');
+    const expected = Buffer.from(pdfBody, 'binary').toString('base64');
+    expect(finalState.data.pdf).to.eql(expected);
+  });
 });
