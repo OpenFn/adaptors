@@ -5,26 +5,20 @@ import { request, dataValue } from '../src/Adaptor.js';
 import { convertHtmlToPdf, convertUrlToPdf } from '../src/Adaptor.js';
 import { generatePdfFromHtml, generatePdfFromUrl } from '../src/Adaptor.js';
 
-// This creates a mock client which acts like a fake server.
-// It enables pattern-matching on the request object and custom responses
-// For the full mock API see
-// https://undici.nodejs.org/#/docs/api/MockPool?id=mockpoolinterceptoptions
 const testServer = enableMockClient('https://production-sfo.browserless.io');
 
 describe('request', () => {
-  it('makes a post request to the right endpoint', async () => {
-    // Setup a mock endpoint
+  it('makes a post request to convert HTML to PDF', async () => {
     testServer
       .intercept({
-        path: '/patients',
+        path: '/convert',
         method: 'POST',
         headers: {
           Authorization: 'Basic aGVsbG86dGhlcmU=',
         },
       })
-      // Set the reply from this endpoint
-      // The body will be returned to state.data
-      .reply(200, { id: 7, fullName: 'Mamadou', gender: 'M' });
+     
+      .reply(200, { pdf: 'base64-pdf-string' });
 
     const state = {
       configuration: {
@@ -32,22 +26,13 @@ describe('request', () => {
         username: 'hello',
         password: 'there',
       },
-      data: {
-        fullName: 'Mamadou',
-        gender: 'M',
-      },
     };
 
-    const finalState = await request('POST', 'patients', {
-      name: state.data.fullName,
-      gender: state.data.gender,
+    const finalState = await request('POST', 'convert', {
+      html: '<p>Test PDF content</p>',
     })(state);
 
-    expect(finalState.data).to.eql({
-      fullName: 'Mamadou',
-      gender: 'M',
-      id: 7,
-    });
+    expect(finalState.data).to.eql({ pdf: 'base64-pdf-string' });
   });
 
   it('throws an error if the service returns 403', async () => {
@@ -86,7 +71,7 @@ describe('Browserless convert', () => {
       configuration: { baseUrl: 'https://production-sfo.browserless.io', username: 'u', password: 'p' },
     };
 
-    const finalState = await convertHtmlToPdf('<p>Hello</p>') (state);
+    const finalState = await convertHtmlToPdf('<p>Hello</p>')(state);
 
     expect(finalState.data).to.eql({ pdf: 'base64-pdf-string' });
   });
