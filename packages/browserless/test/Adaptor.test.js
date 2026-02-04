@@ -15,7 +15,7 @@ describe('request', () => {
     // Setup a mock endpoint
     testServer
       .intercept({
-        path: '/api/patients',
+        path: '/patients',
         method: 'POST',
         headers: {
           Authorization: 'Basic aGVsbG86dGhlcmU=',
@@ -52,7 +52,7 @@ describe('request', () => {
   it('throws an error if the service returns 403', async () => {
     testServer
       .intercept({
-        path: '/api/noAccess',
+        path: '/noAccess',
         method: 'POST',
       })
       .reply(403);
@@ -78,7 +78,7 @@ describe('request', () => {
 describe('Browserless convert', () => {
   it('converts HTML to PDF (base64) using convertHtmlToPdf', async () => {
     testServer
-      .intercept({ path: '/api/convert', method: 'POST' })
+      .intercept({ path: '/convert', method: 'POST' })
       .reply(200, { pdf: 'base64-pdf-string' });
 
     const state = {
@@ -92,7 +92,7 @@ describe('Browserless convert', () => {
 
   it('converts URL to PDF using convertUrlToPdf', async () => {
     testServer
-      .intercept({ path: '/api/convert', method: 'POST' })
+      .intercept({ path: '/convert', method: 'POST' })
       .reply(200, { url: 'https://files.example.com/doc.pdf' });
 
     const state = {
