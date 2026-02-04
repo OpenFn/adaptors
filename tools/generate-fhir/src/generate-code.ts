@@ -32,11 +32,9 @@ const generateCode = (
 ): { builders: string; profiles: Record<string, string> } => {
   const statements: n.Statement[] = [];
 
-  if (!options.base) {
-    statements.push(
-      b.exportAllDeclaration(b.stringLiteral('./datatypes'), null),
-    );
-  }
+  // if (!options.base) {
+  statements.push(b.exportAllDeclaration(b.stringLiteral('./datatypes'), null));
+  // }
 
   const imports: n.Statement[] = [];
 
@@ -81,7 +79,7 @@ const generateCode = (
       );
     }
 
-    // Generate the signatures and entrypoint fucntion
+    // Generate the signatures and entrypoint funtion
     statements.push(
       ...generateEntry(
         getTypeName(sortedProfiles[0]),
