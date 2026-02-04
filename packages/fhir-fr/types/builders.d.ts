@@ -1,66 +1,6 @@
-
-// THIS FILE WAS AUTO-GENERATED
-// DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
-// SEE THE README FILE FOR DETAILS
-
-import { builders } from '@openfn/language-fhir-4';
-
-declare type Patient_fr_core_patient_Props = {
-    active?: boolean;
-    address?: builders.Address[];
-    birthDate?: string;
-    communication?: builders.BackboneElement[];
-    contact?: builders.BackboneElement[];
-    contained?: any[];
-    deceased?: boolean | string;
-    extension?: builders.Extension[];
-    gender?: string;
-    generalPractitioner?: builders.Reference[];
-    id?: string;
-    identifier?: builders.Identifier[];
-    implicitRules?: string;
-    language?: string;
-    link?: builders.BackboneElement[];
-    managingOrganization?: builders.Reference;
-    maritalStatus?: builders.CodeableConcept;
-    meta?: builders.Meta;
-    modifierExtension?: builders.Extension[];
-    multipleBirth?: boolean | number;
-    name?: builders.HumanName[];
-    photo?: builders.Attachment[];
-    telecom?: builders.ContactPoint[];
-    text?: builders.Narrative;
-    [key: string]: any;
-};
-
-declare type Patient_fr_core_patient_ins_Props = {
-    active?: boolean;
-    address?: builders.Address[];
-    birthDate?: string;
-    communication?: builders.BackboneElement[];
-    contact?: builders.BackboneElement[];
-    contained?: any[];
-    deceased?: boolean | string;
-    extension?: builders.Extension[];
-    gender?: string;
-    generalPractitioner?: builders.Reference[];
-    id?: string;
-    identifier?: builders.Identifier[];
-    implicitRules?: string;
-    language?: string;
-    link?: builders.BackboneElement[];
-    managingOrganization?: builders.Reference;
-    maritalStatus?: builders.CodeableConcept;
-    meta?: builders.Meta;
-    modifierExtension?: builders.Extension[];
-    multipleBirth?: boolean | number;
-    name?: builders.HumanName[];
-    photo?: builders.Attachment[];
-    telecom?: builders.ContactPoint[];
-    text?: builders.Narrative;
-    [key: string]: any;
-};
-
+import { Patient_fr_core_patient_Props } from "./profiles/fr-core-patient";
+import { Patient_fr_core_patient_ins_Props } from "./profiles/fr-core-patient-ins";
+export * from "./datatypes";
 /**
   * Create a Patient resource.
   * @public
@@ -92,8 +32,5 @@ declare type Patient_fr_core_patient_ins_Props = {
   * @param {Reference} [props.managingOrganization] - Organization that is the custodian of the patient record
   * @param {BackboneElement} [props.link] - Link to another patient resource that concerns the same actual person
   */
-declare function patient(type: "fr-core-patient", props: Patient_fr_core_patient_Props): any;
-declare function patient(type: "fr-core-patient-ins", props: Patient_fr_core_patient_ins_Props): any;
-
-export { patient };
-
+export declare function patient(type: "fr-core-patient", props: Patient_fr_core_patient_Props): any;
+export declare function patient(type: "fr-core-patient-ins", props: Patient_fr_core_patient_ins_Props): any;

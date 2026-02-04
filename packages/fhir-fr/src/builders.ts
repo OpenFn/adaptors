@@ -5,6 +5,7 @@
 
 import Patient_fr_core_patient, { Patient_fr_core_patient_Props } from "./profiles/fr-core-patient";
 import Patient_fr_core_patient_ins, { Patient_fr_core_patient_ins_Props } from "./profiles/fr-core-patient-ins";
+export * from "./datatypes";
 
 /**
   * Create a Patient resource.
