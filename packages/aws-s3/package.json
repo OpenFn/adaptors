@@ -36,6 +36,7 @@
   "devDependencies": {
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
+    "aws-sdk-client-mock": "^1.11.0",
     "deep-eql": "4.1.1",
     "mocha": "^10.7.3",
     "rimraf": "3.0.2",
