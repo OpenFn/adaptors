@@ -136,14 +136,17 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
       Address: 1,
       Attachment: 1,
       BackboneElement: 1,
+      Coding: 1,
       CodeableConcept: 1,
       ContactPoint: 1,
+      Duration: 1,
       Extension: 1,
       HumanName: 1,
       Identifier: 1,
       Meta: 1,
       Narrative: 1,
       Reference: 1,
+      Period: 1,
     };
   } else {
     try {
@@ -229,6 +232,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     '--allowJs',
     '--declaration',
     '--emitDeclarationOnly',
+    '--skipLibCheck',
     '--lib es2020',
     `--declarationDir ${path.resolve(adaptorPath, 'types')}`,
   ];
@@ -240,9 +244,9 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     `pnpm exec tsc ${tscArgs.join(' ')} ${pathToEntry}`,
     {},
     async (err, stderr) => {
-      // if (err) {
-      //   console.log('>', err);
-      // }
+      if (err) {
+        console.log('>', err);
+      }
       // if (stderr) {
       //   console.log('>', stderr);
       // }
