@@ -160,7 +160,6 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
       await writeFile(dtsPath, withDisclaimer(src));
     } catch (e) {
       console.log('Skipping datatype generation');
-      console.log(e);
     }
   }
 
@@ -199,18 +198,6 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     }
   }
 
-  console.log('Writing types to ./types');
-  await mkdir(path.resolve(adaptorPath, 'types'), { recursive: true });
-
-  console.log('Generating DTS with tsc');
-  const tscArgs = [
-    '--allowJs',
-    '--declaration',
-    '--emitDeclarationOnly',
-    '--lib es2020',
-    `--declarationDir ${path.resolve(adaptorPath, 'types')}`,
-  ];
-
   // Finally, update package json metadata
   const pkg = await readPkg();
   updateMeta(pkg, {
@@ -234,6 +221,18 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     }
   }
 
+  console.log('Writing types to ./types');
+  await mkdir(path.resolve(adaptorPath, 'types'), { recursive: true });
+
+  console.log('Generating DTS with tsc');
+  const tscArgs = [
+    '--allowJs',
+    '--declaration',
+    '--emitDeclarationOnly',
+    '--lib es2020',
+    `--declarationDir ${path.resolve(adaptorPath, 'types')}`,
+  ];
+
   const pathToEntry = path.resolve(adaptorPath, 'src', 'index.ts');
 
   // Now build typings for index and utils
@@ -241,8 +240,12 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     `pnpm exec tsc ${tscArgs.join(' ')} ${pathToEntry}`,
     {},
     async (err, stderr) => {
-      // console.log('>', err);
-      // console.log('>', stderr);
+      // if (err) {
+      //   console.log('>', err);
+      // }
+      // if (stderr) {
+      //   console.log('>', stderr);
+      // }
       console.log('Bundling DTS files');
       const bundle = await rollup({
         // Only bundle builders and profile together

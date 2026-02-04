@@ -9,7 +9,7 @@ import {
   getTypeName,
   sortKeys,
 } from './util';
-import { Mapping, MappingSpec, Schema } from './types';
+import { Mapping, MappingSpec, ProfileSpec, Schema } from './types';
 import { generateType } from './generate-types';
 
 const RESOURCE_NAME = 'resource';
@@ -24,6 +24,9 @@ type Options = {
   /** base adaptor name to generate types and builders from */
   base?: string;
 };
+
+const getProfileBuilderName = (profile: ProfileSpec): string =>
+  `build_${profile.id}`.replace(/-/g, '_');
 
 const generateCode = (
   schema: Record<string, Schema[]>,
@@ -52,7 +55,7 @@ const generateCode = (
     const sortedProfiles = sortKeys(schema[resourceType]) as Schema[];
     for (const profile of sortedProfiles) {
       // import this builder
-      const name = getTypeName(profile);
+      const name = getProfileBuilderName(profile);
       const iface = getInterfaceName(profile);
       imports.push(
         b.importDeclaration(
@@ -260,7 +263,7 @@ const generateEntry = (
         profiles.map(profile =>
           b.objectProperty(
             b.stringLiteral(profile.id),
-            b.identifier(getTypeName(profile)),
+            b.identifier(getProfileBuilderName(profile)),
           ),
         ),
       ),

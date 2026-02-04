@@ -45,7 +45,7 @@ export default async function (
   baseDir: string,
   specPath: string,
   mappings: MappingSpec,
-  download: boolean = true // for now, don't redownload
+  download: boolean = true, // for now, don't redownload
 ) {
   return new Promise<Meta>(async (resolve, reject) => {
     await mkdir(path.resolve(baseDir, 'spec'), { recursive: true });
@@ -76,7 +76,7 @@ export default async function (
 
           await writeFile(
             `${outputDir}/valuesets.json`,
-            JSON.stringify(valueSets ?? {})
+            JSON.stringify(valueSets ?? {}),
           );
         } catch (e) {
           console.log('Error downloading valuesets');
@@ -105,7 +105,7 @@ export default async function (
           });
       } else {
         console.log(
-          `Skipping download. Reading spec.json from  ${outputDir}...`
+          `Skipping download. Reading spec.json from  ${outputDir}...`,
         );
         onDownloadComplete();
       }
@@ -226,12 +226,12 @@ async function downloadValueSets(spec, mappings) {
 }
 
 function parseIGZip(inputDir: string) {
-  console.log(inputDir);
   return new Promise<{ meta: Meta; specs: SpecJSON }>((resolve, reject) => {
     yauzl.open(inputDir, { lazyEntries: true }, function (err, zipfile) {
       if (err) {
         reject(err);
       }
+      console.log('OPENED!');
       // these are all the main resources for which we create builders
       const resources: SpecJSON = {};
       // These are datatypes for which we'll generate typings
@@ -250,13 +250,13 @@ function parseIGZip(inputDir: string) {
         console.log('Writing resources to spec.json');
         await writeFile(
           path.resolve(outputDir, 'spec.json'),
-          JSON.stringify(resources)
+          JSON.stringify(resources),
         );
         if (Object.keys(types).length) {
           console.log('Writing types to spec-types.json');
           await writeFile(
             path.resolve(outputDir, 'spec-types.json'),
-            JSON.stringify(types)
+            JSON.stringify(types),
           );
         }
 
@@ -358,13 +358,13 @@ function parseIGZip(inputDir: string) {
       const processResource = async (
         json: any,
         fileName: string,
-        asType?: boolean
+        asType?: boolean,
       ) => {
         if (json.resourceType === 'StructureDefinition') {
           // TODO maybe only do this if a flag is passed
           await writeFile(
             path.resolve(outputDir, fileName),
-            JSON.stringify(json, null, 2)
+            JSON.stringify(json, null, 2),
           );
 
           delete json.text;
