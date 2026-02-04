@@ -1,10 +1,7 @@
 import { composeNextState } from '@openfn/language-common';
-import {
-  request as commonRequest,
-  makeBasicAuthHeader,
-  assertRelativeUrl,
-} from '@openfn/language-common/util';
+import { S3Client, PutObjectCommand, GetObjectCommand, ListObjectsV2Command, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import nodepath from 'node:path';
+import { Readable } from 'stream';
 
 export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
@@ -19,50 +16,99 @@ export const prepareNextState = (state, response) => {
   };
 };
 
-// This helper function will call out to the backend service
-// and add authorisation headers
-// Refer to the common request function for options and details
-export const request = (configuration = {}, method, path, options) => {
-  // You might want to check that the path is not an absolute URL before
-  // appending credentials commonRequest will do this for you if you
-  // pass a baseURL to it and you don't need to build a path here
-  // assertRelativeUrl(path);
+// Build an S3 client using configuration or default credential chain
+export const s3ClientFromConfig = (configuration = {}) => {
+  const { accessKeyId, secretAccessKey, sessionToken, region } = configuration || {};
+  const clientConfig = {};
+  if (region) clientConfig.region = region;
+  if (accessKeyId && secretAccessKey) {
+    clientConfig.credentials = {
+      accessKeyId,
+      secretAccessKey,
+      sessionToken,
+    };
+  }
+  return new S3Client(clientConfig);
+};
 
-  // TODO This example adds basic auth from config data
-  //       you may need to support other auth strategies
-  const { baseUrl, username, password } = configuration;
-  const headers = makeBasicAuthHeader(username, password);
+export const putObject = async (configuration = {}, params = {}) => {
+  const { Bucket, Key, Body, ContentType, ACL, ServerSideEncryption } = params;
+  const client = s3ClientFromConfig(configuration);
+  const cmd = new PutObjectCommand({ Bucket, Key, Body, ContentType, ACL, ServerSideEncryption });
+  return client.send(cmd);
+};
 
-  // TODO You can define custom error messages here
-  //      The request function will throw if it receives
-  //      an error code (<=400), terminating the workflow
-  const errors = {
-    404: 'Page not found',
-  };
+export const getObject = async (configuration = {}, params = {}) => {
+  const { Bucket, Key } = params;
+  const client = s3ClientFromConfig(configuration);
+  const cmd = new GetObjectCommand({ Bucket, Key });
+  return client.send(cmd);
+};
 
-  const opts = {
-    // Force the response to be parsed as JSON
-    parseAs: 'json',
+export const deleteObject = async (configuration = {}, params = {}) => {
+  const { Bucket, Key } = params;
+  const client = s3ClientFromConfig(configuration);
+  const cmd = new DeleteObjectCommand({ Bucket, Key });
+  return client.send(cmd);
+};
 
-    // Include the error map
-    errors,
+export const listObjects = async (configuration = {}, params = {}) => {
+  const { Bucket, Prefix, MaxKeys, ContinuationToken } = params;
+  const client = s3ClientFromConfig(configuration);
+  const cmd = new ListObjectsV2Command({ Bucket, Prefix, MaxKeys, ContinuationToken });
+  return client.send(cmd);
+};
 
-    // Set the baseUrl from the config object
-    baseUrl,
+// Helper to read stream body to Buffer
+const streamToBuffer = async (stream) => {
+  if (Buffer.isBuffer(stream)) return stream;
+  if (typeof stream.arrayBuffer === 'function') {
+    const ab = await stream.arrayBuffer();
+    return Buffer.from(ab);
+  }
+  if (stream instanceof Readable) {
+    const chunks = [];
+    for await (const chunk of stream) chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+    return Buffer.concat(chunks);
+  }
+  return Buffer.from(String(stream));
+};
 
-    ...options,
-
-    // You can add extra headers here if you want to
-    headers: {
-      'content-type': 'application/json',
-      ...headers,
+export const prepareS3GetResponse = async (response) => {
+  // response.Body can be a stream — convert to base64
+  const bodyStream = response.Body;
+  const buffer = await streamToBuffer(bodyStream);
+  const base64 = buffer.toString('base64');
+  return {
+    body: {
+      base64,
+      contentType: response.ContentType,
+      contentLength: response.ContentLength,
     },
+    headers: response.$metadata || {},
+    statusCode: 200,
   };
+};
 
-  // TODO you may want to add a prefix to the path
-  // use path.join to build the path safely
-  const safePath = nodepath.join(path);
+export const preparePutResponse = (response, Bucket, Key) => {
+  return {
+    body: {
+      bucket: Bucket,
+      key: Key,
+      etag: response.ETag,
+    },
+    headers: response.$metadata || {},
+    statusCode: 200,
+  };
+};
 
-  // Make the actual request
-  return commonRequest(method, safePath, opts);
+export default {
+  s3ClientFromConfig,
+  putObject,
+  getObject,
+  deleteObject,
+  listObjects,
+  prepareS3GetResponse,
+  preparePutResponse,
+  prepareNextState,
 };

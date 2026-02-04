@@ -1,5 +1,5 @@
 import { expandReferences } from '@openfn/language-common/util';
-import * as util from './Utils';
+import * as util from './Utils.js';
 
 /**
  * State object
@@ -34,55 +34,63 @@ import * as util from './Utils';
  * @returns {Operation}
  * @state {HttpState}
  */
-export function get(path, options) {
-  return request('GET', path, null, options);
-}
-
 /**
- * Make a POST request
- * @example
- * post("patient", { "name": "Bukayo" });
- * @function
- * @public
- * @param {string} path - Path to resource
- * @param {object} body - Object which will be attached to the POST body
- * @param {RequestOptions} options - Optional request options
- * @returns {Operation}
- * @state {HttpState}
+ * Upload an object to S3
+ * @param {object} params - { Bucket, Key, Body, ContentType, ACL }
  */
-export function post(path, body, options) {
-  return request('POST', path, body, options);
-}
-
-/**
- * Make a general HTTP request
- * @example
- * request("POST", "patient", { "name": "Bukayo" });
- * @function
- * @public
- * @param {string} method - HTTP method to use
- * @param {string} path - Path to resource
- * @param {object} body - Object which will be attached to the POST body
- * @param {RequestOptions} options - Optional request options
- * @returns {Operation}
- * @state {HttpState}
- */
-export function request(method, path, body, options = {}) {
+export function upload(params) {
   return async state => {
-    const [resolvedMethod, resolvedPath, resolvedBody, resolvedoptions] =
-      expandReferences(state, method, path, body, options);
+    const [resolvedParams] = expandReferences(state, params);
+    const resp = await util.putObject(state.configuration, resolvedParams);
+    const formatted = util.preparePutResponse(resp, resolvedParams.Bucket, resolvedParams.Key);
+    return util.prepareNextState(state, formatted);
+  };
+}
 
-    const response = await util.request(
-      state.configuration,
-      resolvedMethod,
-      resolvedPath,
-      {
-        body: resolvedBody,
-        ...resolvedoptions,
-      }
-    );
+/**
+ * Download an object from S3 and return base64-encoded body
+ * @param {object} params - { Bucket, Key }
+ */
+export function download(params) {
+  return async state => {
+    const [resolvedParams] = expandReferences(state, params);
+    const resp = await util.getObject(state.configuration, resolvedParams);
+    const formatted = await util.prepareS3GetResponse(resp);
+    return util.prepareNextState(state, formatted);
+  };
+}
 
-    return util.prepareNextState(state, response);
+/**
+ * Delete an object from S3
+ * @param {object} params - { Bucket, Key }
+ */
+export function remove(params) {
+  return async state => {
+    const [resolvedParams] = expandReferences(state, params);
+    const resp = await util.deleteObject(state.configuration, resolvedParams);
+    const formatted = {
+      body: { bucket: resolvedParams.Bucket, key: resolvedParams.Key, result: resp },
+      headers: resp.$metadata || {},
+      statusCode: 200,
+    };
+    return util.prepareNextState(state, formatted);
+  };
+}
+
+/**
+ * List objects in a bucket
+ * @param {object} params - { Bucket, Prefix, MaxKeys }
+ */
+export function list(params) {
+  return async state => {
+    const [resolvedParams] = expandReferences(state, params);
+    const resp = await util.listObjects(state.configuration, resolvedParams);
+    const formatted = {
+      body: resp,
+      headers: resp.$metadata || {},
+      statusCode: 200,
+    };
+    return util.prepareNextState(state, formatted);
   };
 }
 

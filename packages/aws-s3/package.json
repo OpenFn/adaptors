@@ -30,6 +30,9 @@
   "dependencies": {
     "@openfn/language-common": "workspace:*"
   },
+  "optionalDependencies": {
+    "@aws-sdk/client-s3": "^3.500.0"
+  },
   "devDependencies": {
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
