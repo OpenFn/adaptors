@@ -3,6 +3,7 @@ import { enableMockClient } from '@openfn/language-common/util';
 
 import { request, dataValue } from '../src/Adaptor.js';
 import { convertHtmlToPdf, convertUrlToPdf } from '../src/Adaptor.js';
+import { generatePdfFromHtml, generatePdfFromUrl } from '../src/Adaptor.js';
 
 // This creates a mock client which acts like a fake server.
 // It enables pattern-matching on the request object and custom responses
@@ -102,5 +103,27 @@ describe('Browserless convert', () => {
     const finalState = await convertUrlToPdf('https://example.com') (state);
 
     expect(finalState.data).to.eql({ url: 'https://files.example.com/doc.pdf' });
+  });
+
+  it('generates PDF via /pdf endpoint using token (html)', async () => {
+    const token = 'tk-123';
+    testServer.intercept({ path: `/pdf?token=${token}`, method: 'POST' }).reply(200, { pdf: 'ok' });
+
+    const state = { configuration: { baseUrl: 'https://fake.server.com', token } };
+
+    const finalState = await generatePdfFromHtml('<p>Hello</p>')(state);
+
+    expect(finalState.data).to.eql({ pdf: 'ok' });
+  });
+
+  it('generates PDF via /pdf endpoint using token (url)', async () => {
+    const token = 'tk-xyz';
+    testServer.intercept({ path: `/pdf?token=${token}`, method: 'POST' }).reply(200, { url: 'ok' });
+
+    const state = { configuration: { baseUrl: 'https://fake.server.com', token } };
+
+    const finalState = await generatePdfFromUrl('https://example.com')(state);
+
+    expect(finalState.data).to.eql({ url: 'ok' });
   });
 });

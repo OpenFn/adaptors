@@ -30,7 +30,7 @@ export const request = (configuration = {}, method, path, options) => {
 
   // TODO This example adds basic auth from config data
   //       you may need to support other auth strategies
-  const { baseUrl, username, password } = configuration;
+  const { baseUrl = 'https://production-sfo.browserless.io', username, password, token } = configuration;
   const headers = makeBasicAuthHeader(username, password);
 
   // TODO You can define custom error messages here
@@ -50,13 +50,21 @@ export const request = (configuration = {}, method, path, options) => {
     // Set the baseUrl from the config object
     baseUrl,
 
+    // Merge provided options (query, body, headers, etc.)
     ...options,
 
     // You can add extra headers here if you want to
     headers: {
       'content-type': 'application/json',
       ...headers,
+      ...(options && options.headers ? options.headers : {}),
     },
+  };
+
+  // Ensure token is passed as a query parameter if provided
+  opts.query = {
+    ...(opts.query || {}),
+    ...(token ? { token } : {}),
   };
 
   // TODO you may want to add a prefix to the path

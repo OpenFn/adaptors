@@ -81,6 +81,32 @@ export function convertUrlToPdf(url, options) {
 }
 
 /**
+ * Generate PDF using Browserless `/pdf` endpoint from HTML
+ * @public
+ * @param {string} html
+ * @param {RequestOptions} options
+ */
+export function generatePdfFromHtml(html, options) {
+  return async state => {
+    const response = await request('POST', 'pdf', { html }, options)(state);
+    return response;
+  };
+}
+
+/**
+ * Generate PDF using Browserless `/pdf` endpoint from URL
+ * @public
+ * @param {string} url
+ * @param {RequestOptions} options
+ */
+export function generatePdfFromUrl(url, options) {
+  return async state => {
+    const response = await request('POST', 'pdf', { url }, options)(state);
+    return response;
+  };
+}
+
+/**
  * Make a general HTTP request
  * @example
  * request("POST", "patient", { "name": "Bukayo" });
