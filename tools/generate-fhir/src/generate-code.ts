@@ -158,15 +158,15 @@ const generateProfile = (
 
   // TODO It would be better to define this once and import it,
   // but that's a bit harder to work out with Lightning I think?
-  // statements.push(
-  //   b.tsTypeAliasDeclaration(
-  //     b.identifier('MaybeArray<T>'),
-  //     b.tsUnionType([
-  //       b.tsTypeReference(b.identifier('T')),
-  //       b.tsTypeReference(b.identifier('T[]')),
-  //     ]),
-  //   ),
-  // );
+  statements.push(
+    b.tsTypeAliasDeclaration(
+      b.identifier('MaybeArray<T>'),
+      b.tsUnionType([
+        b.tsTypeReference(b.identifier('T')),
+        b.tsTypeReference(b.identifier('T[]')),
+      ]),
+    ),
+  );
 
   const typedef = generateType(
     profile.type,

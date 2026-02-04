@@ -7,11 +7,15 @@ export { addDisclaimer, sortKeys };
 export const getBuilderName = (resourceName: string) =>
   resourceName[0].toLowerCase() + resourceName.slice(1);
 
-export const getTypeName = (profile: Schema): string =>
+export const getTypeName = (profile: ProfileSpec): string =>
   `${profile.type}_${profile.id}`.replace(/-/g, '_');
 
-export const getInterfaceName = (profile: Schema): string =>
-  `${profile.type}_${profile.id}_Props`.replace(/-/g, '_');
+export const getInterfaceName = (profile: ProfileSpec): string => {
+  if (profile.type === profile.id) {
+    return `${profile.type}_Props`.replace(/-/g, '_');
+  }
+  return `${profile.type}_${profile.id}_Props`.replace(/-/g, '_');
+};
 
 export const shouldIgnoreProfile = (
   profile: ProfileSpec,

@@ -1,5 +1,14 @@
 import _ from 'lodash';
 
+// TODO need to generate this export properly
+// For base adaptors, we do this:
+import type * as FHIR from './fhir';
+export type * from './fhir';
+
+// But if there's a base, we import those core types from it
+// (note that we actually only want to import datatypes)
+// import type { builders as FHIR } from '@openfn/language-fhir-4';
+
 let systemMap = {};
 
 // https://hl7.org/fhir/R4/datatypes.html#dateTime
@@ -317,7 +326,7 @@ export const composite = (object, key, value) => {
     object[finalKey] = value;
   } else {
     console.warn(
-      `WARNING: Failed to map ${key}: unrecognised data type (see utils.composite)`
+      `WARNING: Failed to map ${key}: unrecognised data type (see utils.composite)`,
     );
   }
 };

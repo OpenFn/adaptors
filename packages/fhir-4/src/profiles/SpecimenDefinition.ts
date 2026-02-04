@@ -6,6 +6,7 @@
 import _ from "lodash";
 import * as dt from "../datatypes";
 import type * as FHIR from "../fhir";
+type MaybeArray<T> = T | T[];
 
 export type SpecimenDefinition_Props = {
     collection?: MaybeArray<string[] | FHIR.CodeableConcept>;
