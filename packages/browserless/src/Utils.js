@@ -55,11 +55,16 @@ export const request = (configuration = {}, method, path, options) => {
       if (wantsPdfBase64 || isPdfContent) {
         const body = response.body;
         if (body) {
-          // If commonRequest already returned a base64 string, use it directly
           if (typeof body === 'string') {
             const maybeBase64 = /^[A-Za-z0-9+/=\r\n]+$/.test(body);
             if (maybeBase64) {
-              response.body = { pdf: body };
+              try {
+                const decoded = Buffer.from(body, 'base64').toString('utf8');
+                const parsed = JSON.parse(decoded);
+                response.body = parsed;
+              } catch (err) {
+                response.body = { pdf: body };
+              }
             } else {
               const buf = Buffer.from(body, 'binary');
               response.body = { pdf: buf.toString('base64') };
@@ -74,7 +79,6 @@ export const request = (configuration = {}, method, path, options) => {
         }
       }
     } catch (err) {
-      // Don't fail the request if conversion fails; return original response
     }
 
     return response;

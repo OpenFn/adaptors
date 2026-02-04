@@ -105,7 +105,6 @@ describe('Browserless convert', () => {
     const token = 'tk-binary';
     const pdfBody = '%PDF-1.4\n%\xE2\xE3\xCF\xD3\n1 0 obj\n<<';
 
-    // Return a Buffer so the request wrapper can parse as arrayBuffer
     testServer
       .intercept({ path: `/pdf?token=${token}`, method: 'POST' })
       .reply(200, Buffer.from(pdfBody, 'binary'), {
