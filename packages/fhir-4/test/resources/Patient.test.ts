@@ -6,7 +6,7 @@ import patientExample from '../fixtures/Patient-simple.json' with { type: 'json'
 import { b } from '../../src/index';
 
 describe('Patient', () => {
-  it.only('should create a simple Patient', () => {
+  it('should create a simple Patient', () => {
     const resource = builders.patient({
       identifier: b.identifier({}),
     });

@@ -133,7 +133,7 @@ export function account(type: "Account", props: Account_Props);
 
 export function account(props: Account_Props);
 
-export function account(props?: any) {
+export function account(type: any, props?: any) {
     const mappings = {
         "Account": Account_Account
     };
@@ -205,7 +205,7 @@ export function activityDefinition(type: "ActivityDefinition", props: ActivityDe
 
 export function activityDefinition(props: ActivityDefinition_Props);
 
-export function activityDefinition(props?: any) {
+export function activityDefinition(type: any, props?: any) {
     const mappings = {
         "ActivityDefinition": ActivityDefinition_ActivityDefinition
     };
@@ -244,7 +244,7 @@ export function administrableProductDefinition(
 
 export function administrableProductDefinition(props: AdministrableProductDefinition_Props);
 
-export function administrableProductDefinition(props?: any) {
+export function administrableProductDefinition(type: any, props?: any) {
     const mappings = {
         "AdministrableProductDefinition": AdministrableProductDefinition_AdministrableProductDefinition
     };
@@ -290,7 +290,7 @@ export function adverseEvent(type: "AdverseEvent", props: AdverseEvent_Props);
 
 export function adverseEvent(props: AdverseEvent_Props);
 
-export function adverseEvent(props?: any) {
+export function adverseEvent(type: any, props?: any) {
     const mappings = {
         "AdverseEvent": AdverseEvent_AdverseEvent
     };
@@ -332,7 +332,7 @@ export function allergyIntolerance(type: "AllergyIntolerance", props: AllergyInt
 
 export function allergyIntolerance(props: AllergyIntolerance_Props);
 
-export function allergyIntolerance(props?: any) {
+export function allergyIntolerance(type: any, props?: any) {
     const mappings = {
         "AllergyIntolerance": AllergyIntolerance_AllergyIntolerance
     };
@@ -380,7 +380,7 @@ export function appointment(type: "Appointment", props: Appointment_Props);
 
 export function appointment(props: Appointment_Props);
 
-export function appointment(props?: any) {
+export function appointment(type: any, props?: any) {
     const mappings = {
         "Appointment": Appointment_Appointment
     };
@@ -414,7 +414,7 @@ export function appointmentResponse(type: "AppointmentResponse", props: Appointm
 
 export function appointmentResponse(props: AppointmentResponse_Props);
 
-export function appointmentResponse(props?: any) {
+export function appointmentResponse(type: any, props?: any) {
     const mappings = {
         "AppointmentResponse": AppointmentResponse_AppointmentResponse
     };
@@ -454,7 +454,7 @@ export function biologicallyDerivedProduct(
 
 export function biologicallyDerivedProduct(props: BiologicallyDerivedProduct_Props);
 
-export function biologicallyDerivedProduct(props?: any) {
+export function biologicallyDerivedProduct(type: any, props?: any) {
     const mappings = {
         "BiologicallyDerivedProduct": BiologicallyDerivedProduct_BiologicallyDerivedProduct
     };
@@ -488,7 +488,7 @@ export function bodyStructure(type: "BodyStructure", props: BodyStructure_Props)
 
 export function bodyStructure(props: BodyStructure_Props);
 
-export function bodyStructure(props?: any) {
+export function bodyStructure(type: any, props?: any) {
     const mappings = {
         "BodyStructure": BodyStructure_BodyStructure
     };
@@ -537,7 +537,7 @@ export function carePlan(type: "CarePlan", props: CarePlan_Props);
 
 export function carePlan(props: CarePlan_Props);
 
-export function carePlan(props?: any) {
+export function carePlan(type: any, props?: any) {
     const mappings = {
         "CarePlan": CarePlan_CarePlan
     };
@@ -576,7 +576,7 @@ export function careTeam(type: "CareTeam", props: CareTeam_Props);
 
 export function careTeam(props: CareTeam_Props);
 
-export function careTeam(props?: any) {
+export function careTeam(type: any, props?: any) {
     const mappings = {
         "CareTeam": CareTeam_CareTeam
     };
@@ -628,7 +628,7 @@ export function chargeItem(type: "ChargeItem", props: ChargeItem_Props);
 
 export function chargeItem(props: ChargeItem_Props);
 
-export function chargeItem(props?: any) {
+export function chargeItem(type: any, props?: any) {
     const mappings = {
         "ChargeItem": ChargeItem_ChargeItem
     };
@@ -677,7 +677,7 @@ export function chargeItemDefinition(type: "ChargeItemDefinition", props: Charge
 
 export function chargeItemDefinition(props: ChargeItemDefinition_Props);
 
-export function chargeItemDefinition(props?: any) {
+export function chargeItemDefinition(type: any, props?: any) {
     const mappings = {
         "ChargeItemDefinition": ChargeItemDefinition_ChargeItemDefinition
     };
@@ -732,7 +732,7 @@ export function citation(type: "Citation", props: Citation_Props);
 
 export function citation(props: Citation_Props);
 
-export function citation(props?: any) {
+export function citation(type: any, props?: any) {
     const mappings = {
         "Citation": Citation_Citation
     };
@@ -785,7 +785,7 @@ export function claim(type: "Claim", props: Claim_Props);
 
 export function claim(props: Claim_Props);
 
-export function claim(props?: any) {
+export function claim(type: any, props?: any) {
     const mappings = {
         "Claim": Claim_Claim
     };
@@ -838,7 +838,7 @@ export function claimResponse(type: "ClaimResponse", props: ClaimResponse_Props)
 
 export function claimResponse(props: ClaimResponse_Props);
 
-export function claimResponse(props?: any) {
+export function claimResponse(type: any, props?: any) {
     const mappings = {
         "ClaimResponse": ClaimResponse_ClaimResponse
     };
@@ -884,7 +884,7 @@ export function clinicalImpression(type: "ClinicalImpression", props: ClinicalIm
 
 export function clinicalImpression(props: ClinicalImpression_Props);
 
-export function clinicalImpression(props?: any) {
+export function clinicalImpression(type: any, props?: any) {
     const mappings = {
         "ClinicalImpression": ClinicalImpression_ClinicalImpression
     };
@@ -921,7 +921,7 @@ export function clinicalUseDefinition(type: "ClinicalUseDefinition", props: Clin
 
 export function clinicalUseDefinition(props: ClinicalUseDefinition_Props);
 
-export function clinicalUseDefinition(props?: any) {
+export function clinicalUseDefinition(type: any, props?: any) {
     const mappings = {
         "ClinicalUseDefinition": ClinicalUseDefinition_ClinicalUseDefinition
     };
@@ -970,7 +970,7 @@ export function communication(type: "Communication", props: Communication_Props)
 
 export function communication(props: Communication_Props);
 
-export function communication(props?: any) {
+export function communication(type: any, props?: any) {
     const mappings = {
         "Communication": Communication_Communication
     };
@@ -1018,7 +1018,7 @@ export function communicationRequest(type: "CommunicationRequest", props: Commun
 
 export function communicationRequest(props: CommunicationRequest_Props);
 
-export function communicationRequest(props?: any) {
+export function communicationRequest(type: any, props?: any) {
     const mappings = {
         "CommunicationRequest": CommunicationRequest_CommunicationRequest
     };
@@ -1077,7 +1077,7 @@ export function contract(type: "Contract", props: Contract_Props);
 
 export function contract(props: Contract_Props);
 
-export function contract(props?: any) {
+export function contract(type: any, props?: any) {
     const mappings = {
         "Contract": Contract_Contract
     };
@@ -1120,7 +1120,7 @@ export function coverage(type: "Coverage", props: Coverage_Props);
 
 export function coverage(props: Coverage_Props);
 
-export function coverage(props?: any) {
+export function coverage(type: any, props?: any) {
     const mappings = {
         "Coverage": Coverage_Coverage
     };
@@ -1163,7 +1163,7 @@ export function coverageEligibilityRequest(
 
 export function coverageEligibilityRequest(props: CoverageEligibilityRequest_Props);
 
-export function coverageEligibilityRequest(props?: any) {
+export function coverageEligibilityRequest(type: any, props?: any) {
     const mappings = {
         "CoverageEligibilityRequest": CoverageEligibilityRequest_CoverageEligibilityRequest
     };
@@ -1207,7 +1207,7 @@ export function coverageEligibilityResponse(
 
 export function coverageEligibilityResponse(props: CoverageEligibilityResponse_Props);
 
-export function coverageEligibilityResponse(props?: any) {
+export function coverageEligibilityResponse(type: any, props?: any) {
     const mappings = {
         "CoverageEligibilityResponse": CoverageEligibilityResponse_CoverageEligibilityResponse
     };
@@ -1245,7 +1245,7 @@ export function detectedIssue(type: "DetectedIssue", props: DetectedIssue_Props)
 
 export function detectedIssue(props: DetectedIssue_Props);
 
-export function detectedIssue(props?: any) {
+export function detectedIssue(type: any, props?: any) {
     const mappings = {
         "DetectedIssue": DetectedIssue_DetectedIssue
     };
@@ -1297,7 +1297,7 @@ export function device(type: "Device", props: Device_Props);
 
 export function device(props: Device_Props);
 
-export function device(props?: any) {
+export function device(type: any, props?: any) {
     const mappings = {
         "Device": Device_Device
     };
@@ -1345,7 +1345,7 @@ export function deviceDefinition(type: "DeviceDefinition", props: DeviceDefiniti
 
 export function deviceDefinition(props: DeviceDefinition_Props);
 
-export function deviceDefinition(props?: any) {
+export function deviceDefinition(type: any, props?: any) {
     const mappings = {
         "DeviceDefinition": DeviceDefinition_DeviceDefinition
     };
@@ -1381,7 +1381,7 @@ export function deviceMetric(type: "DeviceMetric", props: DeviceMetric_Props);
 
 export function deviceMetric(props: DeviceMetric_Props);
 
-export function deviceMetric(props?: any) {
+export function deviceMetric(type: any, props?: any) {
     const mappings = {
         "DeviceMetric": DeviceMetric_DeviceMetric
     };
@@ -1431,7 +1431,7 @@ export function deviceRequest(type: "DeviceRequest", props: DeviceRequest_Props)
 
 export function deviceRequest(props: DeviceRequest_Props);
 
-export function deviceRequest(props?: any) {
+export function deviceRequest(type: any, props?: any) {
     const mappings = {
         "DeviceRequest": DeviceRequest_DeviceRequest
     };
@@ -1470,7 +1470,7 @@ export function deviceUseStatement(type: "DeviceUseStatement", props: DeviceUseS
 
 export function deviceUseStatement(props: DeviceUseStatement_Props);
 
-export function deviceUseStatement(props?: any) {
+export function deviceUseStatement(type: any, props?: any) {
     const mappings = {
         "DeviceUseStatement": DeviceUseStatement_DeviceUseStatement
     };
@@ -1514,7 +1514,7 @@ export function diagnosticReport(type: "DiagnosticReport", props: DiagnosticRepo
 
 export function diagnosticReport(props: DiagnosticReport_Props);
 
-export function diagnosticReport(props?: any) {
+export function diagnosticReport(type: any, props?: any) {
     const mappings = {
         "DiagnosticReport": DiagnosticReport_DiagnosticReport
     };
@@ -1541,7 +1541,7 @@ export function domainResource(type: "DomainResource", props: DomainResource_Pro
 
 export function domainResource(props: DomainResource_Props);
 
-export function domainResource(props?: any) {
+export function domainResource(type: any, props?: any) {
     const mappings = {
         "DomainResource": DomainResource_DomainResource
     };
@@ -1590,7 +1590,7 @@ export function encounter(type: "Encounter", props: Encounter_Props);
 
 export function encounter(props: Encounter_Props);
 
-export function encounter(props?: any) {
+export function encounter(type: any, props?: any) {
     const mappings = {
         "Encounter": Encounter_Encounter
     };
@@ -1623,7 +1623,7 @@ export function enrollmentRequest(type: "EnrollmentRequest", props: EnrollmentRe
 
 export function enrollmentRequest(props: EnrollmentRequest_Props);
 
-export function enrollmentRequest(props?: any) {
+export function enrollmentRequest(type: any, props?: any) {
     const mappings = {
         "EnrollmentRequest": EnrollmentRequest_EnrollmentRequest
     };
@@ -1657,7 +1657,7 @@ export function enrollmentResponse(type: "EnrollmentResponse", props: Enrollment
 
 export function enrollmentResponse(props: EnrollmentResponse_Props);
 
-export function enrollmentResponse(props?: any) {
+export function enrollmentResponse(type: any, props?: any) {
     const mappings = {
         "EnrollmentResponse": EnrollmentResponse_EnrollmentResponse
     };
@@ -1695,7 +1695,7 @@ export function episodeOfCare(type: "EpisodeOfCare", props: EpisodeOfCare_Props)
 
 export function episodeOfCare(props: EpisodeOfCare_Props);
 
-export function episodeOfCare(props?: any) {
+export function episodeOfCare(type: any, props?: any) {
     const mappings = {
         "EpisodeOfCare": EpisodeOfCare_EpisodeOfCare
     };
@@ -1749,7 +1749,7 @@ export function eventDefinition(type: "EventDefinition", props: EventDefinition_
 
 export function eventDefinition(props: EventDefinition_Props);
 
-export function eventDefinition(props?: any) {
+export function eventDefinition(type: any, props?: any) {
     const mappings = {
         "EventDefinition": EventDefinition_EventDefinition
     };
@@ -1800,7 +1800,7 @@ export function evidence(type: "Evidence", props: Evidence_Props);
 
 export function evidence(props: Evidence_Props);
 
-export function evidence(props?: any) {
+export function evidence(type: any, props?: any) {
     const mappings = {
         "Evidence": Evidence_Evidence
     };
@@ -1844,7 +1844,7 @@ export function evidenceReport(type: "EvidenceReport", props: EvidenceReport_Pro
 
 export function evidenceReport(props: EvidenceReport_Props);
 
-export function evidenceReport(props?: any) {
+export function evidenceReport(type: any, props?: any) {
     const mappings = {
         "EvidenceReport": EvidenceReport_EvidenceReport
     };
@@ -1894,7 +1894,7 @@ export function evidenceVariable(type: "EvidenceVariable", props: EvidenceVariab
 
 export function evidenceVariable(props: EvidenceVariable_Props);
 
-export function evidenceVariable(props?: any) {
+export function evidenceVariable(type: any, props?: any) {
     const mappings = {
         "EvidenceVariable": EvidenceVariable_EvidenceVariable
     };
@@ -1963,7 +1963,7 @@ export function explanationOfBenefit(type: "ExplanationOfBenefit", props: Explan
 
 export function explanationOfBenefit(props: ExplanationOfBenefit_Props);
 
-export function explanationOfBenefit(props?: any) {
+export function explanationOfBenefit(type: any, props?: any) {
     const mappings = {
         "ExplanationOfBenefit": ExplanationOfBenefit_ExplanationOfBenefit
     };
@@ -2007,7 +2007,7 @@ export function familyMemberHistory(type: "FamilyMemberHistory", props: FamilyMe
 
 export function familyMemberHistory(props: FamilyMemberHistory_Props);
 
-export function familyMemberHistory(props?: any) {
+export function familyMemberHistory(type: any, props?: any) {
     const mappings = {
         "FamilyMemberHistory": FamilyMemberHistory_FamilyMemberHistory
     };
@@ -2041,7 +2041,7 @@ export function flag(type: "Flag", props: Flag_Props);
 
 export function flag(props: Flag_Props);
 
-export function flag(props?: any) {
+export function flag(type: any, props?: any) {
     const mappings = {
         "Flag": Flag_Flag
     };
@@ -2083,7 +2083,7 @@ export function goal(type: "Goal", props: Goal_Props);
 
 export function goal(props: Goal_Props);
 
-export function goal(props?: any) {
+export function goal(type: any, props?: any) {
     const mappings = {
         "Goal": Goal_Goal
     };
@@ -2119,7 +2119,7 @@ export function group(type: "Group", props: Group_Props);
 
 export function group(props: Group_Props);
 
-export function group(props?: any) {
+export function group(type: any, props?: any) {
     const mappings = {
         "Group": Group_Group
     };
@@ -2160,7 +2160,7 @@ export function guidanceResponse(type: "GuidanceResponse", props: GuidanceRespon
 
 export function guidanceResponse(props: GuidanceResponse_Props);
 
-export function guidanceResponse(props?: any) {
+export function guidanceResponse(type: any, props?: any) {
     const mappings = {
         "GuidanceResponse": GuidanceResponse_GuidanceResponse
     };
@@ -2210,7 +2210,7 @@ export function healthcareService(type: "HealthcareService", props: HealthcareSe
 
 export function healthcareService(props: HealthcareService_Props);
 
-export function healthcareService(props?: any) {
+export function healthcareService(type: any, props?: any) {
     const mappings = {
         "HealthcareService": HealthcareService_HealthcareService
     };
@@ -2256,7 +2256,7 @@ export function imagingStudy(type: "ImagingStudy", props: ImagingStudy_Props);
 
 export function imagingStudy(props: ImagingStudy_Props);
 
-export function imagingStudy(props?: any) {
+export function imagingStudy(type: any, props?: any) {
     const mappings = {
         "ImagingStudy": ImagingStudy_ImagingStudy
     };
@@ -2310,7 +2310,7 @@ export function immunization(type: "Immunization", props: Immunization_Props);
 
 export function immunization(props: Immunization_Props);
 
-export function immunization(props?: any) {
+export function immunization(type: any, props?: any) {
     const mappings = {
         "Immunization": Immunization_Immunization
     };
@@ -2349,7 +2349,7 @@ export function immunizationEvaluation(type: "ImmunizationEvaluation", props: Im
 
 export function immunizationEvaluation(props: ImmunizationEvaluation_Props);
 
-export function immunizationEvaluation(props?: any) {
+export function immunizationEvaluation(type: any, props?: any) {
     const mappings = {
         "ImmunizationEvaluation": ImmunizationEvaluation_ImmunizationEvaluation
     };
@@ -2383,7 +2383,7 @@ export function immunizationRecommendation(
 
 export function immunizationRecommendation(props: ImmunizationRecommendation_Props);
 
-export function immunizationRecommendation(props?: any) {
+export function immunizationRecommendation(type: any, props?: any) {
     const mappings = {
         "ImmunizationRecommendation": ImmunizationRecommendation_ImmunizationRecommendation
     };
@@ -2417,7 +2417,7 @@ export function ingredient(type: "Ingredient", props: Ingredient_Props);
 
 export function ingredient(props: Ingredient_Props);
 
-export function ingredient(props?: any) {
+export function ingredient(type: any, props?: any) {
     const mappings = {
         "Ingredient": Ingredient_Ingredient
     };
@@ -2457,7 +2457,7 @@ export function insurancePlan(type: "InsurancePlan", props: InsurancePlan_Props)
 
 export function insurancePlan(props: InsurancePlan_Props);
 
-export function insurancePlan(props?: any) {
+export function insurancePlan(type: any, props?: any) {
     const mappings = {
         "InsurancePlan": InsurancePlan_InsurancePlan
     };
@@ -2499,7 +2499,7 @@ export function invoice(type: "Invoice", props: Invoice_Props);
 
 export function invoice(props: Invoice_Props);
 
-export function invoice(props?: any) {
+export function invoice(type: any, props?: any) {
     const mappings = {
         "Invoice": Invoice_Invoice
     };
@@ -2556,7 +2556,7 @@ export function library(type: "Library", props: Library_Props);
 
 export function library(props: Library_Props);
 
-export function library(props?: any) {
+export function library(type: any, props?: any) {
     const mappings = {
         "Library": Library_Library
     };
@@ -2595,7 +2595,7 @@ export function list(type: "List", props: List_Props);
 
 export function list(props: List_Props);
 
-export function list(props?: any) {
+export function list(type: any, props?: any) {
     const mappings = {
         "List": List_List
     };
@@ -2638,7 +2638,7 @@ export function location(type: "Location", props: Location_Props);
 
 export function location(props: Location_Props);
 
-export function location(props?: any) {
+export function location(type: any, props?: any) {
     const mappings = {
         "Location": Location_Location
     };
@@ -2674,7 +2674,7 @@ export function manufacturedItemDefinition(
 
 export function manufacturedItemDefinition(props: ManufacturedItemDefinition_Props);
 
-export function manufacturedItemDefinition(props?: any) {
+export function manufacturedItemDefinition(type: any, props?: any) {
     const mappings = {
         "ManufacturedItemDefinition": ManufacturedItemDefinition_ManufacturedItemDefinition
     };
@@ -2741,7 +2741,7 @@ export function measure(type: "Measure", props: Measure_Props);
 
 export function measure(props: Measure_Props);
 
-export function measure(props?: any) {
+export function measure(type: any, props?: any) {
     const mappings = {
         "Measure": Measure_Measure
     };
@@ -2778,7 +2778,7 @@ export function measureReport(type: "MeasureReport", props: MeasureReport_Props)
 
 export function measureReport(props: MeasureReport_Props);
 
-export function measureReport(props?: any) {
+export function measureReport(type: any, props?: any) {
     const mappings = {
         "MeasureReport": MeasureReport_MeasureReport
     };
@@ -2826,7 +2826,7 @@ export function media(type: "Media", props: Media_Props);
 
 export function media(props: Media_Props);
 
-export function media(props?: any) {
+export function media(type: any, props?: any) {
     const mappings = {
         "Media": Media_Media
     };
@@ -2860,7 +2860,7 @@ export function medication(type: "Medication", props: Medication_Props);
 
 export function medication(props: Medication_Props);
 
-export function medication(props?: any) {
+export function medication(type: any, props?: any) {
     const mappings = {
         "Medication": Medication_Medication
     };
@@ -2905,7 +2905,7 @@ export function medicationAdministration(type: "MedicationAdministration", props
 
 export function medicationAdministration(props: MedicationAdministration_Props);
 
-export function medicationAdministration(props?: any) {
+export function medicationAdministration(type: any, props?: any) {
     const mappings = {
         "MedicationAdministration": MedicationAdministration_MedicationAdministration
     };
@@ -2955,7 +2955,7 @@ export function medicationDispense(type: "MedicationDispense", props: Medication
 
 export function medicationDispense(props: MedicationDispense_Props);
 
-export function medicationDispense(props?: any) {
+export function medicationDispense(type: any, props?: any) {
     const mappings = {
         "MedicationDispense": MedicationDispense_MedicationDispense
     };
@@ -3003,7 +3003,7 @@ export function medicationKnowledge(type: "MedicationKnowledge", props: Medicati
 
 export function medicationKnowledge(props: MedicationKnowledge_Props);
 
-export function medicationKnowledge(props?: any) {
+export function medicationKnowledge(type: any, props?: any) {
     const mappings = {
         "MedicationKnowledge": MedicationKnowledge_MedicationKnowledge
     };
@@ -3061,7 +3061,7 @@ export function medicationRequest(type: "MedicationRequest", props: MedicationRe
 
 export function medicationRequest(props: MedicationRequest_Props);
 
-export function medicationRequest(props?: any) {
+export function medicationRequest(type: any, props?: any) {
     const mappings = {
         "MedicationRequest": MedicationRequest_MedicationRequest
     };
@@ -3104,7 +3104,7 @@ export function medicationStatement(type: "MedicationStatement", props: Medicati
 
 export function medicationStatement(props: MedicationStatement_Props);
 
-export function medicationStatement(props?: any) {
+export function medicationStatement(type: any, props?: any) {
     const mappings = {
         "MedicationStatement": MedicationStatement_MedicationStatement
     };
@@ -3161,7 +3161,7 @@ export function medicinalProductDefinition(
 
 export function medicinalProductDefinition(props: MedicinalProductDefinition_Props);
 
-export function medicinalProductDefinition(props?: any) {
+export function medicinalProductDefinition(type: any, props?: any) {
     const mappings = {
         "MedicinalProductDefinition": MedicinalProductDefinition_MedicinalProductDefinition
     };
@@ -3203,7 +3203,7 @@ export function molecularSequence(type: "MolecularSequence", props: MolecularSeq
 
 export function molecularSequence(props: MolecularSequence_Props);
 
-export function molecularSequence(props?: any) {
+export function molecularSequence(type: any, props?: any) {
     const mappings = {
         "MolecularSequence": MolecularSequence_MolecularSequence
     };
@@ -3246,7 +3246,7 @@ export function nutritionOrder(type: "NutritionOrder", props: NutritionOrder_Pro
 
 export function nutritionOrder(props: NutritionOrder_Props);
 
-export function nutritionOrder(props?: any) {
+export function nutritionOrder(type: any, props?: any) {
     const mappings = {
         "NutritionOrder": NutritionOrder_NutritionOrder
     };
@@ -3282,7 +3282,7 @@ export function nutritionProduct(type: "NutritionProduct", props: NutritionProdu
 
 export function nutritionProduct(props: NutritionProduct_Props);
 
-export function nutritionProduct(props?: any) {
+export function nutritionProduct(type: any, props?: any) {
     const mappings = {
         "NutritionProduct": NutritionProduct_NutritionProduct
     };
@@ -3332,7 +3332,7 @@ export function observation(type: "Observation", props: Observation_Props);
 
 export function observation(props: Observation_Props);
 
-export function observation(props?: any) {
+export function observation(type: any, props?: any) {
     const mappings = {
         "Observation": Observation_Observation
     };
@@ -3371,7 +3371,7 @@ export function observationDefinition(type: "ObservationDefinition", props: Obse
 
 export function observationDefinition(props: ObservationDefinition_Props);
 
-export function observationDefinition(props?: any) {
+export function observationDefinition(type: any, props?: any) {
     const mappings = {
         "ObservationDefinition": ObservationDefinition_ObservationDefinition
     };
@@ -3407,7 +3407,7 @@ export function organization(type: "Organization", props: Organization_Props);
 
 export function organization(props: Organization_Props);
 
-export function organization(props?: any) {
+export function organization(type: any, props?: any) {
     const mappings = {
         "Organization": Organization_Organization
     };
@@ -3445,7 +3445,7 @@ export function organizationAffiliation(type: "OrganizationAffiliation", props: 
 
 export function organizationAffiliation(props: OrganizationAffiliation_Props);
 
-export function organizationAffiliation(props?: any) {
+export function organizationAffiliation(type: any, props?: any) {
     const mappings = {
         "OrganizationAffiliation": OrganizationAffiliation_OrganizationAffiliation
     };
@@ -3485,7 +3485,7 @@ export function packagedProductDefinition(type: "PackagedProductDefinition", pro
 
 export function packagedProductDefinition(props: PackagedProductDefinition_Props);
 
-export function packagedProductDefinition(props?: any) {
+export function packagedProductDefinition(type: any, props?: any) {
     const mappings = {
         "PackagedProductDefinition": PackagedProductDefinition_PackagedProductDefinition
     };
@@ -3527,7 +3527,7 @@ export function patient(type: "Patient", props: Patient_Props);
 
 export function patient(props: Patient_Props);
 
-export function patient(props?: any) {
+export function patient(type: any, props?: any) {
     const mappings = {
         "Patient": Patient_Patient
     };
@@ -3565,7 +3565,7 @@ export function paymentNotice(type: "PaymentNotice", props: PaymentNotice_Props)
 
 export function paymentNotice(props: PaymentNotice_Props);
 
-export function paymentNotice(props?: any) {
+export function paymentNotice(type: any, props?: any) {
     const mappings = {
         "PaymentNotice": PaymentNotice_PaymentNotice
     };
@@ -3606,7 +3606,7 @@ export function paymentReconciliation(type: "PaymentReconciliation", props: Paym
 
 export function paymentReconciliation(props: PaymentReconciliation_Props);
 
-export function paymentReconciliation(props?: any) {
+export function paymentReconciliation(type: any, props?: any) {
     const mappings = {
         "PaymentReconciliation": PaymentReconciliation_PaymentReconciliation
     };
@@ -3642,7 +3642,7 @@ export function person(type: "Person", props: Person_Props);
 
 export function person(props: Person_Props);
 
-export function person(props?: any) {
+export function person(type: any, props?: any) {
     const mappings = {
         "Person": Person_Person
     };
@@ -3699,7 +3699,7 @@ export function planDefinition(type: "PlanDefinition", props: PlanDefinition_Pro
 
 export function planDefinition(props: PlanDefinition_Props);
 
-export function planDefinition(props?: any) {
+export function planDefinition(type: any, props?: any) {
     const mappings = {
         "PlanDefinition": PlanDefinition_PlanDefinition
     };
@@ -3735,7 +3735,7 @@ export function practitioner(type: "Practitioner", props: Practitioner_Props);
 
 export function practitioner(props: Practitioner_Props);
 
-export function practitioner(props?: any) {
+export function practitioner(type: any, props?: any) {
     const mappings = {
         "Practitioner": Practitioner_Practitioner
     };
@@ -3775,7 +3775,7 @@ export function practitionerRole(type: "PractitionerRole", props: PractitionerRo
 
 export function practitionerRole(props: PractitionerRole_Props);
 
-export function practitionerRole(props?: any) {
+export function practitionerRole(type: any, props?: any) {
     const mappings = {
         "PractitionerRole": PractitionerRole_PractitionerRole
     };
@@ -3829,7 +3829,7 @@ export function procedure(type: "Procedure", props: Procedure_Props);
 
 export function procedure(props: Procedure_Props);
 
-export function procedure(props?: any) {
+export function procedure(type: any, props?: any) {
     const mappings = {
         "Procedure": Procedure_Procedure
     };
@@ -3877,7 +3877,7 @@ export function questionnaire(type: "Questionnaire", props: Questionnaire_Props)
 
 export function questionnaire(props: Questionnaire_Props);
 
-export function questionnaire(props?: any) {
+export function questionnaire(type: any, props?: any) {
     const mappings = {
         "Questionnaire": Questionnaire_Questionnaire
     };
@@ -3914,7 +3914,7 @@ export function questionnaireResponse(type: "QuestionnaireResponse", props: Ques
 
 export function questionnaireResponse(props: QuestionnaireResponse_Props);
 
-export function questionnaireResponse(props?: any) {
+export function questionnaireResponse(type: any, props?: any) {
     const mappings = {
         "QuestionnaireResponse": QuestionnaireResponse_QuestionnaireResponse
     };
@@ -3954,7 +3954,7 @@ export function regulatedAuthorization(type: "RegulatedAuthorization", props: Re
 
 export function regulatedAuthorization(props: RegulatedAuthorization_Props);
 
-export function regulatedAuthorization(props?: any) {
+export function regulatedAuthorization(type: any, props?: any) {
     const mappings = {
         "RegulatedAuthorization": RegulatedAuthorization_RegulatedAuthorization
     };
@@ -3992,7 +3992,7 @@ export function relatedPerson(type: "RelatedPerson", props: RelatedPerson_Props)
 
 export function relatedPerson(props: RelatedPerson_Props);
 
-export function relatedPerson(props?: any) {
+export function relatedPerson(type: any, props?: any) {
     const mappings = {
         "RelatedPerson": RelatedPerson_RelatedPerson
     };
@@ -4036,7 +4036,7 @@ export function requestGroup(type: "RequestGroup", props: RequestGroup_Props);
 
 export function requestGroup(props: RequestGroup_Props);
 
-export function requestGroup(props?: any) {
+export function requestGroup(type: any, props?: any) {
     const mappings = {
         "RequestGroup": RequestGroup_RequestGroup
     };
@@ -4096,7 +4096,7 @@ export function researchDefinition(type: "ResearchDefinition", props: ResearchDe
 
 export function researchDefinition(props: ResearchDefinition_Props);
 
-export function researchDefinition(props?: any) {
+export function researchDefinition(type: any, props?: any) {
     const mappings = {
         "ResearchDefinition": ResearchDefinition_ResearchDefinition
     };
@@ -4155,7 +4155,7 @@ export function researchElementDefinition(type: "ResearchElementDefinition", pro
 
 export function researchElementDefinition(props: ResearchElementDefinition_Props);
 
-export function researchElementDefinition(props?: any) {
+export function researchElementDefinition(type: any, props?: any) {
     const mappings = {
         "ResearchElementDefinition": ResearchElementDefinition_ResearchElementDefinition
     };
@@ -4205,7 +4205,7 @@ export function researchStudy(type: "ResearchStudy", props: ResearchStudy_Props)
 
 export function researchStudy(props: ResearchStudy_Props);
 
-export function researchStudy(props?: any) {
+export function researchStudy(type: any, props?: any) {
     const mappings = {
         "ResearchStudy": ResearchStudy_ResearchStudy
     };
@@ -4239,7 +4239,7 @@ export function researchSubject(type: "ResearchSubject", props: ResearchSubject_
 
 export function researchSubject(props: ResearchSubject_Props);
 
-export function researchSubject(props?: any) {
+export function researchSubject(type: any, props?: any) {
     const mappings = {
         "ResearchSubject": ResearchSubject_ResearchSubject
     };
@@ -4282,7 +4282,7 @@ export function riskAssessment(type: "RiskAssessment", props: RiskAssessment_Pro
 
 export function riskAssessment(props: RiskAssessment_Props);
 
-export function riskAssessment(props?: any) {
+export function riskAssessment(type: any, props?: any) {
     const mappings = {
         "RiskAssessment": RiskAssessment_RiskAssessment
     };
@@ -4316,7 +4316,7 @@ export function schedule(type: "Schedule", props: Schedule_Props);
 
 export function schedule(props: Schedule_Props);
 
-export function schedule(props?: any) {
+export function schedule(type: any, props?: any) {
     const mappings = {
         "Schedule": Schedule_Schedule
     };
@@ -4375,7 +4375,7 @@ export function serviceRequest(type: "ServiceRequest", props: ServiceRequest_Pro
 
 export function serviceRequest(props: ServiceRequest_Props);
 
-export function serviceRequest(props?: any) {
+export function serviceRequest(type: any, props?: any) {
     const mappings = {
         "ServiceRequest": ServiceRequest_ServiceRequest
     };
@@ -4412,7 +4412,7 @@ export function slot(type: "Slot", props: Slot_Props);
 
 export function slot(props: Slot_Props);
 
-export function slot(props?: any) {
+export function slot(type: any, props?: any) {
     const mappings = {
         "Slot": Slot_Slot
     };
@@ -4451,7 +4451,7 @@ export function specimen(type: "Specimen", props: Specimen_Props);
 
 export function specimen(props: Specimen_Props);
 
-export function specimen(props?: any) {
+export function specimen(type: any, props?: any) {
     const mappings = {
         "Specimen": Specimen_Specimen
     };
@@ -4483,7 +4483,7 @@ export function specimenDefinition(type: "SpecimenDefinition", props: SpecimenDe
 
 export function specimenDefinition(props: SpecimenDefinition_Props);
 
-export function specimenDefinition(props?: any) {
+export function specimenDefinition(type: any, props?: any) {
     const mappings = {
         "SpecimenDefinition": SpecimenDefinition_SpecimenDefinition
     };
@@ -4516,7 +4516,7 @@ export function substance(type: "Substance", props: Substance_Props);
 
 export function substance(props: Substance_Props);
 
-export function substance(props?: any) {
+export function substance(type: any, props?: any) {
     const mappings = {
         "Substance": Substance_Substance
     };
@@ -4561,7 +4561,7 @@ export function substanceDefinition(type: "SubstanceDefinition", props: Substanc
 
 export function substanceDefinition(props: SubstanceDefinition_Props);
 
-export function substanceDefinition(props?: any) {
+export function substanceDefinition(type: any, props?: any) {
     const mappings = {
         "SubstanceDefinition": SubstanceDefinition_SubstanceDefinition
     };
@@ -4598,7 +4598,7 @@ export function supplyDelivery(type: "SupplyDelivery", props: SupplyDelivery_Pro
 
 export function supplyDelivery(props: SupplyDelivery_Props);
 
-export function supplyDelivery(props?: any) {
+export function supplyDelivery(type: any, props?: any) {
     const mappings = {
         "SupplyDelivery": SupplyDelivery_SupplyDelivery
     };
@@ -4639,7 +4639,7 @@ export function supplyRequest(type: "SupplyRequest", props: SupplyRequest_Props)
 
 export function supplyRequest(props: SupplyRequest_Props);
 
-export function supplyRequest(props?: any) {
+export function supplyRequest(type: any, props?: any) {
     const mappings = {
         "SupplyRequest": SupplyRequest_SupplyRequest
     };
@@ -4696,7 +4696,7 @@ export function task(type: "Task", props: Task_Props);
 
 export function task(props: Task_Props);
 
-export function task(props?: any) {
+export function task(type: any, props?: any) {
     const mappings = {
         "Task": Task_Task
     };
@@ -4734,7 +4734,7 @@ export function testReport(type: "TestReport", props: TestReport_Props);
 
 export function testReport(props: TestReport_Props);
 
-export function testReport(props?: any) {
+export function testReport(type: any, props?: any) {
     const mappings = {
         "TestReport": TestReport_TestReport
     };
@@ -4774,7 +4774,7 @@ export function verificationResult(type: "VerificationResult", props: Verificati
 
 export function verificationResult(props: VerificationResult_Props);
 
-export function verificationResult(props?: any) {
+export function verificationResult(type: any, props?: any) {
     const mappings = {
         "VerificationResult": VerificationResult_VerificationResult
     };
@@ -4808,7 +4808,7 @@ export function visionPrescription(type: "VisionPrescription", props: VisionPres
 
 export function visionPrescription(props: VisionPrescription_Props);
 
-export function visionPrescription(props?: any) {
+export function visionPrescription(type: any, props?: any) {
     const mappings = {
         "VisionPrescription": VisionPrescription_VisionPrescription
     };

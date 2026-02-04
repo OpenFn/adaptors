@@ -314,13 +314,12 @@ const generateEntry = (
     b.functionDeclaration(
       b.identifier(getBuilderName(resourceType)),
       [
-        profiles.length > 1 &&
-          b.tsParameterProperty(
-            b.identifier.from({
-              name: 'type',
-              typeAnnotation: b.tsTypeAnnotation(b.tsAnyKeyword()),
-            }),
-          ),
+        b.tsParameterProperty(
+          b.identifier.from({
+            name: 'type',
+            typeAnnotation: b.tsTypeAnnotation(b.tsAnyKeyword()),
+          }),
+        ),
         b.tsParameterProperty(
           // TODO need a full type for this. Where do we get it?
           b.identifier.from({
@@ -329,7 +328,7 @@ const generateEntry = (
             optional: true,
           }),
         ),
-      ].filter(Boolean),
+      ],
       b.blockStatement(statements),
     ),
   );

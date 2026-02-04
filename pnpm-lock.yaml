@@ -697,6 +697,9 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
+      ts-node:
+        specifier: 10.9.1
+        version: 10.9.1(@swc/core@1.10.9)(@types/node@18.17.5)(typescript@4.8.4)
       typescript:
         specifier: 4.8.4
         version: 4.8.4

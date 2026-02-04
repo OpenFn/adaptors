@@ -6,6 +6,7 @@
 import _ from "lodash";
 import { b as dt } from "@openfn/language-fhir-4";
 import type { builders as FHIR } from "@openfn/language-fhir-4";
+type MaybeArray<T> = T | T[];
 
 export type Patient_fr_core_patient_ins_Props = {
     active?: boolean;
