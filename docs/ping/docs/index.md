@@ -92,7 +92,7 @@ This operation writes the following keys to state:
 
 **Example:** Update intervention records in PING
 ```js
-post('/api/ingestion/v2/PNR-1363/data', {
+http.post('/api/ingestion/v2/PNR-1363/data', {
   "ShippingProcessId": "SHP-2345",
   "InteropId": "INT-1234",
   "Data": [{
