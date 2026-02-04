@@ -76,10 +76,42 @@ export const prepareS3GetResponse = async (response) => {
   const bodyStream = response.Body;
   const buffer = await streamToBuffer(bodyStream);
   const base64 = buffer.toString('base64');
+  const contentType = response.ContentType || '';
+
+  
+  if (contentType.includes('application/json')) {
+    try {
+      const text = buffer.toString('utf8');
+      const json = JSON.parse(text);
+      return {
+        body: json,
+        headers: response.$metadata || {},
+        statusCode: 200,
+      };
+    } catch (e) {
+   
+    }
+  }
+
+ 
+  const firstChar = buffer.slice(0, 1).toString();
+  if (firstChar === '{' || firstChar === '[') {
+    try {
+      const json = JSON.parse(buffer.toString('utf8'));
+      return {
+        body: json,
+        headers: response.$metadata || {},
+        statusCode: 200,
+      };
+    } catch (e) {
+     
+    }
+  }
+
   return {
     body: {
       base64,
-      contentType: response.ContentType,
+      contentType,
       contentLength: response.ContentLength,
     },
     headers: response.$metadata || {},

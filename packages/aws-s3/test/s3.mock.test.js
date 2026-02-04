@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { mockClient } from 'aws-sdk-client-mock';
 import { PutObjectCommand, GetObjectCommand, ListObjectsV2Command, DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3';
 
-import { upload, download, list, remove } from '../src/Adaptor.js';
+import { upload, download, list, remove, get, search } from '../src/Adaptor.js';
 
 describe('aws-s3 adaptor operations (mocked S3Client)', () => {
   const s3Mock = mockClient(S3Client);
@@ -31,6 +31,17 @@ describe('aws-s3 adaptor operations (mocked S3Client)', () => {
     expect(final.data.contentType).to.equal('text/plain');
   });
 
+  it('get -> parses JSON when object is JSON', async () => {
+    const obj = { id: 1, name: 'x' };
+    const payload = Buffer.from(JSON.stringify(obj));
+    s3Mock.on(GetObjectCommand).resolves({ Body: payload, ContentType: 'application/json', ContentLength: payload.length });
+
+    const state = { configuration: {}, data: {} };
+    const final = await get({ Bucket: 'b', Key: 'k' })(state);
+
+    expect(final.data).to.eql(obj);
+  });
+
   it('list -> returns Contents in state.data', async () => {
     const contents = [{ Key: 'a' }, { Key: 'b' }];
     s3Mock.on(ListObjectsV2Command).resolves({ Contents: contents });
@@ -38,7 +49,26 @@ describe('aws-s3 adaptor operations (mocked S3Client)', () => {
     const state = { configuration: {}, data: {} };
     const final = await list({ Bucket: 'b' })(state);
 
-    expect(final.data.Contents).to.eql(contents);
+    expect(final.data).to.eql(contents);
+  });
+
+  it('search -> list and optionally fetch items', async () => {
+    const contents = [{ Key: 'a' }, { Key: 'b' }];
+    s3Mock.on(ListObjectsV2Command).resolves({ Contents: contents });
+
+    // When fetch=false (default) should return the list
+    const state = { configuration: {}, data: {} };
+    const res1 = await search({ Bucket: 'b' })(state);
+    expect(res1.data).to.eql(contents);
+
+    // When fetch=true should fetch each item and return parsed bodies
+    const objA = { id: 'a' };
+    const objB = { id: 'b' };
+    s3Mock.on(GetObjectCommand, { Key: 'a' }).resolves({ Body: Buffer.from(JSON.stringify(objA)), ContentType: 'application/json' });
+    s3Mock.on(GetObjectCommand, { Key: 'b' }).resolves({ Body: Buffer.from(JSON.stringify(objB)), ContentType: 'application/json' });
+
+    const res2 = await search({ Bucket: 'b', fetch: true })(state);
+    expect(res2.data).to.eql([objA, objB]);
   });
 
   it('remove -> returns result in state.data', async () => {

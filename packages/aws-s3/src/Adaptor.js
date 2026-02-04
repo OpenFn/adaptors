@@ -82,11 +82,46 @@ export function list(params) {
     const [resolvedParams] = expandReferences(state, params);
     const resp = await util.listObjects(state.configuration, resolvedParams);
     const formatted = {
-      body: resp,
+      body: resp.Contents || [],
       headers: resp.$metadata || {},
       statusCode: 200,
     };
     return util.prepareNextState(state, formatted);
+  };
+}
+
+/**
+ * @param {object} params 
+ */
+export function get(params) {
+  return async state => {
+    const [resolvedParams] = expandReferences(state, params);
+    const resp = await util.getObject(state.configuration, resolvedParams);
+    const formatted = await util.prepareS3GetResponse(resp);
+    return util.prepareNextState(state, formatted);
+  };
+}
+
+/**
+ * @param {object} params 
+ */
+export function search(params) {
+  return async state => {
+    const [resolvedParams] = expandReferences(state, params);
+    const listResp = await util.listObjects(state.configuration, resolvedParams);
+    const contents = listResp.Contents || [];
+
+    if (resolvedParams.fetch) {
+      const results = [];
+      for (const item of contents) {
+        const getResp = await util.getObject(state.configuration, { Bucket: resolvedParams.Bucket, Key: item.Key });
+        const formatted = await util.prepareS3GetResponse(getResp);
+        results.push(formatted.body);
+      }
+      return util.prepareNextState(state, { body: results, headers: listResp.$metadata || {}, statusCode: 200 });
+    }
+
+    return util.prepareNextState(state, { body: contents, headers: listResp.$metadata || {}, statusCode: 200 });
   };
 }
 
