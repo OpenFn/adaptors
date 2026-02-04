@@ -26,7 +26,7 @@ export type Location_SzLocation_Props = {
     mode?: string;
     modifierExtension?: FHIR.Extension[];
     name?: string;
-    operationalStatus?: Coding;
+    operationalStatus?: FHIR.Coding;
     partOf?: FHIR.Reference;
     physicalType?: FHIR.CodeableConcept;
     position?: FHIR.BackboneElement;

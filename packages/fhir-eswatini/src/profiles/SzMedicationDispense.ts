@@ -13,10 +13,10 @@ export type MedicationDispense_SzMedicationDispense_Props = {
     category?: FHIR.CodeableConcept;
     contained?: any[];
     context?: FHIR.Reference;
-    daysSupply?: Quantity;
+    daysSupply?: FHIR.Quantity;
     destination?: FHIR.Reference;
     detectedIssue?: FHIR.Reference[];
-    dosageInstruction?: Dosage[];
+    dosageInstruction?: FHIR.Dosage[];
     eventHistory?: FHIR.Reference[];
     extension?: FHIR.Extension[];
     id?: string;
@@ -27,10 +27,10 @@ export type MedicationDispense_SzMedicationDispense_Props = {
     medication?: FHIR.CodeableConcept;
     meta?: FHIR.Meta;
     modifierExtension?: FHIR.Extension[];
-    note?: Annotation[];
+    note?: FHIR.Annotation[];
     partOf?: FHIR.Reference[];
     performer?: FHIR.BackboneElement[];
-    quantity?: Quantity;
+    quantity?: FHIR.Quantity;
     receiver?: FHIR.Reference[];
     status?: string;
     statusReason?: FHIR.CodeableConcept | FHIR.Reference;

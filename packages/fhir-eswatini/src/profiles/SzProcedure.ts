@@ -30,10 +30,10 @@ export type Procedure_SzProcedure_Props = {
     location?: FHIR.Reference;
     meta?: FHIR.Meta;
     modifierExtension?: FHIR.Extension[];
-    note?: Annotation[];
+    note?: FHIR.Annotation[];
     outcome?: FHIR.CodeableConcept;
     partOf?: FHIR.Reference[];
-    performed?: string | FHIR.Period | Age | Range;
+    performed?: string | FHIR.Period | FHIR.Age | FHIR.Range;
     performer?: FHIR.BackboneElement[];
     reasonCode?: FHIR.CodeableConcept[];
     reasonReference?: FHIR.Reference[];

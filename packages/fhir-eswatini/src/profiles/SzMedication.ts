@@ -9,7 +9,7 @@ import type { builders as FHIR } from "@openfn/language-fhir-4";
 type MaybeArray<T> = T | T[];
 
 export type Medication_SzMedication_Props = {
-    amount?: Ratio;
+    amount?: FHIR.Ratio;
     batch?: FHIR.BackboneElement;
     code?: FHIR.CodeableConcept;
     contained?: any[];

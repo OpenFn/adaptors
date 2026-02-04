@@ -9,7 +9,7 @@ import type { builders as FHIR } from "@openfn/language-fhir-4";
 type MaybeArray<T> = T | T[];
 
 export type Condition_SzCondition_Props = {
-    abatement?: string | Age | FHIR.Period | Range;
+    abatement?: string | FHIR.Age | FHIR.Period | FHIR.Range;
     asserter?: FHIR.Reference;
     bodySite?: FHIR.CodeableConcept[];
     category?: FHIR.CodeableConcept[];
@@ -25,7 +25,7 @@ export type Condition_SzCondition_Props = {
     language?: string;
     meta?: FHIR.Meta;
     modifierExtension?: FHIR.Extension[];
-    note?: Annotation[];
+    note?: FHIR.Annotation[];
     onset?: string;
     recordedDate?: string;
     recorder?: FHIR.Reference;

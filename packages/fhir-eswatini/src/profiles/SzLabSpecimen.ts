@@ -21,7 +21,7 @@ export type Specimen_SzLabSpecimen_Props = {
     language?: string;
     meta?: FHIR.Meta;
     modifierExtension?: FHIR.Extension[];
-    note?: Annotation[];
+    note?: FHIR.Annotation[];
     parent?: FHIR.Reference[];
     processing?: FHIR.BackboneElement[];
     receivedTime?: string;

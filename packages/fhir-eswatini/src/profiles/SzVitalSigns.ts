@@ -32,7 +32,7 @@ export type Observation_SzVitalSigns_Props = {
     meta?: FHIR.Meta;
     method?: FHIR.CodeableConcept;
     modifierExtension?: FHIR.Extension[];
-    note?: Annotation[];
+    note?: FHIR.Annotation[];
     partOf?: FHIR.Reference[];
     performer?: FHIR.Reference[];
     referenceRange?: FHIR.BackboneElement[];
@@ -40,7 +40,7 @@ export type Observation_SzVitalSigns_Props = {
     status?: string;
     subject?: FHIR.Reference;
     text?: FHIR.Narrative;
-    value?: Quantity;
+    value?: FHIR.Quantity;
     [key: string]: any;
 };
 

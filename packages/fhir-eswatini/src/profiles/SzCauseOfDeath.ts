@@ -18,7 +18,7 @@ export type Observation_SzCauseOfDeath_Props = {
     dataAbsentReason?: FHIR.CodeableConcept;
     derivedFrom?: FHIR.Reference[];
     device?: FHIR.Reference;
-    effective?: string | FHIR.Period | Timing;
+    effective?: string | FHIR.Period | FHIR.Timing;
     encounter?: FHIR.Reference;
     extension?: FHIR.Extension[];
     focus?: FHIR.Reference[];
@@ -32,7 +32,7 @@ export type Observation_SzCauseOfDeath_Props = {
     meta?: FHIR.Meta;
     method?: FHIR.CodeableConcept;
     modifierExtension?: FHIR.Extension[];
-    note?: Annotation[];
+    note?: FHIR.Annotation[];
     partOf?: FHIR.Reference[];
     performer?: FHIR.Reference[];
     referenceRange?: FHIR.BackboneElement[];

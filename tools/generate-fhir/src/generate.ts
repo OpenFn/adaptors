@@ -133,8 +133,10 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     // TODO need to generate this list based on the base adaptor
     // may need to cross-reference to only use types that are NOT defined in the IG
     fhirTypes = {
+      Age: 1,
       Address: 1,
       Attachment: 1,
+      Annotation: 1,
       BackboneElement: 1,
       Coding: 1,
       CodeableConcept: 1,
@@ -146,7 +148,13 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
       Meta: 1,
       Narrative: 1,
       Reference: 1,
+      Range: 1,
+      Ratio: 1,
       Period: 1,
+      Quantity: 1,
+      Dosage: 1,
+      Timing: 1,
+      SampledData: 1,
     };
   } else {
     try {
@@ -244,9 +252,11 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     `pnpm exec tsc ${tscArgs.join(' ')} ${pathToEntry}`,
     {},
     async (err, stderr) => {
-      if (err) {
-        console.log('>', err);
-      }
+      // errors are usually bogus - except when they're not!!
+      // See https://github.com/OpenFn/adaptors/issues/1522 for even more vaguery
+      // if (err) {
+      //   console.log('>', err);
+      // }
       // if (stderr) {
       //   console.log('>', stderr);
       // }

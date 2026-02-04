@@ -31,14 +31,14 @@ export type ServiceRequest_SzReferral_Props = {
     locationReference?: FHIR.Reference[];
     meta?: FHIR.Meta;
     modifierExtension?: FHIR.Extension[];
-    note?: Annotation[];
-    occurrence?: string | FHIR.Period | Timing;
+    note?: FHIR.Annotation[];
+    occurrence?: string | FHIR.Period | FHIR.Timing;
     orderDetail?: FHIR.CodeableConcept[];
     patientInstruction?: string;
     performer?: FHIR.Reference[];
     performerType?: FHIR.CodeableConcept;
     priority?: string;
-    quantity?: Quantity | Ratio | Range;
+    quantity?: FHIR.Quantity | FHIR.Ratio | FHIR.Range;
     reasonCode?: FHIR.CodeableConcept[];
     reasonReference?: FHIR.Reference[];
     relevantHistory?: FHIR.Reference[];

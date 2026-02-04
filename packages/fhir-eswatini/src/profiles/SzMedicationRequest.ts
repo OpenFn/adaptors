@@ -17,7 +17,7 @@ export type MedicationRequest_SzMedicationRequest_Props = {
     detectedIssue?: FHIR.Reference[];
     dispenseRequest?: FHIR.BackboneElement;
     doNotPerform?: boolean;
-    dosageInstruction?: Dosage[];
+    dosageInstruction?: FHIR.Dosage[];
     encounter?: FHIR.Reference;
     eventHistory?: FHIR.Reference[];
     extension?: FHIR.Extension[];
@@ -33,7 +33,7 @@ export type MedicationRequest_SzMedicationRequest_Props = {
     medication?: FHIR.CodeableConcept;
     meta?: FHIR.Meta;
     modifierExtension?: FHIR.Extension[];
-    note?: Annotation[];
+    note?: FHIR.Annotation[];
     performer?: FHIR.Reference;
     performerType?: FHIR.CodeableConcept;
     priorPrescription?: FHIR.Reference;
