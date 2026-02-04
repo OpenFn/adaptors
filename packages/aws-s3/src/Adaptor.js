@@ -47,6 +47,13 @@ export function upload(params) {
 }
 
 /**
+ * Alias: put -> upload (minimal API)
+ */
+export function put(params) {
+  return upload(params);
+}
+
+/**
  * @param {object} params 
  */
 export function download(params) {

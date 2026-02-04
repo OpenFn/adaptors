@@ -11,19 +11,21 @@ full technical documentation.
 
 ## Usage
 
-Import the adaptor and call its operations inside an OpenFn job. Example
-snippets:
+Import the adaptor and call its operations inside an OpenFn job. Minimal
+API: prefer `get`, `put`, and `list` for most workflows. Backwards-compatible
+aliases are provided (`upload`, `download`, `remove`) but keep your jobs
+simple and use the minimal names when possible.
 
-Upload a file (sends raw `Body` to S3):
+Put (upload) a file (sends raw `Body` to S3):
 
 ```javascript
-upload({ Bucket: 'my-bucket', Key: 'path/file.txt', Body: state.data.blob, ContentType: 'application/octet-stream' })
+put({ Bucket: 'my-bucket', Key: 'path/file.txt', Body: state.data.blob, ContentType: 'application/octet-stream' })
 ```
 
-Download a file (result returned as base64 in `state.data`):
+Get / Download a file (returns parsed JSON when available, otherwise base64 in `state.data`):
 
 ```javascript
-download({ Bucket: 'my-bucket', Key: 'path/file.txt' })
+get({ Bucket: 'my-bucket', Key: 'path/file.txt' })
 ```
 
 List objects:
@@ -32,7 +34,7 @@ List objects:
 list({ Bucket: 'my-bucket', Prefix: 'path/' })
 ```
 
-Delete an object:
+Delete an object (alias `remove` retained for compatibility):
 
 ```javascript
 remove({ Bucket: 'my-bucket', Key: 'path/file.txt' })
