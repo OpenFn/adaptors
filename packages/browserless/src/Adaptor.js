@@ -1,6 +1,6 @@
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
-import * as httpModule from './http.js';
+import { request as httpRequest } from './http.js';
 
 /**
  * Shared typedefs for HTTP operations used by this adaptor.
@@ -40,13 +40,14 @@ export function createPDF(input, options) {
   return async state => {
     const maybeBody = typeof input === 'string' ? { html: input } : input || {};
     const [,, resolvedBody, resolvedOptions] = expandReferences(state, 'POST', 'pdf', maybeBody, options);
+    const response = await httpRequest('POST', 'pdf', { body: resolvedBody, ...(resolvedOptions || {}), forcePdfBase64: true })(state);
 
-    const response = await http.request('POST', 'pdf', { body: resolvedBody, ...(resolvedOptions || {}), forcePdfBase64: true })(state);
-   
     return response;
   };
 }
 
+
+export * as http from './http.js';
 /**
  * Generic Browserless-authenticated HTTP request operation.
  * Use for arbitrary Browserless endpoints (for example `/convert`).
@@ -62,7 +63,6 @@ export function request(method, path, options) {
   return httpModule.request(method, path, options);
 }
 
-export const http = { request };
 
 export {
   as,
