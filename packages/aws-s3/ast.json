@@ -37,6 +37,90 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "list",
+      "params": [
+        "params"
+      ],
+      "docs": {
+        "description": "List objects in a bucket (by prefix).",
+        "tags": [
+          {
+            "title": "example",
+            "description": "list({ bucket: 'my-bucket', prefix: 'path/to/' });"
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "S3Params"
+            },
+            "name": "params"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{Object} state - On success sets `state.data` to the list of objects and `state.response` to the raw S3 response metadata."
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "get",
+      "params": [
+        "params"
+      ],
+      "docs": {
+        "description": "Get an object from S3.\r\n\r\nAttempts to parse JSON objects automatically into `state.data`. For binary\r\nobjects the adaptor returns base64 in `state.data.base64`.",
+        "tags": [
+          {
+            "title": "example",
+            "description": "get({ bucket: 'my-bucket', key: 'path/to/file.txt' });"
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "S3Params"
+            },
+            "name": "params"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{Object} state - On success sets `state.data` to the parsed body (or `{ base64: '...' }`) and `state.response` to the raw response metadata."
+          }
+        ]
+      },
+      "valid": true
     }
   ],
   "exports": [],
