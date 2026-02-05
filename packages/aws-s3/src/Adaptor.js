@@ -35,8 +35,8 @@ import * as util from './Utils.js';
  * @state {HttpState}
  */
 /**
- * Put (upload) an object. Public API uses camelCase params.
- * @param {object} params - { bucket, key, body, contentType }
+
+ * @param {object} params 
  */
 export function put(params) {
   return async state => {
@@ -59,13 +59,11 @@ export function put(params) {
 /**
  * @param {object} params 
  */
-// `get` is the canonical read operation (see below)
+
 
 /**
  * @param {object} params 
  */
-// delete/remove operation intentionally omitted from the public API to keep the
-// adaptor minimal. If needed, it can be added later.
 
 /**
  * @param {object} params 
@@ -110,7 +108,7 @@ export function get(params) {
 /**
  * @param {object} params 
  */
-// search/list variations intentionally omitted to maintain minimal API surface.
+
 
 export {
   as,

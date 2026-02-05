@@ -52,5 +52,5 @@ describe('aws-s3 adaptor operations (mocked S3Client)', () => {
     expect(final.data).to.eql(contents);
   });
 
-  // removed search/remove tests to match minimal public API (get/put/list)
+
 });
