@@ -29,11 +29,6 @@
       "writeOnly": true,
       "examples": ["@some(!)Str0ngp4ss0w0rd"]
     },
-    "accessToken": {
-      "title": "Access Token",
-      "type": "string",
-      "description": "Your Ping Access Token"
-    },
     "clientId": {
       "title": "Client ID",
       "type": "string",

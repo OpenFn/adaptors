@@ -21,7 +21,7 @@ import * as util from './Utils.js';
 /**
  * Make a POST request
  * @example <caption>Update intervention records in PING</caption>
- * post('/api/ingestion/v2/PNR-1363/data', {
+ * http.post('/api/ingestion/v2/PNR-1363/data', {
  *   "ShippingProcessId": "SHP-2345",
  *   "InteropId": "INT-1234",
  *   "Data": [{
