@@ -6,8 +6,17 @@
         "params"
       ],
       "docs": {
-        "description": "Put (upload) an object.",
+        "description": "Make a GET request",
         "tags": [
+          {
+            "title": "example",
+            "description": "get(\"patients\");"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
           {
             "title": "public",
             "description": null,
@@ -15,88 +24,21 @@
           },
           {
             "title": "param",
-            "description": "Parameters for the put operation.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "params"
-          },
-          {
-            "title": "param",
-            "description": "S3 bucket name (camelCase public API)",
+            "description": "Path to resource",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "params.bucket"
+            "name": "path"
           },
           {
             "title": "param",
-            "description": "S3 object key",
+            "description": "Optional request options",
             "type": {
               "type": "NameExpression",
-              "name": "string"
+              "name": "RequestOptions"
             },
-            "name": "params.key"
-          },
-          {
-            "title": "param",
-            "description": "Object body to store",
-            "type": {
-              "type": "UnionType",
-              "elements": [
-                {
-                  "type": "NameExpression",
-                  "name": "string"
-                },
-                {
-                  "type": "NameExpression",
-                  "name": "Buffer"
-                },
-                {
-                  "type": "NameExpression",
-                  "name": "Uint8Array"
-                }
-              ]
-            },
-            "name": "params.body"
-          },
-          {
-            "title": "param",
-            "description": "MIME content type",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "params.contentType"
-          },
-          {
-            "title": "param",
-            "description": "ACL (e.g. 'public-read')",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "params.acl"
-          },
-          {
-            "title": "param",
-            "description": "Server-side encryption algorithm",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "params.serverSideEncryption"
+            "name": "options"
           },
           {
             "title": "returns",
@@ -108,146 +50,7 @@
           },
           {
             "title": "state",
-            "description": "{object}"
-          }
-        ]
-      },
-      "valid": false
-    },
-    {
-      "name": "get",
-      "params": [
-        "params"
-      ],
-      "docs": {
-        "description": "Get (download) an object from S3. If the object is JSON it will be parsed\r\ninto `state.data`; otherwise the raw body will be returned as base64 in\r\n`state.data.base64`.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Parameters for the get operation.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "params"
-          },
-          {
-            "title": "param",
-            "description": "S3 bucket name",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "params.bucket"
-          },
-          {
-            "title": "param",
-            "description": "S3 object key",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "params.key"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{object}"
-          }
-        ]
-      },
-      "valid": false
-    },
-    {
-      "name": "list",
-      "params": [
-        "params"
-      ],
-      "docs": {
-        "description": "List objects in a bucket (wrapper around S3 ListObjectsV2).",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Parameters for list operation.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "params"
-          },
-          {
-            "title": "param",
-            "description": "S3 bucket name",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "params.bucket"
-          },
-          {
-            "title": "param",
-            "description": "Key prefix to filter",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "params.prefix"
-          },
-          {
-            "title": "param",
-            "description": "Maximum number of keys to return",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "number"
-              }
-            },
-            "name": "params.maxKeys"
-          },
-          {
-            "title": "param",
-            "description": "Continuation token for pagination",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "params.continuationToken"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{object}"
+            "description": "{HttpState}"
           }
         ]
       },
