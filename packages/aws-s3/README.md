@@ -9,155 +9,47 @@ View the
 [docs site](https://docs.openfn.org/adaptors/packages/aws-s3-docs) for
 full technical documentation.
 
-## Usage
+# aws-s3 — Minimal API
 
-Import the adaptor and call its operations inside an OpenFn job. Minimal
-API: prefer `get`, `put`, and `list` for most workflows.
+This document describes the minimal public API for the `@openfn/language-aws-s3` adaptor.
+It focuses only on three simple, commonly-used operations: `put`, `get`, and `list`.
 
-Put (upload) a file (sends raw `body` to S3):
+Usage principles
+- Keep jobs small and explicit. Use the camelCase public API (`bucket`, `key`, `body`, `contentType`).
+- The adaptor uses the AWS SDK v3 `S3Client` under the hood and the default credential provider chain unless credentials are provided in `state.configuration`.
 
-```javascript
-put({ bucket: 'my-bucket', key: 'path/file.txt', body: state.data.blob, contentType: 'application/octet-stream' })
-```
+Operations
 
-Get a file (returns parsed JSON when available, otherwise base64 in `state.data`):
+- `put(params)` — Put an object into a bucket.
+  - Params: `{ bucket, key, body, contentType?, acl?, serverSideEncryption? }`
+  - Writes the given `body` to S3.
+  - Returns an operation that merges metadata (bucket, key, etag) into the job `state`.
 
-```javascript
-get({ bucket: 'my-bucket', key: 'path/file.txt' })
-```
+- `get(params)` — Retrieve an object from a bucket.
+  - Params: `{ bucket, key }`
+  - If the object is JSON (Content-Type `application/json`) the adaptor attempts to parse it and sets `state.data` to the parsed value.
+  - Otherwise the binary body is returned as base64 at `state.data.base64`, with `state.data.contentType` and `state.data.contentLength` set when available.
 
-List objects:
+- `list(params)` — List objects in a bucket.
+  - Params: `{ bucket, prefix?, maxKeys?, continuationToken? }`
+  - Returns an array of S3 `Contents` in `state.data` (each item contains at least `Key` and other S3 metadata).
 
-```javascript
-list({ bucket: 'my-bucket', prefix: 'path/' })
-```
-
-## Notes
-
-- Authentication: the adaptor uses AWS SDK v3 `S3Client`. It will use the
-	default credential provider chain unless `accessKeyId` and
-	`secretAccessKey` are provided in `state.configuration`.
-- `download` normalizes returned object bodies to base64 under
-	`state.data.base64` (and includes `contentType` and `contentLength`).
-
-## Scope
-
-This adaptor focuses on simple object-level operations and intentionally
-limits functionality in the initial release to keep the surface area small
-and easy to maintain.
-
-In scope:
-In scope:
-- `put` — put an object into a bucket
-- `get` — retrieve an object; parsed as JSON when possible
-- `list` — list objects
-
-Out of scope for this initial version:
-- Multipart uploads
-- Presigned URLs
-- Bucket policy or ACL management
-- Streaming very large objects (the adaptor reads objects into memory for
-  parsing/base64 normalization)
-
-These features may be added incrementally in future releases as needed.
-
-## Credentials & Test Environments
-
-- Demo / sandbox: For development and CI you can run a local S3-compatible
-	sandbox such as LocalStack or MinIO. These provide isolated test
-	environments without touching production AWS accounts.
-
-- LocalStack quickstart (recommended for CI/dev):
-
-	```bash
-	# start LocalStack (requires Docker)
-	localstack start -d
-
-	# create a bucket for tests
-	aws --endpoint-url=http://localhost:4566 s3api create-bucket --bucket openfn-test
-	```
-
-- MinIO quickstart (alternate):
-
-	```bash
-	docker run -p 9000:9000 -p 9001:9001 --name minio -e MINIO_ROOT_USER=access -e MINIO_ROOT_PASSWORD=secret -d minio/minio server /data --console-address ":9001"
-	```
-
-Note: Do NOT commit real AWS credentials into source control. Use
-environment variables, CI secrets, or the default credential provider chain.
-
-### Test Records
-
-- With LocalStack or MinIO you can seed test objects using the AWS CLI pointing
-	at the local endpoint. Example: upload a sample JSON object used by tests.
-
-	```bash
-	aws --endpoint-url=http://localhost:4566 s3 cp sample-data/patient.json s3://openfn-test/patients/1.json
-	```
-
-- The adaptor's unit tests are designed to run without network calls and use
-	`aws-sdk-client-mock` so CI does not need a live S3 service.
-
-## Authentication Methods
-
-- AWS Signature v4 (recommended): the adaptor uses the AWS SDK v3 `S3Client`,
-	which supports the standard credential provider chain (environment
-	variables, shared credentials file, EC2/ECS/IRSA roles, etc.).
-- Static credentials: you may supply `accessKeyId`, `secretAccessKey`,
-	optional `sessionToken`, and `region` in `state.configuration` if you need
-	to override the default provider for a job:
+Examples
 
 ```javascript
-state.configuration = {
-	accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-	secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-	region: 'us-east-1',
-};
-```
-
-- Local endpoints: when testing against LocalStack/MinIO, pass the
-	`endpoint` property via the SDK config (see AWS SDK docs) or configure the
-	AWS CLI to use the local endpoint.
-
-## Example Job Snippets
-
-- Put a file:
-
-```javascript
-put({ bucket: 'openfn-test', key: 'patients/1.json', body: state.data, contentType: 'application/json' })
-```
-
-- Get and parse JSON (returns parsed JSON in `state.data` when JSON):
-
-```javascript
+put({ bucket: 'openfn-test', key: 'patients/1.json', body: JSON.stringify({ id: 1, name: 'A' }), contentType: 'application/json' })
 get({ bucket: 'openfn-test', key: 'patients/1.json' })
-```
-
-- List objects:
-
-```javascript
 list({ bucket: 'openfn-test', prefix: 'patients/' })
 ```
 
-## Resources
-
-- AWS S3 docs: https://docs.aws.amazon.com/s3/
-- AWS SDK for JavaScript (v3) S3 client: https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/index.html
-- LocalStack: https://localstack.cloud/
-- MinIO: https://min.io/
-- `aws-sdk-client-mock` (used in tests): https://github.com/m-radzikowski/aws-sdk-client-mock
-
-## Logo
-
-- The adaptor's logo assets live in the package `assets/` directory. Use
-	`assets/square.png` for a square logo and add other sizes as needed.
+Notes
+- Do not commit real AWS credentials into source control. Use environment variables, CI secrets, or the default provider chain.
+- The adaptor reads objects into memory for parsing/base64 conversion; avoid very large objects or implement streaming outside this adaptor.
+- Unit tests use `aws-sdk-client-mock` so they run without network access.
 
 
-### Configuration
+-- OpenFn
 
-View the
-[configuration-schema](https://docs.openfn.org/adaptors/packages/aws-s3-configuration-schema/)
-for required and optional `configuration` properties.
 
 ## Development
 

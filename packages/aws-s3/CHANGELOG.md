@@ -2,12 +2,12 @@
 
 ### 1.0.1 (unreleased)
 
-- Add S3 client helpers and operations: `upload`, `download`, `list`, `remove`.
-- Add `get` and `search` operations: `get` returns parsed JSON when available, `search` lists objects and optionally fetches/parses each object.
-- Add unit tests that mock `@aws-sdk/client-s3` using `aws-sdk-client-mock` (no network calls required).
-- Normalize downloaded object bodies to base64 in `download`, and attempt to parse JSON bodies automatically in `get`/`download` when possible.
-- Add `tmp/qa-aws-s3.js` QA job demonstrating upload → get → delete against LocalStack/MinIO.
-- Update `README.md` with credentials, LocalStack/MinIO quickstarts, example job snippets, and resource links.
+- Simplify public API to a minimal surface: `put`, `get`, and `list`.
+	- `put`: upload an object using camelCase params (`bucket`, `key`, `body`, `contentType`).
+	- `get`: retrieve an object; attempts to parse JSON into `state.data`, otherwise returns base64 in `state.data.base64`.
+	- `list`: list objects under a bucket/prefix and return S3 `Contents` in `state.data`.
+- Update unit tests and QA job to use the minimal API (no live network calls; mocking via `aws-sdk-client-mock`).
+- Update `README.md` and added `README_MINIMAL.md` to document the reduced API and usage examples.
 
 ## 1.0.0
 
