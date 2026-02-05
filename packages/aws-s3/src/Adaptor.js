@@ -24,8 +24,8 @@ import * as util from './Utils.js';
  * @returns {Operation}
  */
 /**
-
- * @param {object} params 
+ * Internal typing placeholder for editors. `params` is validated at runtime.
+ * @param {object} params
  */
 export function put(params) {
   return async state => {
@@ -45,8 +45,17 @@ export function put(params) {
   };
 }
 
+
 /**
- * @param {object} params 
+ * List objects in a bucket (by prefix).
+ *
+ * @example
+ * list({ bucket: 'my-bucket', prefix: 'path/to/' });
+ *
+ * @public
+ * @param {S3Params} params
+ * @returns {Operation}
+ * @state {Object} state - On success sets `state.data` to the list of objects and `state.response` to the raw S3 response metadata.
  */
 
 
@@ -78,7 +87,18 @@ export function list(params) {
 }
 
 /**
- * @param {object} params 
+ * Get an object from S3.
+ *
+ * Attempts to parse JSON objects automatically into `state.data`. For binary
+ * objects the adaptor returns base64 in `state.data.base64`.
+ *
+ * @example
+ * get({ bucket: 'my-bucket', key: 'path/to/file.txt' });
+ *
+ * @public
+ * @param {S3Params} params
+ * @returns {Operation}
+ * @state {Object} state - On success sets `state.data` to the parsed body (or `{ base64: '...' }`) and `state.response` to the raw response metadata.
  */
 export function get(params) {
   return async state => {
