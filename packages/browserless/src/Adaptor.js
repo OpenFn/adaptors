@@ -1,5 +1,6 @@
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
+import * as http from './http.js';
 
 /**
  * State object
@@ -34,105 +35,25 @@ import * as util from './Utils.js';
  * @returns {Operation}
  * @state {HttpState}
  */
-export function get(path, options) {
-  return request('GET', path, null, options);
-}
-
 /**
- * Making a POST request
- * @example
- * post("patient", { "name": "Bukayo" });
- * @function
+ * Create a PDF from HTML or URL.
+ * Accepts either a string (treated as HTML) or an object `{ html }` or `{ url }`.
  * @public
- * @param {string} path 
- * @param {object} body
- * @param {RequestOptions} options 
- * @returns {Operation}
- * @state {HttpState}
- */
-export function post(path, body, options) {
-  return request('POST', path, body, options);
-}
-
-/**
- * @public
- * @param {string} html
+ * @param {string|object} input - HTML string or `{ html }` / `{ url }` object
  * @param {RequestOptions} options
  */
-export function convertHtmlToPdf(html, options) {
+export function createPDF(input, options) {
   return async state => {
-    const response = await request('POST', 'convert', { html }, options)(state);
+    const maybeBody = typeof input === 'string' ? { html: input } : input || {};
+    const [,, resolvedBody, resolvedOptions] = expandReferences(state, 'POST', 'pdf', maybeBody, options);
+
+    const response = await http.request('POST', 'pdf', { body: resolvedBody, ...(resolvedOptions || {}), forcePdfBase64: true })(state);
+   
     return response;
   };
 }
 
-/**
- * @public
- * @param {string} url 
- * @param {RequestOptions} options
- */
-export function convertUrlToPdf(url, options) {
-  return async state => {
-    const response = await request('POST', 'convert', { url }, options)(state);
-    return response;
-  };
-}
-
-/**
- * @public
- * @param {string} html
- * @param {RequestOptions} options
- */
-export function generatePdfFromHtml(html, options) {
-  return async state => {
-    const response = await request('POST', 'pdf', { html }, { ...(options || {}), forcePdfBase64: true })(state);
-    return response;
-  };
-}
-
-/**
- * @public
- * @param {string} url
- * @param {RequestOptions} options
- */
-export function generatePdfFromUrl(url, options) {
-  return async state => {
-    const response = await request('POST', 'pdf', { url }, { ...(options || {}), forcePdfBase64: true })(state);
-    return response;
-  };
-}
-
-/**
- * Making a general HTTP request
- * @example
- * request("POST", "patient", { "name": "Bukayo" });
- * @function
- * @public
- * @param {string} method - HTTP method to use
- * @param {string} path - Path to resource
- * @param {object} body - Object which will be attached to the POST body
- * @param {RequestOptions} options - Optional request options
- * @returns {Operation}
- * @state {HttpState}
- */
-export function request(method, path, body, options = {}) {
-  return async state => {
-    const [resolvedMethod, resolvedPath, resolvedBody, resolvedoptions] =
-      expandReferences(state, method, path, body, options);
-
-    const response = await util.request(
-      state.configuration,
-      resolvedMethod,
-      resolvedPath,
-      {
-        body: resolvedBody,
-        ...resolvedoptions,
-      }
-    );
-
-    return util.prepareNextState(state, response);
-  };
-}
+export { http };
 
 export {
   as,
