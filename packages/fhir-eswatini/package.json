@@ -1,0 +1,56 @@
+{
+  "name": "@openfn/language-fhir-eswatini",
+  "version": "0.1.1",
+  "description": "OpenFn fhir-eswatini adaptor",
+  "scripts": {
+    "build": "pnpm clean && build-adaptor fhir-eswatini src ast docs",
+    "build:src": "pnpm generate-fhir fhir-eswatini --base fhir-4",
+    "build:spec": "pnpm generate-fhir fhir-eswatini --respec",
+    "test": "TS_NODE_TRANSPILE_ONLY=true mocha --experimental-specifier-resolution=node --no-warnings  --loader=ts-node/esm test/**/*.test.ts",
+    "clean": "rimraf dist docs",
+    "pack": "pnpm pack --pack-destination ../../dist"
+  },
+  "author": "Open Function Group",
+  "license": "LGPLv3",
+  "type": "module",
+  "fhir": {
+    "specUrl": "http://172.209.216.154/definitions.json.zip",
+    "adaptorGeneratedDate": "2026-02-05T14:46:11.173Z",
+    "generatorVersion": "0.5.0",
+    "options": {}
+  },
+  "dependencies": {
+    "@openfn/language-common": "workspace:*",
+    "@openfn/language-fhir-4": "workspace:*"
+  },
+  "devDependencies": {
+    "assertion-error": "2.0.0",
+    "chai": "4.3.6",
+    "deep-eql": "4.1.1",
+    "mocha": "^10.7.3",
+    "rimraf": "3.0.2",
+    "ts-node": "^10.9.1",
+    "typescript": "4.8.4",
+    "undici": "^5.22.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openfn/adaptors.git"
+  },
+  "types": "types/index.d.ts",
+  "main": "dist/index.cjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/",
+    "types/",
+    "ast.json",
+    "configuration-schema.json"
+  ]
+}

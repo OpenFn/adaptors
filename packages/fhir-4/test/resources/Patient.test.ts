@@ -57,7 +57,7 @@ describe('Patient', () => {
       birthDate: '1974-12-25',
       _birthDate: b.ext(
         'http://hl7.org/fhir/StructureDefinition/patient-birthTime',
-        '1974-12-25T14:35:45-05:00'
+        '1974-12-25T14:35:45-05:00',
       ),
       deceased: false,
       // builder is no help here

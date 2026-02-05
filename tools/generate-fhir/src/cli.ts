@@ -7,7 +7,6 @@ import generate from './generate';
 
 const run = async (args: any) => {
   const name = args.name.startsWith('fhir-') ? args.name : `fhir-${args.name}`;
-
   await promptForBranchChange(name);
   await generate(name, args);
 };

@@ -3,9 +3,9 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import * as dt from "../datatypes";
 import _ from "lodash";
-import * as FHIR from "../fhir";
+import * as dt from "../datatypes";
+import type * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type NutritionOrder_Props = {

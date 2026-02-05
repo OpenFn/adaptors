@@ -670,6 +670,40 @@ importers:
         specifier: ^5.29.0
         version: 5.29.0
 
+  packages/fhir-eswatini:
+    dependencies:
+      '@openfn/language-common':
+        specifier: workspace:*
+        version: link:../common
+      '@openfn/language-fhir-4':
+        specifier: workspace:*
+        version: link:../fhir-4
+    devDependencies:
+      assertion-error:
+        specifier: 2.0.0
+        version: 2.0.0
+      chai:
+        specifier: 4.3.6
+        version: 4.3.6
+      deep-eql:
+        specifier: 4.1.1
+        version: 4.1.1
+      mocha:
+        specifier: ^10.7.3
+        version: 10.8.2
+      rimraf:
+        specifier: 3.0.2
+        version: 3.0.2
+      ts-node:
+        specifier: ^10.9.1
+        version: 10.9.1(@swc/core@1.10.9)(@types/node@18.17.5)(typescript@4.8.4)
+      typescript:
+        specifier: 4.8.4
+        version: 4.8.4
+      undici:
+        specifier: ^5.22.1
+        version: 5.29.0
+
   packages/fhir-fr:
     dependencies:
       '@openfn/language-common':

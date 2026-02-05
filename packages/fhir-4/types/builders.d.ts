@@ -3,334 +3,182 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-type Address = {
-    /**
-     * Name of city, town etc.
-     *  */
+interface Address {
+    /** Name of city, town etc. */
     city?: string;
-    /**
-     * Country (e.g. can be ISO 3166 2 or 3 letter code)
-     *  */
+    /** Country (e.g. can be ISO 3166 2 or 3 letter code) */
     country?: string;
-    /**
-     * District name (aka county)
-     *  */
+    /** District name (aka county) */
     district?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
+    /** Unique id for inter-element referencing */
     id?: string;
-    /**
-     * Street name, number, direction & P.O. Box etc.
-     *  */
+    /** Street name, number, direction & P.O. Box etc. */
     line?: string[];
-    /**
-     * Time period when address was/is in use
-     *  */
+    /** Time period when address was/is in use */
     period?: Period;
-    /**
-     * Postal code for area
-     *  */
+    /** Postal code for area */
     postalCode?: string;
-    /**
-     * Sub-unit of country (abbreviations ok)
-     *  */
+    /** Sub-unit of country (abbreviations ok) */
     state?: string;
-    /**
-     * Text representation of the address
-     *  */
+    /** Text representation of the address */
     text?: string;
-    /**
-     * postal | physical | both
-     *  */
+    /** postal | physical | both */
     type?: string;
-    /**
-     * home | work | temp | old | billing - purpose of this address
-     *  */
+    /** home | work | temp | old | billing - purpose of this address */
     use?: string;
-};
-type Age = {
-    /**
-     * Coded form of the unit
-     *  */
+}
+interface Age {
+    /** Coded form of the unit */
     code?: string;
-    /**
-     * < | <= | >= | > - how to understand the value
-     *  */
+    /** < | <= | >= | > - how to understand the value */
     comparator?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
+    /** Unique id for inter-element referencing */
     id?: string;
-    /**
-     * System that defines coded unit form
-     *  */
+    /** System that defines coded unit form */
     system?: string;
-    /**
-     * Unit representation
-     *  */
+    /** Unit representation */
     unit?: string;
-    /**
-     * Numerical value (with implicit precision)
-     *  */
+    /** Numerical value (with implicit precision) */
     value?: number;
-};
-type Annotation = {
-    /**
-     * Individual responsible for the annotation
-     *  */
+}
+interface Annotation {
+    /** Individual responsible for the annotation */
     author?: (string | Reference) | string;
-    /**
-     * Additional content defined by implementations
-     *  */
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
+    /** Unique id for inter-element referencing */
     id?: string;
-    /**
-     * The annotation  - text content (as markdown)
-     *  */
+    /** The annotation  - text content (as markdown) */
     text?: markdown;
-    /**
-     * When the annotation was made
-     *  */
+    /** When the annotation was made */
     time?: string;
-};
-type Attachment = {
-    /**
-     * Mime type of the content, with charset etc.
-     *  */
+}
+interface Attachment {
+    /** Mime type of the content, with charset etc. */
     contentType?: string;
-    /**
-     * Date attachment was first created
-     *  */
+    /** Date attachment was first created */
     creation?: string;
-    /**
-     * Data inline, base64ed
-     *  */
+    /** Data inline, base64ed */
     data?: base64Binary;
-    /**
-     * Additional content defined by implementations
-     *  */
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * Hash of the data (sha-1, base64ed)
-     *  */
+    /** Hash of the data (sha-1, base64ed) */
     hash?: base64Binary;
-    /**
-     * Unique id for inter-element referencing
-     *  */
+    /** Unique id for inter-element referencing */
     id?: string;
-    /**
-     * Human language of the content (BCP-47)
-     *  */
+    /** Human language of the content (BCP-47) */
     language?: string;
-    /**
-     * Number of bytes of content (if url provided)
-     *  */
+    /** Number of bytes of content (if url provided) */
     size?: number;
-    /**
-     * Label to display in place of the data
-     *  */
+    /** Label to display in place of the data */
     title?: string;
-    /**
-     * Uri where the data can be found
-     *  */
+    /** Uri where the data can be found */
     url?: url;
-};
-type BackboneElement = {
-    /**
-     * Additional content defined by implementations
-     *  */
+}
+interface BackboneElement {
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
+    /** Unique id for inter-element referencing */
     id?: string;
-    /**
-     * Extensions that cannot be ignored even if unrecognized
-     *  */
+    /** Extensions that cannot be ignored even if unrecognized */
     modifierExtension?: Extension[];
-};
-type CodeableConcept = {
-    /**
-     * Code defined by a terminology system
-     *  */
+}
+interface CodeableConcept {
+    /** Code defined by a terminology system */
     coding?: Coding[];
-    /**
-     * Additional content defined by implementations
-     *  */
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
+    /** Unique id for inter-element referencing */
     id?: string;
-    /**
-     * Plain text representation of the concept
-     *  */
+    /** Plain text representation of the concept */
     text?: string;
-};
-type CodeableReference = {
-    /**
-     * Reference to a concept (by class)
-     *  */
+}
+interface CodeableReference {
+    /** Reference to a concept (by class) */
     concept?: string[] | CodeableConcept;
-    /**
-     * Additional content defined by implementations
-     *  */
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
+    /** Unique id for inter-element referencing */
     id?: string;
-    /**
-     * Reference to a resource (by instance)
-     *  */
+    /** Reference to a resource (by instance) */
     reference?: string | Reference;
-};
-type Coding = {
-    /**
-     * Symbol in syntax defined by the system
-     *  */
+}
+interface Coding {
+    /** Symbol in syntax defined by the system */
     code?: string;
-    /**
-     * Representation defined by the system
-     *  */
+    /** Representation defined by the system */
     display?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
+    /** Unique id for inter-element referencing */
     id?: string;
-    /**
-     * Identity of the terminology system
-     *  */
+    /** Identity of the terminology system */
     system?: string;
-    /**
-     * If this coding was chosen directly by the user
-     *  */
+    /** If this coding was chosen directly by the user */
     userSelected?: boolean;
-    /**
-     * Version of the system - if relevant
-     *  */
+    /** Version of the system - if relevant */
     version?: string;
-};
-type ContactDetail = {
-    /**
-     * Additional content defined by implementations
-     *  */
+}
+interface ContactDetail {
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
+    /** Unique id for inter-element referencing */
     id?: string;
-    /**
-     * Name of an individual to contact
-     *  */
+    /** Name of an individual to contact */
     name?: string;
-    /**
-     * Contact details for individual or organization
-     *  */
+    /** Contact details for individual or organization */
     telecom?: ContactPoint[];
-};
-type ContactPoint = {
-    /**
-     * Additional content defined by implementations
-     *  */
+}
+interface ContactPoint {
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
+    /** Unique id for inter-element referencing */
     id?: string;
-    /**
-     * Time period when the contact point was/is in use
-     *  */
+    /** Time period when the contact point was/is in use */
     period?: Period;
-    /**
-     * Specify preferred order of use (1 = highest)
-     *  */
+    /** Specify preferred order of use (1 = highest) */
     rank?: number;
-    /**
-     * phone | fax | email | pager | url | sms | other
-     *  */
+    /** phone | fax | email | pager | url | sms | other */
     system?: string;
-    /**
-     * home | work | temp | old | mobile - purpose of this contact point
-     *  */
+    /** home | work | temp | old | mobile - purpose of this contact point */
     use?: string;
-    /**
-     * The actual contact point details
-     *  */
+    /** The actual contact point details */
     value?: string;
-};
-type Contributor = {
-    /**
-     * Contact details of the contributor
-     *  */
+}
+interface Contributor {
+    /** Contact details of the contributor */
     contact?: ContactDetail[];
-    /**
-     * Additional content defined by implementations
-     *  */
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
+    /** Unique id for inter-element referencing */
     id?: string;
-    /**
-     * Who contributed the content
-     *  */
+    /** Who contributed the content */
     name?: string;
-    /**
-     * author | editor | reviewer | endorser
-     *  */
+    /** author | editor | reviewer | endorser */
     type?: string;
-};
-type Count = {
-    /**
-     * Coded form of the unit
-     *  */
+}
+interface Count {
+    /** Coded form of the unit */
     code?: string;
-    /**
-     * < | <= | >= | > - how to understand the value
-     *  */
+    /** < | <= | >= | > - how to understand the value */
     comparator?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
+    /** Unique id for inter-element referencing */
     id?: string;
-    /**
-     * System that defines coded unit form
-     *  */
+    /** System that defines coded unit form */
     system?: string;
-    /**
-     * Unit representation
-     *  */
+    /** Unit representation */
     unit?: string;
-    /**
-     * Numerical value (with implicit precision)
-     *  */
+    /** Numerical value (with implicit precision) */
     value?: number;
-};
-type DataRequirement = {
-    /**
-     * What codes are expected
-     *  */
+}
+interface DataRequirement {
+    /** What codes are expected */
     codeFilter?: {
         /**
          * Unique id for inter-element referencing
@@ -353,9 +201,7 @@ type DataRequirement = {
          *  */
         code: Coding;
     };
-    /**
-     * What dates/date ranges are expected
-     *  */
+    /** What dates/date ranges are expected */
     dateFilter?: {
         /**
          * Unique id for inter-element referencing
@@ -374,29 +220,17 @@ type DataRequirement = {
          *  */
         value: string;
     };
-    /**
-     * Additional content defined by implementations
-     *  */
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
+    /** Unique id for inter-element referencing */
     id?: string;
-    /**
-     * Number of results
-     *  */
+    /** Number of results */
     limit?: number;
-    /**
-     * Indicates specific structure elements that are referenced by the knowledge module
-     *  */
+    /** Indicates specific structure elements that are referenced by the knowledge module */
     mustSupport?: string[];
-    /**
-     * The profile of the required data
-     *  */
+    /** The profile of the required data */
     profile?: any[];
-    /**
-     * Order of the results
-     *  */
+    /** Order of the results */
     sort?: {
         /**
          * Unique id for inter-element referencing
@@ -411,57 +245,33 @@ type DataRequirement = {
          *  */
         direction: string;
     };
-    /**
-     * E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
-     *  */
+    /** E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device */
     subject?: (string[] | CodeableConcept) | (string | Reference);
-    /**
-     * The type of the required data
-     *  */
+    /** The type of the required data */
     type?: string;
-};
-type Distance = {
-    /**
-     * Coded form of the unit
-     *  */
+}
+interface Distance {
+    /** Coded form of the unit */
     code?: string;
-    /**
-     * < | <= | >= | > - how to understand the value
-     *  */
+    /** < | <= | >= | > - how to understand the value */
     comparator?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
+    /** Unique id for inter-element referencing */
     id?: string;
-    /**
-     * System that defines coded unit form
-     *  */
+    /** System that defines coded unit form */
     system?: string;
-    /**
-     * Unit representation
-     *  */
+    /** Unit representation */
     unit?: string;
-    /**
-     * Numerical value (with implicit precision)
-     *  */
+    /** Numerical value (with implicit precision) */
     value?: number;
-};
-type Dosage = {
-    /**
-     * Supplemental instruction or warnings to the patient - e.g. "with meals", "may cause drowsiness"
-     *  */
+}
+interface Dosage {
+    /** Supplemental instruction or warnings to the patient - e.g. "with meals", "may cause drowsiness" */
     additionalInstruction?: string[] | CodeableConcept;
-    /**
-     * Take "as needed" (for x)
-     *  */
+    /** Take "as needed" (for x) */
     asNeeded?: boolean | (string[] | CodeableConcept);
-    /**
-     * Amount of medication administered
-     *  */
+    /** Amount of medication administered */
     doseAndRate?: {
         /**
          * Unique id for inter-element referencing
@@ -480,709 +290,656 @@ type Dosage = {
          *  */
         rate: Ratio;
     };
-    /**
-     * Additional content defined by implementations
-     *  */
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
+    /** Unique id for inter-element referencing */
     id?: string;
-    /**
-     * Upper limit on medication per administration
-     *  */
+    /** Upper limit on medication per administration */
     maxDosePerAdministration?: Quantity;
-    /**
-     * Upper limit on medication per lifetime of the patient
-     *  */
+    /** Upper limit on medication per lifetime of the patient */
     maxDosePerLifetime?: Quantity;
-    /**
-     * Upper limit on medication per unit of time
-     *  */
+    /** Upper limit on medication per unit of time */
     maxDosePerPeriod?: Ratio;
-    /**
-     * Technique for administering medication
-     *  */
+    /** Technique for administering medication */
     method?: string[] | CodeableConcept;
-    /**
-     * Extensions that cannot be ignored even if unrecognized
-     *  */
+    /** Extensions that cannot be ignored even if unrecognized */
     modifierExtension?: Extension[];
-    /**
-     * Patient or consumer oriented instructions
-     *  */
+    /** Patient or consumer oriented instructions */
     patientInstruction?: string;
-    /**
-     * How drug should enter body
-     *  */
+    /** How drug should enter body */
     route?: string[] | CodeableConcept;
-    /**
-     * The order of the dosage instructions
-     *  */
+    /** The order of the dosage instructions */
     sequence?: number;
-    /**
-     * Body site to administer to
-     *  */
+    /** Body site to administer to */
     site?: string[] | CodeableConcept;
-    /**
-     * Free text dosage instructions e.g. SIG
-     *  */
+    /** Free text dosage instructions e.g. SIG */
     text?: string;
-    /**
-     * When medication should be administered
-     *  */
+    /** When medication should be administered */
     timing?: Timing;
-};
-type Duration = {
-    /**
-     * Coded form of the unit
-     *  */
+}
+interface Duration {
+    /** Coded form of the unit */
     code?: string;
-    /**
-     * < | <= | >= | > - how to understand the value
-     *  */
+    /** < | <= | >= | > - how to understand the value */
     comparator?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
+    /** Unique id for inter-element referencing */
     id?: string;
-    /**
-     * System that defines coded unit form
-     *  */
+    /** System that defines coded unit form */
     system?: string;
-    /**
-     * Unit representation
-     *  */
+    /** Unit representation */
     unit?: string;
-    /**
-     * Numerical value (with implicit precision)
-     *  */
+    /** Numerical value (with implicit precision) */
     value?: number;
-};
-type Expression = {
-    /**
-     * Natural language description of the condition
-     *  */
-    description?: string;
-    /**
-     * Expression in specified language
-     *  */
-    expression?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
+}
+interface Element {
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
+    /** Unique id for inter-element referencing */
     id?: string;
-    /**
-     * text/cql | text/fhirpath | application/x-fhir-query | text/cql-identifier | text/cql-expression | etc.
-     *  */
-    language?: string;
-    /**
-     * Short name assigned to expression for reuse
-     *  */
-    name?: string;
-    /**
-     * Where the expression is found
-     *  */
-    reference?: string;
-};
-type Extension = {
-    /**
-     * Additional content defined by implementations
-     *  */
+}
+interface ElementDefinition {
+    /** Other names */
+    alias?: string[];
+    /** Base definition information for tools */
+    base?: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Path that identifies the base element
+         *  */
+        path: string;
+        /**
+         * Min cardinality of the base element
+         *  */
+        min: number;
+        /**
+         * Max cardinality of the base element
+         *  */
+        max: string;
+    };
+    /** ValueSet details if this is coded */
+    binding?: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * required | extensible | preferred | example
+         *  */
+        strength: string;
+        /**
+         * Human explanation of the value set
+         *  */
+        description: string;
+        /**
+         * Source of value set
+         *  */
+        valueSet: any;
+    };
+    /** Corresponding codes in terminologies */
+    code?: Coding;
+    /** Comments about the use of this element */
+    comment?: markdown;
+    /** Reference to invariant about presence */
+    condition?: string[];
+    /** Condition that must evaluate to true */
+    constraint?: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Target of 'condition' reference above
+         *  */
+        key: string;
+        /**
+         * Why this constraint is necessary or appropriate
+         *  */
+        requirements: string;
+        /**
+         * error | warning
+         *  */
+        severity: string;
+        /**
+         * Human description of constraint
+         *  */
+        human: string;
+        /**
+         * FHIRPath expression of constraint
+         *  */
+        expression: string;
+        /**
+         * XPath expression of constraint
+         *  */
+        xpath: string;
+        /**
+         * Reference to original source of constraint
+         *  */
+        source: any;
+    };
+    /** Reference to definition of content for the element */
+    contentReference?: string;
+    /** Specified value if missing from instance */
+    defaultValue?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
+    /** Full formal definition as narrative text */
+    definition?: markdown;
+    /** Example value (as defined for type) */
+    example?: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Describes the purpose of this example
+         *  */
+        label: string;
+        /**
+         * Value of Example (one of allowed types)
+         *  */
+        value: base64Binary;
+    };
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
+    /** Value must be exactly this */
+    fixed?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
+    /** Unique id for inter-element referencing */
     id?: string;
-    /**
-     * identifies the meaning of the extension
-     *  */
-    url?: string;
-    /**
-     * Value of extension
-     *  */
-    value?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
-};
-type HumanName = {
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Family name (often called 'Surname')
-     *  */
-    family?: string;
-    /**
-     * Given names (not always 'first'). Includes middle names
-     *  */
-    given?: string[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Time period when name was/is in use
-     *  */
-    period?: Period;
-    /**
-     * Parts that come before the name
-     *  */
-    prefix?: string[];
-    /**
-     * Parts that come after the name
-     *  */
-    suffix?: string[];
-    /**
-     * Text representation of the full name
-     *  */
-    text?: string;
-    /**
-     * usual | official | temp | nickname | anonymous | old | maiden
-     *  */
-    use?: string;
-};
-type Identifier = {
-    /**
-     * Organization that issued id (may be just text)
-     *  */
-    assigner?: string | Reference;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Time period when id is/was valid for use
-     *  */
-    period?: Period;
-    /**
-     * The namespace for the identifier value
-     *  */
-    system?: string;
-    /**
-     * Description of identifier
-     *  */
-    type?: string[] | CodeableConcept;
-    /**
-     * usual | official | temp | secondary | old (If known)
-     *  */
-    use?: string;
-    /**
-     * The value that is unique
-     *  */
-    value?: string;
-};
-type MarketingStatus = {
-    /**
-     * The country in which the marketing authorisation has been granted shall be specified It should be specified using the ISO 3166 ‑ 1 alpha-2 code elements
-     *  */
-    country?: string[] | CodeableConcept;
-    /**
-     * The date when the Medicinal Product is placed on the market by the Marketing Authorisation Holder (or where applicable, the manufacturer/distributor) in a country and/or jurisdiction shall be provided A complete date consisting of day, month and year shall be specified using the ISO 8601 date format NOTE “Placed on the market” refers to the release of the Medicinal Product into the distribution chain
-     *  */
-    dateRange?: Period;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Where a Medicines Regulatory Agency has granted a marketing authorisation for which specific provisions within a jurisdiction apply, the jurisdiction can be specified using an appropriate controlled terminology The controlled term and the controlled term identifier shall be specified
-     *  */
-    jurisdiction?: string[] | CodeableConcept;
-    /**
-     * Extensions that cannot be ignored even if unrecognized
-     *  */
-    modifierExtension?: Extension[];
-    /**
-     * The date when the Medicinal Product is placed on the market by the Marketing Authorisation Holder (or where applicable, the manufacturer/distributor) in a country and/or jurisdiction shall be provided A complete date consisting of day, month and year shall be specified using the ISO 8601 date format NOTE “Placed on the market” refers to the release of the Medicinal Product into the distribution chain
-     *  */
-    restoreDate?: string;
-    /**
-     * This attribute provides information on the status of the marketing of the medicinal product See ISO/TS 20443 for more information and examples
-     *  */
-    status?: string[] | CodeableConcept;
-};
-type Meta = {
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * When the resource version last changed
-     *  */
-    lastUpdated?: string;
-    /**
-     * Profiles this resource claims to conform to
-     *  */
-    profile?: any[];
-    /**
-     * Security Labels applied to this resource
-     *  */
-    security?: Coding;
-    /**
-     * Identifies where the resource comes from
-     *  */
-    source?: string;
-    /**
-     * Tags applied to this resource
-     *  */
-    tag?: Coding;
-    /**
-     * Version specific identifier
-     *  */
-    versionId?: string;
-};
-type Money = {
-    /**
-     * ISO 4217 Currency Code
-     *  */
-    currency?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Numerical value (with implicit precision)
-     *  */
-    value?: number;
-};
-type Quantity = {
-    /**
-     * Coded form of the unit
-     *  */
-    code?: string;
-    /**
-     * < | <= | >= | > - how to understand the value
-     *  */
-    comparator?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * System that defines coded unit form
-     *  */
-    system?: string;
-    /**
-     * Unit representation
-     *  */
-    unit?: string;
-    /**
-     * Numerical value (with implicit precision)
-     *  */
-    value?: number;
-};
-type Narrative = {
-    /**
-     * Limited xhtml content
-     *  */
-    div?: xhtml;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * generated | extensions | additional | empty
-     *  */
-    status?: string;
-};
-type ParameterDefinition = {
-    /**
-     * A brief description of the parameter
-     *  */
-    documentation?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Maximum cardinality (a number of *)
-     *  */
-    max?: string;
-    /**
-     * Minimum cardinality
-     *  */
-    min?: number;
-    /**
-     * Name used to access the parameter value
-     *  */
-    name?: string;
-    /**
-     * What profile the value is expected to be
-     *  */
-    profile?: any;
-    /**
-     * What type of value
-     *  */
-    type?: string;
-    /**
-     * in | out
-     *  */
-    use?: string;
-};
-type Period = {
-    /**
-     * End time with inclusive boundary, if not ongoing
-     *  */
-    end?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Starting time with inclusive boundary
-     *  */
-    start?: string;
-};
-type ProdCharacteristic = {
-    /**
-     * Where applicable, the color can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
-     *  */
-    color?: string[];
-    /**
-     * Where applicable, the depth can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
-     *  */
-    depth?: Quantity;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Where applicable, the external diameter can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
-     *  */
-    externalDiameter?: Quantity;
-    /**
-     * Where applicable, the height can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
-     *  */
-    height?: Quantity;
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Where applicable, the image can be provided The format of the image attachment shall be specified by regional implementations
-     *  */
-    image?: Attachment[];
-    /**
-     * Where applicable, the imprint can be specified as text
-     *  */
-    imprint?: string[];
-    /**
-     * Extensions that cannot be ignored even if unrecognized
-     *  */
-    modifierExtension?: Extension[];
-    /**
-     * Where applicable, the nominal volume can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
-     *  */
-    nominalVolume?: Quantity;
-    /**
-     * Where applicable, the scoring can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
-     *  */
-    scoring?: string[] | CodeableConcept;
-    /**
-     * Where applicable, the shape can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
-     *  */
-    shape?: string;
-    /**
-     * Where applicable, the weight can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
-     *  */
-    weight?: Quantity;
-    /**
-     * Where applicable, the width can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
-     *  */
-    width?: Quantity;
-};
-type ProductShelfLife = {
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Unique identifier for the packaged Medicinal Product
-     *  */
-    identifier?: string | Identifier;
-    /**
-     * Extensions that cannot be ignored even if unrecognized
-     *  */
-    modifierExtension?: Extension[];
-    /**
-     * The shelf life time period can be specified using a numerical value for the period of time and its unit of time measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
-     *  */
-    period?: Quantity;
-    /**
-     * Special precautions for storage, if any, can be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified
-     *  */
-    specialPrecautionsForStorage?: string[] | CodeableConcept;
-    /**
-     * This describes the shelf life, taking into account various scenarios such as shelf life of the packaged Medicinal Product itself, shelf life after transformation where necessary and shelf life after the first opening of a bottle, etc. The shelf life type shall be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified
-     *  */
-    type?: string[] | CodeableConcept;
-};
-type Range = {
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * High limit
-     *  */
-    high?: Quantity;
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Low limit
-     *  */
-    low?: Quantity;
-};
-type Ratio = {
-    /**
-     * Denominator value
-     *  */
-    denominator?: Quantity;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Numerator value
-     *  */
-    numerator?: Quantity;
-};
-type RatioRange = {
-    /**
-     * Denominator value
-     *  */
-    denominator?: Quantity;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * High Numerator limit
-     *  */
-    highNumerator?: Quantity;
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Low Numerator limit
-     *  */
-    lowNumerator?: Quantity;
-};
-type Reference = {
-    /**
-     * Text alternative for the resource
-     *  */
-    display?: string;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Logical reference, when literal reference is not known
-     *  */
-    identifier?: string | Identifier;
-    /**
-     * Literal reference, Relative, internal or absolute URL
-     *  */
-    reference?: string;
-    /**
-     * Type the reference refers to (e.g. "Patient")
-     *  */
-    type?: string;
-};
-type RelatedArtifact = {
-    /**
-     * Bibliographic citation for the artifact
-     *  */
-    citation?: markdown;
-    /**
-     * Brief description of the related artifact
-     *  */
-    display?: string;
-    /**
-     * What document is being referenced
-     *  */
-    document?: Attachment;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Short label
-     *  */
+    /** If this modifies the meaning of other elements */
+    isModifier?: boolean;
+    /** Reason that this element is marked as a modifier */
+    isModifierReason?: string;
+    /** Include when _summary = true? */
+    isSummary?: boolean;
+    /** Name for element to display with or prompt for element */
     label?: string;
-    /**
-     * What resource is being referenced
-     *  */
-    resource?: any;
-    /**
-     * documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of
-     *  */
-    type?: string;
-    /**
-     * Where the artifact can be accessed
-     *  */
-    url?: url;
-};
-type SampledData = {
-    /**
-     * Decimal values with spaces, or "E" | "U" | "L"
-     *  */
-    data?: string;
-    /**
-     * Number of sample points at each time point
-     *  */
-    dimensions?: number;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Multiply data by this before adding to origin
-     *  */
-    factor?: number;
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Lower limit of detection
-     *  */
-    lowerLimit?: number;
-    /**
-     * Zero value and units
-     *  */
-    origin?: Quantity;
-    /**
-     * Number of milliseconds between samples
-     *  */
-    period?: number;
-    /**
-     * Upper limit of detection
-     *  */
-    upperLimit?: number;
-};
-type Signature = {
-    /**
-     * The actual signature content (XML DigSig. JWS, picture, etc.)
-     *  */
-    data?: base64Binary;
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * The party represented
-     *  */
-    onBehalfOf?: string | Reference;
-    /**
-     * The technical format of the signature
-     *  */
-    sigFormat?: string;
-    /**
-     * The technical format of the signed resources
-     *  */
-    targetFormat?: string;
-    /**
-     * Indication of the reason the entity signed the object(s)
-     *  */
-    type?: Coding;
-    /**
-     * When the signature was created
-     *  */
-    when?: string;
-    /**
-     * Who signed
-     *  */
-    who?: string | Reference;
-};
-type Timing = {
-    /**
-     * BID | TID | QID | AM | PM | QD | QOD | +
-     *  */
-    code?: string[] | CodeableConcept;
-    /**
-     * When the event occurs
-     *  */
-    event?: string[];
-    /**
-     * Additional content defined by implementations
-     *  */
-    extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
-    id?: string;
-    /**
-     * Extensions that cannot be ignored even if unrecognized
-     *  */
+    /** Map element to another set of definitions */
+    mapping?: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Reference to mapping declaration
+         *  */
+        identity: string;
+        /**
+         * Computable language of mapping
+         *  */
+        language: string;
+        /**
+         * Details of the mapping
+         *  */
+        map: string;
+        /**
+         * Comments about the mapping or its use
+         *  */
+        comment: string;
+    };
+    /** Maximum Cardinality (a number or *) */
+    max?: string;
+    /** Max length for strings */
+    maxLength?: number;
+    /** Maximum Allowed Value (for some types) */
+    maxValue?: string | string | string | string | number | number | number | number | Quantity;
+    /** Implicit meaning when this element is missing */
+    meaningWhenMissing?: markdown;
+    /** Minimum Cardinality */
+    min?: number;
+    /** Minimum Allowed Value (for some types) */
+    minValue?: string | string | string | string | number | number | number | number | Quantity;
+    /** Extensions that cannot be ignored even if unrecognized */
     modifierExtension?: Extension[];
-    /**
-     * When the event is to occur
-     *  */
+    /** If the element must be supported */
+    mustSupport?: boolean;
+    /** What the order of the elements means */
+    orderMeaning?: string;
+    /** Path of the element in the hierarchy of elements */
+    path?: string;
+    /** Value must have at least these property values */
+    pattern?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
+    /** xmlAttr | xmlText | typeAttr | cdaText | xhtml */
+    representation?: string;
+    /** Why this resource has been created */
+    requirements?: markdown;
+    /** Concise definition for space-constrained presentation */
+    short?: string;
+    /** If this slice definition constrains an inherited slice definition (or not) */
+    sliceIsConstraining?: boolean;
+    /** Name for this particular element (in a set of slices) */
+    sliceName?: string;
+    /** This element is sliced - slices follow */
+    slicing?: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Path to element value
+         *  */
+        discriminator: string;
+        /**
+         * Text description of how slicing works (or not)
+         *  */
+        description: string;
+        /**
+         * If elements must be in same order as slices
+         *  */
+        ordered: boolean;
+        /**
+         * closed | open | openAtEnd
+         *  */
+        rules: string;
+    };
+    /** Data type and Profile for this element */
+    type?: {
+        /**
+         * Unique id for inter-element referencing
+         *  */
+        id: string;
+        /**
+         * Data type or Resource (reference to definition)
+         *  */
+        code: string;
+        /**
+         * Profiles (StructureDefinition or IG) - one must apply
+         *  */
+        profile: any;
+        /**
+         * Profile (StructureDefinition or IG) on the Reference/canonical target - one must apply
+         *  */
+        targetProfile: any;
+        /**
+         * contained | referenced | bundled - how aggregated
+         *  */
+        aggregation: string;
+        /**
+         * either | independent | specific
+         *  */
+        versioning: string;
+    };
+}
+interface Expression {
+    /** Natural language description of the condition */
+    description?: string;
+    /** Expression in specified language */
+    expression?: string;
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** text/cql | text/fhirpath | application/x-fhir-query | text/cql-identifier | text/cql-expression | etc. */
+    language?: string;
+    /** Short name assigned to expression for reuse */
+    name?: string;
+    /** Where the expression is found */
+    reference?: string;
+}
+interface Extension {
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** identifies the meaning of the extension */
+    url?: string;
+    /** Value of extension */
+    value?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
+}
+interface HumanName {
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Family name (often called 'Surname') */
+    family?: string;
+    /** Given names (not always 'first'). Includes middle names */
+    given?: string[];
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** Time period when name was/is in use */
+    period?: Period;
+    /** Parts that come before the name */
+    prefix?: string[];
+    /** Parts that come after the name */
+    suffix?: string[];
+    /** Text representation of the full name */
+    text?: string;
+    /** usual | official | temp | nickname | anonymous | old | maiden */
+    use?: string;
+}
+interface Identifier {
+    /** Organization that issued id (may be just text) */
+    assigner?: string | Reference;
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** Time period when id is/was valid for use */
+    period?: Period;
+    /** The namespace for the identifier value */
+    system?: string;
+    /** Description of identifier */
+    type?: string[] | CodeableConcept;
+    /** usual | official | temp | secondary | old (If known) */
+    use?: string;
+    /** The value that is unique */
+    value?: string;
+}
+interface MarketingStatus {
+    /** The country in which the marketing authorisation has been granted shall be specified It should be specified using the ISO 3166 ‑ 1 alpha-2 code elements */
+    country?: string[] | CodeableConcept;
+    /** The date when the Medicinal Product is placed on the market by the Marketing Authorisation Holder (or where applicable, the manufacturer/distributor) in a country and/or jurisdiction shall be provided A complete date consisting of day, month and year shall be specified using the ISO 8601 date format NOTE “Placed on the market” refers to the release of the Medicinal Product into the distribution chain */
+    dateRange?: Period;
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** Where a Medicines Regulatory Agency has granted a marketing authorisation for which specific provisions within a jurisdiction apply, the jurisdiction can be specified using an appropriate controlled terminology The controlled term and the controlled term identifier shall be specified */
+    jurisdiction?: string[] | CodeableConcept;
+    /** Extensions that cannot be ignored even if unrecognized */
+    modifierExtension?: Extension[];
+    /** The date when the Medicinal Product is placed on the market by the Marketing Authorisation Holder (or where applicable, the manufacturer/distributor) in a country and/or jurisdiction shall be provided A complete date consisting of day, month and year shall be specified using the ISO 8601 date format NOTE “Placed on the market” refers to the release of the Medicinal Product into the distribution chain */
+    restoreDate?: string;
+    /** This attribute provides information on the status of the marketing of the medicinal product See ISO/TS 20443 for more information and examples */
+    status?: string[] | CodeableConcept;
+}
+interface Meta {
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** When the resource version last changed */
+    lastUpdated?: string;
+    /** Profiles this resource claims to conform to */
+    profile?: any[];
+    /** Security Labels applied to this resource */
+    security?: Coding;
+    /** Identifies where the resource comes from */
+    source?: string;
+    /** Tags applied to this resource */
+    tag?: Coding;
+    /** Version specific identifier */
+    versionId?: string;
+}
+interface Money {
+    /** ISO 4217 Currency Code */
+    currency?: string;
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** Numerical value (with implicit precision) */
+    value?: number;
+}
+interface MoneyQuantity {
+    /** Coded form of the unit */
+    code?: string;
+    /** < | <= | >= | > - how to understand the value */
+    comparator?: string;
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** System that defines coded unit form */
+    system?: string;
+    /** Unit representation */
+    unit?: string;
+    /** Numerical value (with implicit precision) */
+    value?: number;
+}
+interface Quantity {
+    /** Coded form of the unit */
+    code?: string;
+    /** < | <= | >= | > - how to understand the value */
+    comparator?: string;
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** System that defines coded unit form */
+    system?: string;
+    /** Unit representation */
+    unit?: string;
+    /** Numerical value (with implicit precision) */
+    value?: number;
+}
+interface SimpleQuantity {
+    /** Coded form of the unit */
+    code?: string;
+    /** < | <= | >= | > - how to understand the value */
+    comparator?: string;
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** System that defines coded unit form */
+    system?: string;
+    /** Unit representation */
+    unit?: string;
+    /** Numerical value (with implicit precision) */
+    value?: number;
+}
+interface Narrative {
+    /** Limited xhtml content */
+    div?: xhtml;
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** generated | extensions | additional | empty */
+    status?: string;
+}
+interface ParameterDefinition {
+    /** A brief description of the parameter */
+    documentation?: string;
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** Maximum cardinality (a number of *) */
+    max?: string;
+    /** Minimum cardinality */
+    min?: number;
+    /** Name used to access the parameter value */
+    name?: string;
+    /** What profile the value is expected to be */
+    profile?: any;
+    /** What type of value */
+    type?: string;
+    /** in | out */
+    use?: string;
+}
+interface Period {
+    /** End time with inclusive boundary, if not ongoing */
+    end?: string;
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** Starting time with inclusive boundary */
+    start?: string;
+}
+interface Population {
+    /** The age of the specific population */
+    age?: Range | (string[] | CodeableConcept);
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** The gender of the specific population */
+    gender?: string[] | CodeableConcept;
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** Extensions that cannot be ignored even if unrecognized */
+    modifierExtension?: Extension[];
+    /** The existing physiological conditions of the specific population to which this applies */
+    physiologicalCondition?: string[] | CodeableConcept;
+    /** Race of the specific population */
+    race?: string[] | CodeableConcept;
+}
+interface ProdCharacteristic {
+    /** Where applicable, the color can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used */
+    color?: string[];
+    /** Where applicable, the depth can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used */
+    depth?: Quantity;
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Where applicable, the external diameter can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used */
+    externalDiameter?: Quantity;
+    /** Where applicable, the height can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used */
+    height?: Quantity;
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** Where applicable, the image can be provided The format of the image attachment shall be specified by regional implementations */
+    image?: Attachment[];
+    /** Where applicable, the imprint can be specified as text */
+    imprint?: string[];
+    /** Extensions that cannot be ignored even if unrecognized */
+    modifierExtension?: Extension[];
+    /** Where applicable, the nominal volume can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used */
+    nominalVolume?: Quantity;
+    /** Where applicable, the scoring can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used */
+    scoring?: string[] | CodeableConcept;
+    /** Where applicable, the shape can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used */
+    shape?: string;
+    /** Where applicable, the weight can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used */
+    weight?: Quantity;
+    /** Where applicable, the width can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used */
+    width?: Quantity;
+}
+interface ProductShelfLife {
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** Unique identifier for the packaged Medicinal Product */
+    identifier?: string | Identifier;
+    /** Extensions that cannot be ignored even if unrecognized */
+    modifierExtension?: Extension[];
+    /** The shelf life time period can be specified using a numerical value for the period of time and its unit of time measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used */
+    period?: Quantity;
+    /** Special precautions for storage, if any, can be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified */
+    specialPrecautionsForStorage?: string[] | CodeableConcept;
+    /** This describes the shelf life, taking into account various scenarios such as shelf life of the packaged Medicinal Product itself, shelf life after transformation where necessary and shelf life after the first opening of a bottle, etc. The shelf life type shall be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified */
+    type?: string[] | CodeableConcept;
+}
+interface Range {
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** High limit */
+    high?: Quantity;
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** Low limit */
+    low?: Quantity;
+}
+interface Ratio {
+    /** Denominator value */
+    denominator?: Quantity;
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** Numerator value */
+    numerator?: Quantity;
+}
+interface RatioRange {
+    /** Denominator value */
+    denominator?: Quantity;
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** High Numerator limit */
+    highNumerator?: Quantity;
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** Low Numerator limit */
+    lowNumerator?: Quantity;
+}
+interface Reference {
+    /** Text alternative for the resource */
+    display?: string;
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** Logical reference, when literal reference is not known */
+    identifier?: string | Identifier;
+    /** Literal reference, Relative, internal or absolute URL */
+    reference?: string;
+    /** Type the reference refers to (e.g. "Patient") */
+    type?: string;
+}
+interface RelatedArtifact {
+    /** Bibliographic citation for the artifact */
+    citation?: markdown;
+    /** Brief description of the related artifact */
+    display?: string;
+    /** What document is being referenced */
+    document?: Attachment;
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** Short label */
+    label?: string;
+    /** What resource is being referenced */
+    resource?: any;
+    /** documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of */
+    type?: string;
+    /** Where the artifact can be accessed */
+    url?: url;
+}
+interface SampledData {
+    /** Decimal values with spaces, or "E" | "U" | "L" */
+    data?: string;
+    /** Number of sample points at each time point */
+    dimensions?: number;
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Multiply data by this before adding to origin */
+    factor?: number;
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** Lower limit of detection */
+    lowerLimit?: number;
+    /** Zero value and units */
+    origin?: Quantity;
+    /** Number of milliseconds between samples */
+    period?: number;
+    /** Upper limit of detection */
+    upperLimit?: number;
+}
+interface Signature {
+    /** The actual signature content (XML DigSig. JWS, picture, etc.) */
+    data?: base64Binary;
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** The party represented */
+    onBehalfOf?: string | Reference;
+    /** The technical format of the signature */
+    sigFormat?: string;
+    /** The technical format of the signed resources */
+    targetFormat?: string;
+    /** Indication of the reason the entity signed the object(s) */
+    type?: Coding;
+    /** When the signature was created */
+    when?: string;
+    /** Who signed */
+    who?: string | Reference;
+}
+interface Timing {
+    /** BID | TID | QID | AM | PM | QD | QOD | + */
+    code?: string[] | CodeableConcept;
+    /** When the event occurs */
+    event?: string[];
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** Unique id for inter-element referencing */
+    id?: string;
+    /** Extensions that cannot be ignored even if unrecognized */
+    modifierExtension?: Extension[];
+    /** When the event is to occur */
     repeat?: {
         /**
          * Unique id for inter-element referencing
@@ -1249,139 +1006,89 @@ type Timing = {
          *  */
         offset: number;
     };
-};
-type TriggerDefinition = {
-    /**
-     * Whether the event triggers (boolean expression)
-     *  */
+}
+interface TriggerDefinition {
+    /** Whether the event triggers (boolean expression) */
     condition?: Expression;
-    /**
-     * Triggering data of the event (multiple = 'and')
-     *  */
+    /** Triggering data of the event (multiple = 'and') */
     data?: DataRequirement[];
-    /**
-     * Additional content defined by implementations
-     *  */
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
+    /** Unique id for inter-element referencing */
     id?: string;
-    /**
-     * Name or URI that identifies the event
-     *  */
+    /** Name or URI that identifies the event */
     name?: string;
-    /**
-     * Timing of the event
-     *  */
+    /** Timing of the event */
     timing?: Timing | (string | Reference) | string | string;
-    /**
-     * named-event | periodic | data-changed | data-added | data-modified | data-removed | data-accessed | data-access-ended
-     *  */
+    /** named-event | periodic | data-changed | data-added | data-modified | data-removed | data-accessed | data-access-ended */
     type?: string;
-};
-type UsageContext = {
-    /**
-     * Type of context being specified
-     *  */
+}
+interface UsageContext {
+    /** Type of context being specified */
     code?: Coding;
-    /**
-     * Additional content defined by implementations
-     *  */
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * Unique id for inter-element referencing
-     *  */
+    /** Unique id for inter-element referencing */
     id?: string;
-    /**
-     * Value that defines the context
-     *  */
+    /** Value that defines the context */
     value?: (string[] | CodeableConcept) | Quantity | Range | (string | Reference);
-};
-type base64Binary = {
-    /**
-     * Additional content defined by implementations
-     *  */
+}
+interface base64Binary {
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * xml:id (or equivalent in JSON)
-     *  */
+    /** xml:id (or equivalent in JSON) */
     id?: string;
-    /**
-     * Primitive value for base64Binary
-     *  */
+    /** Primitive value for base64Binary */
     value?: string;
-};
-type markdown = {
-    /**
-     * Additional content defined by implementations
-     *  */
+}
+interface code {
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * xml:id (or equivalent in JSON)
-     *  */
+    /** xml:id (or equivalent in JSON) */
     id?: string;
-    /**
-     * Primitive value for markdown
-     *  */
+    /** Primitive value for code */
     value?: string;
-};
-type oid = {
-    /**
-     * Additional content defined by implementations
-     *  */
+}
+interface markdown {
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * xml:id (or equivalent in JSON)
-     *  */
+    /** xml:id (or equivalent in JSON) */
     id?: string;
-    /**
-     * Primitive value for oid
-     *  */
+    /** Primitive value for markdown */
     value?: string;
-};
-type url = {
-    /**
-     * Additional content defined by implementations
-     *  */
+}
+interface oid {
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * xml:id (or equivalent in JSON)
-     *  */
+    /** xml:id (or equivalent in JSON) */
     id?: string;
-    /**
-     * Primitive value for url
-     *  */
+    /** Primitive value for oid */
     value?: string;
-};
-type uuid = {
-    /**
-     * Additional content defined by implementations
-     *  */
+}
+interface url {
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * xml:id (or equivalent in JSON)
-     *  */
+    /** xml:id (or equivalent in JSON) */
     id?: string;
-    /**
-     * Primitive value for uuid
-     *  */
+    /** Primitive value for url */
     value?: string;
-};
-type xhtml = {
-    /**
-     * Additional content defined by implementations
-     *  */
+}
+interface uuid {
+    /** Additional content defined by implementations */
     extension?: Extension[];
-    /**
-     * xml:id (or equivalent in JSON)
-     *  */
+    /** xml:id (or equivalent in JSON) */
     id?: string;
-    /**
-     * Actual xhtml
-     *  */
+    /** Primitive value for uuid */
     value?: string;
-};
+}
+interface xhtml {
+    /** Additional content defined by implementations */
+    extension?: Extension[];
+    /** xml:id (or equivalent in JSON) */
+    id?: string;
+    /** Actual xhtml */
+    value?: string;
+}
 
 type MaybeArray$1E<T> = T | T[];
 type Account_Props = {
@@ -4825,10 +4532,9 @@ declare const ref: (ref: any, opts?: {}) => any;
 declare const composite: (object: any, key: any, value: any) => void;
 
 /**
-  * Create a FHIR Account resource.
+  * Create a Account resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Account number
   * @param {string} [props.status] - active | inactive | entered-in-error | on-hold | unknown
@@ -4841,14 +4547,13 @@ declare const composite: (object: any, key: any, value: any) => void;
   * @param {string} [props.description] - Explanation of purpose/use
   * @param {BackboneElement} [props.guarantor] - The parties ultimately responsible for balancing the Account
   * @param {Reference} [props.partOf] - Reference to a parent Account
- */
-declare function account(type: string, props: Account_Props): any;
+  */
+declare function account(type: "Account", props: Account_Props): any;
 declare function account(props: Account_Props): any;
 /**
-  * Create a FHIR ActivityDefinition resource.
+  * Create a ActivityDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this activity definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the activity definition
@@ -4896,14 +4601,13 @@ declare function account(props: Account_Props): any;
   * @param {Reference} [props.observationResultRequirement] - What observations must be produced by this action
   * @param {canonical} [props.transform] - Transform to apply the template
   * @param {BackboneElement} [props.dynamicValue] - Dynamic aspects of the definition
- */
-declare function activityDefinition(type: string, props: ActivityDefinition_Props): any;
+  */
+declare function activityDefinition(type: "ActivityDefinition", props: ActivityDefinition_Props): any;
 declare function activityDefinition(props: ActivityDefinition_Props): any;
 /**
-  * Create a FHIR AdministrableProductDefinition resource.
+  * Create a AdministrableProductDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - An identifier for the administrable product
   * @param {string} [props.status] - draft | active | retired | unknown
@@ -4915,14 +4619,13 @@ declare function activityDefinition(props: ActivityDefinition_Props): any;
   * @param {Reference} [props.device] - A device that is integral to the medicinal product, in effect being considered as an "ingredient" of the medicinal product
   * @param {BackboneElement} [props.property] - Characteristics e.g. a product's onset of action
   * @param {BackboneElement} [props.routeOfAdministration] - The path by which the product is taken into or makes contact with the body
- */
-declare function administrableProductDefinition(type: string, props: AdministrableProductDefinition_Props): any;
+  */
+declare function administrableProductDefinition(type: "AdministrableProductDefinition", props: AdministrableProductDefinition_Props): any;
 declare function administrableProductDefinition(props: AdministrableProductDefinition_Props): any;
 /**
-  * Create a FHIR AdverseEvent resource.
+  * Create a AdverseEvent resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for the event
   * @param {string} [props.actuality] - actual | potential
@@ -4944,14 +4647,13 @@ declare function administrableProductDefinition(props: AdministrableProductDefin
   * @param {Reference} [props.subjectMedicalHistory] - AdverseEvent.subjectMedicalHistory
   * @param {Reference} [props.referenceDocument] - AdverseEvent.referenceDocument
   * @param {Reference} [props.study] - AdverseEvent.study
- */
-declare function adverseEvent(type: string, props: AdverseEvent_Props): any;
+  */
+declare function adverseEvent(type: "AdverseEvent", props: AdverseEvent_Props): any;
 declare function adverseEvent(props: AdverseEvent_Props): any;
 /**
-  * Create a FHIR AllergyIntolerance resource.
+  * Create a AllergyIntolerance resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External ids for this item
   * @param {CodeableConcept} [props.clinicalStatus] - active | inactive | resolved
@@ -4969,14 +4671,13 @@ declare function adverseEvent(props: AdverseEvent_Props): any;
   * @param {dateTime} [props.lastOccurrence] - Date(/time) of last known occurrence of a reaction
   * @param {Annotation} [props.note] - Additional text not captured in other fields
   * @param {BackboneElement} [props.reaction] - Adverse Reaction Events linked to exposure to substance
- */
-declare function allergyIntolerance(type: string, props: AllergyIntolerance_Props): any;
+  */
+declare function allergyIntolerance(type: "AllergyIntolerance", props: AllergyIntolerance_Props): any;
 declare function allergyIntolerance(props: AllergyIntolerance_Props): any;
 /**
-  * Create a FHIR Appointment resource.
+  * Create a Appointment resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this item
   * @param {string} [props.status] - proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error | checked-in | waitlist
@@ -5000,14 +4701,13 @@ declare function allergyIntolerance(props: AllergyIntolerance_Props): any;
   * @param {Reference} [props.basedOn] - The service request this appointment is allocated to assess
   * @param {BackboneElement} [props.participant] - Participants involved in appointment
   * @param {Period} [props.requestedPeriod] - Potential date/time interval(s) requested to allocate the appointment within
- */
-declare function appointment(type: string, props: Appointment_Props): any;
+  */
+declare function appointment(type: "Appointment", props: Appointment_Props): any;
 declare function appointment(props: Appointment_Props): any;
 /**
-  * Create a FHIR AppointmentResponse resource.
+  * Create a AppointmentResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this item
   * @param {Reference} [props.appointment] - Appointment this response relates to
@@ -5017,14 +4717,13 @@ declare function appointment(props: Appointment_Props): any;
   * @param {Reference} [props.actor] - Person, Location, HealthcareService, or Device
   * @param {string} [props.participantStatus] - accepted | declined | tentative | needs-action
   * @param {string} [props.comment] - Additional comments
- */
-declare function appointmentResponse(type: string, props: AppointmentResponse_Props): any;
+  */
+declare function appointmentResponse(type: "AppointmentResponse", props: AppointmentResponse_Props): any;
 declare function appointmentResponse(props: AppointmentResponse_Props): any;
 /**
-  * Create a FHIR BiologicallyDerivedProduct resource.
+  * Create a BiologicallyDerivedProduct resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External ids for this item
   * @param {string} [props.productCategory] - organ | tissue | fluid | cells | biologicalAgent
@@ -5037,14 +4736,13 @@ declare function appointmentResponse(props: AppointmentResponse_Props): any;
   * @param {BackboneElement} [props.processing] - Any processing of the product during collection
   * @param {BackboneElement} [props.manipulation] - Any manipulation of product post-collection
   * @param {BackboneElement} [props.storage] - Product storage
- */
-declare function biologicallyDerivedProduct(type: string, props: BiologicallyDerivedProduct_Props): any;
+  */
+declare function biologicallyDerivedProduct(type: "BiologicallyDerivedProduct", props: BiologicallyDerivedProduct_Props): any;
 declare function biologicallyDerivedProduct(props: BiologicallyDerivedProduct_Props): any;
 /**
-  * Create a FHIR BodyStructure resource.
+  * Create a BodyStructure resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Bodystructure identifier
   * @param {boolean} [props.active] - Whether this record is in active use
@@ -5054,14 +4752,13 @@ declare function biologicallyDerivedProduct(props: BiologicallyDerivedProduct_Pr
   * @param {string} [props.description] - Text description
   * @param {Attachment} [props.image] - Attached images
   * @param {Reference} [props.patient] - Who this is about
- */
-declare function bodyStructure(type: string, props: BodyStructure_Props): any;
+  */
+declare function bodyStructure(type: "BodyStructure", props: BodyStructure_Props): any;
 declare function bodyStructure(props: BodyStructure_Props): any;
 /**
-  * Create a FHIR CarePlan resource.
+  * Create a CarePlan resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this plan
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -5086,14 +4783,13 @@ declare function bodyStructure(props: BodyStructure_Props): any;
   * @param {Reference} [props.goal] - Desired outcome of plan
   * @param {BackboneElement} [props.activity] - Action to occur as part of plan
   * @param {Annotation} [props.note] - Comments about the plan
- */
-declare function carePlan(type: string, props: CarePlan_Props): any;
+  */
+declare function carePlan(type: "CarePlan", props: CarePlan_Props): any;
 declare function carePlan(props: CarePlan_Props): any;
 /**
-  * Create a FHIR CareTeam resource.
+  * Create a CareTeam resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this team
   * @param {string} [props.status] - proposed | active | suspended | inactive | entered-in-error
@@ -5108,14 +4804,13 @@ declare function carePlan(props: CarePlan_Props): any;
   * @param {Reference} [props.managingOrganization] - Organization responsible for the care team
   * @param {ContactPoint} [props.telecom] - A contact detail for the care team (that applies to all members)
   * @param {Annotation} [props.note] - Comments made about the CareTeam
- */
-declare function careTeam(type: string, props: CareTeam_Props): any;
+  */
+declare function careTeam(type: "CareTeam", props: CareTeam_Props): any;
 declare function careTeam(props: CareTeam_Props): any;
 /**
-  * Create a FHIR ChargeItem resource.
+  * Create a ChargeItem resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for item
   * @param {string} [props.definitionUri] - Defining information about the code of this charge item
@@ -5143,14 +4838,13 @@ declare function careTeam(props: CareTeam_Props): any;
   * @param {Reference} [props.account] - Account to place this charge
   * @param {Annotation} [props.note] - Comments made about the ChargeItem
   * @param {Reference} [props.supportingInformation] - Further information supporting this charge
- */
-declare function chargeItem(type: string, props: ChargeItem_Props): any;
+  */
+declare function chargeItem(type: "ChargeItem", props: ChargeItem_Props): any;
 declare function chargeItem(props: ChargeItem_Props): any;
 /**
-  * Create a FHIR ChargeItemDefinition resource.
+  * Create a ChargeItemDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this charge item definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the charge item definition
@@ -5175,14 +4869,13 @@ declare function chargeItem(props: ChargeItem_Props): any;
   * @param {Reference} [props.instance] - Instances this definition applies to
   * @param {BackboneElement} [props.applicability] - Whether or not the billing code is applicable
   * @param {BackboneElement} [props.propertyGroup] - Group of properties which are applicable under the same conditions
- */
-declare function chargeItemDefinition(type: string, props: ChargeItemDefinition_Props): any;
+  */
+declare function chargeItemDefinition(type: "ChargeItemDefinition", props: ChargeItemDefinition_Props): any;
 declare function chargeItemDefinition(props: ChargeItemDefinition_Props): any;
 /**
-  * Create a FHIR Citation resource.
+  * Create a Citation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this citation, represented as a globally unique URI
   * @param {Identifier} [props.identifier] - Identifier for the Citation resource itself
@@ -5213,14 +4906,13 @@ declare function chargeItemDefinition(props: ChargeItemDefinition_Props): any;
   * @param {BackboneElement} [props.statusDate] - An effective date or period for a status of the citation
   * @param {BackboneElement} [props.relatesTo] - Artifact related to the Citation Resource
   * @param {BackboneElement} [props.citedArtifact] - The article or artifact being described
- */
-declare function citation(type: string, props: Citation_Props): any;
+  */
+declare function citation(type: "Citation", props: Citation_Props): any;
 declare function citation(props: Citation_Props): any;
 /**
-  * Create a FHIR Claim resource.
+  * Create a Claim resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for claim
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -5249,14 +4941,13 @@ declare function citation(props: Citation_Props): any;
   * @param {BackboneElement} [props.accident] - Details of the event
   * @param {BackboneElement} [props.item] - Product or service provided
   * @param {Money} [props.total] - Total claim cost
- */
-declare function claim(type: string, props: Claim_Props): any;
+  */
+declare function claim(type: "Claim", props: Claim_Props): any;
 declare function claim(props: Claim_Props): any;
 /**
-  * Create a FHIR ClaimResponse resource.
+  * Create a ClaimResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for a claim response
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -5285,14 +4976,13 @@ declare function claim(props: Claim_Props): any;
   * @param {Reference} [props.communicationRequest] - Request for additional information
   * @param {BackboneElement} [props.insurance] - Patient insurance information
   * @param {BackboneElement} [props.error] - Processing errors
- */
-declare function claimResponse(type: string, props: ClaimResponse_Props): any;
+  */
+declare function claimResponse(type: "ClaimResponse", props: ClaimResponse_Props): any;
 declare function claimResponse(props: ClaimResponse_Props): any;
 /**
-  * Create a FHIR ClinicalImpression resource.
+  * Create a ClinicalImpression resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.status] - in-progress | completed | entered-in-error
@@ -5314,14 +5004,13 @@ declare function claimResponse(props: ClaimResponse_Props): any;
   * @param {Reference} [props.prognosisReference] - RiskAssessment expressing likely outcome
   * @param {Reference} [props.supportingInfo] - Information supporting the clinical impression
   * @param {Annotation} [props.note] - Comments made about the ClinicalImpression
- */
-declare function clinicalImpression(type: string, props: ClinicalImpression_Props): any;
+  */
+declare function clinicalImpression(type: "ClinicalImpression", props: ClinicalImpression_Props): any;
 declare function clinicalImpression(props: ClinicalImpression_Props): any;
 /**
-  * Create a FHIR ClinicalUseDefinition resource.
+  * Create a ClinicalUseDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for this issue
   * @param {string} [props.type] - indication | contraindication | interaction | undesirable-effect | warning
@@ -5334,14 +5023,13 @@ declare function clinicalImpression(props: ClinicalImpression_Props): any;
   * @param {Reference} [props.population] - The population group to which this applies
   * @param {BackboneElement} [props.undesirableEffect] - A possible negative outcome from the use of this treatment
   * @param {BackboneElement} [props.warning] - Critical environmental, health or physical risks or hazards. For example 'Do not operate heavy machinery', 'May cause drowsiness'
- */
-declare function clinicalUseDefinition(type: string, props: ClinicalUseDefinition_Props): any;
+  */
+declare function clinicalUseDefinition(type: "ClinicalUseDefinition", props: ClinicalUseDefinition_Props): any;
 declare function clinicalUseDefinition(props: ClinicalUseDefinition_Props): any;
 /**
-  * Create a FHIR Communication resource.
+  * Create a Communication resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique identifier
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -5366,14 +5054,13 @@ declare function clinicalUseDefinition(props: ClinicalUseDefinition_Props): any;
   * @param {Reference} [props.reasonReference] - Why was communication done?
   * @param {BackboneElement} [props.payload] - Message payload
   * @param {Annotation} [props.note] - Comments made about the communication
- */
-declare function communication(type: string, props: Communication_Props): any;
+  */
+declare function communication(type: "Communication", props: Communication_Props): any;
 declare function communication(props: Communication_Props): any;
 /**
-  * Create a FHIR CommunicationRequest resource.
+  * Create a CommunicationRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique identifier
   * @param {Reference} [props.basedOn] - Fulfills plan or proposal
@@ -5397,14 +5084,13 @@ declare function communication(props: Communication_Props): any;
   * @param {CodeableConcept} [props.reasonCode] - Why is communication needed?
   * @param {Reference} [props.reasonReference] - Why is communication needed?
   * @param {Annotation} [props.note] - Comments made about communication request
- */
-declare function communicationRequest(type: string, props: CommunicationRequest_Props): any;
+  */
+declare function communicationRequest(type: "CommunicationRequest", props: CommunicationRequest_Props): any;
 declare function communicationRequest(props: CommunicationRequest_Props): any;
 /**
-  * Create a FHIR Contract resource.
+  * Create a Contract resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Contract number
   * @param {string} [props.url] - Basal definition
@@ -5439,14 +5125,13 @@ declare function communicationRequest(props: CommunicationRequest_Props): any;
   * @param {BackboneElement} [props.legal] - Contract Legal Language
   * @param {BackboneElement} [props.rule] - Computable Contract Language
   * @param {Attachment|Reference} [props.legallyBinding] - Binding Contract
- */
-declare function contract(type: string, props: Contract_Props): any;
+  */
+declare function contract(type: "Contract", props: Contract_Props): any;
 declare function contract(props: Contract_Props): any;
 /**
-  * Create a FHIR Coverage resource.
+  * Create a Coverage resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for the coverage
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -5465,14 +5150,13 @@ declare function contract(props: Contract_Props): any;
   * @param {BackboneElement} [props.costToBeneficiary] - Patient payments for services/products
   * @param {boolean} [props.subrogation] - Reimbursement to insurer
   * @param {Reference} [props.contract] - Contract details
- */
-declare function coverage(type: string, props: Coverage_Props): any;
+  */
+declare function coverage(type: "Coverage", props: Coverage_Props): any;
 declare function coverage(props: Coverage_Props): any;
 /**
-  * Create a FHIR CoverageEligibilityRequest resource.
+  * Create a CoverageEligibilityRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for coverage eligiblity request
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -5488,14 +5172,13 @@ declare function coverage(props: Coverage_Props): any;
   * @param {BackboneElement} [props.supportingInfo] - Supporting information
   * @param {BackboneElement} [props.insurance] - Patient insurance information
   * @param {BackboneElement} [props.item] - Item to be evaluated for eligibiity
- */
-declare function coverageEligibilityRequest(type: string, props: CoverageEligibilityRequest_Props): any;
+  */
+declare function coverageEligibilityRequest(type: "CoverageEligibilityRequest", props: CoverageEligibilityRequest_Props): any;
 declare function coverageEligibilityRequest(props: CoverageEligibilityRequest_Props): any;
 /**
-  * Create a FHIR CoverageEligibilityResponse resource.
+  * Create a CoverageEligibilityResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for coverage eligiblity request
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -5512,14 +5195,13 @@ declare function coverageEligibilityRequest(props: CoverageEligibilityRequest_Pr
   * @param {string} [props.preAuthRef] - Preauthorization reference
   * @param {CodeableConcept} [props.form] - Printed form identifier
   * @param {BackboneElement} [props.error] - Processing errors
- */
-declare function coverageEligibilityResponse(type: string, props: CoverageEligibilityResponse_Props): any;
+  */
+declare function coverageEligibilityResponse(type: "CoverageEligibilityResponse", props: CoverageEligibilityResponse_Props): any;
 declare function coverageEligibilityResponse(props: CoverageEligibilityResponse_Props): any;
 /**
-  * Create a FHIR DetectedIssue resource.
+  * Create a DetectedIssue resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique id for the detected issue
   * @param {string} [props.status] - registered | preliminary | final | amended +
@@ -5533,14 +5215,13 @@ declare function coverageEligibilityResponse(props: CoverageEligibilityResponse_
   * @param {string} [props.detail] - Description and context
   * @param {string} [props.reference] - Authority for issue
   * @param {BackboneElement} [props.mitigation] - Step taken to address
- */
-declare function detectedIssue(type: string, props: DetectedIssue_Props): any;
+  */
+declare function detectedIssue(type: "DetectedIssue", props: DetectedIssue_Props): any;
 declare function detectedIssue(props: DetectedIssue_Props): any;
 /**
-  * Create a FHIR Device resource.
+  * Create a Device resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Instance identifier
   * @param {Reference} [props.definition] - The reference to the definition for the device
@@ -5568,14 +5249,13 @@ declare function detectedIssue(props: DetectedIssue_Props): any;
   * @param {Annotation} [props.note] - Device notes and comments
   * @param {CodeableConcept} [props.safety] - Safety Characteristics of Device
   * @param {Reference} [props.parent] - The device that this device is attached to or is part of
- */
-declare function device(type: string, props: Device_Props): any;
+  */
+declare function device(type: "Device", props: Device_Props): any;
 declare function device(props: Device_Props): any;
 /**
-  * Create a FHIR DeviceDefinition resource.
+  * Create a DeviceDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Instance identifier
   * @param {BackboneElement} [props.udiDeviceIdentifier] - Unique Device Identifier (UDI) Barcode string
@@ -5599,14 +5279,13 @@ declare function device(props: Device_Props): any;
   * @param {Quantity} [props.quantity] - The quantity of the device present in the packaging (e.g. the number of devices present in a pack, or the number of devices in the same package of the medicinal product)
   * @param {Reference} [props.parentDevice] - The parent device it can be part of
   * @param {BackboneElement} [props.material] - A substance used to create the material(s) of which the device is made
- */
-declare function deviceDefinition(type: string, props: DeviceDefinition_Props): any;
+  */
+declare function deviceDefinition(type: "DeviceDefinition", props: DeviceDefinition_Props): any;
 declare function deviceDefinition(props: DeviceDefinition_Props): any;
 /**
-  * Create a FHIR DeviceMetric resource.
+  * Create a DeviceMetric resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Instance identifier
   * @param {CodeableConcept} [props.type] - Identity of metric, for example Heart Rate or PEEP Setting
@@ -5618,14 +5297,13 @@ declare function deviceDefinition(props: DeviceDefinition_Props): any;
   * @param {string} [props.category] - measurement | setting | calculation | unspecified
   * @param {Timing} [props.measurementPeriod] - Describes the measurement repetition time
   * @param {BackboneElement} [props.calibration] - Describes the calibrations that have been performed or that are required to be performed
- */
-declare function deviceMetric(type: string, props: DeviceMetric_Props): any;
+  */
+declare function deviceMetric(type: "DeviceMetric", props: DeviceMetric_Props): any;
 declare function deviceMetric(props: DeviceMetric_Props): any;
 /**
-  * Create a FHIR DeviceRequest resource.
+  * Create a DeviceRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Request identifier
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -5651,14 +5329,13 @@ declare function deviceMetric(props: DeviceMetric_Props): any;
   * @param {Reference} [props.supportingInfo] - Additional clinical information
   * @param {Annotation} [props.note] - Notes or comments
   * @param {Reference} [props.relevantHistory] - Request provenance
- */
-declare function deviceRequest(type: string, props: DeviceRequest_Props): any;
+  */
+declare function deviceRequest(type: "DeviceRequest", props: DeviceRequest_Props): any;
 declare function deviceRequest(props: DeviceRequest_Props): any;
 /**
-  * Create a FHIR DeviceUseStatement resource.
+  * Create a DeviceUseStatement resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier for this record
   * @param {Reference} [props.basedOn] - Fulfills plan, proposal or order
@@ -5673,14 +5350,13 @@ declare function deviceRequest(props: DeviceRequest_Props): any;
   * @param {Reference} [props.reasonReference] - Why was DeviceUseStatement performed?
   * @param {CodeableConcept} [props.bodySite] - Target body site
   * @param {Annotation} [props.note] - Addition details (comments, instructions)
- */
-declare function deviceUseStatement(type: string, props: DeviceUseStatement_Props): any;
+  */
+declare function deviceUseStatement(type: "DeviceUseStatement", props: DeviceUseStatement_Props): any;
 declare function deviceUseStatement(props: DeviceUseStatement_Props): any;
 /**
-  * Create a FHIR DiagnosticReport resource.
+  * Create a DiagnosticReport resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for report
   * @param {Reference} [props.basedOn] - What was requested
@@ -5700,24 +5376,22 @@ declare function deviceUseStatement(props: DeviceUseStatement_Props): any;
   * @param {string} [props.conclusion] - Clinical conclusion (interpretation) of test results
   * @param {CodeableConcept} [props.conclusionCode] - Codes for the clinical conclusion of test results
   * @param {Attachment} [props.presentedForm] - Entire report as issued
- */
-declare function diagnosticReport(type: string, props: DiagnosticReport_Props): any;
+  */
+declare function diagnosticReport(type: "DiagnosticReport", props: DiagnosticReport_Props): any;
 declare function diagnosticReport(props: DiagnosticReport_Props): any;
 /**
-  * Create a FHIR DomainResource resource.
+  * Create a DomainResource resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
 
- */
-declare function domainResource(type: string, props: DomainResource_Props): any;
+  */
+declare function domainResource(type: "DomainResource", props: DomainResource_Props): any;
 declare function domainResource(props: DomainResource_Props): any;
 /**
-  * Create a FHIR Encounter resource.
+  * Create a Encounter resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifier(s) by which this encounter is known
   * @param {string} [props.status] - planned | arrived | triaged | in-progress | onleave | finished | cancelled +
@@ -5742,14 +5416,13 @@ declare function domainResource(props: DomainResource_Props): any;
   * @param {BackboneElement} [props.location] - List of locations where the patient has been
   * @param {Reference} [props.serviceProvider] - The organization (facility) responsible for this encounter
   * @param {Reference} [props.partOf] - Another Encounter this encounter is part of
- */
-declare function encounter(type: string, props: Encounter_Props): any;
+  */
+declare function encounter(type: "Encounter", props: Encounter_Props): any;
 declare function encounter(props: Encounter_Props): any;
 /**
-  * Create a FHIR EnrollmentRequest resource.
+  * Create a EnrollmentRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -5758,14 +5431,13 @@ declare function encounter(props: Encounter_Props): any;
   * @param {Reference} [props.provider] - Responsible practitioner
   * @param {Reference} [props.candidate] - The subject to be enrolled
   * @param {Reference} [props.coverage] - Insurance information
- */
-declare function enrollmentRequest(type: string, props: EnrollmentRequest_Props): any;
+  */
+declare function enrollmentRequest(type: "EnrollmentRequest", props: EnrollmentRequest_Props): any;
 declare function enrollmentRequest(props: EnrollmentRequest_Props): any;
 /**
-  * Create a FHIR EnrollmentResponse resource.
+  * Create a EnrollmentResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -5775,14 +5447,13 @@ declare function enrollmentRequest(props: EnrollmentRequest_Props): any;
   * @param {dateTime} [props.created] - Creation date
   * @param {Reference} [props.organization] - Insurer
   * @param {Reference} [props.requestProvider] - Responsible practitioner
- */
-declare function enrollmentResponse(type: string, props: EnrollmentResponse_Props): any;
+  */
+declare function enrollmentResponse(type: "EnrollmentResponse", props: EnrollmentResponse_Props): any;
 declare function enrollmentResponse(props: EnrollmentResponse_Props): any;
 /**
-  * Create a FHIR EpisodeOfCare resource.
+  * Create a EpisodeOfCare resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier(s) relevant for this EpisodeOfCare
   * @param {string} [props.status] - planned | waitlist | active | onhold | finished | cancelled | entered-in-error
@@ -5796,14 +5467,13 @@ declare function enrollmentResponse(props: EnrollmentResponse_Props): any;
   * @param {Reference} [props.careManager] - Care manager/care coordinator for the patient
   * @param {Reference} [props.team] - Other practitioners facilitating this episode of care
   * @param {Reference} [props.account] - The set of accounts that may be used for billing for this EpisodeOfCare
- */
-declare function episodeOfCare(type: string, props: EpisodeOfCare_Props): any;
+  */
+declare function episodeOfCare(type: "EpisodeOfCare", props: EpisodeOfCare_Props): any;
 declare function episodeOfCare(props: EpisodeOfCare_Props): any;
 /**
-  * Create a FHIR EventDefinition resource.
+  * Create a EventDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this event definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the event definition
@@ -5833,14 +5503,13 @@ declare function episodeOfCare(props: EpisodeOfCare_Props): any;
   * @param {ContactDetail} [props.endorser] - Who endorsed the content
   * @param {RelatedArtifact} [props.relatedArtifact] - Additional documentation, citations, etc.
   * @param {TriggerDefinition} [props.trigger] - "when" the event occurs (multiple = 'or')
- */
-declare function eventDefinition(type: string, props: EventDefinition_Props): any;
+  */
+declare function eventDefinition(type: "EventDefinition", props: EventDefinition_Props): any;
 declare function eventDefinition(props: EventDefinition_Props): any;
 /**
-  * Create a FHIR Evidence resource.
+  * Create a Evidence resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this evidence, represented as a globally unique URI
   * @param {Identifier} [props.identifier] - Additional identifier for the summary
@@ -5867,14 +5536,13 @@ declare function eventDefinition(props: EventDefinition_Props): any;
   * @param {CodeableConcept} [props.studyType] - The type of study that produced this evidence
   * @param {BackboneElement} [props.statistic] - Values and parameters for a single statistic
   * @param {BackboneElement} [props.certainty] - Certainty or quality of the evidence
- */
-declare function evidence(type: string, props: Evidence_Props): any;
+  */
+declare function evidence(type: "Evidence", props: Evidence_Props): any;
 declare function evidence(props: Evidence_Props): any;
 /**
-  * Create a FHIR EvidenceReport resource.
+  * Create a EvidenceReport resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this EvidenceReport, represented as a globally unique URI
   * @param {string} [props.status] - draft | active | retired | unknown
@@ -5894,14 +5562,13 @@ declare function evidence(props: Evidence_Props): any;
   * @param {ContactDetail} [props.endorser] - Who endorsed the content
   * @param {BackboneElement} [props.relatesTo] - Relationships to other compositions/documents
   * @param {BackboneElement} [props.section] - Composition is broken into sections
- */
-declare function evidenceReport(type: string, props: EvidenceReport_Props): any;
+  */
+declare function evidenceReport(type: "EvidenceReport", props: EvidenceReport_Props): any;
 declare function evidenceReport(props: EvidenceReport_Props): any;
 /**
-  * Create a FHIR EvidenceVariable resource.
+  * Create a EvidenceVariable resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this evidence variable, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the evidence variable
@@ -5927,14 +5594,13 @@ declare function evidenceReport(props: EvidenceReport_Props): any;
   * @param {BackboneElement} [props.characteristic] - What defines the members of the evidence element
   * @param {string} [props.handling] - continuous | dichotomous | ordinal | polychotomous
   * @param {BackboneElement} [props.category] - A grouping for ordinal or polychotomous variables
- */
-declare function evidenceVariable(type: string, props: EvidenceVariable_Props): any;
+  */
+declare function evidenceVariable(type: "EvidenceVariable", props: EvidenceVariable_Props): any;
 declare function evidenceVariable(props: EvidenceVariable_Props): any;
 /**
-  * Create a FHIR ExplanationOfBenefit resource.
+  * Create a ExplanationOfBenefit resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for the resource
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -5979,14 +5645,13 @@ declare function evidenceVariable(props: EvidenceVariable_Props): any;
   * @param {BackboneElement} [props.processNote] - Note concerning adjudication
   * @param {Period} [props.benefitPeriod] - When the benefits are applicable
   * @param {BackboneElement} [props.benefitBalance] - Balance by Benefit Category
- */
-declare function explanationOfBenefit(type: string, props: ExplanationOfBenefit_Props): any;
+  */
+declare function explanationOfBenefit(type: "ExplanationOfBenefit", props: ExplanationOfBenefit_Props): any;
 declare function explanationOfBenefit(props: ExplanationOfBenefit_Props): any;
 /**
-  * Create a FHIR FamilyMemberHistory resource.
+  * Create a FamilyMemberHistory resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Id(s) for this record
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -6006,14 +5671,13 @@ declare function explanationOfBenefit(props: ExplanationOfBenefit_Props): any;
   * @param {Reference} [props.reasonReference] - Why was family member history performed?
   * @param {Annotation} [props.note] - General note about related person
   * @param {BackboneElement} [props.condition] - Condition that the related person had
- */
-declare function familyMemberHistory(type: string, props: FamilyMemberHistory_Props): any;
+  */
+declare function familyMemberHistory(type: "FamilyMemberHistory", props: FamilyMemberHistory_Props): any;
 declare function familyMemberHistory(props: FamilyMemberHistory_Props): any;
 /**
-  * Create a FHIR Flag resource.
+  * Create a Flag resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.status] - active | inactive | entered-in-error
@@ -6023,14 +5687,13 @@ declare function familyMemberHistory(props: FamilyMemberHistory_Props): any;
   * @param {Period} [props.period] - Time period when flag is active
   * @param {Reference} [props.encounter] - Alert relevant during encounter
   * @param {Reference} [props.author] - Flag creator
- */
-declare function flag(type: string, props: Flag_Props): any;
+  */
+declare function flag(type: "Flag", props: Flag_Props): any;
 declare function flag(props: Flag_Props): any;
 /**
-  * Create a FHIR Goal resource.
+  * Create a Goal resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this goal
   * @param {string} [props.lifecycleStatus] - proposed | planned | accepted | active | on-hold | completed | cancelled | entered-in-error | rejected
@@ -6048,14 +5711,13 @@ declare function flag(props: Flag_Props): any;
   * @param {Annotation} [props.note] - Comments about the goal
   * @param {CodeableConcept} [props.outcomeCode] - What result was achieved regarding the goal?
   * @param {Reference} [props.outcomeReference] - Observation that resulted from goal
- */
-declare function goal(type: string, props: Goal_Props): any;
+  */
+declare function goal(type: "Goal", props: Goal_Props): any;
 declare function goal(props: Goal_Props): any;
 /**
-  * Create a FHIR Group resource.
+  * Create a Group resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique id
   * @param {boolean} [props.active] - Whether this group's record is in active use
@@ -6067,14 +5729,13 @@ declare function goal(props: Goal_Props): any;
   * @param {Reference} [props.managingEntity] - Entity that is the custodian of the Group's definition
   * @param {BackboneElement} [props.characteristic] - Include / Exclude group members by Trait
   * @param {BackboneElement} [props.member] - Who or what is in group
- */
-declare function group(type: string, props: Group_Props): any;
+  */
+declare function group(type: "Group", props: Group_Props): any;
 declare function group(props: Group_Props): any;
 /**
-  * Create a FHIR GuidanceResponse resource.
+  * Create a GuidanceResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.requestIdentifier] - The identifier of the request associated with this response, if any
   * @param {Identifier} [props.identifier] - Business identifier
@@ -6091,14 +5752,13 @@ declare function group(props: Group_Props): any;
   * @param {Reference} [props.outputParameters] - The output parameters of the evaluation, if any
   * @param {Reference} [props.result] - Proposed actions, if any
   * @param {DataRequirement} [props.dataRequirement] - Additional required data
- */
-declare function guidanceResponse(type: string, props: GuidanceResponse_Props): any;
+  */
+declare function guidanceResponse(type: "GuidanceResponse", props: GuidanceResponse_Props): any;
 declare function guidanceResponse(props: GuidanceResponse_Props): any;
 /**
-  * Create a FHIR HealthcareService resource.
+  * Create a HealthcareService resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifiers for this item
   * @param {boolean} [props.active] - Whether this HealthcareService record is in active use
@@ -6124,14 +5784,13 @@ declare function guidanceResponse(props: GuidanceResponse_Props): any;
   * @param {BackboneElement} [props.notAvailable] - Not available during this time due to provided reason
   * @param {string} [props.availabilityExceptions] - Description of availability exceptions
   * @param {Reference} [props.endpoint] - Technical endpoints providing access to electronic services operated for the healthcare service
- */
-declare function healthcareService(type: string, props: HealthcareService_Props): any;
+  */
+declare function healthcareService(type: "HealthcareService", props: HealthcareService_Props): any;
 declare function healthcareService(props: HealthcareService_Props): any;
 /**
-  * Create a FHIR ImagingStudy resource.
+  * Create a ImagingStudy resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifiers for the whole study
   * @param {string} [props.status] - registered | available | cancelled | entered-in-error | unknown
@@ -6153,14 +5812,13 @@ declare function healthcareService(props: HealthcareService_Props): any;
   * @param {Annotation} [props.note] - User-defined comments
   * @param {string} [props.description] - Institution-generated description
   * @param {BackboneElement} [props.series] - Each study has one or more series of instances
- */
-declare function imagingStudy(type: string, props: ImagingStudy_Props): any;
+  */
+declare function imagingStudy(type: "ImagingStudy", props: ImagingStudy_Props): any;
 declare function imagingStudy(props: ImagingStudy_Props): any;
 /**
-  * Create a FHIR Immunization resource.
+  * Create a Immunization resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.status] - completed | entered-in-error | not-done
@@ -6190,14 +5848,13 @@ declare function imagingStudy(props: ImagingStudy_Props): any;
   * @param {CodeableConcept} [props.fundingSource] - Funding source for the vaccine
   * @param {BackboneElement} [props.reaction] - Details of a reaction that follows immunization
   * @param {BackboneElement} [props.protocolApplied] - Protocol followed by the provider
- */
-declare function immunization(type: string, props: Immunization_Props): any;
+  */
+declare function immunization(type: "Immunization", props: Immunization_Props): any;
 declare function immunization(props: Immunization_Props): any;
 /**
-  * Create a FHIR ImmunizationEvaluation resource.
+  * Create a ImmunizationEvaluation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.status] - completed | entered-in-error
@@ -6212,28 +5869,26 @@ declare function immunization(props: Immunization_Props): any;
   * @param {string} [props.series] - Name of vaccine series
   * @param {number|string} [props.doseNumber] - Dose number within series
   * @param {number|string} [props.seriesDoses] - Recommended number of doses for immunity
- */
-declare function immunizationEvaluation(type: string, props: ImmunizationEvaluation_Props): any;
+  */
+declare function immunizationEvaluation(type: "ImmunizationEvaluation", props: ImmunizationEvaluation_Props): any;
 declare function immunizationEvaluation(props: ImmunizationEvaluation_Props): any;
 /**
-  * Create a FHIR ImmunizationRecommendation resource.
+  * Create a ImmunizationRecommendation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {Reference} [props.patient] - Who this profile is for
   * @param {dateTime} [props.date] - Date recommendation(s) created
   * @param {Reference} [props.authority] - Who is responsible for protocol
   * @param {BackboneElement} [props.recommendation] - Vaccine administration recommendations
- */
-declare function immunizationRecommendation(type: string, props: ImmunizationRecommendation_Props): any;
+  */
+declare function immunizationRecommendation(type: "ImmunizationRecommendation", props: ImmunizationRecommendation_Props): any;
 declare function immunizationRecommendation(props: ImmunizationRecommendation_Props): any;
 /**
-  * Create a FHIR Ingredient resource.
+  * Create a Ingredient resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - An identifier or code by which the ingredient can be referenced
   * @param {string} [props.status] - draft | active | retired | unknown
@@ -6243,14 +5898,13 @@ declare function immunizationRecommendation(props: ImmunizationRecommendation_Pr
   * @param {boolean} [props.allergenicIndicator] - If the ingredient is a known or suspected allergen
   * @param {BackboneElement} [props.manufacturer] - An organization that manufactures this ingredient
   * @param {BackboneElement} [props.substance] - The substance that comprises this ingredient
- */
-declare function ingredient(type: string, props: Ingredient_Props): any;
+  */
+declare function ingredient(type: "Ingredient", props: Ingredient_Props): any;
 declare function ingredient(props: Ingredient_Props): any;
 /**
-  * Create a FHIR InsurancePlan resource.
+  * Create a InsurancePlan resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for Product
   * @param {string} [props.status] - draft | active | retired | unknown
@@ -6266,14 +5920,13 @@ declare function ingredient(props: Ingredient_Props): any;
   * @param {Reference} [props.network] - What networks are Included
   * @param {BackboneElement} [props.coverage] - Coverage details
   * @param {BackboneElement} [props.plan] - Plan details
- */
-declare function insurancePlan(type: string, props: InsurancePlan_Props): any;
+  */
+declare function insurancePlan(type: "InsurancePlan", props: InsurancePlan_Props): any;
 declare function insurancePlan(props: InsurancePlan_Props): any;
 /**
-  * Create a FHIR Invoice resource.
+  * Create a Invoice resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for item
   * @param {string} [props.status] - draft | issued | balanced | cancelled | entered-in-error
@@ -6291,14 +5944,13 @@ declare function insurancePlan(props: InsurancePlan_Props): any;
   * @param {Money} [props.totalGross] - Gross total of this Invoice
   * @param {markdown} [props.paymentTerms] - Payment details
   * @param {Annotation} [props.note] - Comments made about the invoice
- */
-declare function invoice(type: string, props: Invoice_Props): any;
+  */
+declare function invoice(type: "Invoice", props: Invoice_Props): any;
 declare function invoice(props: Invoice_Props): any;
 /**
-  * Create a FHIR Library resource.
+  * Create a Library resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this library, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the library
@@ -6331,14 +5983,13 @@ declare function invoice(props: Invoice_Props): any;
   * @param {ParameterDefinition} [props.parameter] - Parameters defined by the library
   * @param {DataRequirement} [props.dataRequirement] - What data is referenced by this library
   * @param {Attachment} [props.content] - Contents of the library, either embedded or referenced
- */
-declare function library(type: string, props: Library_Props): any;
+  */
+declare function library(type: "Library", props: Library_Props): any;
 declare function library(props: Library_Props): any;
 /**
-  * Create a FHIR List resource.
+  * Create a List resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {string} [props.status] - current | retired | entered-in-error
@@ -6353,14 +6004,13 @@ declare function library(props: Library_Props): any;
   * @param {Annotation} [props.note] - Comments about the list
   * @param {BackboneElement} [props.entry] - Entries in the list
   * @param {CodeableConcept} [props.emptyReason] - Why list is empty
- */
-declare function list(type: string, props: List_Props): any;
+  */
+declare function list(type: "List", props: List_Props): any;
 declare function list(props: List_Props): any;
 /**
-  * Create a FHIR Location resource.
+  * Create a Location resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique code or number identifying the location to its users
   * @param {string} [props.status] - active | suspended | inactive
@@ -6379,14 +6029,13 @@ declare function list(props: List_Props): any;
   * @param {BackboneElement} [props.hoursOfOperation] - What days/times during a week is this location usually open
   * @param {string} [props.availabilityExceptions] - Description of availability exceptions
   * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for the location
- */
-declare function location(type: string, props: Location_Props): any;
+  */
+declare function location(type: "Location", props: Location_Props): any;
 declare function location(props: Location_Props): any;
 /**
-  * Create a FHIR ManufacturedItemDefinition resource.
+  * Create a ManufacturedItemDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique identifier
   * @param {string} [props.status] - draft | active | retired | unknown
@@ -6395,14 +6044,13 @@ declare function location(props: Location_Props): any;
   * @param {Reference} [props.manufacturer] - Manufacturer of the item (Note that this should be named "manufacturer" but it currently causes technical issues)
   * @param {CodeableConcept} [props.ingredient] - The ingredients of this manufactured item. Only needed if these are not specified by incoming references from the Ingredient resource
   * @param {BackboneElement} [props.property] - General characteristics of this item
- */
-declare function manufacturedItemDefinition(type: string, props: ManufacturedItemDefinition_Props): any;
+  */
+declare function manufacturedItemDefinition(type: "ManufacturedItemDefinition", props: ManufacturedItemDefinition_Props): any;
 declare function manufacturedItemDefinition(props: ManufacturedItemDefinition_Props): any;
 /**
-  * Create a FHIR Measure resource.
+  * Create a Measure resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this measure, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the measure
@@ -6445,14 +6093,13 @@ declare function manufacturedItemDefinition(props: ManufacturedItemDefinition_Pr
   * @param {markdown} [props.guidance] - Additional guidance for implementers
   * @param {BackboneElement} [props.group] - Population criteria group
   * @param {BackboneElement} [props.supplementalData] - What other data should be reported with the measure
- */
-declare function measure(type: string, props: Measure_Props): any;
+  */
+declare function measure(type: "Measure", props: Measure_Props): any;
 declare function measure(props: Measure_Props): any;
 /**
-  * Create a FHIR MeasureReport resource.
+  * Create a MeasureReport resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Additional identifier for the MeasureReport
   * @param {string} [props.status] - complete | pending | error
@@ -6465,14 +6112,13 @@ declare function measure(props: Measure_Props): any;
   * @param {CodeableConcept} [props.improvementNotation] - increase | decrease
   * @param {BackboneElement} [props.group] - Measure results for each group
   * @param {Reference} [props.evaluatedResource] - What data was used to calculate the measure score
- */
-declare function measureReport(type: string, props: MeasureReport_Props): any;
+  */
+declare function measureReport(type: "MeasureReport", props: MeasureReport_Props): any;
 declare function measureReport(props: MeasureReport_Props): any;
 /**
-  * Create a FHIR Media resource.
+  * Create a Media resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifier(s) for the image
   * @param {Reference} [props.basedOn] - Procedure that caused this media to be created
@@ -6496,14 +6142,13 @@ declare function measureReport(props: MeasureReport_Props): any;
   * @param {decimal} [props.duration] - Length in seconds (audio / video)
   * @param {Attachment} [props.content] - Actual Media - reference or data
   * @param {Annotation} [props.note] - Comments made about the media
- */
-declare function media(type: string, props: Media_Props): any;
+  */
+declare function media(type: "Media", props: Media_Props): any;
 declare function media(props: Media_Props): any;
 /**
-  * Create a FHIR Medication resource.
+  * Create a Medication resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for this medication
   * @param {CodeableConcept} [props.code] - Codes that identify this medication
@@ -6513,14 +6158,13 @@ declare function media(props: Media_Props): any;
   * @param {Ratio} [props.amount] - Amount of drug in package
   * @param {BackboneElement} [props.ingredient] - Active or inactive ingredient
   * @param {BackboneElement} [props.batch] - Details about packaged medications
- */
-declare function medication(type: string, props: Medication_Props): any;
+  */
+declare function medication(type: "Medication", props: Medication_Props): any;
 declare function medication(props: Medication_Props): any;
 /**
-  * Create a FHIR MedicationAdministration resource.
+  * Create a MedicationAdministration resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier
   * @param {string} [props.instantiates] - Instantiates protocol or definition
@@ -6541,14 +6185,13 @@ declare function medication(props: Medication_Props): any;
   * @param {Annotation} [props.note] - Information about the administration
   * @param {BackboneElement} [props.dosage] - Details of how medication was taken
   * @param {Reference} [props.eventHistory] - A list of events of interest in the lifecycle
- */
-declare function medicationAdministration(type: string, props: MedicationAdministration_Props): any;
+  */
+declare function medicationAdministration(type: "MedicationAdministration", props: MedicationAdministration_Props): any;
 declare function medicationAdministration(props: MedicationAdministration_Props): any;
 /**
-  * Create a FHIR MedicationDispense resource.
+  * Create a MedicationDispense resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier
   * @param {Reference} [props.partOf] - Event that dispense is part of
@@ -6574,14 +6217,13 @@ declare function medicationAdministration(props: MedicationAdministration_Props)
   * @param {BackboneElement} [props.substitution] - Whether a substitution was performed on the dispense
   * @param {Reference} [props.detectedIssue] - Clinical issue with action
   * @param {Reference} [props.eventHistory] - A list of relevant lifecycle events
- */
-declare function medicationDispense(type: string, props: MedicationDispense_Props): any;
+  */
+declare function medicationDispense(type: "MedicationDispense", props: MedicationDispense_Props): any;
 declare function medicationDispense(props: MedicationDispense_Props): any;
 /**
-  * Create a FHIR MedicationKnowledge resource.
+  * Create a MedicationKnowledge resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {CodeableConcept} [props.code] - Code that identifies this medication
   * @param {string} [props.status] - active | inactive | entered-in-error
@@ -6605,14 +6247,13 @@ declare function medicationDispense(props: MedicationDispense_Props): any;
   * @param {Reference} [props.contraindication] - Potential clinical issue with or between medication(s)
   * @param {BackboneElement} [props.regulatory] - Regulatory information about a medication
   * @param {BackboneElement} [props.kinetics] - The time course of drug absorption, distribution, metabolism and excretion of a medication from the body
- */
-declare function medicationKnowledge(type: string, props: MedicationKnowledge_Props): any;
+  */
+declare function medicationKnowledge(type: "MedicationKnowledge", props: MedicationKnowledge_Props): any;
 declare function medicationKnowledge(props: MedicationKnowledge_Props): any;
 /**
-  * Create a FHIR MedicationRequest resource.
+  * Create a MedicationRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External ids for this request
   * @param {string} [props.status] - active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown
@@ -6646,14 +6287,13 @@ declare function medicationKnowledge(props: MedicationKnowledge_Props): any;
   * @param {Reference} [props.priorPrescription] - An order/prescription that is being replaced
   * @param {Reference} [props.detectedIssue] - Clinical Issue with action
   * @param {Reference} [props.eventHistory] - A list of events of interest in the lifecycle
- */
-declare function medicationRequest(type: string, props: MedicationRequest_Props): any;
+  */
+declare function medicationRequest(type: "MedicationRequest", props: MedicationRequest_Props): any;
 declare function medicationRequest(props: MedicationRequest_Props): any;
 /**
-  * Create a FHIR MedicationStatement resource.
+  * Create a MedicationStatement resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier
   * @param {Reference} [props.basedOn] - Fulfils plan, proposal or order
@@ -6672,14 +6312,13 @@ declare function medicationRequest(props: MedicationRequest_Props): any;
   * @param {Reference} [props.reasonReference] - Condition or observation that supports why the medication is being/was taken
   * @param {Annotation} [props.note] - Further information about the statement
   * @param {Dosage} [props.dosage] - Details of how medication is/was taken or should be taken
- */
-declare function medicationStatement(type: string, props: MedicationStatement_Props): any;
+  */
+declare function medicationStatement(type: "MedicationStatement", props: MedicationStatement_Props): any;
 declare function medicationStatement(props: MedicationStatement_Props): any;
 /**
-  * Create a FHIR MedicinalProductDefinition resource.
+  * Create a MedicinalProductDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for this product. Could be an MPID
   * @param {CodeableConcept} [props.type] - Regulatory type, e.g. Investigational or Authorized
@@ -6709,14 +6348,13 @@ declare function medicationStatement(props: MedicationStatement_Props): any;
   * @param {BackboneElement} [props.crossReference] - Reference to another product, e.g. for linking authorised to investigational product
   * @param {BackboneElement} [props.operation] - A manufacturing or administrative process for the medicinal product
   * @param {BackboneElement} [props.characteristic] - Key product features such as "sugar free", "modified release"
- */
-declare function medicinalProductDefinition(type: string, props: MedicinalProductDefinition_Props): any;
+  */
+declare function medicinalProductDefinition(type: "MedicinalProductDefinition", props: MedicinalProductDefinition_Props): any;
 declare function medicinalProductDefinition(props: MedicinalProductDefinition_Props): any;
 /**
-  * Create a FHIR MolecularSequence resource.
+  * Create a MolecularSequence resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique ID for this particular sequence. This is a FHIR-defined id
   * @param {string} [props.type] - aa | dna | rna
@@ -6734,14 +6372,13 @@ declare function medicinalProductDefinition(props: MedicinalProductDefinition_Pr
   * @param {BackboneElement} [props.repository] - External repository which contains detailed report related with observedSeq in this resource
   * @param {Reference} [props.pointer] - Pointer to next atomic sequence
   * @param {BackboneElement} [props.structureVariant] - Structural variant
- */
-declare function molecularSequence(type: string, props: MolecularSequence_Props): any;
+  */
+declare function molecularSequence(type: "MolecularSequence", props: MolecularSequence_Props): any;
 declare function molecularSequence(props: MolecularSequence_Props): any;
 /**
-  * Create a FHIR NutritionOrder resource.
+  * Create a NutritionOrder resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifiers assigned to this order
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -6760,14 +6397,13 @@ declare function molecularSequence(props: MolecularSequence_Props): any;
   * @param {BackboneElement} [props.supplement] - Supplement components
   * @param {BackboneElement} [props.enteralFormula] - Enteral formula components
   * @param {Annotation} [props.note] - Comments
- */
-declare function nutritionOrder(type: string, props: NutritionOrder_Props): any;
+  */
+declare function nutritionOrder(type: "NutritionOrder", props: NutritionOrder_Props): any;
 declare function nutritionOrder(props: NutritionOrder_Props): any;
 /**
-  * Create a FHIR NutritionProduct resource.
+  * Create a NutritionProduct resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.status] - active | inactive | entered-in-error
   * @param {CodeableConcept} [props.category] - A category or class of the nutrition product (halal, kosher, gluten free, vegan, etc)
@@ -6779,14 +6415,13 @@ declare function nutritionOrder(props: NutritionOrder_Props): any;
   * @param {BackboneElement} [props.productCharacteristic] - Specifies descriptive properties of the nutrition product
   * @param {BackboneElement} [props.instance] - One or several physical instances or occurrences of the nutrition product
   * @param {Annotation} [props.note] - Comments made about the product
- */
-declare function nutritionProduct(type: string, props: NutritionProduct_Props): any;
+  */
+declare function nutritionProduct(type: "NutritionProduct", props: NutritionProduct_Props): any;
 declare function nutritionProduct(props: NutritionProduct_Props): any;
 /**
-  * Create a FHIR Observation resource.
+  * Create a Observation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for observation
   * @param {Reference} [props.basedOn] - Fulfills plan, proposal or order
@@ -6812,14 +6447,13 @@ declare function nutritionProduct(props: NutritionProduct_Props): any;
   * @param {Reference} [props.hasMember] - Related resource that belongs to the Observation group
   * @param {Reference} [props.derivedFrom] - Related measurements the observation is made from
   * @param {BackboneElement} [props.component] - Component results
- */
-declare function observation(type: string, props: Observation_Props): any;
+  */
+declare function observation(type: "Observation", props: Observation_Props): any;
 declare function observation(props: Observation_Props): any;
 /**
-  * Create a FHIR ObservationDefinition resource.
+  * Create a ObservationDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {CodeableConcept} [props.category] - Category of observation
   * @param {CodeableConcept} [props.code] - Type of observation (code / type)
@@ -6834,14 +6468,13 @@ declare function observation(props: Observation_Props): any;
   * @param {Reference} [props.normalCodedValueSet] - Value set of normal coded values for the observations conforming to this ObservationDefinition
   * @param {Reference} [props.abnormalCodedValueSet] - Value set of abnormal coded values for the observations conforming to this ObservationDefinition
   * @param {Reference} [props.criticalCodedValueSet] - Value set of critical coded values for the observations conforming to this ObservationDefinition
- */
-declare function observationDefinition(type: string, props: ObservationDefinition_Props): any;
+  */
+declare function observationDefinition(type: "ObservationDefinition", props: ObservationDefinition_Props): any;
 declare function observationDefinition(props: ObservationDefinition_Props): any;
 /**
-  * Create a FHIR Organization resource.
+  * Create a Organization resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifies this organization  across multiple systems
   * @param {boolean} [props.active] - Whether the organization's record is still in active use
@@ -6853,14 +6486,13 @@ declare function observationDefinition(props: ObservationDefinition_Props): any;
   * @param {Reference} [props.partOf] - The organization of which this organization forms a part
   * @param {BackboneElement} [props.contact] - Contact for the organization for a certain purpose
   * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for the organization
- */
-declare function organization(type: string, props: Organization_Props): any;
+  */
+declare function organization(type: "Organization", props: Organization_Props): any;
 declare function organization(props: Organization_Props): any;
 /**
-  * Create a FHIR OrganizationAffiliation resource.
+  * Create a OrganizationAffiliation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifiers that are specific to this role
   * @param {boolean} [props.active] - Whether this organization affiliation record is in active use
@@ -6874,14 +6506,13 @@ declare function organization(props: Organization_Props): any;
   * @param {Reference} [props.healthcareService] - Healthcare services provided through the role
   * @param {ContactPoint} [props.telecom] - Contact details at the participatingOrganization relevant to this Affiliation
   * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for this role
- */
-declare function organizationAffiliation(type: string, props: OrganizationAffiliation_Props): any;
+  */
+declare function organizationAffiliation(type: "OrganizationAffiliation", props: OrganizationAffiliation_Props): any;
 declare function organizationAffiliation(props: OrganizationAffiliation_Props): any;
 /**
-  * Create a FHIR PackagedProductDefinition resource.
+  * Create a PackagedProductDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - A unique identifier for this package as whole
   * @param {string} [props.name] - A name for this package. Typically as listed in a drug formulary, catalogue, inventory etc
@@ -6897,14 +6528,13 @@ declare function organizationAffiliation(props: OrganizationAffiliation_Props): 
   * @param {boolean} [props.copackagedIndicator] - If the drug product is supplied with another item such as a diluent or adjuvant
   * @param {Reference} [props.manufacturer] - Manufacturer of this package type (multiple means these are all possible manufacturers)
   * @param {BackboneElement} [props.package] - A packaging item, as a container for medically related items, possibly with other packaging items within, or a packaging component, such as bottle cap
- */
-declare function packagedProductDefinition(type: string, props: PackagedProductDefinition_Props): any;
+  */
+declare function packagedProductDefinition(type: "PackagedProductDefinition", props: PackagedProductDefinition_Props): any;
 declare function packagedProductDefinition(props: PackagedProductDefinition_Props): any;
 /**
-  * Create a FHIR Patient resource.
+  * Create a Patient resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - An identifier for this patient
   * @param {boolean} [props.active] - Whether this patient's record is in active use
@@ -6922,14 +6552,13 @@ declare function packagedProductDefinition(props: PackagedProductDefinition_Prop
   * @param {Reference} [props.generalPractitioner] - Patient's nominated primary care provider
   * @param {Reference} [props.managingOrganization] - Organization that is the custodian of the patient record
   * @param {BackboneElement} [props.link] - Link to another patient resource that concerns the same actual person
- */
-declare function patient(type: string, props: Patient_Props): any;
+  */
+declare function patient(type: "Patient", props: Patient_Props): any;
 declare function patient(props: Patient_Props): any;
 /**
-  * Create a FHIR PaymentNotice resource.
+  * Create a PaymentNotice resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for the payment noctice
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -6943,14 +6572,13 @@ declare function patient(props: Patient_Props): any;
   * @param {Reference} [props.recipient] - Party being notified
   * @param {Money} [props.amount] - Monetary amount of the payment
   * @param {CodeableConcept} [props.paymentStatus] - Issued or cleared Status of the payment
- */
-declare function paymentNotice(type: string, props: PaymentNotice_Props): any;
+  */
+declare function paymentNotice(type: "PaymentNotice", props: PaymentNotice_Props): any;
 declare function paymentNotice(props: PaymentNotice_Props): any;
 /**
-  * Create a FHIR PaymentReconciliation resource.
+  * Create a PaymentReconciliation resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for a payment reconciliation
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -6967,14 +6595,13 @@ declare function paymentNotice(props: PaymentNotice_Props): any;
   * @param {BackboneElement} [props.detail] - Settlement particulars
   * @param {CodeableConcept} [props.formCode] - Printed form identifier
   * @param {BackboneElement} [props.processNote] - Note concerning processing
- */
-declare function paymentReconciliation(type: string, props: PaymentReconciliation_Props): any;
+  */
+declare function paymentReconciliation(type: "PaymentReconciliation", props: PaymentReconciliation_Props): any;
 declare function paymentReconciliation(props: PaymentReconciliation_Props): any;
 /**
-  * Create a FHIR Person resource.
+  * Create a Person resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - A human identifier for this person
   * @param {HumanName} [props.name] - A name associated with the person
@@ -6986,14 +6613,13 @@ declare function paymentReconciliation(props: PaymentReconciliation_Props): any;
   * @param {Reference} [props.managingOrganization] - The organization that is the custodian of the person record
   * @param {boolean} [props.active] - This person's record is in active use
   * @param {BackboneElement} [props.link] - Link to a resource that concerns the same actual person
- */
-declare function person(type: string, props: Person_Props): any;
+  */
+declare function person(type: "Person", props: Person_Props): any;
 declare function person(props: Person_Props): any;
 /**
-  * Create a FHIR PlanDefinition resource.
+  * Create a PlanDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this plan definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the plan definition
@@ -7026,14 +6652,13 @@ declare function person(props: Person_Props): any;
   * @param {canonical} [props.library] - Logic used by the plan definition
   * @param {BackboneElement} [props.goal] - What the plan is trying to accomplish
   * @param {BackboneElement} [props.action] - Action defined by the plan
- */
-declare function planDefinition(type: string, props: PlanDefinition_Props): any;
+  */
+declare function planDefinition(type: "PlanDefinition", props: PlanDefinition_Props): any;
 declare function planDefinition(props: PlanDefinition_Props): any;
 /**
-  * Create a FHIR Practitioner resource.
+  * Create a Practitioner resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - An identifier for the person as this agent
   * @param {boolean} [props.active] - Whether this practitioner's record is in active use
@@ -7045,14 +6670,13 @@ declare function planDefinition(props: PlanDefinition_Props): any;
   * @param {Attachment} [props.photo] - Image of the person
   * @param {BackboneElement} [props.qualification] - Certification, licenses, or training pertaining to the provision of care
   * @param {CodeableConcept} [props.communication] - A language the practitioner can use in patient communication
- */
-declare function practitioner(type: string, props: Practitioner_Props): any;
+  */
+declare function practitioner(type: "Practitioner", props: Practitioner_Props): any;
 declare function practitioner(props: Practitioner_Props): any;
 /**
-  * Create a FHIR PractitionerRole resource.
+  * Create a PractitionerRole resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifiers that are specific to a role/location
   * @param {boolean} [props.active] - Whether this practitioner role record is in active use
@@ -7068,14 +6692,13 @@ declare function practitioner(props: Practitioner_Props): any;
   * @param {BackboneElement} [props.notAvailable] - Not available during this time due to provided reason
   * @param {string} [props.availabilityExceptions] - Description of availability exceptions
   * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for the practitioner with this role
- */
-declare function practitionerRole(type: string, props: PractitionerRole_Props): any;
+  */
+declare function practitionerRole(type: "PractitionerRole", props: PractitionerRole_Props): any;
 declare function practitionerRole(props: PractitionerRole_Props): any;
 /**
-  * Create a FHIR Procedure resource.
+  * Create a Procedure resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Identifiers for this procedure
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -7105,14 +6728,13 @@ declare function practitionerRole(props: PractitionerRole_Props): any;
   * @param {BackboneElement} [props.focalDevice] - Manipulated, implanted, or removed device
   * @param {Reference} [props.usedReference] - Items used during procedure
   * @param {CodeableConcept} [props.usedCode] - Coded items used during the procedure
- */
-declare function procedure(type: string, props: Procedure_Props): any;
+  */
+declare function procedure(type: "Procedure", props: Procedure_Props): any;
 declare function procedure(props: Procedure_Props): any;
 /**
-  * Create a FHIR Questionnaire resource.
+  * Create a Questionnaire resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this questionnaire, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the questionnaire
@@ -7136,14 +6758,13 @@ declare function procedure(props: Procedure_Props): any;
   * @param {Period} [props.effectivePeriod] - When the questionnaire is expected to be used
   * @param {Coding} [props.code] - Concept that represents the overall questionnaire
   * @param {BackboneElement} [props.item] - Questions and sections within the Questionnaire
- */
-declare function questionnaire(type: string, props: Questionnaire_Props): any;
+  */
+declare function questionnaire(type: "Questionnaire", props: Questionnaire_Props): any;
 declare function questionnaire(props: Questionnaire_Props): any;
 /**
-  * Create a FHIR QuestionnaireResponse resource.
+  * Create a QuestionnaireResponse resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique id for this set of answers
   * @param {Reference} [props.basedOn] - Request fulfilled by this QuestionnaireResponse
@@ -7156,14 +6777,13 @@ declare function questionnaire(props: Questionnaire_Props): any;
   * @param {Reference} [props.author] - Person who received and recorded the answers
   * @param {Reference} [props.source] - The person who answered the questions
   * @param {BackboneElement} [props.item] - Groups and questions
- */
-declare function questionnaireResponse(type: string, props: QuestionnaireResponse_Props): any;
+  */
+declare function questionnaireResponse(type: "QuestionnaireResponse", props: QuestionnaireResponse_Props): any;
 declare function questionnaireResponse(props: QuestionnaireResponse_Props): any;
 /**
-  * Create a FHIR RegulatedAuthorization resource.
+  * Create a RegulatedAuthorization resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier for the authorization, typically assigned by the authorizing body
   * @param {Reference} [props.subject] - The product type, treatment, facility or activity that is being authorized
@@ -7179,14 +6799,13 @@ declare function questionnaireResponse(props: QuestionnaireResponse_Props): any;
   * @param {Reference} [props.holder] - The organization that has been granted this authorization, by the regulator
   * @param {Reference} [props.regulator] - The regulatory authority or authorizing body granting the authorization
   * @param {BackboneElement} [props.case] - The case or regulatory procedure for granting or amending a regulated authorization. Note: This area is subject to ongoing review and the workgroup is seeking implementer feedback on its use (see link at bottom of page)
- */
-declare function regulatedAuthorization(type: string, props: RegulatedAuthorization_Props): any;
+  */
+declare function regulatedAuthorization(type: "RegulatedAuthorization", props: RegulatedAuthorization_Props): any;
 declare function regulatedAuthorization(props: RegulatedAuthorization_Props): any;
 /**
-  * Create a FHIR RelatedPerson resource.
+  * Create a RelatedPerson resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - A human identifier for this person
   * @param {boolean} [props.active] - Whether this related person's record is in active use
@@ -7200,14 +6819,13 @@ declare function regulatedAuthorization(props: RegulatedAuthorization_Props): an
   * @param {Attachment} [props.photo] - Image of the person
   * @param {Period} [props.period] - Period of time that this relationship is considered valid
   * @param {BackboneElement} [props.communication] - A language which may be used to communicate with about the patient's health
- */
-declare function relatedPerson(type: string, props: RelatedPerson_Props): any;
+  */
+declare function relatedPerson(type: "RelatedPerson", props: RelatedPerson_Props): any;
 declare function relatedPerson(props: RelatedPerson_Props): any;
 /**
-  * Create a FHIR RequestGroup resource.
+  * Create a RequestGroup resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -7227,14 +6845,13 @@ declare function relatedPerson(props: RelatedPerson_Props): any;
   * @param {Reference} [props.reasonReference] - Why the request group is needed
   * @param {Annotation} [props.note] - Additional notes about the response
   * @param {BackboneElement} [props.action] - Proposed actions, if any
- */
-declare function requestGroup(type: string, props: RequestGroup_Props): any;
+  */
+declare function requestGroup(type: "RequestGroup", props: RequestGroup_Props): any;
 declare function requestGroup(props: RequestGroup_Props): any;
 /**
-  * Create a FHIR ResearchDefinition resource.
+  * Create a ResearchDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this research definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the research definition
@@ -7270,14 +6887,13 @@ declare function requestGroup(props: RequestGroup_Props): any;
   * @param {Reference} [props.exposure] - What exposure?
   * @param {Reference} [props.exposureAlternative] - What alternative exposure state?
   * @param {Reference} [props.outcome] - What outcome?
- */
-declare function researchDefinition(type: string, props: ResearchDefinition_Props): any;
+  */
+declare function researchDefinition(type: "ResearchDefinition", props: ResearchDefinition_Props): any;
 declare function researchDefinition(props: ResearchDefinition_Props): any;
 /**
-  * Create a FHIR ResearchElementDefinition resource.
+  * Create a ResearchElementDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {string} [props.url] - Canonical identifier for this research element definition, represented as a URI (globally unique)
   * @param {Identifier} [props.identifier] - Additional identifier for the research element definition
@@ -7312,14 +6928,13 @@ declare function researchDefinition(props: ResearchDefinition_Props): any;
   * @param {string} [props.type] - population | exposure | outcome
   * @param {string} [props.variableType] - dichotomous | continuous | descriptive
   * @param {BackboneElement} [props.characteristic] - What defines the members of the research element
- */
-declare function researchElementDefinition(type: string, props: ResearchElementDefinition_Props): any;
+  */
+declare function researchElementDefinition(type: "ResearchElementDefinition", props: ResearchElementDefinition_Props): any;
 declare function researchElementDefinition(props: ResearchElementDefinition_Props): any;
 /**
-  * Create a FHIR ResearchStudy resource.
+  * Create a ResearchStudy resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for study
   * @param {string} [props.title] - Name for this study
@@ -7345,14 +6960,13 @@ declare function researchElementDefinition(props: ResearchElementDefinition_Prop
   * @param {Annotation} [props.note] - Comments made about the study
   * @param {BackboneElement} [props.arm] - Defined path through the study for a subject
   * @param {BackboneElement} [props.objective] - A goal for the study
- */
-declare function researchStudy(type: string, props: ResearchStudy_Props): any;
+  */
+declare function researchStudy(type: "ResearchStudy", props: ResearchStudy_Props): any;
 declare function researchStudy(props: ResearchStudy_Props): any;
 /**
-  * Create a FHIR ResearchSubject resource.
+  * Create a ResearchSubject resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for research subject in a study
   * @param {string} [props.status] - candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn
@@ -7362,14 +6976,13 @@ declare function researchStudy(props: ResearchStudy_Props): any;
   * @param {string} [props.assignedArm] - What path should be followed
   * @param {string} [props.actualArm] - What path was followed
   * @param {Reference} [props.consent] - Agreement to participate in study
- */
-declare function researchSubject(type: string, props: ResearchSubject_Props): any;
+  */
+declare function researchSubject(type: "ResearchSubject", props: ResearchSubject_Props): any;
 declare function researchSubject(props: ResearchSubject_Props): any;
 /**
-  * Create a FHIR RiskAssessment resource.
+  * Create a RiskAssessment resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique identifier for the assessment
   * @param {Reference} [props.basedOn] - Request fulfilled by this assessment
@@ -7388,14 +7001,13 @@ declare function researchSubject(props: ResearchSubject_Props): any;
   * @param {BackboneElement} [props.prediction] - Outcome predicted
   * @param {string} [props.mitigation] - How to reduce risk
   * @param {Annotation} [props.note] - Comments on the risk assessment
- */
-declare function riskAssessment(type: string, props: RiskAssessment_Props): any;
+  */
+declare function riskAssessment(type: "RiskAssessment", props: RiskAssessment_Props): any;
 declare function riskAssessment(props: RiskAssessment_Props): any;
 /**
-  * Create a FHIR Schedule resource.
+  * Create a Schedule resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this item
   * @param {boolean} [props.active] - Whether this schedule is in active use
@@ -7405,14 +7017,13 @@ declare function riskAssessment(props: RiskAssessment_Props): any;
   * @param {Reference} [props.actor] - Resource(s) that availability information is being provided for
   * @param {Period} [props.planningHorizon] - Period of time covered by schedule
   * @param {string} [props.comment] - Comments on availability
- */
-declare function schedule(type: string, props: Schedule_Props): any;
+  */
+declare function schedule(type: "Schedule", props: Schedule_Props): any;
 declare function schedule(props: Schedule_Props): any;
 /**
-  * Create a FHIR ServiceRequest resource.
+  * Create a ServiceRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifiers assigned to this order
   * @param {canonical} [props.instantiatesCanonical] - Instantiates FHIR protocol or definition
@@ -7447,14 +7058,13 @@ declare function schedule(props: Schedule_Props): any;
   * @param {Annotation} [props.note] - Comments
   * @param {string} [props.patientInstruction] - Patient or consumer-oriented instructions
   * @param {Reference} [props.relevantHistory] - Request provenance
- */
-declare function serviceRequest(type: string, props: ServiceRequest_Props): any;
+  */
+declare function serviceRequest(type: "ServiceRequest", props: ServiceRequest_Props): any;
 declare function serviceRequest(props: ServiceRequest_Props): any;
 /**
-  * Create a FHIR Slot resource.
+  * Create a Slot resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Ids for this item
   * @param {CodeableConcept} [props.serviceCategory] - A broad categorization of the service that is to be performed during this appointment
@@ -7467,14 +7077,13 @@ declare function serviceRequest(props: ServiceRequest_Props): any;
   * @param {instant} [props.end] - Date/Time that the slot is to conclude
   * @param {boolean} [props.overbooked] - This slot has already been overbooked, appointments are unlikely to be accepted for this time
   * @param {string} [props.comment] - Comments on the slot to describe any extended information. Such as custom constraints on the slot
- */
-declare function slot(type: string, props: Slot_Props): any;
+  */
+declare function slot(type: "Slot", props: Slot_Props): any;
 declare function slot(props: Slot_Props): any;
 /**
-  * Create a FHIR Specimen resource.
+  * Create a Specimen resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External Identifier
   * @param {Identifier} [props.accessionIdentifier] - Identifier assigned by the lab
@@ -7489,14 +7098,13 @@ declare function slot(props: Slot_Props): any;
   * @param {BackboneElement} [props.container] - Direct container of specimen (tube/slide, etc.)
   * @param {CodeableConcept} [props.condition] - State of the specimen
   * @param {Annotation} [props.note] - Comments
- */
-declare function specimen(type: string, props: Specimen_Props): any;
+  */
+declare function specimen(type: "Specimen", props: Specimen_Props): any;
 declare function specimen(props: Specimen_Props): any;
 /**
-  * Create a FHIR SpecimenDefinition resource.
+  * Create a SpecimenDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business identifier of a kind of specimen
   * @param {CodeableConcept} [props.typeCollected] - Kind of material to collect
@@ -7504,14 +7112,13 @@ declare function specimen(props: Specimen_Props): any;
   * @param {string} [props.timeAspect] - Time aspect for collection
   * @param {CodeableConcept} [props.collection] - Specimen collection procedure
   * @param {BackboneElement} [props.typeTested] - Specimen in container intended for testing by lab
- */
-declare function specimenDefinition(type: string, props: SpecimenDefinition_Props): any;
+  */
+declare function specimenDefinition(type: "SpecimenDefinition", props: SpecimenDefinition_Props): any;
 declare function specimenDefinition(props: SpecimenDefinition_Props): any;
 /**
-  * Create a FHIR Substance resource.
+  * Create a Substance resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Unique identifier
   * @param {string} [props.status] - active | inactive | entered-in-error
@@ -7520,14 +7127,13 @@ declare function specimenDefinition(props: SpecimenDefinition_Props): any;
   * @param {string} [props.description] - Textual description of the substance, comments
   * @param {BackboneElement} [props.instance] - If this describes a specific package/container of the substance
   * @param {BackboneElement} [props.ingredient] - Composition information about the substance
- */
-declare function substance(type: string, props: Substance_Props): any;
+  */
+declare function substance(type: "Substance", props: Substance_Props): any;
 declare function substance(props: Substance_Props): any;
 /**
-  * Create a FHIR SubstanceDefinition resource.
+  * Create a SubstanceDefinition resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Identifier by which this substance is known
   * @param {string} [props.version] - A business level version identifier of the substance
@@ -7548,14 +7154,13 @@ declare function substance(props: Substance_Props): any;
   * @param {BackboneElement} [props.name] - Names applicable to this substance
   * @param {BackboneElement} [props.relationship] - A link between this substance and another
   * @param {BackboneElement} [props.sourceMaterial] - Material or taxonomic/anatomical source
- */
-declare function substanceDefinition(type: string, props: SubstanceDefinition_Props): any;
+  */
+declare function substanceDefinition(type: "SubstanceDefinition", props: SubstanceDefinition_Props): any;
 declare function substanceDefinition(props: SubstanceDefinition_Props): any;
 /**
-  * Create a FHIR SupplyDelivery resource.
+  * Create a SupplyDelivery resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier
   * @param {Reference} [props.basedOn] - Fulfills plan, proposal or order
@@ -7568,14 +7173,13 @@ declare function substanceDefinition(props: SubstanceDefinition_Props): any;
   * @param {Reference} [props.supplier] - Dispenser
   * @param {Reference} [props.destination] - Where the Supply was sent
   * @param {Reference} [props.receiver] - Who collected the Supply
- */
-declare function supplyDelivery(type: string, props: SupplyDelivery_Props): any;
+  */
+declare function supplyDelivery(type: "SupplyDelivery", props: SupplyDelivery_Props): any;
 declare function supplyDelivery(props: SupplyDelivery_Props): any;
 /**
-  * Create a FHIR SupplyRequest resource.
+  * Create a SupplyRequest resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for SupplyRequest
   * @param {string} [props.status] - draft | active | suspended +
@@ -7592,14 +7196,13 @@ declare function supplyDelivery(props: SupplyDelivery_Props): any;
   * @param {Reference} [props.reasonReference] - The reason why the supply item was requested
   * @param {Reference} [props.deliverFrom] - The origin of the supply
   * @param {Reference} [props.deliverTo] - The destination of the supply
- */
-declare function supplyRequest(type: string, props: SupplyRequest_Props): any;
+  */
+declare function supplyRequest(type: "SupplyRequest", props: SupplyRequest_Props): any;
 declare function supplyRequest(props: SupplyRequest_Props): any;
 /**
-  * Create a FHIR Task resource.
+  * Create a Task resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Task Instance Identifier
   * @param {canonical} [props.instantiatesCanonical] - Formal definition of task
@@ -7632,14 +7235,13 @@ declare function supplyRequest(props: SupplyRequest_Props): any;
   * @param {BackboneElement} [props.restriction] - Constraints on fulfillment tasks
   * @param {BackboneElement} [props.input] - Information used to perform task
   * @param {BackboneElement} [props.output] - Information produced as part of task
- */
-declare function task(type: string, props: Task_Props): any;
+  */
+declare function task(type: "Task", props: Task_Props): any;
 declare function task(props: Task_Props): any;
 /**
-  * Create a FHIR TestReport resource.
+  * Create a TestReport resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - External identifier
   * @param {string} [props.name] - Informal name of the executed TestScript
@@ -7653,14 +7255,13 @@ declare function task(props: Task_Props): any;
   * @param {BackboneElement} [props.setup] - The results of the series of required setup operations before the tests were executed
   * @param {BackboneElement} [props.test] - A test executed from the test script
   * @param {BackboneElement} [props.teardown] - The results of running the series of required clean up steps
- */
-declare function testReport(type: string, props: TestReport_Props): any;
+  */
+declare function testReport(type: "TestReport", props: TestReport_Props): any;
 declare function testReport(props: TestReport_Props): any;
 /**
-  * Create a FHIR VerificationResult resource.
+  * Create a VerificationResult resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Reference} [props.target] - A resource that was validated
   * @param {string} [props.targetLocation] - The fhirpath location(s) within the resource that was validated
@@ -7676,14 +7277,13 @@ declare function testReport(props: TestReport_Props): any;
   * @param {BackboneElement} [props.primarySource] - Information about the primary source(s) involved in validation
   * @param {BackboneElement} [props.attestation] - Information about the entity attesting to information
   * @param {BackboneElement} [props.validator] - Information about the entity validating information
- */
-declare function verificationResult(type: string, props: VerificationResult_Props): any;
+  */
+declare function verificationResult(type: "VerificationResult", props: VerificationResult_Props): any;
 declare function verificationResult(props: VerificationResult_Props): any;
 /**
-  * Create a FHIR VisionPrescription resource.
+  * Create a VisionPrescription resource.
   * @public
   * @function
-  * @param {string} type - The profile id for the resource variant. Optional.
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
   * @param {Identifier} [props.identifier] - Business Identifier for vision prescription
   * @param {string} [props.status] - active | cancelled | draft | entered-in-error
@@ -7693,9 +7293,9 @@ declare function verificationResult(props: VerificationResult_Props): any;
   * @param {dateTime} [props.dateWritten] - When prescription was authorized
   * @param {Reference} [props.prescriber] - Who authorized the vision prescription
   * @param {BackboneElement} [props.lensSpecification] - Vision lens authorization
- */
-declare function visionPrescription(type: string, props: VisionPrescription_Props): any;
+  */
+declare function visionPrescription(type: "VisionPrescription", props: VisionPrescription_Props): any;
 declare function visionPrescription(props: VisionPrescription_Props): any;
 
-export { account, activityDefinition, addExtension, administrableProductDefinition, adverseEvent, allergyIntolerance, appointment, appointmentResponse, biologicallyDerivedProduct, bodyStructure, c, carePlan, careTeam, cc, chargeItem, chargeItemDefinition, citation, claim, claimResponse, clinicalImpression, clinicalUseDefinition, coding, communication, communicationRequest, composite, concept, contract, coverage, coverageEligibilityRequest, coverageEligibilityResponse, detectedIssue, device, deviceDefinition, deviceMetric, deviceRequest, deviceUseStatement, diagnosticReport, domainResource, encounter, enrollmentRequest, enrollmentResponse, episodeOfCare, eventDefinition, evidence, evidenceReport, evidenceVariable, explanationOfBenefit, ext, extendSystemMap, extension, familyMemberHistory, findExtension, flag, goal, group, guidanceResponse, healthcareService, id, identifier, imagingStudy, immunization, immunizationEvaluation, immunizationRecommendation, ingredient, insurancePlan, invoice, library, list, location, manufacturedItemDefinition, mapSystems, measure, measureReport, media, medication, medicationAdministration, medicationDispense, medicationKnowledge, medicationRequest, medicationStatement, medicinalProductDefinition, molecularSequence, nutritionOrder, nutritionProduct, observation, observationDefinition, organization, organizationAffiliation, packagedProductDefinition, patient, paymentNotice, paymentReconciliation, person, planDefinition, practitioner, practitionerRole, procedure, questionnaire, questionnaireResponse, ref, reference, regulatedAuthorization, relatedPerson, requestGroup, researchDefinition, researchElementDefinition, researchStudy, researchSubject, riskAssessment, schedule, serviceRequest, setSystemMap, slot, specimen, specimenDefinition, substance, substanceDefinition, supplyDelivery, supplyRequest, task, testReport, value, verificationResult, visionPrescription };
+export { type Address, type Age, type Annotation, type Attachment, type BackboneElement, type CodeableConcept, type CodeableReference, type Coding, type ContactDetail, type ContactPoint, type Contributor, type Count, type DataRequirement, type Distance, type Dosage, type Duration, type Element, type ElementDefinition, type Expression, type Extension, type HumanName, type Identifier, type MarketingStatus, type Meta, type Money, type MoneyQuantity, type Narrative, type ParameterDefinition, type Period, type Population, type ProdCharacteristic, type ProductShelfLife, type Quantity, type Range, type Ratio, type RatioRange, type Reference, type RelatedArtifact, type SampledData, type Signature, type SimpleQuantity, type Timing, type TriggerDefinition, type UsageContext, account, activityDefinition, addExtension, administrableProductDefinition, adverseEvent, allergyIntolerance, appointment, appointmentResponse, type base64Binary, biologicallyDerivedProduct, bodyStructure, c, carePlan, careTeam, cc, chargeItem, chargeItemDefinition, citation, claim, claimResponse, clinicalImpression, clinicalUseDefinition, type code, coding, communication, communicationRequest, composite, concept, contract, coverage, coverageEligibilityRequest, coverageEligibilityResponse, detectedIssue, device, deviceDefinition, deviceMetric, deviceRequest, deviceUseStatement, diagnosticReport, domainResource, encounter, enrollmentRequest, enrollmentResponse, episodeOfCare, eventDefinition, evidence, evidenceReport, evidenceVariable, explanationOfBenefit, ext, extendSystemMap, extension, familyMemberHistory, findExtension, flag, goal, group, guidanceResponse, healthcareService, id, identifier, imagingStudy, immunization, immunizationEvaluation, immunizationRecommendation, ingredient, insurancePlan, invoice, library, list, location, manufacturedItemDefinition, mapSystems, type markdown, measure, measureReport, media, medication, medicationAdministration, medicationDispense, medicationKnowledge, medicationRequest, medicationStatement, medicinalProductDefinition, molecularSequence, nutritionOrder, nutritionProduct, observation, observationDefinition, type oid, organization, organizationAffiliation, packagedProductDefinition, patient, paymentNotice, paymentReconciliation, person, planDefinition, practitioner, practitionerRole, procedure, questionnaire, questionnaireResponse, ref, reference, regulatedAuthorization, relatedPerson, requestGroup, researchDefinition, researchElementDefinition, researchStudy, researchSubject, riskAssessment, schedule, serviceRequest, setSystemMap, slot, specimen, specimenDefinition, substance, substanceDefinition, supplyDelivery, supplyRequest, task, testReport, type url, type uuid, value, verificationResult, visionPrescription, type xhtml };
 

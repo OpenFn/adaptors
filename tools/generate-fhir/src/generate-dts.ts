@@ -12,14 +12,14 @@ const b = ts.factory;
 // TODO duplicates (are other globals, like dom globals). maybe we should namespace after all
 export const generateDataTypes = (
   schema: Record<string, Schema[]>,
-  mappings: MappingSpec
+  mappings: MappingSpec,
 ) => {
   const resultFile = ts.createSourceFile(
     'test.ts',
     '',
     ts.ScriptTarget.Latest,
     /*setParentNodes*/ false,
-    ts.ScriptKind.TS
+    ts.ScriptKind.TS,
   );
   const index: Record<string, true> = {};
   const statements: ts.NodeArray<ts.Node> = [];
@@ -30,13 +30,12 @@ export const generateDataTypes = (
         continue;
       }
       index[profile.id] = true;
-      const ast = generateType(
+      const ast = generateInterface(
         resourceType,
         profile,
         {},
         mappings.typeShorthands,
         profile.id,
-        true
       );
       statements.push(ast);
     }
@@ -63,7 +62,7 @@ export const generateDataTypes = (
     ts.ListFormat.SourceFileStatements,
     // statements.map(s => b.createExportDeclaration([], [], false, )),
     statements,
-    resultFile
+    resultFile,
   );
 
   return { src, index };
@@ -78,7 +77,7 @@ const generateDTS = (
   mappings: MappingSpec = {},
   options: {
     simpleSignatures?: boolean;
-  } = {}
+  } = {},
 ) => {
   let contents: ts.Statement[] = [];
 
@@ -89,12 +88,16 @@ const generateDTS = (
     '',
     ts.ScriptTarget.Latest,
     /*setParentNodes*/ false,
-    ts.ScriptKind.TS
+    ts.ScriptKind.TS,
   );
 
   // Add an explicit import of globals.d.ts
   contents.push(
-    b.createImportDeclaration([], undefined, b.createStringLiteral('./globals'))
+    b.createImportDeclaration(
+      [],
+      undefined,
+      b.createStringLiteral('./globals'),
+    ),
   );
 
   for (const resourceType in schema) {
@@ -103,13 +106,13 @@ const generateDTS = (
       const overrides = Object.assign(
         {},
         mappings.overrides?.[resourceType]?.any,
-        mappings.overrides?.[resourceType]?.[profile.id]
+        mappings.overrides?.[resourceType]?.[profile.id],
       );
       const typedef = generateType(
         name,
         profile,
         overrides,
-        mappings.typeShorthands
+        mappings.typeShorthands,
       );
       contents.push(typedef);
     }
@@ -118,8 +121,8 @@ const generateDTS = (
       ...generateEntryFuction(
         resourceType,
         schema[resourceType],
-        options.simpleSignatures
-      )
+        options.simpleSignatures,
+      ),
     );
   }
 
@@ -156,7 +159,7 @@ const typeMap = {
 const generateEntryFuction = (
   resourceType: string,
   schemas: Schema[],
-  simpleSignatures?: boolean
+  simpleSignatures?: boolean,
 ) => {
   const result = [];
 
@@ -172,10 +175,10 @@ const generateEntryFuction = (
           [],
           b.createStringLiteral(id),
           undefined,
-          b.createIdentifier(`${resourceType}_${id}_Props`.replace(/-/g, '_'))
-        )
-      )
-    )
+          b.createIdentifier(`${resourceType}_${id}_Props`.replace(/-/g, '_')),
+        ),
+      ),
+    ),
   );
   result.push(lookup);
 
@@ -183,7 +186,7 @@ const generateEntryFuction = (
     const defaultProfile = schemas[0].id;
     const defaultTypeName = `${resourceType}_${defaultProfile}_Props`.replace(
       /-/g,
-      '_'
+      '_',
     );
     const fn2 = b.createExportDeclaration(
       [],
@@ -201,12 +204,12 @@ const generateEntryFuction = (
             undefined,
             'props',
             undefined,
-            b.createTypeReferenceNode(defaultTypeName)
+            b.createTypeReferenceNode(defaultTypeName),
           ),
         ], // params
         undefined,
-        undefined // body
-      )
+        undefined, // body
+      ),
     );
 
     result.push(fn2);
@@ -226,8 +229,8 @@ const generateEntryFuction = (
           'T',
           b.createTypeOperatorNode(
             ts.SyntaxKind.KeyOfKeyword,
-            b.createTypeReferenceNode(lookupTableName)
-          )
+            b.createTypeReferenceNode(lookupTableName),
+          ),
         ),
       ],
       [
@@ -236,7 +239,7 @@ const generateEntryFuction = (
           undefined,
           'type',
           undefined,
-          b.createTypeReferenceNode('T')
+          b.createTypeReferenceNode('T'),
         ),
         b.createParameterDeclaration(
           [],
@@ -245,13 +248,13 @@ const generateEntryFuction = (
           undefined,
           b.createIndexedAccessTypeNode(
             b.createIdentifier(lookupTableName),
-            b.createIdentifier('T')
-          )
+            b.createIdentifier('T'),
+          ),
         ),
       ], // params
       undefined,
-      undefined // body
-    )
+      undefined, // body
+    ),
   );
 
   result.push(fn);
@@ -266,7 +269,7 @@ const createTypeNode = (
   incomingType: string,
   isArray?: boolean,
   values?: string[],
-  shorthands?: string[]
+  shorthands?: string[],
 ) => {
   let node;
   const type = typeMap[incomingType] ?? incomingType;
@@ -294,7 +297,7 @@ const createTypeNode = (
   }
   if (shorthands?.length) {
     node = b.createUnionTypeNode(
-      shorthands.map(s => b.createTypeReferenceNode(s)).concat(node)
+      shorthands.map(s => b.createTypeReferenceNode(s)).concat(node),
     );
   } else if (isArray && !values) {
     node = b.createArrayTypeNode(node);
@@ -308,13 +311,13 @@ export const generateType = (
   mappingOverrides = {},
   typeShorthands: MappingSpec['typeShorthands'] = {},
   typeName?: string,
-  includeExport = false
+  includeExport = false,
 ) => {
   const props = [];
 
   // find the superset of schema keys and mappings keys
   const allKeys = Object.keys(
-    Object.assign({}, schema.props, mappingOverrides)
+    Object.assign({}, schema.props, mappingOverrides),
   ).sort();
 
   // Now for each key, build a type
@@ -343,7 +346,7 @@ export const generateType = (
         t = [t];
       }
       const types = t.map(t =>
-        createTypeNode(t, s.isArray, m.values || s.values, typeShorthands[t])
+        createTypeNode(t, s.isArray, m.values || s.values, typeShorthands[t]),
       );
       if (types.length === 1) {
         type = types[0];
@@ -359,8 +362,8 @@ export const generateType = (
         [],
         key,
         b.createToken(ts.SyntaxKind.QuestionToken),
-        type
-      )
+        type,
+      ),
     );
   }
 
@@ -368,7 +371,85 @@ export const generateType = (
     includeExport ? [b.createToken(ts.SyntaxKind.ExportKeyword)] : [],
     typeName || `${resourceName}_Props`,
     [], // generics
-    b.createTypeLiteralNode(props)
+    b.createTypeLiteralNode(props),
+  );
+
+  return t;
+};
+
+// This generates a top-level datatype interface
+// TODO it's almost a duplication of generateType - what can we re-use?
+export const generateInterface = (
+  resourceName: string,
+  schema: Schema,
+  mappingOverrides = {},
+  typeShorthands: MappingSpec['typeShorthands'] = {},
+  typeName?: string,
+) => {
+  const props = [];
+
+  // find the superset of schema keys and mappings keys
+  const allKeys = Object.keys(
+    Object.assign({}, schema.props, mappingOverrides),
+  ).sort();
+
+  // Now for each key, build a type
+  // Note that mappings should overwrite schema if conflict
+  for (const key of allKeys) {
+    const s = schema.props[key] || {};
+    const m = mappingOverrides[key] || {};
+
+    if (m == false || m.type === false) {
+      // Ignore this key if it's mapped out
+      continue;
+    }
+
+    let type;
+    if (s.typeDef) {
+      type = generateInlineType(s.typeDef);
+    } else {
+      // TODO handle keys like deceased[x] in Patient
+      if (key.includes('[x]')) {
+        console.log(` >> Skipping typings for ${resourceName}.${key}`);
+        continue;
+      }
+
+      let t = m.type || s.type || 'any';
+      if (!Array.isArray(t)) {
+        t = [t];
+      }
+      const types = t.map(t =>
+        createTypeNode(t, s.isArray, m.values || s.values, typeShorthands[t]),
+      );
+      if (types.length === 1) {
+        type = types[0];
+      } else {
+        type = b.createUnionTypeNode(types);
+      }
+    }
+    const propSig = b.createPropertySignature(
+      [],
+      key,
+      b.createToken(ts.SyntaxKind.QuestionToken),
+      type,
+    );
+    if (s.desc) {
+      ts.addSyntheticLeadingComment(
+        propSig,
+        ts.SyntaxKind.MultiLineCommentTrivia,
+        `* ${s.desc} `,
+        true,
+      );
+    }
+    props.push(propSig);
+  }
+
+  const t = b.createInterfaceDeclaration(
+    [b.createToken(ts.SyntaxKind.ExportKeyword)],
+    typeName,
+    [], // generics,
+    [], // heritage clauses
+    props.filter((p): p is ts.TypeElement => ts.isPropertySignature(p)),
   );
 
   return t;
@@ -389,8 +470,8 @@ const generateInlineType = (typeDef: PropDef) => {
         [],
         useStringLiteral ? b.createStringLiteral(key) : key,
         undefined,
-        typeNode
-      )
+        typeNode,
+      ),
     );
   }
   return b.createTypeLiteralNode(props);

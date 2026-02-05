@@ -1,7 +1,7 @@
 import { namedTypes as n, builders as b, ASTNode } from 'ast-types';
 import { print, parse } from 'recast';
 import _ from 'lodash';
-import { getBuilderName, getTypeName } from './util';
+import { getBuilderName, getInterfaceName, getTypeName } from './util';
 import { PropDef } from './generate-schema';
 import { MappingSpec } from './types';
 
@@ -27,13 +27,13 @@ export const generateType = (
   resourceName: string,
   schema: Schema,
   mappings: MappingSpec,
-  fhirTypes: Record<string, true> = {}
+  fhirTypes: Record<string, true> = {},
 ) => {
   const props = [];
 
   // // find the superset of schema keys and mappings keys
   const allKeys = Object.keys(
-    Object.assign({}, schema.props, mappings.overrides)
+    Object.assign({}, schema.props, mappings.overrides),
   ).sort();
 
   // // Now for each key, build a type
@@ -78,24 +78,24 @@ export const generateType = (
         t in fhirTypes ? `FHIR.${t}` : t,
         s.isArray,
         m.values || s.values,
-        mappings.typeShorthands?.[t]?.filter(s => !t.includes(s))
-      )
+        mappings.typeShorthands?.[t]?.filter(s => !t.includes(s)),
+      ),
     );
     if (types.length == 1) {
       props.push(
         b.tsPropertySignature(
           b.identifier(key),
           b.tsTypeAnnotation(types[0]),
-          true
-        )
+          true,
+        ),
       );
     } else {
       props.push(
         b.tsPropertySignature(
           b.identifier(key),
           b.tsTypeAnnotation(b.tsUnionType(types)),
-          true
-        )
+          true,
+        ),
       );
     }
   }
@@ -107,16 +107,16 @@ export const generateType = (
           typeAnnotation: b.tsTypeAnnotation(b.tsStringKeyword()),
         }),
       ],
-      b.tsTypeAnnotation(b.tsAnyKeyword())
-    )
+      b.tsTypeAnnotation(b.tsAnyKeyword()),
+    ),
   );
 
   const t = b.exportDeclaration(
     false,
     b.tsTypeAliasDeclaration(
-      b.identifier(`${resourceName}_Props`),
-      b.tsTypeLiteral(props)
-    )
+      b.identifier(getInterfaceName(schema)),
+      b.tsTypeLiteral(props),
+    ),
   );
 
   return t;
@@ -139,8 +139,8 @@ const generateInlineType = (typeDef: PropDef) => {
         [],
         useStringLiteral ? b.createStringLiteral(key) : key,
         undefined,
-        typeNode
-      )
+        typeNode,
+      ),
     );
   }
   return b.createTypeLiteralNode(props);
@@ -151,7 +151,7 @@ const createTypeNode = (
   type: string,
   isArray: boolean,
   values?: string[],
-  shorthands?: string[]
+  shorthands?: string[],
 ) => {
   let node;
   // TODO restore and adapt this for values
@@ -178,7 +178,7 @@ const createTypeNode = (
     if (isArray) {
       node = b.tsTypeReference(
         b.identifier('MaybeArray'),
-        b.tsTypeParameterInstantiation([node])
+        b.tsTypeParameterInstantiation([node]),
       );
     }
   } else if (isArray) {

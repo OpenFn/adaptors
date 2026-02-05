@@ -1,6 +1,7 @@
 import _ from 'lodash';
 
 import type * as FHIR from './fhir';
+export type * from './fhir';
 
 let systemMap = {};
 
@@ -121,7 +122,7 @@ export const addExtension = (resource, url, value) => {
 export const extension = (
   url: string,
   value: any,
-  props: Omit<FHIR.Extension, 'url'> = {}
+  props: Omit<FHIR.Extension, 'url'> = {},
 ) => {
   const ext = {
     url: url,
@@ -164,7 +165,7 @@ export const findExtension = (obj, targetUrl, path) => {
 export const coding = (
   code: string,
   system: string,
-  extra: Omit<FHIR.Coding, 'code' | 'system'> = {}
+  extra: Omit<FHIR.Coding, 'code' | 'system'> = {},
 ) =>
   mapSystems({
     code,
@@ -207,7 +208,7 @@ type ConceptCoding =
 
 export const concept = (
   codings: ConceptCoding | ConceptCoding[],
-  extra: Omit<FHIR.CodeableConcept, 'coding'> = {}
+  extra: Omit<FHIR.CodeableConcept, 'coding'> = {},
 ): FHIR.CodeableConcept => {
   // This looks like a valid concept - just return it
   if ((codings as any).coding) {
@@ -340,7 +341,7 @@ export const composite = (object, key, value) => {
     object[finalKey] = value;
   } else {
     console.warn(
-      `WARNING: Failed to map ${key}: unrecognised data type (see utils.composite)`
+      `WARNING: Failed to map ${key}: unrecognised data type (see utils.composite)`,
     );
   }
 };

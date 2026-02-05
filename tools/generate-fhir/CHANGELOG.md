@@ -2,6 +2,15 @@
 
 ## 0.4.2
 
+### Minor Changes
+
+Restore code to generate typescript adaptors from a custom IG, important and
+referencing a base spec (eg, fhir-4)
+
+reference implementation: fhir-eswatini
+
+## 0.4.2
+
 ### Patch Changes
 
 - 4e531fe: Fix mappings for `CodeableConcept`
