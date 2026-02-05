@@ -121,28 +121,22 @@ state.configuration = {
 
 ## Example Job Snippets
 
-- Upload a file:
+- Put a file:
 
 ```javascript
-upload({ Bucket: 'openfn-test', Key: 'patients/1.json', Body: state.data, ContentType: 'application/json' })
+put({ bucket: 'openfn-test', key: 'patients/1.json', body: state.data, contentType: 'application/json' })
 ```
 
-- Download and parse JSON (returns parsed JSON in `state.data` when JSON):
+- Get and parse JSON (returns parsed JSON in `state.data` when JSON):
 
 ```javascript
-download({ Bucket: 'openfn-test', Key: 'patients/1.json' })
-// or use the `get` alias which parses JSON when available
-get({ Bucket: 'openfn-test', Key: 'patients/1.json' })
+get({ bucket: 'openfn-test', key: 'patients/1.json' })
 ```
 
-- Search (list objects) and optionally fetch each result:
+- List objects:
 
 ```javascript
-// just list
-list({ Bucket: 'openfn-test', Prefix: 'patients/' })
-
-// list and fetch parsed objects
-search({ Bucket: 'openfn-test', Prefix: 'patients/', fetch: true })
+list({ bucket: 'openfn-test', prefix: 'patients/' })
 ```
 
 ## Resources
