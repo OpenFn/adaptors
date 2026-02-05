@@ -6,4 +6,11 @@ export default {
   exclude: [],
   overrides: {},
   valueSets: [],
+  initialiser: resource => {
+    resource.meta = {
+      profile: [
+        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
+      ],
+    };
+  },
 };

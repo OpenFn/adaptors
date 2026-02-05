@@ -6,7 +6,9 @@ const sampleBasic = {
   resourceType: 'Patient',
   id: 'SampleSzMalariaPatient',
 
-  /// TODO text  ?
+  meta: {
+    profile: ['http://172.209.216.154:3447/fhir/StructureDefinition/SzPatient'],
+  },
 
   name: [
     {

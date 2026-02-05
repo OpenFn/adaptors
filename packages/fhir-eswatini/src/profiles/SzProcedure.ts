@@ -183,5 +183,10 @@ export default function(props: Partial<Procedure_SzProcedure_Props>) {
         resource.usedCode = dt.concept(props.usedCode);
     }
 
+    resource.meta = {
+      profile: [
+        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
+      ],
+    };
     return resource;
 }

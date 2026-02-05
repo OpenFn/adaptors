@@ -727,13 +727,12 @@ declare const mapSystems: (obj: any) => any;
  * @public
  * @function
  * @example <caption>Set shortcut system mappings</caption>
- * util.setSystemMap({
+ * b.setSystemMap({
  *   SmartCareID: 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'
  * });
- * builders.patient('patient', { identifier: util.identifier('xyz', 'SmartCareId') })
- * };
+ * create(builders.patient({ identifier: b.identifier('xyz', 'SmartCareId') }))
  */
-declare const setSystemMap: (newMappings: any) => void;
+declare const setSystemMap: (newMappings: any) => (state: any) => any;
 declare const extendSystemMap: (newMappings: any) => void;
 /**
  * Create an Identifier. Systems will be mapped against the system map. Pass extensions as extra arguments.
@@ -743,13 +742,13 @@ declare const extendSystemMap: (newMappings: any) => void;
  * @param ext - Any other arguments will be treated as extensions
  * @param {string} [system] - the string system to use by default if
  */
-declare const identifier: (id: string | Identifier, ...ext: any[]) => any;
+declare const identifier: (id: string | builders.Identifier, ...ext: any[]) => any;
 /**
- * Alias for util.identifier()
+ * Alias for b.identifier()
  * @public
  * @function
  */
-declare const id: (id: string | Identifier, ...ext: any[]) => any;
+declare const id: (id: string | builders.Identifier, ...ext: any[]) => any;
 /**
  * Add an extension to a resource (or object).
  * An object will be created and added to an `extension` array on the provided resource.
@@ -762,6 +761,16 @@ declare const id: (id: string | Identifier, ...ext: any[]) => any;
  * @param value - the value that the extension should contain
  */
 declare const addExtension: (resource: any, url: any, value: any) => void;
+/**
+ * Alias for b.extension()
+ * @public
+ * @function
+ */
+declare const ext: (url: string, value: any, props?: Omit<builders.Extension, 'url'>) => {
+    extension: ({
+        url: string;
+    } & Omit<builders.Extension, "url">)[];
+};
 /**
  * Find an extension with a given url in some array
  * @public
@@ -776,43 +785,38 @@ declare const findExtension: (obj: any, targetUrl: any, path: any) => any;
  * @public
  * @function
  * @param {string} code - the code value
- * @param {string} system - URL to the system. Well be mapped using the system map.
+ * @param {string} system - URL to the system. Will be mapped using the system map.
  */
-declare const coding: (code: any, system: any) => {
-    code: any;
-    system: any;
-};
-declare const c: (code: any, system: any) => {
-    code: any;
-    system: any;
-};
+declare const coding: (code: string, system: string, extra?: Omit<builders.Coding, 'code' | 'system'>) => any;
+declare const c: (code: string, system: string, extra?: Omit<builders.Coding, 'code' | 'system'>) => any;
 /**
  * Create a value object { code, system } with optional system. Systems will be mapped.
- * @public
  * @function
  * @param {string} value - the value
  * @param {string} system - URL to the system. Well be mapped using the system map.
  */
 declare const value: (value: any, system: any, ...extra: any[]) => any;
 /**
- * Create a codeableConcept. Codings can be coding objects or
- * [code, system] tuples
- * if the first argument is a string, it will be set as the text.
+ * Create a CodeableConcept. Codings can be coding objects or
+ * [code, system, extra] tuples (such as passed to b.coding())
  * Systems will be mapped with the system map
  * @public
  * @function
+ * @param {string} value - the value
+ * @param {object} extra - Extra properties to write to the coding
  * @example <caption>Create a codeableConcept</caption>
  * const myConcept = util.concept(['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
  * @example <caption>Create a codeableConcept with text</caption>
  * const myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
  */
-declare const concept: (text: any, ...codings: any[]) => {};
+declare type ConceptCoding = builders.Coding | [string, string, Omit<builders.Coding, 'code' | 'system'>?];
+declare const concept: (codings: ConceptCoding | ConceptCoding[], extra?: Omit<builders.CodeableConcept, 'coding'>) => builders.CodeableConcept;
 /**
- * Alias for util.concept()
+ * Alias for b.concept()
  * @public
  * @function
  */
-declare const cc: (text: any, ...codings: any[]) => {};
+declare const cc: (codings: ConceptCoding | ConceptCoding[], extra?: Omit<builders.CodeableConcept, 'coding'>) => builders.CodeableConcept;
 /**
  * Create a reference object of the form { reference }
  * If ref is an array, each item will be mapped and an array returned.
@@ -823,13 +827,13 @@ declare const cc: (text: any, ...codings: any[]) => {};
  * @function
  * @param ref - the thing to generate a reference from
  */
-declare const reference: (ref: any, opts: any) => any;
+declare const reference: (ref: any, opts?: {}) => any;
 /**
- * Alias for util.reference()
+ * Alias for b.reference()
  * @public
  * @function
  */
-declare const ref: (ref: any, opts: any) => any;
+declare const ref: (ref: any, opts?: {}) => any;
 /**
  * Write a value to the target object using a typed key
  * Ie, if key is `value` and the value is a date time string,
@@ -1384,5 +1388,5 @@ declare function serviceRequest(type: "SzReferral", props: ServiceRequest_SzRefe
   */
 declare function specimen(type: "SzLabSpecimen", props: Specimen_SzLabSpecimen_Props): any;
 
-export { addExtension, appointment, c, cc, coding, composite, concept, condition, encounter, episodeOfCare, extendSystemMap, extension, findExtension, id, identifier, location, mapSystems, medication, medicationDispense, medicationRequest, observation, organization, patient, practitioner, procedure, ref, reference, serviceRequest, setSystemMap, specimen, value };
+export { addExtension, appointment, c, cc, coding, composite, concept, condition, encounter, episodeOfCare, ext, extendSystemMap, extension, findExtension, id, identifier, location, mapSystems, medication, medicationDispense, medicationRequest, observation, organization, patient, practitioner, procedure, ref, reference, serviceRequest, setSystemMap, specimen, value };
 

@@ -94,5 +94,10 @@ export default function(props: Partial<Location_SzLocation_Props>) {
         resource.endpoint = dt.reference(props.endpoint);
     }
 
+    resource.meta = {
+      profile: [
+        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
+      ],
+    };
     return resource;
 }

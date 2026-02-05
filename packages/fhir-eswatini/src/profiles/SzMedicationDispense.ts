@@ -143,5 +143,10 @@ export default function(props: Partial<MedicationDispense_SzMedicationDispense_P
         resource.eventHistory = dt.reference(props.eventHistory);
     }
 
+    resource.meta = {
+      profile: [
+        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
+      ],
+    };
     return resource;
 }

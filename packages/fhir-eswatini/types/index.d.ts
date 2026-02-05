@@ -30,25 +30,24 @@ declare const b: {
     serviceRequest(type: "SzReferral", props: import("./profiles/SzReferral").ServiceRequest_SzReferral_Props): any;
     specimen(type: "SzLabSpecimen", props: import("./profiles/SzLabSpecimen").Specimen_SzLabSpecimen_Props): any;
     mapSystems: (obj: any) => any;
-    setSystemMap: (newMappings: any) => void;
+    setSystemMap: (newMappings: any) => (state: any) => any;
     extendSystemMap: (newMappings: any) => void;
-    identifier: (id: any, ...ext: any[]) => any;
-    id: (id: any, ...ext: any[]) => any;
+    identifier: (id: string | import("@openfn/language-fhir-4/types/builders").Identifier, ...ext: any[]) => any;
+    id: (id: string | import("@openfn/language-fhir-4/types/builders").Identifier, ...ext: any[]) => any;
     addExtension: (resource: any, url: any, value: any) => void;
+    ext: (url: string, value: any, props?: Omit<import("@openfn/language-fhir-4/types/builders").Extension, "url">) => {
+        extension: ({
+            url: string;
+        } & Omit<import("@openfn/language-fhir-4/types/builders").Extension, "url">)[];
+    };
     findExtension: (obj: any, targetUrl: any, path: any) => any;
-    coding: (code: any, system: any) => {
-        code: any;
-        system: any;
-    };
-    c: (code: any, system: any) => {
-        code: any;
-        system: any;
-    };
+    coding: (code: string, system: string, extra?: Omit<import("@openfn/language-fhir-4/types/builders").Coding, "code" | "system">) => any;
+    c: (code: string, system: string, extra?: Omit<import("@openfn/language-fhir-4/types/builders").Coding, "code" | "system">) => any;
     value: (value: any, system: any, ...extra: any[]) => any;
-    concept: (text: any, ...codings: any[]) => {};
-    cc: (text: any, ...codings: any[]) => {};
-    reference: (ref: any, opts: any) => any;
-    ref: (ref: any, opts: any) => any;
+    concept: (codings: (import("@openfn/language-fhir-4/types/builders").Coding | [string, string, Omit<import("@openfn/language-fhir-4/types/builders").Coding, "code" | "system">?]) | (import("@openfn/language-fhir-4/types/builders").Coding | [string, string, Omit<import("@openfn/language-fhir-4/types/builders").Coding, "code" | "system">?])[], extra?: Omit<import("@openfn/language-fhir-4/types/builders").CodeableConcept, "coding">) => import("@openfn/language-fhir-4/types/builders").CodeableConcept;
+    cc: (codings: (import("@openfn/language-fhir-4/types/builders").Coding | [string, string, Omit<import("@openfn/language-fhir-4/types/builders").Coding, "code" | "system">?]) | (import("@openfn/language-fhir-4/types/builders").Coding | [string, string, Omit<import("@openfn/language-fhir-4/types/builders").Coding, "code" | "system">?])[], extra?: Omit<import("@openfn/language-fhir-4/types/builders").CodeableConcept, "coding">) => import("@openfn/language-fhir-4/types/builders").CodeableConcept;
+    reference: (ref: any, opts?: {}) => any;
+    ref: (ref: any, opts?: {}) => any;
     composite: (object: any, key: any, value: any) => void;
 };
 export { b, b as builders };

@@ -103,5 +103,10 @@ export default function(props: Partial<EpisodeOfCare_SzEpisodeOfCare_Props>) {
         resource.account = dt.reference(props.account);
     }
 
+    resource.meta = {
+      profile: [
+        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
+      ],
+    };
     return resource;
 }
