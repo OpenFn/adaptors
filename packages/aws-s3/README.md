@@ -12,32 +12,24 @@ full technical documentation.
 ## Usage
 
 Import the adaptor and call its operations inside an OpenFn job. Minimal
-API: prefer `get`, `put`, and `list` for most workflows. Backwards-compatible
-aliases are provided (`upload`, `download`, `remove`) but keep your jobs
-simple and use the minimal names when possible.
+API: prefer `get`, `put`, and `list` for most workflows.
 
-Put (upload) a file (sends raw `Body` to S3):
+Put (upload) a file (sends raw `body` to S3):
 
 ```javascript
-put({ Bucket: 'my-bucket', Key: 'path/file.txt', Body: state.data.blob, ContentType: 'application/octet-stream' })
+put({ bucket: 'my-bucket', key: 'path/file.txt', body: state.data.blob, contentType: 'application/octet-stream' })
 ```
 
-Get / Download a file (returns parsed JSON when available, otherwise base64 in `state.data`):
+Get a file (returns parsed JSON when available, otherwise base64 in `state.data`):
 
 ```javascript
-get({ Bucket: 'my-bucket', Key: 'path/file.txt' })
+get({ bucket: 'my-bucket', key: 'path/file.txt' })
 ```
 
 List objects:
 
 ```javascript
-list({ Bucket: 'my-bucket', Prefix: 'path/' })
-```
-
-Delete an object (alias `remove` retained for compatibility):
-
-```javascript
-remove({ Bucket: 'my-bucket', Key: 'path/file.txt' })
+list({ bucket: 'my-bucket', prefix: 'path/' })
 ```
 
 ## Notes
@@ -55,10 +47,10 @@ limits functionality in the initial release to keep the surface area small
 and easy to maintain.
 
 In scope:
-- `upload` — put an object into a bucket
-- `download` / `get` — retrieve an object; parsed as JSON when possible
-- `list` / `search` — list objects and optionally fetch each object's contents
-- `remove` — delete an object
+In scope:
+- `put` — put an object into a bucket
+- `get` — retrieve an object; parsed as JSON when possible
+- `list` — list objects
 
 Out of scope for this initial version:
 - Multipart uploads

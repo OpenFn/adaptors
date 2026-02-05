@@ -35,51 +35,37 @@ import * as util from './Utils.js';
  * @state {HttpState}
  */
 /**
- * @param {object} params - { Bucket, Key, Body, ContentType, ACL }
- */
-export function upload(params) {
-  return async state => {
-    const [resolvedParams] = expandReferences(state, params);
-    const resp = await util.putObject(state.configuration, resolvedParams);
-    const formatted = util.preparePutResponse(resp, resolvedParams.Bucket, resolvedParams.Key);
-    return util.prepareNextState(state, formatted);
-  };
-}
-
-/**
- * Alias: put -> upload (minimal API)
+ * Put (upload) an object. Public API uses camelCase params.
+ * @param {object} params - { bucket, key, body, contentType }
  */
 export function put(params) {
-  return upload(params);
-}
-
-/**
- * @param {object} params 
- */
-export function download(params) {
   return async state => {
     const [resolvedParams] = expandReferences(state, params);
-    const resp = await util.getObject(state.configuration, resolvedParams);
-    const formatted = await util.prepareS3GetResponse(resp);
-    return util.prepareNextState(state, formatted);
-  };
-}
-
-/**
- * @param {object} params 
- */
-export function remove(params) {
-  return async state => {
-    const [resolvedParams] = expandReferences(state, params);
-    const resp = await util.deleteObject(state.configuration, resolvedParams);
-    const formatted = {
-      body: { bucket: resolvedParams.Bucket, key: resolvedParams.Key, result: resp },
-      headers: resp.$metadata || {},
-      statusCode: 200,
+    const awsParams = {
+      Bucket: resolvedParams.bucket || resolvedParams.Bucket,
+      Key: resolvedParams.key || resolvedParams.Key,
+      Body: resolvedParams.body || resolvedParams.Body,
+      ContentType: resolvedParams.contentType || resolvedParams.ContentType,
+      ACL: resolvedParams.acl || resolvedParams.ACL,
+      ServerSideEncryption: resolvedParams.serverSideEncryption || resolvedParams.ServerSideEncryption,
     };
+
+    const resp = await util.putObject(state.configuration, awsParams);
+    const formatted = util.preparePutResponse(resp, awsParams.Bucket, awsParams.Key);
     return util.prepareNextState(state, formatted);
   };
 }
+
+/**
+ * @param {object} params 
+ */
+// `get` is the canonical read operation (see below)
+
+/**
+ * @param {object} params 
+ */
+// delete/remove operation intentionally omitted from the public API to keep the
+// adaptor minimal. If needed, it can be added later.
 
 /**
  * @param {object} params 
@@ -87,7 +73,14 @@ export function remove(params) {
 export function list(params) {
   return async state => {
     const [resolvedParams] = expandReferences(state, params);
-    const resp = await util.listObjects(state.configuration, resolvedParams);
+    const awsParams = {
+      Bucket: resolvedParams.bucket || resolvedParams.Bucket,
+      Prefix: resolvedParams.prefix || resolvedParams.Prefix,
+      MaxKeys: resolvedParams.maxKeys || resolvedParams.MaxKeys,
+      ContinuationToken: resolvedParams.continuationToken || resolvedParams.ContinuationToken,
+    };
+
+    const resp = await util.listObjects(state.configuration, awsParams);
     const formatted = {
       body: resp.Contents || [],
       headers: resp.$metadata || {},
@@ -103,7 +96,12 @@ export function list(params) {
 export function get(params) {
   return async state => {
     const [resolvedParams] = expandReferences(state, params);
-    const resp = await util.getObject(state.configuration, resolvedParams);
+    const awsParams = {
+      Bucket: resolvedParams.bucket || resolvedParams.Bucket,
+      Key: resolvedParams.key || resolvedParams.Key,
+    };
+
+    const resp = await util.getObject(state.configuration, awsParams);
     const formatted = await util.prepareS3GetResponse(resp);
     return util.prepareNextState(state, formatted);
   };
@@ -112,25 +110,7 @@ export function get(params) {
 /**
  * @param {object} params 
  */
-export function search(params) {
-  return async state => {
-    const [resolvedParams] = expandReferences(state, params);
-    const listResp = await util.listObjects(state.configuration, resolvedParams);
-    const contents = listResp.Contents || [];
-
-    if (resolvedParams.fetch) {
-      const results = [];
-      for (const item of contents) {
-        const getResp = await util.getObject(state.configuration, { Bucket: resolvedParams.Bucket, Key: item.Key });
-        const formatted = await util.prepareS3GetResponse(getResp);
-        results.push(formatted.body);
-      }
-      return util.prepareNextState(state, { body: results, headers: listResp.$metadata || {}, statusCode: 200 });
-    }
-
-    return util.prepareNextState(state, { body: contents, headers: listResp.$metadata || {}, statusCode: 200 });
-  };
-}
+// search/list variations intentionally omitted to maintain minimal API surface.
 
 export {
   as,
