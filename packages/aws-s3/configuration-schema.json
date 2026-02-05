@@ -1,36 +1,37 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
-    "baseUrl": {
-      "title": "Base URL",
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "description": "The base URL (http://www.example.com)",
-      "format": "uri",
-      "minLength": 1,
-      "examples": ["https://example.com"]
-    },
-    "username": {
-      "title": "Username",
+    "accessKeyId": {
+      "title": "AWS Access Key ID",
       "type": "string",
-      "description": "Username",
-      "examples": ["test@openfn.org"]
+      "description": "AWS access key id. Prefer using environment credentials or the default provider chain.",
+      "examples": ["AKIA..."]
     },
-    "password": {
-      "title": "Password",
+    "secretAccessKey": {
+      "title": "AWS Secret Access Key",
       "type": "string",
-      "description": "Password",
-      "writeOnly": true,
-      "examples": ["@some(!)Str0ngp4ss0w0rd"]
+      "description": "AWS secret key. Prefer using environment credentials or the default provider chain.",
+      "writeOnly": true
+    },
+    "sessionToken": {
+      "title": "AWS Session Token",
+      "type": "string",
+      "description": "Optional temporary session token (for STS).",
+      "writeOnly": true
+    },
+    "region": {
+      "title": "AWS Region",
+      "type": "string",
+      "description": "AWS region to use (e.g. us-east-1).",
+      "examples": ["us-east-1"]
+    },
+    "endpoint": {
+      "title": "Override endpoint",
+      "type": "string",
+      "description": "Optional S3 endpoint (useful for LocalStack or S3-compatible services).",
+      "format": "uri"
     }
   },
   "type": "object",
-  "additionalProperties": true,
-  "required": ["password", "username"]
+  "additionalProperties": false
 }

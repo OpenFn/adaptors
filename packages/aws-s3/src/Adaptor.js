@@ -2,37 +2,26 @@ import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
 
 /**
- * State object
- * @typedef {Object} HttpState
- * @property data - the parsed response body
- * @property response - the response from the HTTP server, including headers, statusCode, body, etc
- * @property references - an array of all previous data objects used in the Job
- **/
-
-/**
- * Options provided to the HTTP request
- * @typedef {Object} RequestOptions
- * @public
- * @property {object|string} body - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).
- * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
- * @property {object} form - Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body.
- * @property {object} query - An object of query parameters to be encoded into the URL.
- * @property {object} headers - An object of headers to append to the request.
- * @property {string} parseAs - Parse the response body as json, text or stream. By default will use the response headers.
- * @property {number} timeout - Request timeout in ms. Default: 300 seconds.
- * @property {object} tls - TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions
+ * S3 operation input params used by `put`, `get`, and `list`.
+ * @typedef {Object} S3Params
+ * @property {string} bucket - S3 bucket name (required).
+ * @property {string} key - Object key for `put`/`get` (required for those ops).
+ * @property {any} [body] - Body for `put` (string, Buffer, or stream).
+ * @property {string} [contentType] - Optional content type for `put`.
+ * @property {string} [prefix] - Prefix for `list` operation.
+ * @property {number} [maxKeys] - Max keys for `list`.
+ * @property {string} [continuationToken] - Continuation token for `list` pagination.
  */
 
 /**
- * Make a GET request
+ * Put an object into S3.
+ *
  * @example
- * get("patients");
- * @function
+ * put({ bucket: 'my-bucket', key: 'path/to/file.txt', body: 'hello' });
+ *
  * @public
- * @param {string} path - Path to resource
- * @param {RequestOptions} options - Optional request options
+ * @param {S3Params} params
  * @returns {Operation}
- * @state {HttpState}
  */
 /**
 
