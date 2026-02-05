@@ -6,16 +6,11 @@
         "params"
       ],
       "docs": {
-        "description": "Make a GET request",
+        "description": "Put an object into S3.",
         "tags": [
           {
             "title": "example",
-            "description": "get(\"patients\");"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
+            "description": "put({ bucket: 'my-bucket', key: 'path/to/file.txt', body: 'hello' });"
           },
           {
             "title": "public",
@@ -24,21 +19,12 @@
           },
           {
             "title": "param",
-            "description": "Path to resource",
+            "description": null,
             "type": {
               "type": "NameExpression",
-              "name": "string"
+              "name": "S3Params"
             },
-            "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "Optional request options",
-            "type": {
-              "type": "NameExpression",
-              "name": "RequestOptions"
-            },
-            "name": "options"
+            "name": "params"
           },
           {
             "title": "returns",
@@ -47,14 +33,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
-          },
-          {
-            "title": "state",
-            "description": "{HttpState}"
           }
         ]
       },
-      "valid": false
+      "valid": true
     }
   ],
   "exports": [],
