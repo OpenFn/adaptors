@@ -28,6 +28,7 @@ import * as util from './Utils.js';
  * @function
  * @public
  * @param {Object} customerData
+ * @param {Object} [options] - Optional request options
  * @returns {Function}
  */
 export function createCustomer(customerData, options = {}) {
@@ -54,6 +55,7 @@ export function createCustomer(customerData, options = {}) {
  * @function
  * @public
  * @param {Object} paymentData - The payment details to send to Flutterwave.
+ * @param {Object} [options] - Optional request options
  * @returns {Function} - A function that takes the state and performs the operation.
  */
 export function initiatePayment(paymentData, options = {}) {
@@ -80,6 +82,7 @@ export function initiatePayment(paymentData, options = {}) {
  * @function
  * @public
  * @param {Object} paymentMethodData - The payment method details to send to Flutterwave.
+ * @param {Object} [options] - Optional request options
  * @returns {Function} - A function that takes the state and performs the operation.
  */
 export function createPaymentMethod(paymentMethodData, options = {}) {
