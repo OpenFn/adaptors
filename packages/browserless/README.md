@@ -17,22 +17,28 @@ for required and optional `configuration` properties.
 
 ### Usage
 
-Examples below show the small set of helpers provided by this adaptor:
+This adaptor exposes two public features:
 
-- `convertHtmlToPdf(html)` — converts an HTML string and returns the service response.
-- `convertUrlToPdf(url)` — converts a publicly-accessible URL to PDF.
-- `generatePdfFromHtml(html)` — uses Browserless `/pdf` endpoint and supports passing a `token` in configuration.
-- `generatePdfFromUrl(url)` — same as above but accepts a URL.
+- `http.request(method, path, options)` — a generic Browserless-authenticated HTTP request operation. Use this for arbitrary Browserless endpoints (for example `/convert`).
+- `createPDF(input, options)` — PDF generation helper. `input` may be an HTML string or an object `{ html }` / `{ url }`. This calls the `/pdf` endpoint and normalizes PDF responses to `{ pdf: '<base64>' }` by default.
 
-Example job snippet:
+Example job using `http.request`:
 
 ```javascript
-import { generatePdfFromHtml } from '@openfn/language-browserless';
+import { http } from '@openfn/language-browserless';
 
-export default generatePdfFromHtml('<p>Hello PDF</p>');
+export default http.request('POST', 'convert', { html: '<p>Hello</p>' });
 ```
 
-Example with configuration (token-based `/pdf`):
+Example job using `createPDF`:
+
+```javascript
+import { createPDF } from '@openfn/language-browserless';
+
+export default createPDF('<p>Hello PDF</p>');
+```
+
+Configuration example (token-based `/pdf`):
 
 ```javascript
 const state = {
@@ -42,13 +48,12 @@ const state = {
 	},
 };
 
-const result = await generatePdfFromHtml('<p>Hello</p>')(state);
+const result = await createPDF('<p>Hello</p>')(state);
+```
 
 Normalization note:
 
-- When using the `/pdf` endpoint, this adaptor normalizes binary PDF responses to a base64 string and returns `{ pdf: '<base64>' }` by default. This ensures a consistent return shape across Browserless REST `/pdf`, BrowserQL, and Function APIs. If you prefer raw bytes or the original response, call the lower-level `request()` helper with `forcePdfBase64: false`.
-
-```
+- When using the `/pdf` endpoint, this adaptor normalizes binary PDF responses to a base64 string and returns `{ pdf: '<base64>' }` by default. If you prefer raw bytes or the original response, call the lower-level `http.request()` with `forcePdfBase64: false`.
 
 ## Development
 
