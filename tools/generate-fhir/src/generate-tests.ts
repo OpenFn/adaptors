@@ -13,7 +13,7 @@ type TestSpec = Record<FilePath, Content>;
 const generate = (
   schema: Record<string, Schema[]>,
   mappings: MappingSpec = {},
-  options: { name: string; simpleSignatures?: boolean }
+  options: { name: string; simpleSignatures?: boolean },
 ) => {
   // test gen won't clean up after itself
   // Tests are really only support to be a one-time template
@@ -34,15 +34,15 @@ const generate = (
           b.importSpecifier(b.identifier('expect')),
           b.importSpecifier(b.identifier('assert')),
         ],
-        b.stringLiteral('chai')
-      )
+        b.stringLiteral('chai'),
+      ),
     );
 
     statements.push(
       b.importDeclaration(
-        [b.importSpecifier(b.identifier('builders'))],
-        b.stringLiteral(`../../src/index`)
-      )
+        [b.importSpecifier(b.identifier('b'))],
+        b.stringLiteral(`../../src/index`),
+      ),
     );
 
     for (const profile of sortedProfiles) {
@@ -70,7 +70,7 @@ const createDescribeBlock = (profileId: string, tests: n.Statement[]) =>
     b.callExpression(b.identifier('describe'), [
       b.stringLiteral(profileId),
       b.arrowFunctionExpression([], b.blockStatement(tests)),
-    ])
+    ]),
   );
 
 const createTestStub = (profile: Schema, simpleSignatures?: boolean) => {
@@ -80,31 +80,31 @@ const createTestStub = (profile: Schema, simpleSignatures?: boolean) => {
       b.identifier('resource'),
       b.callExpression(
         b.memberExpression(
-          b.identifier('builders'),
-          b.identifier(getBuilderName(profile.type))
+          b.identifier('b'),
+          b.identifier(getBuilderName(profile.type)),
         ),
         simpleSignatures
           ? [b.objectExpression([])]
-          : [b.stringLiteral(profile.id), b.objectExpression([])]
-      )
+          : [b.stringLiteral(profile.id), b.objectExpression([])],
+      ),
     ),
   ]);
   const assertResource = b.expressionStatement(
     b.callExpression(
       b.memberExpression(b.identifier('assert'), b.identifier('isOk')),
-      [b.identifier('resource')]
-    )
+      [b.identifier('resource')],
+    ),
   );
   tests.push(
     b.expressionStatement(
       b.callExpression(b.identifier('it'), [
-        b.stringLiteral(`should create a simple ${profile.id}`),
+        b.stringLiteral(`should create an empty ${profile.id}`),
         b.arrowFunctionExpression(
           [],
-          b.blockStatement([createResource, assertResource])
+          b.blockStatement([createResource, assertResource]),
         ),
-      ])
-    )
+      ]),
+    ),
   );
 
   return tests;
