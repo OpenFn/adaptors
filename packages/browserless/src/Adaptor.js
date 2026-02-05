@@ -37,9 +37,8 @@ import * as http from './http.js';
  */
 /**
  * Create a PDF from HTML or URL.
- * Accepts either a string (treated as HTML) or an object `{ html }` or `{ url }`.
  * @public
- * @param {string|object} input - HTML string or `{ html }` / `{ url }` object
+ * @param {string|object} input 
  * @param {RequestOptions} options
  */
 export function createPDF(input, options) {

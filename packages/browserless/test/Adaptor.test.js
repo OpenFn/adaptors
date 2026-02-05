@@ -29,8 +29,6 @@ describe('createPDF', () => {
     const state2 = { configuration: { baseUrl: 'https://production-sfo.browserless.io', token: token2 } };
     const res2 = await createPDF('https://example.com')(state2);
     expect(res2.data).to.eql({ url: 'ok' });
-
-    // binary normalization
     const token3 = 'tk-binary';
     const pdfBody = '%PDF-1.4\n%\xE2\xE3\xCF\xD3\n1 0 obj\n<<';
     testServer.intercept({ path: `/pdf?token=${token3}`, method: 'POST' }).reply(200, Buffer.from(pdfBody, 'binary'), { 'content-type': 'application/pdf' });
