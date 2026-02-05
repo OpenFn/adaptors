@@ -3,113 +3,113 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import Account_Account, { Account_Props } from "./profiles/Account";
-import ActivityDefinition_ActivityDefinition, { ActivityDefinition_Props } from "./profiles/ActivityDefinition";
-import AdministrableProductDefinition_AdministrableProductDefinition, { AdministrableProductDefinition_Props } from "./profiles/AdministrableProductDefinition";
-import AdverseEvent_AdverseEvent, { AdverseEvent_Props } from "./profiles/AdverseEvent";
-import AllergyIntolerance_AllergyIntolerance, { AllergyIntolerance_Props } from "./profiles/AllergyIntolerance";
-import Appointment_Appointment, { Appointment_Props } from "./profiles/Appointment";
-import AppointmentResponse_AppointmentResponse, { AppointmentResponse_Props } from "./profiles/AppointmentResponse";
-import BiologicallyDerivedProduct_BiologicallyDerivedProduct, { BiologicallyDerivedProduct_Props } from "./profiles/BiologicallyDerivedProduct";
-import BodyStructure_BodyStructure, { BodyStructure_Props } from "./profiles/BodyStructure";
-import CarePlan_CarePlan, { CarePlan_Props } from "./profiles/CarePlan";
-import CareTeam_CareTeam, { CareTeam_Props } from "./profiles/CareTeam";
-import ChargeItem_ChargeItem, { ChargeItem_Props } from "./profiles/ChargeItem";
-import ChargeItemDefinition_ChargeItemDefinition, { ChargeItemDefinition_Props } from "./profiles/ChargeItemDefinition";
-import Citation_Citation, { Citation_Props } from "./profiles/Citation";
-import Claim_Claim, { Claim_Props } from "./profiles/Claim";
-import ClaimResponse_ClaimResponse, { ClaimResponse_Props } from "./profiles/ClaimResponse";
-import ClinicalImpression_ClinicalImpression, { ClinicalImpression_Props } from "./profiles/ClinicalImpression";
-import ClinicalUseDefinition_ClinicalUseDefinition, { ClinicalUseDefinition_Props } from "./profiles/ClinicalUseDefinition";
-import Communication_Communication, { Communication_Props } from "./profiles/Communication";
-import CommunicationRequest_CommunicationRequest, { CommunicationRequest_Props } from "./profiles/CommunicationRequest";
-import Contract_Contract, { Contract_Props } from "./profiles/Contract";
-import Coverage_Coverage, { Coverage_Props } from "./profiles/Coverage";
-import CoverageEligibilityRequest_CoverageEligibilityRequest, { CoverageEligibilityRequest_Props } from "./profiles/CoverageEligibilityRequest";
-import CoverageEligibilityResponse_CoverageEligibilityResponse, { CoverageEligibilityResponse_Props } from "./profiles/CoverageEligibilityResponse";
-import DetectedIssue_DetectedIssue, { DetectedIssue_Props } from "./profiles/DetectedIssue";
-import Device_Device, { Device_Props } from "./profiles/Device";
-import DeviceDefinition_DeviceDefinition, { DeviceDefinition_Props } from "./profiles/DeviceDefinition";
-import DeviceMetric_DeviceMetric, { DeviceMetric_Props } from "./profiles/DeviceMetric";
-import DeviceRequest_DeviceRequest, { DeviceRequest_Props } from "./profiles/DeviceRequest";
-import DeviceUseStatement_DeviceUseStatement, { DeviceUseStatement_Props } from "./profiles/DeviceUseStatement";
-import DiagnosticReport_DiagnosticReport, { DiagnosticReport_Props } from "./profiles/DiagnosticReport";
-import DomainResource_DomainResource, { DomainResource_Props } from "./profiles/DomainResource";
-import Encounter_Encounter, { Encounter_Props } from "./profiles/Encounter";
-import EnrollmentRequest_EnrollmentRequest, { EnrollmentRequest_Props } from "./profiles/EnrollmentRequest";
-import EnrollmentResponse_EnrollmentResponse, { EnrollmentResponse_Props } from "./profiles/EnrollmentResponse";
-import EpisodeOfCare_EpisodeOfCare, { EpisodeOfCare_Props } from "./profiles/EpisodeOfCare";
-import EventDefinition_EventDefinition, { EventDefinition_Props } from "./profiles/EventDefinition";
-import Evidence_Evidence, { Evidence_Props } from "./profiles/Evidence";
-import EvidenceReport_EvidenceReport, { EvidenceReport_Props } from "./profiles/EvidenceReport";
-import EvidenceVariable_EvidenceVariable, { EvidenceVariable_Props } from "./profiles/EvidenceVariable";
-import ExplanationOfBenefit_ExplanationOfBenefit, { ExplanationOfBenefit_Props } from "./profiles/ExplanationOfBenefit";
-import FamilyMemberHistory_FamilyMemberHistory, { FamilyMemberHistory_Props } from "./profiles/FamilyMemberHistory";
-import Flag_Flag, { Flag_Props } from "./profiles/Flag";
-import Goal_Goal, { Goal_Props } from "./profiles/Goal";
-import Group_Group, { Group_Props } from "./profiles/Group";
-import GuidanceResponse_GuidanceResponse, { GuidanceResponse_Props } from "./profiles/GuidanceResponse";
-import HealthcareService_HealthcareService, { HealthcareService_Props } from "./profiles/HealthcareService";
-import ImagingStudy_ImagingStudy, { ImagingStudy_Props } from "./profiles/ImagingStudy";
-import Immunization_Immunization, { Immunization_Props } from "./profiles/Immunization";
-import ImmunizationEvaluation_ImmunizationEvaluation, { ImmunizationEvaluation_Props } from "./profiles/ImmunizationEvaluation";
-import ImmunizationRecommendation_ImmunizationRecommendation, { ImmunizationRecommendation_Props } from "./profiles/ImmunizationRecommendation";
-import Ingredient_Ingredient, { Ingredient_Props } from "./profiles/Ingredient";
-import InsurancePlan_InsurancePlan, { InsurancePlan_Props } from "./profiles/InsurancePlan";
-import Invoice_Invoice, { Invoice_Props } from "./profiles/Invoice";
-import Library_Library, { Library_Props } from "./profiles/Library";
-import List_List, { List_Props } from "./profiles/List";
-import Location_Location, { Location_Props } from "./profiles/Location";
-import ManufacturedItemDefinition_ManufacturedItemDefinition, { ManufacturedItemDefinition_Props } from "./profiles/ManufacturedItemDefinition";
-import Measure_Measure, { Measure_Props } from "./profiles/Measure";
-import MeasureReport_MeasureReport, { MeasureReport_Props } from "./profiles/MeasureReport";
-import Media_Media, { Media_Props } from "./profiles/Media";
-import Medication_Medication, { Medication_Props } from "./profiles/Medication";
-import MedicationAdministration_MedicationAdministration, { MedicationAdministration_Props } from "./profiles/MedicationAdministration";
-import MedicationDispense_MedicationDispense, { MedicationDispense_Props } from "./profiles/MedicationDispense";
-import MedicationKnowledge_MedicationKnowledge, { MedicationKnowledge_Props } from "./profiles/MedicationKnowledge";
-import MedicationRequest_MedicationRequest, { MedicationRequest_Props } from "./profiles/MedicationRequest";
-import MedicationStatement_MedicationStatement, { MedicationStatement_Props } from "./profiles/MedicationStatement";
-import MedicinalProductDefinition_MedicinalProductDefinition, { MedicinalProductDefinition_Props } from "./profiles/MedicinalProductDefinition";
-import MolecularSequence_MolecularSequence, { MolecularSequence_Props } from "./profiles/MolecularSequence";
-import NutritionOrder_NutritionOrder, { NutritionOrder_Props } from "./profiles/NutritionOrder";
-import NutritionProduct_NutritionProduct, { NutritionProduct_Props } from "./profiles/NutritionProduct";
-import Observation_Observation, { Observation_Props } from "./profiles/Observation";
-import ObservationDefinition_ObservationDefinition, { ObservationDefinition_Props } from "./profiles/ObservationDefinition";
-import Organization_Organization, { Organization_Props } from "./profiles/Organization";
-import OrganizationAffiliation_OrganizationAffiliation, { OrganizationAffiliation_Props } from "./profiles/OrganizationAffiliation";
-import PackagedProductDefinition_PackagedProductDefinition, { PackagedProductDefinition_Props } from "./profiles/PackagedProductDefinition";
-import Patient_Patient, { Patient_Props } from "./profiles/Patient";
-import PaymentNotice_PaymentNotice, { PaymentNotice_Props } from "./profiles/PaymentNotice";
-import PaymentReconciliation_PaymentReconciliation, { PaymentReconciliation_Props } from "./profiles/PaymentReconciliation";
-import Person_Person, { Person_Props } from "./profiles/Person";
-import PlanDefinition_PlanDefinition, { PlanDefinition_Props } from "./profiles/PlanDefinition";
-import Practitioner_Practitioner, { Practitioner_Props } from "./profiles/Practitioner";
-import PractitionerRole_PractitionerRole, { PractitionerRole_Props } from "./profiles/PractitionerRole";
-import Procedure_Procedure, { Procedure_Props } from "./profiles/Procedure";
-import Questionnaire_Questionnaire, { Questionnaire_Props } from "./profiles/Questionnaire";
-import QuestionnaireResponse_QuestionnaireResponse, { QuestionnaireResponse_Props } from "./profiles/QuestionnaireResponse";
-import RegulatedAuthorization_RegulatedAuthorization, { RegulatedAuthorization_Props } from "./profiles/RegulatedAuthorization";
-import RelatedPerson_RelatedPerson, { RelatedPerson_Props } from "./profiles/RelatedPerson";
-import RequestGroup_RequestGroup, { RequestGroup_Props } from "./profiles/RequestGroup";
-import ResearchDefinition_ResearchDefinition, { ResearchDefinition_Props } from "./profiles/ResearchDefinition";
-import ResearchElementDefinition_ResearchElementDefinition, { ResearchElementDefinition_Props } from "./profiles/ResearchElementDefinition";
-import ResearchStudy_ResearchStudy, { ResearchStudy_Props } from "./profiles/ResearchStudy";
-import ResearchSubject_ResearchSubject, { ResearchSubject_Props } from "./profiles/ResearchSubject";
-import RiskAssessment_RiskAssessment, { RiskAssessment_Props } from "./profiles/RiskAssessment";
-import Schedule_Schedule, { Schedule_Props } from "./profiles/Schedule";
-import ServiceRequest_ServiceRequest, { ServiceRequest_Props } from "./profiles/ServiceRequest";
-import Slot_Slot, { Slot_Props } from "./profiles/Slot";
-import Specimen_Specimen, { Specimen_Props } from "./profiles/Specimen";
-import SpecimenDefinition_SpecimenDefinition, { SpecimenDefinition_Props } from "./profiles/SpecimenDefinition";
-import Substance_Substance, { Substance_Props } from "./profiles/Substance";
-import SubstanceDefinition_SubstanceDefinition, { SubstanceDefinition_Props } from "./profiles/SubstanceDefinition";
-import SupplyDelivery_SupplyDelivery, { SupplyDelivery_Props } from "./profiles/SupplyDelivery";
-import SupplyRequest_SupplyRequest, { SupplyRequest_Props } from "./profiles/SupplyRequest";
-import Task_Task, { Task_Props } from "./profiles/Task";
-import TestReport_TestReport, { TestReport_Props } from "./profiles/TestReport";
-import VerificationResult_VerificationResult, { VerificationResult_Props } from "./profiles/VerificationResult";
-import VisionPrescription_VisionPrescription, { VisionPrescription_Props } from "./profiles/VisionPrescription";
+import build_Account, { Account_Props } from "./profiles/Account";
+import build_ActivityDefinition, { ActivityDefinition_Props } from "./profiles/ActivityDefinition";
+import build_AdministrableProductDefinition, { AdministrableProductDefinition_Props } from "./profiles/AdministrableProductDefinition";
+import build_AdverseEvent, { AdverseEvent_Props } from "./profiles/AdverseEvent";
+import build_AllergyIntolerance, { AllergyIntolerance_Props } from "./profiles/AllergyIntolerance";
+import build_Appointment, { Appointment_Props } from "./profiles/Appointment";
+import build_AppointmentResponse, { AppointmentResponse_Props } from "./profiles/AppointmentResponse";
+import build_BiologicallyDerivedProduct, { BiologicallyDerivedProduct_Props } from "./profiles/BiologicallyDerivedProduct";
+import build_BodyStructure, { BodyStructure_Props } from "./profiles/BodyStructure";
+import build_CarePlan, { CarePlan_Props } from "./profiles/CarePlan";
+import build_CareTeam, { CareTeam_Props } from "./profiles/CareTeam";
+import build_ChargeItem, { ChargeItem_Props } from "./profiles/ChargeItem";
+import build_ChargeItemDefinition, { ChargeItemDefinition_Props } from "./profiles/ChargeItemDefinition";
+import build_Citation, { Citation_Props } from "./profiles/Citation";
+import build_Claim, { Claim_Props } from "./profiles/Claim";
+import build_ClaimResponse, { ClaimResponse_Props } from "./profiles/ClaimResponse";
+import build_ClinicalImpression, { ClinicalImpression_Props } from "./profiles/ClinicalImpression";
+import build_ClinicalUseDefinition, { ClinicalUseDefinition_Props } from "./profiles/ClinicalUseDefinition";
+import build_Communication, { Communication_Props } from "./profiles/Communication";
+import build_CommunicationRequest, { CommunicationRequest_Props } from "./profiles/CommunicationRequest";
+import build_Contract, { Contract_Props } from "./profiles/Contract";
+import build_Coverage, { Coverage_Props } from "./profiles/Coverage";
+import build_CoverageEligibilityRequest, { CoverageEligibilityRequest_Props } from "./profiles/CoverageEligibilityRequest";
+import build_CoverageEligibilityResponse, { CoverageEligibilityResponse_Props } from "./profiles/CoverageEligibilityResponse";
+import build_DetectedIssue, { DetectedIssue_Props } from "./profiles/DetectedIssue";
+import build_Device, { Device_Props } from "./profiles/Device";
+import build_DeviceDefinition, { DeviceDefinition_Props } from "./profiles/DeviceDefinition";
+import build_DeviceMetric, { DeviceMetric_Props } from "./profiles/DeviceMetric";
+import build_DeviceRequest, { DeviceRequest_Props } from "./profiles/DeviceRequest";
+import build_DeviceUseStatement, { DeviceUseStatement_Props } from "./profiles/DeviceUseStatement";
+import build_DiagnosticReport, { DiagnosticReport_Props } from "./profiles/DiagnosticReport";
+import build_DomainResource, { DomainResource_Props } from "./profiles/DomainResource";
+import build_Encounter, { Encounter_Props } from "./profiles/Encounter";
+import build_EnrollmentRequest, { EnrollmentRequest_Props } from "./profiles/EnrollmentRequest";
+import build_EnrollmentResponse, { EnrollmentResponse_Props } from "./profiles/EnrollmentResponse";
+import build_EpisodeOfCare, { EpisodeOfCare_Props } from "./profiles/EpisodeOfCare";
+import build_EventDefinition, { EventDefinition_Props } from "./profiles/EventDefinition";
+import build_Evidence, { Evidence_Props } from "./profiles/Evidence";
+import build_EvidenceReport, { EvidenceReport_Props } from "./profiles/EvidenceReport";
+import build_EvidenceVariable, { EvidenceVariable_Props } from "./profiles/EvidenceVariable";
+import build_ExplanationOfBenefit, { ExplanationOfBenefit_Props } from "./profiles/ExplanationOfBenefit";
+import build_FamilyMemberHistory, { FamilyMemberHistory_Props } from "./profiles/FamilyMemberHistory";
+import build_Flag, { Flag_Props } from "./profiles/Flag";
+import build_Goal, { Goal_Props } from "./profiles/Goal";
+import build_Group, { Group_Props } from "./profiles/Group";
+import build_GuidanceResponse, { GuidanceResponse_Props } from "./profiles/GuidanceResponse";
+import build_HealthcareService, { HealthcareService_Props } from "./profiles/HealthcareService";
+import build_ImagingStudy, { ImagingStudy_Props } from "./profiles/ImagingStudy";
+import build_Immunization, { Immunization_Props } from "./profiles/Immunization";
+import build_ImmunizationEvaluation, { ImmunizationEvaluation_Props } from "./profiles/ImmunizationEvaluation";
+import build_ImmunizationRecommendation, { ImmunizationRecommendation_Props } from "./profiles/ImmunizationRecommendation";
+import build_Ingredient, { Ingredient_Props } from "./profiles/Ingredient";
+import build_InsurancePlan, { InsurancePlan_Props } from "./profiles/InsurancePlan";
+import build_Invoice, { Invoice_Props } from "./profiles/Invoice";
+import build_Library, { Library_Props } from "./profiles/Library";
+import build_List, { List_Props } from "./profiles/List";
+import build_Location, { Location_Props } from "./profiles/Location";
+import build_ManufacturedItemDefinition, { ManufacturedItemDefinition_Props } from "./profiles/ManufacturedItemDefinition";
+import build_Measure, { Measure_Props } from "./profiles/Measure";
+import build_MeasureReport, { MeasureReport_Props } from "./profiles/MeasureReport";
+import build_Media, { Media_Props } from "./profiles/Media";
+import build_Medication, { Medication_Props } from "./profiles/Medication";
+import build_MedicationAdministration, { MedicationAdministration_Props } from "./profiles/MedicationAdministration";
+import build_MedicationDispense, { MedicationDispense_Props } from "./profiles/MedicationDispense";
+import build_MedicationKnowledge, { MedicationKnowledge_Props } from "./profiles/MedicationKnowledge";
+import build_MedicationRequest, { MedicationRequest_Props } from "./profiles/MedicationRequest";
+import build_MedicationStatement, { MedicationStatement_Props } from "./profiles/MedicationStatement";
+import build_MedicinalProductDefinition, { MedicinalProductDefinition_Props } from "./profiles/MedicinalProductDefinition";
+import build_MolecularSequence, { MolecularSequence_Props } from "./profiles/MolecularSequence";
+import build_NutritionOrder, { NutritionOrder_Props } from "./profiles/NutritionOrder";
+import build_NutritionProduct, { NutritionProduct_Props } from "./profiles/NutritionProduct";
+import build_Observation, { Observation_Props } from "./profiles/Observation";
+import build_ObservationDefinition, { ObservationDefinition_Props } from "./profiles/ObservationDefinition";
+import build_Organization, { Organization_Props } from "./profiles/Organization";
+import build_OrganizationAffiliation, { OrganizationAffiliation_Props } from "./profiles/OrganizationAffiliation";
+import build_PackagedProductDefinition, { PackagedProductDefinition_Props } from "./profiles/PackagedProductDefinition";
+import build_Patient, { Patient_Props } from "./profiles/Patient";
+import build_PaymentNotice, { PaymentNotice_Props } from "./profiles/PaymentNotice";
+import build_PaymentReconciliation, { PaymentReconciliation_Props } from "./profiles/PaymentReconciliation";
+import build_Person, { Person_Props } from "./profiles/Person";
+import build_PlanDefinition, { PlanDefinition_Props } from "./profiles/PlanDefinition";
+import build_Practitioner, { Practitioner_Props } from "./profiles/Practitioner";
+import build_PractitionerRole, { PractitionerRole_Props } from "./profiles/PractitionerRole";
+import build_Procedure, { Procedure_Props } from "./profiles/Procedure";
+import build_Questionnaire, { Questionnaire_Props } from "./profiles/Questionnaire";
+import build_QuestionnaireResponse, { QuestionnaireResponse_Props } from "./profiles/QuestionnaireResponse";
+import build_RegulatedAuthorization, { RegulatedAuthorization_Props } from "./profiles/RegulatedAuthorization";
+import build_RelatedPerson, { RelatedPerson_Props } from "./profiles/RelatedPerson";
+import build_RequestGroup, { RequestGroup_Props } from "./profiles/RequestGroup";
+import build_ResearchDefinition, { ResearchDefinition_Props } from "./profiles/ResearchDefinition";
+import build_ResearchElementDefinition, { ResearchElementDefinition_Props } from "./profiles/ResearchElementDefinition";
+import build_ResearchStudy, { ResearchStudy_Props } from "./profiles/ResearchStudy";
+import build_ResearchSubject, { ResearchSubject_Props } from "./profiles/ResearchSubject";
+import build_RiskAssessment, { RiskAssessment_Props } from "./profiles/RiskAssessment";
+import build_Schedule, { Schedule_Props } from "./profiles/Schedule";
+import build_ServiceRequest, { ServiceRequest_Props } from "./profiles/ServiceRequest";
+import build_Slot, { Slot_Props } from "./profiles/Slot";
+import build_Specimen, { Specimen_Props } from "./profiles/Specimen";
+import build_SpecimenDefinition, { SpecimenDefinition_Props } from "./profiles/SpecimenDefinition";
+import build_Substance, { Substance_Props } from "./profiles/Substance";
+import build_SubstanceDefinition, { SubstanceDefinition_Props } from "./profiles/SubstanceDefinition";
+import build_SupplyDelivery, { SupplyDelivery_Props } from "./profiles/SupplyDelivery";
+import build_SupplyRequest, { SupplyRequest_Props } from "./profiles/SupplyRequest";
+import build_Task, { Task_Props } from "./profiles/Task";
+import build_TestReport, { TestReport_Props } from "./profiles/TestReport";
+import build_VerificationResult, { VerificationResult_Props } from "./profiles/VerificationResult";
+import build_VisionPrescription, { VisionPrescription_Props } from "./profiles/VisionPrescription";
 export * from "./datatypes";
 
 /**
@@ -135,7 +135,7 @@ export function account(props: Account_Props);
 
 export function account(type: any, props?: any) {
     const mappings = {
-        "Account": Account_Account
+        "Account": build_Account
     };
 
     // Handle optional type parameter
@@ -207,7 +207,7 @@ export function activityDefinition(props: ActivityDefinition_Props);
 
 export function activityDefinition(type: any, props?: any) {
     const mappings = {
-        "ActivityDefinition": ActivityDefinition_ActivityDefinition
+        "ActivityDefinition": build_ActivityDefinition
     };
 
     // Handle optional type parameter
@@ -246,7 +246,7 @@ export function administrableProductDefinition(props: AdministrableProductDefini
 
 export function administrableProductDefinition(type: any, props?: any) {
     const mappings = {
-        "AdministrableProductDefinition": AdministrableProductDefinition_AdministrableProductDefinition
+        "AdministrableProductDefinition": build_AdministrableProductDefinition
     };
 
     // Handle optional type parameter
@@ -292,7 +292,7 @@ export function adverseEvent(props: AdverseEvent_Props);
 
 export function adverseEvent(type: any, props?: any) {
     const mappings = {
-        "AdverseEvent": AdverseEvent_AdverseEvent
+        "AdverseEvent": build_AdverseEvent
     };
 
     // Handle optional type parameter
@@ -334,7 +334,7 @@ export function allergyIntolerance(props: AllergyIntolerance_Props);
 
 export function allergyIntolerance(type: any, props?: any) {
     const mappings = {
-        "AllergyIntolerance": AllergyIntolerance_AllergyIntolerance
+        "AllergyIntolerance": build_AllergyIntolerance
     };
 
     // Handle optional type parameter
@@ -382,7 +382,7 @@ export function appointment(props: Appointment_Props);
 
 export function appointment(type: any, props?: any) {
     const mappings = {
-        "Appointment": Appointment_Appointment
+        "Appointment": build_Appointment
     };
 
     // Handle optional type parameter
@@ -416,7 +416,7 @@ export function appointmentResponse(props: AppointmentResponse_Props);
 
 export function appointmentResponse(type: any, props?: any) {
     const mappings = {
-        "AppointmentResponse": AppointmentResponse_AppointmentResponse
+        "AppointmentResponse": build_AppointmentResponse
     };
 
     // Handle optional type parameter
@@ -456,7 +456,7 @@ export function biologicallyDerivedProduct(props: BiologicallyDerivedProduct_Pro
 
 export function biologicallyDerivedProduct(type: any, props?: any) {
     const mappings = {
-        "BiologicallyDerivedProduct": BiologicallyDerivedProduct_BiologicallyDerivedProduct
+        "BiologicallyDerivedProduct": build_BiologicallyDerivedProduct
     };
 
     // Handle optional type parameter
@@ -490,7 +490,7 @@ export function bodyStructure(props: BodyStructure_Props);
 
 export function bodyStructure(type: any, props?: any) {
     const mappings = {
-        "BodyStructure": BodyStructure_BodyStructure
+        "BodyStructure": build_BodyStructure
     };
 
     // Handle optional type parameter
@@ -539,7 +539,7 @@ export function carePlan(props: CarePlan_Props);
 
 export function carePlan(type: any, props?: any) {
     const mappings = {
-        "CarePlan": CarePlan_CarePlan
+        "CarePlan": build_CarePlan
     };
 
     // Handle optional type parameter
@@ -578,7 +578,7 @@ export function careTeam(props: CareTeam_Props);
 
 export function careTeam(type: any, props?: any) {
     const mappings = {
-        "CareTeam": CareTeam_CareTeam
+        "CareTeam": build_CareTeam
     };
 
     // Handle optional type parameter
@@ -630,7 +630,7 @@ export function chargeItem(props: ChargeItem_Props);
 
 export function chargeItem(type: any, props?: any) {
     const mappings = {
-        "ChargeItem": ChargeItem_ChargeItem
+        "ChargeItem": build_ChargeItem
     };
 
     // Handle optional type parameter
@@ -679,7 +679,7 @@ export function chargeItemDefinition(props: ChargeItemDefinition_Props);
 
 export function chargeItemDefinition(type: any, props?: any) {
     const mappings = {
-        "ChargeItemDefinition": ChargeItemDefinition_ChargeItemDefinition
+        "ChargeItemDefinition": build_ChargeItemDefinition
     };
 
     // Handle optional type parameter
@@ -734,7 +734,7 @@ export function citation(props: Citation_Props);
 
 export function citation(type: any, props?: any) {
     const mappings = {
-        "Citation": Citation_Citation
+        "Citation": build_Citation
     };
 
     // Handle optional type parameter
@@ -787,7 +787,7 @@ export function claim(props: Claim_Props);
 
 export function claim(type: any, props?: any) {
     const mappings = {
-        "Claim": Claim_Claim
+        "Claim": build_Claim
     };
 
     // Handle optional type parameter
@@ -840,7 +840,7 @@ export function claimResponse(props: ClaimResponse_Props);
 
 export function claimResponse(type: any, props?: any) {
     const mappings = {
-        "ClaimResponse": ClaimResponse_ClaimResponse
+        "ClaimResponse": build_ClaimResponse
     };
 
     // Handle optional type parameter
@@ -886,7 +886,7 @@ export function clinicalImpression(props: ClinicalImpression_Props);
 
 export function clinicalImpression(type: any, props?: any) {
     const mappings = {
-        "ClinicalImpression": ClinicalImpression_ClinicalImpression
+        "ClinicalImpression": build_ClinicalImpression
     };
 
     // Handle optional type parameter
@@ -923,7 +923,7 @@ export function clinicalUseDefinition(props: ClinicalUseDefinition_Props);
 
 export function clinicalUseDefinition(type: any, props?: any) {
     const mappings = {
-        "ClinicalUseDefinition": ClinicalUseDefinition_ClinicalUseDefinition
+        "ClinicalUseDefinition": build_ClinicalUseDefinition
     };
 
     // Handle optional type parameter
@@ -972,7 +972,7 @@ export function communication(props: Communication_Props);
 
 export function communication(type: any, props?: any) {
     const mappings = {
-        "Communication": Communication_Communication
+        "Communication": build_Communication
     };
 
     // Handle optional type parameter
@@ -1020,7 +1020,7 @@ export function communicationRequest(props: CommunicationRequest_Props);
 
 export function communicationRequest(type: any, props?: any) {
     const mappings = {
-        "CommunicationRequest": CommunicationRequest_CommunicationRequest
+        "CommunicationRequest": build_CommunicationRequest
     };
 
     // Handle optional type parameter
@@ -1079,7 +1079,7 @@ export function contract(props: Contract_Props);
 
 export function contract(type: any, props?: any) {
     const mappings = {
-        "Contract": Contract_Contract
+        "Contract": build_Contract
     };
 
     // Handle optional type parameter
@@ -1122,7 +1122,7 @@ export function coverage(props: Coverage_Props);
 
 export function coverage(type: any, props?: any) {
     const mappings = {
-        "Coverage": Coverage_Coverage
+        "Coverage": build_Coverage
     };
 
     // Handle optional type parameter
@@ -1165,7 +1165,7 @@ export function coverageEligibilityRequest(props: CoverageEligibilityRequest_Pro
 
 export function coverageEligibilityRequest(type: any, props?: any) {
     const mappings = {
-        "CoverageEligibilityRequest": CoverageEligibilityRequest_CoverageEligibilityRequest
+        "CoverageEligibilityRequest": build_CoverageEligibilityRequest
     };
 
     // Handle optional type parameter
@@ -1209,7 +1209,7 @@ export function coverageEligibilityResponse(props: CoverageEligibilityResponse_P
 
 export function coverageEligibilityResponse(type: any, props?: any) {
     const mappings = {
-        "CoverageEligibilityResponse": CoverageEligibilityResponse_CoverageEligibilityResponse
+        "CoverageEligibilityResponse": build_CoverageEligibilityResponse
     };
 
     // Handle optional type parameter
@@ -1247,7 +1247,7 @@ export function detectedIssue(props: DetectedIssue_Props);
 
 export function detectedIssue(type: any, props?: any) {
     const mappings = {
-        "DetectedIssue": DetectedIssue_DetectedIssue
+        "DetectedIssue": build_DetectedIssue
     };
 
     // Handle optional type parameter
@@ -1299,7 +1299,7 @@ export function device(props: Device_Props);
 
 export function device(type: any, props?: any) {
     const mappings = {
-        "Device": Device_Device
+        "Device": build_Device
     };
 
     // Handle optional type parameter
@@ -1347,7 +1347,7 @@ export function deviceDefinition(props: DeviceDefinition_Props);
 
 export function deviceDefinition(type: any, props?: any) {
     const mappings = {
-        "DeviceDefinition": DeviceDefinition_DeviceDefinition
+        "DeviceDefinition": build_DeviceDefinition
     };
 
     // Handle optional type parameter
@@ -1383,7 +1383,7 @@ export function deviceMetric(props: DeviceMetric_Props);
 
 export function deviceMetric(type: any, props?: any) {
     const mappings = {
-        "DeviceMetric": DeviceMetric_DeviceMetric
+        "DeviceMetric": build_DeviceMetric
     };
 
     // Handle optional type parameter
@@ -1433,7 +1433,7 @@ export function deviceRequest(props: DeviceRequest_Props);
 
 export function deviceRequest(type: any, props?: any) {
     const mappings = {
-        "DeviceRequest": DeviceRequest_DeviceRequest
+        "DeviceRequest": build_DeviceRequest
     };
 
     // Handle optional type parameter
@@ -1472,7 +1472,7 @@ export function deviceUseStatement(props: DeviceUseStatement_Props);
 
 export function deviceUseStatement(type: any, props?: any) {
     const mappings = {
-        "DeviceUseStatement": DeviceUseStatement_DeviceUseStatement
+        "DeviceUseStatement": build_DeviceUseStatement
     };
 
     // Handle optional type parameter
@@ -1516,7 +1516,7 @@ export function diagnosticReport(props: DiagnosticReport_Props);
 
 export function diagnosticReport(type: any, props?: any) {
     const mappings = {
-        "DiagnosticReport": DiagnosticReport_DiagnosticReport
+        "DiagnosticReport": build_DiagnosticReport
     };
 
     // Handle optional type parameter
@@ -1543,7 +1543,7 @@ export function domainResource(props: DomainResource_Props);
 
 export function domainResource(type: any, props?: any) {
     const mappings = {
-        "DomainResource": DomainResource_DomainResource
+        "DomainResource": build_DomainResource
     };
 
     // Handle optional type parameter
@@ -1592,7 +1592,7 @@ export function encounter(props: Encounter_Props);
 
 export function encounter(type: any, props?: any) {
     const mappings = {
-        "Encounter": Encounter_Encounter
+        "Encounter": build_Encounter
     };
 
     // Handle optional type parameter
@@ -1625,7 +1625,7 @@ export function enrollmentRequest(props: EnrollmentRequest_Props);
 
 export function enrollmentRequest(type: any, props?: any) {
     const mappings = {
-        "EnrollmentRequest": EnrollmentRequest_EnrollmentRequest
+        "EnrollmentRequest": build_EnrollmentRequest
     };
 
     // Handle optional type parameter
@@ -1659,7 +1659,7 @@ export function enrollmentResponse(props: EnrollmentResponse_Props);
 
 export function enrollmentResponse(type: any, props?: any) {
     const mappings = {
-        "EnrollmentResponse": EnrollmentResponse_EnrollmentResponse
+        "EnrollmentResponse": build_EnrollmentResponse
     };
 
     // Handle optional type parameter
@@ -1697,7 +1697,7 @@ export function episodeOfCare(props: EpisodeOfCare_Props);
 
 export function episodeOfCare(type: any, props?: any) {
     const mappings = {
-        "EpisodeOfCare": EpisodeOfCare_EpisodeOfCare
+        "EpisodeOfCare": build_EpisodeOfCare
     };
 
     // Handle optional type parameter
@@ -1751,7 +1751,7 @@ export function eventDefinition(props: EventDefinition_Props);
 
 export function eventDefinition(type: any, props?: any) {
     const mappings = {
-        "EventDefinition": EventDefinition_EventDefinition
+        "EventDefinition": build_EventDefinition
     };
 
     // Handle optional type parameter
@@ -1802,7 +1802,7 @@ export function evidence(props: Evidence_Props);
 
 export function evidence(type: any, props?: any) {
     const mappings = {
-        "Evidence": Evidence_Evidence
+        "Evidence": build_Evidence
     };
 
     // Handle optional type parameter
@@ -1846,7 +1846,7 @@ export function evidenceReport(props: EvidenceReport_Props);
 
 export function evidenceReport(type: any, props?: any) {
     const mappings = {
-        "EvidenceReport": EvidenceReport_EvidenceReport
+        "EvidenceReport": build_EvidenceReport
     };
 
     // Handle optional type parameter
@@ -1896,7 +1896,7 @@ export function evidenceVariable(props: EvidenceVariable_Props);
 
 export function evidenceVariable(type: any, props?: any) {
     const mappings = {
-        "EvidenceVariable": EvidenceVariable_EvidenceVariable
+        "EvidenceVariable": build_EvidenceVariable
     };
 
     // Handle optional type parameter
@@ -1965,7 +1965,7 @@ export function explanationOfBenefit(props: ExplanationOfBenefit_Props);
 
 export function explanationOfBenefit(type: any, props?: any) {
     const mappings = {
-        "ExplanationOfBenefit": ExplanationOfBenefit_ExplanationOfBenefit
+        "ExplanationOfBenefit": build_ExplanationOfBenefit
     };
 
     // Handle optional type parameter
@@ -2009,7 +2009,7 @@ export function familyMemberHistory(props: FamilyMemberHistory_Props);
 
 export function familyMemberHistory(type: any, props?: any) {
     const mappings = {
-        "FamilyMemberHistory": FamilyMemberHistory_FamilyMemberHistory
+        "FamilyMemberHistory": build_FamilyMemberHistory
     };
 
     // Handle optional type parameter
@@ -2043,7 +2043,7 @@ export function flag(props: Flag_Props);
 
 export function flag(type: any, props?: any) {
     const mappings = {
-        "Flag": Flag_Flag
+        "Flag": build_Flag
     };
 
     // Handle optional type parameter
@@ -2085,7 +2085,7 @@ export function goal(props: Goal_Props);
 
 export function goal(type: any, props?: any) {
     const mappings = {
-        "Goal": Goal_Goal
+        "Goal": build_Goal
     };
 
     // Handle optional type parameter
@@ -2121,7 +2121,7 @@ export function group(props: Group_Props);
 
 export function group(type: any, props?: any) {
     const mappings = {
-        "Group": Group_Group
+        "Group": build_Group
     };
 
     // Handle optional type parameter
@@ -2162,7 +2162,7 @@ export function guidanceResponse(props: GuidanceResponse_Props);
 
 export function guidanceResponse(type: any, props?: any) {
     const mappings = {
-        "GuidanceResponse": GuidanceResponse_GuidanceResponse
+        "GuidanceResponse": build_GuidanceResponse
     };
 
     // Handle optional type parameter
@@ -2212,7 +2212,7 @@ export function healthcareService(props: HealthcareService_Props);
 
 export function healthcareService(type: any, props?: any) {
     const mappings = {
-        "HealthcareService": HealthcareService_HealthcareService
+        "HealthcareService": build_HealthcareService
     };
 
     // Handle optional type parameter
@@ -2258,7 +2258,7 @@ export function imagingStudy(props: ImagingStudy_Props);
 
 export function imagingStudy(type: any, props?: any) {
     const mappings = {
-        "ImagingStudy": ImagingStudy_ImagingStudy
+        "ImagingStudy": build_ImagingStudy
     };
 
     // Handle optional type parameter
@@ -2312,7 +2312,7 @@ export function immunization(props: Immunization_Props);
 
 export function immunization(type: any, props?: any) {
     const mappings = {
-        "Immunization": Immunization_Immunization
+        "Immunization": build_Immunization
     };
 
     // Handle optional type parameter
@@ -2351,7 +2351,7 @@ export function immunizationEvaluation(props: ImmunizationEvaluation_Props);
 
 export function immunizationEvaluation(type: any, props?: any) {
     const mappings = {
-        "ImmunizationEvaluation": ImmunizationEvaluation_ImmunizationEvaluation
+        "ImmunizationEvaluation": build_ImmunizationEvaluation
     };
 
     // Handle optional type parameter
@@ -2385,7 +2385,7 @@ export function immunizationRecommendation(props: ImmunizationRecommendation_Pro
 
 export function immunizationRecommendation(type: any, props?: any) {
     const mappings = {
-        "ImmunizationRecommendation": ImmunizationRecommendation_ImmunizationRecommendation
+        "ImmunizationRecommendation": build_ImmunizationRecommendation
     };
 
     // Handle optional type parameter
@@ -2419,7 +2419,7 @@ export function ingredient(props: Ingredient_Props);
 
 export function ingredient(type: any, props?: any) {
     const mappings = {
-        "Ingredient": Ingredient_Ingredient
+        "Ingredient": build_Ingredient
     };
 
     // Handle optional type parameter
@@ -2459,7 +2459,7 @@ export function insurancePlan(props: InsurancePlan_Props);
 
 export function insurancePlan(type: any, props?: any) {
     const mappings = {
-        "InsurancePlan": InsurancePlan_InsurancePlan
+        "InsurancePlan": build_InsurancePlan
     };
 
     // Handle optional type parameter
@@ -2501,7 +2501,7 @@ export function invoice(props: Invoice_Props);
 
 export function invoice(type: any, props?: any) {
     const mappings = {
-        "Invoice": Invoice_Invoice
+        "Invoice": build_Invoice
     };
 
     // Handle optional type parameter
@@ -2558,7 +2558,7 @@ export function library(props: Library_Props);
 
 export function library(type: any, props?: any) {
     const mappings = {
-        "Library": Library_Library
+        "Library": build_Library
     };
 
     // Handle optional type parameter
@@ -2597,7 +2597,7 @@ export function list(props: List_Props);
 
 export function list(type: any, props?: any) {
     const mappings = {
-        "List": List_List
+        "List": build_List
     };
 
     // Handle optional type parameter
@@ -2640,7 +2640,7 @@ export function location(props: Location_Props);
 
 export function location(type: any, props?: any) {
     const mappings = {
-        "Location": Location_Location
+        "Location": build_Location
     };
 
     // Handle optional type parameter
@@ -2676,7 +2676,7 @@ export function manufacturedItemDefinition(props: ManufacturedItemDefinition_Pro
 
 export function manufacturedItemDefinition(type: any, props?: any) {
     const mappings = {
-        "ManufacturedItemDefinition": ManufacturedItemDefinition_ManufacturedItemDefinition
+        "ManufacturedItemDefinition": build_ManufacturedItemDefinition
     };
 
     // Handle optional type parameter
@@ -2743,7 +2743,7 @@ export function measure(props: Measure_Props);
 
 export function measure(type: any, props?: any) {
     const mappings = {
-        "Measure": Measure_Measure
+        "Measure": build_Measure
     };
 
     // Handle optional type parameter
@@ -2780,7 +2780,7 @@ export function measureReport(props: MeasureReport_Props);
 
 export function measureReport(type: any, props?: any) {
     const mappings = {
-        "MeasureReport": MeasureReport_MeasureReport
+        "MeasureReport": build_MeasureReport
     };
 
     // Handle optional type parameter
@@ -2828,7 +2828,7 @@ export function media(props: Media_Props);
 
 export function media(type: any, props?: any) {
     const mappings = {
-        "Media": Media_Media
+        "Media": build_Media
     };
 
     // Handle optional type parameter
@@ -2862,7 +2862,7 @@ export function medication(props: Medication_Props);
 
 export function medication(type: any, props?: any) {
     const mappings = {
-        "Medication": Medication_Medication
+        "Medication": build_Medication
     };
 
     // Handle optional type parameter
@@ -2907,7 +2907,7 @@ export function medicationAdministration(props: MedicationAdministration_Props);
 
 export function medicationAdministration(type: any, props?: any) {
     const mappings = {
-        "MedicationAdministration": MedicationAdministration_MedicationAdministration
+        "MedicationAdministration": build_MedicationAdministration
     };
 
     // Handle optional type parameter
@@ -2957,7 +2957,7 @@ export function medicationDispense(props: MedicationDispense_Props);
 
 export function medicationDispense(type: any, props?: any) {
     const mappings = {
-        "MedicationDispense": MedicationDispense_MedicationDispense
+        "MedicationDispense": build_MedicationDispense
     };
 
     // Handle optional type parameter
@@ -3005,7 +3005,7 @@ export function medicationKnowledge(props: MedicationKnowledge_Props);
 
 export function medicationKnowledge(type: any, props?: any) {
     const mappings = {
-        "MedicationKnowledge": MedicationKnowledge_MedicationKnowledge
+        "MedicationKnowledge": build_MedicationKnowledge
     };
 
     // Handle optional type parameter
@@ -3063,7 +3063,7 @@ export function medicationRequest(props: MedicationRequest_Props);
 
 export function medicationRequest(type: any, props?: any) {
     const mappings = {
-        "MedicationRequest": MedicationRequest_MedicationRequest
+        "MedicationRequest": build_MedicationRequest
     };
 
     // Handle optional type parameter
@@ -3106,7 +3106,7 @@ export function medicationStatement(props: MedicationStatement_Props);
 
 export function medicationStatement(type: any, props?: any) {
     const mappings = {
-        "MedicationStatement": MedicationStatement_MedicationStatement
+        "MedicationStatement": build_MedicationStatement
     };
 
     // Handle optional type parameter
@@ -3163,7 +3163,7 @@ export function medicinalProductDefinition(props: MedicinalProductDefinition_Pro
 
 export function medicinalProductDefinition(type: any, props?: any) {
     const mappings = {
-        "MedicinalProductDefinition": MedicinalProductDefinition_MedicinalProductDefinition
+        "MedicinalProductDefinition": build_MedicinalProductDefinition
     };
 
     // Handle optional type parameter
@@ -3205,7 +3205,7 @@ export function molecularSequence(props: MolecularSequence_Props);
 
 export function molecularSequence(type: any, props?: any) {
     const mappings = {
-        "MolecularSequence": MolecularSequence_MolecularSequence
+        "MolecularSequence": build_MolecularSequence
     };
 
     // Handle optional type parameter
@@ -3248,7 +3248,7 @@ export function nutritionOrder(props: NutritionOrder_Props);
 
 export function nutritionOrder(type: any, props?: any) {
     const mappings = {
-        "NutritionOrder": NutritionOrder_NutritionOrder
+        "NutritionOrder": build_NutritionOrder
     };
 
     // Handle optional type parameter
@@ -3284,7 +3284,7 @@ export function nutritionProduct(props: NutritionProduct_Props);
 
 export function nutritionProduct(type: any, props?: any) {
     const mappings = {
-        "NutritionProduct": NutritionProduct_NutritionProduct
+        "NutritionProduct": build_NutritionProduct
     };
 
     // Handle optional type parameter
@@ -3334,7 +3334,7 @@ export function observation(props: Observation_Props);
 
 export function observation(type: any, props?: any) {
     const mappings = {
-        "Observation": Observation_Observation
+        "Observation": build_Observation
     };
 
     // Handle optional type parameter
@@ -3373,7 +3373,7 @@ export function observationDefinition(props: ObservationDefinition_Props);
 
 export function observationDefinition(type: any, props?: any) {
     const mappings = {
-        "ObservationDefinition": ObservationDefinition_ObservationDefinition
+        "ObservationDefinition": build_ObservationDefinition
     };
 
     // Handle optional type parameter
@@ -3409,7 +3409,7 @@ export function organization(props: Organization_Props);
 
 export function organization(type: any, props?: any) {
     const mappings = {
-        "Organization": Organization_Organization
+        "Organization": build_Organization
     };
 
     // Handle optional type parameter
@@ -3447,7 +3447,7 @@ export function organizationAffiliation(props: OrganizationAffiliation_Props);
 
 export function organizationAffiliation(type: any, props?: any) {
     const mappings = {
-        "OrganizationAffiliation": OrganizationAffiliation_OrganizationAffiliation
+        "OrganizationAffiliation": build_OrganizationAffiliation
     };
 
     // Handle optional type parameter
@@ -3487,7 +3487,7 @@ export function packagedProductDefinition(props: PackagedProductDefinition_Props
 
 export function packagedProductDefinition(type: any, props?: any) {
     const mappings = {
-        "PackagedProductDefinition": PackagedProductDefinition_PackagedProductDefinition
+        "PackagedProductDefinition": build_PackagedProductDefinition
     };
 
     // Handle optional type parameter
@@ -3529,7 +3529,7 @@ export function patient(props: Patient_Props);
 
 export function patient(type: any, props?: any) {
     const mappings = {
-        "Patient": Patient_Patient
+        "Patient": build_Patient
     };
 
     // Handle optional type parameter
@@ -3567,7 +3567,7 @@ export function paymentNotice(props: PaymentNotice_Props);
 
 export function paymentNotice(type: any, props?: any) {
     const mappings = {
-        "PaymentNotice": PaymentNotice_PaymentNotice
+        "PaymentNotice": build_PaymentNotice
     };
 
     // Handle optional type parameter
@@ -3608,7 +3608,7 @@ export function paymentReconciliation(props: PaymentReconciliation_Props);
 
 export function paymentReconciliation(type: any, props?: any) {
     const mappings = {
-        "PaymentReconciliation": PaymentReconciliation_PaymentReconciliation
+        "PaymentReconciliation": build_PaymentReconciliation
     };
 
     // Handle optional type parameter
@@ -3644,7 +3644,7 @@ export function person(props: Person_Props);
 
 export function person(type: any, props?: any) {
     const mappings = {
-        "Person": Person_Person
+        "Person": build_Person
     };
 
     // Handle optional type parameter
@@ -3701,7 +3701,7 @@ export function planDefinition(props: PlanDefinition_Props);
 
 export function planDefinition(type: any, props?: any) {
     const mappings = {
-        "PlanDefinition": PlanDefinition_PlanDefinition
+        "PlanDefinition": build_PlanDefinition
     };
 
     // Handle optional type parameter
@@ -3737,7 +3737,7 @@ export function practitioner(props: Practitioner_Props);
 
 export function practitioner(type: any, props?: any) {
     const mappings = {
-        "Practitioner": Practitioner_Practitioner
+        "Practitioner": build_Practitioner
     };
 
     // Handle optional type parameter
@@ -3777,7 +3777,7 @@ export function practitionerRole(props: PractitionerRole_Props);
 
 export function practitionerRole(type: any, props?: any) {
     const mappings = {
-        "PractitionerRole": PractitionerRole_PractitionerRole
+        "PractitionerRole": build_PractitionerRole
     };
 
     // Handle optional type parameter
@@ -3831,7 +3831,7 @@ export function procedure(props: Procedure_Props);
 
 export function procedure(type: any, props?: any) {
     const mappings = {
-        "Procedure": Procedure_Procedure
+        "Procedure": build_Procedure
     };
 
     // Handle optional type parameter
@@ -3879,7 +3879,7 @@ export function questionnaire(props: Questionnaire_Props);
 
 export function questionnaire(type: any, props?: any) {
     const mappings = {
-        "Questionnaire": Questionnaire_Questionnaire
+        "Questionnaire": build_Questionnaire
     };
 
     // Handle optional type parameter
@@ -3916,7 +3916,7 @@ export function questionnaireResponse(props: QuestionnaireResponse_Props);
 
 export function questionnaireResponse(type: any, props?: any) {
     const mappings = {
-        "QuestionnaireResponse": QuestionnaireResponse_QuestionnaireResponse
+        "QuestionnaireResponse": build_QuestionnaireResponse
     };
 
     // Handle optional type parameter
@@ -3956,7 +3956,7 @@ export function regulatedAuthorization(props: RegulatedAuthorization_Props);
 
 export function regulatedAuthorization(type: any, props?: any) {
     const mappings = {
-        "RegulatedAuthorization": RegulatedAuthorization_RegulatedAuthorization
+        "RegulatedAuthorization": build_RegulatedAuthorization
     };
 
     // Handle optional type parameter
@@ -3994,7 +3994,7 @@ export function relatedPerson(props: RelatedPerson_Props);
 
 export function relatedPerson(type: any, props?: any) {
     const mappings = {
-        "RelatedPerson": RelatedPerson_RelatedPerson
+        "RelatedPerson": build_RelatedPerson
     };
 
     // Handle optional type parameter
@@ -4038,7 +4038,7 @@ export function requestGroup(props: RequestGroup_Props);
 
 export function requestGroup(type: any, props?: any) {
     const mappings = {
-        "RequestGroup": RequestGroup_RequestGroup
+        "RequestGroup": build_RequestGroup
     };
 
     // Handle optional type parameter
@@ -4098,7 +4098,7 @@ export function researchDefinition(props: ResearchDefinition_Props);
 
 export function researchDefinition(type: any, props?: any) {
     const mappings = {
-        "ResearchDefinition": ResearchDefinition_ResearchDefinition
+        "ResearchDefinition": build_ResearchDefinition
     };
 
     // Handle optional type parameter
@@ -4157,7 +4157,7 @@ export function researchElementDefinition(props: ResearchElementDefinition_Props
 
 export function researchElementDefinition(type: any, props?: any) {
     const mappings = {
-        "ResearchElementDefinition": ResearchElementDefinition_ResearchElementDefinition
+        "ResearchElementDefinition": build_ResearchElementDefinition
     };
 
     // Handle optional type parameter
@@ -4207,7 +4207,7 @@ export function researchStudy(props: ResearchStudy_Props);
 
 export function researchStudy(type: any, props?: any) {
     const mappings = {
-        "ResearchStudy": ResearchStudy_ResearchStudy
+        "ResearchStudy": build_ResearchStudy
     };
 
     // Handle optional type parameter
@@ -4241,7 +4241,7 @@ export function researchSubject(props: ResearchSubject_Props);
 
 export function researchSubject(type: any, props?: any) {
     const mappings = {
-        "ResearchSubject": ResearchSubject_ResearchSubject
+        "ResearchSubject": build_ResearchSubject
     };
 
     // Handle optional type parameter
@@ -4284,7 +4284,7 @@ export function riskAssessment(props: RiskAssessment_Props);
 
 export function riskAssessment(type: any, props?: any) {
     const mappings = {
-        "RiskAssessment": RiskAssessment_RiskAssessment
+        "RiskAssessment": build_RiskAssessment
     };
 
     // Handle optional type parameter
@@ -4318,7 +4318,7 @@ export function schedule(props: Schedule_Props);
 
 export function schedule(type: any, props?: any) {
     const mappings = {
-        "Schedule": Schedule_Schedule
+        "Schedule": build_Schedule
     };
 
     // Handle optional type parameter
@@ -4377,7 +4377,7 @@ export function serviceRequest(props: ServiceRequest_Props);
 
 export function serviceRequest(type: any, props?: any) {
     const mappings = {
-        "ServiceRequest": ServiceRequest_ServiceRequest
+        "ServiceRequest": build_ServiceRequest
     };
 
     // Handle optional type parameter
@@ -4414,7 +4414,7 @@ export function slot(props: Slot_Props);
 
 export function slot(type: any, props?: any) {
     const mappings = {
-        "Slot": Slot_Slot
+        "Slot": build_Slot
     };
 
     // Handle optional type parameter
@@ -4453,7 +4453,7 @@ export function specimen(props: Specimen_Props);
 
 export function specimen(type: any, props?: any) {
     const mappings = {
-        "Specimen": Specimen_Specimen
+        "Specimen": build_Specimen
     };
 
     // Handle optional type parameter
@@ -4485,7 +4485,7 @@ export function specimenDefinition(props: SpecimenDefinition_Props);
 
 export function specimenDefinition(type: any, props?: any) {
     const mappings = {
-        "SpecimenDefinition": SpecimenDefinition_SpecimenDefinition
+        "SpecimenDefinition": build_SpecimenDefinition
     };
 
     // Handle optional type parameter
@@ -4518,7 +4518,7 @@ export function substance(props: Substance_Props);
 
 export function substance(type: any, props?: any) {
     const mappings = {
-        "Substance": Substance_Substance
+        "Substance": build_Substance
     };
 
     // Handle optional type parameter
@@ -4563,7 +4563,7 @@ export function substanceDefinition(props: SubstanceDefinition_Props);
 
 export function substanceDefinition(type: any, props?: any) {
     const mappings = {
-        "SubstanceDefinition": SubstanceDefinition_SubstanceDefinition
+        "SubstanceDefinition": build_SubstanceDefinition
     };
 
     // Handle optional type parameter
@@ -4600,7 +4600,7 @@ export function supplyDelivery(props: SupplyDelivery_Props);
 
 export function supplyDelivery(type: any, props?: any) {
     const mappings = {
-        "SupplyDelivery": SupplyDelivery_SupplyDelivery
+        "SupplyDelivery": build_SupplyDelivery
     };
 
     // Handle optional type parameter
@@ -4641,7 +4641,7 @@ export function supplyRequest(props: SupplyRequest_Props);
 
 export function supplyRequest(type: any, props?: any) {
     const mappings = {
-        "SupplyRequest": SupplyRequest_SupplyRequest
+        "SupplyRequest": build_SupplyRequest
     };
 
     // Handle optional type parameter
@@ -4698,7 +4698,7 @@ export function task(props: Task_Props);
 
 export function task(type: any, props?: any) {
     const mappings = {
-        "Task": Task_Task
+        "Task": build_Task
     };
 
     // Handle optional type parameter
@@ -4736,7 +4736,7 @@ export function testReport(props: TestReport_Props);
 
 export function testReport(type: any, props?: any) {
     const mappings = {
-        "TestReport": TestReport_TestReport
+        "TestReport": build_TestReport
     };
 
     // Handle optional type parameter
@@ -4776,7 +4776,7 @@ export function verificationResult(props: VerificationResult_Props);
 
 export function verificationResult(type: any, props?: any) {
     const mappings = {
-        "VerificationResult": VerificationResult_VerificationResult
+        "VerificationResult": build_VerificationResult
     };
 
     // Handle optional type parameter
@@ -4810,7 +4810,7 @@ export function visionPrescription(props: VisionPrescription_Props);
 
 export function visionPrescription(type: any, props?: any) {
     const mappings = {
-        "VisionPrescription": VisionPrescription_VisionPrescription
+        "VisionPrescription": build_VisionPrescription
     };
 
     // Handle optional type parameter
