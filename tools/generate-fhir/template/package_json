@@ -8,8 +8,7 @@
     "build:spec": "pnpm generate-fhir {{NAME}} --respec",
     "test": "TS_NODE_TRANSPILE_ONLY=true mocha --experimental-specifier-resolution=node --no-warnings  --loader=ts-node/esm test/**/*.test.ts",
     "clean": "rimraf dist docs",
-    "pack": "pnpm pack --pack-destination ../../dist",
-    "lint": "eslint src"
+    "pack": "pnpm pack --pack-destination ../../dist"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
