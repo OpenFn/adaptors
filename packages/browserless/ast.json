@@ -7,17 +7,8 @@
         "options"
       ],
       "docs": {
-        "description": "Making a GET request",
+        "description": "Create a PDF from HTML or URL.\r\nAccepts an HTML string or an object `{ html }` / `{ url }`.\r\nThis operation calls the Browserless `/pdf` endpoint and normalizes PDF\r\nresponses into `{ pdf: '<base64>' }` by default. To override, call\r\n`http.request('POST', 'pdf', { body: {...}, forcePdfBase64: false })`.",
         "tags": [
-          {
-            "title": "example",
-            "description": "get(\"patients\");"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
           {
             "title": "public",
             "description": null,
@@ -25,21 +16,34 @@
           },
           {
             "title": "param",
-            "description": null,
+            "description": "HTML string or `{ html }` / `{ url }` object",
             "type": {
-              "type": "NameExpression",
-              "name": "string"
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "object"
+                }
+              ]
             },
-            "name": "path"
+            "name": "input"
           },
           {
             "title": "param",
-            "description": null,
+            "description": "Optional request options",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"
             },
             "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
           },
           {
             "title": "returns",
@@ -48,14 +52,73 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "request",
+      "params": [
+        "method",
+        "path",
+        "options"
+      ],
+      "docs": {
+        "description": "Generic Browserless-authenticated HTTP request operation.\r\nUse for arbitrary Browserless endpoints (for example `/convert`).",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "HTTP method (e.g. 'GET', 'POST').",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "method"
+          },
+          {
+            "title": "param",
+            "description": "Path or URL to request (relative paths are joined to the configured `baseUrl`).",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Optional request options",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
           },
           {
             "title": "state",
             "description": "{HttpState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
           }
         ]
       },
-      "valid": false
+      "valid": true
     }
   ],
   "exports": [],

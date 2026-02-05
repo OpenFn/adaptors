@@ -1,16 +1,16 @@
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
-import * as http from './http.js';
+import * as httpModule from './http.js';
 
 /**
+ * Shared typedefs for HTTP operations used by this adaptor.
+ *
  * State object
  * @typedef {Object} HttpState
  * @property data - the parsed response body
  * @property response - the response from the HTTP server, including headers, statusCode, body, etc
  * @property references - an array of all previous data objects used in the Job
- **/
-
-/**
+ *
  * Options provided to the HTTP request
  * @typedef {Object} RequestOptions
  * @public
@@ -24,17 +24,6 @@ import * as http from './http.js';
  * @property {object} tls - TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions
  */
 
-/**
- * Making a GET request
- * @example
- * get("patients");
- * @function
- * @public
- * @param {string} path 
- * @param {RequestOptions} options
- * @returns {Operation}
- * @state {HttpState}
- */
 /**
  * Create a PDF from HTML or URL.
  * Accepts an HTML string or an object `{ html }` / `{ url }`.
@@ -58,7 +47,22 @@ export function createPDF(input, options) {
   };
 }
 
-export { http };
+/**
+ * Generic Browserless-authenticated HTTP request operation.
+ * Use for arbitrary Browserless endpoints (for example `/convert`).
+ * @public
+ * @function
+ * @param {string} method - HTTP method (e.g. 'GET', 'POST').
+ * @param {string} path - Path or URL to request (relative paths are joined to the configured `baseUrl`).
+ * @param {RequestOptions} options - Optional request options
+ * @state {HttpState}
+ * @returns {Operation}
+ */
+export function request(method, path, options) {
+  return httpModule.request(method, path, options);
+}
+
+export const http = { request };
 
 export {
   as,

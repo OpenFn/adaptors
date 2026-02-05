@@ -18,7 +18,7 @@ import { expandReferences } from '@openfn/language-common/util';
  * @state {HttpState}
  * @returns {Operation} an OpenFn operation returning a state with `data` and `response`.
  */
-const req = function (method, url, options) {
+export function request(method, url, options) {
   return async state => {
     const [resolvedMethod, resolvedUrl, resolvedOptions] = expandReferences(
       state,
@@ -35,5 +35,4 @@ const req = function (method, url, options) {
       data: body,
     };
   };
-};
-export { req as request };
+}
