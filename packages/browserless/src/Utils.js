@@ -18,6 +18,19 @@ export const prepareNextState = (state, response) => {
     response: responseWithoutBody,
   };
 };
+/**
+ * Low-level request helper used by the adaptor.
+ * Note: this lives in `Utils.js` and is an infrastructure helper (not a
+ * public operation). Keep the signature stable: `request(configuration, method,
+ * path, options)`.
+ * @param {object} [configuration={}] - Adaptor configuration (baseUrl, auth, token).
+ * @param {string} method - HTTP method (e.g. 'GET', 'POST').
+ * @param {string} path - Relative path or URL to request.
+ * @param {object} [options] - Request options passed through to the HTTP client
+ *   (`body`, `headers`, `query`, `parseAs`, `forcePdfBase64`, `timeout`, etc.).
+ * @returns {Promise<object>} Resolves to the raw response object from the
+ *   underlying HTTP client. The caller may normalize `response.body` further.
+ */
 export const request = (configuration = {}, method, path, options) => {
   const { baseUrl = 'https://production-sfo.browserless.io', username, password, token } = configuration;
   const headers = makeBasicAuthHeader(username, password);
