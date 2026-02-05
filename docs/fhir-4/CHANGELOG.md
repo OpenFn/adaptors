@@ -1,5 +1,12 @@
 # @openfn/language-fhir-4
 
+## 0.2.7
+
+### Patch Changes
+
+- d935dda: Update d.ts defintion structure
+- a78d53e: Rebuild on latest generator (should be no behaviour differences)"
+
 ## 0.2.6
 
 ### Patch Changes

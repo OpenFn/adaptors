@@ -19,431 +19,431 @@ This adaptor exports the following namespaced functions:
 
 <dl>
 <dt>
-    <a href="#builders_account">builders.account(type, props)</a>
+    <a href="#builders_account">builders.account(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_activityDefinition">builders.activityDefinition(type, props)</a>
+    <a href="#builders_activityDefinition">builders.activityDefinition(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_administrableProductDefinition">builders.administrableProductDefinition(type, props)</a>
+    <a href="#builders_administrableProductDefinition">builders.administrableProductDefinition(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_adverseEvent">builders.adverseEvent(type, props)</a>
+    <a href="#builders_adverseEvent">builders.adverseEvent(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_allergyIntolerance">builders.allergyIntolerance(type, props)</a>
+    <a href="#builders_allergyIntolerance">builders.allergyIntolerance(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_appointment">builders.appointment(type, props)</a>
+    <a href="#builders_appointment">builders.appointment(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_appointmentResponse">builders.appointmentResponse(type, props)</a>
+    <a href="#builders_appointmentResponse">builders.appointmentResponse(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_biologicallyDerivedProduct">builders.biologicallyDerivedProduct(type, props)</a>
+    <a href="#builders_biologicallyDerivedProduct">builders.biologicallyDerivedProduct(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_bodyStructure">builders.bodyStructure(type, props)</a>
+    <a href="#builders_bodyStructure">builders.bodyStructure(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_carePlan">builders.carePlan(type, props)</a>
+    <a href="#builders_carePlan">builders.carePlan(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_careTeam">builders.careTeam(type, props)</a>
+    <a href="#builders_careTeam">builders.careTeam(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_chargeItem">builders.chargeItem(type, props)</a>
+    <a href="#builders_chargeItem">builders.chargeItem(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_chargeItemDefinition">builders.chargeItemDefinition(type, props)</a>
+    <a href="#builders_chargeItemDefinition">builders.chargeItemDefinition(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_citation">builders.citation(type, props)</a>
+    <a href="#builders_citation">builders.citation(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_claim">builders.claim(type, props)</a>
+    <a href="#builders_claim">builders.claim(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_claimResponse">builders.claimResponse(type, props)</a>
+    <a href="#builders_claimResponse">builders.claimResponse(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_clinicalImpression">builders.clinicalImpression(type, props)</a>
+    <a href="#builders_clinicalImpression">builders.clinicalImpression(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_clinicalUseDefinition">builders.clinicalUseDefinition(type, props)</a>
+    <a href="#builders_clinicalUseDefinition">builders.clinicalUseDefinition(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_communication">builders.communication(type, props)</a>
+    <a href="#builders_communication">builders.communication(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_communicationRequest">builders.communicationRequest(type, props)</a>
+    <a href="#builders_communicationRequest">builders.communicationRequest(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_contract">builders.contract(type, props)</a>
+    <a href="#builders_contract">builders.contract(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_coverage">builders.coverage(type, props)</a>
+    <a href="#builders_coverage">builders.coverage(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_coverageEligibilityRequest">builders.coverageEligibilityRequest(type, props)</a>
+    <a href="#builders_coverageEligibilityRequest">builders.coverageEligibilityRequest(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_coverageEligibilityResponse">builders.coverageEligibilityResponse(type, props)</a>
+    <a href="#builders_coverageEligibilityResponse">builders.coverageEligibilityResponse(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_detectedIssue">builders.detectedIssue(type, props)</a>
+    <a href="#builders_detectedIssue">builders.detectedIssue(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_device">builders.device(type, props)</a>
+    <a href="#builders_device">builders.device(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_deviceDefinition">builders.deviceDefinition(type, props)</a>
+    <a href="#builders_deviceDefinition">builders.deviceDefinition(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_deviceMetric">builders.deviceMetric(type, props)</a>
+    <a href="#builders_deviceMetric">builders.deviceMetric(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_deviceRequest">builders.deviceRequest(type, props)</a>
+    <a href="#builders_deviceRequest">builders.deviceRequest(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_deviceUseStatement">builders.deviceUseStatement(type, props)</a>
+    <a href="#builders_deviceUseStatement">builders.deviceUseStatement(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_diagnosticReport">builders.diagnosticReport(type, props)</a>
+    <a href="#builders_diagnosticReport">builders.diagnosticReport(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_domainResource">builders.domainResource(type, props)</a>
+    <a href="#builders_domainResource">builders.domainResource(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_encounter">builders.encounter(type, props)</a>
+    <a href="#builders_encounter">builders.encounter(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_enrollmentRequest">builders.enrollmentRequest(type, props)</a>
+    <a href="#builders_enrollmentRequest">builders.enrollmentRequest(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_enrollmentResponse">builders.enrollmentResponse(type, props)</a>
+    <a href="#builders_enrollmentResponse">builders.enrollmentResponse(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_episodeOfCare">builders.episodeOfCare(type, props)</a>
+    <a href="#builders_episodeOfCare">builders.episodeOfCare(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_eventDefinition">builders.eventDefinition(type, props)</a>
+    <a href="#builders_eventDefinition">builders.eventDefinition(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_evidence">builders.evidence(type, props)</a>
+    <a href="#builders_evidence">builders.evidence(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_evidenceReport">builders.evidenceReport(type, props)</a>
+    <a href="#builders_evidenceReport">builders.evidenceReport(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_evidenceVariable">builders.evidenceVariable(type, props)</a>
+    <a href="#builders_evidenceVariable">builders.evidenceVariable(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_explanationOfBenefit">builders.explanationOfBenefit(type, props)</a>
+    <a href="#builders_explanationOfBenefit">builders.explanationOfBenefit(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_familyMemberHistory">builders.familyMemberHistory(type, props)</a>
+    <a href="#builders_familyMemberHistory">builders.familyMemberHistory(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_flag">builders.flag(type, props)</a>
+    <a href="#builders_flag">builders.flag(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_goal">builders.goal(type, props)</a>
+    <a href="#builders_goal">builders.goal(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_group">builders.group(type, props)</a>
+    <a href="#builders_group">builders.group(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_guidanceResponse">builders.guidanceResponse(type, props)</a>
+    <a href="#builders_guidanceResponse">builders.guidanceResponse(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_healthcareService">builders.healthcareService(type, props)</a>
+    <a href="#builders_healthcareService">builders.healthcareService(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_imagingStudy">builders.imagingStudy(type, props)</a>
+    <a href="#builders_imagingStudy">builders.imagingStudy(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_immunization">builders.immunization(type, props)</a>
+    <a href="#builders_immunization">builders.immunization(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_immunizationEvaluation">builders.immunizationEvaluation(type, props)</a>
+    <a href="#builders_immunizationEvaluation">builders.immunizationEvaluation(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_immunizationRecommendation">builders.immunizationRecommendation(type, props)</a>
+    <a href="#builders_immunizationRecommendation">builders.immunizationRecommendation(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_ingredient">builders.ingredient(type, props)</a>
+    <a href="#builders_ingredient">builders.ingredient(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_insurancePlan">builders.insurancePlan(type, props)</a>
+    <a href="#builders_insurancePlan">builders.insurancePlan(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_invoice">builders.invoice(type, props)</a>
+    <a href="#builders_invoice">builders.invoice(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_library">builders.library(type, props)</a>
+    <a href="#builders_library">builders.library(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_list">builders.list(type, props)</a>
+    <a href="#builders_list">builders.list(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_location">builders.location(type, props)</a>
+    <a href="#builders_location">builders.location(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_manufacturedItemDefinition">builders.manufacturedItemDefinition(type, props)</a>
+    <a href="#builders_manufacturedItemDefinition">builders.manufacturedItemDefinition(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_measure">builders.measure(type, props)</a>
+    <a href="#builders_measure">builders.measure(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_measureReport">builders.measureReport(type, props)</a>
+    <a href="#builders_measureReport">builders.measureReport(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_media">builders.media(type, props)</a>
+    <a href="#builders_media">builders.media(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_medication">builders.medication(type, props)</a>
+    <a href="#builders_medication">builders.medication(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_medicationAdministration">builders.medicationAdministration(type, props)</a>
+    <a href="#builders_medicationAdministration">builders.medicationAdministration(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_medicationDispense">builders.medicationDispense(type, props)</a>
+    <a href="#builders_medicationDispense">builders.medicationDispense(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_medicationKnowledge">builders.medicationKnowledge(type, props)</a>
+    <a href="#builders_medicationKnowledge">builders.medicationKnowledge(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_medicationRequest">builders.medicationRequest(type, props)</a>
+    <a href="#builders_medicationRequest">builders.medicationRequest(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_medicationStatement">builders.medicationStatement(type, props)</a>
+    <a href="#builders_medicationStatement">builders.medicationStatement(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_medicinalProductDefinition">builders.medicinalProductDefinition(type, props)</a>
+    <a href="#builders_medicinalProductDefinition">builders.medicinalProductDefinition(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_molecularSequence">builders.molecularSequence(type, props)</a>
+    <a href="#builders_molecularSequence">builders.molecularSequence(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_nutritionOrder">builders.nutritionOrder(type, props)</a>
+    <a href="#builders_nutritionOrder">builders.nutritionOrder(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_nutritionProduct">builders.nutritionProduct(type, props)</a>
+    <a href="#builders_nutritionProduct">builders.nutritionProduct(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_observation">builders.observation(type, props)</a>
+    <a href="#builders_observation">builders.observation(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_observationDefinition">builders.observationDefinition(type, props)</a>
+    <a href="#builders_observationDefinition">builders.observationDefinition(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_organization">builders.organization(type, props)</a>
+    <a href="#builders_organization">builders.organization(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_organizationAffiliation">builders.organizationAffiliation(type, props)</a>
+    <a href="#builders_organizationAffiliation">builders.organizationAffiliation(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_packagedProductDefinition">builders.packagedProductDefinition(type, props)</a>
+    <a href="#builders_packagedProductDefinition">builders.packagedProductDefinition(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_patient">builders.patient(type, props)</a>
+    <a href="#builders_patient">builders.patient(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_paymentNotice">builders.paymentNotice(type, props)</a>
+    <a href="#builders_paymentNotice">builders.paymentNotice(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_paymentReconciliation">builders.paymentReconciliation(type, props)</a>
+    <a href="#builders_paymentReconciliation">builders.paymentReconciliation(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_person">builders.person(type, props)</a>
+    <a href="#builders_person">builders.person(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_planDefinition">builders.planDefinition(type, props)</a>
+    <a href="#builders_planDefinition">builders.planDefinition(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_practitioner">builders.practitioner(type, props)</a>
+    <a href="#builders_practitioner">builders.practitioner(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_practitionerRole">builders.practitionerRole(type, props)</a>
+    <a href="#builders_practitionerRole">builders.practitionerRole(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_procedure">builders.procedure(type, props)</a>
+    <a href="#builders_procedure">builders.procedure(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_questionnaire">builders.questionnaire(type, props)</a>
+    <a href="#builders_questionnaire">builders.questionnaire(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_questionnaireResponse">builders.questionnaireResponse(type, props)</a>
+    <a href="#builders_questionnaireResponse">builders.questionnaireResponse(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_regulatedAuthorization">builders.regulatedAuthorization(type, props)</a>
+    <a href="#builders_regulatedAuthorization">builders.regulatedAuthorization(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_relatedPerson">builders.relatedPerson(type, props)</a>
+    <a href="#builders_relatedPerson">builders.relatedPerson(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_requestGroup">builders.requestGroup(type, props)</a>
+    <a href="#builders_requestGroup">builders.requestGroup(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_researchDefinition">builders.researchDefinition(type, props)</a>
+    <a href="#builders_researchDefinition">builders.researchDefinition(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_researchElementDefinition">builders.researchElementDefinition(type, props)</a>
+    <a href="#builders_researchElementDefinition">builders.researchElementDefinition(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_researchStudy">builders.researchStudy(type, props)</a>
+    <a href="#builders_researchStudy">builders.researchStudy(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_researchSubject">builders.researchSubject(type, props)</a>
+    <a href="#builders_researchSubject">builders.researchSubject(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_riskAssessment">builders.riskAssessment(type, props)</a>
+    <a href="#builders_riskAssessment">builders.riskAssessment(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_schedule">builders.schedule(type, props)</a>
+    <a href="#builders_schedule">builders.schedule(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_serviceRequest">builders.serviceRequest(type, props)</a>
+    <a href="#builders_serviceRequest">builders.serviceRequest(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_slot">builders.slot(type, props)</a>
+    <a href="#builders_slot">builders.slot(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_specimen">builders.specimen(type, props)</a>
+    <a href="#builders_specimen">builders.specimen(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_specimenDefinition">builders.specimenDefinition(type, props)</a>
+    <a href="#builders_specimenDefinition">builders.specimenDefinition(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_substance">builders.substance(type, props)</a>
+    <a href="#builders_substance">builders.substance(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_substanceDefinition">builders.substanceDefinition(type, props)</a>
+    <a href="#builders_substanceDefinition">builders.substanceDefinition(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_supplyDelivery">builders.supplyDelivery(type, props)</a>
+    <a href="#builders_supplyDelivery">builders.supplyDelivery(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_supplyRequest">builders.supplyRequest(type, props)</a>
+    <a href="#builders_supplyRequest">builders.supplyRequest(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_task">builders.task(type, props)</a>
+    <a href="#builders_task">builders.task(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_testReport">builders.testReport(type, props)</a>
+    <a href="#builders_testReport">builders.testReport(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_verificationResult">builders.verificationResult(type, props)</a>
+    <a href="#builders_verificationResult">builders.verificationResult(props)</a>
 </dt>
 
 <dt>
-    <a href="#builders_visionPrescription">builders.visionPrescription(type, props)</a>
+    <a href="#builders_visionPrescription">builders.visionPrescription(props)</a>
 </dt>
 
 <dt>
@@ -715,14 +715,13 @@ uploadBundle($.patientsBundle)
 These functions belong to the builders namespace.
 ### builders.account {#builders_account}
 
-<p><code>account(type, props)</code></p>
+<p><code>account(props)</code></p>
 
-Create a FHIR Account resource.
+Create a Account resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Account number |
 | [props.status] | <code>string</code> | active | inactive | entered-in-error | on-hold | unknown |
@@ -743,14 +742,13 @@ Create a FHIR Account resource.
 
 ### builders.activityDefinition {#builders_activityDefinition}
 
-<p><code>activityDefinition(type, props)</code></p>
+<p><code>activityDefinition(props)</code></p>
 
-Create a FHIR ActivityDefinition resource.
+Create a ActivityDefinition resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.url] | <code>string</code> | Canonical identifier for this activity definition, represented as a URI (globally unique) |
 | [props.identifier] | <code>Identifier</code> | Additional identifier for the activity definition |
@@ -806,14 +804,13 @@ Create a FHIR ActivityDefinition resource.
 
 ### builders.administrableProductDefinition {#builders_administrableProductDefinition}
 
-<p><code>administrableProductDefinition(type, props)</code></p>
+<p><code>administrableProductDefinition(props)</code></p>
 
-Create a FHIR AdministrableProductDefinition resource.
+Create a AdministrableProductDefinition resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | An identifier for the administrable product |
 | [props.status] | <code>string</code> | draft | active | retired | unknown |
@@ -833,14 +830,13 @@ Create a FHIR AdministrableProductDefinition resource.
 
 ### builders.adverseEvent {#builders_adverseEvent}
 
-<p><code>adverseEvent(type, props)</code></p>
+<p><code>adverseEvent(props)</code></p>
 
-Create a FHIR AdverseEvent resource.
+Create a AdverseEvent resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business identifier for the event |
 | [props.actuality] | <code>string</code> | actual | potential |
@@ -870,14 +866,13 @@ Create a FHIR AdverseEvent resource.
 
 ### builders.allergyIntolerance {#builders_allergyIntolerance}
 
-<p><code>allergyIntolerance(type, props)</code></p>
+<p><code>allergyIntolerance(props)</code></p>
 
-Create a FHIR AllergyIntolerance resource.
+Create a AllergyIntolerance resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External ids for this item |
 | [props.clinicalStatus] | <code>CodeableConcept</code> | active | inactive | resolved |
@@ -903,14 +898,13 @@ Create a FHIR AllergyIntolerance resource.
 
 ### builders.appointment {#builders_appointment}
 
-<p><code>appointment(type, props)</code></p>
+<p><code>appointment(props)</code></p>
 
-Create a FHIR Appointment resource.
+Create a Appointment resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External Ids for this item |
 | [props.status] | <code>string</code> | proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error | checked-in | waitlist |
@@ -942,14 +936,13 @@ Create a FHIR Appointment resource.
 
 ### builders.appointmentResponse {#builders_appointmentResponse}
 
-<p><code>appointmentResponse(type, props)</code></p>
+<p><code>appointmentResponse(props)</code></p>
 
-Create a FHIR AppointmentResponse resource.
+Create a AppointmentResponse resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External Ids for this item |
 | [props.appointment] | <code>Reference</code> | Appointment this response relates to |
@@ -967,14 +960,13 @@ Create a FHIR AppointmentResponse resource.
 
 ### builders.biologicallyDerivedProduct {#builders_biologicallyDerivedProduct}
 
-<p><code>biologicallyDerivedProduct(type, props)</code></p>
+<p><code>biologicallyDerivedProduct(props)</code></p>
 
-Create a FHIR BiologicallyDerivedProduct resource.
+Create a BiologicallyDerivedProduct resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External ids for this item |
 | [props.productCategory] | <code>string</code> | organ | tissue | fluid | cells | biologicalAgent |
@@ -995,14 +987,13 @@ Create a FHIR BiologicallyDerivedProduct resource.
 
 ### builders.bodyStructure {#builders_bodyStructure}
 
-<p><code>bodyStructure(type, props)</code></p>
+<p><code>bodyStructure(props)</code></p>
 
-Create a FHIR BodyStructure resource.
+Create a BodyStructure resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Bodystructure identifier |
 | [props.active] | <code>boolean</code> | Whether this record is in active use |
@@ -1020,14 +1011,13 @@ Create a FHIR BodyStructure resource.
 
 ### builders.carePlan {#builders_carePlan}
 
-<p><code>carePlan(type, props)</code></p>
+<p><code>carePlan(props)</code></p>
 
-Create a FHIR CarePlan resource.
+Create a CarePlan resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External Ids for this plan |
 | [props.instantiatesCanonical] | <code>canonical</code> | Instantiates FHIR protocol or definition |
@@ -1060,14 +1050,13 @@ Create a FHIR CarePlan resource.
 
 ### builders.careTeam {#builders_careTeam}
 
-<p><code>careTeam(type, props)</code></p>
+<p><code>careTeam(props)</code></p>
 
-Create a FHIR CareTeam resource.
+Create a CareTeam resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External Ids for this team |
 | [props.status] | <code>string</code> | proposed | active | suspended | inactive | entered-in-error |
@@ -1090,14 +1079,13 @@ Create a FHIR CareTeam resource.
 
 ### builders.chargeItem {#builders_chargeItem}
 
-<p><code>chargeItem(type, props)</code></p>
+<p><code>chargeItem(props)</code></p>
 
-Create a FHIR ChargeItem resource.
+Create a ChargeItem resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business Identifier for item |
 | [props.definitionUri] | <code>string</code> | Defining information about the code of this charge item |
@@ -1133,14 +1121,13 @@ Create a FHIR ChargeItem resource.
 
 ### builders.chargeItemDefinition {#builders_chargeItemDefinition}
 
-<p><code>chargeItemDefinition(type, props)</code></p>
+<p><code>chargeItemDefinition(props)</code></p>
 
-Create a FHIR ChargeItemDefinition resource.
+Create a ChargeItemDefinition resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.url] | <code>string</code> | Canonical identifier for this charge item definition, represented as a URI (globally unique) |
 | [props.identifier] | <code>Identifier</code> | Additional identifier for the charge item definition |
@@ -1173,14 +1160,13 @@ Create a FHIR ChargeItemDefinition resource.
 
 ### builders.citation {#builders_citation}
 
-<p><code>citation(type, props)</code></p>
+<p><code>citation(props)</code></p>
 
-Create a FHIR Citation resource.
+Create a Citation resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.url] | <code>string</code> | Canonical identifier for this citation, represented as a globally unique URI |
 | [props.identifier] | <code>Identifier</code> | Identifier for the Citation resource itself |
@@ -1219,14 +1205,13 @@ Create a FHIR Citation resource.
 
 ### builders.claim {#builders_claim}
 
-<p><code>claim(type, props)</code></p>
+<p><code>claim(props)</code></p>
 
-Create a FHIR Claim resource.
+Create a Claim resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business Identifier for claim |
 | [props.status] | <code>string</code> | active | cancelled | draft | entered-in-error |
@@ -1263,14 +1248,13 @@ Create a FHIR Claim resource.
 
 ### builders.claimResponse {#builders_claimResponse}
 
-<p><code>claimResponse(type, props)</code></p>
+<p><code>claimResponse(props)</code></p>
 
-Create a FHIR ClaimResponse resource.
+Create a ClaimResponse resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business Identifier for a claim response |
 | [props.status] | <code>string</code> | active | cancelled | draft | entered-in-error |
@@ -1307,14 +1291,13 @@ Create a FHIR ClaimResponse resource.
 
 ### builders.clinicalImpression {#builders_clinicalImpression}
 
-<p><code>clinicalImpression(type, props)</code></p>
+<p><code>clinicalImpression(props)</code></p>
 
-Create a FHIR ClinicalImpression resource.
+Create a ClinicalImpression resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business identifier |
 | [props.status] | <code>string</code> | in-progress | completed | entered-in-error |
@@ -1344,14 +1327,13 @@ Create a FHIR ClinicalImpression resource.
 
 ### builders.clinicalUseDefinition {#builders_clinicalUseDefinition}
 
-<p><code>clinicalUseDefinition(type, props)</code></p>
+<p><code>clinicalUseDefinition(props)</code></p>
 
-Create a FHIR ClinicalUseDefinition resource.
+Create a ClinicalUseDefinition resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business identifier for this issue |
 | [props.type] | <code>string</code> | indication | contraindication | interaction | undesirable-effect | warning |
@@ -1372,14 +1354,13 @@ Create a FHIR ClinicalUseDefinition resource.
 
 ### builders.communication {#builders_communication}
 
-<p><code>communication(type, props)</code></p>
+<p><code>communication(props)</code></p>
 
-Create a FHIR Communication resource.
+Create a Communication resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Unique identifier |
 | [props.instantiatesCanonical] | <code>canonical</code> | Instantiates FHIR protocol or definition |
@@ -1412,14 +1393,13 @@ Create a FHIR Communication resource.
 
 ### builders.communicationRequest {#builders_communicationRequest}
 
-<p><code>communicationRequest(type, props)</code></p>
+<p><code>communicationRequest(props)</code></p>
 
-Create a FHIR CommunicationRequest resource.
+Create a CommunicationRequest resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Unique identifier |
 | [props.basedOn] | <code>Reference</code> | Fulfills plan or proposal |
@@ -1451,14 +1431,13 @@ Create a FHIR CommunicationRequest resource.
 
 ### builders.contract {#builders_contract}
 
-<p><code>contract(type, props)</code></p>
+<p><code>contract(props)</code></p>
 
-Create a FHIR Contract resource.
+Create a Contract resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Contract number |
 | [props.url] | <code>string</code> | Basal definition |
@@ -1501,14 +1480,13 @@ Create a FHIR Contract resource.
 
 ### builders.coverage {#builders_coverage}
 
-<p><code>coverage(type, props)</code></p>
+<p><code>coverage(props)</code></p>
 
-Create a FHIR Coverage resource.
+Create a Coverage resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business Identifier for the coverage |
 | [props.status] | <code>string</code> | active | cancelled | draft | entered-in-error |
@@ -1535,14 +1513,13 @@ Create a FHIR Coverage resource.
 
 ### builders.coverageEligibilityRequest {#builders_coverageEligibilityRequest}
 
-<p><code>coverageEligibilityRequest(type, props)</code></p>
+<p><code>coverageEligibilityRequest(props)</code></p>
 
-Create a FHIR CoverageEligibilityRequest resource.
+Create a CoverageEligibilityRequest resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business Identifier for coverage eligiblity request |
 | [props.status] | <code>string</code> | active | cancelled | draft | entered-in-error |
@@ -1566,14 +1543,13 @@ Create a FHIR CoverageEligibilityRequest resource.
 
 ### builders.coverageEligibilityResponse {#builders_coverageEligibilityResponse}
 
-<p><code>coverageEligibilityResponse(type, props)</code></p>
+<p><code>coverageEligibilityResponse(props)</code></p>
 
-Create a FHIR CoverageEligibilityResponse resource.
+Create a CoverageEligibilityResponse resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business Identifier for coverage eligiblity request |
 | [props.status] | <code>string</code> | active | cancelled | draft | entered-in-error |
@@ -1598,14 +1574,13 @@ Create a FHIR CoverageEligibilityResponse resource.
 
 ### builders.detectedIssue {#builders_detectedIssue}
 
-<p><code>detectedIssue(type, props)</code></p>
+<p><code>detectedIssue(props)</code></p>
 
-Create a FHIR DetectedIssue resource.
+Create a DetectedIssue resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Unique id for the detected issue |
 | [props.status] | <code>string</code> | registered | preliminary | final | amended + |
@@ -1627,14 +1602,13 @@ Create a FHIR DetectedIssue resource.
 
 ### builders.device {#builders_device}
 
-<p><code>device(type, props)</code></p>
+<p><code>device(props)</code></p>
 
-Create a FHIR Device resource.
+Create a Device resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Instance identifier |
 | [props.definition] | <code>Reference</code> | The reference to the definition for the device |
@@ -1670,14 +1644,13 @@ Create a FHIR Device resource.
 
 ### builders.deviceDefinition {#builders_deviceDefinition}
 
-<p><code>deviceDefinition(type, props)</code></p>
+<p><code>deviceDefinition(props)</code></p>
 
-Create a FHIR DeviceDefinition resource.
+Create a DeviceDefinition resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Instance identifier |
 | [props.udiDeviceIdentifier] | <code>BackboneElement</code> | Unique Device Identifier (UDI) Barcode string |
@@ -1709,14 +1682,13 @@ Create a FHIR DeviceDefinition resource.
 
 ### builders.deviceMetric {#builders_deviceMetric}
 
-<p><code>deviceMetric(type, props)</code></p>
+<p><code>deviceMetric(props)</code></p>
 
-Create a FHIR DeviceMetric resource.
+Create a DeviceMetric resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Instance identifier |
 | [props.type] | <code>CodeableConcept</code> | Identity of metric, for example Heart Rate or PEEP Setting |
@@ -1736,14 +1708,13 @@ Create a FHIR DeviceMetric resource.
 
 ### builders.deviceRequest {#builders_deviceRequest}
 
-<p><code>deviceRequest(type, props)</code></p>
+<p><code>deviceRequest(props)</code></p>
 
-Create a FHIR DeviceRequest resource.
+Create a DeviceRequest resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External Request identifier |
 | [props.instantiatesCanonical] | <code>canonical</code> | Instantiates FHIR protocol or definition |
@@ -1777,14 +1748,13 @@ Create a FHIR DeviceRequest resource.
 
 ### builders.deviceUseStatement {#builders_deviceUseStatement}
 
-<p><code>deviceUseStatement(type, props)</code></p>
+<p><code>deviceUseStatement(props)</code></p>
 
-Create a FHIR DeviceUseStatement resource.
+Create a DeviceUseStatement resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External identifier for this record |
 | [props.basedOn] | <code>Reference</code> | Fulfills plan, proposal or order |
@@ -1807,14 +1777,13 @@ Create a FHIR DeviceUseStatement resource.
 
 ### builders.diagnosticReport {#builders_diagnosticReport}
 
-<p><code>diagnosticReport(type, props)</code></p>
+<p><code>diagnosticReport(props)</code></p>
 
-Create a FHIR DiagnosticReport resource.
+Create a DiagnosticReport resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business identifier for report |
 | [props.basedOn] | <code>Reference</code> | What was requested |
@@ -1842,14 +1811,13 @@ Create a FHIR DiagnosticReport resource.
 
 ### builders.domainResource {#builders_domainResource}
 
-<p><code>domainResource(type, props)</code></p>
+<p><code>domainResource(props)</code></p>
 
-Create a FHIR DomainResource resource.
+Create a DomainResource resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 
 
@@ -1859,14 +1827,13 @@ Create a FHIR DomainResource resource.
 
 ### builders.encounter {#builders_encounter}
 
-<p><code>encounter(type, props)</code></p>
+<p><code>encounter(props)</code></p>
 
-Create a FHIR Encounter resource.
+Create a Encounter resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Identifier(s) by which this encounter is known |
 | [props.status] | <code>string</code> | planned | arrived | triaged | in-progress | onleave | finished | cancelled + |
@@ -1899,14 +1866,13 @@ Create a FHIR Encounter resource.
 
 ### builders.enrollmentRequest {#builders_enrollmentRequest}
 
-<p><code>enrollmentRequest(type, props)</code></p>
+<p><code>enrollmentRequest(props)</code></p>
 
-Create a FHIR EnrollmentRequest resource.
+Create a EnrollmentRequest resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business Identifier |
 | [props.status] | <code>string</code> | active | cancelled | draft | entered-in-error |
@@ -1923,14 +1889,13 @@ Create a FHIR EnrollmentRequest resource.
 
 ### builders.enrollmentResponse {#builders_enrollmentResponse}
 
-<p><code>enrollmentResponse(type, props)</code></p>
+<p><code>enrollmentResponse(props)</code></p>
 
-Create a FHIR EnrollmentResponse resource.
+Create a EnrollmentResponse resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business Identifier |
 | [props.status] | <code>string</code> | active | cancelled | draft | entered-in-error |
@@ -1948,14 +1913,13 @@ Create a FHIR EnrollmentResponse resource.
 
 ### builders.episodeOfCare {#builders_episodeOfCare}
 
-<p><code>episodeOfCare(type, props)</code></p>
+<p><code>episodeOfCare(props)</code></p>
 
-Create a FHIR EpisodeOfCare resource.
+Create a EpisodeOfCare resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business Identifier(s) relevant for this EpisodeOfCare |
 | [props.status] | <code>string</code> | planned | waitlist | active | onhold | finished | cancelled | entered-in-error |
@@ -1977,14 +1941,13 @@ Create a FHIR EpisodeOfCare resource.
 
 ### builders.eventDefinition {#builders_eventDefinition}
 
-<p><code>eventDefinition(type, props)</code></p>
+<p><code>eventDefinition(props)</code></p>
 
-Create a FHIR EventDefinition resource.
+Create a EventDefinition resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.url] | <code>string</code> | Canonical identifier for this event definition, represented as a URI (globally unique) |
 | [props.identifier] | <code>Identifier</code> | Additional identifier for the event definition |
@@ -2022,14 +1985,13 @@ Create a FHIR EventDefinition resource.
 
 ### builders.evidence {#builders_evidence}
 
-<p><code>evidence(type, props)</code></p>
+<p><code>evidence(props)</code></p>
 
-Create a FHIR Evidence resource.
+Create a Evidence resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.url] | <code>string</code> | Canonical identifier for this evidence, represented as a globally unique URI |
 | [props.identifier] | <code>Identifier</code> | Additional identifier for the summary |
@@ -2064,14 +2026,13 @@ Create a FHIR Evidence resource.
 
 ### builders.evidenceReport {#builders_evidenceReport}
 
-<p><code>evidenceReport(type, props)</code></p>
+<p><code>evidenceReport(props)</code></p>
 
-Create a FHIR EvidenceReport resource.
+Create a EvidenceReport resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.url] | <code>string</code> | Canonical identifier for this EvidenceReport, represented as a globally unique URI |
 | [props.status] | <code>string</code> | draft | active | retired | unknown |
@@ -2099,14 +2060,13 @@ Create a FHIR EvidenceReport resource.
 
 ### builders.evidenceVariable {#builders_evidenceVariable}
 
-<p><code>evidenceVariable(type, props)</code></p>
+<p><code>evidenceVariable(props)</code></p>
 
-Create a FHIR EvidenceVariable resource.
+Create a EvidenceVariable resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.url] | <code>string</code> | Canonical identifier for this evidence variable, represented as a URI (globally unique) |
 | [props.identifier] | <code>Identifier</code> | Additional identifier for the evidence variable |
@@ -2140,14 +2100,13 @@ Create a FHIR EvidenceVariable resource.
 
 ### builders.explanationOfBenefit {#builders_explanationOfBenefit}
 
-<p><code>explanationOfBenefit(type, props)</code></p>
+<p><code>explanationOfBenefit(props)</code></p>
 
-Create a FHIR ExplanationOfBenefit resource.
+Create a ExplanationOfBenefit resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business Identifier for the resource |
 | [props.status] | <code>string</code> | active | cancelled | draft | entered-in-error |
@@ -2200,14 +2159,13 @@ Create a FHIR ExplanationOfBenefit resource.
 
 ### builders.familyMemberHistory {#builders_familyMemberHistory}
 
-<p><code>familyMemberHistory(type, props)</code></p>
+<p><code>familyMemberHistory(props)</code></p>
 
-Create a FHIR FamilyMemberHistory resource.
+Create a FamilyMemberHistory resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External Id(s) for this record |
 | [props.instantiatesCanonical] | <code>canonical</code> | Instantiates FHIR protocol or definition |
@@ -2235,14 +2193,13 @@ Create a FHIR FamilyMemberHistory resource.
 
 ### builders.flag {#builders_flag}
 
-<p><code>flag(type, props)</code></p>
+<p><code>flag(props)</code></p>
 
-Create a FHIR Flag resource.
+Create a Flag resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business identifier |
 | [props.status] | <code>string</code> | active | inactive | entered-in-error |
@@ -2260,14 +2217,13 @@ Create a FHIR Flag resource.
 
 ### builders.goal {#builders_goal}
 
-<p><code>goal(type, props)</code></p>
+<p><code>goal(props)</code></p>
 
-Create a FHIR Goal resource.
+Create a Goal resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External Ids for this goal |
 | [props.lifecycleStatus] | <code>string</code> | proposed | planned | accepted | active | on-hold | completed | cancelled | entered-in-error | rejected |
@@ -2293,14 +2249,13 @@ Create a FHIR Goal resource.
 
 ### builders.group {#builders_group}
 
-<p><code>group(type, props)</code></p>
+<p><code>group(props)</code></p>
 
-Create a FHIR Group resource.
+Create a Group resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Unique id |
 | [props.active] | <code>boolean</code> | Whether this group's record is in active use |
@@ -2320,14 +2275,13 @@ Create a FHIR Group resource.
 
 ### builders.guidanceResponse {#builders_guidanceResponse}
 
-<p><code>guidanceResponse(type, props)</code></p>
+<p><code>guidanceResponse(props)</code></p>
 
-Create a FHIR GuidanceResponse resource.
+Create a GuidanceResponse resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.requestIdentifier] | <code>Identifier</code> | The identifier of the request associated with this response, if any |
 | [props.identifier] | <code>Identifier</code> | Business identifier |
@@ -2352,14 +2306,13 @@ Create a FHIR GuidanceResponse resource.
 
 ### builders.healthcareService {#builders_healthcareService}
 
-<p><code>healthcareService(type, props)</code></p>
+<p><code>healthcareService(props)</code></p>
 
-Create a FHIR HealthcareService resource.
+Create a HealthcareService resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External identifiers for this item |
 | [props.active] | <code>boolean</code> | Whether this HealthcareService record is in active use |
@@ -2393,14 +2346,13 @@ Create a FHIR HealthcareService resource.
 
 ### builders.imagingStudy {#builders_imagingStudy}
 
-<p><code>imagingStudy(type, props)</code></p>
+<p><code>imagingStudy(props)</code></p>
 
-Create a FHIR ImagingStudy resource.
+Create a ImagingStudy resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Identifiers for the whole study |
 | [props.status] | <code>string</code> | registered | available | cancelled | entered-in-error | unknown |
@@ -2430,14 +2382,13 @@ Create a FHIR ImagingStudy resource.
 
 ### builders.immunization {#builders_immunization}
 
-<p><code>immunization(type, props)</code></p>
+<p><code>immunization(props)</code></p>
 
-Create a FHIR Immunization resource.
+Create a Immunization resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business identifier |
 | [props.status] | <code>string</code> | completed | entered-in-error | not-done |
@@ -2475,14 +2426,13 @@ Create a FHIR Immunization resource.
 
 ### builders.immunizationEvaluation {#builders_immunizationEvaluation}
 
-<p><code>immunizationEvaluation(type, props)</code></p>
+<p><code>immunizationEvaluation(props)</code></p>
 
-Create a FHIR ImmunizationEvaluation resource.
+Create a ImmunizationEvaluation resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business identifier |
 | [props.status] | <code>string</code> | completed | entered-in-error |
@@ -2505,14 +2455,13 @@ Create a FHIR ImmunizationEvaluation resource.
 
 ### builders.immunizationRecommendation {#builders_immunizationRecommendation}
 
-<p><code>immunizationRecommendation(type, props)</code></p>
+<p><code>immunizationRecommendation(props)</code></p>
 
-Create a FHIR ImmunizationRecommendation resource.
+Create a ImmunizationRecommendation resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business identifier |
 | [props.patient] | <code>Reference</code> | Who this profile is for |
@@ -2527,14 +2476,13 @@ Create a FHIR ImmunizationRecommendation resource.
 
 ### builders.ingredient {#builders_ingredient}
 
-<p><code>ingredient(type, props)</code></p>
+<p><code>ingredient(props)</code></p>
 
-Create a FHIR Ingredient resource.
+Create a Ingredient resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | An identifier or code by which the ingredient can be referenced |
 | [props.status] | <code>string</code> | draft | active | retired | unknown |
@@ -2552,14 +2500,13 @@ Create a FHIR Ingredient resource.
 
 ### builders.insurancePlan {#builders_insurancePlan}
 
-<p><code>insurancePlan(type, props)</code></p>
+<p><code>insurancePlan(props)</code></p>
 
-Create a FHIR InsurancePlan resource.
+Create a InsurancePlan resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business Identifier for Product |
 | [props.status] | <code>string</code> | draft | active | retired | unknown |
@@ -2583,14 +2530,13 @@ Create a FHIR InsurancePlan resource.
 
 ### builders.invoice {#builders_invoice}
 
-<p><code>invoice(type, props)</code></p>
+<p><code>invoice(props)</code></p>
 
-Create a FHIR Invoice resource.
+Create a Invoice resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business Identifier for item |
 | [props.status] | <code>string</code> | draft | issued | balanced | cancelled | entered-in-error |
@@ -2616,14 +2562,13 @@ Create a FHIR Invoice resource.
 
 ### builders.library {#builders_library}
 
-<p><code>library(type, props)</code></p>
+<p><code>library(props)</code></p>
 
-Create a FHIR Library resource.
+Create a Library resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.url] | <code>string</code> | Canonical identifier for this library, represented as a URI (globally unique) |
 | [props.identifier] | <code>Identifier</code> | Additional identifier for the library |
@@ -2664,14 +2609,13 @@ Create a FHIR Library resource.
 
 ### builders.list {#builders_list}
 
-<p><code>list(type, props)</code></p>
+<p><code>list(props)</code></p>
 
-Create a FHIR List resource.
+Create a List resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business identifier |
 | [props.status] | <code>string</code> | current | retired | entered-in-error |
@@ -2694,14 +2638,13 @@ Create a FHIR List resource.
 
 ### builders.location {#builders_location}
 
-<p><code>location(type, props)</code></p>
+<p><code>location(props)</code></p>
 
-Create a FHIR Location resource.
+Create a Location resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Unique code or number identifying the location to its users |
 | [props.status] | <code>string</code> | active | suspended | inactive |
@@ -2728,14 +2671,13 @@ Create a FHIR Location resource.
 
 ### builders.manufacturedItemDefinition {#builders_manufacturedItemDefinition}
 
-<p><code>manufacturedItemDefinition(type, props)</code></p>
+<p><code>manufacturedItemDefinition(props)</code></p>
 
-Create a FHIR ManufacturedItemDefinition resource.
+Create a ManufacturedItemDefinition resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Unique identifier |
 | [props.status] | <code>string</code> | draft | active | retired | unknown |
@@ -2752,14 +2694,13 @@ Create a FHIR ManufacturedItemDefinition resource.
 
 ### builders.measure {#builders_measure}
 
-<p><code>measure(type, props)</code></p>
+<p><code>measure(props)</code></p>
 
-Create a FHIR Measure resource.
+Create a Measure resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.url] | <code>string</code> | Canonical identifier for this measure, represented as a URI (globally unique) |
 | [props.identifier] | <code>Identifier</code> | Additional identifier for the measure |
@@ -2810,14 +2751,13 @@ Create a FHIR Measure resource.
 
 ### builders.measureReport {#builders_measureReport}
 
-<p><code>measureReport(type, props)</code></p>
+<p><code>measureReport(props)</code></p>
 
-Create a FHIR MeasureReport resource.
+Create a MeasureReport resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Additional identifier for the MeasureReport |
 | [props.status] | <code>string</code> | complete | pending | error |
@@ -2838,14 +2778,13 @@ Create a FHIR MeasureReport resource.
 
 ### builders.media {#builders_media}
 
-<p><code>media(type, props)</code></p>
+<p><code>media(props)</code></p>
 
-Create a FHIR Media resource.
+Create a Media resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Identifier(s) for the image |
 | [props.basedOn] | <code>Reference</code> | Procedure that caused this media to be created |
@@ -2877,14 +2816,13 @@ Create a FHIR Media resource.
 
 ### builders.medication {#builders_medication}
 
-<p><code>medication(type, props)</code></p>
+<p><code>medication(props)</code></p>
 
-Create a FHIR Medication resource.
+Create a Medication resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business identifier for this medication |
 | [props.code] | <code>CodeableConcept</code> | Codes that identify this medication |
@@ -2902,14 +2840,13 @@ Create a FHIR Medication resource.
 
 ### builders.medicationAdministration {#builders_medicationAdministration}
 
-<p><code>medicationAdministration(type, props)</code></p>
+<p><code>medicationAdministration(props)</code></p>
 
-Create a FHIR MedicationAdministration resource.
+Create a MedicationAdministration resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External identifier |
 | [props.instantiates] | <code>string</code> | Instantiates protocol or definition |
@@ -2938,14 +2875,13 @@ Create a FHIR MedicationAdministration resource.
 
 ### builders.medicationDispense {#builders_medicationDispense}
 
-<p><code>medicationDispense(type, props)</code></p>
+<p><code>medicationDispense(props)</code></p>
 
-Create a FHIR MedicationDispense resource.
+Create a MedicationDispense resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External identifier |
 | [props.partOf] | <code>Reference</code> | Event that dispense is part of |
@@ -2979,14 +2915,13 @@ Create a FHIR MedicationDispense resource.
 
 ### builders.medicationKnowledge {#builders_medicationKnowledge}
 
-<p><code>medicationKnowledge(type, props)</code></p>
+<p><code>medicationKnowledge(props)</code></p>
 
-Create a FHIR MedicationKnowledge resource.
+Create a MedicationKnowledge resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.code] | <code>CodeableConcept</code> | Code that identifies this medication |
 | [props.status] | <code>string</code> | active | inactive | entered-in-error |
@@ -3018,14 +2953,13 @@ Create a FHIR MedicationKnowledge resource.
 
 ### builders.medicationRequest {#builders_medicationRequest}
 
-<p><code>medicationRequest(type, props)</code></p>
+<p><code>medicationRequest(props)</code></p>
 
-Create a FHIR MedicationRequest resource.
+Create a MedicationRequest resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External ids for this request |
 | [props.status] | <code>string</code> | active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown |
@@ -3067,14 +3001,13 @@ Create a FHIR MedicationRequest resource.
 
 ### builders.medicationStatement {#builders_medicationStatement}
 
-<p><code>medicationStatement(type, props)</code></p>
+<p><code>medicationStatement(props)</code></p>
 
-Create a FHIR MedicationStatement resource.
+Create a MedicationStatement resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External identifier |
 | [props.basedOn] | <code>Reference</code> | Fulfils plan, proposal or order |
@@ -3101,14 +3034,13 @@ Create a FHIR MedicationStatement resource.
 
 ### builders.medicinalProductDefinition {#builders_medicinalProductDefinition}
 
-<p><code>medicinalProductDefinition(type, props)</code></p>
+<p><code>medicinalProductDefinition(props)</code></p>
 
-Create a FHIR MedicinalProductDefinition resource.
+Create a MedicinalProductDefinition resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business identifier for this product. Could be an MPID |
 | [props.type] | <code>CodeableConcept</code> | Regulatory type, e.g. Investigational or Authorized |
@@ -3146,14 +3078,13 @@ Create a FHIR MedicinalProductDefinition resource.
 
 ### builders.molecularSequence {#builders_molecularSequence}
 
-<p><code>molecularSequence(type, props)</code></p>
+<p><code>molecularSequence(props)</code></p>
 
-Create a FHIR MolecularSequence resource.
+Create a MolecularSequence resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Unique ID for this particular sequence. This is a FHIR-defined id |
 | [props.type] | <code>string</code> | aa | dna | rna |
@@ -3179,14 +3110,13 @@ Create a FHIR MolecularSequence resource.
 
 ### builders.nutritionOrder {#builders_nutritionOrder}
 
-<p><code>nutritionOrder(type, props)</code></p>
+<p><code>nutritionOrder(props)</code></p>
 
-Create a FHIR NutritionOrder resource.
+Create a NutritionOrder resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Identifiers assigned to this order |
 | [props.instantiatesCanonical] | <code>canonical</code> | Instantiates FHIR protocol or definition |
@@ -3213,14 +3143,13 @@ Create a FHIR NutritionOrder resource.
 
 ### builders.nutritionProduct {#builders_nutritionProduct}
 
-<p><code>nutritionProduct(type, props)</code></p>
+<p><code>nutritionProduct(props)</code></p>
 
-Create a FHIR NutritionProduct resource.
+Create a NutritionProduct resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.status] | <code>string</code> | active | inactive | entered-in-error |
 | [props.category] | <code>CodeableConcept</code> | A category or class of the nutrition product (halal, kosher, gluten free, vegan, etc) |
@@ -3240,14 +3169,13 @@ Create a FHIR NutritionProduct resource.
 
 ### builders.observation {#builders_observation}
 
-<p><code>observation(type, props)</code></p>
+<p><code>observation(props)</code></p>
 
-Create a FHIR Observation resource.
+Create a Observation resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business Identifier for observation |
 | [props.basedOn] | <code>Reference</code> | Fulfills plan, proposal or order |
@@ -3281,14 +3209,13 @@ Create a FHIR Observation resource.
 
 ### builders.observationDefinition {#builders_observationDefinition}
 
-<p><code>observationDefinition(type, props)</code></p>
+<p><code>observationDefinition(props)</code></p>
 
-Create a FHIR ObservationDefinition resource.
+Create a ObservationDefinition resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.category] | <code>CodeableConcept</code> | Category of observation |
 | [props.code] | <code>CodeableConcept</code> | Type of observation (code / type) |
@@ -3311,14 +3238,13 @@ Create a FHIR ObservationDefinition resource.
 
 ### builders.organization {#builders_organization}
 
-<p><code>organization(type, props)</code></p>
+<p><code>organization(props)</code></p>
 
-Create a FHIR Organization resource.
+Create a Organization resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Identifies this organization  across multiple systems |
 | [props.active] | <code>boolean</code> | Whether the organization's record is still in active use |
@@ -3338,14 +3264,13 @@ Create a FHIR Organization resource.
 
 ### builders.organizationAffiliation {#builders_organizationAffiliation}
 
-<p><code>organizationAffiliation(type, props)</code></p>
+<p><code>organizationAffiliation(props)</code></p>
 
-Create a FHIR OrganizationAffiliation resource.
+Create a OrganizationAffiliation resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business identifiers that are specific to this role |
 | [props.active] | <code>boolean</code> | Whether this organization affiliation record is in active use |
@@ -3367,14 +3292,13 @@ Create a FHIR OrganizationAffiliation resource.
 
 ### builders.packagedProductDefinition {#builders_packagedProductDefinition}
 
-<p><code>packagedProductDefinition(type, props)</code></p>
+<p><code>packagedProductDefinition(props)</code></p>
 
-Create a FHIR PackagedProductDefinition resource.
+Create a PackagedProductDefinition resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | A unique identifier for this package as whole |
 | [props.name] | <code>string</code> | A name for this package. Typically as listed in a drug formulary, catalogue, inventory etc |
@@ -3398,14 +3322,13 @@ Create a FHIR PackagedProductDefinition resource.
 
 ### builders.patient {#builders_patient}
 
-<p><code>patient(type, props)</code></p>
+<p><code>patient(props)</code></p>
 
-Create a FHIR Patient resource.
+Create a Patient resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | An identifier for this patient |
 | [props.active] | <code>boolean</code> | Whether this patient's record is in active use |
@@ -3431,14 +3354,13 @@ Create a FHIR Patient resource.
 
 ### builders.paymentNotice {#builders_paymentNotice}
 
-<p><code>paymentNotice(type, props)</code></p>
+<p><code>paymentNotice(props)</code></p>
 
-Create a FHIR PaymentNotice resource.
+Create a PaymentNotice resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business Identifier for the payment noctice |
 | [props.status] | <code>string</code> | active | cancelled | draft | entered-in-error |
@@ -3460,14 +3382,13 @@ Create a FHIR PaymentNotice resource.
 
 ### builders.paymentReconciliation {#builders_paymentReconciliation}
 
-<p><code>paymentReconciliation(type, props)</code></p>
+<p><code>paymentReconciliation(props)</code></p>
 
-Create a FHIR PaymentReconciliation resource.
+Create a PaymentReconciliation resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business Identifier for a payment reconciliation |
 | [props.status] | <code>string</code> | active | cancelled | draft | entered-in-error |
@@ -3492,14 +3413,13 @@ Create a FHIR PaymentReconciliation resource.
 
 ### builders.person {#builders_person}
 
-<p><code>person(type, props)</code></p>
+<p><code>person(props)</code></p>
 
-Create a FHIR Person resource.
+Create a Person resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | A human identifier for this person |
 | [props.name] | <code>HumanName</code> | A name associated with the person |
@@ -3519,14 +3439,13 @@ Create a FHIR Person resource.
 
 ### builders.planDefinition {#builders_planDefinition}
 
-<p><code>planDefinition(type, props)</code></p>
+<p><code>planDefinition(props)</code></p>
 
-Create a FHIR PlanDefinition resource.
+Create a PlanDefinition resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.url] | <code>string</code> | Canonical identifier for this plan definition, represented as a URI (globally unique) |
 | [props.identifier] | <code>Identifier</code> | Additional identifier for the plan definition |
@@ -3567,14 +3486,13 @@ Create a FHIR PlanDefinition resource.
 
 ### builders.practitioner {#builders_practitioner}
 
-<p><code>practitioner(type, props)</code></p>
+<p><code>practitioner(props)</code></p>
 
-Create a FHIR Practitioner resource.
+Create a Practitioner resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | An identifier for the person as this agent |
 | [props.active] | <code>boolean</code> | Whether this practitioner's record is in active use |
@@ -3594,14 +3512,13 @@ Create a FHIR Practitioner resource.
 
 ### builders.practitionerRole {#builders_practitionerRole}
 
-<p><code>practitionerRole(type, props)</code></p>
+<p><code>practitionerRole(props)</code></p>
 
-Create a FHIR PractitionerRole resource.
+Create a PractitionerRole resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business Identifiers that are specific to a role/location |
 | [props.active] | <code>boolean</code> | Whether this practitioner role record is in active use |
@@ -3625,14 +3542,13 @@ Create a FHIR PractitionerRole resource.
 
 ### builders.procedure {#builders_procedure}
 
-<p><code>procedure(type, props)</code></p>
+<p><code>procedure(props)</code></p>
 
-Create a FHIR Procedure resource.
+Create a Procedure resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External Identifiers for this procedure |
 | [props.instantiatesCanonical] | <code>canonical</code> | Instantiates FHIR protocol or definition |
@@ -3670,14 +3586,13 @@ Create a FHIR Procedure resource.
 
 ### builders.questionnaire {#builders_questionnaire}
 
-<p><code>questionnaire(type, props)</code></p>
+<p><code>questionnaire(props)</code></p>
 
-Create a FHIR Questionnaire resource.
+Create a Questionnaire resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.url] | <code>string</code> | Canonical identifier for this questionnaire, represented as a URI (globally unique) |
 | [props.identifier] | <code>Identifier</code> | Additional identifier for the questionnaire |
@@ -3709,14 +3624,13 @@ Create a FHIR Questionnaire resource.
 
 ### builders.questionnaireResponse {#builders_questionnaireResponse}
 
-<p><code>questionnaireResponse(type, props)</code></p>
+<p><code>questionnaireResponse(props)</code></p>
 
-Create a FHIR QuestionnaireResponse resource.
+Create a QuestionnaireResponse resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Unique id for this set of answers |
 | [props.basedOn] | <code>Reference</code> | Request fulfilled by this QuestionnaireResponse |
@@ -3737,14 +3651,13 @@ Create a FHIR QuestionnaireResponse resource.
 
 ### builders.regulatedAuthorization {#builders_regulatedAuthorization}
 
-<p><code>regulatedAuthorization(type, props)</code></p>
+<p><code>regulatedAuthorization(props)</code></p>
 
-Create a FHIR RegulatedAuthorization resource.
+Create a RegulatedAuthorization resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business identifier for the authorization, typically assigned by the authorizing body |
 | [props.subject] | <code>Reference</code> | The product type, treatment, facility or activity that is being authorized |
@@ -3768,14 +3681,13 @@ Create a FHIR RegulatedAuthorization resource.
 
 ### builders.relatedPerson {#builders_relatedPerson}
 
-<p><code>relatedPerson(type, props)</code></p>
+<p><code>relatedPerson(props)</code></p>
 
-Create a FHIR RelatedPerson resource.
+Create a RelatedPerson resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | A human identifier for this person |
 | [props.active] | <code>boolean</code> | Whether this related person's record is in active use |
@@ -3797,14 +3709,13 @@ Create a FHIR RelatedPerson resource.
 
 ### builders.requestGroup {#builders_requestGroup}
 
-<p><code>requestGroup(type, props)</code></p>
+<p><code>requestGroup(props)</code></p>
 
-Create a FHIR RequestGroup resource.
+Create a RequestGroup resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business identifier |
 | [props.instantiatesCanonical] | <code>canonical</code> | Instantiates FHIR protocol or definition |
@@ -3832,14 +3743,13 @@ Create a FHIR RequestGroup resource.
 
 ### builders.researchDefinition {#builders_researchDefinition}
 
-<p><code>researchDefinition(type, props)</code></p>
+<p><code>researchDefinition(props)</code></p>
 
-Create a FHIR ResearchDefinition resource.
+Create a ResearchDefinition resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.url] | <code>string</code> | Canonical identifier for this research definition, represented as a URI (globally unique) |
 | [props.identifier] | <code>Identifier</code> | Additional identifier for the research definition |
@@ -3883,14 +3793,13 @@ Create a FHIR ResearchDefinition resource.
 
 ### builders.researchElementDefinition {#builders_researchElementDefinition}
 
-<p><code>researchElementDefinition(type, props)</code></p>
+<p><code>researchElementDefinition(props)</code></p>
 
-Create a FHIR ResearchElementDefinition resource.
+Create a ResearchElementDefinition resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.url] | <code>string</code> | Canonical identifier for this research element definition, represented as a URI (globally unique) |
 | [props.identifier] | <code>Identifier</code> | Additional identifier for the research element definition |
@@ -3933,14 +3842,13 @@ Create a FHIR ResearchElementDefinition resource.
 
 ### builders.researchStudy {#builders_researchStudy}
 
-<p><code>researchStudy(type, props)</code></p>
+<p><code>researchStudy(props)</code></p>
 
-Create a FHIR ResearchStudy resource.
+Create a ResearchStudy resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business Identifier for study |
 | [props.title] | <code>string</code> | Name for this study |
@@ -3974,14 +3882,13 @@ Create a FHIR ResearchStudy resource.
 
 ### builders.researchSubject {#builders_researchSubject}
 
-<p><code>researchSubject(type, props)</code></p>
+<p><code>researchSubject(props)</code></p>
 
-Create a FHIR ResearchSubject resource.
+Create a ResearchSubject resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business Identifier for research subject in a study |
 | [props.status] | <code>string</code> | candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn |
@@ -3999,14 +3906,13 @@ Create a FHIR ResearchSubject resource.
 
 ### builders.riskAssessment {#builders_riskAssessment}
 
-<p><code>riskAssessment(type, props)</code></p>
+<p><code>riskAssessment(props)</code></p>
 
-Create a FHIR RiskAssessment resource.
+Create a RiskAssessment resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Unique identifier for the assessment |
 | [props.basedOn] | <code>Reference</code> | Request fulfilled by this assessment |
@@ -4033,14 +3939,13 @@ Create a FHIR RiskAssessment resource.
 
 ### builders.schedule {#builders_schedule}
 
-<p><code>schedule(type, props)</code></p>
+<p><code>schedule(props)</code></p>
 
-Create a FHIR Schedule resource.
+Create a Schedule resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External Ids for this item |
 | [props.active] | <code>boolean</code> | Whether this schedule is in active use |
@@ -4058,14 +3963,13 @@ Create a FHIR Schedule resource.
 
 ### builders.serviceRequest {#builders_serviceRequest}
 
-<p><code>serviceRequest(type, props)</code></p>
+<p><code>serviceRequest(props)</code></p>
 
-Create a FHIR ServiceRequest resource.
+Create a ServiceRequest resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Identifiers assigned to this order |
 | [props.instantiatesCanonical] | <code>canonical</code> | Instantiates FHIR protocol or definition |
@@ -4108,14 +4012,13 @@ Create a FHIR ServiceRequest resource.
 
 ### builders.slot {#builders_slot}
 
-<p><code>slot(type, props)</code></p>
+<p><code>slot(props)</code></p>
 
-Create a FHIR Slot resource.
+Create a Slot resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External Ids for this item |
 | [props.serviceCategory] | <code>CodeableConcept</code> | A broad categorization of the service that is to be performed during this appointment |
@@ -4136,14 +4039,13 @@ Create a FHIR Slot resource.
 
 ### builders.specimen {#builders_specimen}
 
-<p><code>specimen(type, props)</code></p>
+<p><code>specimen(props)</code></p>
 
-Create a FHIR Specimen resource.
+Create a Specimen resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External Identifier |
 | [props.accessionIdentifier] | <code>Identifier</code> | Identifier assigned by the lab |
@@ -4166,14 +4068,13 @@ Create a FHIR Specimen resource.
 
 ### builders.specimenDefinition {#builders_specimenDefinition}
 
-<p><code>specimenDefinition(type, props)</code></p>
+<p><code>specimenDefinition(props)</code></p>
 
-Create a FHIR SpecimenDefinition resource.
+Create a SpecimenDefinition resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business identifier of a kind of specimen |
 | [props.typeCollected] | <code>CodeableConcept</code> | Kind of material to collect |
@@ -4189,14 +4090,13 @@ Create a FHIR SpecimenDefinition resource.
 
 ### builders.substance {#builders_substance}
 
-<p><code>substance(type, props)</code></p>
+<p><code>substance(props)</code></p>
 
-Create a FHIR Substance resource.
+Create a Substance resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Unique identifier |
 | [props.status] | <code>string</code> | active | inactive | entered-in-error |
@@ -4213,14 +4113,13 @@ Create a FHIR Substance resource.
 
 ### builders.substanceDefinition {#builders_substanceDefinition}
 
-<p><code>substanceDefinition(type, props)</code></p>
+<p><code>substanceDefinition(props)</code></p>
 
-Create a FHIR SubstanceDefinition resource.
+Create a SubstanceDefinition resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Identifier by which this substance is known |
 | [props.version] | <code>string</code> | A business level version identifier of the substance |
@@ -4249,14 +4148,13 @@ Create a FHIR SubstanceDefinition resource.
 
 ### builders.supplyDelivery {#builders_supplyDelivery}
 
-<p><code>supplyDelivery(type, props)</code></p>
+<p><code>supplyDelivery(props)</code></p>
 
-Create a FHIR SupplyDelivery resource.
+Create a SupplyDelivery resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External identifier |
 | [props.basedOn] | <code>Reference</code> | Fulfills plan, proposal or order |
@@ -4277,14 +4175,13 @@ Create a FHIR SupplyDelivery resource.
 
 ### builders.supplyRequest {#builders_supplyRequest}
 
-<p><code>supplyRequest(type, props)</code></p>
+<p><code>supplyRequest(props)</code></p>
 
-Create a FHIR SupplyRequest resource.
+Create a SupplyRequest resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business Identifier for SupplyRequest |
 | [props.status] | <code>string</code> | draft | active | suspended + |
@@ -4309,14 +4206,13 @@ Create a FHIR SupplyRequest resource.
 
 ### builders.task {#builders_task}
 
-<p><code>task(type, props)</code></p>
+<p><code>task(props)</code></p>
 
-Create a FHIR Task resource.
+Create a Task resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Task Instance Identifier |
 | [props.instantiatesCanonical] | <code>canonical</code> | Formal definition of task |
@@ -4357,14 +4253,13 @@ Create a FHIR Task resource.
 
 ### builders.testReport {#builders_testReport}
 
-<p><code>testReport(type, props)</code></p>
+<p><code>testReport(props)</code></p>
 
-Create a FHIR TestReport resource.
+Create a TestReport resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | External identifier |
 | [props.name] | <code>string</code> | Informal name of the executed TestScript |
@@ -4386,14 +4281,13 @@ Create a FHIR TestReport resource.
 
 ### builders.verificationResult {#builders_verificationResult}
 
-<p><code>verificationResult(type, props)</code></p>
+<p><code>verificationResult(props)</code></p>
 
-Create a FHIR VerificationResult resource.
+Create a VerificationResult resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.target] | <code>Reference</code> | A resource that was validated |
 | [props.targetLocation] | <code>string</code> | The fhirpath location(s) within the resource that was validated |
@@ -4417,14 +4311,13 @@ Create a FHIR VerificationResult resource.
 
 ### builders.visionPrescription {#builders_visionPrescription}
 
-<p><code>visionPrescription(type, props)</code></p>
+<p><code>visionPrescription(props)</code></p>
 
-Create a FHIR VisionPrescription resource.
+Create a VisionPrescription resource.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| type | <code>string</code> | The profile id for the resource variant. Optional. |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
 | [props.identifier] | <code>Identifier</code> | Business Identifier for vision prescription |
 | [props.status] | <code>string</code> | active | cancelled | draft | entered-in-error |
