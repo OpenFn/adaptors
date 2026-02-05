@@ -37,9 +37,15 @@ import * as http from './http.js';
  */
 /**
  * Create a PDF from HTML or URL.
+ * Accepts an HTML string or an object `{ html }` / `{ url }`.
+ * This operation calls the Browserless `/pdf` endpoint and normalizes PDF
+ * responses into `{ pdf: '<base64>' }` by default. To override, call
+ * `http.request('POST', 'pdf', { body: {...}, forcePdfBase64: false })`.
  * @public
- * @param {string|object} input 
- * @param {RequestOptions} options
+ * @param {string|object} input - HTML string or `{ html }` / `{ url }` object
+ * @param {RequestOptions} options - Optional request options
+ * @state {HttpState}
+ * @returns {Operation}
  */
 export function createPDF(input, options) {
   return async state => {

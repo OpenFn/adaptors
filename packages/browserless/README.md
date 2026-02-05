@@ -55,6 +55,15 @@ Normalization note:
 
 - When using the `/pdf` endpoint, this adaptor normalizes binary PDF responses to a base64 string and returns `{ pdf: '<base64>' }` by default. If you prefer raw bytes or the original response, call the lower-level `http.request()` with `forcePdfBase64: false`.
 
+Example: using `http.request` and controlling `forcePdfBase64`:
+
+```javascript
+import { http } from '@openfn/language-browserless';
+
+// request raw bytes from /pdf (do not coerce to base64 wrapper)
+export default http.request('POST', 'pdf', { html: '<p>Raw</p>', forcePdfBase64: false });
+```
+
 ## Development
 
 Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the

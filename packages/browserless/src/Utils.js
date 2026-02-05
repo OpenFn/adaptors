@@ -49,26 +49,33 @@ export const request = (configuration = {}, method, path, options) => {
 
   return commonRequest(method, safePath, opts).then(response => {
     try {
-      const contentType = (response && response.headers && (response.headers['content-type'] || response.headers['Content-Type'])) || '';
-      const isPdfContent = /application\/(pdf|octet-stream)/i.test(contentType);
-
-      if (wantsPdfBase64 || isPdfContent) {
+      const contentType = response?.headers?.['content-type'] || '';
+      const isPdfContent = /application\/(pdf|octet-stream)/i.test(contentType || '');
+      if (wantsPdfBase64) {
         const body = response.body;
         if (body) {
           if (typeof body === 'string') {
-            const maybeBase64 = /^[A-Za-z0-9+/=\r\n]+$/.test(body);
-            if (maybeBase64) {
-              try {
-                const decoded = Buffer.from(body, 'base64').toString('utf8');
-                const parsed = JSON.parse(decoded);
-                response.body = parsed;
-              } catch (err) {
-                response.body = { pdf: body };
-              }
-            } else {
-              const buf = Buffer.from(body, 'binary');
-              response.body = { pdf: buf.toString('base64') };
+            try {
+              const decoded = Buffer.from(body, 'base64').toString('utf8');
+              const parsed = JSON.parse(decoded);
+              response.body = parsed;
+            } catch (err) {
+              response.body = { pdf: body };
             }
+          } else if (Buffer.isBuffer(body)) {
+            response.body = { pdf: body.toString('base64') };
+          } else if (body instanceof ArrayBuffer) {
+            response.body = { pdf: Buffer.from(body).toString('base64') };
+          } else if (ArrayBuffer.isView(body)) {
+            response.body = { pdf: Buffer.from(body.buffer).toString('base64') };
+          }
+        }
+      } else if (isPdfContent) {
+        const body = response.body;
+        if (body) {
+          if (typeof body === 'string') {
+            const buf = Buffer.from(body, 'binary');
+            response.body = { pdf: buf.toString('base64') };
           } else if (Buffer.isBuffer(body)) {
             response.body = { pdf: body.toString('base64') };
           } else if (body instanceof ArrayBuffer) {
