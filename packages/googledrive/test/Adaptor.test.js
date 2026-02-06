@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import { google } from 'googleapis';
 import { execute, create, get, update, list } from '../src/index.js';
 
-describe('Google Drive Adapter', () => {
+describe('Google Drive Adaptor', () => {
   let sandbox;
   let mockDrive;
   let mockFiles;
@@ -41,7 +41,7 @@ describe('Google Drive Adapter', () => {
               createdTime: '2024-01-02T00:00:00.000Z',
               modifiedTime: '2024-01-02T00:00:00.000Z',
             },
-          ]
+          ],
         },
       }),
     };
@@ -76,7 +76,7 @@ describe('Google Drive Adapter', () => {
       //Expected 2 calls: one for metadata and one for content
       expect(mockFiles.get.calledTwice).to.be.true;
       expect(result.data.content).to.equal(
-        Buffer.from('file content').toString('base64')
+        Buffer.from('file content').toString('base64'),
       );
     });
   });
@@ -98,7 +98,8 @@ describe('Google Drive Adapter', () => {
     it('should list files successfully with folderId', async () => {
       const state = { configuration: { access_token: 'mockToken' } };
 
-      const result = await execute(list({ folderId: 'folder123' }))(state);
+      const result = await execute(list('folder123'))(state);
+
       expect(mockFiles.list.calledOnce).to.be.true;
       expect(result.data).to.be.an('array').with.lengthOf(2);
       expect(result.data[0]).to.have.property('id', 'file123');
@@ -107,9 +108,8 @@ describe('Google Drive Adapter', () => {
 
     it('should list files with folderId option', async () => {
       const state = { configuration: { access_token: 'mockToken' } };
-      const options = { folderId: 'folder123' };
 
-      const result = await execute(list(options))(state);
+      const result = await execute(list('folder123'))(state);
       expect(mockFiles.list.calledOnce).to.be.true;
 
       const callArgs = mockFiles.list.getCall(0).args[0];
@@ -121,10 +121,10 @@ describe('Google Drive Adapter', () => {
       const state = { configuration: { access_token: 'mockToken' } };
 
       try {
-        await execute(list({}))(state);
+        await execute(list())(state);
         expect.fail('Should have thrown an error');
       } catch (error) {
-        expect(error.message).to.include('options.folderId is required');
+        expect(error.message).to.include('folderId is required');
       }
     });
 
@@ -135,7 +135,7 @@ describe('Google Drive Adapter', () => {
         await execute(list({ folderId: 123 }))(state);
         expect.fail('Should have thrown an error');
       } catch (error) {
-        expect(error.message).to.include('options.folderId is required');
+        expect(error.message).to.include('folderId is required');
       }
     });
 
@@ -143,10 +143,10 @@ describe('Google Drive Adapter', () => {
       const state = { configuration: { access_token: 'mockToken' } };
 
       try {
-        await execute(list({ folderId: null }))(state);
+        await execute(list(null))(state);
         expect.fail('Should have thrown an error');
       } catch (error) {
-        expect(error.message).to.include('options.folderId is required');
+        expect(error.message).to.include('folderId is required');
       }
     });
   });
