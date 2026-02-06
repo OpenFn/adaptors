@@ -4,7 +4,7 @@
 <dt>
     <a href="#get">get(fileIdOrName)</a></dt>
 <dt>
-    <a href="#list">list([options])</a></dt>
+    <a href="#list">list(folderId, [options])</a></dt>
 <dt>
     <a href="#update">update(fileId, content)</a></dt>
 </dl>
@@ -137,7 +137,7 @@ get('hello-world.txt')
 
 ### list
 
-<p><code>list([options]) ⇒ Operation</code></p>
+<p><code>list(folderId, [options]) ⇒ Operation</code></p>
 
 Lists files from a directory or root.
 
@@ -145,8 +145,8 @@ Lists files from a directory or root.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [options] | <code>Object</code> | Options for listing files. |
-| [options.folderId] | <code>string</code> | ID of the folder to list files from. If not provided, lists files from the root. |
+| folderId | <code>string</code> | ID of the folder to list files from. If not provided, lists files from the root. |
+| [options] | <code>Object</code> | Options for listing files |
 | [options.fields] | <code>string</code> | Fields to return in the response. Defaults to 'files(id, name, mimeType, createdTime, modifiedTime)'. |
 | [options.query] | <code>string</code> | Custom query string for filtering files (see Google Drive API query syntax). |
 | [options.limit] | <code>number</code> | Maximum number of files to return |
