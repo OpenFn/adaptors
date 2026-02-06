@@ -1,5 +1,11 @@
 # @openfn/language-googledrive
 
+## 3.0.0
+
+### Major Changes
+
+- 7971401: `list()` now requires a `folderId` argument
+
 ## 2.1.1
 
 ### Patch Changes
