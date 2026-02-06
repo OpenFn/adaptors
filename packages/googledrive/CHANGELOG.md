@@ -1,6 +1,29 @@
 # @openfn/language-googledrive
 
-## 2.1.1
+## 3.0.0
+
+The 3.0.0 version ensures that the `list()` command can access all folders
+shared with the credential - but demands that a single folderId be provided, to
+prevent accidental data leaks.
+
+### Breaking Changes
+
+- 7971401: `list()` now requires a `folderId` argument
+
+If you used `list()` from v2.1.0, you must now provide a folderId as an
+argument:
+
+```
+list() -> list('21345', { limit: 10 })
+```
+
+If you used folderId as an option, it must now be an argument
+
+```
+list({ folderId; '21345', limit: 10 }) -> list('21345', { limit: 10 })
+```
+
+## 2.1.1 (deprecated)
 
 ### Patch Changes
 
