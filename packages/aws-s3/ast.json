@@ -19,7 +19,7 @@
           },
           {
             "title": "param",
-            "description": null,
+            "description": "The S3 operation parameters (bucket. key, body, contentType, etc.)",
             "type": {
               "type": "NameExpression",
               "name": "S3Params"
@@ -28,7 +28,7 @@
           },
           {
             "title": "returns",
-            "description": null,
+            "description": "A function that takes the state and performs the put operation.",
             "type": {
               "type": "NameExpression",
               "name": "Operation"
@@ -57,7 +57,7 @@
           },
           {
             "title": "param",
-            "description": null,
+            "description": "The S3 operation parameters (bucket, prefix, etc.)",
             "type": {
               "type": "NameExpression",
               "name": "S3Params"
@@ -66,7 +66,7 @@
           },
           {
             "title": "returns",
-            "description": null,
+            "description": "A function that takes the state and performs the list operation.",
             "type": {
               "type": "NameExpression",
               "name": "Operation"
@@ -99,7 +99,7 @@
           },
           {
             "title": "param",
-            "description": null,
+            "description": "The S3 operation parameters (bucket, key).",
             "type": {
               "type": "NameExpression",
               "name": "S3Params"
@@ -108,7 +108,7 @@
           },
           {
             "title": "returns",
-            "description": null,
+            "description": "A function that takes the state and performs the get operation.",
             "type": {
               "type": "NameExpression",
               "name": "Operation"
