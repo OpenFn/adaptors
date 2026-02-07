@@ -35,7 +35,7 @@
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "Object"
+                "name": "RequestOptions"
               }
             },
             "name": "options"
@@ -87,7 +87,7 @@
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "Object"
+                "name": "RequestOptions"
               }
             },
             "name": "options"
@@ -139,7 +139,7 @@
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "Object"
+                "name": "RequestOptions"
               }
             },
             "name": "options"
