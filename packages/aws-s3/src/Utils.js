@@ -31,34 +31,30 @@ export const s3ClientFromConfig = (configuration = {}) => {
 };
 
 export const putObject = async (configuration = {}, params = {}) => {
-  const { Bucket, Key, Body, ContentType, ACL, ServerSideEncryption } = params;
   const client = s3ClientFromConfig(configuration);
-  const cmd = new PutObjectCommand({ Bucket, Key, Body, ContentType, ACL, ServerSideEncryption });
+  const cmd = new PutObjectCommand(params);
   return client.send(cmd);
 };
 
 export const getObject = async (configuration = {}, params = {}) => {
-  const { Bucket, Key } = params;
   const client = s3ClientFromConfig(configuration);
-  const cmd = new GetObjectCommand({ Bucket, Key });
+  const cmd = new GetObjectCommand(params);
   return client.send(cmd);
 };
 
 export const deleteObject = async (configuration = {}, params = {}) => {
-  const { Bucket, Key } = params;
   const client = s3ClientFromConfig(configuration);
-  const cmd = new DeleteObjectCommand({ Bucket, Key });
+  const cmd = new DeleteObjectCommand(params);
   return client.send(cmd);
 };
 
 export const listObjects = async (configuration = {}, params = {}) => {
-  const { Bucket, Prefix, MaxKeys, ContinuationToken } = params;
   const client = s3ClientFromConfig(configuration);
-  const cmd = new ListObjectsV2Command({ Bucket, Prefix, MaxKeys, ContinuationToken });
+  const cmd = new ListObjectsV2Command(params);
   return client.send(cmd);
 };
 
-const streamToBuffer = async (stream) => {
+export const streamToBuffer = async (stream) => {
   if (Buffer.isBuffer(stream)) return stream;
   if (typeof stream.arrayBuffer === 'function') {
     const ab = await stream.arrayBuffer();
@@ -73,50 +69,12 @@ const streamToBuffer = async (stream) => {
 };
 
 export const prepareS3GetResponse = async (response) => {
-  const bodyStream = response.Body;
-  const buffer = await streamToBuffer(bodyStream);
-  const base64 = buffer.toString('base64');
-  const contentType = response.ContentType || '';
-
-  
-  if (contentType.includes('application/json')) {
-    try {
-      const text = buffer.toString('utf8');
-      const json = JSON.parse(text);
-      return {
-        body: json,
-        headers: response.$metadata || {},
-        statusCode: 200,
-      };
-    } catch (e) {
-   
-    }
-  }
-
- 
-  const firstChar = buffer.slice(0, 1).toString();
-  if (firstChar === '{' || firstChar === '[') {
-    try {
-      const json = JSON.parse(buffer.toString('utf8'));
-      return {
-        body: json,
-        headers: response.$metadata || {},
-        statusCode: 200,
-      };
-    } catch (e) {
-     
-    }
-  }
-
-  return {
-    body: {
-      base64,
-      contentType,
-      contentLength: response.ContentLength,
-    },
-    headers: response.$metadata || {},
-    statusCode: 200,
-  };
+ const buffer = await streamToBuffer(response.Body);
+ try{
+  return  JSON.parse(buffer.toString('utf8'));
+ } catch (e){
+  return buffer;
+ }
 };
 
 export const preparePutResponse = (response, Bucket, Key) => {

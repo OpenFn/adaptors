@@ -1,5 +1,6 @@
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
+import {PutObjectCommand, ListObjectsV2Command, GetObjectCommand} from '@aws-sdk/client-s3';
 
 /**
  * S3 operation input params used by `put`, `get`, and `list`.
@@ -20,27 +21,37 @@ import * as util from './Utils.js';
  * put({ bucket: 'my-bucket', key: 'path/to/file.txt', body: 'hello' });
  *
  * @public
- * @param {S3Params} params
- * @returns {Operation}
+ * @param {S3Params} params - The S3 operation parameters (bucket. key, body, contentType, etc.)
+ * @returns {Operation} - A function that takes the state and performs the put operation.
  */
-/**
- * Internal typing placeholder for editors. `params` is validated at runtime.
- * @param {object} params
- */
+
 export function put(params) {
   return async state => {
     const [resolvedParams] = expandReferences(state, params);
     const awsParams = {
-      Bucket: resolvedParams.bucket || resolvedParams.Bucket,
-      Key: resolvedParams.key || resolvedParams.Key,
-      Body: resolvedParams.body || resolvedParams.Body,
-      ContentType: resolvedParams.contentType || resolvedParams.ContentType,
+      Bucket: resolvedParams.bucket,
+      Key: resolvedParams.key,
+      Body: resolvedParams.body,
+      ContentType: resolvedParams.contentType,
       ACL: resolvedParams.acl || resolvedParams.ACL,
-      ServerSideEncryption: resolvedParams.serverSideEncryption || resolvedParams.ServerSideEncryption,
+      ServerSideEncryption: resolvedParams.serverSideEncryption,
+    };
+    
+    const client = util.s3ClientFromConfig(state.configuration);
+    const resp = await client.send(new PutObjectCommand(awsParams));
+
+    const formatted = {
+      body: {
+        ...state.data,
+        bucket: awsParams.Bucket,
+        key: awsParams.Key,
+        etag: resp.ETag,
+
+      },
+      headers: resp.$metadata || {},
+      statusCode: 200,
     };
 
-    const resp = await util.putObject(state.configuration, awsParams);
-    const formatted = util.preparePutResponse(resp, awsParams.Bucket, awsParams.Key);
     return util.prepareNextState(state, formatted);
   };
 }
@@ -53,30 +64,22 @@ export function put(params) {
  * list({ bucket: 'my-bucket', prefix: 'path/to/' });
  *
  * @public
- * @param {S3Params} params
- * @returns {Operation}
+ * @param {S3Params} params - The S3 operation parameters (bucket, prefix, etc.)
+ * @returns {Operation} - A function that takes the state and performs the list operation.
  * @state {Object} state - On success sets `state.data` to the list of objects and `state.response` to the raw S3 response metadata.
  */
 
-
-/**
- * @param {object} params 
- */
-
-/**
- * @param {object} params 
- */
 export function list(params) {
   return async state => {
     const [resolvedParams] = expandReferences(state, params);
     const awsParams = {
-      Bucket: resolvedParams.bucket || resolvedParams.Bucket,
-      Prefix: resolvedParams.prefix || resolvedParams.Prefix,
-      MaxKeys: resolvedParams.maxKeys || resolvedParams.MaxKeys,
+      Bucket: resolvedParams.bucket, 
+      Prefix: resolvedParams.prefix ,
+      MaxKeys: resolvedParams.maxKeys, 
       ContinuationToken: resolvedParams.continuationToken || resolvedParams.ContinuationToken,
     };
-
-    const resp = await util.listObjects(state.configuration, awsParams);
+    const client = util.s3ClientFromConfig(state.configuration);
+    const resp = await client.send(new ListObjectsV2Command(awsParams));
     const formatted = {
       body: resp.Contents || [],
       headers: resp.$metadata || {},
@@ -96,27 +99,37 @@ export function list(params) {
  * get({ bucket: 'my-bucket', key: 'path/to/file.txt' });
  *
  * @public
- * @param {S3Params} params
- * @returns {Operation}
+ * @param {S3Params} params - The S3 operation parameters (bucket, key).
+ * @returns {Operation} - A function that takes the state and performs the get operation.
  * @state {Object} state - On success sets `state.data` to the parsed body (or `{ base64: '...' }`) and `state.response` to the raw response metadata.
  */
 export function get(params) {
   return async state => {
     const [resolvedParams] = expandReferences(state, params);
+
     const awsParams = {
-      Bucket: resolvedParams.bucket || resolvedParams.Bucket,
-      Key: resolvedParams.key || resolvedParams.Key,
+      Bucket: resolvedParams.bucket,
+      Key: resolvedParams.key,
     };
-
-    const resp = await util.getObject(state.configuration, awsParams);
-    const formatted = await util.prepareS3GetResponse(resp);
-    return util.prepareNextState(state, formatted);
-  };
+    
+    const client = util.s3ClientFromConfig(state.configuration);
+    const resp = await client.send(new GetObjectCommand(awsParams));
+    const buffer = await util.streamToBuffer(resp.Body);
+    
+    let data;
+    
+    try{
+      data = JSON.parse(buffer.toString('utf8'));
+    } catch (e){
+      data = {
+      base64: buffer.toString('base64'),
+      contentType: resp.ContentType || '',
+      contentLength: resp.ContentLength || buffer.length
+    };
+    }
+    return util.prepareNextState(state, {body: data});
+};
 }
-
-/**
- * @param {object} params 
- */
 
 
 export {
