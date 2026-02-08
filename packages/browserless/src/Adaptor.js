@@ -1,57 +1,75 @@
-import { expandReferences } from "@openfn/language-common/util";
+import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
-import {request as loweLevelRequest} from './Utils.js';
-
+import { request as lowLevelRequest } from './Utils.js';
 
 /**
  * Create a PDF from HTML or URL.
- * Accepts a flat HTML string, a URL string, or an object `{html}` / `{url}`.
- * Normalizes PDF responses into `{ pdf: <base64 string> }` by default.
  * @public
- * @param {string|object} input - HTML string, URL string, or `{ html }` / `{url}` object.
- * @param {object} options - Optional request options.
- * @returns {operation} Returns state with `{ data: { pdf: '<base64>' } }` .
- * 
+ * @param {string|object} input - HTML string, URL string, or { html } / { url }
+ * @param {object} options - Optional request options
+ * @returns {Operation} Returns state with { data: { pdf: '<base64>' } }
  */
-
-export function createPDF(input, options){
-  return async state => {
+export function createPDF(input, options) {
+  return async (state) => {
     const maybeBody =
-    typeof input === 'string'
-    ? input.startsWith('http') ? { url: input } : { html: input}
-  : input || {};
-  
-  const [resolvedInput, resolvedOptions] = expandReferences(state, maybeBody, options);
+      typeof input === 'string'
+        ? input.startsWith('http') ? { url: input } : { html: input }
+        : input || {};
 
-  const response = await loweLevelRequest(undefined, 'POST', 'pdf', 
-    { body: resolvedInput, ...(resolvedOptions || {})})(state);
+    const [resolvedInput, resolvedOptions] = expandReferences(state, maybeBody, options);
 
-  return {
-    ...state,
-    data: response.data,
+    const response = await lowLevelRequest(
+      state.configuration,
+      'POST',
+      'pdf',
+      { body: resolvedInput, ...(resolvedOptions || {}), parseAs: (resolvedOptions && resolvedOptions.parseAs) || 'base64' }
+    );
 
-  };  
+    const { body, ...responseWithoutBody } = response;
+
+    return {
+      ...state,
+      data: body,
+      response: responseWithoutBody,
+    };
   };
 }
 
-
 /**
- * Generic Browserless-authnticated HTTP request operation.
- * Use for arbitrary Browserless  endpoints (for example `/convert`).
+ * Generic Browserless-authenticated HTTP request operation.
  * @public
- * @function
- * @param {string} method - HTTP method (e.g. 'GET', 'POST').
- * @param {string} path - Path or URL to request (relative paths are joined to baseUrl).
- * @param {object} options - Optional request options.
- * @returns {Operation} Returns state with `data` and `response`.
- * 
+ * @param {string} method - HTTP method
+ * @param {string} path - URL or relative path
+ * @param {object} options - Request options
+ * @returns {Operation} Returns state with `data` and `response`
  */
+export function request(method, path, options) {
+  return async (state) => {
+    const [resolvedMethod, resolvedPath, resolvedOptions] = expandReferences(
+      state,
+      method,
+      path,
+      options
+    );
 
-export function request(method, path, options){
-  return loweLevelRequest(undefined, method, path, options);
+    const response = await util.request(
+      state.configuration,
+      resolvedMethod,
+      resolvedPath,
+      resolvedOptions
+    );
+
+    const { body, ...responseWithoutBody } = response;
+
+    return {
+      ...state,
+      data: body,
+      response: responseWithoutBody,
+    };
+  };
 }
 
-export{
+export {
   as,
   combine,
   cursor,
@@ -71,7 +89,4 @@ export{
   source,
   sourceValue,
   util,
-} from '@openfn/language-common'
-
-
-
+} from '@openfn/language-common';

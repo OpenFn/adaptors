@@ -1,81 +1,63 @@
 # language-browserless <img src='./assets/square.png' width="30" height="30"/>
 
-An OpenFn **_adaptor_** for building integration jobs for use with the
-browserless API.
+An OpenFn adaptor for interacting with the Browserless API (PDF generation and related endpoints).
 
-## Documentation
+Documentation: https://docs.openfn.org/adaptors/packages/browserless-docs
 
-View the
-[docs site](https://docs.openfn.org/adaptors/packages/browserless-docs) for
-full technical documentation.
+**Exports**
+- `createPDF(input, options)` — Operation that calls the `/pdf` endpoint and returns a state with `data: { pdf: '<base64>' }` for binary responses.
+- `request(method, path, options)` — Generic Browserless-authenticated HTTP operation.
 
-### Configuration
+Both functions return an OpenFn operation: a function that accepts `state` and returns a new state (or a Promise resolving to it).
 
-This adaptor requires a Browserless API token.
+Configuration
+- `state.configuration.baseUrl` (optional) — base URL for Browserless (default: `https://production-sfo.browserless.io`).
+- `state.configuration.token` (optional) — Browserless API token; when present it is appended as a `token` query parameter.
 
-```js
-{
-  token: 'YOUR_BROWSERLESS_TOKEN',
-  baseUrl: 'https://production-sfo.browserless.io' 
-}
+Examples
 
-
-### Usage
-
-This adaptor exposes two public features:
-
-- `http.request(method, path, options)` — a generic Browserless-authenticated HTTP request operation. Use this for arbitrary Browserless endpoints (for example `/convert`).
-- `createPDF(input, options)` — PDF generation helper. `input` may be an HTML string or an object `{ html }` / `{ url }`. This calls the `/pdf` endpoint and normalizes PDF responses to `{ pdf: '<base64>' }` by default.
-
-Example job using `http.request`:
-
-```javascript
-import { http } from '@openfn/language-browserless';
-
-export default http.request('POST', 'convert', { html: '<p>Hello</p>' });
-```
-
-Example job using `createPDF`:
+- create a PDF from HTML:
 
 ```javascript
 import { createPDF } from '@openfn/language-browserless';
 
-export default createPDF('<p>Hello PDF</p>');
+const op = createPDF('<p>Hello PDF</p>');
+
+const state = { configuration: { baseUrl: 'https://production-sfo.browserless.io', token: process.env.BROWSERLESS_TOKEN } };
+const result = await op(state);
+
 ```
 
-Configuration example (token-based `/pdf`):
+- call an arbitrary Browserless endpoint:
 
 ```javascript
-const state = {
-	configuration: {
-		baseUrl: 'https://production-sfo.browserless.io',
-		token: process.env.BROWSERLESS_TOKEN,
-	},
-};
+import { request } from '@openfn/language-browserless';
 
-const result = await createPDF('<p>Hello</p>')(state);
+const op = request('POST', 'convert', { body: { html: '<p>Hi</p>' } });
+const result = await op({ configuration: { baseUrl: 'https://production-sfo.browserless.io' } });
+
 ```
 
-Normalization note:
+PDF normalization details
+- `createPDF` requests `/pdf` with `parseAs: 'base64'` (so binary responses are returned safely) and the adaptor normalizes PDF responses into `{ pdf: '<base64>' }`.
+- If you need the raw response or different parsing, call `request()` and pass options such as `parseAs: 'buffer'` or `forcePdfBase64: false` depending on what you need.
 
-- When using the `/pdf` endpoint, this adaptor normalizes binary PDF responses to a base64 string and returns `{ pdf: '<base64>' }` by default. If you prefer raw bytes or the original response, call the lower-level `http.request()` with `forcePdfBase64: false`.
+Testing & development
+- Run this package tests from repository root:
 
-Example: using `http.request` and controlling `forcePdfBase64`:
-
-```javascript
-import { http } from '@openfn/language-browserless';
-
-// request raw bytes from /pdf (do not coerce to base64 wrapper)
-export default http.request('POST', 'pdf', { html: '<p>Raw</p>', forcePdfBase64: false });
+```bash
+pnpm --filter @openfn/language-browserless test
 ```
 
-## Development
+- Or from the package folder:
 
-Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
-"Getting Started" guide inside to get set up.
+```bash
+cd packages/browserless
+pnpm test
+```
 
-Run tests using `pnpm run test` or `pnpm run test:watch`
+Mocking in tests
+- Tests use the mock client helper from `@openfn/language-common/util` (`enableMockClient`) to intercept requests for the configured `baseUrl`.
 
-Build the project using `pnpm build`.
 
-To build _only_ the docs run `pnpm build docs`.
+
