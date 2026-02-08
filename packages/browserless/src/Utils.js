@@ -1,47 +1,47 @@
 import { composeNextState } from '@openfn/language-common';
-import {
-  request as commonRequest,
-  makeBasicAuthHeader,
-  assertRelativeUrl,
-} from '@openfn/language-common/util';
+import { request as commonRequest, makeBasicAuthHeader, } from '@openfn/language-common/util';
 import nodepath from 'node:path';
+
+/**
+ * prepares the next state for OpenFn operations.
+ * @param {object} state - Current state of the Operations.
+ * @param {object} response - HTTP response object.
+ * @returns {object} Next State
+ */
 
 export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
 
-  if (!state.references) {
-    state.references = [];
+  if(!state.references) {
+    state.references = {};
   }
-
   return {
-    ...composeNextState(state, response.body),
+    ...commonNextState(state, body), 
     response: responseWithoutBody,
-  };
+    };
 };
+
 /**
- * Low-level request helper used by the adaptor.
- * Note: this lives in `Utils.js` and is an infrastructure helper (not a
- * public operation). Keep the signature stable: `request(configuration, method,
- * path, options)`.
- * @param {object} [configuration={}] - Adaptor configuration (baseUrl, auth, token).
- * @param {string} method - HTTP method (e.g. 'GET', 'POST').
- * @param {string} path - Relative path or URL to request.
- * @param {object} [options] - Request options passed through to the HTTP client
- *   (`body`, `headers`, `query`, `parseAs`, `forcePdfBase64`, `timeout`, etc.).
- * @returns {Promise<object>} Resolves to the raw response object from the
- *   underlying HTTP client. The caller may normalize `response.body` further.
+ * Low-level request helper used by the openfn Browserless adaptor.
+ * PDF normalization is handled automatically based on response content-type.
+ * @param {object} [configuration={}] - Adaptor configuration (baseUrl, token, etc.)
+ * @param {string} method - HTTP method ('GET', 'POST', etc.)
+ * @param {string} path - URL or relative path
+ * @param {object} [options] - Request options (body, headers, query, parseAs, timeout)
+ * @param {Promise<object>} Resolves to the raw HTTP response
  */
+
 export const request = (configuration = {}, method, path, options) => {
-  const { baseUrl = 'https://production-sfo.browserless.io', username, password, token } = configuration;
-  const headers = makeBasicAuthHeader(username, password);
-  const errors = {
+  const {baseUrl = 'https://production-sfo.browserless.io', username, password, token } = configuration;
+
+  const headers = makeBasicAuthHeader(username, password,);
+  const error = {
     404: 'Page not found',
   };
 
   const opts = {
-      parseAs: 'json',
-    errors,
-    baseUrl,
+    parseAs: 'json',
+    error,
     ...options,
     headers: {
       'content-type': 'application/json',
@@ -49,58 +49,41 @@ export const request = (configuration = {}, method, path, options) => {
       ...(options && options.headers ? options.headers : {}),
     },
   };
-  opts.query = {
-    ...(opts.query || {}),
-    ...(token ? { token } : {}),
-  };
 
-  const safePath = nodepath.join(path);
-  const wantsPdfBase64 = options && options.forcePdfBase64;
-  if (wantsPdfBase64) {
-    opts.parseAs = 'base64';
-  }
+opts.query = {
+  ...opts(opts.query || {}),
+  ...(token ? { token } : {}),
+};
 
-  return commonRequest(method, safePath, opts).then(response => {
-    try {
-      const contentType = response?.headers?.['content-type'] || '';
-      const isPdfContent = /application\/(pdf|octet-stream)/i.test(contentType || '');
-      if (wantsPdfBase64) {
-        const body = response.body;
-        if (body) {
-          if (typeof body === 'string') {
-            try {
-              const decoded = Buffer.from(body, 'base64').toString('utf8');
-              const parsed = JSON.parse(decoded);
-              response.body = parsed;
-            } catch (err) {
-              response.body = { pdf: body };
-            }
-          } else if (Buffer.isBuffer(body)) {
-            response.body = { pdf: body.toString('base64') };
-          } else if (body instanceof ArrayBuffer) {
-            response.body = { pdf: Buffer.from(body).toString('base64') };
-          } else if (ArrayBuffer.isView(body)) {
-            response.body = { pdf: Buffer.from(body.buffer).toString('base64') };
-          }
-        }
-      } else if (isPdfContent) {
-        const body = response.body;
-        if (body) {
-          if (typeof body === 'string') {
-            const buf = Buffer.from(body, 'binary');
-            response.body = { pdf: buf.toString('base64') };
-          } else if (Buffer.isBuffer(body)) {
-            response.body = { pdf: body.toString('base64') };
-          } else if (body instanceof ArrayBuffer) {
-            response.body = { pdf: Buffer.from(body).toString('base64') };
-          } else if (ArrayBuffer.isView(body)) {
-            response.body = { pdf: Buffer.from(body.buffer).toString('base64') };
-          }
-        }
-      }
-    } catch (err) {
+const safePath = nodepath.join(path);
+
+return commonRequest(method, safePath, opts).then(response => {
+  try{
+    const contentType = response?.headers?.['content-type'] || '';
+    const isPDF = /application\/(pdf|octet-stream)/i.test(contentType);
+
+
+if (isPDF) {
+  const body = response.body;
+  if (body){
+    if (typeof  body === 'string'){
+      const buf = Buffer.from(body, 'binary');
+      response.body = { pdf: buf.toString('base64')};
+
+    } else if (Buffer.isBuffer(body)){
+      response.body = { pdf: body.toString('base64')};
+    } else if (body instanceof ArrayBuffer){
+      response.body = { pdf: Buffer.from(body).toString('base64') };
+
+    } else if (ArrayBuffer.isView(body)) {
+      response.body = { pdf: Buffer.from(body.buffer).toString('base64') };
     }
+  }
+}
+} catch (err) {
 
-    return response;
-  });
+}
+return response;
+});
+
 };
