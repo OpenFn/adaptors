@@ -1,5 +1,5 @@
 import { composeNextState } from '@openfn/language-common';
-import { request as commonRequest, makeBasicAuthHeader, } from '@openfn/language-common/util';
+import { request as commonRequest } from '@openfn/language-common/util';
 import nodepath from 'node:path';
 
 /**
@@ -13,10 +13,10 @@ export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
 
   if(!state.references) {
-    state.references = {};
+    state.references = [];
   }
   return {
-    ...commonNextState(state, body), 
+    ...composeNextState(state, body), 
     response: responseWithoutBody,
     };
 };
@@ -32,26 +32,23 @@ export const prepareNextState = (state, response) => {
  */
 
 export const request = (configuration = {}, method, path, options) => {
-  const {baseUrl = 'https://production-sfo.browserless.io', username, password, token } = configuration;
-
-  const headers = makeBasicAuthHeader(username, password,);
-  const error = {
+  const {baseUrl = 'https://production-sfo.browserless.io', token } = configuration;
+  const errors = {
     404: 'Page not found',
   };
 
   const opts = {
     parseAs: 'json',
-    error,
+    errors,
     ...options,
     headers: {
       'content-type': 'application/json',
-      ...headers,
-      ...(options && options.headers ? options.headers : {}),
+      ...(options.headers || {}),
     },
   };
 
 opts.query = {
-  ...opts(opts.query || {}),
+  ...(opts.query || {}),
   ...(token ? { token } : {}),
 };
 

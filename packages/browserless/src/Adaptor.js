@@ -24,7 +24,7 @@ export function createPDF(input, options){
   const [resolvedInput, resolvedOptions] = expandReferences(state, maybeBody, options);
 
   const response = await loweLevelRequest(undefined, 'POST', 'pdf', 
-    { body: resolvedInput, ...(resolvedOptions || {}), forcePdfBase64: true } )(state);
+    { body: resolvedInput, ...(resolvedOptions || {})})(state);
 
   return {
     ...state,

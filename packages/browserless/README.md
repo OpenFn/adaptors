@@ -11,9 +11,14 @@ full technical documentation.
 
 ### Configuration
 
-View the
-[configuration-schema](https://docs.openfn.org/adaptors/packages/browserless-configuration-schema/)
-for required and optional `configuration` properties.
+This adaptor requires a Browserless API token.
+
+```js
+{
+  token: 'YOUR_BROWSERLESS_TOKEN',
+  baseUrl: 'https://production-sfo.browserless.io' 
+}
+
 
 ### Usage
 

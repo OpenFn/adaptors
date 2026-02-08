@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import { http, createPDF } from '../src/Adaptor.js';
+import { request, createPDF } from '../src/Adaptor.js';
 
 const testServer = enableMockClient('https://production-sfo.browserless.io');
 
@@ -9,10 +9,10 @@ describe('request', () => {
   it('http.request: success and error scenarios', async () => {
     testServer.intercept({ path: '/convert', method: 'POST' }).reply(200, { pdf: 'base64-pdf-string' });
     const state = { configuration: { baseUrl: 'https://production-sfo.browserless.io' } };
-    const success = await http.request('POST', 'convert', { html: '<p>Test PDF content</p>' })(state);
+    const success = await request('POST', 'convert', { html: '<p>Test PDF content</p>' })(state);
     expect(success.data).to.eql({ pdf: 'base64-pdf-string' });
     testServer.intercept({ path: '/noAccess', method: 'POST' }).reply(403);
-    const error = await http.request('POST', 'noAccess', { name: 'taylor' })(state).catch(e => e);
+    const error = await request('POST', 'noAccess', { name: 'taylor' })(state).catch(e => e);
     expect(error.statusMessage).to.eql('Forbidden');
   });
 });
