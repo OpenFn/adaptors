@@ -1,8 +1,7 @@
 import { expandReferences } from "@openfn/language-common/util";
 import * as util from './Utils.js';
-import { request as httpRequest } from './http.js';
-import {request as lowelLevelRequest} from './Utils.js';
-import { OperationCanceledException } from "typescript";
+import {request as loweLevelRequest} from './Utils.js';
+
 
 /**
  * Create a PDF from HTML or URL.
@@ -11,7 +10,7 @@ import { OperationCanceledException } from "typescript";
  * @public
  * @param {string|object} input - HTML string, URL string, or `{ html }` / `{url}` object.
  * @param {object} options - Optional request options.
- * @param {operation} Returns state with `{ data: { pdf: '<base64>' } }` .
+ * @returns {operation} Returns state with `{ data: { pdf: '<base64>' } }` .
  * 
  */
 
@@ -24,8 +23,8 @@ export function createPDF(input, options){
   
   const [resolvedInput, resolvedOptions] = expandReferences(state, maybeBody, options);
 
-  const response = await httpRequest('POST', 'pdf', 
-    { body: resolvedInput, ...(resolvedOptions || {}), forcePdfbase64: true } )(state);
+  const response = await loweLevelRequest(undefined, 'POST', 'pdf', 
+    { body: resolvedInput, ...(resolvedOptions || {}), forcePdfBase64: true } )(state);
 
   return {
     ...state,
@@ -49,7 +48,7 @@ export function createPDF(input, options){
  */
 
 export function request(method, path, options){
-  return lowelLevelRequest(undefined, method, path, options);
+  return loweLevelRequest(undefined, method, path, options);
 }
 
 export{
