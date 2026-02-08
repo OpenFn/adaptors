@@ -7,7 +7,7 @@
         "options"
       ],
       "docs": {
-        "description": "Create a PDF from HTML or URL.\r\nAccepts an HTML string or an object `{ html }` / `{ url }`.\r\nThis operation calls the Browserless `/pdf` endpoint and normalizes PDF\r\nresponses into `{ pdf: '<base64>' }` by default. To override, call\r\n`http.request('POST', 'pdf', { body: {...}, forcePdfBase64: false })`.",
+        "description": "Create a PDF from HTML or URL.",
         "tags": [
           {
             "title": "public",
@@ -16,7 +16,7 @@
           },
           {
             "title": "param",
-            "description": "HTML string or `{ html }` / `{ url }` object",
+            "description": "HTML string, URL string, or { html } / { url }",
             "type": {
               "type": "UnionType",
               "elements": [
@@ -37,17 +37,13 @@
             "description": "Optional request options",
             "type": {
               "type": "NameExpression",
-              "name": "RequestOptions"
+              "name": "object"
             },
             "name": "options"
           },
           {
-            "title": "state",
-            "description": "{HttpState}"
-          },
-          {
             "title": "returns",
-            "description": null,
+            "description": "Returns state with { data: { pdf: '<base64>' } }",
             "type": {
               "type": "NameExpression",
               "name": "Operation"
@@ -65,7 +61,7 @@
         "options"
       ],
       "docs": {
-        "description": "Generic Browserless-authenticated HTTP request operation.\r\nUse for arbitrary Browserless endpoints (for example `/convert`).",
+        "description": "Generic Browserless-authenticated HTTP request operation.",
         "tags": [
           {
             "title": "public",
@@ -73,13 +69,8 @@
             "type": null
           },
           {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
             "title": "param",
-            "description": "HTTP method (e.g. 'GET', 'POST').",
+            "description": "HTTP method",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -88,7 +79,7 @@
           },
           {
             "title": "param",
-            "description": "Path or URL to request (relative paths are joined to the configured `baseUrl`).",
+            "description": "URL or relative path",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -97,20 +88,16 @@
           },
           {
             "title": "param",
-            "description": "Optional request options",
+            "description": "Request options",
             "type": {
               "type": "NameExpression",
-              "name": "RequestOptions"
+              "name": "object"
             },
             "name": "options"
           },
           {
-            "title": "state",
-            "description": "{HttpState}"
-          },
-          {
             "title": "returns",
-            "description": null,
+            "description": "Returns state with `data` and `response`",
             "type": {
               "type": "NameExpression",
               "name": "Operation"
@@ -256,6 +243,67 @@
             "type": {
               "type": "NameExpression",
               "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "source",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Picks out a value from source data.\nWill return whatever JSONPath returns, which will always be an array.\nIf you need a single value use `sourceValue` instead.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "source('$.key')"
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `state`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
+                {
+                  "type": "UnionType",
+                  "elements": [
+                    {
+                      "type": "NameExpression",
+                      "name": "String"
+                    },
+                    {
+                      "type": "NameExpression",
+                      "name": "Object"
+                    }
+                  ]
+                }
+              ]
             }
           }
         ]
