@@ -1,6 +1,6 @@
 # @openfn/language-ping
 
-## 1.0.1
+## 1.0.1 - 09 February 2026
 
 ### Patch Changes
 

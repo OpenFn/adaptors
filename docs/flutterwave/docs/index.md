@@ -1,24 +1,25 @@
 <dl>
 <dt>
-    <a href="#createcustomer">createCustomer(customerData)</a></dt>
+    <a href="#createcustomer">createCustomer(customerData, [options])</a></dt>
 <dt>
-    <a href="#createpaymentmethod">createPaymentMethod(paymentMethodData)</a></dt>
+    <a href="#createpaymentmethod">createPaymentMethod(paymentMethodData, [options])</a></dt>
 <dt>
-    <a href="#initiatepayment">initiatePayment(paymentData)</a></dt>
+    <a href="#initiatepayment">initiatePayment(paymentData, [options])</a></dt>
 </dl>
 
 
 ## Functions
 ### createCustomer
 
-<p><code>createCustomer(customerData) ⇒ function</code></p>
+<p><code>createCustomer(customerData, [options]) ⇒ function</code></p>
 
 Create a new customer in Flutterwave.
 
 
-| Param | Type |
-| --- | --- |
-| customerData | <code>Object</code> | 
+| Param | Type | Description |
+| --- | --- | --- |
+| customerData | <code>Object</code> |  |
+| [options] | [<code>RequestOptions</code>](#requestoptions) | Optional request options |
 
 
 
@@ -26,7 +27,7 @@ Create a new customer in Flutterwave.
 
 ### createPaymentMethod
 
-<p><code>createPaymentMethod(paymentMethodData) ⇒ function</code></p>
+<p><code>createPaymentMethod(paymentMethodData, [options]) ⇒ function</code></p>
 
 Create a new payment method in Flutterwave.
 
@@ -35,6 +36,7 @@ Create a new payment method in Flutterwave.
 | Param | Type | Description |
 | --- | --- | --- |
 | paymentMethodData | <code>Object</code> | The payment method details to send to Flutterwave. |
+| [options] | [<code>RequestOptions</code>](#requestoptions) | Optional request options |
 
 
 
@@ -42,7 +44,7 @@ Create a new payment method in Flutterwave.
 
 ### initiatePayment
 
-<p><code>initiatePayment(paymentData) ⇒ function</code></p>
+<p><code>initiatePayment(paymentData, [options]) ⇒ function</code></p>
 
 Initiate a payment request to the Flutterwave API.
 
@@ -51,6 +53,7 @@ Initiate a payment request to the Flutterwave API.
 | Param | Type | Description |
 | --- | --- | --- |
 | paymentData | <code>Object</code> | The payment details to send to Flutterwave. |
+| [options] | [<code>RequestOptions</code>](#requestoptions) | Optional request options |
 
 
 
@@ -59,17 +62,17 @@ Initiate a payment request to the Flutterwave API.
 
 ##  Interfaces
 
-### HttpState
+### FlutterwaveState
 
-State object
+State object returned by flutterwave API
 
 
 **Properties**
 
 | Name | Description |
 | --- | --- |
-| data | the parsed response body |
-| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| data | the parsed response body from flutterwave |
+| response | the full response from the flutterwave server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
 
 
@@ -77,21 +80,19 @@ State object
 
 ### RequestOptions
 
-Options provided to the HTTP request
+Options provided to the Flutterwave requests
 
 
 **Properties**
 
 | Name | Type | Description |
 | --- | --- | --- |
-| body | <code>object</code> \| <code>string</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |
 | errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |
 | form | <code>object</code> | Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body. |
 | query | <code>object</code> | An object of query parameters to be encoded into the URL. |
 | headers | <code>object</code> | An object of headers to append to the request. |
 | parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |
 | timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |
-| tls | <code>object</code> | TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions |
 
 
 * * *

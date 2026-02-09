@@ -1,11 +1,11 @@
 # @openfn/language-azure-storage
 
-## 3.0.7
+## 3.0.7 - 09 February 2026
 
 ### Patch Changes
 
-- Updated dependencies [8ad6b98]
-- Updated dependencies [8ad6b98]
+- Updated dependencies \[8ad6b98]
+- Updated dependencies \[8ad6b98]
   - @openfn/language-common@3.2.2
 
 ## 3.0.6 - 28 November 2025

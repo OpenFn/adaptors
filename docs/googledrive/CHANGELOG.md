@@ -1,6 +1,6 @@
 # @openfn/language-googledrive
 
-## 3.0.0
+## 3.0.0 - 09 February 2026
 
 The 3.0.0 version ensures that the `list()` command can access all folders
 shared with the credential - but demands that a single folderId be provided, to
@@ -28,8 +28,8 @@ list({ folderId; '21345', limit: 10 }) -> list('21345', { limit: 10 })
 ### Patch Changes
 
 - aa56385: Set supportsAllDrives on list()
-- Updated dependencies [8ad6b98]
-- Updated dependencies [8ad6b98]
+- Updated dependencies \[8ad6b98]
+- Updated dependencies \[8ad6b98]
   - @openfn/language-common@3.2.2
 
 ## 2.1.0
