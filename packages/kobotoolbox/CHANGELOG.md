@@ -1,11 +1,11 @@
 # @openfn/language-kobotoolbox
 
-## 4.2.10
+## 4.2.10 - 09 February 2026
 
 ### Patch Changes
 
-- Updated dependencies [8ad6b98]
-- Updated dependencies [8ad6b98]
+- Updated dependencies \[8ad6b98]
+- Updated dependencies \[8ad6b98]
   - @openfn/language-common@3.2.2
 
 ## 4.2.9 - 09 December 2025

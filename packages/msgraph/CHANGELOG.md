@@ -1,11 +1,11 @@
 # @openfn/language-msgraph
 
-## 0.8.10
+## 0.8.10 - 09 February 2026
 
 ### Patch Changes
 
-- Updated dependencies [8ad6b98]
-- Updated dependencies [8ad6b98]
+- Updated dependencies \[8ad6b98]
+- Updated dependencies \[8ad6b98]
   - @openfn/language-common@3.2.2
 
 ## 0.8.9
@@ -340,7 +340,7 @@
 ### Patch Changes
 
 - aad9549: Ensure that standard OAuth2 credentials with snake-cased
-  "access_token" keys can be used for OAuth2-reliant adaptors
+  "access\_token" keys can be used for OAuth2-reliant adaptors
 - Updated dependencies \[aad9549]
   - @openfn/language-common@1.10.0
 

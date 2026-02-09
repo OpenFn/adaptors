@@ -1,11 +1,11 @@
 # @openfn/language-ghana-bdr
 
-## 0.1.18
+## 0.1.18 - 09 February 2026
 
 ### Patch Changes
 
-- Updated dependencies [8ad6b98]
-- Updated dependencies [8ad6b98]
+- Updated dependencies \[8ad6b98]
+- Updated dependencies \[8ad6b98]
   - @openfn/language-common@3.2.2
 
 ## 0.1.17 - 28 November 2025
