@@ -1,11 +1,11 @@
 # @openfn/language-pdfshift
 
-## 1.0.8
+## 1.0.8 - 09 February 2026
 
 ### Patch Changes
 
-- Updated dependencies [8ad6b98]
-- Updated dependencies [8ad6b98]
+- Updated dependencies \[8ad6b98]
+- Updated dependencies \[8ad6b98]
   - @openfn/language-common@3.2.2
 
 ## 1.0.7 - 28 November 2025

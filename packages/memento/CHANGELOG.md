@@ -1,11 +1,11 @@
 # @openfn/language-memento
 
-## 1.0.5
+## 1.0.5 - 09 February 2026
 
 ### Patch Changes
 
-- Updated dependencies [8ad6b98]
-- Updated dependencies [8ad6b98]
+- Updated dependencies \[8ad6b98]
+- Updated dependencies \[8ad6b98]
   - @openfn/language-common@3.2.2
 
 ## 1.0.4 - 28 November 2025

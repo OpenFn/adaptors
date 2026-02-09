@@ -1,11 +1,11 @@
 # @openfn/language-zata
 
-## 1.0.7
+## 1.0.7 - 09 February 2026
 
 ### Patch Changes
 
-- Updated dependencies [8ad6b98]
-- Updated dependencies [8ad6b98]
+- Updated dependencies \[8ad6b98]
+- Updated dependencies \[8ad6b98]
   - @openfn/language-common@3.2.2
 
 ## 1.0.6 - 28 November 2025
