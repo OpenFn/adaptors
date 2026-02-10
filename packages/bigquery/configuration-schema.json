@@ -12,7 +12,7 @@
             ]
         },
         "project_id": {
-            "title": "Project id",
+            "title": "Project Id",
             "type": "string",
             "description": "Project id",
             "examples": [
