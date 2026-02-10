@@ -1,0 +1,1090 @@
+{
+  "operations": [
+    {
+      "name": "get",
+      "params": [
+        "path",
+        "options"
+      ],
+      "docs": {
+        "description": "Make a GET request to an OpenELIS instance",
+        "tags": [
+          {
+            "title": "example",
+            "description": "get('OpenELIS-Global/rest/home-dashboard/ORDERS_IN_PROGRESS');",
+            "caption": "Get all orders in progress"
+          },
+          {
+            "title": "example",
+            "description": "get('openELIS-Global/rest/home-dashboard/ORDERS_READY_FOR_VALIDATION');",
+            "caption": "Get all orders ready for validation"
+          },
+          {
+            "title": "example",
+            "description": "get('OpenELIS-Global/rest/referral-reasons');",
+            "caption": "Get all the reasons why a lab order could be referred"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Optional request options",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "post",
+      "params": [
+        "path",
+        "body",
+        "options"
+      ],
+      "docs": {
+        "description": "Make a POST request to an OpenELIS instance",
+        "tags": [
+          {
+            "title": "example",
+            "description": "post('OpenELIS-Global/rest/AccessionValidation', {\n\"formName\": \"ResultValidationForm\",\n\"formMethod\": \"POST\",\n\"cancelAction\": \"Home\",\n\"submitOnCancel\": false,\n\"cancelMethod\": \"POST\",\n\"searchFinished\": true,\n\"paging\": {\n\"totalPages\": \"1\",\n\"currentPage\": \"1\",\n\"searchTermToPage\": [\n{\n\"id\": \"25RSH00005L\",\n\"value\": \"1\"\n}\n]\n},\n\"currentDate\": \"\",\n\"resultList\": [\n{\n\"units\": \"g/l ( 1.50-2.60 )\",\n\"testName\": \"Total cholesterol(Serum)\",\n\"accessionNumber\": \"25RSH00005L\",\n\"patientName\": \"\",\n\"result\": \"3.30\",\n\"isAccepted\": false,\n\"isRejected\": false,\n\"sampleIsAccepted\": false,\n\"sampleIsRejected\": false,\n\"analysisId\": \"296\",\n\"testId\": \"7\",\n\"resultId\": \"267\",\n\"lowerCritical\": 0,\n\"higherCritical\": 0,\n\"normalRange\": \"1.50 - 2.60\",\n\"resultType\": \"N\",\n\"isHighlighted\": false,\n\"sampleGroupingNumber\": 2,\n\"testSortNumber\": \"11\",\n\"displayResultAsLog\": false,\n\"showAcceptReject\": true,\n\"dictionaryResults\": [],\n\"multiSelectResultValues\": \"{}\",\n\"readOnly\": false,\n\"nonconforming\": false,\n\"pastNotes\": \"Internal 01/12/2025 14:13 : povišene vrijednosti<br/>Internal 01/12/2025 14:15 : normalan<br/>Internal 01/12/2025 14:17 : visok<br/>Internal 01/12/2025 14:17 : normalno\",\n\"qualifiedResultValue\": \"\",\n\"hasQualifiedResult\": false,\n\"significantDigits\": 2,\n\"valid\": true,\n\"normal\": false,\n\"manual\": false,\n\"reflexGroup\": false,\n\"childReflex\": false,\n\"multipleResultForSample\": true,\n\"positive\": false,\n\"id\": 4\n}\n],\n\"testSection\": \"\",\n\"accessionNumber\": \"25RSH00005L\",\n\"testDate\": \"\",\n\"testName\": \"\",\n\"testSections\": [\n{\n\"id\": \"56\",\n\"value\": \"Biochemistry\"\n}\n],\n\"testSectionsByName\": [\n{\n\"id\": \"56\",\n\"value\": \"Biochemistry\"\n}\n],\n\"displayTestSections\": true\n});",
+            "caption": "Validate results for a lab order"
+          },
+          {
+            "title": "example",
+            "description": "post('OpenELIS-Global/rest/LogbookResults', {\n\"formName\": \"LogbookResultsForm\",\n\"formMethod\": \"POST\",\n\"cancelAction\": \"Home\",\n\"submitOnCancel\": false,\n\"cancelMethod\": \"POST\",\n\"paging\": {\n\"totalPages\": \"1\",\n\"currentPage\": \"1\",\n\"searchTermToPage\": [\n{\n\"id\": \"DEV01260000000000003\",\n\"value\": \"1\"\n}\n]\n},\n\"accessionNumber\": \"DEV01260000000000003\",\n\"singlePatient\": false,\n\"currentDate\": \"09/02/2026\",\n\"displayTestMethod\": true,\n\"displayTestKit\": false,\n\"testResult\": [\n{\n\"accessionNumber\": \"DEV01260000000000003\",\n\"sequenceNumber\": \"1\",\n\"showSampleDetails\": true,\n\"isGroupSeparator\": false,\n\"sampleGroupingNumber\": 2,\n\"testDate\": \"03/02/2026\",\n\"receivedDate\": \"12/01/2026\",\n\"testMethod\": \"52\",\n\"analysisMethod\": \"MANUAL\",\n\"testName\": \"COVID-19 PCR(Respiratory Swab)\",\n\"testId\": \"300\",\n\"testKitInactive\": false,\n\"upperNormalRange\": 0,\n\"lowerNormalRange\": 0,\n\"upperAbnormalRange\": 0,\n\"lowerAbnormalRange\": 0,\n\"normalRange\": \"Any value\",\n\"lowerCritical\": 0,\n\"higherCritical\": 0,\n\"significantDigits\": 0,\n\"shadowResultValue\": \"1335\",\n\"resultValue\": \"1336\",\n\"technician\": \"\",\n\"reportable\": false,\n\"patientName\": \"cray, cray\",\n\"patientInfo\": \"12121212, M, 10/11/2025\",\n\"nationalId\": \"\",\n\"unitsOfMeasure\": \"\",\n\"resultType\": \"D\",\n\"resultDisplayType\": \"TEXT\",\n\"isModified\": \"true\",\n\"analysisId\": \"368\",\n\"analysisStatusId\": \"15\",\n\"resultId\": \"383\",\n\"technicianSignatureId\": \"\",\n\"resultLimitId\": \"113\",\n\"dictionaryResults\": [\n{\n\"id\": \"823\",\n\"value\": \"Invalid\"\n},\n{\n\"id\": \"1336\",\n\"value\": \"RETEST - INCONCLUSIVE\"\n},\n{\n\"id\": \"1335\",\n\"value\": \"SARS-CoV-2 RNA DETECTED\"\n},\n{\n\"id\": \"1334\",\n\"value\": \"SARS-COV-2 RNA NOT DETECTED\"\n}\n],\n\"methods\": [],\n\"remove\": \"no\",\n\"valid\": true,\n\"normal\": true,\n\"notIncludedInWorkplan\": false,\n\"readOnly\": false,\n\"referredOut\": false,\n\"referralCanceled\": false,\n\"shadowReferredOut\": false,\n\"shadowRejected\": false,\n\"multiSelectResultValues\": \"{}\",\n\"sampleType\": \"\",\n\"failedValidation\": false,\n\"nonconforming\": false,\n\"testSortOrder\": \"1\",\n\"reflexParentGroup\": 0,\n\"displayResultAsLog\": false,\n\"qualifiedResultValue\": \"\",\n\"hasQualifiedResult\": false,\n\"rejected\": false,\n\"refer\": false,\n\"defaultResultValue\": \"1334\",\n\"userChoiceReflex\": false,\n\"reflexGroup\": false,\n\"childReflex\": false,\n\"servingAsTestGroupIdentifier\": false,\n\"resultValueLog\": \"3.13\",\n\"id\": \"0\",\n\"forceTechApproval\": \"on\",\n\"referralItem\": {\n\"referredTestId\": \"\",\n\"referredSendDate\": \"\"\n},\n\"note\": \"here are the notes\"\n}\n],\n\"inventoryItems\": [],\n\"hivKits\": [],\n\"syphilisKits\": [],\n\"type\": \"\",\n\"displayMethods\": true,\n\"testSectionId\": \"\",\n\"displayTestSections\": true,\n\"searchByRange\": false,\n\"searchFinished\": true\n});",
+            "caption": "Add results to an order"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Object which will be attached to the POST body",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "body"
+          },
+          {
+            "title": "param",
+            "description": "Optional request options",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "request",
+      "params": [
+        "method",
+        "path",
+        "body",
+        "options"
+      ],
+      "docs": {
+        "description": "Make a general HTTP request",
+        "tags": [
+          {
+            "title": "example",
+            "description": "request('POST', 'OpenELIS-Global/rest/PatientManagement', {\n\"patientUpdateStatus\": \"UPDATE\",\n\"nationalId\": \"1234567892\",\n\"subjectNumber\": \"1234567892\",\n\"lastName\": \"Lazic\",\n\"firstName\": \"Aleksa\",\n\"streetAddress\": \"\",\n\"city\": \"\",\n\"primaryPhone\": \"+255-45-89-63-21\",\n\"gender\": \"F\",\n\"birthDateForDisplay\": \"13/08/2000\",\n\"commune\": \"\",\n\"education\": \"\",\n\"maritialStatus\": \"\",\n\"nationality\": \"\",\n\"healthDistrict\": \"\",\n\"healthRegion\": \"\",\n\"otherNationality\": \"\",\n\"patientContact\": {\n\"person\": {\n\"firstName\": \"\",\n\"lastName\": \"\",\n\"primaryPhone\": \"\",\n\"email\": \"\",\n\"lastupdated\": 1764586121386,\n\"id\": \"409\"\n},\n\"lastupdated\": 1764536400000,\n\"id\": \"200\",\n\"patientId\": \"202\"\n},\n\"patientPK\": \"202\",\n\"guid\": \"c7e48932-2ed8-440a-9312-b68112e3873f\",\n\"aka\": \"\",\n\"mothersName\": \"\",\n\"mothersInitial\": \"\",\n\"addressDepartment\": \"\",\n\"insuranceNumber\": \"\",\n\"occupation\": \"\",\n\"readOnly\": false,\n\"stnumber\": \"\"\n});",
+            "caption": "Edit an existing patient's information"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "HTTP method to use",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "method"
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Object which will be attached to the POST body",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "body"
+          },
+          {
+            "title": "param",
+            "description": "Optional request options",
+            "type": {
+              "type": "NameExpression",
+              "name": "RequestOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    }
+  ],
+  "exports": [],
+  "common": [
+    {
+      "name": "fn",
+      "params": [
+        "func"
+      ],
+      "docs": {
+        "description": "Creates a custom step (or operation) for more flexible job writing.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "fn(state => {\n  // do some things to state\n  return state;\n});"
+          },
+          {
+            "title": "param",
+            "description": "is the function",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "func"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "fnIf",
+      "params": [
+        "condition",
+        "operation"
+      ],
+      "docs": {
+        "description": "Execute a function only when the condition returns true",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
+          },
+          {
+            "title": "param",
+            "description": "The condition that returns true",
+            "type": {
+              "type": "NameExpression",
+              "name": "Boolean"
+            },
+            "name": "condition"
+          },
+          {
+            "title": "param",
+            "description": "The operation needed to be executed.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            },
+            "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "sourceValue",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Picks out a single value from source data.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "sourceValue('$.key')"
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `state`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "dataPath",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Ensures a path points at the data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataPath('key')"
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `data`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "dataValue",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Picks out a single value from the source data object—usually `state.data`.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "dataValue('key')"
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `data`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "lastReferenceValue",
+      "params": [
+        "path"
+      ],
+      "docs": {
+        "description": "Picks out the last reference value from source data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "lastReferenceValue('key')"
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `references`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "String"
+            },
+            "name": "path"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "each",
+      "params": [
+        "dataSource",
+        "operation"
+      ],
+      "docs": {
+        "description": "Iterates over an array of items and invokes an operation upon each one, where the state\nobject is _scoped_ so that state.data is the item under iteration.\nThe rest of the state object is untouched and can be referenced as usual.\nYou can pass an array directly, or use lazy state or a JSONPath string to\nreference a slice of state.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "each(\n  $.data,\n  // Inside the callback operation, `$.data` is scoped to the item under iteration\n  insert(\"patient\", {\n    patient_name: $.data.properties.case_name,\n    patient_id: $.data.case_id,\n  })\n);",
+            "caption": "Using lazy state ($) to iterate over items in state.data and pass each into an \"insert\" operation"
+          },
+          {
+            "title": "example",
+            "description": "each(\n  $.data,\n  insert(\"patient\", (state) => ({\n    patient_id: state.data.case_id,\n    ...state.data\n  }))\n);",
+            "caption": "Iterate over items in state.data and pass each one into an \"insert\" operation"
+          },
+          {
+            "title": "example",
+            "description": "each(\n  \"$.data[*]\",\n  insert(\"patient\", (state) => ({\n    patient_name: state.data.properties.case_name,\n    patient_id: state.data.case_id,\n  }))\n);",
+            "caption": "Using JSON path to iterate over items in state.data and pass each one into an \"insert\" operation"
+          },
+          {
+            "title": "param",
+            "description": "JSONPath referencing a point in `state`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "DataSource"
+            },
+            "name": "dataSource"
+          },
+          {
+            "title": "param",
+            "description": "The operation needed to be repeated.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            },
+            "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "combine",
+      "params": [
+        "operations"
+      ],
+      "docs": {
+        "description": "Combines two operations into one",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "combine(\n  create('foo'),\n  delete('bar')\n)"
+          },
+          {
+            "title": "param",
+            "description": "Operations to be performed.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operations"
+            },
+            "name": "operations"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "field",
+      "params": [
+        "key",
+        "value"
+      ],
+      "docs": {
+        "description": "Returns a key, value pair in an array.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "field('destination_field_name__c', 'value')"
+          },
+          {
+            "title": "param",
+            "description": "Name of the field",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": "The value itself or a sourceable operation.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Value"
+            },
+            "name": "value"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Field"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "fields",
+      "params": [
+        "fields"
+      ],
+      "docs": {
+        "description": "Zips key value pairs into an object.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "fields(list_of_fields)"
+          },
+          {
+            "title": "param",
+            "description": "a list of fields",
+            "type": {
+              "type": "NameExpression",
+              "name": "Fields"
+            },
+            "name": "fields"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "merge",
+      "params": [
+        "dataSource",
+        "fields"
+      ],
+      "docs": {
+        "description": "Merges fields into each item in an array.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "merge(\n  \"$.books[*]\",\n  fields(\n    field( \"publisher\", sourceValue(\"$.publisher\") )\n  )\n)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "DataSource"
+            },
+            "name": "dataSource"
+          },
+          {
+            "title": "param",
+            "description": "Group of fields to merge in.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Object"
+            },
+            "name": "fields"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "DataSource"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "group",
+      "params": [
+        "arrayOfObjects",
+        "keyPath",
+        "callback"
+      ],
+      "docs": {
+        "description": "Groups an array of objects by a specified key path.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "const users = [\n  { name: 'Alice', age: 25, city: 'New York' },\n  { name: 'Bob', age: 30, city: 'San Francisco' },\n  { name: 'Charlie', age: 25, city: 'New York' },\n  { name: 'David', age: 30, city: 'San Francisco' }\n];\ngroup(users, 'city');\n// state is { data: { 'New York': [/Alice, Charlie/], 'San Francisco': [ /Bob, David / ] }"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The array of objects to be grouped.",
+            "type": {
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
+                {
+                  "type": "NameExpression",
+                  "name": "Object"
+                }
+              ]
+            },
+            "name": "arrayOfObjects"
+          },
+          {
+            "title": "param",
+            "description": "The key path to group by.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "keyPath"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) Callback function",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "scrubEmojis",
+      "params": [
+        "text",
+        "replacementChars"
+      ],
+      "docs": {
+        "description": "Replaces emojis in a string.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "scrubEmojis('Dove🕊️⭐ 29')"
+          },
+          {
+            "title": "param",
+            "description": "String that needs to be cleaned",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "text"
+          },
+          {
+            "title": "param",
+            "description": "Characters that replace the emojis",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "replacementChars"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "cursor",
+      "params": [
+        "value",
+        "options"
+      ],
+      "docs": {
+        "description": "Sets a cursor property on state.\nSupports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\nwhich will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones\nare not yet supported.\nYou can provide a formatter to customise the final cursor value, which is useful for normalising\ndifferent inputs. The custom formatter runs after natural language date conversion.\nSee the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "cursor($.cursor, { defaultValue: 'today' })",
+            "caption": "Use a cursor from state if present, or else use the default value"
+          },
+          {
+            "title": "example",
+            "description": "cursor(22)",
+            "caption": "Use a pagination cursor"
+          },
+          {
+            "title": "param",
+            "description": "the cursor value. Usually an ISO date, natural language date, or page number",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "value"
+          },
+          {
+            "title": "param",
+            "description": "options to control the cursor.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "set the cursor key. Will persist through the whole run.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "options.key"
+          },
+          {
+            "title": "param",
+            "description": "the value to use if value is falsy",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "options.defaultValue"
+          },
+          {
+            "title": "param",
+            "description": "custom formatter for the final cursor value",
+            "type": {
+              "type": "NameExpression",
+              "name": "Function"
+            },
+            "name": "options.format"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "as",
+      "params": [
+        "key",
+        "operation"
+      ],
+      "docs": {
+        "description": "Run an operation and save the result to a custom key in state instead of overwriting state.data.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "as('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));",
+            "caption": "Fetch cce-data from collections and store them under state.cceData"
+          },
+          {
+            "title": "param",
+            "description": "The state key to assign the result of the operation to.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "key"
+          },
+          {
+            "title": "param",
+            "description": " An operation that returns a new state object with a `data` property",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "map",
+      "params": {},
+      "docs": {
+        "description": "Iterates over a collection of items and returns a new array of mapped values,\nlike Javascript's `Array.map()` function.\n\nEach item in the source array will be passed into the callback function. The returned value\nwill be added to the new array. The callback is passed the original item, the current index\nin the source array (ie, the nth item number), and the state object.\n\nWrites a new array to `state.data` with transformed values.c array.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "map($.items', (data, index, state) => {\n  return {\n    id: index + 1,\n    name: data.name,\n    createdAt: state.cursor,\n  };\n});",
+            "caption": "Transform an array of items in state"
+          },
+          {
+            "title": "example",
+            "description": "map($.items, async (data, index, state) => {\n  const userInfo = await fetchUserInfo(data.userId);\n  return {\n    id: index + 1,\n    name: data.name,\n    extra: userInfo,\n  };\n});",
+            "caption": "Map items asynchronously (e.g. fetch extra info)"
+          },
+          {
+            "title": "param",
+            "description": "An array of items or a a JSONPath string which points to an array of items.",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "Array"
+                }
+              ]
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "The mapping function, invoked with `(data, index, state)` for each item in the array.",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "State"
+            }
+          }
+        ]
+      },
+      "valid": false
+    }
+  ]
+}
