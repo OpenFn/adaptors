@@ -39,5 +39,5 @@ export const request = (configuration = {}, method, path, options) => {
   };
   const safePath = nodepath.join(`/api/${path}`);
 
-  return commonRequest(method, safePath, opts).then(logResponse).catch(err => err);
+  return commonRequest(method, safePath, opts).then(logResponse)
 };
