@@ -11,7 +11,8 @@
   },
   "scripts": {
     "cli": "tsx src/cli.ts",
-    "demo": "tsx demo.ts"
+    "demo": "tsx demo.ts",
+    "test": "ava"
   },
   "dependencies": {
     "@types/node": "18.17.5",

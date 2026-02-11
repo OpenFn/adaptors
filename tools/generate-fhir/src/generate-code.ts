@@ -23,6 +23,9 @@ type Options = {
 
   /** base adaptor name to generate types and builders from */
   base?: string;
+
+  /** valuesets schemas */
+  valueSets?: any;
 };
 
 const getProfileBuilderName = (profile: ProfileSpec): string =>
@@ -171,6 +174,7 @@ const generateProfile = (
     ),
   );
 
+  // TODO need to handle valuesets here
   const typedef = generateType(
     profile.type,
     profile,
@@ -518,7 +522,7 @@ const mapSimpleProp = (propName: string, mapping: Mapping, schema: Schema) => {
 };
 
 // map a type def (ie, a nested object) property by property
-// TODO this is designed to handle singletone and array types
+// TODO this is designed to handle singleton and array types
 // The array stuff adds a lot of complication and I need tests on both formats
 const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
   const statements: any[] = [];
@@ -613,13 +617,37 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
   }
 
   if (schema.isArray) {
+    let builder: string | false = false;
+    let valueSetHints = {};
+    // TODO must be a better way to map these values
+    if (schema.type.includes('Identifier')) {
+      builder = 'identifier';
+      // for each prop with an associated value set, pass a hint
+      for (const p in schema.typeDef) {
+        const prop = schema.typeDef[p];
+        if (prop.valueSet) {
+          valueSetHints[p] = prop.valueSet;
+        }
+      }
+    }
     assignments.splice(
       0,
       0,
       b.variableDeclaration('let', [
         b.variableDeclarator(
           b.identifier(safePropName),
-          b.objectExpression([b.spreadProperty(b.identifier('item'))]),
+          // If there's a builder for this type, call the builder to resolve it
+          builder
+            ? b.callExpression(
+                b.memberExpression(b.identifier('dt'), b.identifier(builder)),
+                [
+                  b.identifier('item'),
+                  b.arrayExpression([]),
+                  buildValueSetHintMap(valueSetHints),
+                ],
+              )
+            : // Else spread the input
+              b.objectExpression([b.spreadProperty(b.identifier('item'))]),
         ),
       ]),
     );
@@ -795,3 +823,10 @@ const initResource = (resourceType: string) => {
 };
 
 const returnResource = () => b.returnStatement(b.identifier(RESOURCE_NAME));
+
+const buildValueSetHintMap = (hints: Record<string.string>) =>
+  b.objectExpression(
+    Object.entries(hints).map(([key, value]) =>
+      b.objectProperty(b.stringLiteral(key), b.stringLiteral(value)),
+    ),
+  );

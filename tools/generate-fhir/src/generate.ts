@@ -177,11 +177,20 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   console.log('Generating resource schemas');
   const schema = await generateSchema(specPath, mappings);
 
+  // TODO better control of this path
+  // load schemas direct from the file so that we can skip schema gen
+  const valueSetsRaw = await readFile('schema/valuesets.json', 'utf8');
+  let valueSets;
+  if (valueSetsRaw) {
+    valueSets = JSON.parse(valueSetsRaw);
+  }
+
   console.log('Generating code');
   const src = generateCode(schema, mappings, {
     simpleSignatures: simpleBuilders,
     fhirTypes,
     base,
+    valueSets,
   });
 
   const srcPath = path.resolve(adaptorPath, 'src/builders.ts');

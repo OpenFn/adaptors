@@ -138,19 +138,28 @@ async function fetchValueSet(url) {
           break;
         }
       }
+      // TODO should URLs be .json or ?type json?
       // Ugly munging of the URL to try and find the json representation
-      let finalUrl = nextUrl
-        .replace(/\/$/, '')
-        .replace('.xml', '.json')
-        .replace('.html', '.json');
-      if (!finalUrl.endsWith('.json')) {
-        finalUrl += '.json';
-      }
+      // This works for eswatini:
+      // http://172.209.216.154:3447/fhir/CodeSystem/SzPersonIdentificationsCS?_format=json
+      const finalUrl = nextUrl + '?_format=json';
+
+      // but this works for base fhir?
+      // let finalUrl = nextUrl
+      //   .replace(/\/$/, '')
+      //   .replace('.xml', '.json')
+      //   .replace('.html', '.json');
+      // if (!finalUrl.endsWith('.json')) {
+      //   finalUrl += '.json';
+      // }
+
       console.log('fetching ', finalUrl);
+
       response = await fetch(finalUrl);
 
       try {
         const json = await response.json();
+        console.log(JSON.stringify(json));
         valueSetCache[safeUrl] = json;
       } catch (e) {
         console.log(e);
@@ -174,29 +183,35 @@ async function downloadValueSets(spec, mappings) {
 
   const processCache = {};
 
-  const process = async (url: string) => {
+  const process = async (url: string, force = false) => {
     if (processCache[url]) {
       // do nothing if we've processed this url
       return;
     }
+    console.log('process', url);
     processCache[url] = true;
 
-    if (regexes.find(re => re.test(url))) {
+    if (force || regexes.find(re => re.test(url))) {
       const data = await fetchValueSet(url);
-      if (data) {
+      if (data && data.issues?.length) {
+        console.log(`ERROR DOWNLOADING ${url}`);
+        console.log(data.issues);
+      } else if (data) {
+        // TODO this set stuff won't really work
         const values = new Set<string>();
         const ex = new Set<string>();
         if (data.concept) {
           for (const v of data.concept) {
-            values.add(v.code);
+            values.add(v);
           }
         }
         if (data.compose?.include) {
           for (const { system } of data.compose.include) {
+            console.log({ system });
             if (system) {
               ex.add(system);
               // we also have to download each system
-              await process(system);
+              await process(system, true);
             }
           }
         }
@@ -208,7 +223,8 @@ async function downloadValueSets(spec, mappings) {
         // console.log some error if we failed to load data
       }
     } else {
-      console.log('ignoring valueset ', url);
+      // TODO restore this
+      // console.log('ignoring valueset ', url);
     }
   };
 

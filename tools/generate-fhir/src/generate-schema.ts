@@ -62,7 +62,7 @@ const typeMappings = {
 const generate = async (
   specPath: string,
   mappings: MappingSpec = {},
-  options: { clean?: false; debugOutput?: false } = {}
+  options: { clean?: false; debugOutput?: false } = {},
 ) => {
   console.log('Generating schemas from ', specPath);
 
@@ -71,8 +71,8 @@ const generate = async (
   if (options.clean) {
     console.log('Cleaning output dir: ', outputDir);
     await rimraf(outputDir);
-    await mkdir(outputDir, { recursive: true });
   }
+  await mkdir(outputDir, { recursive: true });
 
   const fullSpec = (await import(path.resolve(specPath), {
     assert: { type: 'json' },
@@ -87,12 +87,37 @@ const generate = async (
   );
   const regexes = mappings.valueSets?.map(e => new RegExp(e)) ?? [];
   // remove all valueSets that don't match the mapping criteria
-  const valuesets = Object.keys(rawValuesets)
-    .filter(url => regexes.find(re => re.test(url)))
-    .reduce((obj, url) => {
-      obj[url] = rawValuesets[url];
-      return obj;
-    }, {});
+  // TODO: this is hard because you have to handle extensions too
+  // const valuesets = Object.keys(rawValuesets)
+  //   .filter(url => regexes.find(re => re.test(url)))
+  //   .reduce((obj, url) => {
+  //     obj[url] = rawValuesets[url];
+  //     return obj;
+  //   }, {});
+  const valuesets = rawValuesets.default;
+
+  // write all valuesets to a single file
+  const allValueSets = {};
+  const extractValues = (parent: string, url: string) => {
+    allValueSets[parent] ??= {};
+
+    const def = valuesets[url];
+    for (const value of def.values) {
+      // TODO is code always the correct key here?
+      allValueSets[parent][value.code] = value;
+    }
+    for (const ex of def.extends) {
+      extractValues(parent, ex);
+    }
+  };
+  for (const url in valuesets) {
+    extractValues(url, url);
+  }
+
+  await writeFile(
+    path.resolve(outputDir, `valuesets.json`),
+    JSON.stringify(allValueSets, null, 2),
+  );
 
   const counts = {};
   const codes = {};
@@ -123,7 +148,7 @@ const generate = async (
     const category = profile.extension?.find(
       e =>
         e.url ===
-        'http://hl7.org/fhir/StructureDefinition/structuredefinition-category'
+        'http://hl7.org/fhir/StructureDefinition/structuredefinition-category',
     );
     if (category?.valueString?.startsWith('Foundation.')) {
       console.log('ignoring Foundation profile', profileId);
@@ -191,14 +216,15 @@ const generate = async (
         // It's the schema's job to unpick this slicing
         // This is a quick fix - let's see how well it stands up!
         const slicedValue = spec.snapshot.element.find(
-          e => e.path === `${el.path}.system`
+          e => e.path === `${el.path}.system`,
         );
         if (slicedValue && slicedValue.patternUri) {
           defaults.system = slicedValue.patternUri;
         }
       }
 
-      const values = await extractValueSet(valuesets, el);
+      // TODO if this is a value set, I want to reference it globally
+      // const values = await extractValueSet(valuesets, el);
 
       props[path] = {
         // TODO type may only be useful if it uses a vanilla fhir type
@@ -208,9 +234,13 @@ const generate = async (
         isComposite,
       };
 
-      if (values) {
-        props[path].values = values;
+      if (el.binding) {
+        props[path].valueSet = el.binding.valueSet;
       }
+
+      // if (values) {
+      //   props[path].values = values;
+      // }
 
       if (Object.keys(defaults).length) {
         props[path].defaults = defaults;
@@ -226,10 +256,10 @@ const generate = async (
 
     // Output for debug
     // TODO maybe make optional?
-    if (options.debugOutput) {
+    if (true) {
       await writeFile(
         path.resolve(outputDir, `${resourceType}_${profileId}.json`),
-        JSON.stringify(result[resourceType], null, 2)
+        JSON.stringify(result[resourceType], null, 2),
       );
     }
   }
@@ -263,12 +293,13 @@ async function extractValueSet(valuesets: any, element) {
 async function loadValueSet() {}
 
 // Parse a property of a resource, like address or id
+// TODO really not enjoying the duplication of parseProp
 async function parseProp(
   fullSpec,
   valuesets,
   schema: ElementSpec,
   path: string,
-  data
+  data,
 ) {
   let [parent, prop] = path.split('.');
   // TODO skip if multiple dots
@@ -330,9 +361,12 @@ async function parseProp(
     def.type = simpleType;
     def.desc = data.short || data.definition;
 
-    const values = await extractValueSet(valuesets, data);
-    if (values) {
-      def.values = values;
+    // const values = await extractValueSet(valuesets, data);
+    // if (values) {
+    //   def.values = values;
+    // }
+    if (data.binding) {
+      def.valueSet = data.binding.valueSet;
     }
 
     // TODO is there a better formalism for this?
