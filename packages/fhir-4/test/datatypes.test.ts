@@ -24,6 +24,36 @@ describe('identifier', () => {
   });
 
   it('should map an identifier with a mapped system', () => {
+    // Note that this can be done through an IG adaptor
+    // or by a user in job code
+    b.setValues(
+      'abc',
+      {
+        PI: {
+          code: 'PI',
+          display: 'Personal ID Number',
+          system: 'https://www/fhir/CodeSystem/SzPersonIdentificationsCS',
+        },
+      },
+      'default',
+    );
+
+    const result = b.identifier({ type: 'PI' }, [], { type: 'abc' });
+
+    expect(result).to.eql({
+      type: {
+        coding: [
+          {
+            code: 'PI',
+            display: 'Personal ID Number',
+            system: 'https://www/fhir/CodeSystem/SzPersonIdentificationsCS',
+          },
+        ],
+      },
+    });
+  });
+
+  it.skip('should map a type value', () => {
     b.setSystemMap({
       default: 'xyz',
     })({});
