@@ -239,4 +239,44 @@ describe('SzPatient', () => {
     console.log(JSON.stringify(resource, null, 2));
     assert.deepEqual(resource, sampleBasic);
   });
+
+  it.only('should map identifier coding', () => {
+    // tmp - the adaptor will auto-set this soon
+    builders.setValues(
+      'http://172.209.216.154:3447/fhir/ValueSet/PersonIdentifiersVS',
+      {
+        PI: {
+          code: 'PI',
+          display: 'Personal ID Number',
+          system: 'https://www/fhir/CodeSystem/SzPersonIdentificationsCS',
+        },
+      },
+      'default',
+    );
+
+    const resource = b.patient('SzPatient', {
+      identifier: [
+        {
+          // we can't generate any of this information
+          use: 'official',
+          system: 'http://homeaffairs.sys',
+          value: '1999001000000',
+
+          // This type shorthand is great though
+          // In order to work, the builder will need to pass a value map hint
+          type: 'PI',
+        },
+      ],
+    });
+    assert.deepEqual(resource.identifier[0].type, {
+      coding: [
+        {
+          code: 'PI',
+          display: 'Personal ID Number',
+          system: 'https://www/fhir/CodeSystem/SzPersonIdentificationsCS',
+        },
+      ],
+    });
+    assert.isOk(resource);
+  });
 });

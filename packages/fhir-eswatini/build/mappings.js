@@ -1,11 +1,13 @@
 // Add resource and profile mappings here to improve your generated adaptor
 
 export default {
-  // include: ['Patient', 'Appointment'],
+  include: ['Patient'],
   // // include: ['Appointment', 'Extension'],
   exclude: [],
   overrides: {},
-  valueSets: [],
+
+  // so I want the identifier value set now
+  valueSets: ['PersonIdentifiersVS'],
   initialiser: resource => {
     resource.meta = {
       profile: [
