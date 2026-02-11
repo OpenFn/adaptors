@@ -23,11 +23,11 @@ import * as util from './Utils.js';
 /**
  * Make a GET request to an OpenELIS instance
  * @example <caption>Get all orders in progress</caption>
- * get('OpenELIS-Global/rest/home-dashboard/ORDERS_IN_PROGRESS');
+ * get('home-dashboard/ORDERS_IN_PROGRESS');
  * @example <caption>Get all orders ready for validation</caption>
- * get('openELIS-Global/rest/home-dashboard/ORDERS_READY_FOR_VALIDATION');
+ * get('home-dashboard/ORDERS_READY_FOR_VALIDATION');
  * @example <caption>Get all the reasons why a lab order could be referred</caption>
- * get('OpenELIS-Global/rest/referral-reasons');
+ * get('referral-reasons');
  * @function
  * @public
  * @param {string} path - Path to resource
@@ -56,7 +56,7 @@ export function get(path, options) {
 /**
  * Make a POST request to an OpenELIS instance
  * @example <caption>Validate results for a lab order</caption>
- * post('OpenELIS-Global/rest/AccessionValidation', {
+ * post('AccessionValidation', {
     "formName": "ResultValidationForm",
     "formMethod": "POST",
     "cancelAction": "Home",
@@ -99,7 +99,7 @@ export function get(path, options) {
     "displayTestSections": true
 });
  * @example <caption>Add results to an order</caption>
- * post('OpenELIS-Global/rest/LogbookResults', {
+ * post('LogbookResults', {
     "formName": "LogbookResultsForm",
     "formMethod": "POST",
     "cancelAction": "Home",
@@ -168,7 +168,7 @@ export function post(path, body, options) {
 /**
  * Make a general HTTP request
  * @example <caption>Edit an existing patient's information</caption>
- * request('POST', 'OpenELIS-Global/rest/PatientManagement', {
+ * request('POST', 'PatientManagement', {
     "patientUpdateStatus": "UPDATE",
     "nationalId": "1234567892",
     "subjectNumber": "1234567892",

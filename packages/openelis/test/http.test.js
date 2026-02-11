@@ -19,7 +19,7 @@ describe('request', () => {
   it('should return an object of metrics', async () => {
     testServer
       .intercept({
-        path: '/api/OpenELIS-Global/rest/home-dashboard/metrics',
+        path: 'api/OpenELIS-Global/rest/home-dashboard/metrics',
         method: 'GET',
         headers: {
           Authorization: 'Basic aGVsbG86dGhlcmU=',
@@ -27,7 +27,7 @@ describe('request', () => {
       })
       .reply(200, testData.get.metrics);
 
-    const finalState = await http.request('GET', 'OpenELIS-Global/rest/home-dashboard/metrics')(state);
+    const finalState = await http.request('GET', 'home-dashboard/metrics')(state);
 
     expect(finalState.data).to.eql(testData.get.metrics);
 
@@ -36,7 +36,7 @@ describe('request', () => {
   it('should successfully update a patient', async () => {
     testServer
       .intercept({
-        path: '/api/OpenELIS-Global/rest/PatientManagement',
+        path: 'api/OpenELIS-Global/rest/PatientManagement',
         method: 'POST',
         headers: {
           Authorization: 'Basic aGVsbG86dGhlcmU=',
@@ -44,7 +44,7 @@ describe('request', () => {
       })
       .reply(200);
 
-    const finalState = await http.request('POST', 'OpenELIS-Global/rest/PatientManagement', testData.post.createPatient.payload)(state);
+    const finalState = await http.request('POST', 'PatientManagement', testData.post.createPatient.payload)(state);
 
     expect(finalState.response.statusCode).to.eql(200);
   });
@@ -55,7 +55,7 @@ describe('get', () => {
   it('should return an object of metrics', async () => {
     testServer
       .intercept({
-        path: '/api/OpenELIS-Global/rest/home-dashboard/metrics',
+        path: 'api/OpenELIS-Global/rest/home-dashboard/metrics',
         method: 'GET',
         headers: {
           Authorization: 'Basic aGVsbG86dGhlcmU=',
@@ -63,7 +63,7 @@ describe('get', () => {
       })
       .reply(200, testData.get.metrics);
 
-    const finalState = await http.get('OpenELIS-Global/rest/home-dashboard/metrics')(state);
+    const finalState = await http.get('home-dashboard/metrics')(state);
 
     expect(finalState.data).to.eql(testData.get.metrics);
 
@@ -72,7 +72,7 @@ describe('get', () => {
   it('should return all orders ready for validation', async () => {
     testServer
       .intercept({
-        path: '/api/openELIS-Global/rest/home-dashboard/ORDERS_READY_FOR_VALIDATION',
+        path: 'api/OpenELIS-Global/rest/home-dashboard/ORDERS_READY_FOR_VALIDATION',
         method: 'GET',
         headers: {
           Authorization: 'Basic aGVsbG86dGhlcmU=',
@@ -80,7 +80,7 @@ describe('get', () => {
       })
       .reply(200, testData.get.ordersReadyForValidation);
 
-    const finalState = await http.get('openELIS-Global/rest/home-dashboard/ORDERS_READY_FOR_VALIDATION')(state);
+    const finalState = await http.get('home-dashboard/ORDERS_READY_FOR_VALIDATION')(state);
 
     expect(finalState.data).to.eql(testData.get.ordersReadyForValidation);
 
@@ -91,7 +91,7 @@ describe('post', () => {
   it('makes a post request to the right endpoint with options', async () => {
     testServer
       .intercept({
-        path: '/api/OpenELIS-Global/rest/LogbookResults',
+        path: 'api/OpenELIS-Global/rest/LogbookResults',
         method: 'POST',
         headers: {
           Authorization: 'Basic aGVsbG86dGhlcmU=',
@@ -99,7 +99,7 @@ describe('post', () => {
       })
       .reply(200);
 
-    const finalState = await http.post('OpenELIS-Global/rest/LogbookResults')(state);
+    const finalState = await http.post('LogbookResults')(state);
     expect(finalState.response.statusCode).to.eql(200);
 
   });

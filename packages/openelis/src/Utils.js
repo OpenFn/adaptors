@@ -37,7 +37,7 @@ export const request = (configuration = {}, method, path, options) => {
       ...headers,
     },
   };
-  const safePath = nodepath.join(`/api/${path}`);
+  const safePath = nodepath.join(`/api/OpenELIS-Global/rest/${path}`);
 
   return commonRequest(method, safePath, opts).then(logResponse)
 };
