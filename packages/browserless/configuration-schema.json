@@ -3,34 +3,22 @@
   "properties": {
     "baseUrl": {
       "title": "Base URL",
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "description": "The base URL (http://www.example.com)",
+      "type":["string", "null"],
+      "description": "The Browserless base URL (e.g. https://production-sfo.browserless.io)",
       "format": "uri",
       "minLength": 1,
-      "examples": ["https://example.com"]
+      "examples": ["https://production-sfo.browserless.io"]
     },
-    "username": {
-      "title": "Username",
-      "type": "string",
-      "description": "Username",
-      "examples": ["test@openfn.org"]
-    },
-    "password": {
-      "title": "Password",
-      "type": "string",
-      "description": "Password",
+    "token":{
+      "title": "API Token",
+      "type":"string",
+      "description": "Browserless API token",
       "writeOnly": true,
-      "examples": ["@some(!)Str0ngp4ss0w0rd"]
+      "minLength": 1,
+      "examples": ["your-browserless-token"]
     }
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["password", "username"]
+  "required": ["baseUrl", "token"]
 }

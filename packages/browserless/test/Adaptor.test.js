@@ -18,25 +18,23 @@ describe('request', () => {
 });
 
 describe('createPDF', () => {
-  it('should create PDFs via /pdf and normalize binary responses', async () => {
+  it('should create PDFs via /pdf and return base64 string directly', async () => {
     const token1 = 'tk-json';
     testServer.intercept({ path: `/pdf?token=${token1}`, method: 'POST' }).reply(200, { pdf: 'ok' });
     const state1 = { configuration: { baseUrl: 'https://production-sfo.browserless.io', token: token1 } };
     const res1 = await createPDF('<p>Hello</p>')(state1);
-    expect(res1.data).to.eql({ pdf: 'ok' });
-
+    expect(res1.data).to.eql('ok');
     const token2 = 'tk-binary';
     const pdfBody = '%PDF-1.4\n%\xE2\xE3\xCF\xD3\n1 0 obj\n<<';
+    const expectedBase64 = Buffer.from(pdfBody, 'binary').toString('base64');
     testServer.intercept({ path: `/pdf?token=${token2}`, method: 'POST' }).reply(
       200,
-      Buffer.from(pdfBody, 'binary'),
-      { 'content-type': 'application/pdf' }
+      { pdf: expectedBase64 },
+      { 'content-type': 'application/json' }
     );
     const state2 = { configuration: { baseUrl: 'https://production-sfo.browserless.io', token: token2 } };
     const res2 = await createPDF('<p>Binary</p>')(state2);
 
-    expect(res2.data).to.have.property('pdf');
-    const expected = Buffer.from(pdfBody, 'binary').toString('base64');
-    expect(res2.data.pdf).to.eql(expected);
+    expect(res2.data).to.eql(expectedBase64);
   });
 });

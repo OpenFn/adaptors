@@ -5,4 +5,4 @@
 Initial release with features:
 - `http.request` : generic Broweserless-authenticated HTTP request.
 
-- `createdPDF` : generate PDFs via the `/pdf` endpoint, with response normalized to `{ pdf: '<base64>' }` when appropriate.
+- `createPDF` : generate PDFs via the `/pdf` endpoint, with response normalized to `{ pdf: '<base64>' }` when appropriate.

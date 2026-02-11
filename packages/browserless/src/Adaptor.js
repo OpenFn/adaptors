@@ -1,14 +1,14 @@
 import { expandReferences } from '@openfn/language-common/util';
-import * as util from './Utils.js';
 import { request as lowLevelRequest } from './Utils.js';
 
 /**
  * Create a PDF from HTML or URL.
  * @public
- * @param {string|object} input - HTML string, URL string, or { html } / { url }
+ * @param {string} input - HTML string or URL string
  * @param {object} options - Optional request options
- * @returns {Operation} Returns state with { data: { pdf: '<base64>' } }
+ * @returns {Operation} Returns state with base64 string directly
  */
+
 export function createPDF(input, options) {
   return async (state) => {
     const maybeBody =
@@ -22,52 +22,21 @@ export function createPDF(input, options) {
       state.configuration,
       'POST',
       'pdf',
-      { body: resolvedInput, ...(resolvedOptions || {}), parseAs: (resolvedOptions && resolvedOptions.parseAs) || 'base64' }
+      { body: resolvedInput, ...(resolvedOptions || {}), parseAs: 'buffer' }
     );
 
-    const { body, ...responseWithoutBody } = response;
-
+    const pdfData = response.body?.pdf ?? response.body;
     return {
       ...state,
-      data: body,
-      response: responseWithoutBody,
+      data: pdfData,
+      response: { ...response, body: undefined },
     };
   };
-}
+};
 
-/**
- * Generic Browserless-authenticated HTTP request operation.
- * @public
- * @param {string} method - HTTP method
- * @param {string} path - URL or relative path
- * @param {object} options - Request options
- * @returns {Operation} Returns state with `data` and `response`
- */
-export function request(method, path, options) {
-  return async (state) => {
-    const [resolvedMethod, resolvedPath, resolvedOptions] = expandReferences(
-      state,
-      method,
-      path,
-      options
-    );
+export { request} from './http.js';
 
-    const response = await util.request(
-      state.configuration,
-      resolvedMethod,
-      resolvedPath,
-      resolvedOptions
-    );
 
-    const { body, ...responseWithoutBody } = response;
-
-    return {
-      ...state,
-      data: body,
-      response: responseWithoutBody,
-    };
-  };
-}
 
 export {
   as,
