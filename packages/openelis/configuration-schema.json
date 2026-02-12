@@ -8,13 +8,6 @@
       "minLength": 1,
       "examples": ["https://demo.openelis-global.org"]
     },
-    "fhirStoreUri": {
-      "title": "Fhir Store URI",
-      "description": "The fhir store uri configured in the OpenELIS instance. Go to `admin` → `application properties` to find it",
-      "format": "uri",
-      "minLength": 1,
-      "examples": ["https://demo.openelis-global.org"]
-    },
     "username": {
       "title": "Username",
       "type": "string",
