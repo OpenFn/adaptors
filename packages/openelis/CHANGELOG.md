@@ -4,4 +4,4 @@
 
 Initial release.
 
-Created http helper functions for : `http.get`, `http.post` and a generic function `http.request`
+Created http helper functions: `http.get`, `http.post` and a generic function `http.request`
