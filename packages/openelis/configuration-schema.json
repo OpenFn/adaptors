@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "description": "The base URL for the OpenELIS instance",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://demo.openelis-global.org"]
+    },
+    "username": {
+      "title": "Username",
+      "type": "string",
+      "description": "Username",
+      "examples": ["admin"]
+    },
+    "password": {
+      "title": "Password",
+      "type": "string",
+      "description": "Password",
+      "writeOnly": true,
+      "examples": ["@some(!)Str0ngp4ss0w0rd"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["password", "username", "baseUrl"]
+}
