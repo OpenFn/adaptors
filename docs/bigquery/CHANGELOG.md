@@ -1,6 +1,6 @@
 # @openfn/language-bigquery
 
-## 4.0.10
+## 4.0.10 - 18 February 2026
 
 ### Patch Changes
 
