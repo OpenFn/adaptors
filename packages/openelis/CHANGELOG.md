@@ -1,6 +1,6 @@
 # @openfn/language-openelis
 
-## 1.0.0
+## 1.0.0 - 18 February 2026
 
 Initial release.
 

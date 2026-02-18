@@ -1,5 +1,11 @@
 # @openfn/language-openhim
 
+## 2.0.8 - 18 February 2026
+
+### Patch Changes
+
+- 0357386: Allow custom content-type headers
+
 ## 2.0.7 - 09 February 2026
 
 ### Patch Changes
