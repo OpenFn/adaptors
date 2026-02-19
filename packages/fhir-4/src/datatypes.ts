@@ -45,11 +45,12 @@ export const lookupValue = (url, code) => {
   let value;
 
   // first check for a user match
-  // TODO if this is a string, recycle it, if an object, reuturn it
+  // TODO if this is a string, recycle it, if an object, return it
   value = userValues[url]?.[code] ?? code;
 
   // then look for a default match (in addition, not instead)
-  return defaultValues[url]?.[value] ?? value;
+  value = defaultValues[url]?.[value] ?? value;
+  return value;
 };
 
 // TODO load data mapping from state

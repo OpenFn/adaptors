@@ -11,6 +11,7 @@ import {
 } from './util';
 import { Mapping, MappingSpec, ProfileSpec, Schema } from './types';
 import { generateType } from './generate-types';
+import generateValues from './codegen/values';
 
 const RESOURCE_NAME = 'resource';
 const INPUT_NAME = 'props';
@@ -35,7 +36,7 @@ const generateCode = (
   schema: Record<string, Schema[]>,
   mappings: MappingSpec = {},
   options: Options = {},
-): { builders: string; profiles: Record<string, string> } => {
+): { builders: string; profiles: Record<string, string>; values?: string } => {
   const statements: n.Statement[] = [];
 
   // if (!options.base) {
@@ -43,6 +44,11 @@ const generateCode = (
   // }
 
   const imports: n.Statement[] = [];
+
+  // Import values so that they get initialised with the builders
+  if (options.valueSets) {
+    imports.push(b.importDeclaration([], b.stringLiteral(`./values`)));
+  }
 
   const profiles = {};
 
@@ -101,7 +107,9 @@ const generateCode = (
 
   const builders = print(program).code;
 
-  return { builders, profiles };
+  const values = generateValues(options.valueSets);
+
+  return { builders, profiles, values };
 };
 
 // TODO maybe I need this

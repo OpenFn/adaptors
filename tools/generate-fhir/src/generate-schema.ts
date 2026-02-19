@@ -105,11 +105,19 @@ const generate = async (
     for (const value of def.values) {
       // TODO is code always the correct key here?
       allValueSets[parent][value.code] = value;
+
+      // force the system to be the parent's value set so that
+      // the mapped system is consistent
+      // (needed for  fhir-eswatini at least)
+      if (!value.system) {
+        value.system = parent;
+      }
     }
     for (const ex of def.extends) {
-      extractValues(parent, ex);
+      extractValues(url, ex);
     }
   };
+
   for (const url in valuesets) {
     extractValues(url, url);
   }

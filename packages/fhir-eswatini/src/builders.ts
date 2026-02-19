@@ -3,6 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
+import "./values";
 import build_SzPatient, { Patient_SzPatient_Props } from "./profiles/SzPatient";
 export * from "./datatypes";
 
