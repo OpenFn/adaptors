@@ -1,6 +1,5 @@
 import { expect, assert } from 'chai';
 import { builders as b } from '../../src/index';
-import { builders } from '@openfn/language-fhir-4';
 
 const sampleBasic = {
   resourceType: 'Patient',
@@ -37,9 +36,7 @@ const sampleBasic = {
   ],
   gender: 'male',
   meta: {
-    profile: [
-      'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzPatient',
-    ],
+    profile: ['http://172.209.216.154:3447/fhir/StructureDefinition/SzPatient'],
   },
 };
 
@@ -198,14 +195,8 @@ describe('SzPatient', () => {
           given: ['Jacob', 'Samuel'],
         },
       ],
-      // This should be automatable
-      meta: {
-        profile: [
-          'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzPatient',
-        ],
-      },
     });
-    console.log(JSON.stringify(resource, null, 2));
+    // console.log(JSON.stringify(resource, null, 2));
     assert.deepEqual(resource, sampleBasic);
   });
 
