@@ -3,6 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
+import "./values";
 import build_Account, { Account_Props } from "./profiles/Account";
 import build_ActivityDefinition, { ActivityDefinition_Props } from "./profiles/ActivityDefinition";
 import build_AdministrableProductDefinition, { AdministrableProductDefinition_Props } from "./profiles/AdministrableProductDefinition";

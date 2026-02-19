@@ -68,6 +68,14 @@ export default function(props: Partial<Encounter_Props>) {
         }
     }
 
+    if (!_.isNil(props.class)) {
+        let src = props.class;
+        if (typeof src === 'string') {
+          src = dt.lookupValue('http://terminology.hl7.org/ValueSet/v3-ActEncounterCode', src);
+         }
+        resource.class = dt.coding(src);
+    }
+
     if (!_.isNil(props.classHistory)) {
         let src = props.classHistory;
         if (!Array.isArray(src)) { src = [src]; }

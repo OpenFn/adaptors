@@ -248,6 +248,10 @@ const generateEntry = (
   simpleSignatures?: boolean,
   propsToIgnoreInDocs: string[] = [],
 ) => {
+  if (profiles.length === 1) {
+    simpleSignatures = true;
+  }
+
   const declarations = [];
 
   const statements = [];
@@ -769,7 +773,7 @@ const mapCoding = (propName: string, mapping: Mapping, schema: Schema) => {
 };
 
 // Map a property of the input to some extension
-// This will add a new object to the Extexsion array
+// This will add a new object to the Extension array
 const mapExtension = (propName: string, mapping: Mapping) => {
   const callBuilder = b.expressionStatement(
     b.callExpression(
