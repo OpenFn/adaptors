@@ -133,7 +133,14 @@ async function fetchValueSet(url) {
           redirect: 'manual',
         });
         if (response.headers.has('Location')) {
-          nextUrl = response.headers.get('Location');
+          const location = response.headers.get('Location');
+          if (location.startsWith('/')) {
+            // if the header is a relative URL, try and follow it
+            const og = new URL(nextUrl);
+            nextUrl = og.origin + location;
+          } else {
+            nextUrl = location;
+          }
         } else {
           break;
         }
