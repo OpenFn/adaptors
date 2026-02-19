@@ -186,8 +186,8 @@ export type ValueSetDef = {
 async function downloadValueSets(spec, mappings) {
   const valueSets: Record<string, ValueSetDef> = {};
 
-  const regexes = mappings.valueSets?.map(e => new RegExp(e)) ?? [];
-
+  const urlRegexes = mappings.valueSets?.map(e => new RegExp(e)) ?? [];
+  const validDomains = mappings.valueSetDomains;
   const processCache = {};
 
   const process = async (url: string, force = false) => {
@@ -195,10 +195,14 @@ async function downloadValueSets(spec, mappings) {
       // do nothing if we've processed this url
       return;
     }
+    // Only process valuesets from specified domains
+    if (validDomains && !validDomains.includes(new URL(url).origin)) {
+      return;
+    }
     console.log('process', url);
     processCache[url] = true;
 
-    if (force || regexes.find(re => re.test(url))) {
+    if (force || urlRegexes.find(re => re.test(url))) {
       const data = await fetchValueSet(url);
       if (data && data.issues?.length) {
         console.log(`ERROR DOWNLOADING ${url}`);
@@ -214,7 +218,6 @@ async function downloadValueSets(spec, mappings) {
         }
         if (data.compose?.include) {
           for (const { system } of data.compose.include) {
-            console.log({ system });
             if (system) {
               ex.add(system);
               // we also have to download each system
@@ -254,7 +257,6 @@ function parseIGZip(inputDir: string) {
       if (err) {
         reject(err);
       }
-      console.log('OPENED!');
       // these are all the main resources for which we create builders
       const resources: SpecJSON = {};
       // These are datatypes for which we'll generate typings

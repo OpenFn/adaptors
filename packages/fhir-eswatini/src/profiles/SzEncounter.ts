@@ -68,6 +68,14 @@ export default function(props: Partial<Encounter_SzEncounter_Props>) {
         }
     }
 
+    if (!_.isNil(props.class)) {
+        let src = props.class;
+        if (typeof src === 'string') {
+          src = dt.lookupValue('http://172.209.216.154:3447/fhir/ValueSet/SzEncounterClassificationVS', src);
+         }
+        resource.class = dt.coding(src);
+    }
+
     if (!_.isNil(props.classHistory)) {
         let src = props.classHistory;
         if (!Array.isArray(src)) { src = [src]; }

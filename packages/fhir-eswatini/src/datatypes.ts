@@ -172,12 +172,17 @@ export const coding = (
   code: string,
   system: string,
   extra: Omit<FHIR.Coding, 'code' | 'system'> = {},
-) =>
-  mapSystems({
+) => {
+  if (arguments.length === 1) {
+    return mapSystems(arguments[0]);
+  }
+
+  return mapSystems({
     code,
     system,
     ...extra,
   });
+};
 
 export const c = coding;
 

@@ -102,6 +102,9 @@ const generate = async (
     allValueSets[parent] ??= {};
 
     const def = valuesets[url];
+    if (!def) {
+      return;
+    }
     for (const value of def.values) {
       // TODO is code always the correct key here?
       allValueSets[parent][value.code] = value;

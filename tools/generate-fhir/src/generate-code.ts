@@ -29,6 +29,16 @@ type Options = {
   valueSets?: any;
 };
 
+const getDataTypeBuilderName = (schema: Schema): string | false => {
+  if (schema.type.includes('Identifier')) {
+    return 'identifier';
+  }
+  if (schema.type.includes('Reference')) {
+    return 'Reference';
+  }
+  return false;
+};
+
 const getProfileBuilderName = (profile: ProfileSpec): string =>
   `build_${profile.id}`.replace(/-/g, '_');
 
@@ -437,8 +447,10 @@ const mapProps = (schema, mappings) => {
         props.push(mapComposite(key, mappings[key], spec));
       } else if (spec.typeDef) {
         props.push(mapTypeDef(key, mappings[key], spec));
+      } else if (spec.type.includes('Coding')) {
+        props.push(mapCoding(key, mappings[key], spec));
       } else if (
-        spec.type.includes('Code') ||
+        // spec.type.includes('Code') ||
         spec.type.includes('CodeableConcept')
       ) {
         props.push(mapCodeableConcept(key, mappings[key], spec));
@@ -625,37 +637,13 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
   }
 
   if (schema.isArray) {
-    let builder: string | false = false;
-    let valueSetHints = {};
-    // TODO must be a better way to map these values
-    if (schema.type.includes('Identifier')) {
-      builder = 'identifier';
-      // for each prop with an associated value set, pass a hint
-      for (const p in schema.typeDef) {
-        const prop = schema.typeDef[p];
-        if (prop.valueSet) {
-          valueSetHints[p] = prop.valueSet;
-        }
-      }
-    }
     assignments.splice(
       0,
       0,
       b.variableDeclaration('let', [
         b.variableDeclarator(
           b.identifier(safePropName),
-          // If there's a builder for this type, call the builder to resolve it
-          builder
-            ? b.callExpression(
-                b.memberExpression(b.identifier('dt'), b.identifier(builder)),
-                [
-                  b.identifier('item'),
-                  b.arrayExpression([]),
-                  buildValueSetHintMap(valueSetHints),
-                ],
-              )
-            : // Else spread the input
-              b.objectExpression([b.spreadProperty(b.identifier('item'))]),
+          useBuilderWithValueSet(schema),
         ),
       ]),
     );
@@ -724,6 +712,52 @@ const mapCodeableConcept = (
   );
 
   statements.push(assignToInput(propName, callBuilder));
+
+  let elseStmnt;
+  const d = addDefaults(propName, mapping, schema);
+  if (d) {
+    elseStmnt = d;
+  }
+
+  return ifPropInInput(propName, statements, elseStmnt);
+};
+
+// in a coding, the value could be a string (which we map)
+// or a Coding object, or a builder shorthand
+const mapCoding = (propName: string, mapping: Mapping, schema: Schema) => {
+  const statements: StatementKind[] = [];
+
+  statements.push(
+    b.variableDeclaration('let', [
+      b.variableDeclarator(
+        b.identifier('src'),
+        b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName)),
+      ),
+    ]),
+  );
+
+  // TODO do we need to support an array of values for coding?
+  // Probably, but not today
+
+  if (schema.valueSet) {
+    // call the value map
+    const ast = parse(
+      `if (typeof src === 'string') {
+  src = dt.lookupValue('${schema.valueSet}', src);
+ }`,
+    );
+    statements.push(ast.program.body[0]);
+  }
+
+  statements.push(
+    assignToInput(
+      propName,
+      b.callExpression(
+        b.memberExpression(b.identifier('dt'), b.identifier('coding')),
+        [b.identifier('src')],
+      ),
+    ),
+  );
 
   let elseStmnt;
   const d = addDefaults(propName, mapping, schema);
@@ -838,3 +872,30 @@ const buildValueSetHintMap = (hints: Record<string.string>) =>
       b.objectProperty(b.stringLiteral(key), b.stringLiteral(value)),
     ),
   );
+
+const useBuilderWithValueSet = (schema: Schema) => {
+  let builder: string | false = getDataTypeBuilderName(schema);
+  let valueSetHints = {};
+  // for each prop with an associated value set, pass a hint
+  if (schema.typeDef) {
+    for (const p in schema.typeDef) {
+      const prop = schema.typeDef[p];
+      if (prop.valueSet) {
+        valueSetHints[p] = prop.valueSet;
+      }
+    }
+  }
+
+  return builder
+    ? // If there's a builder for this type, call the builder to resolve it
+      b.callExpression(
+        b.memberExpression(b.identifier('dt'), b.identifier(builder)),
+        [
+          b.identifier('item'),
+          b.arrayExpression([]),
+          buildValueSetHintMap(valueSetHints),
+        ],
+      )
+    : // Else spread the input
+      b.objectExpression([b.spreadProperty(b.identifier('item'))]);
+};

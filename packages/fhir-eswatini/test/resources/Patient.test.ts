@@ -247,7 +247,7 @@ describe('SzPatient', () => {
     assert.deepEqual(resource, sampleBasic);
   });
 
-  it.only('should value map identifier.type', () => {
+  it('should value map identifier.type', () => {
     const resource = b.patient('SzPatient', {
       identifier: [
         {
