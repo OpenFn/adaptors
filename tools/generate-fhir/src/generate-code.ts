@@ -49,9 +49,22 @@ const generateCode = (
 ): { builders: string; profiles: Record<string, string>; values?: string } => {
   const statements: n.Statement[] = [];
 
-  // if (!options.base) {
-  statements.push(b.exportAllDeclaration(b.stringLiteral('./datatypes'), null));
-  // }
+  const profiles = {};
+
+  // This tells us where to load FHIR types from
+  const fhirImportPath = options.base
+    ? `@openfn/language-${options.base}`
+    : '../fhir';
+
+  if (options.base) {
+    statements.push(
+      b.exportAllDeclaration(b.stringLiteral('./datatypes'), null),
+    );
+  } else {
+    statements.push(
+      b.exportAllDeclaration(b.stringLiteral('./datatypes'), null),
+    );
+  }
 
   const imports: n.Statement[] = [];
 
@@ -59,13 +72,6 @@ const generateCode = (
   if (options.valueSets) {
     imports.push(b.importDeclaration([], b.stringLiteral(`./values`)));
   }
-
-  const profiles = {};
-
-  // This tells us where to load FHIR types from
-  const fhirImportPath = options.base
-    ? `@openfn/language-${options.base}`
-    : '../fhir';
 
   // generate a builder for each profile
   const orderedResources = Object.keys(schema).sort();
@@ -248,6 +254,8 @@ const generateEntry = (
   simpleSignatures?: boolean,
   propsToIgnoreInDocs: string[] = [],
 ) => {
+  // TODO I think I want to rip out the simple signatures flag and just say:
+  // for any schema with only a single profile, make it optional to pass the profile string
   if (profiles.length === 1) {
     simpleSignatures = true;
   }
