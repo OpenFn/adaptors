@@ -1,5 +1,11 @@
 # @openfn/generate-fhir
 
+## 0.6.0
+
+### Patch Changes
+
+- 81dd8bd: Enable mapping of valuesets
+
 ## 0.4.2
 
 ### Minor Changes
