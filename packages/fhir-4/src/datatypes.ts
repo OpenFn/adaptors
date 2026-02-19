@@ -222,16 +222,30 @@ export const findExtension = (obj, targetUrl, path) => {
  * @param {string} code - the code value
  * @param {string} system - URL to the system. Will be mapped using the system map.
  */
-export const coding = (
+// TODO provide good interface overrides
+// coding (value: string, map)
+// coding (tuple: [string, string, obj])
+// coding (code: string, system?: string, rest?)
+// coding (codingObj)
+export function coding(
   code: string,
   system: string,
   extra: Omit<FHIR.Coding, 'code' | 'system'> = {},
-) =>
-  mapSystems({
+) {
+  if (arguments.length === 1) {
+    if (Array.isArray(arguments[0])) {
+      const [code, system, extra] = arguments[0];
+      return coding(code, system, extra);
+    }
+    return mapSystems(arguments[0]);
+  }
+
+  return mapSystems({
     code,
     system,
     ...extra,
   });
+}
 
 export const c = coding;
 

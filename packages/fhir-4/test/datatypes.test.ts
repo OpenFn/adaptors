@@ -91,7 +91,7 @@ describe('identifier', () => {
   //it('should map an identifier from a string with a default system', () => {});
 });
 
-describe('coding', () => {
+describe.only('coding', () => {
   it('should create a simple coding', () => {
     const result = b.coding('1234', 'https://fake.loinc.org');
 
@@ -122,6 +122,27 @@ describe('coding', () => {
 
   it('should use a shorthand', () => {
     const result = b.c('1234', 'https://fake.loinc.org');
+
+    expect(result).to.eql({ code: '1234', system: 'https://fake.loinc.org' });
+  });
+
+  // This is convenient to pass into datatype builders
+  it('should accept a coding object', () => {
+    const obj = {
+      system: 'https://fake.loinc.org',
+      version: '1',
+      code: '1234',
+      display: 'a thing',
+      userSelected: false,
+    };
+    const result = b.coding(obj);
+
+    expect(result).to.eql(obj);
+  });
+
+  // This is convenient to pass into datatype builders
+  it('should accept a coding tuple', () => {
+    const result = b.coding(['1234', 'https://fake.loinc.org']);
 
     expect(result).to.eql({ code: '1234', system: 'https://fake.loinc.org' });
   });
