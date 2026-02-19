@@ -7,6 +7,11 @@ describe('SzEncounter', () => {
     assert.isOk(resource);
   });
 
+  it('should create a simple SzEncounter with default profile', () => {
+    const resource = builders.encounter({});
+    assert.isOk(resource);
+  });
+
   it('should map class to an IG value', () => {
     const resource = builders.encounter('SzEncounter', {
       class: 'OPD',
