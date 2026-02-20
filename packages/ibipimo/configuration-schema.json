@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "type": "string",
+      "description": "The base URL of the IBIPIMO API server",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://demo.ibipimo.org"]
+    },
+    "apiToken": {
+      "title": "API Token",
+      "type": "string",
+      "description": "Bearer token for authenticating with the IBIPIMO API",
+      "writeOnly": true,
+      "examples": ["your_access_token_here"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["baseUrl", "apiToken"]
+}
