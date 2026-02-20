@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-fhir-eswatini",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "OpenFn fhir-eswatini adaptor",
   "scripts": {
     "build": "pnpm clean && build-adaptor fhir-eswatini src ast docs",
