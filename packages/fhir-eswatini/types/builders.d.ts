@@ -9,7 +9,7 @@ declare type Encounter_SzEncounter_Props = {
     account?: builders.Reference[];
     appointment?: builders.Reference[];
     basedOn?: builders.Reference[];
-    class?: builders.Coding;
+    class?: "OPD" | "IPD" | "CO" | "SO";
     classHistory?: builders.BackboneElement[];
     contained?: any[];
     diagnosis?: builders.BackboneElement[];

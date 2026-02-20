@@ -10,7 +10,7 @@ import {
   sortKeys,
 } from './util';
 import { Mapping, MappingSpec, ProfileSpec, Schema } from './types';
-import { generateType } from './generate-types';
+import { generateType } from './codegen/generate-types';
 import generateValues, { ValueSets } from './codegen/values';
 
 const RESOURCE_NAME = 'resource';
@@ -103,6 +103,7 @@ const generateCode = (
         ),
         options.fhirTypes,
         fhirImportPath,
+        options.valueSets,
         options.base,
       );
     }
@@ -141,6 +142,7 @@ const generateProfile = (
   mappings: MappingSpec,
   fhirTypes: Record<string, true> = {},
   fhirImport = '../fhir',
+  valueSets: ValueSets = {},
   base?: string,
 ) => {
   const statements = [];
@@ -201,13 +203,13 @@ const generateProfile = (
 
   // TODO need to handle valuesets here
   const typedef = generateType(
-    profile.type,
     profile,
     {
       ...mappings,
       overrides,
     },
     fhirTypes,
+    valueSets,
   );
 
   statements.push(typedef);
