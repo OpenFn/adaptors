@@ -483,7 +483,7 @@ This adaptor exports the following namespaced functions:
 </dt>
 
 <dt>
-    <a href="#datatypes_identifier">datatypes.identifier(id, ext, [system])</a>
+    <a href="#datatypes_identifier">datatypes.identifier(id, ext)</a>
 </dt>
 
 <dt>
@@ -4496,16 +4496,15 @@ Alias for b.identifier()
 
 ### datatypes.identifier {#datatypes_identifier}
 
-<p><code>identifier(id, ext, [system])</code></p>
+<p><code>identifier(id, ext)</code></p>
 
 Create an Identifier. Systems will be mapped against the system map. Pass extensions as extra arguments.
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| id |  | A string identifier, a FHIR identifier object, or an array of either. |
-| ext |  | Any other arguments will be treated as extensions |
-| [system] | <code>string</code> | the string system to use by default if |
+| Param | Description |
+| --- | --- |
+| id | A string identifier, a FHIR identifier object, or an array of either. |
+| ext | Any other arguments will be treated as extensions |
 
 
 
