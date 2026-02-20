@@ -4,8 +4,12 @@
 
 ### Minor Changes
 
-- 7b3b584: Allow valuesets to map shorthand values to simple strings. For
-  example:
+- 7b3b584: Allow valuesets to map shorthand values to simple strings.
+
+Only eswatini extension values are mapped, and documentation isn't expressive
+enough yet to describe all values.
+
+For example:
 
 Patient.identifier.type:
 
