@@ -1,8 +1,8 @@
 // Add resource and profile mappings here to improve your generated adaptor
 
 export default {
-  // include: [],
-  include: ['Encounter'],
+  include: [],
+  // include: ['Encounter'],
   // // include: ['Appointment', 'Extension'],
   exclude: [],
   overrides: {},

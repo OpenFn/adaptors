@@ -75,11 +75,9 @@ export const generateType = (
     t = _.uniq(t.map(incomingType => typeMap[incomingType] ?? incomingType));
 
     if (s.valueSet) {
-      console.log({ s });
       // If this type references a valueset, pull the types inline
       // TODO as an optimisation, generate the type enum for the value set once, and reuse
       const values = Object.keys(valueSets[s.valueSet] || {});
-      console.log({ values });
       if (values.length) {
         s.values = values;
       }
@@ -170,7 +168,9 @@ const createTypeNode = (
   // TODO restore and adapt this for values
   if (values) {
     if (values.length > 1) {
-      return b.tsUnionType(values.map(v => b.tsLiteralType(b.stringLiteral(v))));
+      return b.tsUnionType(
+        values.map(v => b.tsLiteralType(b.stringLiteral(v))),
+      );
     }
     if (values.length === 1) {
       // TODO an edge case, but for a single value

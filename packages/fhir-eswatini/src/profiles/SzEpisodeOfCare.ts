@@ -28,7 +28,7 @@ export type EpisodeOfCare_SzEpisodeOfCare_Props = {
     statusHistory?: FHIR.BackboneElement[];
     team?: FHIR.Reference[];
     text?: FHIR.Narrative;
-    type?: FHIR.CodeableConcept[];
+    type?: "tbds" | "tbdr" | "anc" | "fp" | "art" | "prep";
     [key: string]: any;
 };
 
