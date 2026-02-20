@@ -1,5 +1,12 @@
 # @openfn/language-fhir-4
 
+## 0.2.8
+
+### Patch Changes
+
+- 3c52750: Update coding builder to accept coding objects as a single argument
+- 81dd8bd: Default system key for mapped value in lookupValue
+
 ## 0.2.7 - 09 February 2026
 
 ### Patch Changes

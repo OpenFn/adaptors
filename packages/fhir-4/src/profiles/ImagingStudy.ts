@@ -51,6 +51,14 @@ export default function(props: Partial<ImagingStudy_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.modality)) {
+        let src = props.modality;
+        if (typeof src === 'string') {
+          src = dt.lookupValue('http://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_29.html', src);
+         }
+        resource.modality = dt.coding(src);
+    }
+
     if (!_.isNil(props.subject)) {
         resource.subject = dt.reference(props.subject);
     }

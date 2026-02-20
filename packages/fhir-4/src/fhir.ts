@@ -381,7 +381,7 @@ export interface ElementDefinition {
         valueSet: any;
     };
     /** Corresponding codes in terminologies */
-    code?: Coding;
+    code?: Coding[];
     /** Comments about the use of this element */
     comment?: markdown;
     /** Reference to invariant about presence */
@@ -502,7 +502,7 @@ export interface ElementDefinition {
     /** Value must have at least these property values */
     pattern?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
     /** xmlAttr | xmlText | typeAttr | cdaText | xhtml */
-    representation?: string;
+    representation?: string[];
     /** Why this resource has been created */
     requirements?: markdown;
     /** Concise definition for space-constrained presentation */
@@ -654,11 +654,11 @@ export interface Meta {
     /** Profiles this resource claims to conform to */
     profile?: any[];
     /** Security Labels applied to this resource */
-    security?: Coding;
+    security?: Coding[];
     /** Identifies where the resource comes from */
     source?: string;
     /** Tags applied to this resource */
-    tag?: Coding;
+    tag?: Coding[];
     /** Version specific identifier */
     versionId?: string;
 }
@@ -922,7 +922,7 @@ export interface Signature {
     /** The technical format of the signed resources */
     targetFormat?: string;
     /** Indication of the reason the entity signed the object(s) */
-    type?: Coding;
+    type?: Coding[];
     /** When the signature was created */
     when?: string;
     /** Who signed */

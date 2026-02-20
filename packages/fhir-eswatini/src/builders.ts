@@ -3,6 +3,7 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
+import "./values";
 import build_SzAppointment, { Appointment_SzAppointment_Props } from "./profiles/SzAppointment";
 import build_SzCondition, { Condition_SzCondition_Props } from "./profiles/SzCondition";
 import build_SzEncounter, { Encounter_SzEncounter_Props } from "./profiles/SzEncounter";
@@ -70,11 +71,18 @@ export * from "./datatypes";
   */
 export function appointment(type: "SzAppointment", props: Appointment_SzAppointment_Props);
 
+export function appointment(props: Appointment_SzAppointment_Props);
+
 export function appointment(type: any, props?: any) {
     const mappings = {
         "SzAppointment": build_SzAppointment
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "SzAppointment";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -114,11 +122,18 @@ export function appointment(type: any, props?: any) {
   */
 export function condition(type: "SzCondition", props: Condition_SzCondition_Props);
 
+export function condition(props: Condition_SzCondition_Props);
+
 export function condition(type: any, props?: any) {
     const mappings = {
         "SzCondition": build_SzCondition
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "SzCondition";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -141,7 +156,7 @@ export function condition(type: any, props?: any) {
   * @param {Identifier} [props.identifier] - Identifier(s) by which this encounter is known
   * @param {string} [props.status] - planned | arrived | triaged | in-progress | onleave | finished | cancelled +
   * @param {BackboneElement} [props.statusHistory] - List of past encounter statuses
-  * @param {Coding} [props.class] - Department in which the encounter took place
+  * @param {string} [props.class] - Department in which the encounter took place. Accepts values: OPD, IPD, CO, SO
   * @param {BackboneElement} [props.classHistory] - List of past encounter classes
   * @param {CodeableConcept} [props.type] - Specific type of encounter
   * @param {CodeableConcept} [props.serviceType] - Specific type of service
@@ -164,11 +179,18 @@ export function condition(type: any, props?: any) {
   */
 export function encounter(type: "SzEncounter", props: Encounter_SzEncounter_Props);
 
+export function encounter(props: Encounter_SzEncounter_Props);
+
 export function encounter(type: any, props?: any) {
     const mappings = {
         "SzEncounter": build_SzEncounter
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "SzEncounter";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -203,11 +225,18 @@ export function encounter(type: any, props?: any) {
   */
 export function episodeOfCare(type: "SzEpisodeOfCare", props: EpisodeOfCare_SzEpisodeOfCare_Props);
 
+export function episodeOfCare(props: EpisodeOfCare_SzEpisodeOfCare_Props);
+
 export function episodeOfCare(type: any, props?: any) {
     const mappings = {
         "SzEpisodeOfCare": build_SzEpisodeOfCare
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "SzEpisodeOfCare";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -282,7 +311,7 @@ export function extension(type: any, props?: any) {
   * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
   * @param {Identifier} [props.identifier] - Unique code or number identifying the location to its users
   * @param {string} [props.status] - active | suspended | inactive
-  * @param {Coding} [props.operationalStatus] - The operational status of the location (typically only for a bed/room)
+  * @param {string} [props.operationalStatus] - The operational status of the location (typically only for a bed/room)
   * @param {string} [props.name] - Location Name
   * @param {string} [props.alias] - A list of alternate names that the location is known as, or was known as, in the past
   * @param {string} [props.description] - Additional details about the location that could be displayed as further information to identify the location beyond its name
@@ -300,11 +329,18 @@ export function extension(type: any, props?: any) {
   */
 export function location(type: "SzLocation", props: Location_SzLocation_Props);
 
+export function location(props: Location_SzLocation_Props);
+
 export function location(type: any, props?: any) {
     const mappings = {
         "SzLocation": build_SzLocation
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "SzLocation";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -335,11 +371,18 @@ export function location(type: any, props?: any) {
   */
 export function medication(type: "SzMedication", props: Medication_SzMedication_Props);
 
+export function medication(props: Medication_SzMedication_Props);
+
 export function medication(type: any, props?: any) {
     const mappings = {
         "SzMedication": build_SzMedication
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "SzMedication";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -389,11 +432,18 @@ export function medicationDispense(
     props: MedicationDispense_SzMedicationDispense_Props
 );
 
+export function medicationDispense(props: MedicationDispense_SzMedicationDispense_Props);
+
 export function medicationDispense(type: any, props?: any) {
     const mappings = {
         "SzMedicationDispense": build_SzMedicationDispense
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "SzMedicationDispense";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -451,11 +501,18 @@ export function medicationRequest(
     props: MedicationRequest_SzMedicationRequest_Props
 );
 
+export function medicationRequest(props: MedicationRequest_SzMedicationRequest_Props);
+
 export function medicationRequest(type: any, props?: any) {
     const mappings = {
         "SzMedicationRequest": build_SzMedicationRequest
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "SzMedicationRequest";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -553,11 +610,18 @@ export function observation(type: any, props?: any) {
   */
 export function organization(type: "SzOrganization", props: Organization_SzOrganization_Props);
 
+export function organization(props: Organization_SzOrganization_Props);
+
 export function organization(type: any, props?: any) {
     const mappings = {
         "SzOrganization": build_SzOrganization
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "SzOrganization";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -596,11 +660,18 @@ export function organization(type: any, props?: any) {
   */
 export function patient(type: "SzPatient", props: Patient_SzPatient_Props);
 
+export function patient(props: Patient_SzPatient_Props);
+
 export function patient(type: any, props?: any) {
     const mappings = {
         "SzPatient": build_SzPatient
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "SzPatient";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -633,11 +704,18 @@ export function patient(type: any, props?: any) {
   */
 export function practitioner(type: "SzPractitioner", props: Practitioner_SzPractitioner_Props);
 
+export function practitioner(props: Practitioner_SzPractitioner_Props);
+
 export function practitioner(type: any, props?: any) {
     const mappings = {
         "SzPractitioner": build_SzPractitioner
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "SzPractitioner";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -688,11 +766,18 @@ export function practitioner(type: any, props?: any) {
   */
 export function procedure(type: "SzProcedure", props: Procedure_SzProcedure_Props);
 
+export function procedure(props: Procedure_SzProcedure_Props);
+
 export function procedure(type: any, props?: any) {
     const mappings = {
         "SzProcedure": build_SzProcedure
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "SzProcedure";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -792,11 +877,18 @@ export function serviceRequest(type: any, props?: any) {
   */
 export function specimen(type: "SzLabSpecimen", props: Specimen_SzLabSpecimen_Props);
 
+export function specimen(props: Specimen_SzLabSpecimen_Props);
+
 export function specimen(type: any, props?: any) {
     const mappings = {
         "SzLabSpecimen": build_SzLabSpecimen
     };
 
+    // Handle optional type parameter
+    if (typeof type !== "string") {
+      props = type;
+      type = "SzLabSpecimen";
+    }
     if (type in mappings) {
         return mappings[type](props)
     }

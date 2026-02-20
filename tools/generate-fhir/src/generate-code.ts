@@ -10,7 +10,8 @@ import {
   sortKeys,
 } from './util';
 import { Mapping, MappingSpec, ProfileSpec, Schema } from './types';
-import { generateType } from './generate-types';
+import { generateType } from './codegen/generate-types';
+import generateValues, { ValueSets } from './codegen/values';
 
 const RESOURCE_NAME = 'resource';
 const INPUT_NAME = 'props';
@@ -23,6 +24,19 @@ type Options = {
 
   /** base adaptor name to generate types and builders from */
   base?: string;
+
+  /** valuesets schemas */
+  valueSets?: any;
+};
+
+const getDataTypeBuilderName = (schema: Schema): string | false => {
+  if (schema.type.includes('Identifier')) {
+    return 'identifier';
+  }
+  if (schema.type.includes('Reference')) {
+    return 'Reference';
+  }
+  return false;
 };
 
 const getProfileBuilderName = (profile: ProfileSpec): string =>
@@ -32,14 +46,8 @@ const generateCode = (
   schema: Record<string, Schema[]>,
   mappings: MappingSpec = {},
   options: Options = {},
-): { builders: string; profiles: Record<string, string> } => {
+): { builders: string; profiles: Record<string, string>; values?: string } => {
   const statements: n.Statement[] = [];
-
-  // if (!options.base) {
-  statements.push(b.exportAllDeclaration(b.stringLiteral('./datatypes'), null));
-  // }
-
-  const imports: n.Statement[] = [];
 
   const profiles = {};
 
@@ -47,6 +55,23 @@ const generateCode = (
   const fhirImportPath = options.base
     ? `@openfn/language-${options.base}`
     : '../fhir';
+
+  if (options.base) {
+    statements.push(
+      b.exportAllDeclaration(b.stringLiteral('./datatypes'), null),
+    );
+  } else {
+    statements.push(
+      b.exportAllDeclaration(b.stringLiteral('./datatypes'), null),
+    );
+  }
+
+  const imports: n.Statement[] = [];
+
+  // Import values so that they get initialised with the builders
+  if (options.valueSets) {
+    imports.push(b.importDeclaration([], b.stringLiteral(`./values`)));
+  }
 
   // generate a builder for each profile
   const orderedResources = Object.keys(schema).sort();
@@ -78,6 +103,7 @@ const generateCode = (
         ),
         options.fhirTypes,
         fhirImportPath,
+        options.valueSets,
         options.base,
       );
     }
@@ -90,6 +116,7 @@ const generateCode = (
         schema[resourceType],
         options.simpleSignatures,
         mappings.propsToIgnoreInDocs,
+        options.valueSets,
       ),
     );
   }
@@ -98,7 +125,9 @@ const generateCode = (
 
   const builders = print(program).code;
 
-  return { builders, profiles };
+  const values = generateValues(options.valueSets);
+
+  return { builders, profiles, values };
 };
 
 // TODO maybe I need this
@@ -113,6 +142,7 @@ const generateProfile = (
   mappings: MappingSpec,
   fhirTypes: Record<string, true> = {},
   fhirImport = '../fhir',
+  valueSets: ValueSets = {},
   base?: string,
 ) => {
   const statements = [];
@@ -171,14 +201,15 @@ const generateProfile = (
     ),
   );
 
+  // TODO need to handle valuesets here
   const typedef = generateType(
-    profile.type,
     profile,
     {
       ...mappings,
       overrides,
     },
     fhirTypes,
+    valueSets,
   );
 
   statements.push(typedef);
@@ -196,7 +227,11 @@ const generateProfile = (
 export default generateCode;
 
 // For each prop in the schema, generate a prop in jsdocs
-const generateJsDocs = (schema: Schema[], ignore: string[] = []) => {
+const generateJsDocs = (
+  schema: Schema[],
+  ignore: string[] = [],
+  valueSets: ValueSets,
+) => {
   const props: string[] = [];
 
   // TODO for now, just generate for the first schema
@@ -207,8 +242,24 @@ const generateJsDocs = (schema: Schema[], ignore: string[] = []) => {
   );
   for (const propName of validProps) {
     const prop = profile.props[propName];
-    // TODO do I need the typemap here?
-    props.push(`{${prop.type.join('|')}} [props.${propName}] - ${prop.desc}`);
+
+    let humanType;
+    let desc = prop.desc;
+    if (prop.type.includes('Coding')) {
+      // If this is a Coding, we should represent it as a string
+      // and if possible, lit the values
+      humanType = 'string';
+      if (prop.valueSet) {
+        const values = Object.keys(valueSets[prop.valueSet] || {});
+        if (values.length) {
+          desc += `. Accepts values: ${values.join(', ')}`;
+        }
+      }
+    } else {
+      humanType = prop.type.join('|');
+    }
+
+    props.push(`{${humanType}} [props.${propName}] - ${desc}`);
   }
 
   return props.map(p => `  * @param ${p}`).join('\n');
@@ -225,7 +276,14 @@ const generateEntry = (
   profiles: Schema[],
   simpleSignatures?: boolean,
   propsToIgnoreInDocs: string[] = [],
+  valueSets: ValueSets = {},
 ) => {
+  // TODO I think I want to rip out the simple signatures flag and just say:
+  // for any schema with only a single profile, make it optional to pass the profile string
+  if (profiles.length === 1) {
+    simpleSignatures = true;
+  }
+
   const declarations = [];
 
   const statements = [];
@@ -344,7 +402,7 @@ const generateEntry = (
   * @function
   * @param {string} type - A profile type: one of ${profiles.map(p => p.id).join(',')}
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
-${generateJsDocs(profiles, propsToIgnoreInDocs)}
+${generateJsDocs(profiles, propsToIgnoreInDocs, valueSets)}
   */
   `);
   } else {
@@ -353,7 +411,7 @@ ${generateJsDocs(profiles, propsToIgnoreInDocs)}
   * @public
   * @function
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
-${generateJsDocs(profiles, propsToIgnoreInDocs)}
+${generateJsDocs(profiles, propsToIgnoreInDocs, valueSets)}
   */
   `);
   }
@@ -425,8 +483,10 @@ const mapProps = (schema, mappings) => {
         props.push(mapComposite(key, mappings[key], spec));
       } else if (spec.typeDef) {
         props.push(mapTypeDef(key, mappings[key], spec));
+      } else if (spec.type.includes('Coding')) {
+        props.push(mapCoding(key, mappings[key], spec));
       } else if (
-        spec.type.includes('Code') ||
+        // spec.type.includes('Code') ||
         spec.type.includes('CodeableConcept')
       ) {
         props.push(mapCodeableConcept(key, mappings[key], spec));
@@ -518,7 +578,7 @@ const mapSimpleProp = (propName: string, mapping: Mapping, schema: Schema) => {
 };
 
 // map a type def (ie, a nested object) property by property
-// TODO this is designed to handle singletone and array types
+// TODO this is designed to handle singleton and array types
 // The array stuff adds a lot of complication and I need tests on both formats
 const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
   const statements: any[] = [];
@@ -619,7 +679,7 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
       b.variableDeclaration('let', [
         b.variableDeclarator(
           b.identifier(safePropName),
-          b.objectExpression([b.spreadProperty(b.identifier('item'))]),
+          useBuilderWithValueSet(schema),
         ),
       ]),
     );
@@ -698,8 +758,54 @@ const mapCodeableConcept = (
   return ifPropInInput(propName, statements, elseStmnt);
 };
 
+// in a coding, the value could be a string (which we map)
+// or a Coding object, or a builder shorthand
+const mapCoding = (propName: string, mapping: Mapping, schema: Schema) => {
+  const statements: StatementKind[] = [];
+
+  statements.push(
+    b.variableDeclaration('let', [
+      b.variableDeclarator(
+        b.identifier('src'),
+        b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName)),
+      ),
+    ]),
+  );
+
+  // TODO do we need to support an array of values for coding?
+  // Probably, but not today
+
+  if (schema.valueSet) {
+    // call the value map
+    const ast = parse(
+      `if (typeof src === 'string') {
+  src = dt.lookupValue('${schema.valueSet}', src);
+ }`,
+    );
+    statements.push(ast.program.body[0]);
+  }
+
+  statements.push(
+    assignToInput(
+      propName,
+      b.callExpression(
+        b.memberExpression(b.identifier('dt'), b.identifier('coding')),
+        [b.identifier('src')],
+      ),
+    ),
+  );
+
+  let elseStmnt;
+  const d = addDefaults(propName, mapping, schema);
+  if (d) {
+    elseStmnt = d;
+  }
+
+  return ifPropInInput(propName, statements, elseStmnt);
+};
+
 // Map a property of the input to some extension
-// This will add a new object to the Extexsion array
+// This will add a new object to the Extension array
 const mapExtension = (propName: string, mapping: Mapping) => {
   const callBuilder = b.expressionStatement(
     b.callExpression(
@@ -795,3 +901,37 @@ const initResource = (resourceType: string) => {
 };
 
 const returnResource = () => b.returnStatement(b.identifier(RESOURCE_NAME));
+
+const buildValueSetHintMap = (hints: Record<string.string>) =>
+  b.objectExpression(
+    Object.entries(hints).map(([key, value]) =>
+      b.objectProperty(b.stringLiteral(key), b.stringLiteral(value)),
+    ),
+  );
+
+const useBuilderWithValueSet = (schema: Schema) => {
+  let builder: string | false = getDataTypeBuilderName(schema);
+  let valueSetHints = {};
+  // for each prop with an associated value set, pass a hint
+  if (schema.typeDef) {
+    for (const p in schema.typeDef) {
+      const prop = schema.typeDef[p];
+      if (prop.valueSet) {
+        valueSetHints[p] = prop.valueSet;
+      }
+    }
+  }
+
+  return builder
+    ? // If there's a builder for this type, call the builder to resolve it
+      b.callExpression(
+        b.memberExpression(b.identifier('dt'), b.identifier(builder)),
+        [
+          b.identifier('item'),
+          b.arrayExpression([]),
+          buildValueSetHintMap(valueSetHints),
+        ],
+      )
+    : // Else spread the input
+      b.objectExpression([b.spreadProperty(b.identifier('item'))]);
+};

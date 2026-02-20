@@ -72,7 +72,7 @@ declare type Encounter_SzEncounter_Props = {
     account?: builders.Reference[];
     appointment?: builders.Reference[];
     basedOn?: builders.Reference[];
-    class?: builders.Coding;
+    class?: "OPD" | "IPD" | "CO" | "SO";
     classHistory?: builders.BackboneElement[];
     contained?: any[];
     diagnosis?: builders.BackboneElement[];
@@ -123,7 +123,7 @@ declare type EpisodeOfCare_SzEpisodeOfCare_Props = {
     statusHistory?: builders.BackboneElement[];
     team?: builders.Reference[];
     text?: builders.Narrative;
-    type?: builders.CodeableConcept[];
+    type?: "tbds" | "tbdr" | "anc" | "fp" | "art" | "prep";
     [key: string]: any;
 };
 
@@ -139,7 +139,7 @@ declare type Extension_SzChiefdomExtension_Props = {
     extension?: builders.Extension[];
     id?: string;
     url?: string;
-    value?: builders.CodeableConcept;
+    value?: "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "11" | "12" | "13" | "14" | "15" | "16" | "17" | "18" | "19" | "20" | "21" | "22" | "23" | "24" | "25" | "26" | "27" | "28" | "29" | "30" | "31" | "32" | "33" | "34" | "35" | "36" | "37" | "38" | "39" | "40" | "41" | "42" | "43" | "44" | "45" | "46" | "47" | "48" | "49" | "50" | "51" | "52" | "53" | "54" | "55" | "56" | "57" | "58" | "59" | "60" | "61" | "62" | "63" | "64" | "65" | "66" | "67" | "68" | "69" | "70" | "71" | "72" | "73" | "74" | "75" | "76" | "77" | "78" | "79" | "80" | "81" | "82" | "83" | "84" | "85" | "86" | "87" | "88" | "89" | "90" | "91" | "92" | "93" | "94" | "95" | "96" | "97" | "98" | "99" | "100" | "101" | "102" | "103" | "104" | "105" | "106" | "107" | "108" | "109" | "110" | "111" | "112" | "113" | "114" | "115" | "116" | "117" | "118" | "119" | "120" | "121" | "122" | "123" | "124" | "125" | "126" | "127" | "128" | "129" | "130" | "131" | "132" | "133" | "134" | "135" | "136" | "137" | "138" | "139" | "140" | "141" | "142" | "143" | "144" | "145" | "146" | "147" | "148" | "149" | "150" | "151" | "152" | "153" | "154" | "155" | "156" | "157" | "158" | "159" | "160" | "161" | "162" | "163" | "164" | "165" | "166" | "167" | "168" | "169" | "170" | "171" | "172" | "173" | "174" | "175" | "176" | "177" | "178" | "179" | "180" | "181" | "182" | "183" | "184" | "185" | "186" | "187" | "188" | "189" | "190" | "191" | "192" | "193" | "194" | "195" | "196" | "197" | "198" | "199" | "200" | "201" | "202" | "203" | "204" | "205" | "206" | "207" | "208" | "209" | "210" | "211" | "212" | "213" | "214" | "215" | "216" | "217" | "218" | "219" | "220" | "221" | "222" | "223" | "224" | "225" | "226" | "227" | "228" | "229" | "230" | "231" | "232" | "233" | "234" | "235" | "236" | "237" | "238" | "239" | "240" | "241" | "242" | "243" | "244" | "245" | "246" | "247" | "248" | "249" | "250" | "251" | "252" | "253" | "254" | "255" | "256" | "257" | "258" | "259" | "260" | "261" | "262" | "263" | "264" | "265" | "266" | "267" | "268" | "269" | "270" | "271" | "272" | "273" | "274" | "275" | "276" | "277" | "278" | "279" | "280" | "281" | "282" | "283" | "284" | "285" | "286" | "287" | "288" | "289" | "290" | "291" | "292" | "293" | "294" | "295" | "296" | "297" | "298" | "299" | "300" | "301" | "302" | "303" | "304" | "305" | "306" | "307" | "308" | "309" | "310" | "311" | "312" | "313" | "314" | "315" | "316" | "317" | "318" | "319" | "320" | "321" | "322" | "323" | "324" | "325" | "326" | "327" | "328" | "329" | "330" | "331" | "332" | "333" | "334" | "335" | "336" | "337" | "338" | "340" | "-99";
     [key: string]: any;
 };
 
@@ -147,7 +147,7 @@ declare type Extension_SzInkhundlaExtension_Props = {
     extension?: builders.Extension[];
     id?: string;
     url?: string;
-    value?: builders.CodeableConcept;
+    value?: "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "11" | "12" | "13" | "14" | "15" | "16" | "17" | "18" | "19" | "20" | "21" | "22" | "23" | "24" | "25" | "26" | "27" | "28" | "29" | "30" | "31" | "32" | "33" | "34" | "35" | "36" | "37" | "38" | "39" | "40" | "41" | "42" | "43" | "44" | "45" | "46" | "47" | "48" | "49" | "50" | "51" | "52" | "53" | "54" | "55" | "56" | "57" | "58" | "59" | "60" | "-99";
     [key: string]: any;
 };
 
@@ -215,7 +215,7 @@ declare type Location_SzLocation_Props = {
 declare type Medication_SzMedication_Props = {
     amount?: builders.Ratio;
     batch?: builders.BackboneElement;
-    code?: builders.CodeableConcept;
+    code?: "100001" | "100009" | "100014" | "100089" | "100221" | "100238" | "100304" | "100449" | "100460" | "100528" | "100648" | "100651" | "100654" | "100666" | "100686" | "100689" | "100700" | "100706" | "100707" | "100734" | "102263" | "102266" | "102268" | "102272" | "102273" | "102276" | "102277" | "102280" | "102282" | "102304" | "102323" | "102324" | "102327" | "102332" | "102333" | "102341" | "102346" | "102348" | "102443" | "102492" | "102502";
     contained?: any[];
     extension?: builders.Extension[];
     form?: builders.CodeableConcept;
@@ -290,7 +290,7 @@ declare type MedicationRequest_SzMedicationRequest_Props = {
     insurance?: builders.Reference[];
     intent?: string;
     language?: string;
-    medication?: builders.CodeableConcept;
+    medication?: "100001" | "100009" | "100014" | "100089" | "100221" | "100238" | "100304" | "100449" | "100460" | "100528" | "100648" | "100651" | "100654" | "100666" | "100686" | "100689" | "100700" | "100706" | "100707" | "100734" | "102263" | "102266" | "102268" | "102272" | "102273" | "102276" | "102277" | "102280" | "102282" | "102304" | "102323" | "102324" | "102327" | "102332" | "102333" | "102341" | "102346" | "102348" | "102443" | "102492" | "102502";
     meta?: builders.Meta;
     modifierExtension?: builders.Extension[];
     note?: builders.Annotation[];
@@ -388,7 +388,7 @@ declare type Observation_SzLabResult_Props = {
     basedOn?: builders.Reference[];
     bodySite?: builders.CodeableConcept;
     category?: builders.CodeableConcept[];
-    code?: builders.CodeableConcept;
+    code?: "NIT" | "UG" | "UP" | "UPH" | "UBILI" | "UKET" | "ULEST" | "N/A" | "#BAND" | "#BASO" | "#EOS" | "#IG" | "#LYM" | "#META" | "#MONO" | "#MYEL" | "#NEUT" | "#PROM" | "%BJP" | "%BSAT" | "%HBA1" | "%SAT" | "17AHQ" | "1ST" | "2ND" | "A1ATR" | "A1CEL" | "A2CEL" | "ABAC" | "ABNO" | "ABO" | "ABRH" | "ABRH1" | "ABRH2" | "ABRH3" | "ABRH4" | "ACA" | "ACAS" | "ACEA" | "ACEAB" | "ACLA" | "ACLAG" | "ACLAM" | "ACOLA" | "ACTH" | "ACTHI" | "ACTHO" | "ADATE" | "ADENO" | "ADNA" | "ADNAM" | "ADNAR" | "ADNAS" | "AFB" | "AFP" | "AGHT" | "AHE" | "AHEAL" | "AHG" | "AK" | "AK1" | "ALDOQ" | "ALDOS" | "AMC" | "AMIK" | "AMITA" | "AMITT" | "AMOX" | "AMOX1" | "AMP" | "AMPHE" | "AMPIC" | "ANAH" | "ANCN" | "ANCP" | "ANDRS" | "ANION" | "ANTAB" | "ANTIA" | "ANTIB" | "ANTID" | "APCA" | "APP" | "APPEA" | "APPET" | "APPF" | "APPS" | "APTC" | "APTT" | "ARTN" | "ARTTX" | "ARVID" | "ARVO" | "ARVO1" | "ARVO2" | "ARVO3" | "ARVS" | "ARVT1" | "ARVT2" | "ARVT3" | "ASKMA" | "ASL" | "ASMA" | "ASOT" | "ASPR" | "AST" | "AUG" | "AUG1" | "B2GPG" | "B2GPM" | "BACET" | "BACT" | "SALB" | "BAND#" | "BAND%" | "BARB" | "BARES" | "BASA#" | "BASA%" | "BASO#" | "BASO%" | "BAUTO" | "BBCOM" | "BBTXT" | "BCEL" | "BCULT" | "BE" | "BENZO" | "BENZV" | "BG" | "BHCG2" | "BIOCH" | "BIRON" | "BLST#" | "BLST%" | "BMTXT" | "BPH" | "BPROC" | "BREAS" | "BROMS" | "BS1" | "BS2" | "BSA" | "BSCR1" | "BSCR2" | "BSCR3" | "BTFN" | "BTIME" | "BTNP" | "BTYPE" | "BUA" | "BV" | "C125B" | "C15-3" | "C1EI" | "C1ESC" | "C1ESI" | "C3" | "C4" | "C6" | "CA199" | "CA724" | "CABCO" | "CABFL" | "CABVA" | "CACOR" | "CAERU" | "CALCL" | "CALCN" | "CALCO" | "CANN" | "CANNQ" | "CAPIL" | "CAPP" | "CARB" | "CAREH" | "CASTS" | "CATSC" | "CATSO" | "CBAC" | "CCL" | "CCLEA" | "CCNT" | "CCOM" | "CCON" | "CCOO" | "CCREM" | "CCULT" | "CD3" | "CD3L" | "CD4" | "CD45" | "CD4L" | "CD8" | "CD8L" | "CEFAZ" | "CEFO1" | "CEFOT" | "CEFOX" | "CEFTA" | "CEPHA" | "CEPHR" | "CERYT" | "CGLOB" | "CGLU" | "CHEMC" | "CHEMF" | "CHEMH" | "CHEMO" | "CHEMU" | "CHILD" | "CHIST" | "CHLDN" | "CHLET" | "CHLLV" | "CHLO1" | "CHLOG" | "CHLOR" | "CHLPN" | "CHLPS" | "CHLTR" | "CHM" | "CHR" | "CIPR1" | "CIPRO" | "CLAR" | "CLIND" | "CLOD" | "CLODA" | "CLTR" | "CLTRE" | "CLUE" | "CMGFL" | "CMGVA" | "CMMFL" | "CMMVA" | "COCAI" | "COL" | "COLI" | "COLM" | "COM" | "COMAL" | "COMCL" | "CONCE" | "CONSE" | "COOMB" | "CORWC" | "COTR" | "COTR1" | "COTRI" | "COUN" | "COXVI" | "CPEP2" | "CPROT" | "CRES" | "CRINK" | "CRO" | "CROSM" | "CRP" | "CRPS" | "CRPT" | "CRYLF" | "CRYP" | "CRYST" | "CRYTI" | "CSOB" | "CTIME" | "CTITR" | "CTX" | "CTXT" | "CUTC" | "CUTP" | "CUTS" | "CWBC" | "CWTX" | "CYADE" | "CYADH" | "CYBGH" | "CYBGR" | "CYCYT" | "CYINF" | "CYINH" | "CYINT" | "CYNAH" | "CYNAT" | "CYNFH" | "CYNTH" | "CYRCH" | "CYREC" | "CYSS" | "CYSTS" | "CYTC" | "CYTCH" | "CYTLA" | "CYTLM" | "CYTNA" | "CYTPA" | "CYTPR" | "CYTTY" | "CYTXT" | "DATEP" | "DATEQ" | "DATER" | "DATET" | "DCC3" | "DCC3C" | "DCC3T" | "DCEA" | "DCIGA" | "DCIGG" | "DCIGM" | "DCIGT" | "DCOOH" | "DCOOM" | "DCOT" | "DCRT" | "DDATE" | "DDIME" | "DEATH" | "DHEAS" | "DIAMT" | "DIBN" | "DID" | "DIDA" | "DIFCN" | "DIGO2" | "DIGOX" | "DOA" | "DONG" | "DONN" | "DOXY" | "DOXY1" | "DPROT" | "DRSNO" | "DRTH" | "DRUGI" | "DTIME" | "DUR" | "DUVMA" | "E2" | "E2C" | "EBREA" | "ECOTH" | "ECOTR" | "ECURR" | "EDNAP" | "EEC" | "EFAVI" | "EGFRI" | "EIDCM" | "EIDCN" | "EIDCP" | "EIFS" | "EIFY" | "EMTRI" | "ENVPB" | "ENVPS" | "ENZYM" | "EOS#" | "EOS%" | "EOSA#" | "EOSA%" | "EOTHE" | "EPI" | "EPRE" | "EPRED" | "EPRER" | "EPRES" | "EQAC1" | "EQAC2" | "EQAC3" | "EQAC4" | "EQAC5" | "EQAHS" | "EQAHU" | "EQAMT" | "EQAN2" | "EQAN3" | "EQANP" | "EQAR1" | "EQAR2" | "EQAR3" | "EQAR4" | "EQAR5" | "EQAS1" | "EQAS2" | "EQASC" | "EQCAB" | "EQCAC" | "EQCDI" | "EQCLM" | "EQCPC" | "EQHCT" | "EQHGB" | "EQHPC" | "EQHPE" | "EQHPK" | "EQHPM" | "EQHSD" | "EQHST" | "EQMCH" | "EQMCN" | "EQMCV" | "EQMF2" | "EQMF3" | "EQMFA" | "EQMIC" | "EQMPC" | "EQPF" | "EQPLT" | "EQPO" | "EQRBC" | "EQRDW" | "EQSED" | "EQSLN" | "EQSP1" | "EQSP2" | "EQSP3" | "EQSS1" | "EQSS2" | "EQSS3" | "EQSS4" | "EQSS5" | "EQSS6" | "EQST" | "EQSTM" | "EQWB2" | "EQWB3" | "EQWBC" | "EQWC2" | "EQWC3" | "EQWCC" | "EREGA" | "ERSLT" | "ERTP" | "ERY" | "ERY1" | "ERYT" | "ERYTH" | "ESR" | "ESTBR" | "ESTOB" | "ETRAV" | "EXHYS" | "EXPD" | "EXSTD" | "FCLI" | "FEP" | "FERM2" | "FERM3" | "FERR" | "FERRM" | "FERRR" | "FERRX" | "FERX2" | "FHYS" | "FILAG" | "FINR" | "FLN" | "FLQNS" | "FOB" | "FPORI" | "FPORQ" | "FPROT" | "FRF" | "FROTA" | "FSHC" | "F-T3" | "F-T4" | "FUNGI" | "FWBC" | "G6PD" | "G6PDS" | "GCLUE" | "GCPRD" | "GELNO" | "GENO" | "GENT" | "GENT1" | "GENTA" | "GERMT" | "GL120" | "GL150" | "GL180" | "GL210" | "GL240" | "GL270" | "GL30" | "GL300" | "GL360" | "GL480" | "GL60" | "GL90" | "GLOB" | "GLUCS" | "GNB" | "GNC" | "GNCB" | "GNDC" | "GNPB" | "GPB" | "GPBB" | "GPC" | "GPCC" | "GPCCL" | "GPCP" | "GPDC" | "GPFB" | "GRAMS" | "GREPI" | "GRERY" | "GRWC" | "GTBA" | "GTDOS" | "GTXT" | "GVC" | "GVINC" | "GXRIF" | "GXTB" | "GXTBR" | "H2RL" | "H2VRS" | "HAEM" | "HAEMI" | "HAUTO" | "HBA" | "HBA1" | "HBA1C" | "HBA2" | "HBA2D" | "HBF1" | "HBFD" | "HBH" | "HBSB1" | "HBU" | "HCBCO" | "HCBFL" | "HCBVA" | "HCG" | "HCGS" | "HCO3" | "HCOM" | "HCT" | "HEAL" | "HELPV" | "HELPY" | "HEPD" | "HEPE" | "HERG1" | "HERG2" | "HERPG" | "HERPM" | "HFLU" | "HGB" | "HGH" | "HISTD" | "HISTS" | "HISTT" | "HIV-1" | "HIVA" | "HIVAR" | "HIVBL" | "HIVBR" | "HIVCO" | "HIVD" | "HIVE" | "HIVL" | "HIVL2" | "HIVLA" | "HIVLC" | "HIVLL" | "HIVML" | "HIVP" | "HIVPC" | "HIVPL" | "HIVPR" | "HIVQL" | "HIVR" | "HIVRL" | "HIVRT" | "HIVSI" | "HIVTL" | "HIVTM" | "HIVU" | "HIVVA" | "HIVVB" | "HIVVC" | "HIVVD" | "HIVVM" | "HIVVP" | "HIVVQ" | "HIVVR" | "HLAXB" | "HLB27" | "HPRL" | "HSVG" | "HSVM" | "HT" | "HTSTB" | "HTXT" | "HVVRS" | "HYS0H" | "HYS6H" | "HYSIN" | "HYSUH" | "ICD10" | "ICOM" | "ICOOH" | "ICOOM" | "ICT" | "IG#" | "IGA" | "IHYS" | "IMFIX" | "IMI" | "IMMA" | "IMMSP" | "INCLU" | "INJCS" | "INK" | "INR" | "INTXT" | "IPROT" | "IS" | "ISI" | "ITIME" | "ITITR" | "ITXT" | "IV" | "JRF" | "LA1:2" | "LA1NP" | "LA2NP" | "LACTT" | "LAMIV" | "LCHOL" | "LCRYP" | "LEUCO" | "LHC" | "LI" | "LINE0" | "LINE1" | "LISS" | "LJDAT" | "LJDT" | "LJRES" | "LLA1" | "LLA2" | "LN1:2" | "LPRIF" | "LSD" | "LTIME" | "LUPN" | "LUPP" | "LYM#" | "LYM%" | "LYMA%" | "LYMP" | "MAAG" | "MACS" | "MAL" | "MALF" | "MALRT" | "MALTH" | "MAPP" | "MASS" | "MBILH" | "MCEA" | "MCH" | "MCHC" | "MCM2" | "MCOM" | "MCV" | "MEASG" | "MEASM" | "MEM" | "MET" | "META#" | "META%" | "METH" | "METHD" | "METQ" | "MFIL" | "MGMSA" | "MGMSB" | "MGMSC" | "MGMSD" | "MGMSE" | "MGMSF" | "MGSMH" | "MGSRH" | "MGSSA" | "MGSSB" | "MGSSC" | "MGSSD" | "MGSSE" | "MGSSF" | "MHEAD" | "MIC" | "MICH" | "MICIN" | "MICRE" | "MICRO" | "MLDL" | "MLEUD" | "MMACR" | "MOART" | "MON" | "MONA#" | "MONA%" | "MONO" | "MONO#" | "MONO%" | "MONTH" | "MORPH" | "MOTIL" | "MPCR" | "MPROT" | "MPV" | "M-TP" | "MTRIC" | "MTXT" | "MTZ" | "MUCUS" | "MUMPG" | "MUMPM" | "MUP" | "MXD#" | "MXD%" | "MYCH" | "MYCUL" | "MYEAS" | "MYEL#" | "MYEL%" | "MYGIE" | "MYGT" | "MYKIN" | "MYMIC" | "MYOG" | "MYPAS" | "MZNS" | "NALID" | "NEI" | "NEICO" | "NEUA#" | "NEUA%" | "NEUT#" | "NEUT%" | "NEVI" | "NITR" | "NITRO" | "NNRTI" | "NONNU" | "NORM" | "NOS" | "NRBC" | "NRTIR" | "NUCLE" | "OB" | "OCEA" | "OCEL" | "OOCYS" | "OPIAT" | "ORGS" | "ORGSV" | "ORGSW" | "ORGSX" | "ORGSY" | "OSAT" | "OTERM" | "OTHER" | "OTHR#" | "OTHR%" | "OVA" | "OVA1" | "OVA2" | "OWCC" | "OX19" | "OX2" | "OXAC1" | "OXACI" | "OXK" | "P/N" | "PADIS" | "PAN" | "PARAC" | "PARAS" | "PARS" | "PATH" | "PATHH" | "PATT" | "PB/CR" | "PBNP" | "PCO2" | "PCRAP" | "PCRH" | "PCRQ" | "PCRR" | "PCTR" | "PCULT" | "PCV" | "PDBIL" | "PDW" | "PEN" | "PENG" | "PENG1" | "PER" | "PFAL" | "PGRP" | "PH" | "PHB" | "PHD" | "PHENB" | "PHENC" | "PHENY" | "PHN" | "PHT" | "PHTXT" | "PHYS" | "PHYS0" | "PHYS6" | "PHYSU" | "PIPER" | "PLAC" | "PLT" | "PLTAB" | "PMTCH" | "PMTMO" | "PNEUM" | "PO/CR" | "PO2" | "POCVR" | "POLI1" | "POLI2" | "POLI3" | "POLY" | "POLYM" | "PORL" | "PREG" | "PRLC" | "PROGC" | "PROM#" | "PROM%" | "PROTC" | "PROTS" | "PRTCF" | "PSA" | "PSCHE" | "PSHY" | "PSTD0" | "PSTD6" | "PSTDU" | "PT" | "PTBIL" | "PTC" | "PTH" | "PTHA" | "PTHM" | "PTHP" | "PTTR" | "PVIV" | "QBAS%" | "QCD3" | "QCD3L" | "QCD4" | "QCD4L" | "QCD8" | "QCD8L" | "QCWBC" | "QEOS%" | "QHBG" | "QHCG" | "QHRG" | "QLYM%" | "QMCHC" | "QMON%" | "QNEU%" | "QPEHE" | "QRPR1" | "QRPRT" | "QRPRW" | "RAPI2" | "RATIO" | "RBC" | "RBCA" | "RCC" | "RCCHE" | "RCELU" | "RCOM" | "RDW" | "RECR" | "REJCT" | "REM" | "RENIC" | "REQTS" | "RESLT" | "RETA" | "RETIC" | "RETM" | "RF" | "RF13" | "RF14" | "RF2" | "RF3" | "RF4" | "RF8" | "RFQM" | "RFR" | "RFT" | "RG" | "RGLU" | "RH" | "RHAB" | "RHABC" | "RHABI" | "RHABT" | "RHNEG" | "RIFTB" | "RILPI" | "RINHS" | "RJREA" | "RJREM" | "ROTA" | "ROTAG" | "ROTRT" | "RPCR" | "RPI" | "RPR1" | "RPRT" | "RPRW" | "RRF1" | "RRF4" | "RTTBP" | "RUGFL" | "RUGT" | "RUMFL" | "RUMT" | "SABCO" | "SABFL" | "SABNI" | "SABVA" | "SACE" | "SACT2" | "SACTH" | "SADA" | "SAGCO" | "SAGFL" | "SAGVA" | "SALC" | "SALHT" | "SALP" | "SALT" | "SAMY" | "SAPP" | "SAST" | "SIBIL" | "SCHOL" | "SCK2" | "SCKMB" | "SCO2" | "SCORT" | "SCOUN" | "SCRN" | "SCRT" | "SDBIL" | "SERY" | "SGGT" | "SGLU" | "SHDL" | "SIRON" | "SK" | "SLDH" | "SLDL" | "SLGIE" | "SLPAP" | "SMG" | "SMOT2" | "SMOT3" | "SMOT6" | "SMOTI" | "SMYO" | "SNA" | "SNPP" | "SPEM" | "SPH" | "SPO4" | "SRATE" | "SSMEL" | "STACP" | "STBIL" | "STP" | "STRIG" | "SUREA" | "SVISC" | "SVITA" | "SVOL" | "SWBC" | "TBADT" | "TBAMI" | "TBAR1" | "TBAR2" | "TBARM" | "TBBAC" | "TBBCM" | "TBBDT" | "TBC1D" | "TBCLO" | "TBCN1" | "TBETM" | "TBINH" | "TBLEV" | "TBMOF" | "TBODT" | "TBORG" | "TBP-A" | "TBRCM" | "TBRIF" | "TBRP" | "TEST" | "TETRA" | "THSR" | "TMP" | "TPHA" | "TROP" | "TROPI" | "TRYP" | "TS" | "TSH" | "TWBCC" | "TXMFL" | "TZP" | "UAMY" | "UBACT" | "UBL" | "UCRT" | "UHB" | "UMA" | "UMAER" | "UPREG" | "USG" | "UUBGN" | "UVOL" | "VALPR" | "VANCO" | "VCULT" | "VDRLS" | "VDRLT" | "VEPI" | "VGLU" | "VITD" | "VOL" | "VZG" | "WBACT" | "WBC" | "WDU" | "WEPI" | "WERY" | "WET" | "WFH" | "WPSHY" | "WWBC" | "WYST" | "XGLUC" | "YEAST" | "ZIN" | "COV19" | "CVCOM" | "CA15-3" | "SCA" | "SCL" | "XMATC" | "!GXMT" | "SUA" | "SUAA" | "VCRT" | "DLM" | "LZD" | "BDQ" | "TBETH" | "TBISO" | "TBZCM" | "TBZDT" | "TBZH" | "TBZN" | "TBZNI" | "TBLIN" | "WBCA" | "SALTH" | "SALOT" | "LYMA#" | "CVRP" | "CT" | "NG" | "RCHOL" | "DSYTP" | "TBAU" | "TBCM" | "TBRI2" | "TBMOX" | "TBSF" | "TBLP" | "HIVPS" | "PSC2" | "PSCD" | "SCOM";
     component?: builders.BackboneElement[];
     contained?: any[];
     dataAbsentReason?: builders.CodeableConcept;
@@ -610,7 +610,7 @@ declare type ServiceRequest_SzLabRequest_Props = {
     basedOn?: builders.Reference[];
     bodySite?: builders.CodeableConcept[];
     category?: builders.CodeableConcept[];
-    code?: builders.CodeableConcept;
+    code?: "CD4" | "AST" | "CREA" | "HB" | "LFT" | "HIVVL" | "ICUP" | "GGT" | "KFT" | "CARDE" | "ART" | "ELECT" | "GLUCF" | "GLUCR" | "GTT" | "CL" | "K" | "NA" | "CO2" | "UA" | "CREAC" | "TBIL" | "BILI" | "ALP" | "ALT" | "ALB" | "TPROT" | "CK" | "CKMB" | "MYOG" | "TROPI" | "MAG" | "PO4" | "CAL" | "LDH" | "TRIG" | "LDL" | "HDL" | "CHOL" | "AMY" | "LACT" | "CRP" | "LIPAS" | "HBA1C" | "M-TP" | "FBC" | "DIFF" | "ESR" | "RET" | "COOMB" | "SICKL" | "MAL" | "MALPC" | "MALS" | "PT" | "APTT" | "PI" | "BTIME" | "DDIME" | "TFT" | "T3" | "T4" | "TSH" | "LH" | "FSH" | "E2" | "PROG" | "PRL" | "TESTO" | "CORT" | "PTH" | "HCGSU" | "HCGSB" | "ABORH" | "RPR" | "TPHA" | "PSSA" | "BHCG" | "AFP" | "CA153" | "CA125" | "CEA" | "CA199" | "GRAM" | "MCSF" | "CSF" | "CRINK" | "SEMEN" | "HIVR" | "HIVE" | "HIPOC" | "LCRAG" | "TOXO" | "HELIP" | "HEAG" | "HBCAB" | "HEPC" | "QCRPR" | "WIDAL" | "RF" | "ASOT" | "XMAT" | "HLAX" | "ANISC" | "DCT" | "ICT" | "IGGS" | "ZN1" | "CUBFL" | "HIVGE" | "TROPT" | "UCHEM" | "CRAG" | "CRGLF" | "TBLAM" | "17OPH" | "A1ATR" | "ACA" | "ACE" | "ACERA" | "ACLA" | "ACOLA" | "ACTH" | "ADENO" | "ADNA" | "ALDOS" | "AMITA" | "AMYU" | "ANA" | "ANCA" | "ANDRO" | "ANTBG" | "ANTE" | "AUR1" | "AUR2" | "AUR3" | "AUR4" | "BFCC" | "BG" | "BGAS" | "BGRP" | "BHCG2" | "BM" | "BNP" | "BPARA" | "BPARM" | "C/UP" | "C1EST" | "CA724" | "CAERU" | "CALCI" | "CALCT" | "CARB" | "CATS" | "CHLAM" | "CMP" | "CMV" | "CPEPT" | "CPROT" | "CRPS" | "CSFA" | "CSFAG" | "CSFC" | "CUCSF" | "CULFU" | "CULMY" | "CULPU" | "CULSP" | "CUTUP" | "CYTCO" | "DBILI" | "DBSGE" | "DCRT" | "DIFFM" | "DIFFF" | "DRUGR" | "DRUGS" | "E2M" | "EQAM1" | "FDP" | "FE" | "FERR" | "FERRX" | "FGLU" | "FNA" | "FPROT" | "GLOB" | "GLUC" | "GLUCS" | "GNBST" | "GPCST" | "GROUP" | "GTT2" | "GTT4" | "GYN" | "GYNAE" | "HBELE" | "HBSAB" | "HBSAG" | "HELIC" | "HEPAG" | "HEPAM" | "HEPD" | "HEPE" | "HERP" | "HGH" | "HI2DF" | "HISIN" | "HISSU" | "HISTO" | "HISTX" | "HIV48" | "HIVA" | "HIVC" | "HIVCW" | "HIVLD" | "HIVPC" | "HIVP" | "HIVST" | "HIVWB" | "HSAGR" | "HSV" | "HVART" | "HYS" | "ICD10" | "IGE" | "INR" | "IRONX" | "LALB" | "LCHOL" | "LCOT" | "LCREA" | "LESR" | "LFBC" | "LGGT" | "LGLPF" | "LGLPR" | "LGLUF" | "LGLUR" | "LHBA1" | "LHDL" | "LI" | "LIPO" | "LRF" | "LUPUS" | "LUR" | "MALB" | "MBCAT" | "MBCLT" | "MBFAM" | "MBFAS" | "MBFCA" | "MBFL" | "MBFLU" | "MBFPE" | "MBFPL" | "MBFSY" | "MBTRA" | "MBUCT" | "MBUMC" | "MCES" | "MEAS" | "MENDC" | "MEYE" | "MGAS" | "MICBC" | "MICFL" | "MICNS" | "MICSA" | "MICTS" | "MICU" | "MONO" | "MPEN" | "MPT64" | "MPUS" | "MRCSW" | "MSPUT" | "MSTRS" | "MTISS" | "MUMPS" | "MUPS" | "MWUS" | "MYGT" | "MYMIC" | "MYOB" | "NGYN" | "MFOB" | "PARA" | "PBILI" | "PBS" | "PCRAP" | "PCTR" | "PHENB" | "PHENY" | "PHVS" | "PLAT" | "PM" | "POLIO" | "POSTM" | "POSTX" | "PRD" | "PROT" | "PRT24" | "PSA" | "PTT" | "RA" | "RAPI2" | "RCCHE" | "RH" | "ROTA" | "ROTPC" | "RUB" | "SADA" | "SCREA" | "SEICU" | "SENFA" | "SENGN" | "SENGP" | "SENSA" | "SENST" | "SENSU" | "SHBG" | "STDM" | "STOOL" | "TBA1" | "TBA2" | "TBA3" | "TBBA" | "TBCL" | "TBCL1" | "TBCL2" | "TBCL3" | "TBCON" | "TBEQA" | "TBGEN" | "TBHCG" | "TBILI" | "TBINF" | "TBLP1" | "TBLP2" | "TBLP3" | "TBLP" | "TBLPS" | "TBLSF" | "TBPC1" | "TBPC2" | "TBPC3" | "TBRAP" | "TBRP1" | "TBRP2" | "TBRP3" | "TBSF1" | "TBSF2" | "TBSF3" | "TBSFF" | "TBSS" | "TBSS2" | "TBSS3" | "TBSSF" | "TBZ" | "TBZ1" | "TBZ2" | "TBZ3" | "TBZN" | "TBZN1" | "TBZN2" | "TBZN3" | "THCGB" | "TT3" | "TTA" | "LURIC" | "UBHCG" | "UBJP" | "UCREA" | "UCUL" | "UE" | "UECA" | "UECA+" | "UMAC" | "UMIC" | "UPREG" | "UPROT" | "UREA" | "VALPR" | "VDRL" | "VLPOC" | "VMAC" | "VZV" | "WBCP" | "WCC" | "WF" | "YELLO" | "ZN" | "ZN2" | "ZN3" | "TBSF" | "QHCG" | "CVID" | "CVRP" | "MEASL";
     contained?: any[];
     doNotPerform?: boolean;
     encounter?: builders.Reference;
@@ -719,134 +719,30 @@ declare type Specimen_SzLabSpecimen_Props = {
     [key: string]: any;
 };
 
-declare const mapSystems: (obj: any) => any;
-/**
- * Define a set of mapped system values.
- *
- * Builder functions will use this mappings when they encounter them in system keys. Useful for setting shortcuts.
- * @public
- * @function
- * @example <caption>Set shortcut system mappings</caption>
- * b.setSystemMap({
- *   SmartCareID: 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'
- * });
- * create(builders.patient({ identifier: b.identifier('xyz', 'SmartCareId') }))
- */
-declare const setSystemMap: (newMappings: any) => (state: any) => any;
-declare const extendSystemMap: (newMappings: any) => void;
-/**
- * Create an Identifier. Systems will be mapped against the system map. Pass extensions as extra arguments.
- * @public
- * @function
- * @param id - A string identifier, a FHIR identifier object, or an array of either.
- * @param ext - Any other arguments will be treated as extensions
- * @param {string} [system] - the string system to use by default if
- */
-declare const identifier: (id: string | builders.Identifier, ...ext: any[]) => any;
-/**
- * Alias for b.identifier()
- * @public
- * @function
- */
-declare const id: (id: string | builders.Identifier, ...ext: any[]) => any;
-/**
- * Add an extension to a resource (or object).
- * An object will be created and added to an `extension` array on the provided resource.
- * The extension array will be set if it does not exist on the resource.
- * The value will be smartly written to the object, ie, valueDateTime or valueReference or valueString
- * @public
- * @function
- * @param resource - a FHIR resource object to add an extension too
- * @param {string} url - the URL to set for the extension
- * @param value - the value that the extension should contain
- */
 declare const addExtension: (resource: any, url: any, value: any) => void;
-/**
- * Alias for b.extension()
- * @public
- * @function
- */
-declare const ext: (url: string, value: any, props?: Omit<builders.Extension, 'url'>) => {
+declare const c: typeof builders.coding;
+declare const cc: (codings: (builders.Coding | [string, string, Omit<builders.Coding, "system" | "code">?]) | (builders.Coding | [string, string, Omit<builders.Coding, "system" | "code">?])[], extra?: Omit<builders.CodeableConcept, "coding">) => builders.CodeableConcept;
+declare const coding: typeof builders.coding;
+declare const composite: (object: any, key: any, value: any) => void;
+declare const concept: (codings: (builders.Coding | [string, string, Omit<builders.Coding, "system" | "code">?]) | (builders.Coding | [string, string, Omit<builders.Coding, "system" | "code">?])[], extra?: Omit<builders.CodeableConcept, "coding">) => builders.CodeableConcept;
+declare const ext: (url: string, value: any, props?: Omit<builders.Extension, "url">) => {
     extension: ({
         url: string;
     } & Omit<builders.Extension, "url">)[];
 };
-/**
- * Find an extension with a given url in some array
- * @public
- * @function
- * @param obj - a fhir resource
- * @param {string} targetUrl - the extension URL you want to find
- * @param {string} [path] - a path to extract from the resource. Optional.
- */
+declare const extendSystemMap: (newMappings: any) => void;
+declare const extendValues: (url: any, values: any, type?: string) => void;
 declare const findExtension: (obj: any, targetUrl: any, path: any) => any;
-/**
- * Create a coding object { code, system }. Systems will be mapped using the system map.
- * @public
- * @function
- * @param {string} code - the code value
- * @param {string} system - URL to the system. Will be mapped using the system map.
- */
-declare const coding: (code: string, system: string, extra?: Omit<builders.Coding, 'code' | 'system'>) => any;
-declare const c: (code: string, system: string, extra?: Omit<builders.Coding, 'code' | 'system'>) => any;
-/**
- * Create a value object { code, system } with optional system. Systems will be mapped.
- * @function
- * @param {string} value - the value
- * @param {string} system - URL to the system. Well be mapped using the system map.
- */
-declare const value: (value: any, system: any, ...extra: any[]) => any;
-/**
- * Create a CodeableConcept. Codings can be coding objects or
- * [code, system, extra] tuples (such as passed to b.coding())
- * Systems will be mapped with the system map
- * @public
- * @function
- * @param {string} value - the value
- * @param {object} extra - Extra properties to write to the coding
- * @example <caption>Create a codeableConcept</caption>
- * const myConcept = util.concept(['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
- * @example <caption>Create a codeableConcept with text</caption>
- * const myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/hiv/identifier/SmartCareID'])
- */
-declare type ConceptCoding = builders.Coding | [string, string, Omit<builders.Coding, 'code' | 'system'>?];
-declare const concept: (codings: ConceptCoding | ConceptCoding[], extra?: Omit<builders.CodeableConcept, 'coding'>) => builders.CodeableConcept;
-/**
- * Alias for b.concept()
- * @public
- * @function
- */
-declare const cc: (codings: ConceptCoding | ConceptCoding[], extra?: Omit<builders.CodeableConcept, 'coding'>) => builders.CodeableConcept;
-/**
- * Create a reference object of the form { reference }
- * If ref is an array, each item will be mapped and an array returned.
- * If ref is a FHIR resource, a reference to it will be generated
- * If ref is a string, it'll be treated as a reference id and returned as an object
- * If ref is a valid FHIR reference, it'll just be returned.
- * @public
- * @function
- * @param ref - the thing to generate a reference from
- */
-declare const reference: (ref: any, opts?: {}) => any;
-/**
- * Alias for b.reference()
- * @public
- * @function
- */
+declare const id: (id: string | builders.Identifier, ext?: any[], valueHints?: any) => any;
+declare const identifier: (id: string | builders.Identifier, ext?: any[], valueHints?: any) => any;
+declare const lookupValue: (url: any, code: any) => any;
+declare const mapSystems: (obj: any) => any;
+declare const mapValues: (obj: any, hints: any) => any;
 declare const ref: (ref: any, opts?: {}) => any;
-/**
- * Write a value to the target object using a typed key
- * Ie, if key is `value` and the value is a date time string,
- * this function will write `valueDateTime` to the object.
- *
- * This function is poorly named.
- * @public
- * @function
- * @param object - the object to write the composite key to
- * @param {string} key - the base key to use to write the value
- * @param value - some value to write to the object
- */
-declare const composite: (object: any, key: any, value: any) => void;
+declare const reference: (ref: any, opts?: {}) => any;
+declare const setSystemMap: (newMappings: any) => (state: any) => any;
+declare const setValues: (url: any, values: any, type?: string) => void;
+declare const value: (value: any, system: any, ...extra: any[]) => any;
 
 /**
   * Create a Appointment resource.
@@ -885,6 +781,7 @@ declare const composite: (object: any, key: any, value: any) => void;
   * @param {Period} [props.requestedPeriod] - Potential date/time interval(s) requested to allocate the appointment within
   */
 declare function appointment(type: "SzAppointment", props: Appointment_SzAppointment_Props): any;
+declare function appointment(props: Appointment_SzAppointment_Props): any;
 /**
   * Create a Condition resource.
   * @public
@@ -917,6 +814,7 @@ declare function appointment(type: "SzAppointment", props: Appointment_SzAppoint
   * @param {Annotation} [props.note] - Additional information about the Condition
   */
 declare function condition(type: "SzCondition", props: Condition_SzCondition_Props): any;
+declare function condition(props: Condition_SzCondition_Props): any;
 /**
   * Create a Encounter resource.
   * @public
@@ -933,7 +831,7 @@ declare function condition(type: "SzCondition", props: Condition_SzCondition_Pro
   * @param {Identifier} [props.identifier] - Identifier(s) by which this encounter is known
   * @param {string} [props.status] - planned | arrived | triaged | in-progress | onleave | finished | cancelled +
   * @param {BackboneElement} [props.statusHistory] - List of past encounter statuses
-  * @param {Coding} [props.class] - Department in which the encounter took place
+  * @param {string} [props.class] - Department in which the encounter took place. Accepts values: OPD, IPD, CO, SO
   * @param {BackboneElement} [props.classHistory] - List of past encounter classes
   * @param {CodeableConcept} [props.type] - Specific type of encounter
   * @param {CodeableConcept} [props.serviceType] - Specific type of service
@@ -955,6 +853,7 @@ declare function condition(type: "SzCondition", props: Condition_SzCondition_Pro
   * @param {Reference} [props.partOf] - Another Encounter this encounter is part of
   */
 declare function encounter(type: "SzEncounter", props: Encounter_SzEncounter_Props): any;
+declare function encounter(props: Encounter_SzEncounter_Props): any;
 /**
   * Create a EpisodeOfCare resource.
   * @public
@@ -982,6 +881,7 @@ declare function encounter(type: "SzEncounter", props: Encounter_SzEncounter_Pro
   * @param {Reference} [props.account] - The set of accounts that may be used for billing for this EpisodeOfCare
   */
 declare function episodeOfCare(type: "SzEpisodeOfCare", props: EpisodeOfCare_SzEpisodeOfCare_Props): any;
+declare function episodeOfCare(props: EpisodeOfCare_SzEpisodeOfCare_Props): any;
 /**
   * Create a Extension resource.
   * @public
@@ -1015,7 +915,7 @@ declare function extension(type: "SzTestingLabExtension", props: Extension_SzTes
   * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
   * @param {Identifier} [props.identifier] - Unique code or number identifying the location to its users
   * @param {string} [props.status] - active | suspended | inactive
-  * @param {Coding} [props.operationalStatus] - The operational status of the location (typically only for a bed/room)
+  * @param {string} [props.operationalStatus] - The operational status of the location (typically only for a bed/room)
   * @param {string} [props.name] - Location Name
   * @param {string} [props.alias] - A list of alternate names that the location is known as, or was known as, in the past
   * @param {string} [props.description] - Additional details about the location that could be displayed as further information to identify the location beyond its name
@@ -1032,6 +932,7 @@ declare function extension(type: "SzTestingLabExtension", props: Extension_SzTes
   * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for the location
   */
 declare function location(type: "SzLocation", props: Location_SzLocation_Props): any;
+declare function location(props: Location_SzLocation_Props): any;
 /**
   * Create a Medication resource.
   * @public
@@ -1055,6 +956,7 @@ declare function location(type: "SzLocation", props: Location_SzLocation_Props):
   * @param {BackboneElement} [props.batch] - Details about packaged medications
   */
 declare function medication(type: "SzMedication", props: Medication_SzMedication_Props): any;
+declare function medication(props: Medication_SzMedication_Props): any;
 /**
   * Create a MedicationDispense resource.
   * @public
@@ -1094,6 +996,7 @@ declare function medication(type: "SzMedication", props: Medication_SzMedication
   * @param {Reference} [props.eventHistory] - A list of relevant lifecycle events
   */
 declare function medicationDispense(type: "SzMedicationDispense", props: MedicationDispense_SzMedicationDispense_Props): any;
+declare function medicationDispense(props: MedicationDispense_SzMedicationDispense_Props): any;
 /**
   * Create a MedicationRequest resource.
   * @public
@@ -1141,6 +1044,7 @@ declare function medicationDispense(type: "SzMedicationDispense", props: Medicat
   * @param {Reference} [props.eventHistory] - A list of events of interest in the lifecycle
   */
 declare function medicationRequest(type: "SzMedicationRequest", props: MedicationRequest_SzMedicationRequest_Props): any;
+declare function medicationRequest(props: MedicationRequest_SzMedicationRequest_Props): any;
 /**
   * Create a Observation resource.
   * @public
@@ -1210,6 +1114,7 @@ declare function observation(type: "SzVitalSigns", props: Observation_SzVitalSig
   * @param {Reference} [props.endpoint] - Technical endpoints providing access to services operated for the organization
   */
 declare function organization(type: "SzOrganization", props: Organization_SzOrganization_Props): any;
+declare function organization(props: Organization_SzOrganization_Props): any;
 /**
   * Create a Patient resource.
   * @public
@@ -1241,6 +1146,7 @@ declare function organization(type: "SzOrganization", props: Organization_SzOrga
   * @param {BackboneElement} [props.link] - Link to another patient resource that concerns the same actual person
   */
 declare function patient(type: "SzPatient", props: Patient_SzPatient_Props): any;
+declare function patient(props: Patient_SzPatient_Props): any;
 /**
   * Create a Practitioner resource.
   * @public
@@ -1266,6 +1172,7 @@ declare function patient(type: "SzPatient", props: Patient_SzPatient_Props): any
   * @param {CodeableConcept} [props.communication] - A language the practitioner can use in patient communication
   */
 declare function practitioner(type: "SzPractitioner", props: Practitioner_SzPractitioner_Props): any;
+declare function practitioner(props: Practitioner_SzPractitioner_Props): any;
 /**
   * Create a Procedure resource.
   * @public
@@ -1309,6 +1216,7 @@ declare function practitioner(type: "SzPractitioner", props: Practitioner_SzPrac
   * @param {CodeableConcept} [props.usedCode] - Coded items used during the procedure
   */
 declare function procedure(type: "SzProcedure", props: Procedure_SzProcedure_Props): any;
+declare function procedure(props: Procedure_SzProcedure_Props): any;
 /**
   * Create a ServiceRequest resource.
   * @public
@@ -1387,6 +1295,7 @@ declare function serviceRequest(type: "SzReferral", props: ServiceRequest_SzRefe
   * @param {Annotation} [props.note] - Comments
   */
 declare function specimen(type: "SzLabSpecimen", props: Specimen_SzLabSpecimen_Props): any;
+declare function specimen(props: Specimen_SzLabSpecimen_Props): any;
 
-export { addExtension, appointment, c, cc, coding, composite, concept, condition, encounter, episodeOfCare, ext, extendSystemMap, extension, findExtension, id, identifier, location, mapSystems, medication, medicationDispense, medicationRequest, observation, organization, patient, practitioner, procedure, ref, reference, serviceRequest, setSystemMap, specimen, value };
+export { addExtension, appointment, c, cc, coding, composite, concept, condition, encounter, episodeOfCare, ext, extendSystemMap, extendValues, extension, findExtension, id, identifier, location, lookupValue, mapSystems, mapValues, medication, medicationDispense, medicationRequest, observation, organization, patient, practitioner, procedure, ref, reference, serviceRequest, setSystemMap, setValues, specimen, value };
 

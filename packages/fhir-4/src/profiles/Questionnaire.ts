@@ -58,6 +58,14 @@ export default function(props: Partial<Questionnaire_Props>) {
         resource.jurisdiction = dt.concept(props.jurisdiction);
     }
 
+    if (!_.isNil(props.code)) {
+        let src = props.code;
+        if (typeof src === 'string') {
+          src = dt.lookupValue('http://hl7.org/fhir/ValueSet/questionnaire-questions', src);
+         }
+        resource.code = dt.coding(src);
+    }
+
     if (!_.isNil(props.item)) {
         let src = props.item;
         if (!Array.isArray(src)) { src = [src]; }

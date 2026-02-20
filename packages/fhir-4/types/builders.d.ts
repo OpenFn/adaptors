@@ -381,7 +381,7 @@ interface ElementDefinition {
         valueSet: any;
     };
     /** Corresponding codes in terminologies */
-    code?: Coding;
+    code?: Coding[];
     /** Comments about the use of this element */
     comment?: markdown;
     /** Reference to invariant about presence */
@@ -502,7 +502,7 @@ interface ElementDefinition {
     /** Value must have at least these property values */
     pattern?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
     /** xmlAttr | xmlText | typeAttr | cdaText | xhtml */
-    representation?: string;
+    representation?: string[];
     /** Why this resource has been created */
     requirements?: markdown;
     /** Concise definition for space-constrained presentation */
@@ -654,11 +654,11 @@ interface Meta {
     /** Profiles this resource claims to conform to */
     profile?: any[];
     /** Security Labels applied to this resource */
-    security?: Coding;
+    security?: Coding[];
     /** Identifies where the resource comes from */
     source?: string;
     /** Tags applied to this resource */
-    tag?: Coding;
+    tag?: Coding[];
     /** Version specific identifier */
     versionId?: string;
 }
@@ -922,7 +922,7 @@ interface Signature {
     /** The technical format of the signed resources */
     targetFormat?: string;
     /** Indication of the reason the entity signed the object(s) */
-    type?: Coding;
+    type?: Coding[];
     /** When the signature was created */
     when?: string;
     /** Who signed */
@@ -4387,7 +4387,24 @@ type VisionPrescription_Props = {
     [key: string]: any;
 };
 
+/**
+ * Set the data value index
+ */
+declare const setValues: (url: any, values: any, type?: string) => void;
+/**
+ * Add new entries to the  data value index
+ */
+declare const extendValues: (url: any, values: any, type?: string) => void;
+/**
+ * Look up a code from a value set
+ */
+declare const lookupValue: (url: any, code: any) => any;
 declare const mapSystems: (obj: any) => any;
+/**
+ * Go over all the keys of an obejct and, based on the hints,
+ * expand values using value maps
+ */
+declare const mapValues: (obj: any, hints: any) => any;
 /**
  * Define a set of mapped system values.
  *
@@ -4408,15 +4425,14 @@ declare const extendSystemMap: (newMappings: any) => void;
  * @function
  * @param id - A string identifier, a FHIR identifier object, or an array of either.
  * @param ext - Any other arguments will be treated as extensions
- * @param {string} [system] - the string system to use by default if
  */
-declare const identifier: (id: string | Identifier, ...ext: any[]) => any;
+declare const identifier: (id: string | Identifier, ext?: any[], valueHints?: any) => any;
 /**
  * Alias for b.identifier()
  * @public
  * @function
  */
-declare const id: (id: string | Identifier, ...ext: any[]) => any;
+declare const id: (id: string | Identifier, ext?: any[], valueHints?: any) => any;
 /**
  * Add an extension to a resource (or object).
  * An object will be created and added to an `extension` array on the provided resource.
@@ -4470,8 +4486,8 @@ declare const findExtension: (obj: any, targetUrl: any, path: any) => any;
  * @param {string} code - the code value
  * @param {string} system - URL to the system. Will be mapped using the system map.
  */
-declare const coding: (code: string, system: string, extra?: Omit<Coding, "code" | "system">) => any;
-declare const c: (code: string, system: string, extra?: Omit<Coding, "code" | "system">) => any;
+declare function coding(code: string, system: string, extra?: Omit<Coding, 'code' | 'system'>): any;
+declare const c: typeof coding;
 /**
  * Create a value object { code, system } with optional system. Systems will be mapped.
  * @function
@@ -7297,5 +7313,5 @@ declare function verificationResult(props: VerificationResult_Props): any;
 declare function visionPrescription(type: "VisionPrescription", props: VisionPrescription_Props): any;
 declare function visionPrescription(props: VisionPrescription_Props): any;
 
-export { type Address, type Age, type Annotation, type Attachment, type BackboneElement, type CodeableConcept, type CodeableReference, type Coding, type ContactDetail, type ContactPoint, type Contributor, type Count, type DataRequirement, type Distance, type Dosage, type Duration, type Element, type ElementDefinition, type Expression, type Extension, type HumanName, type Identifier, type MarketingStatus, type Meta, type Money, type MoneyQuantity, type Narrative, type ParameterDefinition, type Period, type Population, type ProdCharacteristic, type ProductShelfLife, type Quantity, type Range, type Ratio, type RatioRange, type Reference, type RelatedArtifact, type SampledData, type Signature, type SimpleQuantity, type Timing, type TriggerDefinition, type UsageContext, account, activityDefinition, addExtension, administrableProductDefinition, adverseEvent, allergyIntolerance, appointment, appointmentResponse, type base64Binary, biologicallyDerivedProduct, bodyStructure, c, carePlan, careTeam, cc, chargeItem, chargeItemDefinition, citation, claim, claimResponse, clinicalImpression, clinicalUseDefinition, type code, coding, communication, communicationRequest, composite, concept, contract, coverage, coverageEligibilityRequest, coverageEligibilityResponse, detectedIssue, device, deviceDefinition, deviceMetric, deviceRequest, deviceUseStatement, diagnosticReport, domainResource, encounter, enrollmentRequest, enrollmentResponse, episodeOfCare, eventDefinition, evidence, evidenceReport, evidenceVariable, explanationOfBenefit, ext, extendSystemMap, extension, familyMemberHistory, findExtension, flag, goal, group, guidanceResponse, healthcareService, id, identifier, imagingStudy, immunization, immunizationEvaluation, immunizationRecommendation, ingredient, insurancePlan, invoice, library, list, location, manufacturedItemDefinition, mapSystems, type markdown, measure, measureReport, media, medication, medicationAdministration, medicationDispense, medicationKnowledge, medicationRequest, medicationStatement, medicinalProductDefinition, molecularSequence, nutritionOrder, nutritionProduct, observation, observationDefinition, type oid, organization, organizationAffiliation, packagedProductDefinition, patient, paymentNotice, paymentReconciliation, person, planDefinition, practitioner, practitionerRole, procedure, questionnaire, questionnaireResponse, ref, reference, regulatedAuthorization, relatedPerson, requestGroup, researchDefinition, researchElementDefinition, researchStudy, researchSubject, riskAssessment, schedule, serviceRequest, setSystemMap, slot, specimen, specimenDefinition, substance, substanceDefinition, supplyDelivery, supplyRequest, task, testReport, type url, type uuid, value, verificationResult, visionPrescription, type xhtml };
+export { type Address, type Age, type Annotation, type Attachment, type BackboneElement, type CodeableConcept, type CodeableReference, type Coding, type ContactDetail, type ContactPoint, type Contributor, type Count, type DataRequirement, type Distance, type Dosage, type Duration, type Element, type ElementDefinition, type Expression, type Extension, type HumanName, type Identifier, type MarketingStatus, type Meta, type Money, type MoneyQuantity, type Narrative, type ParameterDefinition, type Period, type Population, type ProdCharacteristic, type ProductShelfLife, type Quantity, type Range, type Ratio, type RatioRange, type Reference, type RelatedArtifact, type SampledData, type Signature, type SimpleQuantity, type Timing, type TriggerDefinition, type UsageContext, account, activityDefinition, addExtension, administrableProductDefinition, adverseEvent, allergyIntolerance, appointment, appointmentResponse, type base64Binary, biologicallyDerivedProduct, bodyStructure, c, carePlan, careTeam, cc, chargeItem, chargeItemDefinition, citation, claim, claimResponse, clinicalImpression, clinicalUseDefinition, type code, coding, communication, communicationRequest, composite, concept, contract, coverage, coverageEligibilityRequest, coverageEligibilityResponse, detectedIssue, device, deviceDefinition, deviceMetric, deviceRequest, deviceUseStatement, diagnosticReport, domainResource, encounter, enrollmentRequest, enrollmentResponse, episodeOfCare, eventDefinition, evidence, evidenceReport, evidenceVariable, explanationOfBenefit, ext, extendSystemMap, extendValues, extension, familyMemberHistory, findExtension, flag, goal, group, guidanceResponse, healthcareService, id, identifier, imagingStudy, immunization, immunizationEvaluation, immunizationRecommendation, ingredient, insurancePlan, invoice, library, list, location, lookupValue, manufacturedItemDefinition, mapSystems, mapValues, type markdown, measure, measureReport, media, medication, medicationAdministration, medicationDispense, medicationKnowledge, medicationRequest, medicationStatement, medicinalProductDefinition, molecularSequence, nutritionOrder, nutritionProduct, observation, observationDefinition, type oid, organization, organizationAffiliation, packagedProductDefinition, patient, paymentNotice, paymentReconciliation, person, planDefinition, practitioner, practitionerRole, procedure, questionnaire, questionnaireResponse, ref, reference, regulatedAuthorization, relatedPerson, requestGroup, researchDefinition, researchElementDefinition, researchStudy, researchSubject, riskAssessment, schedule, serviceRequest, setSystemMap, setValues, slot, specimen, specimenDefinition, substance, substanceDefinition, supplyDelivery, supplyRequest, task, testReport, type url, type uuid, value, verificationResult, visionPrescription, type xhtml };
 

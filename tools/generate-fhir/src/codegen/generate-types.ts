@@ -1,9 +1,10 @@
 import { namedTypes as n, builders as b, ASTNode } from 'ast-types';
 import { print, parse } from 'recast';
 import _ from 'lodash';
-import { getBuilderName, getInterfaceName, getTypeName } from './util';
-import { PropDef } from './generate-schema';
-import { MappingSpec } from './types';
+import { getBuilderName, getInterfaceName, getTypeName } from '../util';
+import { PropDef } from '../generate-schema';
+import { MappingSpec, Schema } from '../types';
+import { ValueSets } from './values';
 
 // Map some fhir types to js types
 // TODO we should be able to take these from mappings
@@ -24,10 +25,10 @@ const typeMap = {
 };
 
 export const generateType = (
-  resourceName: string,
   schema: Schema,
   mappings: MappingSpec,
   fhirTypes: Record<string, true> = {},
+  valueSets: ValueSets,
 ) => {
   const props = [];
 
@@ -72,6 +73,16 @@ export const generateType = (
     }
     // Map the simple types and remove duplicates
     t = _.uniq(t.map(incomingType => typeMap[incomingType] ?? incomingType));
+
+    if (s.valueSet) {
+      // If this type references a valueset, pull the types inline
+      // TODO as an optimisation, generate the type enum for the value set once, and reuse
+      const values = Object.keys(valueSets[s.valueSet] || {});
+      if (values.length) {
+        s.values = values;
+      }
+    }
+
     // Now map them to nodes
     const types = t.map(t =>
       createTypeNode(
@@ -155,15 +166,17 @@ const createTypeNode = (
 ) => {
   let node;
   // TODO restore and adapt this for values
-  // if (values) {
-  //   if (values.length > 1) {
-  //     return b.createUnionTypeNode(values.map(v => b.createStringLiteral(v)));
-  //   }
-  //   if (values.length === 1) {
-  //     // TODO an edge case, but for a single value
-  //     return b.createStringLiteral(values[0]);
-  //   }
-  // }
+  if (values) {
+    if (values.length > 1) {
+      return b.tsUnionType(
+        values.map(v => b.tsLiteralType(b.stringLiteral(v))),
+      );
+    }
+    if (values.length === 1) {
+      // TODO an edge case, but for a single value
+      return b.stringLiteral(values[0]);
+    }
+  }
   if (type) {
     // TODO why is this double wrapped??
     node = b.tsTypeReference(b.identifier(type));

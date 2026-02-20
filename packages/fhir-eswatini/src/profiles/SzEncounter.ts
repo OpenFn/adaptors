@@ -12,7 +12,7 @@ export type Encounter_SzEncounter_Props = {
     account?: FHIR.Reference[];
     appointment?: FHIR.Reference[];
     basedOn?: FHIR.Reference[];
-    class?: FHIR.Coding;
+    class?: "OPD" | "IPD" | "CO" | "SO";
     classHistory?: FHIR.BackboneElement[];
     contained?: any[];
     diagnosis?: FHIR.BackboneElement[];
@@ -66,6 +66,14 @@ export default function(props: Partial<Encounter_SzEncounter_Props>) {
 
             resource.statusHistory.push(_statusHistory);
         }
+    }
+
+    if (!_.isNil(props.class)) {
+        let src = props.class;
+        if (typeof src === 'string') {
+          src = dt.lookupValue('http://172.209.216.154:3447/fhir/ValueSet/SzEncounterClassificationVS', src);
+         }
+        resource.class = dt.coding(src);
     }
 
     if (!_.isNil(props.classHistory)) {

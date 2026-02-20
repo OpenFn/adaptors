@@ -1,13 +1,14 @@
 import { expect, assert } from 'chai';
 import { builders as b } from '../../src/index';
-import { builders } from '@openfn/language-fhir-4';
 
 const sampleBasic = {
   resourceType: 'Patient',
   id: 'SampleSzMalariaPatient',
 
   meta: {
-    profile: ['http://172.209.216.154:3447/fhir/StructureDefinition/SzPatient'],
+    profile: [
+      'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzPatient',
+    ],
   },
 
   name: [
@@ -23,7 +24,7 @@ const sampleBasic = {
         coding: [
           {
             system:
-              'http://172.209.216.154:3447/fhir/CodeSystem/SzPersonIdentificationsCS',
+              'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzPersonIdentificationsCS',
             code: 'PI',
             display: 'Personal ID Number',
           },
@@ -43,11 +44,13 @@ const sampleFull = {
   resourceType: 'Patient',
   id: 'SampleSzMalariaPatient',
   meta: {
-    profile: ['http://172.209.216.154:3447/fhir/StructureDefinition/SzPatient'],
+    profile: [
+      'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzPatient',
+    ],
   },
   text: {
     status: 'generated',
-    div: '<div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: Patient SampleSzMalariaPatient</b></p><a name="SampleSzMalariaPatient"> </a><a name="hcSampleSzMalariaPatient"> </a><div style="display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%"><p style="margin-bottom: 0px"/><p style="margin-bottom: 0px">Profile: <a href="StructureDefinition-SzPatient.html">Eswatini Patient Profile</a></p></div><p style="border: 1px #661aff solid; background-color: #e6e6ff; padding: 10px;">Jacob Samuel Gule  Male, DoB: 1990-01-01 ( Medical Record Number: M002111111-11\u00a0(use:\u00a0usual,\u00a0))</p><hr/><table class="grid"><tr><td style="background-color: #f3f5da" title="Other Id (see the one above)">Other Id:</td><td colspan="3">Personal ID Number/1999001000000\u00a0(use:\u00a0official,\u00a0)</td></tr><tr><td style="background-color: #f3f5da" title="Ways to contact the Patient">Contact Detail</td><td colspan="3">Mbabane </td></tr><tr><td style="background-color: #f3f5da" title="The nationality of the patient."><a href="http://hl7.org/fhir/extensions/5.3.0-ballot-tc1/StructureDefinition-patient-nationality.html">Patient Nationality</a></td><td colspan="3"><span title="Codes:{urn:iso:std:iso:3166 SWZ}">Eswatini</span></td></tr><tr><td style="background-color: #f3f5da" title="Extention for Eswatini Chiefdom"><a href="StructureDefinition-SzChiefdomExtension.html">Extention: Eswatini Chiefdom</a></td><td colspan="3"><span title="Codes:{http://172.209.216.154:3447/fhir/CodeSystem/SzChiefdomCS 7}">Lobamba</span></td></tr><tr><td style="background-color: #f3f5da" title="Extention for Eswatini Tinkhundla"><a href="StructureDefinition-SzInkhundlaExtension.html">Extention: Eswatini Inkhundla</a></td><td colspan="3"><span title="Codes:{http://172.209.216.154:3447/fhir/CodeSystem/SzTinkhundlaCS 3}">LOBAMBA</span></td></tr></table></div>',
+    div: '<div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: Patient SampleSzMalariaPatient</b></p><a name="SampleSzMalariaPatient"> </a><a name="hcSampleSzMalariaPatient"> </a><div style="display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%"><p style="margin-bottom: 0px"/><p style="margin-bottom: 0px">Profile: <a href="StructureDefinition-SzPatient.html">Eswatini Patient Profile</a></p></div><p style="border: 1px #661aff solid; background-color: #e6e6ff; padding: 10px;">Jacob Samuel Gule  Male, DoB: 1990-01-01 ( Medical Record Number: M002111111-11\u00a0(use:\u00a0usual,\u00a0))</p><hr/><table class="grid"><tr><td style="background-color: #f3f5da" title="Other Id (see the one above)">Other Id:</td><td colspan="3">Personal ID Number/1999001000000\u00a0(use:\u00a0official,\u00a0)</td></tr><tr><td style="background-color: #f3f5da" title="Ways to contact the Patient">Contact Detail</td><td colspan="3">Mbabane </td></tr><tr><td style="background-color: #f3f5da" title="The nationality of the patient."><a href="http://hl7.org/fhir/extensions/5.3.0-ballot-tc1/StructureDefinition-patient-nationality.html">Patient Nationality</a></td><td colspan="3"><span title="Codes:{urn:iso:std:iso:3166 SWZ}">Eswatini</span></td></tr><tr><td style="background-color: #f3f5da" title="Extention for Eswatini Chiefdom"><a href="StructureDefinition-SzChiefdomExtension.html">Extention: Eswatini Chiefdom</a></td><td colspan="3"><span title="Codes:{https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzChiefdomCS 7}">Lobamba</span></td></tr><tr><td style="background-color: #f3f5da" title="Extention for Eswatini Tinkhundla"><a href="StructureDefinition-SzInkhundlaExtension.html">Extention: Eswatini Inkhundla</a></td><td colspan="3"><span title="Codes:{https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzTinkhundlaCS 3}">LOBAMBA</span></td></tr></table></div>',
   },
 
   // TODO i should be able to provide nice mappings for extentions
@@ -76,12 +79,12 @@ const sampleFull = {
       },
     },
     {
-      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzInkhundlaExtension',
+      url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzInkhundlaExtension',
       valueCodeableConcept: {
         coding: [
           {
             system:
-              'http://172.209.216.154:3447/fhir/CodeSystem/SzTinkhundlaCS',
+              'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzTinkhundlaCS',
             code: '3',
             display: 'LOBAMBA',
           },
@@ -90,11 +93,12 @@ const sampleFull = {
       },
     },
     {
-      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzChiefdomExtension',
+      url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzChiefdomExtension',
       valueCodeableConcept: {
         coding: [
           {
-            system: 'http://172.209.216.154:3447/fhir/CodeSystem/SzChiefdomCS',
+            system:
+              'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzChiefdomCS',
             code: '7',
             display: 'Lobamba',
           },
@@ -110,7 +114,7 @@ const sampleFull = {
         coding: [
           {
             system:
-              'http://172.209.216.154:3447/fhir/CodeSystem/SzPersonIdentificationsCS',
+              'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzPersonIdentificationsCS',
             code: 'MR',
             display: 'Medical Record Number',
           },
@@ -125,7 +129,7 @@ const sampleFull = {
         coding: [
           {
             system:
-              'http://172.209.216.154:3447/fhir/CodeSystem/SzPersonIdentificationsCS',
+              'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzPersonIdentificationsCS',
             code: 'PI',
             display: 'Personal ID Number',
           },
@@ -175,7 +179,7 @@ describe('SzPatient', () => {
         // TODO I want to specify this inline, without using the function explicitly
         type: b.concept([
           'PI',
-          'http://172.209.216.154:3447/fhir/CodeSystem/SzPersonIdentificationsCS',
+          'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzPersonIdentificationsCS',
           // TODO we should be able to a) map the system and b) automate the display
           { display: 'Personal ID Number' },
         ]),
@@ -191,14 +195,8 @@ describe('SzPatient', () => {
           given: ['Jacob', 'Samuel'],
         },
       ],
-      // This should be automatable
-      meta: {
-        profile: [
-          'http://172.209.216.154:3447/fhir/StructureDefinition/SzPatient',
-        ],
-      },
     });
-    console.log(JSON.stringify(resource, null, 2));
+    // console.log(JSON.stringify(resource, null, 2));
     assert.deepEqual(resource, sampleBasic);
   });
 
@@ -238,5 +236,33 @@ describe('SzPatient', () => {
     });
     console.log(JSON.stringify(resource, null, 2));
     assert.deepEqual(resource, sampleBasic);
+  });
+
+  it('should value map identifier.type', () => {
+    const resource = b.patient('SzPatient', {
+      identifier: [
+        {
+          // we can't generate any of this information
+          use: 'official',
+          system: 'http://homeaffairs.sys',
+          value: '1999001000000',
+
+          // This type shorthand is great though
+          // In order to work, the builder will need to pass a value map hint
+          type: 'PI',
+        },
+      ],
+    });
+    assert.deepEqual(resource.identifier[0].type, {
+      coding: [
+        {
+          code: 'PI',
+          display: 'Personal ID Number',
+          system:
+            'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzPersonIdentificationsCS',
+        },
+      ],
+    });
+    assert.isOk(resource);
   });
 });

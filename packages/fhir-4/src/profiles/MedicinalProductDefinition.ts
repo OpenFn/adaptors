@@ -141,6 +141,14 @@ export default function(props: Partial<MedicinalProductDefinition_Props>) {
         resource.clinicalTrial = dt.reference(props.clinicalTrial);
     }
 
+    if (!_.isNil(props.code)) {
+        let src = props.code;
+        if (typeof src === 'string') {
+          src = dt.lookupValue('http://hl7.org/fhir/ValueSet/medication-codes', src);
+         }
+        resource.code = dt.coding(src);
+    }
+
     if (!_.isNil(props.name)) {
         let src = props.name;
         if (!Array.isArray(src)) { src = [src]; }

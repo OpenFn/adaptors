@@ -9,6 +9,52 @@ let systemMap = {};
 const datetimeregex =
   /^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?$/;
 
+let defaultValues = {};
+let userValues = {};
+
+/**
+ * Set the data value index
+ */
+export const setValues = (url, values, type = 'user') => {
+  if (type === 'default') {
+    defaultValues[url] ??= {};
+    defaultValues[url] = values;
+  } else {
+    userValues[url] ??= {};
+    userValues[url] = values;
+  }
+};
+
+/**
+ * Add new entries to the  data value index
+ */
+export const extendValues = (url, values, type = 'user') => {
+  if (type === 'default') {
+    defaultValues[url] ??= {};
+    Object.assign(defaultValues[url], values);
+  } else {
+    userValues[url] ??= {};
+    Object.assign(userValues[url], values);
+  }
+};
+
+/**
+ * Look up a code from a value set
+ */
+export const lookupValue = (url, code) => {
+  let value;
+
+  // first check for a user match
+  // TODO if this is a string, recycle it, if an object, return it
+  value = userValues[url]?.[code] ?? code;
+
+  // then look for a default match (in addition, not instead)
+  value = defaultValues[url]?.[value] ?? value;
+  return value;
+};
+
+// TODO load data mapping from state
+
 export const mapSystems = obj => {
   if (Array.isArray(obj)) {
     return obj.map(mapSystems);
@@ -21,6 +67,19 @@ export const mapSystems = obj => {
     };
   }
   return obj;
+};
+
+/**
+ * Go over all the keys of an obejct and, based on the hints,
+ * expand values using value maps
+ */
+export const mapValues = (obj, hints) => {
+  const newObj = { ...obj };
+  for (const key in obj) {
+    newObj[key] =
+      key in hints ? lookupValue(hints[key], obj[key]) : newObj[key];
+  }
+  return newObj;
 };
 
 /**
@@ -50,30 +109,31 @@ export const extendSystemMap = newMappings => {
  * @function
  * @param id - A string identifier, a FHIR identifier object, or an array of either.
  * @param ext - Any other arguments will be treated as extensions
- * @param {string} [system] - the string system to use by default if
  */
-export const identifier = (id: string | FHIR.Identifier, ...ext) => {
+export const identifier = (
+  id: string | FHIR.Identifier,
+  ext: any[] = [],
+  valueHints: any = {},
+) => {
   // If an array of inputs is passed in, map each element of the array
   // because it's very common to support a set of identifiers, rather than just one
   // Note that in this mode, each argument should be an object
   if (Array.isArray(id)) {
-    return id.map(i => identifier(i));
+    return id.map(i => identifier(i, ext, valueHints));
   }
 
-  const i: FHIR.Identifier = {};
+  const i: FHIR.Identifier = mapValues(id, valueHints);
   if (typeof id === 'string') {
     i.value = id;
   } else {
-    if (id.type) {
-      id.type = concept(id.type);
+    if (i.type) {
+      i.type = concept(i.type);
     }
-    Object.assign(i, id);
-    // TODO can we default the system anyhow?
   }
 
   // TODO warn for unexpected keys?
 
-  ext.forEach(e => {
+  ext?.forEach(e => {
     addExtension(i, e.url, e.value);
   });
 
@@ -162,16 +222,30 @@ export const findExtension = (obj, targetUrl, path) => {
  * @param {string} code - the code value
  * @param {string} system - URL to the system. Will be mapped using the system map.
  */
-export const coding = (
+// TODO provide good interface overrides
+// coding (value: string, map)
+// coding (tuple: [string, string, obj])
+// coding (code: string, system?: string, rest?)
+// coding (codingObj)
+export function coding(
   code: string,
   system: string,
   extra: Omit<FHIR.Coding, 'code' | 'system'> = {},
-) =>
-  mapSystems({
+) {
+  if (arguments.length === 1) {
+    if (Array.isArray(arguments[0])) {
+      const [code, system, extra] = arguments[0];
+      return coding(code, system, extra);
+    }
+    return mapSystems(arguments[0]);
+  }
+
+  return mapSystems({
     code,
     system,
     ...extra,
   });
+}
 
 export const c = coding;
 

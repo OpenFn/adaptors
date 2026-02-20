@@ -48,9 +48,10 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
         resource.identifier = [];
 
         for (let item of src) {
-            let _identifier = {
-                ...item
-            };
+            let _identifier = dt.identifier(item, [], {
+                "use": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.1",
+                "type": "http://172.209.216.154:3447/fhir/ValueSet/PersonIdentifiersVS"
+            });
 
             _identifier = dt.mapSystems(_identifier);
             resource.identifier.push(_identifier);
