@@ -11,7 +11,7 @@ import {
 } from './util';
 import { Mapping, MappingSpec, ProfileSpec, Schema } from './types';
 import { generateType } from './generate-types';
-import generateValues from './codegen/values';
+import generateValues, { ValueSets } from './codegen/values';
 
 const RESOURCE_NAME = 'resource';
 const INPUT_NAME = 'props';
@@ -115,6 +115,7 @@ const generateCode = (
         schema[resourceType],
         options.simpleSignatures,
         mappings.propsToIgnoreInDocs,
+        options.valueSets,
       ),
     );
   }
@@ -224,7 +225,11 @@ const generateProfile = (
 export default generateCode;
 
 // For each prop in the schema, generate a prop in jsdocs
-const generateJsDocs = (schema: Schema[], ignore: string[] = []) => {
+const generateJsDocs = (
+  schema: Schema[],
+  ignore: string[] = [],
+  valueSets: ValueSets,
+) => {
   const props: string[] = [];
 
   // TODO for now, just generate for the first schema
@@ -235,8 +240,24 @@ const generateJsDocs = (schema: Schema[], ignore: string[] = []) => {
   );
   for (const propName of validProps) {
     const prop = profile.props[propName];
-    // TODO do I need the typemap here?
-    props.push(`{${prop.type.join('|')}} [props.${propName}] - ${prop.desc}`);
+
+    let humanType;
+    let desc = prop.desc;
+    if (prop.type.includes('Coding')) {
+      // If this is a Coding, we should represent it as a string
+      // and if possible, lit the values
+      humanType = 'string';
+      if (prop.valueSet) {
+        const values = Object.keys(valueSets[prop.valueSet] || {});
+        if (values.length) {
+          desc += `. Accepts values: ${values.join(', ')}`;
+        }
+      }
+    } else {
+      humanType = prop.type.join('|');
+    }
+
+    props.push(`{${humanType}} [props.${propName}] - ${desc}`);
   }
 
   return props.map(p => `  * @param ${p}`).join('\n');
@@ -253,6 +274,7 @@ const generateEntry = (
   profiles: Schema[],
   simpleSignatures?: boolean,
   propsToIgnoreInDocs: string[] = [],
+  valueSets: ValueSets = {},
 ) => {
   // TODO I think I want to rip out the simple signatures flag and just say:
   // for any schema with only a single profile, make it optional to pass the profile string
@@ -378,7 +400,7 @@ const generateEntry = (
   * @function
   * @param {string} type - A profile type: one of ${profiles.map(p => p.id).join(',')}
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
-${generateJsDocs(profiles, propsToIgnoreInDocs)}
+${generateJsDocs(profiles, propsToIgnoreInDocs, valueSets)}
   */
   `);
   } else {
@@ -387,7 +409,7 @@ ${generateJsDocs(profiles, propsToIgnoreInDocs)}
   * @public
   * @function
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
-${generateJsDocs(profiles, propsToIgnoreInDocs)}
+${generateJsDocs(profiles, propsToIgnoreInDocs, valueSets)}
   */
   `);
   }
