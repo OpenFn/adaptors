@@ -238,7 +238,7 @@ describe('SzPatient', () => {
     assert.deepEqual(resource, sampleBasic);
   });
 
-  it('should value map identifier.type', () => {
+  it('should value-map identifier.type', () => {
     const resource = b.patient('SzPatient', {
       identifier: [
         {
@@ -262,6 +262,70 @@ describe('SzPatient', () => {
             'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzPersonIdentificationsCS',
         },
       ],
+    });
+    assert.isOk(resource);
+  });
+
+  it.only('should map extension inkhundla with an extension value', () => {
+    const resource = b.patient('SzPatient', {
+      // So here we've passed the value straight into the extension
+      // No value mapping
+      inkhundla: {
+        coding: [
+          {
+            system:
+              'http://172.209.216.154:3447/fhir/CodeSystem/SzTinkhundlaCS',
+            code: '3',
+            display: 'LOBAMBA',
+          },
+        ],
+        text: 'LOBAMBA',
+      },
+    });
+
+    // And the extension should be properly mapped
+    assert.deepEqual(resource.extension[0], {
+      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzInkhundlaExtension',
+      valueCodeableConcept: {
+        coding: [
+          {
+            system:
+              'http://172.209.216.154:3447/fhir/CodeSystem/SzTinkhundlaCS',
+            code: '3',
+            display: 'LOBAMBA',
+          },
+        ],
+        text: 'LOBAMBA',
+      },
+    });
+    assert.isOk(resource);
+  });
+
+  it.only('should map extension inkundla with a mapped string value', () => {
+    const resource = b.patient('SzPatient', {
+      // Now we just pass a mapped code straight through and the rest will be generated
+      // shame that the display/code thing doesn't work great here
+      inkhundla: '3',
+    });
+
+    // And the extension should be properly mapped
+    assert.deepEqual(resource.extension[0], {
+      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzInkhundlaExtension',
+
+      // This structure is actually pretty hard to generate
+      // mostly because of the text field
+      valueCodeableConcept: {
+        coding: [
+          {
+            system:
+              'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzTinkhundlaCS',
+            code: '3',
+            display: 'LOBAMBA',
+          },
+        ],
+        // If we ignore text here, it's fine
+        // text: 'LOBAMBA',
+      },
     });
     assert.isOk(resource);
   });

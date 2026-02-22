@@ -161,6 +161,30 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
         }
     }
 
+    // hand written extension handling
+    if (!_.isNil(props.inkhundla)) {
+        let src = props.inkhundla;
+
+        // Map the value first
+        // TODO: should I convert to a concept first, and THEN map the value?
+        src = dt.lookupValue('https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzTinkhundlaCS', src);
+
+        // Now map the value into the correct type - codeable concept
+        src = dt.concept(src);
+
+        // Difficulty!!
+        // The concept can have a coding and text
+        // but in the case of inkhundla I only want to accept the coding
+        // how will I handle text in the generator?
+
+        // Now add the prop as an extension
+        dt.addExtension(
+            resource,
+            'http://172.209.216.154:3447/fhir/StructureDefinition/SzInkhundlaExtension',
+            src,
+        )
+    }
+
     resource.meta = {
       profile: [
         `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
