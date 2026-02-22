@@ -2,7 +2,7 @@
 
 export default {
   include: [],
-  // include: ['Encounter'],
+  include: ['Patient'],
   // // include: ['Appointment', 'Extension'],
   exclude: [],
   overrides: {},
