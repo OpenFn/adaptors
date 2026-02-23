@@ -30,7 +30,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "ajv": "^6.12.6",
+    "ajv": "^6.14.0",
     "undici": "^5.29.0"
   },
   "devDependencies": {
