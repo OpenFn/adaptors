@@ -48,10 +48,10 @@ const sampleFull = {
       'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzPatient',
     ],
   },
-  text: {
-    status: 'generated',
-    div: '<div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: Patient SampleSzMalariaPatient</b></p><a name="SampleSzMalariaPatient"> </a><a name="hcSampleSzMalariaPatient"> </a><div style="display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%"><p style="margin-bottom: 0px"/><p style="margin-bottom: 0px">Profile: <a href="StructureDefinition-SzPatient.html">Eswatini Patient Profile</a></p></div><p style="border: 1px #661aff solid; background-color: #e6e6ff; padding: 10px;">Jacob Samuel Gule  Male, DoB: 1990-01-01 ( Medical Record Number: M002111111-11\u00a0(use:\u00a0usual,\u00a0))</p><hr/><table class="grid"><tr><td style="background-color: #f3f5da" title="Other Id (see the one above)">Other Id:</td><td colspan="3">Personal ID Number/1999001000000\u00a0(use:\u00a0official,\u00a0)</td></tr><tr><td style="background-color: #f3f5da" title="Ways to contact the Patient">Contact Detail</td><td colspan="3">Mbabane </td></tr><tr><td style="background-color: #f3f5da" title="The nationality of the patient."><a href="http://hl7.org/fhir/extensions/5.3.0-ballot-tc1/StructureDefinition-patient-nationality.html">Patient Nationality</a></td><td colspan="3"><span title="Codes:{urn:iso:std:iso:3166 SWZ}">Eswatini</span></td></tr><tr><td style="background-color: #f3f5da" title="Extention for Eswatini Chiefdom"><a href="StructureDefinition-SzChiefdomExtension.html">Extention: Eswatini Chiefdom</a></td><td colspan="3"><span title="Codes:{https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzChiefdomCS 7}">Lobamba</span></td></tr><tr><td style="background-color: #f3f5da" title="Extention for Eswatini Tinkhundla"><a href="StructureDefinition-SzInkhundlaExtension.html">Extention: Eswatini Inkhundla</a></td><td colspan="3"><span title="Codes:{https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzTinkhundlaCS 3}">LOBAMBA</span></td></tr></table></div>',
-  },
+  // text: {
+  //   status: 'generated',
+  //   div: '<div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: Patient SampleSzMalariaPatient</b></p><a name="SampleSzMalariaPatient"> </a><a name="hcSampleSzMalariaPatient"> </a><div style="display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%"><p style="margin-bottom: 0px"/><p style="margin-bottom: 0px">Profile: <a href="StructureDefinition-SzPatient.html">Eswatini Patient Profile</a></p></div><p style="border: 1px #661aff solid; background-color: #e6e6ff; padding: 10px;">Jacob Samuel Gule  Male, DoB: 1990-01-01 ( Medical Record Number: M002111111-11\u00a0(use:\u00a0usual,\u00a0))</p><hr/><table class="grid"><tr><td style="background-color: #f3f5da" title="Other Id (see the one above)">Other Id:</td><td colspan="3">Personal ID Number/1999001000000\u00a0(use:\u00a0official,\u00a0)</td></tr><tr><td style="background-color: #f3f5da" title="Ways to contact the Patient">Contact Detail</td><td colspan="3">Mbabane </td></tr><tr><td style="background-color: #f3f5da" title="The nationality of the patient."><a href="http://hl7.org/fhir/extensions/5.3.0-ballot-tc1/StructureDefinition-patient-nationality.html">Patient Nationality</a></td><td colspan="3"><span title="Codes:{urn:iso:std:iso:3166 SWZ}">Eswatini</span></td></tr><tr><td style="background-color: #f3f5da" title="Extention for Eswatini Chiefdom"><a href="StructureDefinition-SzChiefdomExtension.html">Extention: Eswatini Chiefdom</a></td><td colspan="3"><span title="Codes:{https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzChiefdomCS 7}">Lobamba</span></td></tr><tr><td style="background-color: #f3f5da" title="Extention for Eswatini Tinkhundla"><a href="StructureDefinition-SzInkhundlaExtension.html">Extention: Eswatini Inkhundla</a></td><td colspan="3"><span title="Codes:{https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzTinkhundlaCS 3}">LOBAMBA</span></td></tr></table></div>',
+  // },
 
   // TODO i should be able to provide nice mappings for extentions
   // b.ext('Eswatini', 'patient-pationality')
@@ -106,6 +106,10 @@ const sampleFull = {
         text: 'Lobamba',
       },
     },
+    {
+      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzRegistrationDate',
+      valueDateTime: '2025-06-01T10:00:00Z',
+    },
   ],
   identifier: [
     {
@@ -146,15 +150,15 @@ const sampleFull = {
     },
   ],
   gender: 'male',
-  birthDate: '1990-01-01',
-  _birthDate: {
-    extension: [
-      {
-        url: 'http://hl7.org/fhir/StructureDefinition/patient-birthTime',
-        valueDateTime: '2000-01-01T14:35:45-05:00',
-      },
-    ],
-  },
+  // birthDate: '1990-01-01',
+  // _birthDate: {
+  //   extension: [
+  //     {
+  //       url: 'http://hl7.org/fhir/StructureDefinition/patient-birthTime',
+  //       valueDateTime: '2000-01-01T14:35:45-05:00',
+  //     },
+  //   ],
+  // },
   address: [
     {
       city: 'Mbabane',
@@ -200,6 +204,8 @@ describe.only('SzPatient', () => {
     assert.deepEqual(resource, sampleBasic);
   });
 
+  // TODO shorthand props need to be deleted
+  // TODO birthDate/time need mapping
   it.skip('should create a full SzPatient with shorthand input', () => {
     // TODO profile names should be code assisted
     const resource = b.patient('SzPatient', {
@@ -223,18 +229,20 @@ describe.only('SzPatient', () => {
           given: ['Jacob', 'Samuel'],
         },
       ],
-      nationality: 'SWZ',
+      // nationality: 'SWZ', TODO - map base fhir-4 types
       inkhundla: 'LOBAMBA',
       chiefdom: 'Lobamba',
-      birthDate: '1990-01-01',
-      birthTime: '2000-01-01T14:35:45-05:00',
+      registrationDate: '2025-06-01T10:00:00Z',
+      // birthDate: '1990-01-01',   // TODO weird bug
+      // birthTime: '2000-01-01T14:35:45-05:00', // TODO weird bug
       address: [
         {
           city: 'Mbabane',
         },
       ],
     });
-    assert.deepEqual(resource, sampleBasic);
+    console.log(JSON.stringify(resource, null, 2));
+    assert.deepEqual(resource, sampleFull);
   });
 
   it('should value-map identifier.type', () => {
