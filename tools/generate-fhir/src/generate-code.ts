@@ -201,7 +201,6 @@ const generateProfile = (
     ),
   );
 
-  // TODO need to handle valuesets here
   const typedef = generateType(
     profile,
     {
@@ -477,7 +476,9 @@ const mapProps = (schema, mappings) => {
 
     const spec = schema.props[key] as Schema;
     if (spec) {
-      if (spec.isComposite) {
+      if (spec.extension) {
+        props.push(mapExtension(key, mappings[key], spec));
+      } else if (spec.isComposite) {
         // TODO a composite def may also have a typedef - how do we handle this?
         // maybe it's ok just to assign the top object hey?
         props.push(mapComposite(key, mappings[key], spec));
@@ -804,22 +805,22 @@ const mapCoding = (propName: string, mapping: Mapping, schema: Schema) => {
   return ifPropInInput(propName, statements, elseStmnt);
 };
 
-// Map a property of the input to some extension
-// This will add a new object to the Extension array
-const mapExtension = (propName: string, mapping: Mapping) => {
-  const callBuilder = b.expressionStatement(
-    b.callExpression(
-      b.memberExpression(b.identifier('dt'), b.identifier('addExtension')),
-      [
-        b.identifier(RESOURCE_NAME),
-        b.stringLiteral(mapping.extension),
-        b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName)),
-      ],
-    ),
-  );
+// // Map a property of the input to some extension
+// // This will add a new object to the Extension array
+// const mapExtension = (propName: string, mapping: Mapping) => {
+//   const callBuilder = b.expressionStatement(
+//     b.callExpression(
+//       b.memberExpression(b.identifier('dt'), b.identifier('addExtension')),
+//       [
+//         b.identifier(RESOURCE_NAME),
+//         b.stringLiteral(mapping.extension),
+//         b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName)),
+//       ],
+//     ),
+//   );
 
-  return ifPropInInput(propName, [callBuilder]);
-};
+//   return ifPropInInput(propName, [callBuilder]);
+// };
 
 const mapReference = (propName: string, _mapping: Mapping, schema: Schema) => {
   const statements: StatementKind[] = [];
@@ -859,6 +860,79 @@ const mapComposite = (propName: string, _mapping: Mapping, _schema: Schema) => {
     propName,
     [deleteKey, callBuilder].map(b.expressionStatement),
   );
+};
+
+const mapExtension = (propName: string, _mapping: Mapping, schema: Schema) => {
+  const statements: StatementKind[] = [];
+
+  // first extract the prop
+  statements.push(
+    b.variableDeclaration('let', [
+      b.variableDeclarator(
+        b.identifier('src'),
+        b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName)),
+      ),
+    ]),
+  );
+
+  // Map any values associated with the input
+  if (schema.valueSet) {
+    const ast = parse(
+      `if (typeof src === 'string') {
+  src = dt.lookupValue('${schema.valueSet}', src);
+ }`,
+    );
+    statements.push(ast.program.body[0]);
+  }
+
+  // run a typed builder
+  // note that (right now) syntax overlap is subtly different to the main mapping functoins
+  // So, we duplicate!
+  if (schema.type.includes('CodeableConcept')) {
+    statements.push(
+      b.expressionStatement(
+        b.assignmentExpression(
+          '=',
+          b.identifier('src'),
+          b.callExpression(
+            b.memberExpression(b.identifier('dt'), b.identifier('concept')),
+            [b.identifier('src')],
+          ),
+        ),
+      ),
+    );
+    statements.push(
+      b.expressionStatement(
+        b.callExpression(
+          b.memberExpression(
+            b.identifier('dt'),
+            b.identifier('ensureConceptText'),
+          ),
+          [b.identifier('src')],
+        ),
+      ),
+    );
+  } else {
+    console.warn(
+      `WARNING: Failed to generate typed builder ${propName} for extension ${schema.extension}`,
+    );
+  }
+  // TODO handle other types
+
+  // add the extension
+  statements.push(
+    b.expressionStatement(
+      b.callExpression(
+        b.memberExpression(b.identifier('dt'), b.identifier('addExtension')),
+        [
+          b.identifier('resource'),
+          b.stringLiteral(schema.extension),
+          b.identifier('src'),
+        ],
+      ),
+    ),
+  );
+  return ifPropInInput(propName, statements);
 };
 
 const mapIdentifier = (name: string, _mapping: Mapping, schema: Schema) => {
