@@ -56,11 +56,7 @@ export const request = async (configuration = {}, method, path, options) => {
       else if (ArrayBuffer.isView(response.body)) buf = Buffer.from(response.body.buffer);
 
       if (buf) {
-        if (typeof response.body !== 'object' || !response.body.pdf) {
-          response.body = { pdf: buf.toString('base64') };
-        } else {
-          response.body.pdf = buf.toString('base64');
-        }
+        response.body = buf.toString('base64');
       }
     } else if (response.body && Buffer.isBuffer(response.body)) {
       if (/application\/json/i.test(contentType) || opts.parseAs === 'json') {

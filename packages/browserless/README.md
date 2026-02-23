@@ -20,7 +20,7 @@ for required and optional `configuration` properties.
 
 ## Exports
 
-- `createPDF(input, options)` — Operation that calls the `/pdf` endpoint and returns a state with `data: { pdf: '<base64>' }` for binary responses.
+- `createPDF(input, options)` — Operation that calls the `/pdf` endpoint and returns a base64 string for binary responses.
 - `request(method, path, options)` — Generic Browserless-authenticated HTTP operation.
 
 ## browserless Configuration
@@ -30,21 +30,6 @@ for required and optional `configuration` properties.
 
 ---
 
-## Examples
-
-### Create a PDF from HTML
-
-```javascript
-import { createPDF } from '@openfn/language-browserless';
-
-const state = {
-  configuration: {
-    baseUrl: 'https://production-sfo.browserless.io',
-    token: process.env.BROWSERLESS_TOKEN
-  }
-};
-
-```
 ## Development
 
 Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
