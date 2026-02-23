@@ -20,13 +20,13 @@ for required and optional `configuration` properties.
 
 ## Exports
 
-- `createPDF(input, options)` — Operation that calls the `/pdf` endpoint and returns a base64 string for binary responses.
-- `request(method, path, options)` — Generic Browserless-authenticated HTTP operation.
+- `createPDF(input, options)`:  Operation that calls the `/pdf` endpoint and returns a base64 string for binary responses.
+- `request(method, path, options)`:  Generic Browserless-authenticated HTTP operation.
 
 ## browserless Configuration
 
-- `state.configuration.baseUrl` (optional) — Base URL for Browserless (default: `https://production-sfo.browserless.io`).
-- `state.configuration.token` (required) — Browserless API token for authentication.
+- `state.configuration.baseUrl` (optional): Base URL for Browserless (default: `https://production-sfo.browserless.io`).
+- `state.configuration.token` (required):  Browserless API token for authentication.
 
 ---
 
