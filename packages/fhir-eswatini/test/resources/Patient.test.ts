@@ -383,4 +383,16 @@ describe.only('SzPatient', () => {
       },
     });
   });
+
+  it('should map extension registrationDate with a mapped string value', () => {
+    const resource = b.patient('SzPatient', {
+      registrationDate: '2025-06-01T10:00:00Z',
+    });
+
+    // And the extension should be properly mapped
+    assert.deepEqual(resource.extension[0], {
+      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzRegistrationDate',
+      valueDateTime: '2025-06-01T10:00:00Z',
+    });
+  });
 });
