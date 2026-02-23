@@ -266,7 +266,7 @@ describe('SzPatient', () => {
     assert.isOk(resource);
   });
 
-  it.only('should map extension inkhundla with an extension value', () => {
+  it('should map extension inkhundla with an extension value', () => {
     const resource = b.patient('SzPatient', {
       // So here we've passed the value straight into the extension
       // No value mapping
@@ -301,7 +301,43 @@ describe('SzPatient', () => {
     assert.isOk(resource);
   });
 
-  it.only('should map extension inkundla with a mapped string value', () => {
+  // it('should map extension inkundla with a concpet', () => {
+  //   const resource = b.patient('SzPatient', {
+  //     // In this one we pass a concept as a { coding, text } object
+  //     // Which I'm not eve suren makes sense tbh?
+  //     // inkhundla: {
+  //     //   coding: '3',
+  //     //   text: 'LOBAMBA',
+  //     // },
+
+  //     // This is more true to the concept builder API
+  //     // An array of codings, followed by extras
+  //     // But it's awful, awful UX
+  //     inkhundla: [['3'], { text: 'LOBAMA' }],
+  //   });
+
+  //   // And the extension should be properly mapped
+  //   assert.deepEqual(resource.extension[0], {
+  //     url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzInkhundlaExtension',
+
+  //     // This structure is actually pretty hard to generate
+  //     // mostly because of the text field
+  //     valueCodeableConcept: {
+  //       coding: [
+  //         {
+  //           system:
+  //             'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzTinkhundlaCS',
+  //           code: '3',
+  //           display: 'LOBAMBA',
+  //         },
+  //       ],
+  //       text: 'LOBAMBA',
+  //     },
+  //   });
+  //   assert.isOk(resource);
+  // });
+
+  it('should map extension inkundla with a mapped string value', () => {
     const resource = b.patient('SzPatient', {
       // Now we just pass a mapped code straight through and the rest will be generated
       // shame that the display/code thing doesn't work great here
@@ -324,7 +360,43 @@ describe('SzPatient', () => {
           },
         ],
         // If we ignore text here, it's fine
-        // text: 'LOBAMBA',
+        text: 'LOBAMBA',
+      },
+    });
+    assert.isOk(resource);
+  });
+
+  it('should map extension inkundla with a custom mapped string value', () => {
+    // Define mappings in job code
+    b.setValues(
+      'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzTinkhundlaCS',
+      {
+        LO: '3',
+      },
+    );
+
+    const resource = b.patient('SzPatient', {
+      // Now I can pass whatever value I want and it'll magically map
+      inkhundla: 'LO',
+    });
+
+    // And the extension should be properly mapped
+    assert.deepEqual(resource.extension[0], {
+      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzInkhundlaExtension',
+
+      // This structure is actually pretty hard to generate
+      // mostly because of the text field
+      valueCodeableConcept: {
+        coding: [
+          {
+            system:
+              'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzTinkhundlaCS',
+            code: '3',
+            display: 'LOBAMBA',
+          },
+        ],
+        // If we ignore text here, it's fine
+        text: 'LOBAMBA',
       },
     });
     assert.isOk(resource);

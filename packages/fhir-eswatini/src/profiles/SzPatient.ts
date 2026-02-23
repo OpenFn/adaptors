@@ -171,6 +171,7 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
 
         // Now map the value into the correct type - codeable concept
         src = dt.concept(src);
+        dt.ensureConceptText(src)
 
         // Difficulty!!
         // The concept can have a coding and text
