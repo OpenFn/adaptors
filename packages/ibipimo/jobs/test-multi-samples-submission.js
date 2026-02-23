@@ -1,4 +1,4 @@
-// Test job pour soumettre plusieurs échantillons en une seule requête
+// Test job to submit multiple samples in a single request
 
 const payload = {
   siteid: '22222222',

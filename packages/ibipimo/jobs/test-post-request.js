@@ -1,4 +1,4 @@
-// Test job pour envoyer une demande de charge virale
+// Test job to send a viral load request
 const payload = {
   siteid: '22222222',
   samples: [

@@ -1,4 +1,4 @@
-// Job avancé - Test des fonctions de traitement IBIPIMO
+// Advanced jobs - Testing IBIPIMO processing functions
 
 const payloadResult = {
   siteid: '22222222',
@@ -24,10 +24,10 @@ const payloadRequest = {
   ],
 };
 
-// Étape 1: Récupérer les résultats et les traiter
+// Step 1:  Retrieve and process results from IBIPIMO
 getViralLoadResults(payloadResult);
 
-// Étape 2: Traiter la réponse IBIPIMO
+// Step 2: Process IBIPIMO response
 processViralLoadResults((state, processResults) => {
   const processed = processResults(state.data);
 
@@ -44,10 +44,10 @@ processViralLoadResults((state, processResults) => {
   };
 });
 
-// Étape 3: Soumettre de nouveaux échantillons si nécessaire
+// Step 3: Submit new samples if necessary
 postViralLoadRequest(payloadRequest);
 
-// Étape 4: Traiter la réponse de soumission
+// Step 4: Process submission response
 processViralLoadSubmission((state, processSubmission) => {
   const submission = processSubmission(state.data);
 

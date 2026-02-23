@@ -1,4 +1,4 @@
-// Test job générique avec la fonction request
+// Test generic job with the post function
 
 const payload = {
   siteid: '22222222',

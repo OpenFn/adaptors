@@ -1,4 +1,4 @@
-// Test job pour récupérer les résultats de charge virale
+// Test job to retrieve viral load results
 
 const payload = {
   siteid: '22222222',
