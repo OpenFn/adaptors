@@ -198,7 +198,10 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
 
   // TODO better control of this path
   // load schemas direct from the file so that we can skip schema gen
-  const valueSetsRaw = await readFile('schema/valuesets.json', 'utf8');
+  const valueSetsRaw = await readFile(
+    path.resolve(adaptorPath, 'schema/valuesets.json'),
+    'utf8',
+  );
   let valueSets: ValueSets;
   if (valueSetsRaw) {
     valueSets = JSON.parse(valueSetsRaw);
