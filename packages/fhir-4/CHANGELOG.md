@@ -1,6 +1,6 @@
 # @openfn/language-fhir-4
 
-## 0.2.10
+## 0.2.10 - 24 February 2026
 
 ### Patch Changes
 
@@ -29,7 +29,7 @@
 - d935dda: Update d.ts definition structure
 - a78d53e: Rebuild on latest generator (should be no behaviour differences)"
 
-## 0.2.6
+## 0.2.6 - 30 January 2026
 
 ### Patch Changes
 
@@ -57,27 +57,27 @@
 
 - 4e531fe: Fix mappings for `CodeableConcept`
 
-## 0.2.2
+## 0.2.2 - 29 October 2025
 
 ### Patch Changes
 
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 0.2.1
+## 0.2.1 - 23 October 2025
 
 ### Patch Changes
 
 - fccecdc: Sort generated `fhir` types alphabetically
 
-## 0.2.0
+## 0.2.0 - 21 October 2025
 
 ### Minor Changes
 
 - 2040fa4: Updated `datetimeregex` to correctly distinguish betwen datetime and
   strings
 
-## 0.1.12
+## 0.1.12 - 16 October 2025
 
 ### Patch Changes
 

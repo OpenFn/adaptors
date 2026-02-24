@@ -36,7 +36,7 @@
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 1.0.0
+## 1.0.0 - 29 October 2025
 
 - Implemented `get()`, `post()`, and `request()` functions that support getting
   and creating resources in `et-mfr`

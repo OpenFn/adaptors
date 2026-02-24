@@ -22,6 +22,6 @@
 
 - Forwarding custom http headers to built in `getAccessToken` request
 
-## 1.0.0
+## 1.0.0 - 20 November 2025
 
 Initial release (renamed from `eapts`)

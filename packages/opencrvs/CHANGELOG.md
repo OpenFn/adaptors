@@ -1,11 +1,11 @@
 # @openfn/language-opencrvs
 
-## 1.0.17
+## 1.0.17 - 24 February 2026
 
 ### Patch Changes
 
-- Updated dependencies [213115b]
-- Updated dependencies [6ef5351]
+- Updated dependencies \[213115b]
+- Updated dependencies \[6ef5351]
   - @openfn/language-fhir-4@0.2.10
 
 ## 1.0.16 - 24 February 2026
@@ -33,7 +33,7 @@
 - Updated dependencies \[a78d53e]
   - @openfn/language-fhir-4@0.2.7
 
-## 1.0.13
+## 1.0.13 - 30 January 2026
 
 ### Patch Changes
 
@@ -65,7 +65,7 @@
 - Updated dependencies \[4e531fe]
   - @openfn/language-fhir-4@0.2.3
 
-## 1.0.9
+## 1.0.9 - 29 October 2025
 
 ### Patch Changes
 
@@ -73,21 +73,21 @@
   - @openfn/language-common@3.1.2
   - @openfn/language-fhir-4@0.2.2
 
-## 1.0.8
+## 1.0.8 - 23 October 2025
 
 ### Patch Changes
 
 - Updated dependencies \[fccecdc]
   - @openfn/language-fhir-4@0.2.1
 
-## 1.0.7
+## 1.0.7 - 21 October 2025
 
 ### Patch Changes
 
 - Updated dependencies \[2040fa4]
   - @openfn/language-fhir-4@0.2.0
 
-## 1.0.6
+## 1.0.6 - 16 October 2025
 
 ### Patch Changes
 
@@ -131,6 +131,6 @@
 
 - ad57dbf: Update `queryEvents()` examples
 
-## 1.0.0
+## 1.0.0 - 14 July 2025
 
 Implement `queryEvents()` and `createBirthRecord()` functions from `OpenCRVS`

@@ -12,6 +12,7 @@ async function fetchVersions(adaptor) {
       version,
       date: data.time?.[version] || 'unknown',
     }));
+    console.log(versionList);
     return { adaptor, versions: versionList };
   } catch (error) {
     console.error(`❌ Error fetching ${adaptor}: ${error.message}`);

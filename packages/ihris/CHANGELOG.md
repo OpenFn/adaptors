@@ -1,11 +1,11 @@
 # @openfn/language-ihris
 
-## 1.0.7
+## 1.0.7 - 24 February 2026
 
 ### Patch Changes
 
-- Updated dependencies [213115b]
-- Updated dependencies [6ef5351]
+- Updated dependencies \[213115b]
+- Updated dependencies \[6ef5351]
   - @openfn/language-fhir-4@0.2.10
 
 ## 1.0.6 - 24 February 2026
@@ -33,7 +33,7 @@
 - Updated dependencies \[a78d53e]
   - @openfn/language-fhir-4@0.2.7
 
-## 1.0.3
+## 1.0.3 - 30 January 2026
 
 ### Patch Changes
 
@@ -58,7 +58,7 @@
   - @openfn/language-common@3.2.0
   - @openfn/language-fhir-4@0.2.4
 
-## 1.0.0
+## 1.0.0 - 04 November 2025
 
 Implemented the common http function helpers for `iHRiS` adaptor. These
 functions allow a user to: `http.get()` - Get `fhir` resources `http.post()` -
