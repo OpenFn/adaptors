@@ -1,5 +1,12 @@
 # @openfn/language-asana
 
+## 5.0.9 - 24 February 2026
+
+### Patch Changes
+
+- Updated dependencies \[856f85c]
+  - @openfn/language-common@3.2.3
+
 ## 5.0.8 - 09 February 2026
 
 ### Patch Changes

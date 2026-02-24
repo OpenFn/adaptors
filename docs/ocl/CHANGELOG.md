@@ -1,5 +1,13 @@
 # @openfn/language-ocl
 
+## 1.2.27 - 24 February 2026
+
+### Patch Changes
+
+- 856f85c: Security updates
+- Updated dependencies \[856f85c]
+  - @openfn/language-common@3.2.3
+
 ## 1.2.26 - 09 February 2026
 
 ### Patch Changes

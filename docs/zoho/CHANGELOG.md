@@ -1,5 +1,12 @@
 # @openfn/language-zoho
 
+## 0.4.25 - 24 February 2026
+
+### Patch Changes
+
+- Updated dependencies \[856f85c]
+  - @openfn/language-common@3.2.3
+
 ## 0.4.24 - 09 February 2026
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @openfn/language-divoc
 
+## 0.1.16 - 24 February 2026
+
+### Patch Changes
+
+- 856f85c: Security updates
+- Updated dependencies \[856f85c]
+  - @openfn/language-common@3.2.3
+
 ## 0.1.15 - 09 February 2026
 
 ### Patch Changes

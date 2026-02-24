@@ -1,5 +1,12 @@
 # @openfn/language-mssql
 
+## 7.0.2 - 24 February 2026
+
+### Patch Changes
+
+- Updated dependencies \[856f85c]
+  - @openfn/language-common@3.2.3
+
 ## 7.0.1 - 09 February 2026
 
 ### Patch Changes
