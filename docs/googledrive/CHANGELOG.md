@@ -40,13 +40,13 @@ list({ folderId; '21345', limit: 10 }) -> list('21345', { limit: 10 })
 - Updated dependencies \[8ad6b98]
   - @openfn/language-common@3.2.2
 
-## 2.1.0
+## 2.1.0 - 29 January 2026
 
 ### Minor Changes
 
 - 15dc2e4: add list method for listing files in a directory
 
-## 2.0.8
+## 2.0.8 - 28 January 2026
 
 ### Patch Changes
 
@@ -80,7 +80,7 @@ list({ folderId; '21345', limit: 10 }) -> list('21345', { limit: 10 })
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 2.0.3
+## 2.0.3 - 16 October 2025
 
 ### Patch Changes
 

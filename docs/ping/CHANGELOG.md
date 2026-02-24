@@ -14,6 +14,6 @@
 
 - 0fc470b: Update `http.post()` example. Remove `accessToken` from configuration
 
-## 1.0.0
+## 1.0.0 - 30 January 2026
 
 Implement `post` function for the PING adaptor
