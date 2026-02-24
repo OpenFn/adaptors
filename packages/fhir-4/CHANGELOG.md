@@ -1,5 +1,12 @@
 # @openfn/language-fhir-4
 
+## 0.2.10
+
+### Patch Changes
+
+- 213115b: Add `ensureConceptText` utility to datatypes
+- 6ef5351: Map more primitive types (eg, markdown -> string)
+
 ## 0.2.9 - 24 February 2026
 
 ### Patch Changes
