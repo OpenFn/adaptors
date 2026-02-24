@@ -14,10 +14,10 @@ export type Library_Props = {
     contact?: FHIR.ContactDetail[];
     contained?: any[];
     content?: FHIR.Attachment[];
-    copyright?: FHIR.markdown;
+    copyright?: string;
     dataRequirement?: FHIR.DataRequirement[];
     date?: string;
-    description?: FHIR.markdown;
+    description?: string;
     editor?: FHIR.ContactDetail[];
     effectivePeriod?: FHIR.Period;
     endorser?: FHIR.ContactDetail[];
@@ -34,7 +34,7 @@ export type Library_Props = {
     name?: string;
     parameter?: FHIR.ParameterDefinition[];
     publisher?: string;
-    purpose?: FHIR.markdown;
+    purpose?: string;
     relatedArtifact?: FHIR.RelatedArtifact[];
     reviewer?: FHIR.ContactDetail[];
     status?: string;

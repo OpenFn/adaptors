@@ -14,7 +14,7 @@ export type ResearchStudy_Props = {
     condition?: MaybeArray<string[] | FHIR.CodeableConcept>;
     contact?: FHIR.ContactDetail[];
     contained?: any[];
-    description?: FHIR.markdown;
+    description?: string;
     enrollment?: MaybeArray<string | FHIR.Reference>;
     extension?: FHIR.Extension[];
     focus?: MaybeArray<string[] | FHIR.CodeableConcept>;

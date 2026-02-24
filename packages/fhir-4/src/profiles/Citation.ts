@@ -15,10 +15,10 @@ export type Citation_Props = {
     classification?: FHIR.BackboneElement[];
     contact?: FHIR.ContactDetail[];
     contained?: any[];
-    copyright?: FHIR.markdown;
+    copyright?: string;
     currentState?: MaybeArray<string[] | FHIR.CodeableConcept>;
     date?: string;
-    description?: FHIR.markdown;
+    description?: string;
     editor?: FHIR.ContactDetail[];
     effectivePeriod?: FHIR.Period;
     endorser?: FHIR.ContactDetail[];
@@ -35,7 +35,7 @@ export type Citation_Props = {
     name?: string;
     note?: FHIR.Annotation[];
     publisher?: string;
-    purpose?: FHIR.markdown;
+    purpose?: string;
     relatesTo?: FHIR.BackboneElement[];
     reviewer?: FHIR.ContactDetail[];
     status?: string;

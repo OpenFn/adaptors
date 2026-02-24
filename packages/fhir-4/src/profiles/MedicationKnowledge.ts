@@ -32,7 +32,7 @@ export type MedicationKnowledge_Props = {
     monitoringProgram?: FHIR.BackboneElement[];
     monograph?: FHIR.BackboneElement[];
     packaging?: FHIR.BackboneElement;
-    preparationInstruction?: FHIR.markdown;
+    preparationInstruction?: string;
     productType?: MaybeArray<string[] | FHIR.CodeableConcept>;
     regulatory?: FHIR.BackboneElement[];
     relatedMedicationKnowledge?: FHIR.BackboneElement[];

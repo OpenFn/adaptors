@@ -17,7 +17,7 @@ export type EvidenceVariable_Props = {
     contact?: FHIR.ContactDetail[];
     contained?: any[];
     date?: string;
-    description?: FHIR.markdown;
+    description?: string;
     editor?: FHIR.ContactDetail[];
     endorser?: FHIR.ContactDetail[];
     extension?: FHIR.Extension[];

@@ -14,10 +14,10 @@ export type ChargeItemDefinition_Props = {
     code?: string[] | FHIR.CodeableConcept;
     contact?: FHIR.ContactDetail[];
     contained?: any[];
-    copyright?: FHIR.markdown;
+    copyright?: string;
     date?: string;
     derivedFromUri?: string[];
-    description?: FHIR.markdown;
+    description?: string;
     effectivePeriod?: FHIR.Period;
     experimental?: boolean;
     extension?: FHIR.Extension[];

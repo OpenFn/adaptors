@@ -12,7 +12,7 @@ export type RegulatedAuthorization_Props = {
     basis?: MaybeArray<string[] | FHIR.CodeableConcept>;
     case?: FHIR.BackboneElement;
     contained?: any[];
-    description?: FHIR.markdown;
+    description?: string;
     extension?: FHIR.Extension[];
     holder?: string | FHIR.Reference;
     id?: string;
