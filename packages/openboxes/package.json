@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-openboxes",
   "label": "OpenBoxes",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "OpenFn adaptor for OpenBoxes",
   "type": "module",
   "exports": {
@@ -37,7 +37,7 @@
     "deep-eql": "4.1.1",
     "mocha": "^10.7.3",
     "rimraf": "3.0.2",
-    "undici": "^5.29.0"
+    "undici": "^7.19.2"
   },
   "repository": {
     "type": "git",

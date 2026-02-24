@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-zata",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "An OpenFn adaptor for Zata tax compliance",
   "badge": "Legacy",
   "type": "module",
@@ -37,7 +37,7 @@
     "deep-eql": "4.1.1",
     "mocha": "^10.7.3",
     "rimraf": "3.0.2",
-    "undici": "^5.22.1"
+    "undici": "^7.19.2"
   },
   "repository": {
     "type": "git",

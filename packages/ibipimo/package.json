@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-ibipimo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "OpenFn ibipimo adaptor",
   "type": "module",
   "exports": {
@@ -29,7 +29,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^2.0.0"
+    "@openfn/language-common": "workspace:*"
   },
   "devDependencies": {
     "@openfn/cli": "^1.0.0",
@@ -39,7 +39,7 @@
     "mocha": "^10.8.2",
     "rimraf": "3.0.2",
     "sinon": "^21.0.1",
-    "undici": "^5.22.1"
+    "undici": "^7.19.2"
   },
   "repository": {
     "type": "git",

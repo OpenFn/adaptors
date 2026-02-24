@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-satusehat",
   "label": "Satusehat",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "description": "OpenFn adaptor for SATUSEHAT",
   "type": "module",
   "exports": {
@@ -36,7 +36,7 @@
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
     "rimraf": "3.0.2",
-    "undici": "^5.29.0"
+    "undici": "^7.19.2"
   },
   "repository": {
     "type": "git",

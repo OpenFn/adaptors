@@ -1,5 +1,12 @@
 # @openfn/language-facebook
 
+## 0.4.27 - 24 February 2026
+
+### Patch Changes
+
+- Updated dependencies \[856f85c]
+  - @openfn/language-common@3.2.3
+
 ## 0.4.26 - 09 February 2026
 
 ### Patch Changes

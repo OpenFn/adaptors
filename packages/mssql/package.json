@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-mssql",
   "label": "MSSQL",
-  "version": "7.0.1",
+  "version": "7.0.2",
   "description": "A Microsoft SQL language pack for OpenFn",
   "exports": {
     ".": {

@@ -1,5 +1,13 @@
 # @openfn/language-stripe
 
+## 1.0.8 - 24 February 2026
+
+### Patch Changes
+
+- 856f85c: Security updates
+- Updated dependencies \[856f85c]
+  - @openfn/language-common@3.2.3
+
 ## 1.0.7 - 09 February 2026
 
 ### Patch Changes
