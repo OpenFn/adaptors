@@ -1,10 +1,13 @@
 # @openfn/generate-fhir
 
+## 0.7.0
+
+- Support mapping extensions to simple properties
+- Temporary fix to extensions to basic datatypes (date)
+
 ## 0.6.0
 
-### Patch Changes
-
-- 81dd8bd: Enable mapping of valuesets
+Enable mapping of valuesets
 
 ## 0.4.2
 

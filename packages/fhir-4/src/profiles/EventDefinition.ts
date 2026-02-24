@@ -13,9 +13,9 @@ export type EventDefinition_Props = {
     author?: FHIR.ContactDetail[];
     contact?: FHIR.ContactDetail[];
     contained?: any[];
-    copyright?: FHIR.markdown;
+    copyright?: string;
     date?: string;
-    description?: FHIR.markdown;
+    description?: string;
     editor?: FHIR.ContactDetail[];
     effectivePeriod?: FHIR.Period;
     endorser?: FHIR.ContactDetail[];
@@ -31,7 +31,7 @@ export type EventDefinition_Props = {
     modifierExtension?: FHIR.Extension[];
     name?: string;
     publisher?: string;
-    purpose?: FHIR.markdown;
+    purpose?: string;
     relatedArtifact?: FHIR.RelatedArtifact[];
     reviewer?: FHIR.ContactDetail[];
     status?: string;

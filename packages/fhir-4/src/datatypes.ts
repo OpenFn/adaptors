@@ -50,6 +50,7 @@ export const lookupValue = (url, code) => {
 
   // then look for a default match (in addition, not instead)
   value = defaultValues[url]?.[value] ?? value;
+
   return value;
 };
 
@@ -70,7 +71,7 @@ export const mapSystems = obj => {
 };
 
 /**
- * Go over all the keys of an obejct and, based on the hints,
+ * Go over all the keys of an object and, based on the hints,
  * expand values using value maps
  */
 export const mapValues = (obj, hints) => {
@@ -317,6 +318,14 @@ export const concept = (
  * @function
  */
 export const cc = concept;
+
+// Helper function to enure that the text key
+// is set on a concept (defaulted from the first coding)
+export const ensureConceptText = concept => {
+  if (!concept.text && concept.coding?.length) {
+    concept.text = concept.coding[0].display;
+  }
+};
 
 /**
  * Create a reference object of the form { reference }

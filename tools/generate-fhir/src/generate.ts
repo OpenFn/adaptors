@@ -28,6 +28,8 @@ export type Options = {
   /** Path to a mappings file (relative to monorepo root). This will be copied into build/mappings in the new generator */
   mappings?: string;
 
+  include?: string[];
+
   /** Should we generate tests? */
   tests?: boolean;
 
@@ -128,6 +130,14 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     console.log(`Package ${adaptorName} generated!`);
   }
   context.mappings = mappings;
+  if (options.include) {
+    console.log('Overriding mapping.include from CLI argument');
+    if (Array.isArray(options.include)) {
+      context.mappings.include = options.include;
+    } else {
+      context.mappings.include = [options.include];
+    }
+  }
 
   // Load options which may have been saved to the package
   const { simpleBuilders } = options;
@@ -172,6 +182,19 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
       Dosage: 1,
       Timing: 1,
       SampledData: 1,
+
+      Signature: 1,
+      ContactDetail: 1,
+      Contributor: 1,
+      DataRequirement: 1,
+      Expression: 1,
+      ParameterDefinition: 1,
+      RelatedArtifact: 1,
+      TriggerDefinition: 1,
+      UsageContext: 1,
+      Money: 1,
+      Count: 1,
+      Distance: 1,
     };
   } else {
     try {
@@ -180,7 +203,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
       const dtSpecPath = path.resolve(adaptorPath, 'spec', 'spec-types.json');
       // Note: when generating datatypes we ignore the user's mappings and generate everything
       // maybe we need to take a different mappings object?
-      const dtSchema = await generateSchema(dtSpecPath);
+      const dtSchema = await generateSchema(dtSpecPath, {}, { isBase: true });
       const { src, index } = generateDataTypes(dtSchema, mappings);
       fhirTypes = index;
       const dtsPath = path.resolve(adaptorPath, 'src/fhir.ts');
@@ -198,7 +221,10 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
 
   // TODO better control of this path
   // load schemas direct from the file so that we can skip schema gen
-  const valueSetsRaw = await readFile('schema/valuesets.json', 'utf8');
+  const valueSetsRaw = await readFile(
+    path.resolve(adaptorPath, 'schema/valuesets.json'),
+    'utf8',
+  );
   let valueSets: ValueSets;
   if (valueSetsRaw) {
     valueSets = JSON.parse(valueSetsRaw);

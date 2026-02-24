@@ -22,7 +22,7 @@ export type HealthcareService_Props = {
     eligibility?: FHIR.BackboneElement[];
     endpoint?: MaybeArray<string | FHIR.Reference>;
     extension?: FHIR.Extension[];
-    extraDetails?: FHIR.markdown;
+    extraDetails?: string;
     id?: string;
     identifier?: MaybeArray<string | FHIR.Identifier>;
     implicitRules?: string;

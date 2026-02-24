@@ -15,9 +15,9 @@ export type ActivityDefinition_Props = {
     code?: string[] | FHIR.CodeableConcept;
     contact?: FHIR.ContactDetail[];
     contained?: any[];
-    copyright?: FHIR.markdown;
+    copyright?: string;
     date?: string;
-    description?: FHIR.markdown;
+    description?: string;
     doNotPerform?: boolean;
     dosage?: FHIR.Dosage[];
     dynamicValue?: FHIR.BackboneElement[];
@@ -46,7 +46,7 @@ export type ActivityDefinition_Props = {
     product?: string | FHIR.Reference | string[] | FHIR.CodeableConcept;
     profile?: any;
     publisher?: string;
-    purpose?: FHIR.markdown;
+    purpose?: string;
     quantity?: FHIR.Quantity;
     relatedArtifact?: FHIR.RelatedArtifact[];
     reviewer?: FHIR.ContactDetail[];
