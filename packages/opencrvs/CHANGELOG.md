@@ -1,11 +1,11 @@
 # @openfn/language-opencrvs
 
-## 1.0.17
+## 1.0.17 - 24 February 2026
 
 ### Patch Changes
 
-- Updated dependencies [213115b]
-- Updated dependencies [6ef5351]
+- Updated dependencies \[213115b]
+- Updated dependencies \[6ef5351]
   - @openfn/language-fhir-4@0.2.10
 
 ## 1.0.16 - 24 February 2026

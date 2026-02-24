@@ -1,6 +1,6 @@
 # @openfn/language-fhir-4
 
-## 0.2.10
+## 0.2.10 - 24 February 2026
 
 ### Patch Changes
 
