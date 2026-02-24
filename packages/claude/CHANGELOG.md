@@ -1,5 +1,11 @@
 # @openfn/language-claude
 
+## 1.0.20 - 24 February 2026
+
+### Patch Changes
+
+- 745543c: Use the "sonnet 4.6" model by default
+
 ## 1.0.19 - 09 February 2026
 
 ### Patch Changes

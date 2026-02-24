@@ -1,6 +1,6 @@
 # @openfn/language-fhir-4
 
-## 0.2.8
+## 0.2.8 - 24 February 2026
 
 ### Patch Changes
 
@@ -11,7 +11,7 @@
 
 ### Patch Changes
 
-- d935dda: Update d.ts defintion structure
+- d935dda: Update d.ts definition structure
 - a78d53e: Rebuild on latest generator (should be no behaviour differences)"
 
 ## 0.2.6
