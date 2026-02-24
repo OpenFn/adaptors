@@ -48,6 +48,7 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
 
     if (!_.isNil(props.nationality)) {
         let src = props.nationality;
+        delete resource.nationality;
 
         dt.addExtension(
             resource,
@@ -63,6 +64,7 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
          }
         src = dt.concept(src);
         dt.ensureConceptText(src);
+        delete resource.inkhundla;
 
         dt.addExtension(
             resource,
@@ -78,6 +80,7 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
          }
         src = dt.concept(src);
         dt.ensureConceptText(src);
+        delete resource.chiefdom;
 
         dt.addExtension(
             resource,
@@ -88,6 +91,7 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
 
     if (!_.isNil(props.registrationDate)) {
         let src = props.registrationDate;
+        delete resource.registrationDate;
 
         dt.addExtension(
             resource,

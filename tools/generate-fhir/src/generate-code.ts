@@ -919,6 +919,16 @@ const mapExtension = (propName: string, _mapping: Mapping, schema: Schema) => {
   }
   // TODO handle other types
 
+  // Remove the original prop from the resource (which was added in the initial spread
+  statements.push(
+    b.expressionStatement(
+      b.unaryExpression(
+        'delete',
+        b.memberExpression(b.identifier('resource'), b.identifier(propName)),
+      ),
+    ),
+  );
+
   // add the extension
   statements.push(
     b.expressionStatement(

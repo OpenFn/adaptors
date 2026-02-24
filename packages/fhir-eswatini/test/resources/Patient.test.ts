@@ -44,9 +44,7 @@ const sampleFull = {
   resourceType: 'Patient',
   id: 'SampleSzMalariaPatient',
   meta: {
-    profile: [
-      'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzPatient',
-    ],
+    profile: ['http://172.209.216.154:3447/fhir/StructureDefinition/SzPatient'],
   },
   // text: {
   //   status: 'generated',
@@ -65,21 +63,21 @@ const sampleFull = {
   // and we generate the rest. Or I suppose maybe pass a coding
   // value mapping would help
   extension: [
+    // {
+    //   url: 'http://hl7.org/fhir/StructureDefinition/patient-nationality',
+    //   valueCodeableConcept: {
+    //     coding: [
+    //       {
+    //         system: 'urn:iso:std:iso:3166',
+    //         code: 'SWZ',
+    //         display: 'Eswatini',
+    //       },
+    //     ],
+    //     text: 'Eswatini',
+    //   },
+    // },
     {
-      url: 'http://hl7.org/fhir/StructureDefinition/patient-nationality',
-      valueCodeableConcept: {
-        coding: [
-          {
-            system: 'urn:iso:std:iso:3166',
-            code: 'SWZ',
-            display: 'Eswatini',
-          },
-        ],
-        text: 'Eswatini',
-      },
-    },
-    {
-      url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzInkhundlaExtension',
+      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzInkhundlaExtension',
       valueCodeableConcept: {
         coding: [
           {
@@ -93,17 +91,17 @@ const sampleFull = {
       },
     },
     {
-      url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzChiefdomExtension',
+      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzChiefdomExtension',
       valueCodeableConcept: {
         coding: [
           {
             system:
               'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzChiefdomCS',
             code: '7',
-            display: 'Lobamba',
+            display: 'Lobamba ',
           },
         ],
-        text: 'Lobamba',
+        text: 'Lobamba ',
       },
     },
     {
@@ -150,22 +148,22 @@ const sampleFull = {
     },
   ],
   gender: 'male',
-  // birthDate: '1990-01-01',
-  // _birthDate: {
-  //   extension: [
-  //     {
-  //       url: 'http://hl7.org/fhir/StructureDefinition/patient-birthTime',
-  //       valueDateTime: '2000-01-01T14:35:45-05:00',
-  //     },
-  //   ],
-  // },
+  birthDate: '1990-01-01',
+  _birthDate: {
+    extension: [
+      {
+        url: 'http://hl7.org/fhir/StructureDefinition/patient-birthTime',
+        valueDateTime: '2000-01-01T14:35:45-05:00',
+      },
+    ],
+  },
   address: [
     {
       city: 'Mbabane',
     },
   ],
 };
-describe.only('SzPatient', () => {
+describe('SzPatient', () => {
   it('should create an empty SzPatient', () => {
     const resource = b.patient('SzPatient', {});
     assert.isOk(resource);
@@ -204,10 +202,7 @@ describe.only('SzPatient', () => {
     assert.deepEqual(resource, sampleBasic);
   });
 
-  // TODO shorthand props need to be deleted
-  // TODO birthDate/time need mapping
-  it.only('should create a full SzPatient with shorthand input', () => {
-    // TODO profile names should be code assisted
+  it('should create a full SzPatient with shorthand input', () => {
     const resource = b.patient('SzPatient', {
       id: 'SampleSzMalariaPatient',
       gender: 'male',
@@ -216,11 +211,13 @@ describe.only('SzPatient', () => {
           use: 'usual',
           value: 'M002111111-11',
           type: 'MR',
+          system: 'http://mfl.sys/m001',
         },
         {
           use: 'official',
           value: '1999001000000',
           type: 'PI',
+          system: 'http://homeaffairs.sys',
         },
       ],
       name: [
@@ -230,18 +227,29 @@ describe.only('SzPatient', () => {
         },
       ],
       // nationality: 'SWZ', TODO - map base fhir-4 types
-      inkhundla: 'LOBAMBA',
-      chiefdom: 'Lobamba',
+      inkhundla: '3', // 'LOBAMBA',
+      chiefdom: '7', // 'Lobamba',
       registrationDate: '2025-06-01T10:00:00Z',
-      birthDate: '1990-01-01', // TODO weird bug
-      // birthTime: '2000-01-01T14:35:45-05:00', // TODO weird bug
+      birthDate: '1990-01-01',
+
+      // extension not working here yet
+      // birthTime: '2000-01-01T14:35:45-05:00'
+      _birthDate: {
+        extension: [
+          {
+            url: 'http://hl7.org/fhir/StructureDefinition/patient-birthTime',
+            valueDateTime: '2000-01-01T14:35:45-05:00',
+          },
+        ],
+      },
+
       address: [
         {
           city: 'Mbabane',
         },
       ],
     });
-    console.log(JSON.stringify(resource, null, 2));
+    // console.log(JSON.stringify(resource, null, 2));
     assert.deepEqual(resource, sampleFull);
   });
 
