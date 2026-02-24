@@ -15,6 +15,6 @@
 - Updated dependencies \[8ad6b98]
   - @openfn/language-common@3.2.2
 
-## 1.0.0
+## 1.0.0 - 27 January 2026
 
 Initial release.

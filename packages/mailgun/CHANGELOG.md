@@ -35,14 +35,14 @@
 
 - Allow base64 string to be passed (and converted to buffer) for attachments
 
-## 0.5.21
+## 0.5.21 - 29 October 2025
 
 ### Patch Changes
 
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 0.5.20
+## 0.5.20 - 16 October 2025
 
 ### Patch Changes
 

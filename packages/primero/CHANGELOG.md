@@ -42,7 +42,7 @@
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 4.0.3
+## 4.0.3 - 16 October 2025
 
 ### Patch Changes
 

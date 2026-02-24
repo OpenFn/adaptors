@@ -33,7 +33,7 @@
 
 - Add support for gzipped payloads
 
-## 3.1.1
+## 3.1.1 - 16 October 2025
 
 ### Patch Changes
 
