@@ -126,16 +126,6 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
         }
     }
 
-    if (!_.isNil(props.birthDate)) {
-        let src = props.birthDate;
-
-        let _birthDate = {
-            ...item
-        };
-
-        resource.birthDate = _birthDate;
-    }
-
     if (!_.isNil(props.deceased)) {
         delete resource.deceased;
         dt.composite(resource, "deceased", props.deceased);

@@ -206,7 +206,7 @@ describe.only('SzPatient', () => {
 
   // TODO shorthand props need to be deleted
   // TODO birthDate/time need mapping
-  it.skip('should create a full SzPatient with shorthand input', () => {
+  it.only('should create a full SzPatient with shorthand input', () => {
     // TODO profile names should be code assisted
     const resource = b.patient('SzPatient', {
       id: 'SampleSzMalariaPatient',
@@ -233,7 +233,7 @@ describe.only('SzPatient', () => {
       inkhundla: 'LOBAMBA',
       chiefdom: 'Lobamba',
       registrationDate: '2025-06-01T10:00:00Z',
-      // birthDate: '1990-01-01',   // TODO weird bug
+      birthDate: '1990-01-01', // TODO weird bug
       // birthTime: '2000-01-01T14:35:45-05:00', // TODO weird bug
       address: [
         {

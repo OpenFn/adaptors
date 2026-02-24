@@ -346,6 +346,9 @@ async function parseProp(
     return;
   }
 
+  // if the parent is a primitive type, ignore the prop
+  // (later we'll support extenstion types)
+
   if (prop === 'extension') {
     if (data.sliceName) {
       prop = data.sliceName[0].toLowerCase() + data.sliceName.substring(1);
@@ -359,7 +362,7 @@ async function parseProp(
   if (schema.props[parent]) {
     const def: PropDef = {};
 
-    if (!data.type) {
+    if (!data.type || schema.props[parent].type.includes('date')) {
       return;
     }
 
