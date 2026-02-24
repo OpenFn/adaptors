@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-ihris",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "OpenFn adaptor for iHRIS ",
   "type": "module",
   "exports": {

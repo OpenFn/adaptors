@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-mogli",
   "label": "Mogli",
-  "version": "0.6.10",
+  "version": "0.6.11",
   "description": "OpenFn adaptor for Mogli SMS",
   "main": "dist/index.cjs",
   "scripts": {

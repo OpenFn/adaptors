@@ -1,5 +1,11 @@
 ## 3.0.1 - 11 July 2025
 
+## 3.2.3 - 24 February 2026
+
+### Patch Changes
+
+- 856f85c: Security updates
+
 ## 3.2.2 - 09 February 2026
 
 ### Patch Changes
@@ -93,7 +99,7 @@ You must do this instead:
 ```js
 each(
   '$.[*]',
-  create('SObject', field('FirstName', sourceValue('$.firstName'))),
+  create('SObject', field('FirstName', sourceValue('$.firstName')))
 );
 ```
 
@@ -425,8 +431,7 @@ Bumped all package versions to their latest.
   Allowing you to join an array of string'able primitives (strings and integers)
   into a string.
 - Added `toArray` helper.\
-  This can be used to coerce certain types of data into an array, this can be
-  useful when the source data has an ambiguous format. For example a given key
-  in the data may have an object as it's value (when there is only one item),
-  and an array of objects when there is more than one. `toArray` can be used to
-  reconcile this inconsistency.
+  This can be used to coerce certain types of data into an array, this can be useful
+  when the source data has an ambiguous format. For example a given key in the data
+  may have an object as it's value (when there is only one item), and an array of
+  objects when there is more than one. `toArray` can be used to reconcile this inconsistency.

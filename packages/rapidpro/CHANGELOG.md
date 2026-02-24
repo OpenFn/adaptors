@@ -1,5 +1,13 @@
 # @openfn/language-rapidpro
 
+## 2.0.10 - 24 February 2026
+
+### Patch Changes
+
+- 856f85c: Security updates
+- Updated dependencies \[856f85c]
+  - @openfn/language-common@3.2.3
+
 ## 2.0.9 - 09 February 2026
 
 ### Patch Changes

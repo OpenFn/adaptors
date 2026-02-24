@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-browserless",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "OpenFn browserless adaptor",
   "type": "module",
   "exports": {

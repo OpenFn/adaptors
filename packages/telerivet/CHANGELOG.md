@@ -1,5 +1,12 @@
 # @openfn/language-telerivet
 
+## 0.3.25 - 24 February 2026
+
+### Patch Changes
+
+- Updated dependencies \[856f85c]
+  - @openfn/language-common@3.2.3
+
 ## 0.3.24 - 09 February 2026
 
 ### Patch Changes

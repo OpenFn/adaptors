@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-mojatax",
   "label": "MojaTax",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "OpenFn adaptor for MojaTax",
   "type": "module",
   "exports": {

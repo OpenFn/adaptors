@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-magpi",
   "label": "Magpi",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "description": "OpenFn adaptor for Magpi",
   "main": "dist/index.cjs",
   "scripts": {

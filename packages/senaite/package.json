@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-senaite",
   "label": "Senaite",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "OpenFn senaite adaptor for laboratory information management",
   "type": "module",
   "exports": {

@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-erpnext",
   "label": "ERPNext",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "OpenFn ERPNext adaptor",
   "type": "module",
   "exports": {
