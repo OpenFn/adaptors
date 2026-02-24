@@ -152,7 +152,11 @@ const generate = async (
       continue;
     }
 
-    if (profile.resourceType !== 'StructureDefinition') {
+    if (
+      profile.resourceType !== 'StructureDefinition' ||
+      // Don't process extension types explicitly - they'll be handled later
+      profile.type === 'Extension'
+    ) {
       continue;
     }
 

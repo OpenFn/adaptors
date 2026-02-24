@@ -163,6 +163,7 @@ const sampleFull = {
     },
   ],
 };
+
 describe('SzPatient', () => {
   it('should create an empty SzPatient', () => {
     const resource = b.patient('SzPatient', {});

@@ -8,13 +8,6 @@ import build_SzAppointment, { Appointment_SzAppointment_Props } from "./profiles
 import build_SzCondition, { Condition_SzCondition_Props } from "./profiles/SzCondition";
 import build_SzEncounter, { Encounter_SzEncounter_Props } from "./profiles/SzEncounter";
 import build_SzEpisodeOfCare, { EpisodeOfCare_SzEpisodeOfCare_Props } from "./profiles/SzEpisodeOfCare";
-import build_SzAuthorizerExtension, { Extension_SzAuthorizerExtension_Props } from "./profiles/SzAuthorizerExtension";
-import build_SzChiefdomExtension, { Extension_SzChiefdomExtension_Props } from "./profiles/SzChiefdomExtension";
-import build_SzInkhundlaExtension, { Extension_SzInkhundlaExtension_Props } from "./profiles/SzInkhundlaExtension";
-import build_SzLocationCodeExtension, { Extension_SzLocationCodeExtension_Props } from "./profiles/SzLocationCodeExtension";
-import build_SzReferralRecipientExtension, { Extension_SzReferralRecipientExtension_Props } from "./profiles/SzReferralRecipientExtension";
-import build_SzRegistrationDate, { Extension_SzRegistrationDate_Props } from "./profiles/SzRegistrationDate";
-import build_SzTestingLabExtension, { Extension_SzTestingLabExtension_Props } from "./profiles/SzTestingLabExtension";
 import build_SzLocation, { Location_SzLocation_Props } from "./profiles/SzLocation";
 import build_SzMedication, { Medication_SzMedication_Props } from "./profiles/SzMedication";
 import build_SzMedicationDispense, { MedicationDispense_SzMedicationDispense_Props } from "./profiles/SzMedicationDispense";
@@ -237,59 +230,6 @@ export function episodeOfCare(type: any, props?: any) {
       props = type;
       type = "SzEpisodeOfCare";
     }
-    if (type in mappings) {
-        return mappings[type](props)
-    }
-    throw new Error(`Error: profile "${type}" not recognised`)
-}
-
-/**
-  * Create a Extension resource.
-  * @public
-  * @function
-  * @param {string} type - A profile type: one of SzAuthorizerExtension,SzChiefdomExtension,SzInkhundlaExtension,SzLocationCodeExtension,SzReferralRecipientExtension,SzRegistrationDate,SzTestingLabExtension
-  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
-  * @param {string} [props.id] - Unique id for inter-element referencing
-  * @param {Extension} [props.extension] - Extension
-  * @param {string} [props.url] - identifies the meaning of the extension
-  * @param {Reference} [props.value] - Value of extension
-  */
-export function extension(
-    type: "SzAuthorizerExtension",
-    props: Extension_SzAuthorizerExtension_Props
-);
-
-export function extension(type: "SzChiefdomExtension", props: Extension_SzChiefdomExtension_Props);
-export function extension(type: "SzInkhundlaExtension", props: Extension_SzInkhundlaExtension_Props);
-
-export function extension(
-    type: "SzLocationCodeExtension",
-    props: Extension_SzLocationCodeExtension_Props
-);
-
-export function extension(
-    type: "SzReferralRecipientExtension",
-    props: Extension_SzReferralRecipientExtension_Props
-);
-
-export function extension(type: "SzRegistrationDate", props: Extension_SzRegistrationDate_Props);
-
-export function extension(
-    type: "SzTestingLabExtension",
-    props: Extension_SzTestingLabExtension_Props
-);
-
-export function extension(type: any, props?: any) {
-    const mappings = {
-        "SzAuthorizerExtension": build_SzAuthorizerExtension,
-        "SzChiefdomExtension": build_SzChiefdomExtension,
-        "SzInkhundlaExtension": build_SzInkhundlaExtension,
-        "SzLocationCodeExtension": build_SzLocationCodeExtension,
-        "SzReferralRecipientExtension": build_SzReferralRecipientExtension,
-        "SzRegistrationDate": build_SzRegistrationDate,
-        "SzTestingLabExtension": build_SzTestingLabExtension
-    };
-
     if (type in mappings) {
         return mappings[type](props)
     }
@@ -641,8 +581,8 @@ export function organization(type: any, props?: any) {
   * @param {Resource} [props.contained] - Contained, inline Resources
   * @param {Extension} [props.extension] - Extension
   * @param {Extension} [props.nationality] - Nationality.
-  * @param {Extension} [props.inkhundla] - Extention: Eswatini Inkhundla
-  * @param {Extension} [props.chiefdom] - Extention: Eswatini Chiefdom
+  * @param {string} [props.inkhundla] - Extention: Eswatini Inkhundla. Accepts all values from http://172.209.216.154:3447/fhir/ValueSet/SzTinkhundlaVS
+  * @param {string} [props.chiefdom] - Extention: Eswatini Chiefdom. Accepts all values from http://172.209.216.154:3447/fhir/ValueSet/SzChiefdomVS
   * @param {dateTime} [props.registrationDate] - Date the patient was registered
   * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
   * @param {Identifier} [props.identifier] - Patient's Identification Number

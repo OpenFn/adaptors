@@ -9,7 +9,7 @@ import type { builders as FHIR } from "@openfn/language-fhir-4";
 type MaybeArray<T> = T | T[];
 
 export type Observation_SzLabResult_Props = {
-    authorizer?: FHIR.Extension[];
+    authorizer?: FHIR.Reference[];
     basedOn?: FHIR.Reference[];
     bodySite?: FHIR.CodeableConcept;
     category?: FHIR.CodeableConcept[];
