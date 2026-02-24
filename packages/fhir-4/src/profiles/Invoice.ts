@@ -24,7 +24,7 @@ export type Invoice_Props = {
     modifierExtension?: FHIR.Extension[];
     note?: FHIR.Annotation[];
     participant?: FHIR.BackboneElement[];
-    paymentTerms?: FHIR.markdown;
+    paymentTerms?: string;
     recipient?: string | FHIR.Reference;
     status?: string;
     subject?: string | FHIR.Reference;

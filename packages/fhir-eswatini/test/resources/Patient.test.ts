@@ -44,14 +44,12 @@ const sampleFull = {
   resourceType: 'Patient',
   id: 'SampleSzMalariaPatient',
   meta: {
-    profile: [
-      'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzPatient',
-    ],
+    profile: ['http://172.209.216.154:3447/fhir/StructureDefinition/SzPatient'],
   },
-  text: {
-    status: 'generated',
-    div: '<div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: Patient SampleSzMalariaPatient</b></p><a name="SampleSzMalariaPatient"> </a><a name="hcSampleSzMalariaPatient"> </a><div style="display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%"><p style="margin-bottom: 0px"/><p style="margin-bottom: 0px">Profile: <a href="StructureDefinition-SzPatient.html">Eswatini Patient Profile</a></p></div><p style="border: 1px #661aff solid; background-color: #e6e6ff; padding: 10px;">Jacob Samuel Gule  Male, DoB: 1990-01-01 ( Medical Record Number: M002111111-11\u00a0(use:\u00a0usual,\u00a0))</p><hr/><table class="grid"><tr><td style="background-color: #f3f5da" title="Other Id (see the one above)">Other Id:</td><td colspan="3">Personal ID Number/1999001000000\u00a0(use:\u00a0official,\u00a0)</td></tr><tr><td style="background-color: #f3f5da" title="Ways to contact the Patient">Contact Detail</td><td colspan="3">Mbabane </td></tr><tr><td style="background-color: #f3f5da" title="The nationality of the patient."><a href="http://hl7.org/fhir/extensions/5.3.0-ballot-tc1/StructureDefinition-patient-nationality.html">Patient Nationality</a></td><td colspan="3"><span title="Codes:{urn:iso:std:iso:3166 SWZ}">Eswatini</span></td></tr><tr><td style="background-color: #f3f5da" title="Extention for Eswatini Chiefdom"><a href="StructureDefinition-SzChiefdomExtension.html">Extention: Eswatini Chiefdom</a></td><td colspan="3"><span title="Codes:{https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzChiefdomCS 7}">Lobamba</span></td></tr><tr><td style="background-color: #f3f5da" title="Extention for Eswatini Tinkhundla"><a href="StructureDefinition-SzInkhundlaExtension.html">Extention: Eswatini Inkhundla</a></td><td colspan="3"><span title="Codes:{https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzTinkhundlaCS 3}">LOBAMBA</span></td></tr></table></div>',
-  },
+  // text: {
+  //   status: 'generated',
+  //   div: '<div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: Patient SampleSzMalariaPatient</b></p><a name="SampleSzMalariaPatient"> </a><a name="hcSampleSzMalariaPatient"> </a><div style="display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%"><p style="margin-bottom: 0px"/><p style="margin-bottom: 0px">Profile: <a href="StructureDefinition-SzPatient.html">Eswatini Patient Profile</a></p></div><p style="border: 1px #661aff solid; background-color: #e6e6ff; padding: 10px;">Jacob Samuel Gule  Male, DoB: 1990-01-01 ( Medical Record Number: M002111111-11\u00a0(use:\u00a0usual,\u00a0))</p><hr/><table class="grid"><tr><td style="background-color: #f3f5da" title="Other Id (see the one above)">Other Id:</td><td colspan="3">Personal ID Number/1999001000000\u00a0(use:\u00a0official,\u00a0)</td></tr><tr><td style="background-color: #f3f5da" title="Ways to contact the Patient">Contact Detail</td><td colspan="3">Mbabane </td></tr><tr><td style="background-color: #f3f5da" title="The nationality of the patient."><a href="http://hl7.org/fhir/extensions/5.3.0-ballot-tc1/StructureDefinition-patient-nationality.html">Patient Nationality</a></td><td colspan="3"><span title="Codes:{urn:iso:std:iso:3166 SWZ}">Eswatini</span></td></tr><tr><td style="background-color: #f3f5da" title="Extention for Eswatini Chiefdom"><a href="StructureDefinition-SzChiefdomExtension.html">Extention: Eswatini Chiefdom</a></td><td colspan="3"><span title="Codes:{https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzChiefdomCS 7}">Lobamba</span></td></tr><tr><td style="background-color: #f3f5da" title="Extention for Eswatini Tinkhundla"><a href="StructureDefinition-SzInkhundlaExtension.html">Extention: Eswatini Inkhundla</a></td><td colspan="3"><span title="Codes:{https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzTinkhundlaCS 3}">LOBAMBA</span></td></tr></table></div>',
+  // },
 
   // TODO i should be able to provide nice mappings for extentions
   // b.ext('Eswatini', 'patient-pationality')
@@ -65,21 +63,21 @@ const sampleFull = {
   // and we generate the rest. Or I suppose maybe pass a coding
   // value mapping would help
   extension: [
+    // {
+    //   url: 'http://hl7.org/fhir/StructureDefinition/patient-nationality',
+    //   valueCodeableConcept: {
+    //     coding: [
+    //       {
+    //         system: 'urn:iso:std:iso:3166',
+    //         code: 'SWZ',
+    //         display: 'Eswatini',
+    //       },
+    //     ],
+    //     text: 'Eswatini',
+    //   },
+    // },
     {
-      url: 'http://hl7.org/fhir/StructureDefinition/patient-nationality',
-      valueCodeableConcept: {
-        coding: [
-          {
-            system: 'urn:iso:std:iso:3166',
-            code: 'SWZ',
-            display: 'Eswatini',
-          },
-        ],
-        text: 'Eswatini',
-      },
-    },
-    {
-      url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzInkhundlaExtension',
+      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzInkhundlaExtension',
       valueCodeableConcept: {
         coding: [
           {
@@ -93,18 +91,22 @@ const sampleFull = {
       },
     },
     {
-      url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzChiefdomExtension',
+      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzChiefdomExtension',
       valueCodeableConcept: {
         coding: [
           {
             system:
               'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzChiefdomCS',
             code: '7',
-            display: 'Lobamba',
+            display: 'Lobamba ',
           },
         ],
-        text: 'Lobamba',
+        text: 'Lobamba ',
       },
+    },
+    {
+      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzRegistrationDate',
+      valueDateTime: '2025-06-01T10:00:00Z',
     },
   ],
   identifier: [
@@ -161,6 +163,7 @@ const sampleFull = {
     },
   ],
 };
+
 describe('SzPatient', () => {
   it('should create an empty SzPatient', () => {
     const resource = b.patient('SzPatient', {});
@@ -200,8 +203,7 @@ describe('SzPatient', () => {
     assert.deepEqual(resource, sampleBasic);
   });
 
-  it.skip('should create a full SzPatient with shorthand input', () => {
-    // TODO profile names should be code assisted
+  it('should create a full SzPatient with shorthand input', () => {
     const resource = b.patient('SzPatient', {
       id: 'SampleSzMalariaPatient',
       gender: 'male',
@@ -210,11 +212,13 @@ describe('SzPatient', () => {
           use: 'usual',
           value: 'M002111111-11',
           type: 'MR',
+          system: 'http://mfl.sys/m001',
         },
         {
           use: 'official',
           value: '1999001000000',
           type: 'PI',
+          system: 'http://homeaffairs.sys',
         },
       ],
       name: [
@@ -223,22 +227,34 @@ describe('SzPatient', () => {
           given: ['Jacob', 'Samuel'],
         },
       ],
-      nationality: 'SWZ',
-      inkhundla: 'LOBAMBA',
-      chiefdom: 'Lobamba',
+      // nationality: 'SWZ', TODO - map base fhir-4 types
+      inkhundla: '3', // 'LOBAMBA',
+      chiefdom: '7', // 'Lobamba',
+      registrationDate: '2025-06-01T10:00:00Z',
       birthDate: '1990-01-01',
-      birthTime: '2000-01-01T14:35:45-05:00',
+
+      // extension not working here yet
+      // birthTime: '2000-01-01T14:35:45-05:00'
+      _birthDate: {
+        extension: [
+          {
+            url: 'http://hl7.org/fhir/StructureDefinition/patient-birthTime',
+            valueDateTime: '2000-01-01T14:35:45-05:00',
+          },
+        ],
+      },
+
       address: [
         {
           city: 'Mbabane',
         },
       ],
     });
-    console.log(JSON.stringify(resource, null, 2));
-    assert.deepEqual(resource, sampleBasic);
+    // console.log(JSON.stringify(resource, null, 2));
+    assert.deepEqual(resource, sampleFull);
   });
 
-  it('should value map identifier.type', () => {
+  it('should value-map identifier.type', () => {
     const resource = b.patient('SzPatient', {
       identifier: [
         {
@@ -264,5 +280,136 @@ describe('SzPatient', () => {
       ],
     });
     assert.isOk(resource);
+  });
+
+  it('should map extension inkhundla with an a valid codeable concept value', () => {
+    const resource = b.patient('SzPatient', {
+      // So here we've passed the value straight into the extension
+      // No value mapping
+      inkhundla: {
+        coding: [
+          {
+            system:
+              'http://172.209.216.154:3447/fhir/CodeSystem/SzTinkhundlaCS',
+            code: '3',
+            display: 'LOBAMBA',
+          },
+        ],
+        text: 'LOBAMBA',
+      },
+    });
+
+    // And the extension should be properly mapped
+    assert.deepEqual(resource.extension[0], {
+      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzInkhundlaExtension',
+      valueCodeableConcept: {
+        coding: [
+          {
+            system:
+              'http://172.209.216.154:3447/fhir/CodeSystem/SzTinkhundlaCS',
+            code: '3',
+            display: 'LOBAMBA',
+          },
+        ],
+        text: 'LOBAMBA',
+      },
+    });
+    assert.isOk(resource);
+  });
+
+  it('should map extension inkundla with a mapped string value', () => {
+    const resource = b.patient('SzPatient', {
+      // Now we just pass a mapped code straight through and the rest will be generated
+      // shame that the display/code thing doesn't work great here
+      inkhundla: '3',
+    });
+
+    // And the extension should be properly mapped
+    assert.deepEqual(resource.extension[0], {
+      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzInkhundlaExtension',
+
+      // This structure is actually pretty hard to generate
+      // mostly because of the text field
+      valueCodeableConcept: {
+        coding: [
+          {
+            system:
+              'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzTinkhundlaCS',
+            code: '3',
+            display: 'LOBAMBA',
+          },
+        ],
+        // If we ignore text here, it's fine
+        text: 'LOBAMBA',
+      },
+    });
+    assert.isOk(resource);
+  });
+
+  it('should map extension inkundla with a custom mapped string value', () => {
+    // Define mappings in job code
+    b.setValues('http://172.209.216.154:3447/fhir/ValueSet/SzTinkhundlaVS', {
+      LO: '3',
+    });
+
+    const resource = b.patient('SzPatient', {
+      // Now I can pass whatever value I want and it'll magically map
+      inkhundla: 'LO',
+    });
+
+    // And the extension should be properly mapped
+    assert.deepEqual(resource.extension[0], {
+      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzInkhundlaExtension',
+
+      // This structure is actually pretty hard to generate
+      // mostly because of the text field
+      valueCodeableConcept: {
+        coding: [
+          {
+            system:
+              'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzTinkhundlaCS',
+            code: '3',
+            display: 'LOBAMBA',
+          },
+        ],
+        // If we ignore text here, it's fine
+        text: 'LOBAMBA',
+      },
+    });
+    assert.isOk(resource);
+  });
+
+  it('should map extension chiefdom with a mapped string value', () => {
+    const resource = b.patient('SzPatient', {
+      chiefdom: '7',
+    });
+
+    // And the extension should be properly mapped
+    assert.deepEqual(resource.extension[0], {
+      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzChiefdomExtension',
+      valueCodeableConcept: {
+        coding: [
+          {
+            system:
+              'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzChiefdomCS',
+            code: '7',
+            display: 'Lobamba ', // typo in fhir docs
+          },
+        ],
+        text: 'Lobamba ', // typo in fhir docs
+      },
+    });
+  });
+
+  it('should map extension registrationDate with a mapped string value', () => {
+    const resource = b.patient('SzPatient', {
+      registrationDate: '2025-06-01T10:00:00Z',
+    });
+
+    // And the extension should be properly mapped
+    assert.deepEqual(resource.extension[0], {
+      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzRegistrationDate',
+      valueDateTime: '2025-06-01T10:00:00Z',
+    });
   });
 });

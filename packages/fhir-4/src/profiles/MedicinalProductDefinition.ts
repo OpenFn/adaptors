@@ -19,14 +19,14 @@ export type MedicinalProductDefinition_Props = {
     contact?: FHIR.BackboneElement[];
     contained?: any[];
     crossReference?: FHIR.BackboneElement[];
-    description?: FHIR.markdown;
+    description?: string;
     domain?: string[] | FHIR.CodeableConcept;
     extension?: FHIR.Extension[];
     id?: string;
     identifier?: MaybeArray<string | FHIR.Identifier>;
     implicitRules?: string;
     impurity?: FHIR.CodeableReference[];
-    indication?: FHIR.markdown;
+    indication?: string;
     ingredient?: MaybeArray<string[] | FHIR.CodeableConcept>;
     language?: string;
     legalStatusOfSupply?: string[] | FHIR.CodeableConcept;

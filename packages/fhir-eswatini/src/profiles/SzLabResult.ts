@@ -9,6 +9,7 @@ import type { builders as FHIR } from "@openfn/language-fhir-4";
 type MaybeArray<T> = T | T[];
 
 export type Observation_SzLabResult_Props = {
+    authorizer?: FHIR.Reference[];
     basedOn?: FHIR.Reference[];
     bodySite?: FHIR.CodeableConcept;
     category?: FHIR.CodeableConcept[];
@@ -39,6 +40,7 @@ export type Observation_SzLabResult_Props = {
     specimen?: FHIR.Reference;
     status?: string;
     subject?: FHIR.Reference;
+    testingLaboratory?: FHIR.Reference[];
     text?: FHIR.Narrative;
     value?: FHIR.Quantity | FHIR.CodeableConcept | string | boolean | number | FHIR.Range | FHIR.Ratio | FHIR.SampledData | FHIR.Period;
     [key: string]: any;
@@ -49,6 +51,28 @@ export default function(props: Partial<Observation_SzLabResult_Props>) {
         resourceType: "Observation",
         ...props
     };
+
+    if (!_.isNil(props.authorizer)) {
+        let src = props.authorizer;
+        delete resource.authorizer;
+
+        dt.addExtension(
+            resource,
+            "http://172.209.216.154:3447/fhir/StructureDefinition/SzAuthorizerExtension",
+            src
+        );
+    }
+
+    if (!_.isNil(props.testingLaboratory)) {
+        let src = props.testingLaboratory;
+        delete resource.testingLaboratory;
+
+        dt.addExtension(
+            resource,
+            "http://172.209.216.154:3447/fhir/StructureDefinition/SzTestingLabExtension",
+            src
+        );
+    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }

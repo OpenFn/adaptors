@@ -53,7 +53,7 @@ export interface Annotation {
     /** Unique id for inter-element referencing */
     id?: string;
     /** The annotation  - text content (as markdown) */
-    text?: markdown;
+    text?: string;
     /** When the annotation was made */
     time?: string;
 }
@@ -63,11 +63,11 @@ export interface Attachment {
     /** Date attachment was first created */
     creation?: string;
     /** Data inline, base64ed */
-    data?: base64Binary;
+    data?: any;
     /** Additional content defined by implementations */
     extension?: Extension[];
     /** Hash of the data (sha-1, base64ed) */
-    hash?: base64Binary;
+    hash?: any;
     /** Unique id for inter-element referencing */
     id?: string;
     /** Human language of the content (BCP-47) */
@@ -383,7 +383,7 @@ export interface ElementDefinition {
     /** Corresponding codes in terminologies */
     code?: Coding[];
     /** Comments about the use of this element */
-    comment?: markdown;
+    comment?: string;
     /** Reference to invariant about presence */
     condition?: string[];
     /** Condition that must evaluate to true */
@@ -424,9 +424,9 @@ export interface ElementDefinition {
     /** Reference to definition of content for the element */
     contentReference?: string;
     /** Specified value if missing from instance */
-    defaultValue?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
+    defaultValue?: any | boolean | any | string | string | string | number | string | string | number | string | string | number | string | string | number | string | url | string | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
     /** Full formal definition as narrative text */
-    definition?: markdown;
+    definition?: string;
     /** Example value (as defined for type) */
     example?: {
         /**
@@ -440,12 +440,12 @@ export interface ElementDefinition {
         /**
          * Value of Example (one of allowed types)
          *  */
-        value: base64Binary;
+        value: any;
     };
     /** Additional content defined by implementations */
     extension?: Extension[];
     /** Value must be exactly this */
-    fixed?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
+    fixed?: any | boolean | any | string | string | string | number | string | string | number | string | string | number | string | string | number | string | url | string | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
     /** Unique id for inter-element referencing */
     id?: string;
     /** If this modifies the meaning of other elements */
@@ -486,7 +486,7 @@ export interface ElementDefinition {
     /** Maximum Allowed Value (for some types) */
     maxValue?: string | string | string | string | number | number | number | number | Quantity;
     /** Implicit meaning when this element is missing */
-    meaningWhenMissing?: markdown;
+    meaningWhenMissing?: string;
     /** Minimum Cardinality */
     min?: number;
     /** Minimum Allowed Value (for some types) */
@@ -500,11 +500,11 @@ export interface ElementDefinition {
     /** Path of the element in the hierarchy of elements */
     path?: string;
     /** Value must have at least these property values */
-    pattern?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
+    pattern?: any | boolean | any | string | string | string | number | string | string | number | string | string | number | string | string | number | string | url | string | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
     /** xmlAttr | xmlText | typeAttr | cdaText | xhtml */
     representation?: string[];
     /** Why this resource has been created */
-    requirements?: markdown;
+    requirements?: string;
     /** Concise definition for space-constrained presentation */
     short?: string;
     /** If this slice definition constrains an inherited slice definition (or not) */
@@ -586,7 +586,7 @@ export interface Extension {
     /** identifies the meaning of the extension */
     url?: string;
     /** Value of extension */
-    value?: base64Binary | boolean | any | string | string | string | number | string | string | number | markdown | oid | number | string | string | number | string | url | uuid | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
+    value?: any | boolean | any | string | string | string | number | string | string | number | string | string | number | string | string | number | string | url | string | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
 }
 export interface HumanName {
     /** Additional content defined by implementations */
@@ -870,7 +870,7 @@ export interface Reference {
 }
 export interface RelatedArtifact {
     /** Bibliographic citation for the artifact */
-    citation?: markdown;
+    citation?: string;
     /** Brief description of the related artifact */
     display?: string;
     /** What document is being referenced */
@@ -910,7 +910,7 @@ export interface SampledData {
 }
 export interface Signature {
     /** The actual signature content (XML DigSig. JWS, picture, etc.) */
-    data?: base64Binary;
+    data?: any;
     /** Additional content defined by implementations */
     extension?: Extension[];
     /** Unique id for inter-element referencing */
@@ -1033,14 +1033,6 @@ export interface UsageContext {
     /** Value that defines the context */
     value?: (string[] | CodeableConcept) | Quantity | Range | (string | Reference);
 }
-export interface base64Binary {
-    /** Additional content defined by implementations */
-    extension?: Extension[];
-    /** xml:id (or equivalent in JSON) */
-    id?: string;
-    /** Primitive value for base64Binary */
-    value?: string;
-}
 export interface code {
     /** Additional content defined by implementations */
     extension?: Extension[];
@@ -1049,36 +1041,12 @@ export interface code {
     /** Primitive value for code */
     value?: string;
 }
-export interface markdown {
-    /** Additional content defined by implementations */
-    extension?: Extension[];
-    /** xml:id (or equivalent in JSON) */
-    id?: string;
-    /** Primitive value for markdown */
-    value?: string;
-}
-export interface oid {
-    /** Additional content defined by implementations */
-    extension?: Extension[];
-    /** xml:id (or equivalent in JSON) */
-    id?: string;
-    /** Primitive value for oid */
-    value?: string;
-}
 export interface url {
     /** Additional content defined by implementations */
     extension?: Extension[];
     /** xml:id (or equivalent in JSON) */
     id?: string;
     /** Primitive value for url */
-    value?: string;
-}
-export interface uuid {
-    /** Additional content defined by implementations */
-    extension?: Extension[];
-    /** xml:id (or equivalent in JSON) */
-    id?: string;
-    /** Primitive value for uuid */
     value?: string;
 }
 export interface xhtml {

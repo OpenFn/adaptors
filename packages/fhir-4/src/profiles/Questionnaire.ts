@@ -13,10 +13,10 @@ export type Questionnaire_Props = {
     code?: FHIR.Coding[];
     contact?: FHIR.ContactDetail[];
     contained?: any[];
-    copyright?: FHIR.markdown;
+    copyright?: string;
     date?: string;
     derivedFrom?: any[];
-    description?: FHIR.markdown;
+    description?: string;
     effectivePeriod?: FHIR.Period;
     experimental?: boolean;
     extension?: FHIR.Extension[];
@@ -31,7 +31,7 @@ export type Questionnaire_Props = {
     modifierExtension?: FHIR.Extension[];
     name?: string;
     publisher?: string;
-    purpose?: FHIR.markdown;
+    purpose?: string;
     status?: string;
     subjectType?: string[];
     text?: FHIR.Narrative;

@@ -10,14 +10,14 @@ type MaybeArray<T> = T | T[];
 
 export type Evidence_Props = {
     approvalDate?: string;
-    assertion?: FHIR.markdown;
+    assertion?: string;
     author?: FHIR.ContactDetail[];
     certainty?: FHIR.BackboneElement[];
-    citeAs?: string | FHIR.Reference | FHIR.markdown;
+    citeAs?: string | FHIR.Reference | string;
     contact?: FHIR.ContactDetail[];
     contained?: any[];
     date?: string;
-    description?: FHIR.markdown;
+    description?: string;
     editor?: FHIR.ContactDetail[];
     endorser?: FHIR.ContactDetail[];
     extension?: FHIR.Extension[];

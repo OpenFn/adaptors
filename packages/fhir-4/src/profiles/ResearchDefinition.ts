@@ -14,9 +14,9 @@ export type ResearchDefinition_Props = {
     comment?: string[];
     contact?: FHIR.ContactDetail[];
     contained?: any[];
-    copyright?: FHIR.markdown;
+    copyright?: string;
     date?: string;
-    description?: FHIR.markdown;
+    description?: string;
     editor?: FHIR.ContactDetail[];
     effectivePeriod?: FHIR.Period;
     endorser?: FHIR.ContactDetail[];
@@ -37,7 +37,7 @@ export type ResearchDefinition_Props = {
     outcome?: string | FHIR.Reference;
     population?: string | FHIR.Reference;
     publisher?: string;
-    purpose?: FHIR.markdown;
+    purpose?: string;
     relatedArtifact?: FHIR.RelatedArtifact[];
     reviewer?: FHIR.ContactDetail[];
     shortTitle?: string;

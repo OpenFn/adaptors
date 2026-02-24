@@ -13,7 +13,7 @@ export type PackagedProductDefinition_Props = {
     contained?: any[];
     containedItemQuantity?: FHIR.Quantity[];
     copackagedIndicator?: boolean;
-    description?: FHIR.markdown;
+    description?: string;
     extension?: FHIR.Extension[];
     id?: string;
     identifier?: MaybeArray<string | FHIR.Identifier>;

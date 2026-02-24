@@ -12,7 +12,7 @@ export type SubstanceDefinition_Props = {
     classification?: MaybeArray<string[] | FHIR.CodeableConcept>;
     code?: FHIR.BackboneElement[];
     contained?: any[];
-    description?: FHIR.markdown;
+    description?: string;
     domain?: string[] | FHIR.CodeableConcept;
     extension?: FHIR.Extension[];
     grade?: MaybeArray<string[] | FHIR.CodeableConcept>;

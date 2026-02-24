@@ -62,7 +62,7 @@ const typeMappings = {
 const generate = async (
   specPath: string,
   mappings: MappingSpec = {},
-  options: { clean?: false; debugOutput?: false } = {},
+  options: { clean?: false; debugOutput?: false; isBase?: boolean } = {},
 ) => {
   console.log('Generating schemas from ', specPath);
 
@@ -152,7 +152,11 @@ const generate = async (
       continue;
     }
 
-    if (profile.resourceType !== 'StructureDefinition') {
+    if (
+      profile.resourceType !== 'StructureDefinition' ||
+      // if not generating a base adaptor, don't process extension types explicitly - they'll be handled later
+      (!options.isBase && profile.type === 'Extension')
+    ) {
       continue;
     }
 
@@ -202,7 +206,7 @@ const generate = async (
       if (el.path === resourceType) {
         continue;
       }
-      const path = el.path.replace(`${resourceType}\.`, '');
+      let path = el.path.replace(`${resourceType}\.`, '');
 
       if (path.includes('.')) {
         await parseProp(fullSpec, valuesets, schema, path, el);
@@ -210,7 +214,7 @@ const generate = async (
       }
 
       let defaults: Record<string, any> = {};
-      const type = getSimpleType(el);
+      let type = getSimpleType(el);
 
       const isArray = el.base.max === '*';
 
@@ -222,7 +226,32 @@ const generate = async (
           : el.patternCodeableConcept;
       }
 
-      if (type.includes('Identifier')) {
+      let extUrl;
+      let valueSet = el.binding?.valueSet;
+
+      if (type.includes('Extension') && el.sliceName) {
+        // If this is an extension property, override the path and
+        // type definition
+        path = el.sliceName;
+        extUrl = el.type[0].profile?.[0];
+        if (extUrl) {
+          const ext = Object.values(fullSpec).find(s => s.url === extUrl);
+          // find the value
+          const value = ext?.snapshot.element.find(el =>
+            el.path.endsWith('.value[x]'),
+          );
+          if (value) {
+            type = getSimpleType(value);
+            // isComposite = true; // maybe better without this?
+
+            // TODO how do I get the value map out?
+            // If the type is a concept, should I cheat somehow?
+            if (value.binding) {
+              valueSet = value.binding.valueSet;
+            }
+          }
+        }
+      } else if (type.includes('Identifier')) {
         // TODO this isn't robust because it assumes a particular slicing
         // It's the schema's job to unpick this slicing
         // This is a quick fix - let's see how well it stands up!
@@ -243,11 +272,8 @@ const generate = async (
         isArray,
         desc: el.short || el.definition,
         isComposite,
+        valueSet,
       };
-
-      if (el.binding) {
-        props[path].valueSet = el.binding.valueSet;
-      }
 
       // if (values) {
       //   props[path].values = values;
@@ -259,6 +285,10 @@ const generate = async (
 
       if (path.endsWith('.system')) {
         props[path].hasSystem = true;
+      }
+
+      if (extUrl) {
+        props[path].extension = extUrl;
       }
     }
 
@@ -320,6 +350,9 @@ async function parseProp(
     return;
   }
 
+  // if the parent is a primitive type, ignore the prop
+  // (later we'll support extenstion types)
+
   if (prop === 'extension') {
     if (data.sliceName) {
       prop = data.sliceName[0].toLowerCase() + data.sliceName.substring(1);
@@ -333,7 +366,7 @@ async function parseProp(
   if (schema.props[parent]) {
     const def: PropDef = {};
 
-    if (!data.type) {
+    if (!data.type || schema.props[parent].type.includes('date')) {
       return;
     }
 
