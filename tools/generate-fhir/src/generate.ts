@@ -28,6 +28,8 @@ export type Options = {
   /** Path to a mappings file (relative to monorepo root). This will be copied into build/mappings in the new generator */
   mappings?: string;
 
+  include?: string[];
+
   /** Should we generate tests? */
   tests?: boolean;
 
@@ -128,6 +130,14 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     console.log(`Package ${adaptorName} generated!`);
   }
   context.mappings = mappings;
+  if (options.include) {
+    console.log('Overriding mapping.include from CLI argument');
+    if (Array.isArray(options.include)) {
+      context.mappings.include = options.include;
+    } else {
+      context.mappings.include = [options.include];
+    }
+  }
 
   // Load options which may have been saved to the package
   const { simpleBuilders } = options;
