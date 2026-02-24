@@ -29,7 +29,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "^3.2.3"
+    "@openfn/language-common": "workspace:*"
   },
   "devDependencies": {
     "@openfn/cli": "^1.0.0",
