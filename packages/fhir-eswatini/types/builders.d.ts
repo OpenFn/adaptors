@@ -75,24 +75,24 @@ declare const value: (value: any, system: any, ...extra: any[]) => any;
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Meta} [props.meta] - Metadata about the resource
   * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {string} [props.language] - Language of the resource content
+  * @param {string} [props.language] - Language of the resource content. Accepts all values from http://hl7.org/fhir/ValueSet/languages
   * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
   * @param {Resource} [props.contained] - Contained, inline Resources
   * @param {Extension} [props.extension] - Extension
   * @param {Extension} [props.nationality] - Nationality.
-  * @param {CodeableConcept} [props.inkhundla] - Extention: Eswatini Inkhundla
-  * @param {CodeableConcept} [props.chiefdom] - Extention: Eswatini Chiefdom
+  * @param {string} [props.inkhundla] - Extention: Eswatini Inkhundla. Accepts all values from http://172.209.216.154:3447/fhir/ValueSet/SzTinkhundlaVS
+  * @param {string} [props.chiefdom] - Extention: Eswatini Chiefdom. Accepts all values from http://172.209.216.154:3447/fhir/ValueSet/SzChiefdomVS
   * @param {dateTime} [props.registrationDate] - Date the patient was registered
   * @param {Extension} [props.modifierExtension] - Extensions that cannot be ignored
   * @param {Identifier} [props.identifier] - Patient's Identification Number
   * @param {boolean} [props.active] - Whether this patient's record is in active use
   * @param {HumanName} [props.name] - Patient's name
   * @param {ContactPoint} [props.telecom] - A contact detail for the individual
-  * @param {string} [props.gender] - Sex at birth: male | female | other | unknown
+  * @param {string} [props.gender] - Sex at birth: male | female | other | unknown. Accepts all values from http://hl7.org/fhir/ValueSet/administrative-gender|4.0.1
   * @param {date} [props.birthDate] - Date of birth: YYYY-MM-DD
   * @param {boolean|dateTime} [props.deceased] - Indicates if the individual is deceased or not
   * @param {Address} [props.address] - An address for the individual
-  * @param {CodeableConcept} [props.maritalStatus] - Marital (civil) status of a patient
+  * @param {string} [props.maritalStatus] - Marital (civil) status of a patient. Accepts all values from http://hl7.org/fhir/ValueSet/marital-status
   * @param {boolean|integer} [props.multipleBirth] - Whether patient is part of a multiple birth
   * @param {Attachment} [props.photo] - Image of the patient
   * @param {BackboneElement} [props.contact] - A contact party (e.g. guardian, partner, friend) for the patient

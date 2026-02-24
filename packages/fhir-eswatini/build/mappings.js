@@ -3,7 +3,6 @@
 export default {
   include: [],
   include: ['Patient'],
-  // // include: ['Appointment', 'Extension'],
   exclude: [],
   overrides: {},
 

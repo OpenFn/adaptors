@@ -41,6 +41,7 @@ export type ServiceRequest_SzReferral_Props = {
     quantity?: FHIR.Quantity | FHIR.Ratio | FHIR.Range;
     reasonCode?: FHIR.CodeableConcept[];
     reasonReference?: FHIR.Reference[];
+    recipient?: base64Binary[] | boolean[] | any[] | string[] | number[] | markdown[] | oid[] | url[] | uuid[] | FHIR.Address[] | FHIR.Age[] | FHIR.Annotation[] | FHIR.Attachment[] | FHIR.CodeableConcept[] | FHIR.Coding[] | FHIR.ContactPoint[] | Count[] | Distance[] | FHIR.Duration[] | FHIR.HumanName[] | FHIR.Identifier[] | Money[] | FHIR.Period[] | FHIR.Quantity[] | FHIR.Range[] | FHIR.Ratio[] | FHIR.Reference[] | FHIR.SampledData[] | Signature[] | FHIR.Timing[] | ContactDetail[] | Contributor[] | DataRequirement[] | Expression[] | ParameterDefinition[] | RelatedArtifact[] | TriggerDefinition[] | UsageContext[] | FHIR.Dosage[] | FHIR.Meta[];
     relevantHistory?: FHIR.Reference[];
     replaces?: FHIR.Reference[];
     requester?: FHIR.Reference;
@@ -58,6 +59,19 @@ export default function(props: Partial<ServiceRequest_SzReferral_Props>) {
         resourceType: "ServiceRequest",
         ...props
     };
+
+    if (!_.isNil(props.recipient)) {
+        let src = props.recipient;
+        src = dt.concept(src);
+        dt.ensureConceptText(src);
+        delete resource.recipient;
+
+        dt.addExtension(
+            resource,
+            "http://172.209.216.154:3447/fhir/StructureDefinition/SzReferralRecipientExtension",
+            src
+        );
+    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }

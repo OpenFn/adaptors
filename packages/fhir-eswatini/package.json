@@ -15,7 +15,7 @@
   "type": "module",
   "fhir": {
     "specUrl": "http://172.209.216.154/definitions.json.zip",
-    "adaptorGeneratedDate": "2026-02-24T15:32:37.425Z",
+    "adaptorGeneratedDate": "2026-02-24T15:51:21.122Z",
     "generatorVersion": "0.7.0",
     "options": {}
   },

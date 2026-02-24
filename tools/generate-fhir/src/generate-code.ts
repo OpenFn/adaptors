@@ -244,7 +244,10 @@ const generateJsDocs = (
 
     let humanType;
     let desc = prop.desc;
-    if (prop.type.includes('Coding')) {
+    if (prop.valueSet) {
+      humanType = 'string';
+      desc += '. Accepts all values from ' + prop.valueSet;
+    } else if (prop.type.includes('Coding')) {
       // If this is a Coding, we should represent it as a string
       // and if possible, lit the values
       humanType = 'string';
