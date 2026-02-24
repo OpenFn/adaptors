@@ -1,5 +1,11 @@
 # @openfn/language-ibipimo
 
+## 1.0.2 - 24 February 2026
+
+### Patch Changes
+
+- Update icons
+
 ## 1.0.1 - 24 February 2026
 
 ### Patch Changes
