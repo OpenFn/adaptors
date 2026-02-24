@@ -73,7 +73,7 @@ Options provided to Chat Completions Create (https://docs.anthropic.com/en/api/m
 
 | Name | Type | Description |
 | --- | --- | --- |
-| model | <code>string</code> | Which mode to use, i.e., `claude-3-7-sonnet-20250219`. |
+| model | <code>string</code> | Which mode to use, i.e., `claude-sonnet-4-6`. |
 | max_tokens | <code>string</code> | The maximum number of tokens to generate before stopping, i.e., `1024` |
 | temperature | <code>number</code> | Amount of randomness injected into the response. Ranges from 0.0 to 1.0. Use temperature closer to 0.0 for analytical / multiple choice, and closer to 1.0 for creative and generative tasks. |
 
