@@ -39,7 +39,7 @@
     "mocha": "^10.8.2",
     "rimraf": "3.0.2",
     "sinon": "^21.0.1",
-    "undici": "^5.22.1"
+    "undici": "^7.19.2"
   },
   "repository": {
     "type": "git",

@@ -74,8 +74,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.22.1
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/asana:
     dependencies:
@@ -118,8 +118,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/beyonic:
     dependencies:
@@ -214,8 +214,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.22.1
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/cartodb:
     dependencies:
@@ -276,8 +276,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/cht:
     dependencies:
@@ -298,8 +298,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/claude:
     dependencies:
@@ -326,8 +326,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/collections:
     dependencies:
@@ -338,8 +338,8 @@ importers:
         specifier: ^1.8.0
         version: 1.8.0
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -409,8 +409,8 @@ importers:
         specifier: ^4.17.23
         version: 4.17.23
       undici:
-        specifier: ^7.15.0
-        version: 7.16.0
+        specifier: ^7.19.2
+        version: 7.19.2
     devDependencies:
       chai:
         specifier: 4.3.6
@@ -456,8 +456,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.22.1
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/dhis2:
     dependencies:
@@ -515,8 +515,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/dynamics:
     dependencies:
@@ -571,8 +571,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.22.1
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/et-mfr:
     dependencies:
@@ -630,8 +630,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -692,8 +692,8 @@ importers:
         specifier: 5.9.2
         version: 5.9.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/fhir-eswatini:
     dependencies:
@@ -726,8 +726,8 @@ importers:
         specifier: 4.8.4
         version: 4.8.4
       undici:
-        specifier: ^5.22.1
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/fhir-fr:
     dependencies:
@@ -754,8 +754,8 @@ importers:
         specifier: 4.8.4
         version: 4.8.4
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/fhir-ndr-et:
     dependencies:
@@ -797,8 +797,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/flutterwave:
     dependencies:
@@ -828,8 +828,8 @@ importers:
         specifier: ^21.0.1
         version: 21.0.1
       undici:
-        specifier: ^7.15.0
-        version: 7.16.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/formsg:
     dependencies:
@@ -902,8 +902,8 @@ importers:
         specifier: ^8.18.0
         version: 8.18.0
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -930,8 +930,8 @@ importers:
         specifier: ^8.18.0
         version: 8.18.0
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -977,8 +977,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/godata:
     dependencies:
@@ -1036,8 +1036,8 @@ importers:
         specifier: ^19.0.4
         version: 19.0.4
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/googlehealthcare:
     dependencies:
@@ -1058,8 +1058,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/googlesheets:
     dependencies:
@@ -1155,8 +1155,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/ibipimo:
     dependencies:
@@ -1186,8 +1186,8 @@ importers:
         specifier: ^21.0.1
         version: 21.0.1
       undici:
-        specifier: ^5.22.1
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/ihris:
     dependencies:
@@ -1214,8 +1214,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.22.1
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/inform:
     dependencies:
@@ -1239,8 +1239,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/intuit:
     dependencies:
@@ -1264,8 +1264,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/khanacademy:
     dependencies:
@@ -1369,8 +1369,8 @@ importers:
         specifier: ^2.3.0
         version: 2.3.0
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
     devDependencies:
       assertion-error:
         specifier: ^1.1.0
@@ -1574,8 +1574,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/mongodb:
     dependencies:
@@ -1624,8 +1624,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.22.1
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/motherduck:
     dependencies:
@@ -1655,8 +1655,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.22.1
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/mpesa:
     dependencies:
@@ -1680,8 +1680,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/msgraph:
     dependencies:
@@ -1689,8 +1689,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
       xlsx:
         specifier: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
         version: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
@@ -1755,8 +1755,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/mtn-momo:
     dependencies:
@@ -1780,8 +1780,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/mysql:
     dependencies:
@@ -1852,8 +1852,8 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/odk:
     dependencies:
@@ -1874,8 +1874,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/odoo:
     dependencies:
@@ -1902,8 +1902,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/openboxes:
     dependencies:
@@ -1927,8 +1927,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/opencrvs:
     dependencies:
@@ -1955,8 +1955,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.22.1
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/openelis:
     dependencies:
@@ -1980,8 +1980,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.22.1
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/openfn:
     dependencies:
@@ -2083,8 +2083,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/openmrs:
     dependencies:
@@ -2130,8 +2130,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/pdfshift:
     dependencies:
@@ -2155,8 +2155,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.22.1
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/pesapal:
     dependencies:
@@ -2180,8 +2180,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/ping:
     dependencies:
@@ -2205,8 +2205,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.22.1
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/postgresql:
     dependencies:
@@ -2310,8 +2310,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       undici:
-        specifier: ^7.8.0
-        version: 7.8.0
+        specifier: ^7.19.2
+        version: 7.19.2
     devDependencies:
       chai:
         specifier: ^3.4.0
@@ -2429,8 +2429,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/senaite:
     dependencies:
@@ -2454,8 +2454,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/sftp:
     dependencies:
@@ -2516,8 +2516,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.22.1
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/sunbird-rc:
     dependencies:
@@ -2541,8 +2541,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.22.1
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/surveycto:
     dependencies:
@@ -2647,8 +2647,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/vtiger:
     dependencies:
@@ -2706,8 +2706,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.22.1
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/wigal-sms:
     dependencies:
@@ -2715,8 +2715,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       undici:
-        specifier: ^5.29.0
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -2756,8 +2756,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.22.1
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/zoho:
     dependencies:
@@ -11086,12 +11086,8 @@ packages:
     resolution: {integrity: sha512-GrKEsc3ughskmGA9jevVlIOPMiiAHJ4OFUtaAH+NhfTUSiZ1wMPIQqQvAJUrJspFXJt3EBWgpAeoHEDVT1IBug==}
     engines: {node: '>=20.18.1'}
 
-  undici@7.16.0:
-    resolution: {integrity: sha512-QEg3HPMll0o3t2ourKwOeUAZ159Kn9mx5pnzHRQO8+Wixmh88YdZRiIwat0iNzNNXn0yoEtXJqFpyW7eM8BV7g==}
-    engines: {node: '>=20.18.1'}
-
-  undici@7.8.0:
-    resolution: {integrity: sha512-vFv1GA99b7eKO1HG/4RPu2Is3FBTWBrmzqzO0mz+rLxN3yXkE4mqRcb8g8fHxzX4blEysrNZLqg5RbJLqX5buA==}
+  undici@7.19.2:
+    resolution: {integrity: sha512-4VQSpGEGsWzk0VYxyB/wVX/Q7qf9t5znLRgs0dzszr9w9Fej/8RVNQ+S20vdXSAyra/bJ7ZQfGv6ZMj7UEbzSg==}
     engines: {node: '>=20.18.1'}
 
   unicode-canonical-property-names-ecmascript@2.0.1:
@@ -20998,9 +20994,7 @@ snapshots:
 
   undici@7.12.0: {}
 
-  undici@7.16.0: {}
-
-  undici@7.8.0: {}
+  undici@7.19.2: {}
 
   unicode-canonical-property-names-ecmascript@2.0.1: {}
 
