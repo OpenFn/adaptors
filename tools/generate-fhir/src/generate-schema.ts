@@ -62,7 +62,7 @@ const typeMappings = {
 const generate = async (
   specPath: string,
   mappings: MappingSpec = {},
-  options: { clean?: false; debugOutput?: false } = {},
+  options: { clean?: false; debugOutput?: false; isBase?: boolean } = {},
 ) => {
   console.log('Generating schemas from ', specPath);
 
@@ -154,8 +154,8 @@ const generate = async (
 
     if (
       profile.resourceType !== 'StructureDefinition' ||
-      // Don't process extension types explicitly - they'll be handled later
-      profile.type === 'Extension'
+      // if not generating a base adaptor, don't process extension types explicitly - they'll be handled later
+      (!options.isBase && profile.type === 'Extension')
     ) {
       continue;
     }

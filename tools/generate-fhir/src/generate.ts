@@ -174,7 +174,6 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
       SampledData: 1,
 
       Signature: 1,
-      //  FHIR.Timing: 1,
       ContactDetail: 1,
       Contributor: 1,
       DataRequirement: 1,
@@ -194,7 +193,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
       const dtSpecPath = path.resolve(adaptorPath, 'spec', 'spec-types.json');
       // Note: when generating datatypes we ignore the user's mappings and generate everything
       // maybe we need to take a different mappings object?
-      const dtSchema = await generateSchema(dtSpecPath);
+      const dtSchema = await generateSchema(dtSpecPath, {}, { isBase: true });
       const { src, index } = generateDataTypes(dtSchema, mappings);
       fhirTypes = index;
       const dtsPath = path.resolve(adaptorPath, 'src/fhir.ts');
