@@ -14,14 +14,19 @@ const typeMap = {
   dateTime: 'string',
   instant: 'string',
   uri: 'string',
+  url: 'string',
   id: 'string',
+  uuid: 'string',
+  oid: 'string',
   decimal: 'number',
   integer: 'number',
   unsignedInt: 'number',
+  markdown: 'string',
 
   // TODO
   canonical: 'any',
   Resource: 'any',
+  base64Binary: 'any',
 };
 
 export const generateType = (

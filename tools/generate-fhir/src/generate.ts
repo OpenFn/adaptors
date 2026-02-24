@@ -172,6 +172,20 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
       Dosage: 1,
       Timing: 1,
       SampledData: 1,
+
+      Signature: 1,
+      //  FHIR.Timing: 1,
+      ContactDetail: 1,
+      Contributor: 1,
+      DataRequirement: 1,
+      Expression: 1,
+      ParameterDefinition: 1,
+      RelatedArtifact: 1,
+      TriggerDefinition: 1,
+      UsageContext: 1,
+      Money: 1,
+      Count: 1,
+      Distance: 1,
     };
   } else {
     try {

@@ -41,7 +41,7 @@ export type ServiceRequest_SzReferral_Props = {
     quantity?: FHIR.Quantity | FHIR.Ratio | FHIR.Range;
     reasonCode?: FHIR.CodeableConcept[];
     reasonReference?: FHIR.Reference[];
-    recipient?: base64Binary[] | boolean[] | any[] | string[] | number[] | markdown[] | oid[] | url[] | uuid[] | FHIR.Address[] | FHIR.Age[] | FHIR.Annotation[] | FHIR.Attachment[] | FHIR.CodeableConcept[] | FHIR.Coding[] | FHIR.ContactPoint[] | Count[] | Distance[] | FHIR.Duration[] | FHIR.HumanName[] | FHIR.Identifier[] | Money[] | FHIR.Period[] | FHIR.Quantity[] | FHIR.Range[] | FHIR.Ratio[] | FHIR.Reference[] | FHIR.SampledData[] | Signature[] | FHIR.Timing[] | ContactDetail[] | Contributor[] | DataRequirement[] | Expression[] | ParameterDefinition[] | RelatedArtifact[] | TriggerDefinition[] | UsageContext[] | FHIR.Dosage[] | FHIR.Meta[];
+    recipient?: any[] | boolean[] | string[] | number[] | FHIR.Address[] | FHIR.Age[] | FHIR.Annotation[] | FHIR.Attachment[] | FHIR.CodeableConcept[] | FHIR.Coding[] | FHIR.ContactPoint[] | FHIR.Count[] | FHIR.Distance[] | FHIR.Duration[] | FHIR.HumanName[] | FHIR.Identifier[] | FHIR.Money[] | FHIR.Period[] | FHIR.Quantity[] | FHIR.Range[] | FHIR.Ratio[] | FHIR.Reference[] | FHIR.SampledData[] | FHIR.Signature[] | FHIR.Timing[] | FHIR.ContactDetail[] | FHIR.Contributor[] | FHIR.DataRequirement[] | FHIR.Expression[] | FHIR.ParameterDefinition[] | FHIR.RelatedArtifact[] | FHIR.TriggerDefinition[] | FHIR.UsageContext[] | FHIR.Dosage[] | FHIR.Meta[];
     relevantHistory?: FHIR.Reference[];
     replaces?: FHIR.Reference[];
     requester?: FHIR.Reference;

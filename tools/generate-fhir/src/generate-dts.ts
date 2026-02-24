@@ -144,14 +144,18 @@ const typeMap = {
   time: 'string',
   uri: 'string',
   id: 'string',
+  uuid: 'string',
+  oid: 'string',
   decimal: 'number',
   integer: 'number',
   positiveInt: 'number',
   unsignedInt: 'number',
   string: 'string',
   boolean: 'boolean',
+  markdown: 'string',
 
   // TODO
+  base64Binary: 'any',
   canonical: 'any',
 };
 
