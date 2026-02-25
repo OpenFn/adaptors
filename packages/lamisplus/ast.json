@@ -3,7 +3,7 @@
     {
       "name": "getPatients",
       "params": [
-        "params"
+        "query"
       ],
       "docs": {
         "description": "Get Patient resources from LAMISPlus",
@@ -33,12 +33,12 @@
           },
           {
             "title": "param",
-            "description": "data to create the new resource",
+            "description": "Query params, eg size, page",
             "type": {
               "type": "NameExpression",
-              "name": "object"
+              "name": "string"
             },
-            "name": "params"
+            "name": "query"
           },
           {
             "title": "returns",

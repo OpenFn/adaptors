@@ -56,31 +56,32 @@ export function execute(...operations) {
 /**
  * Get Patient resources from LAMISPlus
  * @public
- * @example
+ * @example Get all patients
  * getPatients()
+ * @example Get a single patient
+ * getPatients({ size: 1})
  * @function
- * @param {string} path - Path to resource
- * @param {object} params - data to create the new resource
+ * @param {string} query - Query params, eg size, page
  * @returns {Operation}
  */
-export function getPatients(params) {
+export function getPatients(query = {}) {
   return async state => {
-    const [resolvedParams] = expandReferences(state, params);
-
-    let query;
-    if (resolvedParams) {
-      query = { format: 'json', ...resolvedParams };
-    }
+    const [resolvedQuery] = expandReferences(state, query);
 
     const response = await util.request(
       state.configuration,
       'GET',
       'plugin/ehr/api/v1/patient',
       {
-        query,
+        query: resolvedQuery,
       },
     );
-    return composeNextState(state, response.body);
+    const { body, statusCode } = response;
+    if (statusCode !== '200') {
+      // TODO error handling on statusCode
+    }
+
+    return composeNextState(state, body.data.patients);
   };
 }
 
