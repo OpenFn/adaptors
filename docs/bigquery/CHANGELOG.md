@@ -1,5 +1,12 @@
 # @openfn/language-bigquery
 
+## 4.0.12 - 25 February 2026
+
+### Patch Changes
+
+- 9133458: Add missing writeOnly to sensitive credential fields and fix typos in
+  configuration schemas
+
 ## 4.0.11 - 24 February 2026
 
 ### Patch Changes

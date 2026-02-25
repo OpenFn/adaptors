@@ -1,5 +1,12 @@
 # @openfn/language-asana
 
+## 5.0.10 - 25 February 2026
+
+### Patch Changes
+
+- 9133458: Add missing writeOnly to sensitive credential fields and fix typos in
+  configuration schemas
+
 ## 5.0.9 - 24 February 2026
 
 ### Patch Changes

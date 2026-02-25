@@ -1,5 +1,12 @@
 # @openfn/language-redis
 
+## 1.3.17 - 25 February 2026
+
+### Patch Changes
+
+- 9133458: Add missing writeOnly to sensitive credential fields and fix typos in
+  configuration schemas
+
 ## 1.3.16 - 24 February 2026
 
 ### Patch Changes

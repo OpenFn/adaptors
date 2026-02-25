@@ -1,5 +1,12 @@
 # @openfn/language-collections
 
+## 0.8.3 - 25 February 2026
+
+### Patch Changes
+
+- 9133458: Add missing writeOnly to sensitive credential fields and fix typos in
+  configuration schemas
+
 ## 0.8.2 - 24 February 2026
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @openfn/language-cartodb
 
+## 0.4.28 - 25 February 2026
+
+### Patch Changes
+
+- 9133458: Add missing writeOnly to sensitive credential fields and fix typos in
+  configuration schemas
+
 ## 0.4.27 - 24 February 2026
 
 ### Patch Changes
