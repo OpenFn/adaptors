@@ -20,7 +20,7 @@ export function get(path, options) {
     );
 
     const response = await util.request(
-      state,
+      state.configuration,
       'GET',
       resolvedPath,
       resolvedOptions
@@ -62,7 +62,7 @@ export function post(path, data, options) {
       ...resolvedOptions,
     };
     const response = await util.request(
-      state,
+      state.configuration,
       'POST',
       resolvedPath,
       optionsObject
