@@ -24,6 +24,7 @@
       "title": "Client Secret",
       "type": "string",
       "description": "Client Secret",
+      "writeOnly": true,
       "minLength": 1,
       "examples": [
         "the-long-secret-key-provided-by-satusehat"

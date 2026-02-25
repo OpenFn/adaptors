@@ -22,7 +22,7 @@
       "description": "Maximo instance password",
       "writeOnly": true,
       "minLength": 1,
-      "examples": ["@some(!)passowrd"]
+      "examples": ["@some(!)password"]
     }
   },
   "type": "object",
