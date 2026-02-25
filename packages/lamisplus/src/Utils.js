@@ -30,8 +30,9 @@ export const request = (configuration = {}, method, path, options) => {
 
   // TODO This example adds basic auth from config data
   //       you may need to support other auth strategies
-  const { baseUrl, username, password } = configuration;
-  const headers = makeBasicAuthHeader(username, password);
+  const { auth } = configuration;
+
+  const headers = typeof auth === "object" && !!auth.Authorization ? { ...auth } : {}
 
   // TODO You can define custom error messages here
   //      The request function will throw if it receives
