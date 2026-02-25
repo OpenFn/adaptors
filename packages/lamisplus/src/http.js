@@ -57,7 +57,7 @@ export function post(path, data, options) {
     );
 
     const optionsObject = {
-      data: resolvedData,
+      body: resolvedData,
       ...resolvedOptions,
     };
     const response = await util.request(
