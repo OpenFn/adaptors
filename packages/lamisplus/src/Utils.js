@@ -30,7 +30,7 @@ export const request = (configuration = {}, method, path, options) => {
 
   // TODO This example adds basic auth from config data
   //       you may need to support other auth strategies
-  const { auth } = configuration;
+  const { auth, baseUrl } = configuration;
 
   const headers = typeof auth === "object" && !!auth.Authorization ? { ...auth } : {}
 
