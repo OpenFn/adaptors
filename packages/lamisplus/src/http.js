@@ -1,4 +1,4 @@
-import { expandReferences } from "@openfn/language-common/util";
+import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils';
 
 /* Make a HTTP GET request to any LAMISPlus endpoint
@@ -16,20 +16,19 @@ export function get(path, options) {
     const [resolvedPath, resolvedOptions = {}] = expandReferences(
       state,
       path,
-      options
+      options,
     );
 
     const response = await util.request(
       state.configuration,
       'GET',
       resolvedPath,
-      resolvedOptions
+      resolvedOptions,
     );
 
     return util.prepareNextState(state, response);
   };
 }
-
 
 /**
  * Make a POST request to a LAMISPlus endpoint
@@ -54,7 +53,7 @@ export function post(path, data, options) {
       state,
       path,
       data,
-      options
+      options,
     );
 
     const optionsObject = {
@@ -65,7 +64,39 @@ export function post(path, data, options) {
       state.configuration,
       'POST',
       resolvedPath,
-      optionsObject
+      optionsObject,
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}
+
+/**
+ * Make a general HTTP request
+ * @example
+ * request("POST", "patient", { "name": "Bukayo" });
+ * @function
+ * @public
+ * @param {string} method - HTTP method to use
+ * @param {string} path - Path to resource
+ * @param {object} body - Object which will be attached to the POST body
+ * @param {RequestOptions} options - Optional request options
+ * @returns {Operation}
+ * @state {HttpState}
+ */
+export function request(method, path, body, options = {}) {
+  return async state => {
+    const [resolvedMethod, resolvedPath, resolvedBody, resolvedoptions] =
+      expandReferences(state, method, path, body, options);
+
+    const response = await util.request(
+      state.configuration,
+      resolvedMethod,
+      resolvedPath,
+      {
+        body: resolvedBody,
+        ...resolvedoptions,
+      },
     );
 
     return util.prepareNextState(state, response);

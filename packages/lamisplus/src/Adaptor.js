@@ -111,38 +111,6 @@ export function getPatients(params) {
   };
 }
 
-/**
- * Make a general HTTP request
- * @example
- * request("POST", "patient", { "name": "Bukayo" });
- * @function
- * @public
- * @param {string} method - HTTP method to use
- * @param {string} path - Path to resource
- * @param {object} body - Object which will be attached to the POST body
- * @param {RequestOptions} options - Optional request options
- * @returns {Operation}
- * @state {HttpState}
- */
-export function request(method, path, body, options = {}) {
-  return async state => {
-    const [resolvedMethod, resolvedPath, resolvedBody, resolvedoptions] =
-      expandReferences(state, method, path, body, options);
-
-    const response = await util.request(
-      state.configuration,
-      resolvedMethod,
-      resolvedPath,
-      {
-        body: resolvedBody,
-        ...resolvedoptions,
-      },
-    );
-
-    return util.prepareNextState(state, response);
-  };
-}
-
 export {
   as,
   combine,
