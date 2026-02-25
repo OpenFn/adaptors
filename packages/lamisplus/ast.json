@@ -3,9 +3,7 @@
     {
       "name": "getPatients",
       "params": [
-        "path",
-        "params",
-        "callback"
+        "params"
       ],
       "docs": {
         "description": "Get Patient resources from LAMISPlus",
@@ -43,15 +41,6 @@
             "name": "params"
           },
           {
-            "title": "param",
-            "description": "(Optional) callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -61,7 +50,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "request",

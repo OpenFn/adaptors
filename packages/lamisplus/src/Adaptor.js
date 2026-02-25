@@ -1,4 +1,7 @@
-import { execute as commonExecute, composeNextState } from '@openfn/language-common';
+import {
+  execute as commonExecute,
+  composeNextState,
+} from '@openfn/language-common';
 import { expandReferences, post, get } from '@openfn/language-common/util';
 import * as util from './Utils';
 
@@ -36,14 +39,14 @@ export function execute(...operations) {
     references: [],
     data: null,
   };
-
   return state => {
-    const shouldAuth = state?.configuration?.email && state?.configuration?.password && state?.configuration?.baseUrl
-    return commonExecute(
-      ...(shouldAuth ? [login] : []),
-      ...operations,
-      ...(shouldAuth ? [cleanupState] : [])
-    )({
+    const shouldAuth =
+      state?.configuration?.email && state?.configuration?.password;
+
+    if (shouldAuth) {
+      operations.splice(0, 0, login);
+    }
+    return commonExecute(...operations)({
       ...initialState,
       ...state,
     });
@@ -74,7 +77,7 @@ function login(state) {
   return post(url, body, { headers }).then(response => {
     const auth = { Authorization: `Bearer ${response.body.accessToken}` };
     return { ...state, configuration: { ...configuration, auth } };
-  })
+  });
 }
 
 /**
@@ -85,21 +88,13 @@ function login(state) {
  * @function
  * @param {string} path - Path to resource
  * @param {object} params - data to create the new resource
- * @param {function} callback - (Optional) callback function
  * @returns {Operation}
  */
-export function getPatients(path, params, callback = s => s) {
+export function getPatients(params) {
   return async state => {
-    const [resolvedPath, resolvedParams] = expandReferences(
-      state,
-      path,
-      params
-    );
+    const [resolvedParams] = expandReferences(state, params);
     const { baseUrl, auth } = state.configuration;
 
-    const patientsPath = resolvedPath || 'plugin/ehr/api/v1/patient'
-
-    const url = `${baseUrl}/${patientsPath}`;
     const headers = { ...auth };
 
     let query;
@@ -107,10 +102,12 @@ export function getPatients(path, params, callback = s => s) {
       query = { format: 'json', ...resolvedParams };
     }
 
-    return get(url, { headers, query }).then(response => {
-      const nextState = composeNextState(state, response.body);
-      return callback(nextState);
+    const response = await get('plugin/ehr/api/v1/patient', {
+      baseUrl,
+      headers,
+      query,
     });
+    return composeNextState(state, response.body);
   };
 }
 
@@ -139,24 +136,11 @@ export function request(method, path, body, options = {}) {
       {
         body: resolvedBody,
         ...resolvedoptions,
-      }
+      },
     );
 
     return util.prepareNextState(state, response);
   };
-}
-
-/**
- * Discards the auth token from state.
- * @example
- * cleanupState(state)
- * @function
- * @param {State} state - Runtime state.
- * @returns {State} state - but with a "token" removed from the configuration key.
- */
-function cleanupState(state) {
-  delete state.configuration.auth;
-  return state;
 }
 
 export {
