@@ -14,6 +14,7 @@
       "title": "Token",
       "type": "string",
       "description": "The API token",
+      "writeOnly": true,
       "examples": [
         "sample-tokenyWSJdXBACMLLWMNGgADFA"
       ]

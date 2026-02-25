@@ -8,7 +8,7 @@
             "format": "uri",
             "minLength": 1,
             "examples": [
-                " https://www.orange-or-airtel-or-vodafone.com/api/"
+                "https://www.orange-or-airtel-or-vodafone.com/api/"
             ]
         },
         "username": {

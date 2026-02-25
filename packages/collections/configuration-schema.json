@@ -21,6 +21,7 @@
       "title": "Access Token",
       "type": "string",
       "description": "Access token for the collection",
+      "writeOnly": true,
       "examples": ["x.y.z"]
     }
   },
