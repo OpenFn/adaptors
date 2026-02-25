@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-mailchimp",
   "label": "Mailchimp",
-  "version": "1.0.27",
+  "version": "1.0.28",
   "description": "An OpenFn adaptor for use with Mailchimp",
   "main": "dist/index.cjs",
   "scripts": {

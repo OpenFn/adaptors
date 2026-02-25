@@ -1,5 +1,12 @@
 # @openfn/language-salesforce
 
+## 9.0.6 - 25 February 2026
+
+### Patch Changes
+
+- 9133458: Add missing writeOnly to sensitive credential fields and fix typos in
+  configuration schemas
+
 ## 9.0.5 - 24 February 2026
 
 ### Patch Changes

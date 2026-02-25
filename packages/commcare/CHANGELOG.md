@@ -1,5 +1,12 @@
 # @openfn/language-commcare
 
+## 4.0.11 - 25 February 2026
+
+### Patch Changes
+
+- 9133458: Add missing writeOnly to sensitive credential fields and fix typos in
+  configuration schemas
+
 ## 4.0.10 - 24 February 2026
 
 ### Patch Changes

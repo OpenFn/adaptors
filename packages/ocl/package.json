@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-ocl",
   "label": "OCL",
-  "version": "1.2.27",
+  "version": "1.2.28",
   "description": "OpenFn adaptor for Open Concept Lab (ORL) terminology services",
   "main": "dist/index.cjs",
   "scripts": {
