@@ -15,21 +15,16 @@
           },
           {
             "title": "example",
-            "description": "getPatients()"
+            "description": "Get all patients\ngetPatients()"
+          },
+          {
+            "title": "example",
+            "description": "Get a single patient\ngetPatients({ size: 1})"
           },
           {
             "title": "function",
             "description": null,
             "name": null
-          },
-          {
-            "title": "param",
-            "description": "Path to resource",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "path"
           },
           {
             "title": "param",
@@ -50,7 +45,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     }
   ],
   "exports": [],
