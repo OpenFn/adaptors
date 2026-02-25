@@ -1,9 +1,5 @@
 import { composeNextState } from '@openfn/language-common';
-import {
-  request as commonRequest,
-  makeBasicAuthHeader,
-  assertRelativeUrl,
-} from '@openfn/language-common/util';
+import { request as commonRequest } from '@openfn/language-common/util';
 import nodepath from 'node:path';
 
 export const prepareNextState = (state, response) => {
@@ -19,6 +15,29 @@ export const prepareNextState = (state, response) => {
   };
 };
 
+export async function login(state) {
+  const { configuration = {} } = state;
+  const { baseUrl, password, email } = configuration;
+
+  const url = `${baseUrl}/`;
+  const body = {
+    email,
+    password,
+  };
+  const headers = {
+    'content-type': 'application/json',
+  };
+
+  const response = await request(
+    state.configuration,
+    'POST',
+    'core/api/v1/auth/login',
+    { headers, body },
+  );
+  const auth = { Authorization: `Bearer ${response.body.accessToken}` };
+  return { ...state, configuration: { ...configuration, auth } };
+}
+
 // This helper function will call out to the backend service
 // and add authorisation headers
 // Refer to the common request function for options and details
@@ -28,15 +47,11 @@ export const request = (configuration = {}, method, path, options) => {
   // pass a baseURL to it and you don't need to build a path here
   // assertRelativeUrl(path);
 
-  // TODO This example adds basic auth from config data
-  //       you may need to support other auth strategies
   const { auth, baseUrl } = configuration;
 
-  const headers = typeof auth === "object" && !!auth.Authorization ? { ...auth } : {}
+  const headers =
+    typeof auth === 'object' && !!auth.Authorization ? { ...auth } : {};
 
-  // TODO You can define custom error messages here
-  //      The request function will throw if it receives
-  //      an error code (<=400), terminating the workflow
   const errors = {
     404: 'Page not found',
   };

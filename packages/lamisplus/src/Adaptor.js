@@ -2,7 +2,7 @@ import {
   execute as commonExecute,
   composeNextState,
 } from '@openfn/language-common';
-import { expandReferences, post, get } from '@openfn/language-common/util';
+import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils';
 
 /**
@@ -44,40 +44,13 @@ export function execute(...operations) {
       state?.configuration?.email && state?.configuration?.password;
 
     if (shouldAuth) {
-      operations.splice(0, 0, login);
+      operations.splice(0, 0, util.login);
     }
     return commonExecute(...operations)({
       ...initialState,
       ...state,
     });
   };
-}
-
-/**
- * Logs in to LAMISPlus.
- * @example
- * login(state)
- * @function
- * @private
- * @param {State} state - Runtime state.
- * @returns {State} state - but with a "token" added to the configuration key.
- */
-function login(state) {
-  const { configuration = {} } = state;
-  const { baseUrl, password, email } = configuration;
-
-  const url = `${baseUrl}/core/api/v1/auth/login`;
-  const body = {
-    email,
-    password,
-  };
-  const headers = {
-    'content-type': 'application/json',
-  };
-  return post(url, body, { headers }).then(response => {
-    const auth = { Authorization: `Bearer ${response.body.accessToken}` };
-    return { ...state, configuration: { ...configuration, auth } };
-  });
 }
 
 /**
@@ -93,20 +66,20 @@ function login(state) {
 export function getPatients(params) {
   return async state => {
     const [resolvedParams] = expandReferences(state, params);
-    const { baseUrl, auth } = state.configuration;
-
-    const headers = { ...auth };
 
     let query;
     if (resolvedParams) {
       query = { format: 'json', ...resolvedParams };
     }
 
-    const response = await get('plugin/ehr/api/v1/patient', {
-      baseUrl,
-      headers,
-      query,
-    });
+    const response = await util.request(
+      state.configuration,
+      'GET',
+      'plugin/ehr/api/v1/patient',
+      {
+        query,
+      },
+    );
     return composeNextState(state, response.body);
   };
 }
