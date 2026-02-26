@@ -70,7 +70,7 @@
           {
             "title": "example",
             "description": "list('/api/v2/disbursements/search-transactions', {\n    sourceAccountNumber: 4864192954,\n    startDate: new Date('2025-11-15'),\n    endDate: Date.now()\n});",
-            "caption": "Get all transactions"
+            "caption": "Get transactions within a date range. (Default range is the current date)"
           },
           {
             "title": "example",

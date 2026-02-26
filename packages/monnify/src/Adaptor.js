@@ -56,7 +56,7 @@ export function get(path, options = {}) {
 
 /**
  * Fetch a list of items.
- * @example <caption>Get all transactions</caption>
+ * @example <caption>Get transactions within a date range. (Default range is the current date)</caption>
  * list('/api/v2/disbursements/search-transactions', {
  *     sourceAccountNumber: 4864192954,
  *     startDate: new Date('2025-11-15'),
