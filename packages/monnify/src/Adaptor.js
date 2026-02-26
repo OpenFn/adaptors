@@ -58,7 +58,9 @@ export function get(path, options = {}) {
  * Fetch a list of items.
  * @example <caption>Get all transactions</caption>
  * list('/api/v2/disbursements/search-transactions', {
- *     sourceAccountNumber: 4864192954
+ *     sourceAccountNumber: 4864192954,
+ *     startDate: new Date('2025-11-15'),
+ *     endDate: Date.now()
  * });
  * 
  * @example <caption>Get all transactions for a specific page and page number.</caption>
