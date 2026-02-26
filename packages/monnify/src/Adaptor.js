@@ -14,6 +14,8 @@ import * as util from './Utils.js';
  * @typedef {Object} ListQueryOptions
  * @property {Number} pageNo - The page number. Please note that Monnify pagination starts at 0 not 1. (Default: 0)
  * @property {Number} pageSize - The page size. (Default: 100)
+ * @property {Date} startDate - The lower date range
+ * @property {Date} endDate - The higher date range
  * @property {Record<string, any>} [otherOptions] - Additional options.
  **/
 
@@ -110,9 +112,9 @@ export function list(path, query = {}) {
  * @returns {Operation}
  * @state {HttpState}
  */
-export function post(path, body,options = {}) {
+export function post(path, body, options = {}) {
   return async state => {
-    const [resolvedPath,resolvedBody, resolvedOptions] = expandReferences(state, path,body, options);
+    const [resolvedPath, resolvedBody, resolvedOptions] = expandReferences(state, path, body, options);
 
     const response = await util.request(
       state.configuration,
