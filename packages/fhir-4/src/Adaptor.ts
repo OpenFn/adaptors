@@ -1,6 +1,7 @@
 import { composeNextState } from '@openfn/language-common';
 import { throwError, expandReferences } from '@openfn/language-common/util';
 import { assertValidResourceId, prepareNextState, request } from './util';
+import { sortBundle } from './util.js';
 
 /**
  * Fetch a single FHIR resource.
@@ -382,6 +383,8 @@ export function uploadBundle(bundle: string | any = 'bundle') {
         bundle: $bundle ?? 'bundle (default)',
       });
     }
+
+    data.entry = sortBundle(data.entry);
 
     const response = await request('POST', '/', {
       configuration: state.configuration,
