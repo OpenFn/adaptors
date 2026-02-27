@@ -85,7 +85,7 @@ export const request = (method, path, options: RequestOptions) => {
         accept: 'application/fhir+json',
         'content-type': 'application/fhir+json',
       },
-      options.headers
+      options.headers,
     ),
     baseUrl: configuration.baseUrl,
     parseAs: 'json',
@@ -112,3 +112,72 @@ export const request = (method, path, options: RequestOptions) => {
       throw e;
     });
 };
+
+function collectRefs(value: any): string[] {
+  if (!value || typeof value !== 'object') return [];
+  if (Array.isArray(value)) return value.flatMap(collectRefs);
+
+  const refs: string[] = [];
+  if (typeof value.reference === 'string') {
+    refs.push(value.reference);
+  }
+  for (const v of Object.values(value)) {
+    refs.push(...collectRefs(v));
+  }
+  return refs;
+}
+
+export function sortBundle(entries: any[]) {
+  // Map "ResourceType/id" -> index in the entries array
+  const indexByRef = new Map<string, number>();
+  for (let i = 0; i < entries.length; i++) {
+    const { resourceType, id } = entries[i].resource;
+    if (resourceType && id) {
+      indexByRef.set(`${resourceType}/${id}`, i);
+    }
+  }
+
+  const n = entries.length;
+  const inDegree = new Array(n).fill(0);
+  // adj[j] = list of indices that depend on j (j must come before them)
+  const adj: number[][] = Array.from({ length: n }, () => []);
+
+  for (let i = 0; i < n; i++) {
+    const deps = new Set<number>();
+    for (const ref of collectRefs(entries[i].resource)) {
+      const j = indexByRef.get(ref);
+      if (j !== undefined && j !== i) deps.add(j);
+    }
+    for (const j of deps) {
+      adj[j].push(i);
+      inDegree[i]++;
+    }
+  }
+
+  // Kahn's algorithm - queue seeded with zero-in-degree nodes in original order
+  const queue: number[] = [];
+  for (let i = 0; i < n; i++) {
+    if (inDegree[i] === 0) queue.push(i);
+  }
+
+  const result: any[] = [];
+  while (queue.length > 0) {
+    const idx = queue.shift()!;
+    result.push(entries[idx]);
+    for (const dep of adj[idx]) {
+      if (--inDegree[dep] === 0) {
+        // Insert in original-index order to keep the sort stable
+        let k = 0;
+        while (k < queue.length && queue[k] < dep) k++;
+        queue.splice(k, 0, dep);
+      }
+    }
+  }
+
+  // Append any remaining entries (e.g. circular deps) in original order
+  for (let i = 0; i < n; i++) {
+    if (inDegree[i] > 0) result.push(entries[i]);
+  }
+
+  return result;
+}
