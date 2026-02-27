@@ -1,7 +1,6 @@
+
 import { composeNextState } from '@openfn/language-common';
-import { S3Client, PutObjectCommand, GetObjectCommand, ListObjectsV2Command, DeleteObjectCommand } from '@aws-sdk/client-s3';
-import nodepath from 'node:path';
-import { Readable } from 'stream';
+import { S3Client } from '@aws-sdk/client-s3';
 
 export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
@@ -30,29 +29,7 @@ export const s3ClientFromConfig = (configuration = {}) => {
   return new S3Client(clientConfig);
 };
 
-export const putObject = async (configuration = {}, params = {}) => {
-  const client = s3ClientFromConfig(configuration);
-  const cmd = new PutObjectCommand(params);
-  return client.send(cmd);
-};
 
-export const getObject = async (configuration = {}, params = {}) => {
-  const client = s3ClientFromConfig(configuration);
-  const cmd = new GetObjectCommand(params);
-  return client.send(cmd);
-};
-
-export const deleteObject = async (configuration = {}, params = {}) => {
-  const client = s3ClientFromConfig(configuration);
-  const cmd = new DeleteObjectCommand(params);
-  return client.send(cmd);
-};
-
-export const listObjects = async (configuration = {}, params = {}) => {
-  const client = s3ClientFromConfig(configuration);
-  const cmd = new ListObjectsV2Command(params);
-  return client.send(cmd);
-};
 
 export const streamToBuffer = async (stream) => {
   if (Buffer.isBuffer(stream)) return stream;
@@ -89,13 +66,4 @@ export const preparePutResponse = (response, Bucket, Key) => {
   };
 };
 
-export default {
-  s3ClientFromConfig,
-  putObject,
-  getObject,
-  deleteObject,
-  listObjects,
-  prepareS3GetResponse,
-  preparePutResponse,
-  prepareNextState,
-};
+

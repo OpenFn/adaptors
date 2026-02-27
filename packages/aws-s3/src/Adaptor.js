@@ -40,21 +40,17 @@ export function put(params) {
     const client = util.s3ClientFromConfig(state.configuration);
     const resp = await client.send(new PutObjectCommand(awsParams));
 
-    const formatted = {
-      body: {
-        ...state.data,
-        bucket: awsParams.Bucket,
-        key: awsParams.Key,
-        etag: resp.ETag,
-
-      },
-      headers: resp.$metadata || {},
-      statusCode: 200,
+    // Only write the relevant S3 response to state.data
+    const newData = {
+      ...state.data,
+      bucket: awsParams.Bucket,
+      key: awsParams.Key,
+      etag: resp.ETag,
     };
-
-    return util.prepareNextState(state, formatted);
+    return { ...state, data: newData };
   };
 }
+  
 
 
 /**
@@ -80,12 +76,7 @@ export function list(params) {
     };
     const client = util.s3ClientFromConfig(state.configuration);
     const resp = await client.send(new ListObjectsV2Command(awsParams));
-    const formatted = {
-      body: resp.Contents || [],
-      headers: resp.$metadata || {},
-      statusCode: 200,
-    };
-    return util.prepareNextState(state, formatted);
+    return { ...state, data: resp.Contents || [] };
   };
 }
 
