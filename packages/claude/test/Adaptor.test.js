@@ -12,7 +12,7 @@ describe('prompt', () => {
     const mock = {
       messages: {
         create: ({ model, max_tokens, messages }) => {
-          expect(model).to.eql('claude-sonnet-4-6');
+          expect(model).to.eql('claude-3-7-sonnet-20250219');
           expect(max_tokens).to.eql(1024);
           expect(messages).to.eql([
             { role: 'user', content: 'Write a poem about surfing.' },
@@ -22,7 +22,7 @@ describe('prompt', () => {
             id: 'msg_01UQMuLDXwzgrkUtfWG7X5Ep',
             type: 'message',
             role: 'assistant',
-            model: 'claude-sonnet-4-6',
+            model: 'claude-3-7-sonnet-20250219',
             content: [
               {
                 type: 'text',
@@ -55,7 +55,7 @@ describe('prompt', () => {
       id: 'msg_01UQMuLDXwzgrkUtfWG7X5Ep',
       type: 'message',
       role: 'assistant',
-      model: 'claude-sonnet-4-6',
+      model: 'claude-3-7-sonnet-20250219',
       content: [
         {
           type: 'text',

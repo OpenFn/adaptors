@@ -15,7 +15,6 @@
       "title": "API Token",
       "type": "string",
       "description": "API token",
-      "writeOnly": true,
       "minLength": 1,
       "examples": [
         "cdjhiooiSIUJHDYSYUIHASIOHKAANOAJJjsiujhaka"

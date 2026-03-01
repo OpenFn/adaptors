@@ -150,8 +150,8 @@ export function get(fileIdOrName) {
  * list({folderId: '<id-of-folder-here>'})
  * @example <caption>List files at the root of google drive</caption>
  * list()
- * @param {string} folderId - ID of the folder to list files from. If not provided, lists files from the root.
- * @param {Object} [options] - Options for listing files
+ * @param {Object} [options] - Options for listing files.
+ * @param {string} [options.folderId] - ID of the folder to list files from. If not provided, lists files from the root.
  * @param {string} [options.fields] - Fields to return in the response. Defaults to 'files(id, name, mimeType, createdTime, modifiedTime)'.
  * @param {string} [options.query] - Custom query string for filtering files (see Google Drive API query syntax).
  * @param {number} [options.limit] - Maximum number of files to return
@@ -159,41 +159,36 @@ export function get(fileIdOrName) {
  * @state {DriveState}
  * @returns {Operation} An operation that retrieves a list of files.
  */
-export function list(folderId, options) {
+export function list(options) {
   return async state => {
-    const [resolvedFolderId, resolvedOptions] = expandReferences(
-      state,
-      folderId,
-      options || {},
-    );
-    const { fields, query, limit, orderBy, pageToken } = resolvedOptions;
+    const [listOptions] = expandReferences(state, options || {});
+    const { folderId, fields, query, limit, orderBy, pageToken } = listOptions;
 
-    if (!resolvedFolderId || typeof resolvedFolderId !== 'string') {
-      throw Error(
-        'folderId is required: You need to provide the id of a folder to list from',
-      );
-    }
-
-    let finalFields = ['id', 'name', 'mimeType', 'createdTime', 'modifiedTime'];
-    if (Array.isArray(fields)) finalFields = fields;
-    else if (typeof fields === 'string') {
-      finalFields = fields.split(',').map(v => v.trim());
-    }
+    let final_fields = [
+      'id',
+      'name',
+      'mimeType',
+      'createdTime',
+      'modifiedTime',
+    ];
+    if (Array.isArray(fields)) final_fields = fields;
+    else if (typeof fields === 'string')
+      final_fields = fields.split(',').map(v => v.trim());
 
     // generate final query
-    const queries = [`'${resolvedFolderId}' in parents`];
+    const queries = [];
     if (query) queries.push(query);
+    if (folderId) queries.push(`'${folderId}' in parents`);
 
     const response = await client.files.list({
       q: queries.join(' and '),
-      fields: `nextPageToken, incompleteSearch, kind, files(${finalFields.join(',')})`,
+      fields: `nextPageToken, incompleteSearch, kind, files(${final_fields.join(',')})`,
       pageSize: limit ?? undefined,
       orderBy: orderBy || 'modifiedTime desc',
       pageToken: pageToken ?? undefined,
       supportsAllDrives: true,
-      includeItemsFromAllDrives: true,
     });
-    const files = response?.data?.files ?? [];
+    const files = response?.data?.files || [];
     state.response = { nextPageToken: response?.data?.nextPageToken };
     return composeNextState(state, files);
   };

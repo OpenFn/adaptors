@@ -16,7 +16,6 @@
             "title": "API Key",
             "type": "string",
             "description": "Mailchimp API Key",
-            "writeOnly": true,
             "minLength": 1,
             "examples": [
                 "0eb22c7b4a1c5bcd789379bf8a92902d-us13"

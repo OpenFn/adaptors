@@ -20,14 +20,10 @@ export const prepareNextState = (state, response) => {
 
 export const request = async (configuration = {}, method, path, options) => {
   const { apiUrl, username, password } = configuration;
-  const {
-    query = {},
-    body = {},
-    headers = {},
-    parseAs = 'json',
-    ...otherOptions
-  } = options;
+  const { query = {}, body = {}, headers = {}, parseAs = 'json' } = options;
   const authHeaders = makeBasicAuthHeader(username, password);
+
+  
 
   const opts = {
     parseAs,
@@ -35,18 +31,14 @@ export const request = async (configuration = {}, method, path, options) => {
     body,
     query,
     headers: {
-      ...authHeaders,
+      'content-type': 'application/json',
       ...headers,
+      ...authHeaders,
     },
-    ...otherOptions,
+    ...options,
   };
 
-  const hasContentType = Object.keys(opts.headers).some(
-    header => header.toLowerCase() === 'content-type',
-  );
-  if (!hasContentType) {
-    opts.headers['content-type'] = 'application/json';
-  }
+  
 
   return commonRequest(method, path, opts).then(logResponse);
 };

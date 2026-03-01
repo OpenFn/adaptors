@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-flutterwave",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "description": "OpenFn flutterwave adaptor",
   "type": "module",
   "exports": {
@@ -38,7 +38,7 @@
     "nock": "^14.0.10",
     "rimraf": "3.0.2",
     "sinon": "^21.0.1",
-    "undici": "^7.19.2"
+    "undici": "^7.15.0"
   },
   "repository": {
     "type": "git",

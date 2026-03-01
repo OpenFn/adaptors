@@ -1,25 +1,11 @@
 # @openfn/language-maximo
 
-## 0.5.30 - 25 February 2026
+## 0.5.28
 
 ### Patch Changes
 
-- 9133458: Add missing writeOnly to sensitive credential fields and fix typos in
-  configuration schemas
-
-## 0.5.29 - 24 February 2026
-
-### Patch Changes
-
-- Updated dependencies \[856f85c]
-  - @openfn/language-common@3.2.3
-
-## 0.5.28 - 09 February 2026
-
-### Patch Changes
-
-- Updated dependencies \[8ad6b98]
-- Updated dependencies \[8ad6b98]
+- Updated dependencies [8ad6b98]
+- Updated dependencies [8ad6b98]
   - @openfn/language-common@3.2.2
 
 ## 0.5.27 - 02 December 2025
@@ -49,7 +35,7 @@
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 0.5.23 - 16 October 2025
+## 0.5.23
 
 ### Patch Changes
 

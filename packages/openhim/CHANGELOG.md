@@ -1,24 +1,11 @@
 # @openfn/language-openhim
 
-## 2.0.9 - 24 February 2026
+## 2.0.7
 
 ### Patch Changes
 
-- Updated dependencies \[856f85c]
-  - @openfn/language-common@3.2.3
-
-## 2.0.8 - 18 February 2026
-
-### Patch Changes
-
-- 0357386: Allow custom content-type headers
-
-## 2.0.7 - 09 February 2026
-
-### Patch Changes
-
-- Updated dependencies \[8ad6b98]
-- Updated dependencies \[8ad6b98]
+- Updated dependencies [8ad6b98]
+- Updated dependencies [8ad6b98]
   - @openfn/language-common@3.2.2
 
 ## 2.0.6 - 28 November 2025
@@ -42,7 +29,7 @@
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 2.0.3 - 16 October 2025
+## 2.0.3
 
 ### Patch Changes
 

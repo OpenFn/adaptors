@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-gmail",
   "label": "Gmail",
-  "version": "2.0.11",
+  "version": "2.0.10",
   "badge": "Community",
   "description": "OpenFn gmail adaptor",
   "type": "module",
@@ -40,7 +40,7 @@
     "deep-eql": "4.1.1",
     "mocha": "^10.8.2",
     "rimraf": "3.0.2",
-    "undici": "^7.19.2"
+    "undici": "^5.29.0"
   },
   "repository": {
     "type": "git",

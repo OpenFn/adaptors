@@ -15,7 +15,6 @@
             "title": "Private Key",
             "type": "string",
             "description": "Your Progres private key",
-            "writeOnly": true,
             "minLength": 1,
             "examples": [
                 "-----BEGIN PRIVATE KEY-----SOMETYPEOFPRIVATEVALUE-----END PRIVATE KEY-----"

@@ -1,22 +1,14 @@
 # @openfn/language-khanacademy
 
-## 0.5.28 - 24 February 2026
+## 0.5.27
 
 ### Patch Changes
 
-- 856f85c: Security updates
-- Updated dependencies \[856f85c]
-  - @openfn/language-common@3.2.3
-
-## 0.5.27 - 09 February 2026
-
-### Patch Changes
-
-- Updated dependencies \[8ad6b98]
-- Updated dependencies \[8ad6b98]
+- Updated dependencies [8ad6b98]
+- Updated dependencies [8ad6b98]
   - @openfn/language-common@3.2.2
 
-## 0.5.26 - 26 January 2026
+## 0.5.26
 
 ### Patch Changes
 
@@ -49,7 +41,7 @@
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 0.5.21 - 16 October 2025
+## 0.5.21
 
 ### Patch Changes
 

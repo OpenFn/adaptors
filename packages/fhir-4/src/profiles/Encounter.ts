@@ -3,9 +3,9 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import _ from "lodash";
 import * as dt from "../datatypes";
-import type * as FHIR from "../fhir";
+import _ from "lodash";
+import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type Encounter_Props = {
@@ -66,14 +66,6 @@ export default function(props: Partial<Encounter_Props>) {
 
             resource.statusHistory.push(_statusHistory);
         }
-    }
-
-    if (!_.isNil(props.class)) {
-        let src = props.class;
-        if (typeof src === 'string') {
-          src = dt.lookupValue('http://terminology.hl7.org/ValueSet/v3-ActEncounterCode', src);
-         }
-        resource.class = dt.coding(src);
     }
 
     if (!_.isNil(props.classHistory)) {

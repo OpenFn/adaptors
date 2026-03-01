@@ -14,7 +14,6 @@
             "title": "API Key",
             "type": "string",
             "description": "CartoDB API key",
-            "writeOnly": true,
             "minLength": 1,
             "examples": [
                 "longsecretkey"

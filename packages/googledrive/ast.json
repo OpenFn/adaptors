@@ -131,7 +131,6 @@
     {
       "name": "list",
       "params": [
-        "folderId",
         "options"
       ],
       "docs": {
@@ -154,16 +153,7 @@
           },
           {
             "title": "param",
-            "description": "ID of the folder to list files from. If not provided, lists files from the root.",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "folderId"
-          },
-          {
-            "title": "param",
-            "description": "Options for listing files",
+            "description": "Options for listing files.",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -172,6 +162,18 @@
               }
             },
             "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "ID of the folder to list files from. If not provided, lists files from the root.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "options.folderId"
           },
           {
             "title": "param",

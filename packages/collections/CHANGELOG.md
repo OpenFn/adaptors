@@ -1,21 +1,6 @@
 # @openfn/language-collections
 
-## 0.8.3 - 25 February 2026
-
-### Patch Changes
-
-- 9133458: Add missing writeOnly to sensitive credential fields and fix typos in
-  configuration schemas
-
-## 0.8.2 - 24 February 2026
-
-### Patch Changes
-
-- 856f85c: Security updates
-- Updated dependencies \[856f85c]
-  - @openfn/language-common@3.2.3
-
-## 0.8.1 - 09 February 2026
+## 0.8.1
 
 ### Patch Changes
 
@@ -32,9 +17,8 @@
   fix: use posix path joining for url paths to support windows
   ```
 
-- Updated dependencies \[8ad6b98]
-
-- Updated dependencies \[8ad6b98]
+- Updated dependencies [8ad6b98]
+- Updated dependencies [8ad6b98]
   - @openfn/language-common@3.2.2
 
 ## 0.8.0 - 30 December 2025
@@ -64,7 +48,7 @@
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 0.7.16 - 16 October 2025
+## 0.7.16
 
 ### Patch Changes
 

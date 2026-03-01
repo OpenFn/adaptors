@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-googledrive",
   "label": "Google Drive",
-  "version": "3.0.1",
+  "version": "2.1.1",
   "description": "OpenFn Google Drive adaptor",
   "type": "module",
   "exports": {
@@ -39,7 +39,7 @@
     "mocha": "^10.7.3",
     "rimraf": "3.0.2",
     "sinon": "^19.0.4",
-    "undici": "^7.19.2"
+    "undici": "^5.29.0"
   },
   "repository": {
     "type": "git",

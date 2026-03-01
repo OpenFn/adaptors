@@ -3,9 +3,9 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import _ from "lodash";
 import * as dt from "../datatypes";
-import type * as FHIR from "../fhir";
+import _ from "lodash";
+import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type ActivityDefinition_Props = {
@@ -15,9 +15,9 @@ export type ActivityDefinition_Props = {
     code?: string[] | FHIR.CodeableConcept;
     contact?: FHIR.ContactDetail[];
     contained?: any[];
-    copyright?: string;
+    copyright?: FHIR.markdown;
     date?: string;
-    description?: string;
+    description?: FHIR.markdown;
     doNotPerform?: boolean;
     dosage?: FHIR.Dosage[];
     dynamicValue?: FHIR.BackboneElement[];
@@ -46,7 +46,7 @@ export type ActivityDefinition_Props = {
     product?: string | FHIR.Reference | string[] | FHIR.CodeableConcept;
     profile?: any;
     publisher?: string;
-    purpose?: string;
+    purpose?: FHIR.markdown;
     quantity?: FHIR.Quantity;
     relatedArtifact?: FHIR.RelatedArtifact[];
     reviewer?: FHIR.ContactDetail[];

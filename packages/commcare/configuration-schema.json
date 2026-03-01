@@ -24,7 +24,6 @@
             "title": "API Key",
             "type": "string",
             "description": "The CommCare API Key",
-            "writeOnly": true,
             "minLength": 1,
             "examples": [
                 "the-long-uuid-provided-by-commcare-that-authenticates-requests"
@@ -55,7 +54,7 @@
             "writeOnly": true,
             "minLength": 1,
             "examples": [
-                "supersecretpassword"
+                "superscretepassword"
             ]
         }
     },

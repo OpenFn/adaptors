@@ -1,23 +1,5 @@
 # @openfn/generate-fhir
 
-## 0.7.0
-
-- Support mapping extensions to simple properties
-- Temporary fix to extensions to basic datatypes (date)
-
-## 0.6.0
-
-Enable mapping of valuesets
-
-## 0.4.2
-
-### Minor Changes
-
-Restore code to generate typescript adaptors from a custom IG, important and
-referencing a base spec (eg, fhir-4)
-
-reference implementation: fhir-eswatini
-
 ## 0.4.2
 
 ### Patch Changes

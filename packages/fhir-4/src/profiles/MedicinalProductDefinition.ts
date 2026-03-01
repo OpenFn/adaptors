@@ -3,9 +3,9 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import _ from "lodash";
 import * as dt from "../datatypes";
-import type * as FHIR from "../fhir";
+import _ from "lodash";
+import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type MedicinalProductDefinition_Props = {
@@ -19,14 +19,14 @@ export type MedicinalProductDefinition_Props = {
     contact?: FHIR.BackboneElement[];
     contained?: any[];
     crossReference?: FHIR.BackboneElement[];
-    description?: string;
+    description?: FHIR.markdown;
     domain?: string[] | FHIR.CodeableConcept;
     extension?: FHIR.Extension[];
     id?: string;
     identifier?: MaybeArray<string | FHIR.Identifier>;
     implicitRules?: string;
     impurity?: FHIR.CodeableReference[];
-    indication?: string;
+    indication?: FHIR.markdown;
     ingredient?: MaybeArray<string[] | FHIR.CodeableConcept>;
     language?: string;
     legalStatusOfSupply?: string[] | FHIR.CodeableConcept;
@@ -139,14 +139,6 @@ export default function(props: Partial<MedicinalProductDefinition_Props>) {
     if (!_.isNil(props.clinicalTrial)) {
         if (!Array.isArray(props.clinicalTrial)) { props.clinicalTrial = [props.clinicalTrial]; }
         resource.clinicalTrial = dt.reference(props.clinicalTrial);
-    }
-
-    if (!_.isNil(props.code)) {
-        let src = props.code;
-        if (typeof src === 'string') {
-          src = dt.lookupValue('http://hl7.org/fhir/ValueSet/medication-codes', src);
-         }
-        resource.code = dt.coding(src);
     }
 
     if (!_.isNil(props.name)) {

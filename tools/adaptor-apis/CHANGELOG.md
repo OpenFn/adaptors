@@ -1,11 +1,5 @@
 # @openfn/adaptor-apis
 
-## 0.2.3
-
-### Patch Changes
-
-- Log errors
-
 ## 0.2.2
 
 ### Patch Changes

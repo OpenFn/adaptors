@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-sunbird-rc",
-  "version": "1.0.5",
+  "version": "1.0.4",
   "description": "OpenFn sunbird-rc adaptor",
   "type": "module",
   "exports": {
@@ -36,7 +36,7 @@
     "deep-eql": "4.1.1",
     "mocha": "^10.7.3",
     "rimraf": "3.0.2",
-    "undici": "^7.19.2"
+    "undici": "^5.22.1"
   },
   "repository": {
     "type": "git",

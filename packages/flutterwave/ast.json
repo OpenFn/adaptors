@@ -29,18 +29,6 @@
             "name": "customerData"
           },
           {
-            "title": "param",
-            "description": "Optional request options",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "RequestOptions"
-              }
-            },
-            "name": "options"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
@@ -50,7 +38,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "initiatePayment",
@@ -81,18 +69,6 @@
             "name": "paymentData"
           },
           {
-            "title": "param",
-            "description": "Optional request options",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "RequestOptions"
-              }
-            },
-            "name": "options"
-          },
-          {
             "title": "returns",
             "description": "A function that takes the state and performs the operation.",
             "type": {
@@ -102,7 +78,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "createPaymentMethod",
@@ -133,18 +109,6 @@
             "name": "paymentMethodData"
           },
           {
-            "title": "param",
-            "description": "Optional request options",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "RequestOptions"
-              }
-            },
-            "name": "options"
-          },
-          {
             "title": "returns",
             "description": "A function that takes the state and performs the operation.",
             "type": {
@@ -154,7 +118,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     }
   ],
   "exports": [],

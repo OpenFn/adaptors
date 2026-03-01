@@ -40,6 +40,7 @@
       "title": "Port",
       "type": "string",
       "description": "Redis server port",
+      "writeOnly": true,
       "default": "6379",
       "examples": [
         "16652"

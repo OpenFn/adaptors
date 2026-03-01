@@ -3,16 +3,16 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import _ from "lodash";
 import * as dt from "../datatypes";
-import type * as FHIR from "../fhir";
+import _ from "lodash";
+import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type SubstanceDefinition_Props = {
     classification?: MaybeArray<string[] | FHIR.CodeableConcept>;
     code?: FHIR.BackboneElement[];
     contained?: any[];
-    description?: string;
+    description?: FHIR.markdown;
     domain?: string[] | FHIR.CodeableConcept;
     extension?: FHIR.Extension[];
     grade?: MaybeArray<string[] | FHIR.CodeableConcept>;

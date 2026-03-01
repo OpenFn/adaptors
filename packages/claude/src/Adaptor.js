@@ -9,7 +9,7 @@ import { expandReferences } from '@openfn/language-common/util';
  * Options provided to Chat Completions Create (https://docs.anthropic.com/en/api/messages)
  * @typedef {Object} PromptOptions
  * @public
- * @property {string} model - Which mode to use, i.e., `claude-sonnet-4-6`.
+ * @property {string} model - Which mode to use, i.e., `claude-3-7-sonnet-20250219`.
  * @property {string} max_tokens - The maximum number of tokens to generate before stopping, i.e., `1024`
  * @property {number} temperature - Amount of randomness injected into the response. Ranges from 0.0 to 1.0. Use temperature closer to 0.0 for analytical / multiple choice, and closer to 1.0 for creative and generative tasks.
  */
@@ -78,7 +78,7 @@ export function prompt(message, opts) {
     );
 
     const payload = {
-      model: 'claude-sonnet-4-6',
+      model: 'claude-3-7-sonnet-20250219',
       max_tokens: 1024,
       messages: [{ role: 'user', content: resolvedMessage }],
       ...resolvedOpts,

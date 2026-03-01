@@ -3,9 +3,9 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import _ from "lodash";
 import * as dt from "../datatypes";
-import type * as FHIR from "../fhir";
+import _ from "lodash";
+import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type ChargeItemDefinition_Props = {
@@ -14,10 +14,10 @@ export type ChargeItemDefinition_Props = {
     code?: string[] | FHIR.CodeableConcept;
     contact?: FHIR.ContactDetail[];
     contained?: any[];
-    copyright?: string;
+    copyright?: FHIR.markdown;
     date?: string;
     derivedFromUri?: string[];
-    description?: string;
+    description?: FHIR.markdown;
     effectivePeriod?: FHIR.Period;
     experimental?: boolean;
     extension?: FHIR.Extension[];

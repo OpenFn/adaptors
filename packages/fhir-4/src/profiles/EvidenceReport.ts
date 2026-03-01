@@ -3,14 +3,14 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import _ from "lodash";
 import * as dt from "../datatypes";
-import type * as FHIR from "../fhir";
+import _ from "lodash";
+import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type EvidenceReport_Props = {
     author?: FHIR.ContactDetail[];
-    citeAs?: string | FHIR.Reference | string;
+    citeAs?: string | FHIR.Reference | FHIR.markdown;
     contact?: FHIR.ContactDetail[];
     contained?: any[];
     editor?: FHIR.ContactDetail[];

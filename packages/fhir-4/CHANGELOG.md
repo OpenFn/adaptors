@@ -1,40 +1,11 @@
 # @openfn/language-fhir-4
 
-## 0.2.10 - 24 February 2026
-
-### Patch Changes
-
-- 213115b: Add `ensureConceptText` utility to datatypes
-- 6ef5351: Map more primitive types (eg, markdown -> string)
-
-## 0.2.9 - 24 February 2026
-
-### Patch Changes
-
-- 856f85c: Security updates
-- Updated dependencies \[856f85c]
-  - @openfn/language-common@3.2.3
-
-## 0.2.8 - 24 February 2026
-
-### Patch Changes
-
-- 3c52750: Update coding builder to accept coding objects as a single argument
-- 81dd8bd: Default system key for mapped value in lookupValue
-
-## 0.2.7 - 09 February 2026
-
-### Patch Changes
-
-- d935dda: Update d.ts definition structure
-- a78d53e: Rebuild on latest generator (should be no behaviour differences)"
-
 ## 0.2.6
 
 ### Patch Changes
 
-- Updated dependencies \[8ad6b98]
-- Updated dependencies \[8ad6b98]
+- Updated dependencies [8ad6b98]
+- Updated dependencies [8ad6b98]
   - @openfn/language-common@3.2.2
 
 ## 0.2.5 - 28 November 2025

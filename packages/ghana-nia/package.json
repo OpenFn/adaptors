@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-ghana-nia",
   "label": "Ghana NIA",
-  "version": "0.1.19",
+  "version": "0.1.18",
   "description": "OpenFn ghana-nia adaptor",
   "type": "module",
   "exports": {
@@ -30,8 +30,8 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "ajv": "^8.18.0",
-    "undici": "^7.19.2"
+    "ajv": "6",
+    "undici": "^5.29.0"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",

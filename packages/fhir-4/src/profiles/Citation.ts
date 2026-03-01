@@ -3,9 +3,9 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import _ from "lodash";
 import * as dt from "../datatypes";
-import type * as FHIR from "../fhir";
+import _ from "lodash";
+import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type Citation_Props = {
@@ -15,10 +15,10 @@ export type Citation_Props = {
     classification?: FHIR.BackboneElement[];
     contact?: FHIR.ContactDetail[];
     contained?: any[];
-    copyright?: string;
+    copyright?: FHIR.markdown;
     currentState?: MaybeArray<string[] | FHIR.CodeableConcept>;
     date?: string;
-    description?: string;
+    description?: FHIR.markdown;
     editor?: FHIR.ContactDetail[];
     effectivePeriod?: FHIR.Period;
     endorser?: FHIR.ContactDetail[];
@@ -35,7 +35,7 @@ export type Citation_Props = {
     name?: string;
     note?: FHIR.Annotation[];
     publisher?: string;
-    purpose?: string;
+    purpose?: FHIR.markdown;
     relatesTo?: FHIR.BackboneElement[];
     reviewer?: FHIR.ContactDetail[];
     status?: string;

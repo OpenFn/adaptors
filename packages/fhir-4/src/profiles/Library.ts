@@ -3,9 +3,9 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import _ from "lodash";
 import * as dt from "../datatypes";
-import type * as FHIR from "../fhir";
+import _ from "lodash";
+import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type Library_Props = {
@@ -14,10 +14,10 @@ export type Library_Props = {
     contact?: FHIR.ContactDetail[];
     contained?: any[];
     content?: FHIR.Attachment[];
-    copyright?: string;
+    copyright?: FHIR.markdown;
     dataRequirement?: FHIR.DataRequirement[];
     date?: string;
-    description?: string;
+    description?: FHIR.markdown;
     editor?: FHIR.ContactDetail[];
     effectivePeriod?: FHIR.Period;
     endorser?: FHIR.ContactDetail[];
@@ -34,7 +34,7 @@ export type Library_Props = {
     name?: string;
     parameter?: FHIR.ParameterDefinition[];
     publisher?: string;
-    purpose?: string;
+    purpose?: FHIR.markdown;
     relatedArtifact?: FHIR.RelatedArtifact[];
     reviewer?: FHIR.ContactDetail[];
     status?: string;

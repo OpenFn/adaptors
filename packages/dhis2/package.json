@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-dhis2",
   "label": "DHIS2",
-  "version": "8.0.10",
+  "version": "8.0.9",
   "description": "OpenFn adaptor for DHIS2",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -36,9 +36,9 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "axios": "^1.13.5",
+    "axios": "^1.8.2",
     "lodash": "^4.17.23",
-    "qs": "^6.14.2"
+    "qs": "^6.14.1"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",

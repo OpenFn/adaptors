@@ -62,7 +62,7 @@ const typeMappings = {
 const generate = async (
   specPath: string,
   mappings: MappingSpec = {},
-  options: { clean?: false; debugOutput?: false; isBase?: boolean } = {},
+  options: { clean?: false; debugOutput?: false } = {}
 ) => {
   console.log('Generating schemas from ', specPath);
 
@@ -71,8 +71,8 @@ const generate = async (
   if (options.clean) {
     console.log('Cleaning output dir: ', outputDir);
     await rimraf(outputDir);
+    await mkdir(outputDir, { recursive: true });
   }
-  await mkdir(outputDir, { recursive: true });
 
   const fullSpec = (await import(path.resolve(specPath), {
     assert: { type: 'json' },
@@ -87,48 +87,12 @@ const generate = async (
   );
   const regexes = mappings.valueSets?.map(e => new RegExp(e)) ?? [];
   // remove all valueSets that don't match the mapping criteria
-  // TODO: this is hard because you have to handle extensions too
-  // const valuesets = Object.keys(rawValuesets)
-  //   .filter(url => regexes.find(re => re.test(url)))
-  //   .reduce((obj, url) => {
-  //     obj[url] = rawValuesets[url];
-  //     return obj;
-  //   }, {});
-  const valuesets = rawValuesets.default;
-
-  // write all valuesets to a single file
-  const allValueSets = {};
-  const extractValues = (parent: string, url: string) => {
-    allValueSets[parent] ??= {};
-
-    const def = valuesets[url];
-    if (!def) {
-      return;
-    }
-    for (const value of def.values) {
-      // TODO is code always the correct key here?
-      allValueSets[parent][value.code] = value;
-
-      // force the system to be the parent's value set so that
-      // the mapped system is consistent
-      // (needed for  fhir-eswatini at least)
-      if (!value.system) {
-        value.system = parent;
-      }
-    }
-    for (const ex of def.extends) {
-      extractValues(url, ex);
-    }
-  };
-
-  for (const url in valuesets) {
-    extractValues(url, url);
-  }
-
-  await writeFile(
-    path.resolve(outputDir, `valuesets.json`),
-    JSON.stringify(allValueSets, null, 2),
-  );
+  const valuesets = Object.keys(rawValuesets)
+    .filter(url => regexes.find(re => re.test(url)))
+    .reduce((obj, url) => {
+      obj[url] = rawValuesets[url];
+      return obj;
+    }, {});
 
   const counts = {};
   const codes = {};
@@ -152,18 +116,14 @@ const generate = async (
       continue;
     }
 
-    if (
-      profile.resourceType !== 'StructureDefinition' ||
-      // if not generating a base adaptor, don't process extension types explicitly - they'll be handled later
-      (!options.isBase && profile.type === 'Extension')
-    ) {
+    if (profile.resourceType !== 'StructureDefinition') {
       continue;
     }
 
     const category = profile.extension?.find(
       e =>
         e.url ===
-        'http://hl7.org/fhir/StructureDefinition/structuredefinition-category',
+        'http://hl7.org/fhir/StructureDefinition/structuredefinition-category'
     );
     if (category?.valueString?.startsWith('Foundation.')) {
       console.log('ignoring Foundation profile', profileId);
@@ -206,7 +166,7 @@ const generate = async (
       if (el.path === resourceType) {
         continue;
       }
-      let path = el.path.replace(`${resourceType}\.`, '');
+      const path = el.path.replace(`${resourceType}\.`, '');
 
       if (path.includes('.')) {
         await parseProp(fullSpec, valuesets, schema, path, el);
@@ -214,7 +174,7 @@ const generate = async (
       }
 
       let defaults: Record<string, any> = {};
-      let type = getSimpleType(el);
+      const type = getSimpleType(el);
 
       const isArray = el.base.max === '*';
 
@@ -226,45 +186,19 @@ const generate = async (
           : el.patternCodeableConcept;
       }
 
-      let extUrl;
-      let valueSet = el.binding?.valueSet;
-
-      if (type.includes('Extension') && el.sliceName) {
-        // If this is an extension property, override the path and
-        // type definition
-        path = el.sliceName;
-        extUrl = el.type[0].profile?.[0];
-        if (extUrl) {
-          const ext = Object.values(fullSpec).find(s => s.url === extUrl);
-          // find the value
-          const value = ext?.snapshot.element.find(el =>
-            el.path.endsWith('.value[x]'),
-          );
-          if (value) {
-            type = getSimpleType(value);
-            // isComposite = true; // maybe better without this?
-
-            // TODO how do I get the value map out?
-            // If the type is a concept, should I cheat somehow?
-            if (value.binding) {
-              valueSet = value.binding.valueSet;
-            }
-          }
-        }
-      } else if (type.includes('Identifier')) {
+      if (type.includes('Identifier')) {
         // TODO this isn't robust because it assumes a particular slicing
         // It's the schema's job to unpick this slicing
         // This is a quick fix - let's see how well it stands up!
         const slicedValue = spec.snapshot.element.find(
-          e => e.path === `${el.path}.system`,
+          e => e.path === `${el.path}.system`
         );
         if (slicedValue && slicedValue.patternUri) {
           defaults.system = slicedValue.patternUri;
         }
       }
 
-      // TODO if this is a value set, I want to reference it globally
-      // const values = await extractValueSet(valuesets, el);
+      const values = await extractValueSet(valuesets, el);
 
       props[path] = {
         // TODO type may only be useful if it uses a vanilla fhir type
@@ -272,12 +206,11 @@ const generate = async (
         isArray,
         desc: el.short || el.definition,
         isComposite,
-        valueSet,
       };
 
-      // if (values) {
-      //   props[path].values = values;
-      // }
+      if (values) {
+        props[path].values = values;
+      }
 
       if (Object.keys(defaults).length) {
         props[path].defaults = defaults;
@@ -286,10 +219,6 @@ const generate = async (
       if (path.endsWith('.system')) {
         props[path].hasSystem = true;
       }
-
-      if (extUrl) {
-        props[path].extension = extUrl;
-      }
     }
 
     result[resourceType] ??= [];
@@ -297,10 +226,10 @@ const generate = async (
 
     // Output for debug
     // TODO maybe make optional?
-    if (true) {
+    if (options.debugOutput) {
       await writeFile(
         path.resolve(outputDir, `${resourceType}_${profileId}.json`),
-        JSON.stringify(result[resourceType], null, 2),
+        JSON.stringify(result[resourceType], null, 2)
       );
     }
   }
@@ -334,13 +263,12 @@ async function extractValueSet(valuesets: any, element) {
 async function loadValueSet() {}
 
 // Parse a property of a resource, like address or id
-// TODO really not enjoying the duplication of parseProp
 async function parseProp(
   fullSpec,
   valuesets,
   schema: ElementSpec,
   path: string,
-  data,
+  data
 ) {
   let [parent, prop] = path.split('.');
   // TODO skip if multiple dots
@@ -349,9 +277,6 @@ async function parseProp(
     // TODO warn?
     return;
   }
-
-  // if the parent is a primitive type, ignore the prop
-  // (later we'll support extenstion types)
 
   if (prop === 'extension') {
     if (data.sliceName) {
@@ -366,7 +291,7 @@ async function parseProp(
   if (schema.props[parent]) {
     const def: PropDef = {};
 
-    if (!data.type || schema.props[parent].type.includes('date')) {
+    if (!data.type) {
       return;
     }
 
@@ -405,12 +330,9 @@ async function parseProp(
     def.type = simpleType;
     def.desc = data.short || data.definition;
 
-    // const values = await extractValueSet(valuesets, data);
-    // if (values) {
-    //   def.values = values;
-    // }
-    if (data.binding) {
-      def.valueSet = data.binding.valueSet;
+    const values = await extractValueSet(valuesets, data);
+    if (values) {
+      def.values = values;
     }
 
     // TODO is there a better formalism for this?

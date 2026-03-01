@@ -1,6 +1,0 @@
-
-// THIS FILE WAS AUTO-GENERATED
-// DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
-// SEE THE README FILE FOR DETAILS
-
-import { builders } from '@openfn/language-fhir-4';

@@ -36,7 +36,6 @@
       "title": "Security Token",
       "type": "string",
       "description": "The security token to access the Salesforce instance",
-      "writeOnly": true,
       "minLength": 1,
       "examples": [
         "salesforcesecuritytoken"

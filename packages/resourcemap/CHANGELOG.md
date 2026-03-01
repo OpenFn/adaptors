@@ -1,18 +1,11 @@
 # @openfn/language-resourcemap
 
-## 0.4.28 - 24 February 2026
+## 0.4.27
 
 ### Patch Changes
 
-- Updated dependencies \[856f85c]
-  - @openfn/language-common@3.2.3
-
-## 0.4.27 - 09 February 2026
-
-### Patch Changes
-
-- Updated dependencies \[8ad6b98]
-- Updated dependencies \[8ad6b98]
+- Updated dependencies [8ad6b98]
+- Updated dependencies [8ad6b98]
   - @openfn/language-common@3.2.2
 
 ## 0.4.26 - 02 December 2025
@@ -42,7 +35,7 @@
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 0.4.22 - 16 October 2025
+## 0.4.22
 
 ### Patch Changes
 

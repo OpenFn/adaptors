@@ -1,19 +1,11 @@
 # @openfn/language-odoo
 
-## 2.1.9 - 24 February 2026
+## 2.1.8
 
 ### Patch Changes
 
-- 856f85c: Security updates
-- Updated dependencies \[856f85c]
-  - @openfn/language-common@3.2.3
-
-## 2.1.8 - 09 February 2026
-
-### Patch Changes
-
-- Updated dependencies \[8ad6b98]
-- Updated dependencies \[8ad6b98]
+- Updated dependencies [8ad6b98]
+- Updated dependencies [8ad6b98]
   - @openfn/language-common@3.2.2
 
 ## 2.1.7 - 28 November 2025
@@ -37,7 +29,7 @@
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 2.1.4 - 16 October 2025
+## 2.1.4
 
 ### Patch Changes
 

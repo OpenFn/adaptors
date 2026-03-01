@@ -3,9 +3,9 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import _ from "lodash";
 import * as dt from "../datatypes";
-import type * as FHIR from "../fhir";
+import _ from "lodash";
+import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type Location_Props = {
@@ -46,14 +46,6 @@ export default function(props: Partial<Location_Props>) {
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = dt.identifier(props.identifier);
-    }
-
-    if (!_.isNil(props.operationalStatus)) {
-        let src = props.operationalStatus;
-        if (typeof src === 'string') {
-          src = dt.lookupValue('http://terminology.hl7.org/ValueSet/v2-0116', src);
-         }
-        resource.operationalStatus = dt.coding(src);
     }
 
     if (!_.isNil(props.type)) {

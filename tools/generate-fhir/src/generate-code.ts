@@ -9,69 +9,27 @@ import {
   getTypeName,
   sortKeys,
 } from './util';
-import { Mapping, MappingSpec, ProfileSpec, Schema } from './types';
-import { generateType } from './codegen/generate-types';
-import generateValues, { ValueSets } from './codegen/values';
+import { Mapping, MappingSpec, Schema } from './types';
+import { generateType } from './generate-types';
 
 const RESOURCE_NAME = 'resource';
 const INPUT_NAME = 'props';
 
-type Options = {
-  simpleSignatures?: boolean;
-
-  /** List of type definitions which can be imported from FHIR */
-  fhirTypes?: Record<string, true>;
-
-  /** base adaptor name to generate types and builders from */
-  base?: string;
-
-  /** valuesets schemas */
-  valueSets?: any;
-};
-
-const getDataTypeBuilderName = (schema: Schema): string | false => {
-  if (schema.type.includes('Identifier')) {
-    return 'identifier';
-  }
-  if (schema.type.includes('Reference')) {
-    return 'Reference';
-  }
-  return false;
-};
-
-const getProfileBuilderName = (profile: ProfileSpec): string =>
-  `build_${profile.id}`.replace(/-/g, '_');
-
 const generateCode = (
   schema: Record<string, Schema[]>,
   mappings: MappingSpec = {},
-  options: Options = {},
-): { builders: string; profiles: Record<string, string>; values?: string } => {
+  options: {
+    simpleSignatures?: boolean;
+    fhirTypes?: Record<string, true>;
+  } = {}
+): { builders: string; profiles: Record<string, string> } => {
   const statements: n.Statement[] = [];
 
-  const profiles = {};
-
-  // This tells us where to load FHIR types from
-  const fhirImportPath = options.base
-    ? `@openfn/language-${options.base}`
-    : '../fhir';
-
-  if (options.base) {
-    statements.push(
-      b.exportAllDeclaration(b.stringLiteral('./datatypes'), null),
-    );
-  } else {
-    statements.push(
-      b.exportAllDeclaration(b.stringLiteral('./datatypes'), null),
-    );
-  }
+  statements.push(b.exportAllDeclaration(b.stringLiteral('./datatypes'), null));
 
   const imports: n.Statement[] = [];
 
-  // Import values so that they get initialised with the builders
-  if (options.valueSets) {
-    imports.push(b.importDeclaration([], b.stringLiteral(`./values`)));
-  }
+  const profiles = {};
 
   // generate a builder for each profile
   const orderedResources = Object.keys(schema).sort();
@@ -80,7 +38,7 @@ const generateCode = (
     const sortedProfiles = sortKeys(schema[resourceType]) as Schema[];
     for (const profile of sortedProfiles) {
       // import this builder
-      const name = getProfileBuilderName(profile);
+      const name = getTypeName(profile);
       const iface = getInterfaceName(profile);
       imports.push(
         b.importDeclaration(
@@ -88,8 +46,8 @@ const generateCode = (
             b.importDefaultSpecifier(b.identifier(name)),
             b.importSpecifier(b.identifier(iface)),
           ],
-          b.stringLiteral(`./profiles/${profile.id}`),
-        ),
+          b.stringLiteral(`./profiles/${profile.id}`)
+        )
       );
 
       profiles[profile.id] = generateProfile(
@@ -99,51 +57,35 @@ const generateCode = (
             initialiser: mappings.initialiser,
             typeShorthands: mappings.typeShorthands,
           },
-          mappings.overrides?.[resourceType],
+          mappings.overrides?.[resourceType]
         ),
-        options.fhirTypes,
-        fhirImportPath,
-        options.valueSets,
-        options.base,
+        options.fhirTypes
+      );
+
+      // Generate an entrypoint function
+      statements.push(
+        ...generateEntry(
+          name,
+          resourceType,
+          schema[resourceType],
+          options.simpleSignatures,
+          mappings.propsToIgnoreInDocs
+        )
       );
     }
-
-    // Generate the signatures and entrypoint funtion
-    statements.push(
-      ...generateEntry(
-        getTypeName(sortedProfiles[0]),
-        resourceType,
-        schema[resourceType],
-        options.simpleSignatures,
-        mappings.propsToIgnoreInDocs,
-        options.valueSets,
-      ),
-    );
   }
 
   const program = b.program([...imports, ...statements]);
 
   const builders = print(program).code;
 
-  const values = generateValues(options.valueSets);
-
-  return { builders, profiles, values };
-};
-
-// TODO maybe I need this
-type FhirImports = {
-  types: Record<string, true>;
-  path: string;
-  // datatypes: any;
+  return { builders, profiles };
 };
 
 const generateProfile = (
   profile: Schema,
   mappings: MappingSpec,
-  fhirTypes: Record<string, true> = {},
-  fhirImport = '../fhir',
-  valueSets: ValueSets = {},
-  base?: string,
+  fhirTypes: Record<string, true> = {}
 ) => {
   const statements = [];
 
@@ -151,43 +93,22 @@ const generateProfile = (
 
   statements.push(
     b.importDeclaration(
-      [b.importDefaultSpecifier(b.identifier('_'))],
-      b.stringLiteral('lodash'),
-    ),
+      [b.importNamespaceSpecifier(b.identifier('dt'))],
+      b.stringLiteral('../datatypes')
+    )
   );
-
-  // TODO this import isn't so nice
-  // Maybe we ONLY take base here and the rest is derived?
-  if (base) {
-    statements.push(
-      b.importDeclaration(
-        [b.importSpecifier(b.identifier('b'), b.identifier('dt'))],
-        b.stringLiteral(`@openfn/language-${base}`),
-      ),
-    );
-    statements.push(
-      b.importDeclaration(
-        [b.importSpecifier(b.identifier('builders'), b.identifier('FHIR'))],
-        b.stringLiteral(fhirImport),
-        'type',
-      ),
-    );
-  } else {
-    statements.push(
-      b.importDeclaration(
-        [b.importNamespaceSpecifier(b.identifier('dt'))],
-        b.stringLiteral('../datatypes'),
-      ),
-    );
-
-    statements.push(
-      b.importDeclaration(
-        [b.importNamespaceSpecifier(b.identifier('FHIR'))],
-        b.stringLiteral(fhirImport),
-        'type',
-      ),
-    );
-  }
+  statements.push(
+    b.importDeclaration(
+      [b.importDefaultSpecifier(b.identifier('_'))],
+      b.stringLiteral('lodash')
+    )
+  );
+  statements.push(
+    b.importDeclaration(
+      [b.importNamespaceSpecifier(b.identifier('FHIR'))],
+      b.stringLiteral('../fhir')
+    )
+  );
 
   // TODO It would be better to define this once and import it,
   // but that's a bit harder to work out with Lightning I think?
@@ -197,18 +118,18 @@ const generateProfile = (
       b.tsUnionType([
         b.tsTypeReference(b.identifier('T')),
         b.tsTypeReference(b.identifier('T[]')),
-      ]),
-    ),
+      ])
+    )
   );
 
   const typedef = generateType(
+    profile.type,
     profile,
     {
       ...mappings,
       overrides,
     },
-    fhirTypes,
-    valueSets,
+    fhirTypes
   );
 
   statements.push(typedef);
@@ -226,117 +147,86 @@ const generateProfile = (
 export default generateCode;
 
 // For each prop in the schema, generate a prop in jsdocs
-const generateJsDocs = (
-  schema: Schema[],
-  ignore: string[] = [],
-  valueSets: ValueSets,
-) => {
+const generateJsDocs = (schema: Schema[], ignore: string[] = []) => {
   const props: string[] = [];
 
   // TODO for now, just generate for the first schema
-  // Later we have to generate a superset of all props and provide variations
   const profile = schema[0];
   const validProps = Object.keys(profile.props).filter(
-    p => !ignore.includes(p),
+    p => !ignore.includes(p)
   );
   for (const propName of validProps) {
     const prop = profile.props[propName];
-
-    let humanType;
-    let desc = prop.desc;
-    if (prop.valueSet) {
-      humanType = 'string';
-      desc += '. Accepts all values from ' + prop.valueSet;
-    } else if (prop.type.includes('Coding')) {
-      // If this is a Coding, we should represent it as a string
-      // and if possible, lit the values
-      humanType = 'string';
-      if (prop.valueSet) {
-        const values = Object.keys(valueSets[prop.valueSet] || {});
-        if (values.length) {
-          desc += `. Accepts values: ${values.join(', ')}`;
-        }
-      }
-    } else {
-      humanType = prop.type.join('|');
-    }
-
-    props.push(`{${humanType}} [props.${propName}] - ${desc}`);
+    // TODO do I need the typemap here?
+    props.push(`{${prop.type.join('|')}} [props.${propName}] - ${prop.desc}`);
   }
 
   return props.map(p => `  * @param ${p}`).join('\n');
 };
 
-// TODO this function is quite different depending on the number of profiles
-// if 1 profile, it's a simple function
-// if 2+ profiles, we need interfaces and a mapping
-// easiest way right now is probably to duplicate:
-// simple builder vs interfaced builder
 const generateEntry = (
   name: string,
   resourceType: string,
-  profiles: Schema[],
+  variants: Schema[],
   simpleSignatures?: boolean,
-  propsToIgnoreInDocs: string[] = [],
-  valueSets: ValueSets = {},
+  propsToIgnoreInDocs: string[] = []
 ) => {
-  // TODO I think I want to rip out the simple signatures flag and just say:
-  // for any schema with only a single profile, make it optional to pass the profile string
-  if (profiles.length === 1) {
-    simpleSignatures = true;
-  }
-
   const declarations = [];
 
   const statements = [];
-
-  // generate signatures for each profile
-  for (const profile of profiles) {
-    const signature = b.exportDeclaration(
-      false,
-      b.tsDeclareFunction(b.identifier(getBuilderName(resourceType)), [
-        b.tsParameterProperty(
-          b.identifier.from({
-            name: 'type',
-            typeAnnotation: b.tsTypeAnnotation(
-              b.tsLiteralType(b.stringLiteral(profile.id)),
-            ),
-          }),
-        ),
-        b.tsParameterProperty(
-          b.identifier.from({
-            name: INPUT_NAME,
-            typeAnnotation: b.tsTypeAnnotation(
-              b.tsTypeReference(b.identifier(getInterfaceName(profile))),
-            ),
-          }),
-        ),
-      ]),
-    );
-    declarations.push(signature);
+  const comment = parse(`/**
+  * Create a FHIR ${resourceType} resource.
+  * @public
+  * @function
+  * @param {string} type - The profile id for the resource variant.${
+    simpleSignatures ? ' Optional.' : ''
   }
+  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
+${generateJsDocs(variants, propsToIgnoreInDocs)}
+ */
+`);
 
   const map = b.variableDeclaration('const', [
     b.variableDeclarator(
       b.identifier('mappings'),
       b.objectExpression(
-        profiles.map(profile =>
-          b.objectProperty(
-            b.stringLiteral(profile.id),
-            b.identifier(getProfileBuilderName(profile)),
-          ),
-        ),
-      ),
+        variants.map(schema =>
+          b.objectProperty(b.stringLiteral(schema.id), b.identifier(name))
+        )
+      )
     ),
   ]);
   statements.push(map);
+
+  // Generate the main tssignature
+  // Also push an override for the simple interface
+  const signature = b.exportDeclaration(
+    false,
+    b.tsDeclareFunction(b.identifier(getBuilderName(resourceType)), [
+      b.tsParameterProperty(
+        b.identifier.from({
+          name: 'type',
+          typeAnnotation: b.tsTypeAnnotation(b.tsStringKeyword()),
+        })
+      ),
+      b.tsParameterProperty(
+        b.identifier.from({
+          name: INPUT_NAME,
+          typeAnnotation: b.tsTypeAnnotation(
+            b.tsTypeReference(b.identifier(getInterfaceName(variants[0])))
+          ),
+        })
+      ),
+    ])
+  );
+  declarations.push(signature);
 
   if (simpleSignatures) {
     // TODO how do we know the default type?
     const handleOptionalType = parse(`// Handle optional type parameter
   if (typeof type !== "string") {
     props = type;
-    type = "${profiles[0].id}";
+    type = "${variants[0].id}";
   }`);
     statements.push(...handleOptionalType.program.body);
 
@@ -350,15 +240,15 @@ const generateEntry = (
             b.identifier.from({
               name: INPUT_NAME,
               typeAnnotation: b.tsTypeAnnotation(
-                b.tsTypeReference(b.identifier(getInterfaceName(profiles[0]))),
+                b.tsTypeReference(b.identifier(getInterfaceName(variants[0])))
               ),
-            }),
+            })
           ),
-        ],
+        ]
         // What is the return type?
         // It's not the same as our props - it's a fhir object
         // b.tsTypeAnnotation(b.tsTypeReference(b.identifier('Patient')))
-      ),
+      )
     );
 
     declarations.push(override);
@@ -381,7 +271,7 @@ const generateEntry = (
           b.identifier.from({
             name: 'type',
             typeAnnotation: b.tsTypeAnnotation(b.tsAnyKeyword()),
-          }),
+          })
         ),
         b.tsParameterProperty(
           // TODO need a full type for this. Where do we get it?
@@ -389,38 +279,17 @@ const generateEntry = (
             name: INPUT_NAME,
             typeAnnotation: b.tsTypeAnnotation(b.tsAnyKeyword()),
             optional: true,
-          }),
+          })
         ),
       ],
-      b.blockStatement(statements),
-    ),
+      b.blockStatement(statements)
+    )
   );
+  declarations.push(impl);
 
-  let comment;
-  if (profiles.length > 1) {
-    comment = parse(`/**
-  * Create a ${resourceType} resource.
-  * @public
-  * @function
-  * @param {string} type - A profile type: one of ${profiles.map(p => p.id).join(',')}
-  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
-${generateJsDocs(profiles, propsToIgnoreInDocs, valueSets)}
-  */
-  `);
-  } else {
-    comment = parse(`/**
-  * Create a ${resourceType} resource.
-  * @public
-  * @function
-  * @param {object} props - Properties to apply to the resource (includes common and custom properties).
-${generateJsDocs(profiles, propsToIgnoreInDocs, valueSets)}
-  */
-  `);
-  }
+  // Add the comment to the first declaration
   declarations[0].comments = comment.program.comments;
   declarations[0].comments![0].leading = true;
-
-  declarations.push(impl);
 
   return declarations;
 };
@@ -456,13 +325,13 @@ const generateBuilder = (schema, mappings, initialiser: (r: any) => void) => {
           b.tsTypeReference(
             b.identifier('Partial'),
             b.tsTypeParameterInstantiation([
-              b.tsTypeReference(b.identifier(getInterfaceName(schema))),
-            ]),
-          ),
+              b.tsTypeReference(b.identifier(`${schema.type}_Props`)),
+            ])
+          )
         ),
       }),
     ],
-    b.blockStatement(body),
+    b.blockStatement(body)
   );
 
   return fn;
@@ -479,20 +348,13 @@ const mapProps = (schema, mappings) => {
 
     const spec = schema.props[key] as Schema;
     if (spec) {
-      if (spec.extension) {
-        props.push(mapExtension(key, mappings[key], spec));
-      } else if (spec.isComposite) {
+      if (spec.isComposite) {
         // TODO a composite def may also have a typedef - how do we handle this?
         // maybe it's ok just to assign the top object hey?
         props.push(mapComposite(key, mappings[key], spec));
       } else if (spec.typeDef) {
         props.push(mapTypeDef(key, mappings[key], spec));
-      } else if (spec.type.includes('Coding')) {
-        props.push(mapCoding(key, mappings[key], spec));
-      } else if (
-        // spec.type.includes('Code') ||
-        spec.type.includes('CodeableConcept')
-      ) {
+      } else if (spec.type.includes('Code') || spec.type.includes('CodeableConcept')) {
         props.push(mapCodeableConcept(key, mappings[key], spec));
       } else {
         // TODO what happens if the type is like `reference | identifier`? Such contrasting types?
@@ -534,24 +396,24 @@ const ifPropInInput = (
   prop: string,
   statements: StatementKind[],
   alts?: StatementKind[],
-  inputName = INPUT_NAME,
+  inputName = INPUT_NAME
 ) =>
   b.ifStatement(
     b.unaryExpression(
       '!',
       b.callExpression(
         b.memberExpression(b.identifier('_'), b.identifier('isNil')),
-        [safelyRefProp(inputName, prop)],
-      ),
+        [safelyRefProp(inputName, prop)]
+      )
     ),
     b.blockStatement(statements),
-    alts ? b.blockStatement(alts) : null,
+    alts ? b.blockStatement(alts) : null
   );
 
 // assigns SOMETHING to a prop on the input
 const assignToInput = (prop: string, rhs) =>
   b.expressionStatement(
-    b.assignmentExpression('=', safelyRefProp(RESOURCE_NAME, prop), rhs),
+    b.assignmentExpression('=', safelyRefProp(RESOURCE_NAME, prop), rhs)
   );
 
 // this generates a statement to add the default
@@ -561,7 +423,7 @@ const addDefaults = (propName: string, mapping: Mapping, schema: Schema) => {
     // generate an assignment statement using the mappings
     const parsed = parse(
       `${RESOURCE_NAME}.${propName} = ${JSON.stringify(defaults)};`,
-      {},
+      {}
     );
     return parsed.program.body;
   }
@@ -573,7 +435,7 @@ const mapSimpleProp = (propName: string, mapping: Mapping, schema: Schema) => {
   // This is the actual assignment
   const assignProp = assignToInput(
     propName,
-    b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName)),
+    b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))
   );
 
   const elseStatement = addDefaults(propName, mapping, schema);
@@ -582,7 +444,7 @@ const mapSimpleProp = (propName: string, mapping: Mapping, schema: Schema) => {
 };
 
 // map a type def (ie, a nested object) property by property
-// TODO this is designed to handle singleton and array types
+// TODO this is designed to handle singletone and array types
 // The array stuff adds a lot of complication and I need tests on both formats
 const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
   const statements: any[] = [];
@@ -591,9 +453,9 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
     b.variableDeclaration('let', [
       b.variableDeclarator(
         b.identifier('src'),
-        b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName)),
+        b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))
       ),
-    ]),
+    ])
   );
 
   // Map the property name into an underscore var so it's always save
@@ -611,20 +473,20 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
           '=',
           b.memberExpression(
             b.identifier(RESOURCE_NAME),
-            b.identifier(propName),
+            b.identifier(propName)
           ),
-          b.arrayExpression([]),
-        ),
-      ),
+          b.arrayExpression([])
+        )
+      )
     );
   } else {
     statements.push(
       b.variableDeclaration('let', [
         b.variableDeclarator(
           b.identifier(safePropName),
-          b.objectExpression([b.spreadProperty(b.identifier('item'))]),
+          b.objectExpression([b.spreadProperty(b.identifier('item'))])
         ),
-      ]),
+      ])
     );
   }
 
@@ -644,15 +506,15 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
           b.callExpression(
             b.memberExpression(
               b.identifier('dt'),
-              b.identifier('addExtension'),
+              b.identifier('addExtension')
             ),
             [
               b.identifier(safePropName),
               b.stringLiteral(spec.extension.url),
               sourceValue,
-            ],
-          ),
-        ),
+            ]
+          )
+        )
       );
       assignments.push(ifPropInInput(prop, body, alts, inputName));
     } else {
@@ -669,10 +531,10 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
           b.identifier(safePropName),
           b.callExpression(
             b.memberExpression(b.identifier('dt'), b.identifier('mapSystems')),
-            [b.identifier(safePropName)],
-          ),
-        ),
-      ),
+            [b.identifier(safePropName)]
+          )
+        )
+      )
     );
   }
 
@@ -683,9 +545,9 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
       b.variableDeclaration('let', [
         b.variableDeclarator(
           b.identifier(safePropName),
-          useBuilderWithValueSet(schema),
+          b.objectExpression([b.spreadProperty(b.identifier('item'))])
         ),
-      ]),
+      ])
     );
     assignments.push(
       b.expressionStatement(
@@ -693,20 +555,20 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
           b.memberExpression(
             b.memberExpression(
               b.identifier(RESOURCE_NAME),
-              b.identifier(propName),
+              b.identifier(propName)
             ),
-            b.identifier('push'),
+            b.identifier('push')
           ),
-          [b.identifier(safePropName)],
-        ),
-      ),
+          [b.identifier(safePropName)]
+        )
+      )
     );
     statements.push(
       b.forOfStatement(
         b.variableDeclaration('let', [b.identifier('item')]),
         b.identifier('src'),
-        b.blockStatement(assignments),
-      ),
+        b.blockStatement(assignments)
+      )
     );
   } else {
     statements.push(...assignments);
@@ -716,11 +578,11 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
           '=',
           b.memberExpression(
             b.identifier(RESOURCE_NAME),
-            b.identifier(propName),
+            b.identifier(propName)
           ),
-          b.identifier(safePropName),
-        ),
-      ),
+          b.identifier(safePropName)
+        )
+      )
     );
   }
 
@@ -736,7 +598,7 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
 const mapCodeableConcept = (
   propName: string,
   mapping: Mapping,
-  schema: Schema,
+  schema: Schema
 ) => {
   const statements: StatementKind[] = [];
 
@@ -748,7 +610,7 @@ const mapCodeableConcept = (
 
   const callBuilder = b.callExpression(
     b.memberExpression(b.identifier('dt'), b.identifier('concept')),
-    [b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))],
+    [b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))]
   );
 
   statements.push(assignToInput(propName, callBuilder));
@@ -762,68 +624,22 @@ const mapCodeableConcept = (
   return ifPropInInput(propName, statements, elseStmnt);
 };
 
-// in a coding, the value could be a string (which we map)
-// or a Coding object, or a builder shorthand
-const mapCoding = (propName: string, mapping: Mapping, schema: Schema) => {
-  const statements: StatementKind[] = [];
-
-  statements.push(
-    b.variableDeclaration('let', [
-      b.variableDeclarator(
-        b.identifier('src'),
+// Map a property of the input to some extension
+// This will add a new object to the Extexsion array
+const mapExtension = (propName: string, mapping: Mapping) => {
+  const callBuilder = b.expressionStatement(
+    b.callExpression(
+      b.memberExpression(b.identifier('dt'), b.identifier('addExtension')),
+      [
+        b.identifier(RESOURCE_NAME),
+        b.stringLiteral(mapping.extension),
         b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName)),
-      ),
-    ]),
+      ]
+    )
   );
 
-  // TODO do we need to support an array of values for coding?
-  // Probably, but not today
-
-  if (schema.valueSet) {
-    // call the value map
-    const ast = parse(
-      `if (typeof src === 'string') {
-  src = dt.lookupValue('${schema.valueSet}', src);
- }`,
-    );
-    statements.push(ast.program.body[0]);
-  }
-
-  statements.push(
-    assignToInput(
-      propName,
-      b.callExpression(
-        b.memberExpression(b.identifier('dt'), b.identifier('coding')),
-        [b.identifier('src')],
-      ),
-    ),
-  );
-
-  let elseStmnt;
-  const d = addDefaults(propName, mapping, schema);
-  if (d) {
-    elseStmnt = d;
-  }
-
-  return ifPropInInput(propName, statements, elseStmnt);
+  return ifPropInInput(propName, [callBuilder]);
 };
-
-// // Map a property of the input to some extension
-// // This will add a new object to the Extension array
-// const mapExtension = (propName: string, mapping: Mapping) => {
-//   const callBuilder = b.expressionStatement(
-//     b.callExpression(
-//       b.memberExpression(b.identifier('dt'), b.identifier('addExtension')),
-//       [
-//         b.identifier(RESOURCE_NAME),
-//         b.stringLiteral(mapping.extension),
-//         b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName)),
-//       ],
-//     ),
-//   );
-
-//   return ifPropInInput(propName, [callBuilder]);
-// };
 
 const mapReference = (propName: string, _mapping: Mapping, schema: Schema) => {
   const statements: StatementKind[] = [];
@@ -836,7 +652,7 @@ const mapReference = (propName: string, _mapping: Mapping, schema: Schema) => {
 
   const callBuilder = b.callExpression(
     b.memberExpression(b.identifier('dt'), b.identifier('reference')),
-    [b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))],
+    [b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))]
   );
 
   statements.push(assignToInput(propName, callBuilder));
@@ -847,7 +663,7 @@ const mapReference = (propName: string, _mapping: Mapping, schema: Schema) => {
 const mapComposite = (propName: string, _mapping: Mapping, _schema: Schema) => {
   const deleteKey = b.unaryExpression(
     'delete',
-    b.memberExpression(b.identifier(RESOURCE_NAME), b.identifier(propName)),
+    b.memberExpression(b.identifier(RESOURCE_NAME), b.identifier(propName))
   );
   const callBuilder = b.callExpression(
     b.memberExpression(b.identifier('dt'), b.identifier('composite')),
@@ -856,96 +672,13 @@ const mapComposite = (propName: string, _mapping: Mapping, _schema: Schema) => {
       b.identifier(RESOURCE_NAME),
       b.stringLiteral(propName),
       b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName)),
-    ],
+    ]
   );
 
   return ifPropInInput(
     propName,
-    [deleteKey, callBuilder].map(b.expressionStatement),
+    [deleteKey, callBuilder].map(b.expressionStatement)
   );
-};
-
-const mapExtension = (propName: string, _mapping: Mapping, schema: Schema) => {
-  const statements: StatementKind[] = [];
-
-  // first extract the prop
-  statements.push(
-    b.variableDeclaration('let', [
-      b.variableDeclarator(
-        b.identifier('src'),
-        b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName)),
-      ),
-    ]),
-  );
-
-  // Map any values associated with the input
-  if (schema.valueSet) {
-    const ast = parse(
-      `if (typeof src === 'string') {
-  src = dt.lookupValue('${schema.valueSet}', src);
- }`,
-    );
-    statements.push(ast.program.body[0]);
-  }
-
-  // run a typed builder
-  // note that (right now) syntax overlap is subtly different to the main mapping functoins
-  // So, we duplicate!
-  if (schema.type.includes('CodeableConcept')) {
-    statements.push(
-      b.expressionStatement(
-        b.assignmentExpression(
-          '=',
-          b.identifier('src'),
-          b.callExpression(
-            b.memberExpression(b.identifier('dt'), b.identifier('concept')),
-            [b.identifier('src')],
-          ),
-        ),
-      ),
-    );
-    statements.push(
-      b.expressionStatement(
-        b.callExpression(
-          b.memberExpression(
-            b.identifier('dt'),
-            b.identifier('ensureConceptText'),
-          ),
-          [b.identifier('src')],
-        ),
-      ),
-    );
-  } else {
-    console.warn(
-      `WARNING: Failed to generate typed builder ${propName} for extension ${schema.extension}`,
-    );
-  }
-  // TODO handle other types
-
-  // Remove the original prop from the resource (which was added in the initial spread
-  statements.push(
-    b.expressionStatement(
-      b.unaryExpression(
-        'delete',
-        b.memberExpression(b.identifier('resource'), b.identifier(propName)),
-      ),
-    ),
-  );
-
-  // add the extension
-  statements.push(
-    b.expressionStatement(
-      b.callExpression(
-        b.memberExpression(b.identifier('dt'), b.identifier('addExtension')),
-        [
-          b.identifier('resource'),
-          b.stringLiteral(schema.extension),
-          b.identifier('src'),
-        ],
-      ),
-    ),
-  );
-  return ifPropInInput(propName, statements);
 };
 
 const mapIdentifier = (name: string, _mapping: Mapping, schema: Schema) => {
@@ -958,7 +691,7 @@ const mapIdentifier = (name: string, _mapping: Mapping, schema: Schema) => {
     [
       b.memberExpression(b.identifier(INPUT_NAME), b.identifier(name)),
       defaultSystem && b.stringLiteral(defaultSystem),
-    ].filter(ast => ast),
+    ].filter(ast => ast)
   );
   if (schema.isArray) {
     // if this is an array type, we should force the input to be an array
@@ -976,49 +709,15 @@ const mapIdentifier = (name: string, _mapping: Mapping, schema: Schema) => {
 const initResource = (resourceType: string) => {
   const rt = b.objectProperty(
     b.identifier('resourceType'),
-    b.stringLiteral(resourceType),
+    b.stringLiteral(resourceType)
   );
 
   return b.variableDeclaration('const', [
     b.variableDeclarator(
       b.identifier(RESOURCE_NAME),
-      b.objectExpression([rt, b.spreadProperty(b.identifier(INPUT_NAME))]),
+      b.objectExpression([rt, b.spreadProperty(b.identifier(INPUT_NAME))])
     ),
   ]);
 };
 
 const returnResource = () => b.returnStatement(b.identifier(RESOURCE_NAME));
-
-const buildValueSetHintMap = (hints: Record<string.string>) =>
-  b.objectExpression(
-    Object.entries(hints).map(([key, value]) =>
-      b.objectProperty(b.stringLiteral(key), b.stringLiteral(value)),
-    ),
-  );
-
-const useBuilderWithValueSet = (schema: Schema) => {
-  let builder: string | false = getDataTypeBuilderName(schema);
-  let valueSetHints = {};
-  // for each prop with an associated value set, pass a hint
-  if (schema.typeDef) {
-    for (const p in schema.typeDef) {
-      const prop = schema.typeDef[p];
-      if (prop.valueSet) {
-        valueSetHints[p] = prop.valueSet;
-      }
-    }
-  }
-
-  return builder
-    ? // If there's a builder for this type, call the builder to resolve it
-      b.callExpression(
-        b.memberExpression(b.identifier('dt'), b.identifier(builder)),
-        [
-          b.identifier('item'),
-          b.arrayExpression([]),
-          buildValueSetHintMap(valueSetHints),
-        ],
-      )
-    : // Else spread the input
-      b.objectExpression([b.spreadProperty(b.identifier('item'))]);
-};

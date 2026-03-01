@@ -3,9 +3,9 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import _ from "lodash";
 import * as dt from "../datatypes";
-import type * as FHIR from "../fhir";
+import _ from "lodash";
+import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type MedicationKnowledge_Props = {
@@ -32,7 +32,7 @@ export type MedicationKnowledge_Props = {
     monitoringProgram?: FHIR.BackboneElement[];
     monograph?: FHIR.BackboneElement[];
     packaging?: FHIR.BackboneElement;
-    preparationInstruction?: string;
+    preparationInstruction?: FHIR.markdown;
     productType?: MaybeArray<string[] | FHIR.CodeableConcept>;
     regulatory?: FHIR.BackboneElement[];
     relatedMedicationKnowledge?: FHIR.BackboneElement[];

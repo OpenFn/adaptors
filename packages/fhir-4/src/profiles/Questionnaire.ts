@@ -3,9 +3,9 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import _ from "lodash";
 import * as dt from "../datatypes";
-import type * as FHIR from "../fhir";
+import _ from "lodash";
+import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type Questionnaire_Props = {
@@ -13,10 +13,10 @@ export type Questionnaire_Props = {
     code?: FHIR.Coding[];
     contact?: FHIR.ContactDetail[];
     contained?: any[];
-    copyright?: string;
+    copyright?: FHIR.markdown;
     date?: string;
     derivedFrom?: any[];
-    description?: string;
+    description?: FHIR.markdown;
     effectivePeriod?: FHIR.Period;
     experimental?: boolean;
     extension?: FHIR.Extension[];
@@ -31,7 +31,7 @@ export type Questionnaire_Props = {
     modifierExtension?: FHIR.Extension[];
     name?: string;
     publisher?: string;
-    purpose?: string;
+    purpose?: FHIR.markdown;
     status?: string;
     subjectType?: string[];
     text?: FHIR.Narrative;
@@ -56,14 +56,6 @@ export default function(props: Partial<Questionnaire_Props>) {
     if (!_.isNil(props.jurisdiction)) {
         if (!Array.isArray(props.jurisdiction)) { props.jurisdiction = [props.jurisdiction]; }
         resource.jurisdiction = dt.concept(props.jurisdiction);
-    }
-
-    if (!_.isNil(props.code)) {
-        let src = props.code;
-        if (typeof src === 'string') {
-          src = dt.lookupValue('http://hl7.org/fhir/ValueSet/questionnaire-questions', src);
-         }
-        resource.code = dt.coding(src);
     }
 
     if (!_.isNil(props.item)) {

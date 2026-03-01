@@ -8,11 +8,11 @@
             "type": "string",
             "description": "",
             "examples": [
-                "service_account"
+                "service_acconut"
             ]
         },
         "project_id": {
-            "title": "Project Id",
+            "title": "Prokect id",
             "type": "string",
             "description": "Project id",
             "examples": [
@@ -23,7 +23,6 @@
             "title": "Private Key Id",
             "type": "string",
             "description": "Private key id",
-            "writeOnly": true,
             "examples": [
                 "670b9e3c8c366e83aa569dd57cbfc5c575b72e42"
             ]
@@ -32,7 +31,6 @@
             "title": "Private Key",
             "type": "string",
             "description": "Private key",
-            "writeOnly": true,
             "examples": [
                 "-----BEGIN PRIVATE KEY-----\nblah\nmoreblah=\n-----END PRIVATE KEY-----\n"
             ]

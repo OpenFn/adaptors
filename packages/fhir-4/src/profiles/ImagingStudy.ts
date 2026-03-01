@@ -3,9 +3,9 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import _ from "lodash";
 import * as dt from "../datatypes";
-import type * as FHIR from "../fhir";
+import _ from "lodash";
+import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type ImagingStudy_Props = {
@@ -49,14 +49,6 @@ export default function(props: Partial<ImagingStudy_Props>) {
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
         resource.identifier = dt.identifier(props.identifier);
-    }
-
-    if (!_.isNil(props.modality)) {
-        let src = props.modality;
-        if (typeof src === 'string') {
-          src = dt.lookupValue('http://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_29.html', src);
-         }
-        resource.modality = dt.coding(src);
     }
 
     if (!_.isNil(props.subject)) {

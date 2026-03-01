@@ -57,12 +57,6 @@ pnpm generate-fhir <name> --spec www
 
 (or modify package.json)
 
-## Only include certain resource types in the generation
-
-```
-pnpm generate-fhir <name> --include Patient --include Encounter
-```
-
 ## Test the adaptor
 
 Each adaptor generates a (very basic) set of unit tests which should pass out of

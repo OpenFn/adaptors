@@ -1,19 +1,11 @@
 # @openfn/language-inform
 
-## 1.2.3 - 24 February 2026
+## 1.2.2
 
 ### Patch Changes
 
-- 856f85c: Security updates
-- Updated dependencies \[856f85c]
-  - @openfn/language-common@3.2.3
-
-## 1.2.2 - 09 February 2026
-
-### Patch Changes
-
-- Updated dependencies \[8ad6b98]
-- Updated dependencies \[8ad6b98]
+- Updated dependencies [8ad6b98]
+- Updated dependencies [8ad6b98]
   - @openfn/language-common@3.2.2
 
 ## 1.2.1 - 28 November 2025
@@ -41,7 +33,7 @@
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 1.1.6 - 16 October 2025
+## 1.1.6
 
 ### Patch Changes
 

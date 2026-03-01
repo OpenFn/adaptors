@@ -1,52 +1,21 @@
 # @openfn/language-googledrive
 
-## 3.0.1 - 24 February 2026
-
-### Patch Changes
-
-- 856f85c: Security updates
-- Updated dependencies \[856f85c]
-  - @openfn/language-common@3.2.3
-
-## 3.0.0 - 09 February 2026
-
-The 3.0.0 version ensures that the `list()` command can access all folders
-shared with the credential - but demands that a single folderId be provided, to
-prevent accidental data leaks.
-
-### Breaking Changes
-
-- 7971401: `list()` now requires a `folderId` argument
-
-If you used `list()` from v2.1.0, you must now provide a folderId as an
-argument:
-
-```
-list() -> list('21345', { limit: 10 })
-```
-
-If you used folderId as an option, it must now be an argument
-
-```
-list({ folderId; '21345', limit: 10 }) -> list('21345', { limit: 10 })
-```
-
-## 2.1.1 (deprecated)
+## 2.1.1
 
 ### Patch Changes
 
 - aa56385: Set supportsAllDrives on list()
-- Updated dependencies \[8ad6b98]
-- Updated dependencies \[8ad6b98]
+- Updated dependencies [8ad6b98]
+- Updated dependencies [8ad6b98]
   - @openfn/language-common@3.2.2
 
-## 2.1.0 - 29 January 2026
+## 2.1.0
 
 ### Minor Changes
 
 - 15dc2e4: add list method for listing files in a directory
 
-## 2.0.8 - 28 January 2026
+## 2.0.8
 
 ### Patch Changes
 
@@ -80,7 +49,7 @@ list({ folderId; '21345', limit: 10 }) -> list('21345', { limit: 10 })
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 2.0.3 - 16 October 2025
+## 2.0.3
 
 ### Patch Changes
 

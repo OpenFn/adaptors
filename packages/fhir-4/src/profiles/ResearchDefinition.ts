@@ -3,9 +3,9 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import _ from "lodash";
 import * as dt from "../datatypes";
-import type * as FHIR from "../fhir";
+import _ from "lodash";
+import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type ResearchDefinition_Props = {
@@ -14,9 +14,9 @@ export type ResearchDefinition_Props = {
     comment?: string[];
     contact?: FHIR.ContactDetail[];
     contained?: any[];
-    copyright?: string;
+    copyright?: FHIR.markdown;
     date?: string;
-    description?: string;
+    description?: FHIR.markdown;
     editor?: FHIR.ContactDetail[];
     effectivePeriod?: FHIR.Period;
     endorser?: FHIR.ContactDetail[];
@@ -37,7 +37,7 @@ export type ResearchDefinition_Props = {
     outcome?: string | FHIR.Reference;
     population?: string | FHIR.Reference;
     publisher?: string;
-    purpose?: string;
+    purpose?: FHIR.markdown;
     relatedArtifact?: FHIR.RelatedArtifact[];
     reviewer?: FHIR.ContactDetail[];
     shortTitle?: string;

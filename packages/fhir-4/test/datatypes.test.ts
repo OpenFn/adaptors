@@ -24,36 +24,6 @@ describe('identifier', () => {
   });
 
   it('should map an identifier with a mapped system', () => {
-    // Note that this can be done through an IG adaptor
-    // or by a user in job code
-    b.setValues(
-      'abc',
-      {
-        PI: {
-          code: 'PI',
-          display: 'Personal ID Number',
-          system: 'https://www/fhir/CodeSystem/SzPersonIdentificationsCS',
-        },
-      },
-      'default',
-    );
-
-    const result = b.identifier({ type: 'PI' }, [], { type: 'abc' });
-
-    expect(result).to.eql({
-      type: {
-        coding: [
-          {
-            code: 'PI',
-            display: 'Personal ID Number',
-            system: 'https://www/fhir/CodeSystem/SzPersonIdentificationsCS',
-          },
-        ],
-      },
-    });
-  });
-
-  it.skip('should map a type value', () => {
     b.setSystemMap({
       default: 'xyz',
     })({});
@@ -91,7 +61,7 @@ describe('identifier', () => {
   //it('should map an identifier from a string with a default system', () => {});
 });
 
-describe.only('coding', () => {
+describe('coding', () => {
   it('should create a simple coding', () => {
     const result = b.coding('1234', 'https://fake.loinc.org');
 
@@ -122,27 +92,6 @@ describe.only('coding', () => {
 
   it('should use a shorthand', () => {
     const result = b.c('1234', 'https://fake.loinc.org');
-
-    expect(result).to.eql({ code: '1234', system: 'https://fake.loinc.org' });
-  });
-
-  // This is convenient to pass into datatype builders
-  it('should accept a coding object', () => {
-    const obj = {
-      system: 'https://fake.loinc.org',
-      version: '1',
-      code: '1234',
-      display: 'a thing',
-      userSelected: false,
-    };
-    const result = b.coding(obj);
-
-    expect(result).to.eql(obj);
-  });
-
-  // This is convenient to pass into datatype builders
-  it('should accept a coding tuple', () => {
-    const result = b.coding(['1234', 'https://fake.loinc.org']);
 
     expect(result).to.eql({ code: '1234', system: 'https://fake.loinc.org' });
   });

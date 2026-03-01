@@ -3,9 +3,9 @@
 // DO NOT MAKE CHANGES MANUALLY OR THEY WILL BE LOST
 // SEE THE README FILE FOR DETAILS
 
-import _ from "lodash";
 import * as dt from "../datatypes";
-import type * as FHIR from "../fhir";
+import _ from "lodash";
+import * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type PackagedProductDefinition_Props = {
@@ -13,7 +13,7 @@ export type PackagedProductDefinition_Props = {
     contained?: any[];
     containedItemQuantity?: FHIR.Quantity[];
     copackagedIndicator?: boolean;
-    description?: string;
+    description?: FHIR.markdown;
     extension?: FHIR.Extension[];
     id?: string;
     identifier?: MaybeArray<string | FHIR.Identifier>;

@@ -13,7 +13,7 @@ import loadPkg from './util/load-pkg';
 const loadActualPackageJson = async (specifier: string) => {
   // call unpkg for a production package json
   const res = await fetch(
-    `https://cdn.jsdelivr.net/npm/${specifier}/package.json`,
+    `https://cdn.jsdelivr.net/npm/${specifier}/package.json`
   );
   if (res.status === 200) {
     return res.json();
@@ -24,7 +24,7 @@ const loadActualPackageJson = async (specifier: string) => {
 export const installAndGen = async (
   specifier: string,
   cacheDir?: string,
-  clean?: boolean,
+  clean?: boolean
 ) => {
   try {
     if (!specifier.startsWith('@openfn/language-')) {
@@ -50,13 +50,12 @@ export const installAndGen = async (
       try {
         const commonPath = await preinstallAdaptor(
           `@openfn/language-common@${commonVersion}`,
-          cacheDir,
+          cacheDir
         );
         commonDocs = await gen(commonPath, { serialize: true });
         console.log('✅ common ready');
       } catch (e) {
         console.log('❌ error loading common');
-        console.log(e);
       }
     }
     const docs = await gen(root, { serialize: true, common: commonDocs });
@@ -64,7 +63,6 @@ export const installAndGen = async (
     return { docs, path: path.join(root, 'docs', 'raw.json') };
   } catch (e: any) {
     console.log('Error installing adaptor docs');
-    console.log(e);
     throw { message: e.message };
   }
 };
@@ -88,7 +86,7 @@ const gen = async (root: string, { serialize = false, common }: any = {}) => {
     await mkdir(`${root}/docs`, { recursive: true });
     await writeFile(
       `${root}/docs/raw.json`,
-      JSON.stringify(functions, null, 2),
+      JSON.stringify(functions, null, 2)
     );
   }
 
@@ -105,7 +103,7 @@ export default gen;
 // But that's for later: first pass is parity but in a standalone package
 const findExternalFunctions = async (
   root: string,
-  commonDefs?: string | object,
+  commonDefs?: string | object
 ) => {
   const externals: any[] = [];
 
@@ -123,7 +121,7 @@ const findExternalFunctions = async (
       const commonRaw = await readFile(
         // '../../packages/common/docs/raw.json'
         path.resolve(commonDefs),
-        'utf8',
+        'utf8'
       );
       common = JSON.parse(commonRaw || '');
     } else if (commonDefs) {
@@ -137,7 +135,7 @@ const findExternalFunctions = async (
     // TODO: use a cached value if it exists
   } catch (e) {
     console.warn(
-      'WARNING: failed to load common docs. This may result in incorrect documentation',
+      'WARNING: failed to load common docs. This may result in incorrect documentation'
     );
   }
 
@@ -180,7 +178,7 @@ const findExternalFunctions = async (
 const fetchFilesList = async (
   specifier: string,
   dir: string,
-  filterDir: string[] = [],
+  filterDir: string[] = []
 ): Promise<any[]> => {
   const url = `https://api.github.com/repos/openfn/adaptors/contents/${dir}?ref=${specifier}`;
   const headers: HeadersInit = {
@@ -239,7 +237,7 @@ const fetchFiles = async (files: string[], output: string) => {
 
 export const preinstallAdaptor = async (
   specifier: string,
-  targetDir?: string,
+  targetDir?: string
 ): Promise<string> => {
   const { name, version } = getNameAndVersion(specifier);
   const shortName = name.split('@openfn/language-')[1];
