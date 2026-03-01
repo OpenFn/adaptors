@@ -12,7 +12,7 @@ describe('aws-s3 adaptor', () => {
 
 
 describe ('put', () =>{
-  it('should return bucket/key/etag merged into state.data', async () => {
+  it('should return bucket/key/etag in state.data', async () => {
     s3Mock.on(PutObjectCommand).resolves({ ETag: '"abc123"'});
 
     const state = { 
@@ -23,7 +23,7 @@ describe ('put', () =>{
     expect(finalState.data.bucket).to.equal('my-bucket');
     expect(finalState.data.key).to.equal('path/file.txt');
     expect(finalState.data.etag).to.equal('"abc123"');
-    expect(finalState.data.foo).to.equal('bar');
+    expect(finalState.data.foo).to.be.undefined;
 
   });
   

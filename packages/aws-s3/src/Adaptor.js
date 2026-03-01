@@ -39,10 +39,7 @@ export function put(params) {
     
     const client = util.s3ClientFromConfig(state.configuration);
     const resp = await client.send(new PutObjectCommand(awsParams));
-
-    // Only write the relevant S3 response to state.data
     const newData = {
-      ...state.data,
       bucket: awsParams.Bucket,
       key: awsParams.Key,
       etag: resp.ETag,
