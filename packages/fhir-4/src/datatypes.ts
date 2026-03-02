@@ -14,13 +14,19 @@ let userValues = {};
 
 const mapExtraKeys = (values, keys = ['display']) => {
   const result = { ...values };
-  for (const code in values) {
-    const v = values[code];
-    for (const key of keys) {
-      if (key in v) {
-        result[v[key]] = v;
+  try {
+    for (const code in values) {
+      const v = values[code];
+      if (typeof v !== 'string') {
+        for (const key of keys) {
+          if (key in v) {
+            result[v[key]] = v;
+          }
+        }
       }
     }
+  } catch (e) {
+    // do nothing for invalid values
   }
   return result;
 };
