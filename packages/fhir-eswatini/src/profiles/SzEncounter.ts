@@ -12,7 +12,7 @@ export type Encounter_SzEncounter_Props = {
     account?: FHIR.Reference[];
     appointment?: FHIR.Reference[];
     basedOn?: FHIR.Reference[];
-    class?: "OPD" | "IPD" | "CO" | "SO";
+    class?: "OPD" | "IPD" | "CO" | "SO" | "Outpatient Department" | "Inpatient Department" | "Community Outreach" | "Schools Outreach";
     classHistory?: FHIR.BackboneElement[];
     contained?: any[];
     diagnosis?: FHIR.BackboneElement[];

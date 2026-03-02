@@ -84,7 +84,11 @@ export const generateType = (
       // TODO as an optimisation, generate the type enum for the value set once, and reuse
       const values = Object.keys(valueSets[s.valueSet] || {});
       if (values.length) {
-        s.values = values;
+        // Also check for display values, which are accepted as mappings
+        const displayValues = Object.values(valueSets[s.valueSet])
+          .map(v => v.display)
+          .filter(Boolean);
+        s.values = values.concat(displayValues);
       }
     }
 
