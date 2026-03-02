@@ -4,6 +4,8 @@
 <dt>
     <a href="#create">create(resource)</a></dt>
 <dt>
+    <a href="#createbundle">createBundle([props])</a></dt>
+<dt>
     <a href="#delete">delete(reference)</a></dt>
 <dt>
     <a href="#read">read(reference)</a></dt>
@@ -554,6 +556,45 @@ This operation writes the following keys to state:
 create(b.patient({
   name: { family: "Messi", given: "Lionel", use: "official" },
 }))
+```
+
+* * *
+
+### createBundle
+
+<p><code>createBundle([props]) ⇒</code></p>
+
+Generate a new bundle on state. Any existing bundle with the same name will be overwritten.
+
+**Returns**: Operation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [options.name] | <code>string</code> | A name (key) for this bundle on state (defaults to `bundle`) |
+| [options.type] | <code>string</code> | The type of this bundle. Accepts document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection | subscription-notification. |
+| [props] | <code>object</code> | Assign any arbitrary properties to the bundle object |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| <name> | the updated bundle |
+
+**Example:** Create a default bundle and add an item
+```js
+createBundle()
+addToBundle($.patient)
+```
+**Example:** Create a batch-type bundle called 'upload'
+```js
+createBundle({ name: 'upload', type: 'batch' })
+```
+**Example:** Create a bundle with custom properties
+```js
+createBundle({}, { timestamp: new Date().toISOString() }})
+* @example <caption>Create a named bundle and add an item</caption>
+createBundle({ name: 'upload')
+addToBundle($.patient, 'upload')
 ```
 
 * * *

@@ -1,5 +1,19 @@
 # @openfn/language-fhir-eswatini
 
+## 0.4.0 - 02 March 2026
+
+### Minor Changes
+
+- 355f383: Add bundle APIs: `createBundle`, `addToBundle` and `uploadBundle`
+
+### Patch Changes
+
+- 3a9915b: When mapping coding values, also index on the display value. This is
+  useful for codings where the code is not intuitive, but the display value is.
+- Updated dependencies \[3a9915b]
+- Updated dependencies \[355f383]
+  - @openfn/language-fhir-4@0.3.0
+
 ## 0.3.0 - 24 February 2026
 
 ### Minor Changes

@@ -1,3 +1,7 @@
+<dl>
+<dt>
+    <a href="#base_url">BASE_URL(resources, [name])</a></dt>
+</dl>
 
 This adaptor exports the following namespaced functions:
 
@@ -63,6 +67,35 @@ This adaptor exports the following namespaced functions:
 </dt>
 </dl>
 
+
+## Functions
+### BASE_URL
+
+<p><code>BASE\_URL(resources, [name]) ⇒</code></p>
+
+Add a resource to a bundle on state, using the `name` as the key (or `bundle` by default).
+The resource will be upserted (via PUT).
+A new bundle will be generated if one does not already exist.
+
+**Returns**: Operation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| resources | <code>object/array</code> | A resource or array of resources to add to the bundle |
+| [name] | <code>string</code> | A name (key) for this bundle on state (defaults to `bundle`) |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| bundle | the updated bundle |
+
+**Example:** Add a new patient resource to the default bundle
+```js
+addToBundle(b.patient($.patientDetails))
+```
+
+* * *
 
 
 ## builders
