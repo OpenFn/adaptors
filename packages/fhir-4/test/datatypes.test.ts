@@ -53,6 +53,36 @@ describe('identifier', () => {
     });
   });
 
+  it('should map an identifier with a mapped system and look up by display', () => {
+    b.setValues(
+      'abc',
+      {
+        '2143': {
+          code: '2143',
+          display: 'PID',
+          system: 'https://www/fhir/CodeSystem/SzPersonIdentificationsCS',
+        },
+      },
+      'default',
+    );
+
+    // Map the type using the display string, not the code
+    // which is useful in cases where the code is arbitrary
+    const result = b.identifier({ type: 'PID' }, [], { type: 'abc' });
+
+    expect(result).to.eql({
+      type: {
+        coding: [
+          {
+            code: '2143',
+            display: 'PID',
+            system: 'https://www/fhir/CodeSystem/SzPersonIdentificationsCS',
+          },
+        ],
+      },
+    });
+  });
+
   it.skip('should map a type value', () => {
     b.setSystemMap({
       default: 'xyz',
@@ -69,7 +99,7 @@ describe('identifier', () => {
   });
 
   it('should add an extension', () => {
-    const result = b.identifier({ value: 'abc' }, { value: 'x', url: 'www' });
+    const result = b.identifier({ value: 'abc' }, [{ value: 'x', url: 'www' }]);
 
     expect(result.extension).to.eql([{ valueString: 'x', url: 'www' }]);
   });
@@ -91,7 +121,7 @@ describe('identifier', () => {
   //it('should map an identifier from a string with a default system', () => {});
 });
 
-describe.only('coding', () => {
+describe('coding', () => {
   it('should create a simple coding', () => {
     const result = b.coding('1234', 'https://fake.loinc.org');
 
