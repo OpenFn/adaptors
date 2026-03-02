@@ -12,10 +12,31 @@ const datetimeregex =
 let defaultValues = {};
 let userValues = {};
 
+const mapExtraKeys = (values, keys = ['display']) => {
+  const result = { ...values };
+  try {
+    for (const code in values) {
+      const v = values[code];
+      if (typeof v !== 'string') {
+        for (const key of keys) {
+          if (key in v) {
+            result[v[key]] = v;
+          }
+        }
+      }
+    }
+  } catch (e) {
+    // do nothing for invalid values
+  }
+  return result;
+};
+
 /**
  * Set the data value index
+ * Each value will be indexed by code and display
  */
 export const setValues = (url, values, type = 'user') => {
+  values = mapExtraKeys(values);
   if (type === 'default') {
     defaultValues[url] ??= {};
     defaultValues[url] = values;
@@ -29,6 +50,7 @@ export const setValues = (url, values, type = 'user') => {
  * Add new entries to the  data value index
  */
 export const extendValues = (url, values, type = 'user') => {
+  values = mapExtraKeys(values);
   if (type === 'default') {
     defaultValues[url] ??= {};
     Object.assign(defaultValues[url], values);
@@ -123,13 +145,13 @@ export const identifier = (
     return id.map(i => identifier(i, ext, valueHints));
   }
 
-  const i: FHIR.Identifier = mapValues(id, valueHints);
-  if (typeof id === 'string') {
-    i.value = id;
-  } else {
-    if (i.type) {
-      i.type = concept(i.type);
-    }
+  const i: FHIR.Identifier =
+    typeof id === 'string'
+      ? mapValues({ value: id }, valueHints)
+      : mapValues(id, valueHints);
+
+  if (i.type) {
+    i.type = concept(i.type);
   }
 
   // TODO warn for unexpected keys?
