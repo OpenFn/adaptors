@@ -278,23 +278,30 @@ type CreateBundleOptions = {
  * @function
  * @param {string} [options.name] - A name (key) for this bundle on state (defaults to `bundle`)
  * @param {string} [options.type] - The type of this bundle. Accepts document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection | subscription-notification.
+ * @param {object} [props] - Assign any arbitrary properties to the bundle object
  * @state <name> - the updated bundle
- * @example <caption>Create a batch bundle called 'upload', and add an item</caption>
+ * @example <caption>Create a default bundle and add an item</caption>
+ * createBundle()
+ * addToBundle($.patient)
+ * @example <caption>Create a batch-type bundle called 'upload'</caption>
  * createBundle({ name: 'upload', type: 'batch' })
+ * @example <caption>Create a bundle with custom properties</caption>
+ * createBundle({}, { timestamp: new Date().toISOString() }})
+ * * @example <caption>Create a named bundle and add an item</caption>
+ * createBundle({ name: 'upload')
  * addToBundle($.patient, 'upload')
  * @returns Operation
  */
-export function createBundle(options: CreateBundleOptions) {
+export function createBundle(options: CreateBundleOptions, props: any = {}) {
   return state => {
-    const [{ name = 'bundle', type = 'transaction' }] = expandReferences(
-      state,
-      options,
-    );
+    const [{ name = 'bundle', type = 'transaction' }, $props] =
+      expandReferences(state, options, props);
 
     state[name] = {
       resourceType: 'Bundle',
       type,
       entry: [],
+      ...props,
     };
 
     return state;
