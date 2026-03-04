@@ -62,6 +62,15 @@
       "examples": [
         true
       ]
+    },
+    "requestTimeout": {
+      "title": "Request Timeout",
+      "description": "Number of milliseconds before a request times out. Default is 600000 (10 minutes). Set to 0 for no timeout.",
+      "type": "integer",
+      "default": 600000,
+      "examples": [
+        300000
+      ]
     }
   },
   "type": "object",
