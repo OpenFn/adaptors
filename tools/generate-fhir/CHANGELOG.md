@@ -1,5 +1,10 @@
 # @openfn/generate-fhir
 
+## 0.7.1
+
+- Fix an issue where a singleton prop with a typedef would throw an error (item
+  is not defined)
+
 ## 0.7.0
 
 - Support mapping extensions to simple properties
