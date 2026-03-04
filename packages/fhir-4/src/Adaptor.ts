@@ -279,7 +279,7 @@ type CreateBundleOptions = {
  * @param {string} [options.name] - A name (key) for this bundle on state (defaults to `bundle`)
  * @param {string} [options.type] - The type of this bundle. Accepts document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection | subscription-notification.
  * @param {object} [props] - Assign any arbitrary properties to the bundle object
- * @state <name> - the updated bundle
+ * @state (name) - the updated bundle
  * @example <caption>Create a default bundle and add an item</caption>
  * createBundle()
  * addToBundle($.patient)
