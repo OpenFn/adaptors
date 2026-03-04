@@ -1,5 +1,12 @@
 # @openfn/generate-fhir
 
+## 0.7.2
+
+### Patch Changes
+
+- 7ae2a7a: - Fix a docs issue for addToBundle
+  - Fix encounter.period (and other props) which report "item is not defined"
+
 ## 0.7.1
 
 - Fix an issue where a singleton prop with a typedef would throw an error (item
