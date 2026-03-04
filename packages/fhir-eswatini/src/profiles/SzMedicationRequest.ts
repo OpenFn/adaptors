@@ -157,7 +157,7 @@ export default function(props: Partial<MedicationRequest_SzMedicationRequest_Pro
         let src = props.dispenseRequest;
 
         let _dispenseRequest = {
-            ...item
+            ...src
         };
 
         resource.dispenseRequest = _dispenseRequest;
@@ -167,7 +167,7 @@ export default function(props: Partial<MedicationRequest_SzMedicationRequest_Pro
         let src = props.substitution;
 
         let _substitution = {
-            ...item
+            ...src
         };
 
         resource.substitution = _substitution;

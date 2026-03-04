@@ -1,5 +1,64 @@
 {
-  "operations": [],
+  "operations": [
+    {
+      "name": "addToBundle",
+      "params": [
+        "resources",
+        "name"
+      ],
+      "docs": {
+        "description": "Add a resource to a bundle on state, using the `name` as the key (or `bundle` by default).\nThe resource will be upserted (via PUT).\nA new bundle will be generated if one does not already exist.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "A resource or array of resources to add to the bundle",
+            "type": {
+              "type": "NameExpression",
+              "name": "object/array"
+            },
+            "name": "resources"
+          },
+          {
+            "title": "param",
+            "description": "A name (key) for this bundle on state (defaults to `bundle`)",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "name"
+          },
+          {
+            "title": "state",
+            "description": "bundle - the updated bundle"
+          },
+          {
+            "title": "example",
+            "description": "addToBundle(b.patient($.patientDetails))",
+            "caption": "Add a new patient resource to the default bundle"
+          },
+          {
+            "title": "returns",
+            "description": "Operation",
+            "type": null
+          }
+        ]
+      },
+      "valid": true
+    }
+  ],
   "exports": [],
   "common": [
     {
@@ -268,6 +327,49 @@
               "name": "Operation"
             },
             "name": "operation"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "combine",
+      "params": [
+        "operations"
+      ],
+      "docs": {
+        "description": "Combines two operations into one",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "combine(\n  create('foo'),\n  delete('bar')\n)"
+          },
+          {
+            "title": "param",
+            "description": "Operations to be performed.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operations"
+            },
+            "name": "operations"
           },
           {
             "title": "returns",

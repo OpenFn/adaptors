@@ -70,7 +70,7 @@ export default function(props: Partial<Specimen_SzLabSpecimen_Props>) {
         let src = props.collection;
 
         let _collection = {
-            ...item
+            ...src
         };
 
         resource.collection = _collection;

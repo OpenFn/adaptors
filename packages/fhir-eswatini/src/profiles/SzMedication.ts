@@ -69,7 +69,7 @@ export default function(props: Partial<Medication_SzMedication_Props>) {
         let src = props.batch;
 
         let _batch = {
-            ...item
+            ...src
         };
 
         resource.batch = _batch;
