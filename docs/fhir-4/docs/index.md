@@ -578,7 +578,7 @@ This operation writes the following keys to state:
 
 | State Key | Description |
 | --- | --- |
-| <name> | the updated bundle |
+| (name) | the updated bundle |
 
 **Example:** Create a default bundle and add an item
 ```js
