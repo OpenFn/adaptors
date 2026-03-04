@@ -228,7 +228,7 @@ Execute a raw SQL statement
 | --- | --- | --- |
 | params | <code>object</code> | Payload data for the SQL query |
 | params.query | <code>string</code> | The SQL query to execute |
-| params.options | <code>object</code> | Optional query options |
+| [params.options] | <code>object</code> | Optional query options |
 
 
 **Example**

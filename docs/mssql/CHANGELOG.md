@@ -1,5 +1,11 @@
 # @openfn/language-mssql
 
+## 7.0.3 - 04 March 2026
+
+### Patch Changes
+
+- Add new config option: requestTimeout. Defaults to 10 minutes
+
 ## 7.0.2 - 24 February 2026
 
 ### Patch Changes
