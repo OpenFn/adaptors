@@ -1,6 +1,6 @@
 <dl>
 <dt>
-    <a href="#base_url">BASE_URL(resources, [name])</a></dt>
+    <a href="#addtobundle">addToBundle(resources, [name])</a></dt>
 </dl>
 
 This adaptor exports the following namespaced functions:
@@ -69,9 +69,9 @@ This adaptor exports the following namespaced functions:
 
 
 ## Functions
-### BASE_URL
+### addToBundle
 
-<p><code>BASE\_URL(resources, [name]) ⇒</code></p>
+<p><code>addToBundle(resources, [name]) ⇒</code></p>
 
 Add a resource to a bundle on state, using the `name` as the key (or `bundle` by default).
 The resource will be upserted (via PUT).
