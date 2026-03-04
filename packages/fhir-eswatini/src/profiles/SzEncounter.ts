@@ -140,7 +140,7 @@ export default function(props: Partial<Encounter_SzEncounter_Props>) {
         let src = props.period;
 
         let _period = {
-            ...item
+            ...src
         };
 
         resource.period = _period;
@@ -179,7 +179,7 @@ export default function(props: Partial<Encounter_SzEncounter_Props>) {
         let src = props.hospitalization;
 
         let _hospitalization = {
-            ...item
+            ...src
         };
 
         resource.hospitalization = _hospitalization;

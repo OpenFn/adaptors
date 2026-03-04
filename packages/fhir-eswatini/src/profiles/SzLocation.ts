@@ -69,7 +69,7 @@ export default function(props: Partial<Location_SzLocation_Props>) {
         let src = props.position;
 
         let _position = {
-            ...item
+            ...src
         };
 
         resource.position = _position;

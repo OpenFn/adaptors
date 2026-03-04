@@ -622,7 +622,7 @@ const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
       b.variableDeclaration('let', [
         b.variableDeclarator(
           b.identifier(safePropName),
-          b.objectExpression([b.spreadProperty(b.identifier('item'))]),
+          b.objectExpression([b.spreadProperty(b.identifier('src'))]),
         ),
       ]),
     );

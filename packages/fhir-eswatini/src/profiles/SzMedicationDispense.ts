@@ -127,7 +127,7 @@ export default function(props: Partial<MedicationDispense_SzMedicationDispense_P
         let src = props.substitution;
 
         let _substitution = {
-            ...item
+            ...src
         };
 
         resource.substitution = _substitution;

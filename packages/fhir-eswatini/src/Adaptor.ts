@@ -2,6 +2,9 @@ import { expandReferences } from '@openfn/language-common/util';
 
 export { createBundle, uploadBundle } from '@openfn/language-fhir-4';
 
+// TODO would like a smarter way to track this
+const BASE_URL = 'http://172.209.216.154';
+
 /**
  * Add a resource to a bundle on state, using the `name` as the key (or `bundle` by default).
  * The resource will be upserted (via PUT).
@@ -15,10 +18,6 @@ export { createBundle, uploadBundle } from '@openfn/language-fhir-4';
  * addToBundle(b.patient($.patientDetails))
  * @returns Operation
  */
-
-// TODO would like a smarter way to track this
-const BASE_URL = 'http://172.209.216.154';
-
 export function addToBundle(resources: any | any[], name: string = 'bundle') {
   return state => {
     let [$resources, $name] = expandReferences(state, resources, name);
@@ -51,6 +50,7 @@ export function addToBundle(resources: any | any[], name: string = 'bundle') {
 }
 
 export {
+  combine,
   dataPath,
   dataValue,
   dateFns,
