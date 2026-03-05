@@ -115,10 +115,12 @@ This operation writes the following keys to state:
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
 
-**Example:** Get all transactions
+**Example:** Get transactions within a date range. (Default range is the current date)
 ```js
 list('/api/v2/disbursements/search-transactions', {
-    sourceAccountNumber: 4864192954
+    sourceAccountNumber: 4864192954,
+    startDate: new Date('2025-11-15'),
+    endDate: Date.now()
 });
 ```
 **Example:** Get all transactions for a specific page and page number.
@@ -231,6 +233,8 @@ Query option for the `list` helper function
 | --- | --- | --- |
 | pageNo | <code>Number</code> | The page number. Please note that Monnify pagination starts at 0 not 1. (Default: 0) |
 | pageSize | <code>Number</code> | The page size. (Default: 100) |
+| startDate | <code>Date</code> | The lower date range |
+| endDate | <code>Date</code> | The higher date range |
 | [otherOptions] | <code>Record.&lt;string, any&gt;</code> | Additional options. |
 
 
