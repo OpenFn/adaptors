@@ -1,11 +1,5 @@
 # @openfn/language-monnify
 
-## 1.1.0 - 05 March 2026
-
-### Minor Changes
-
-- e822118: Update docs to include the startDate and endDate in list examples
-
 ## 1.0.2 - 24 February 2026
 
 ### Patch Changes
