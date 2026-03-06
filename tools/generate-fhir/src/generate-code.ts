@@ -746,12 +746,39 @@ const mapCodeableConcept = (
     statements.push(ast.program.body[0]);
   }
 
+  // the right hand side of the assignment
+  let rhs: any = b.memberExpression(
+    b.identifier(INPUT_NAME),
+    b.identifier(propName),
+  );
+
+  if (schema.valueSet) {
+    // If there's a value map involved, lookup the value before assignment
+    rhs = b.callExpression(
+      b.memberExpression(b.identifier('dt'), b.identifier('lookupValue')),
+      [b.stringLiteral(schema.valueSet), rhs],
+    );
+  }
+
   const callBuilder = b.callExpression(
     b.memberExpression(b.identifier('dt'), b.identifier('concept')),
-    [b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))],
+    [rhs],
   );
 
   statements.push(assignToInput(propName, callBuilder));
+
+  // TODO maybe this is option driven?
+  statements.push(
+    b.expressionStatement(
+      b.callExpression(
+        b.memberExpression(
+          b.identifier('dt'),
+          b.identifier('ensureConceptText'),
+        ),
+        [b.memberExpression(b.identifier('resource'), b.identifier(propName))],
+      ),
+    ),
+  );
 
   let elseStmnt;
   const d = addDefaults(propName, mapping, schema);
@@ -904,6 +931,8 @@ const mapExtension = (propName: string, _mapping: Mapping, schema: Schema) => {
         ),
       ),
     );
+
+    // TODO maybe this is option driven?
     statements.push(
       b.expressionStatement(
         b.callExpression(

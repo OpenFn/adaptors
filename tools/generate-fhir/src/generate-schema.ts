@@ -292,17 +292,17 @@ const generate = async (
       }
     }
 
-    result[resourceType] ??= [];
-    result[resourceType].push(schema);
-
     // Output for debug
     // TODO maybe make optional?
     if (true) {
       await writeFile(
         path.resolve(outputDir, `${resourceType}_${profileId}.json`),
-        JSON.stringify(result[resourceType], null, 2),
+        JSON.stringify(schema, null, 2),
       );
     }
+
+    result[resourceType] ??= [];
+    result[resourceType].push(schema);
   }
 
   console.log({ counts });
