@@ -344,7 +344,7 @@ export const cc = concept;
 // Helper function to enure that the text key
 // is set on a concept (defaulted from the first coding)
 export const ensureConceptText = concept => {
-  if (!concept.text && concept.coding?.length) {
+  if (!concept.text && concept.coding?.length && concept.coding[0].display) {
     concept.text = concept.coding[0].display;
   }
 };
