@@ -31,6 +31,11 @@ export type Medication_SzMedication_Props = {
 export default function(props: Partial<Medication_SzMedication_Props>) {
     const resource = {
         resourceType: "Medication",
+
+        meta: {
+            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzMedication"]
+        },
+
         ...props
     };
 
@@ -75,10 +80,5 @@ export default function(props: Partial<Medication_SzMedication_Props>) {
         resource.batch = _batch;
     }
 
-    resource.meta = {
-      profile: [
-        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
-      ],
-    };
     return resource;
 }

@@ -47,6 +47,11 @@ export type Observation_SzCauseOfDeath_Props = {
 export default function(props: Partial<Observation_SzCauseOfDeath_Props>) {
     const resource = {
         resourceType: "Observation",
+
+        meta: {
+            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzCauseOfDeath"]
+        },
+
         ...props
     };
 
@@ -167,10 +172,5 @@ export default function(props: Partial<Observation_SzCauseOfDeath_Props>) {
         }
     }
 
-    resource.meta = {
-      profile: [
-        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
-      ],
-    };
     return resource;
 }

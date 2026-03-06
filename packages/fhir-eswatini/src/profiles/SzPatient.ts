@@ -43,6 +43,11 @@ export type Patient_SzPatient_Props = {
 export default function(props: Partial<Patient_SzPatient_Props>) {
     const resource = {
         resourceType: "Patient",
+
+        meta: {
+            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzPatient"]
+        },
+
         ...props
     };
 
@@ -209,10 +214,5 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
         }
     }
 
-    resource.meta = {
-      profile: [
-        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
-      ],
-    };
     return resource;
 }

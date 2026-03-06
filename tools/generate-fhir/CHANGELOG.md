@@ -1,5 +1,11 @@
 # @openfn/generate-fhir
 
+## 0.7.3
+
+### Patch Changes
+
+- Properly generate profile urls automatically
+
 ## 0.7.2
 
 ### Patch Changes

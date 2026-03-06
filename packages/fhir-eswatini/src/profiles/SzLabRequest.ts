@@ -56,6 +56,11 @@ export type ServiceRequest_SzLabRequest_Props = {
 export default function(props: Partial<ServiceRequest_SzLabRequest_Props>) {
     const resource = {
         resourceType: "ServiceRequest",
+
+        meta: {
+            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzLabRequest"]
+        },
+
         ...props
     };
 
@@ -182,10 +187,5 @@ export default function(props: Partial<ServiceRequest_SzLabRequest_Props>) {
         resource.relevantHistory = dt.reference(props.relevantHistory);
     }
 
-    resource.meta = {
-      profile: [
-        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
-      ],
-    };
     return resource;
 }

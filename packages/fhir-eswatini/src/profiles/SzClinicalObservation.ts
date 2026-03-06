@@ -47,6 +47,13 @@ export type Observation_SzClinicalObservation_Props = {
 export default function(props: Partial<Observation_SzClinicalObservation_Props>) {
     const resource = {
         resourceType: "Observation",
+
+        meta: {
+            profile: [
+                "http://172.209.216.154:3447/fhir/StructureDefinition/SzClinicalObservation"
+            ]
+        },
+
         ...props
     };
 
@@ -165,10 +172,5 @@ export default function(props: Partial<Observation_SzClinicalObservation_Props>)
         }
     }
 
-    resource.meta = {
-      profile: [
-        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
-      ],
-    };
     return resource;
 }

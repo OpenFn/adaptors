@@ -428,7 +428,7 @@ ${generateJsDocs(profiles, propsToIgnoreInDocs, valueSets)}
 const generateBuilder = (schema, mappings, initialiser: (r: any) => void) => {
   const body: StatementKind[] = [];
 
-  body.push(initResource(schema.type));
+  body.push(initResource(schema.type, schema.url));
 
   body.push(...mapProps(schema, mappings));
 
@@ -973,16 +973,33 @@ const mapIdentifier = (name: string, _mapping: Mapping, schema: Schema) => {
   return ifPropInInput(name, statements);
 };
 
-const initResource = (resourceType: string) => {
+const initResource = (resourceType: string, profileUrl?: string) => {
   const rt = b.objectProperty(
     b.identifier('resourceType'),
     b.stringLiteral(resourceType),
   );
 
+  // setup meta.profile
+  const pr =
+    profileUrl &&
+    b.objectProperty(
+      b.identifier('meta'),
+      b.objectExpression([
+        b.objectProperty(
+          b.identifier('profile'),
+          b.arrayExpression([b.stringLiteral(profileUrl)]),
+        ),
+      ]),
+    );
+
   return b.variableDeclaration('const', [
     b.variableDeclarator(
       b.identifier(RESOURCE_NAME),
-      b.objectExpression([rt, b.spreadProperty(b.identifier(INPUT_NAME))]),
+      b.objectExpression([
+        rt,
+        pr ?? null,
+        b.spreadProperty(b.identifier(INPUT_NAME)),
+      ]),
     ),
   ]);
 };

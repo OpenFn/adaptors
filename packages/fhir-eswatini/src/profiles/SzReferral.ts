@@ -57,6 +57,11 @@ export type ServiceRequest_SzReferral_Props = {
 export default function(props: Partial<ServiceRequest_SzReferral_Props>) {
     const resource = {
         resourceType: "ServiceRequest",
+
+        meta: {
+            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzReferral"]
+        },
+
         ...props
     };
 
@@ -187,10 +192,5 @@ export default function(props: Partial<ServiceRequest_SzReferral_Props>) {
         resource.relevantHistory = dt.reference(props.relevantHistory);
     }
 
-    resource.meta = {
-      profile: [
-        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
-      ],
-    };
     return resource;
 }

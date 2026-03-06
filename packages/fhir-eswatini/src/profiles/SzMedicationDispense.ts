@@ -47,6 +47,13 @@ export type MedicationDispense_SzMedicationDispense_Props = {
 export default function(props: Partial<MedicationDispense_SzMedicationDispense_Props>) {
     const resource = {
         resourceType: "MedicationDispense",
+
+        meta: {
+            profile: [
+                "http://172.209.216.154:3447/fhir/StructureDefinition/SzMedicationDispense"
+            ]
+        },
+
         ...props
     };
 
@@ -143,10 +150,5 @@ export default function(props: Partial<MedicationDispense_SzMedicationDispense_P
         resource.eventHistory = dt.reference(props.eventHistory);
     }
 
-    resource.meta = {
-      profile: [
-        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
-      ],
-    };
     return resource;
 }
