@@ -75,15 +75,25 @@ export default function(props: Partial<Procedure_SzProcedure_Props>) {
     }
 
     if (!_.isNil(props.statusReason)) {
-        resource.statusReason = dt.concept(props.statusReason);
+        resource.statusReason = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/procedure-not-performed-reason",
+            props.statusReason
+        ));
+
+        dt.ensureConceptText(resource.statusReason);
     }
 
     if (!_.isNil(props.category)) {
-        resource.category = dt.concept(props.category);
+        resource.category = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-category", props.category)
+        );
+
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(props.code);
+        resource.code = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-code", props.code));
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.subject)) {
@@ -127,7 +137,12 @@ export default function(props: Partial<Procedure_SzProcedure_Props>) {
 
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
-        resource.reasonCode = dt.concept(props.reasonCode);
+
+        resource.reasonCode = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-reason", props.reasonCode)
+        );
+
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {
@@ -137,11 +152,16 @@ export default function(props: Partial<Procedure_SzProcedure_Props>) {
 
     if (!_.isNil(props.bodySite)) {
         if (!Array.isArray(props.bodySite)) { props.bodySite = [props.bodySite]; }
-        resource.bodySite = dt.concept(props.bodySite);
+        resource.bodySite = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site", props.bodySite));
+        dt.ensureConceptText(resource.bodySite);
     }
 
     if (!_.isNil(props.outcome)) {
-        resource.outcome = dt.concept(props.outcome);
+        resource.outcome = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-outcome", props.outcome)
+        );
+
+        dt.ensureConceptText(resource.outcome);
     }
 
     if (!_.isNil(props.report)) {
@@ -151,7 +171,12 @@ export default function(props: Partial<Procedure_SzProcedure_Props>) {
 
     if (!_.isNil(props.complication)) {
         if (!Array.isArray(props.complication)) { props.complication = [props.complication]; }
-        resource.complication = dt.concept(props.complication);
+
+        resource.complication = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-code", props.complication)
+        );
+
+        dt.ensureConceptText(resource.complication);
     }
 
     if (!_.isNil(props.complicationDetail)) {
@@ -161,7 +186,12 @@ export default function(props: Partial<Procedure_SzProcedure_Props>) {
 
     if (!_.isNil(props.followUp)) {
         if (!Array.isArray(props.followUp)) { props.followUp = [props.followUp]; }
-        resource.followUp = dt.concept(props.followUp);
+
+        resource.followUp = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-followup", props.followUp)
+        );
+
+        dt.ensureConceptText(resource.followUp);
     }
 
     if (!_.isNil(props.focalDevice)) {
@@ -185,7 +215,8 @@ export default function(props: Partial<Procedure_SzProcedure_Props>) {
 
     if (!_.isNil(props.usedCode)) {
         if (!Array.isArray(props.usedCode)) { props.usedCode = [props.usedCode]; }
-        resource.usedCode = dt.concept(props.usedCode);
+        resource.usedCode = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/device-kind", props.usedCode));
+        dt.ensureConceptText(resource.usedCode);
     }
 
     return resource;

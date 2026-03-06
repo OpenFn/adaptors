@@ -54,29 +54,50 @@ export default function(props: Partial<Condition_SzCondition_Props>) {
     }
 
     if (!_.isNil(props.clinicalStatus)) {
-        resource.clinicalStatus = dt.concept(props.clinicalStatus);
+        resource.clinicalStatus = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/condition-clinical|4.0.1",
+            props.clinicalStatus
+        ));
+
+        dt.ensureConceptText(resource.clinicalStatus);
     }
 
     if (!_.isNil(props.verificationStatus)) {
-        resource.verificationStatus = dt.concept(props.verificationStatus);
+        resource.verificationStatus = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/condition-ver-status|4.0.1",
+            props.verificationStatus
+        ));
+
+        dt.ensureConceptText(resource.verificationStatus);
     }
 
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
-        resource.category = dt.concept(props.category);
+
+        resource.category = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-category", props.category)
+        );
+
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.severity)) {
-        resource.severity = dt.concept(props.severity);
+        resource.severity = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-severity", props.severity)
+        );
+
+        dt.ensureConceptText(resource.severity);
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(props.code);
+        resource.code = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-code", props.code));
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.bodySite)) {
         if (!Array.isArray(props.bodySite)) { props.bodySite = [props.bodySite]; }
-        resource.bodySite = dt.concept(props.bodySite);
+        resource.bodySite = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site", props.bodySite));
+        dt.ensureConceptText(resource.bodySite);
     }
 
     if (!_.isNil(props.subject)) {

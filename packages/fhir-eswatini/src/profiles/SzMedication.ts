@@ -45,7 +45,11 @@ export default function(props: Partial<Medication_SzMedication_Props>) {
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(props.code);
+        resource.code = dt.concept(
+            dt.lookupValue("http://172.209.216.154:3447/fhir/ValueSet/SzProductCodeVS", props.code)
+        );
+
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.manufacturer)) {
@@ -53,7 +57,11 @@ export default function(props: Partial<Medication_SzMedication_Props>) {
     }
 
     if (!_.isNil(props.form)) {
-        resource.form = dt.concept(props.form);
+        resource.form = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/medication-form-codes", props.form)
+        );
+
+        dt.ensureConceptText(resource.form);
     }
 
     if (!_.isNil(props.ingredient)) {

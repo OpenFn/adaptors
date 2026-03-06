@@ -76,7 +76,12 @@ export default function(props: Partial<Practitioner_SzPractitioner_Props>) {
 
     if (!_.isNil(props.communication)) {
         if (!Array.isArray(props.communication)) { props.communication = [props.communication]; }
-        resource.communication = dt.concept(props.communication);
+
+        resource.communication = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/languages", props.communication)
+        );
+
+        dt.ensureConceptText(resource.communication);
     }
 
     return resource;
