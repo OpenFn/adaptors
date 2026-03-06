@@ -1,5 +1,11 @@
 # @openfn/language-mssql
 
+## 7.0.4 - 06 March 2026
+
+### Patch Changes
+
+- 81c1bfa: Add missiong titles in configuration-schema
+
 ## 7.0.3 - 04 March 2026
 
 ### Patch Changes
