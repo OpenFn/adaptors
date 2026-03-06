@@ -56,11 +56,6 @@ export type ServiceRequest_Props = {
 export default function(props: Partial<ServiceRequest_Props>) {
     const resource = {
         resourceType: "ServiceRequest",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/ServiceRequest"]
-        },
-
         ...props
     };
 

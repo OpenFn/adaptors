@@ -37,11 +37,6 @@ export type VerificationResult_Props = {
 export default function(props: Partial<VerificationResult_Props>) {
     const resource = {
         resourceType: "VerificationResult",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/VerificationResult"]
-        },
-
         ...props
     };
 

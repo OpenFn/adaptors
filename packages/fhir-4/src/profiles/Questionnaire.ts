@@ -45,11 +45,6 @@ export type Questionnaire_Props = {
 export default function(props: Partial<Questionnaire_Props>) {
     const resource = {
         resourceType: "Questionnaire",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Questionnaire"]
-        },
-
         ...props
     };
 

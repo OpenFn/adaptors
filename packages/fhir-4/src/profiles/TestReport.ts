@@ -35,11 +35,6 @@ export type TestReport_Props = {
 export default function(props: Partial<TestReport_Props>) {
     const resource = {
         resourceType: "TestReport",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/TestReport"]
-        },
-
         ...props
     };
 

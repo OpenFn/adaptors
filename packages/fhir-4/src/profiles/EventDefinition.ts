@@ -51,11 +51,6 @@ export type EventDefinition_Props = {
 export default function(props: Partial<EventDefinition_Props>) {
     const resource = {
         resourceType: "EventDefinition",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/EventDefinition"]
-        },
-
         ...props
     };
 

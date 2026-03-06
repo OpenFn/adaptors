@@ -49,11 +49,6 @@ export type ChargeItem_Props = {
 export default function(props: Partial<ChargeItem_Props>) {
     const resource = {
         resourceType: "ChargeItem",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/ChargeItem"]
-        },
-
         ...props
     };
 

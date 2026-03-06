@@ -64,11 +64,6 @@ export type Measure_Props = {
 export default function(props: Partial<Measure_Props>) {
     const resource = {
         resourceType: "Measure",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Measure"]
-        },
-
         ...props
     };
 

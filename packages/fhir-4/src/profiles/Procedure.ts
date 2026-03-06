@@ -51,11 +51,6 @@ export type Procedure_Props = {
 export default function(props: Partial<Procedure_Props>) {
     const resource = {
         resourceType: "Procedure",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Procedure"]
-        },
-
         ...props
     };
 

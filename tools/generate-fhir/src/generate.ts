@@ -339,6 +339,7 @@ async function handleCode(context: GenContext) {
     fhirTypes,
     base: options.base,
     valueSets,
+    generateMeta: mappings.generateMeta,
   });
 
   const srcPath = path.resolve(adaptorPath, 'src/builders.ts');

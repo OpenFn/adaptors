@@ -43,11 +43,6 @@ export type ClinicalImpression_Props = {
 export default function(props: Partial<ClinicalImpression_Props>) {
     const resource = {
         resourceType: "ClinicalImpression",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/ClinicalImpression"]
-        },
-
         ...props
     };
 

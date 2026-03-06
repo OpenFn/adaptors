@@ -56,11 +56,6 @@ export type Contract_Props = {
 export default function(props: Partial<Contract_Props>) {
     const resource = {
         resourceType: "Contract",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Contract"]
-        },
-
         ...props
     };
 

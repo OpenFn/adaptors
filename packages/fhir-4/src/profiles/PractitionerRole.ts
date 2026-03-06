@@ -37,11 +37,6 @@ export type PractitionerRole_Props = {
 export default function(props: Partial<PractitionerRole_Props>) {
     const resource = {
         resourceType: "PractitionerRole",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/PractitionerRole"]
-        },
-
         ...props
     };
 

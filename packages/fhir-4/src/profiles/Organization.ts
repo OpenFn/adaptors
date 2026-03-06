@@ -33,11 +33,6 @@ export type Organization_Props = {
 export default function(props: Partial<Organization_Props>) {
     const resource = {
         resourceType: "Organization",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Organization"]
-        },
-
         ...props
     };
 

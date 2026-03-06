@@ -38,11 +38,6 @@ export type SupplyRequest_Props = {
 export default function(props: Partial<SupplyRequest_Props>) {
     const resource = {
         resourceType: "SupplyRequest",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/SupplyRequest"]
-        },
-
         ...props
     };
 

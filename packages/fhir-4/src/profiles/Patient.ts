@@ -39,11 +39,6 @@ export type Patient_Props = {
 export default function(props: Partial<Patient_Props>) {
     const resource = {
         resourceType: "Patient",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Patient"]
-        },
-
         ...props
     };
 

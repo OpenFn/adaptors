@@ -50,11 +50,6 @@ export type Claim_Props = {
 export default function(props: Partial<Claim_Props>) {
     const resource = {
         resourceType: "Claim",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Claim"]
-        },
-
         ...props
     };
 

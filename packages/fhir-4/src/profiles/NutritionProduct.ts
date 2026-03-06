@@ -33,11 +33,6 @@ export type NutritionProduct_Props = {
 export default function(props: Partial<NutritionProduct_Props>) {
     const resource = {
         resourceType: "NutritionProduct",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/NutritionProduct"]
-        },
-
         ...props
     };
 

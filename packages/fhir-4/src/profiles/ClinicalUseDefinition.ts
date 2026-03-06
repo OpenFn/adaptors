@@ -34,11 +34,6 @@ export type ClinicalUseDefinition_Props = {
 export default function(props: Partial<ClinicalUseDefinition_Props>) {
     const resource = {
         resourceType: "ClinicalUseDefinition",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/ClinicalUseDefinition"]
-        },
-
         ...props
     };
 

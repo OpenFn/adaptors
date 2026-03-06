@@ -31,11 +31,6 @@ export type BodyStructure_Props = {
 export default function(props: Partial<BodyStructure_Props>) {
     const resource = {
         resourceType: "BodyStructure",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/BodyStructure"]
-        },
-
         ...props
     };
 

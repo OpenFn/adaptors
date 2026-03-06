@@ -69,11 +69,6 @@ export type ActivityDefinition_Props = {
 export default function(props: Partial<ActivityDefinition_Props>) {
     const resource = {
         resourceType: "ActivityDefinition",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/ActivityDefinition"]
-        },
-
         ...props
     };
 

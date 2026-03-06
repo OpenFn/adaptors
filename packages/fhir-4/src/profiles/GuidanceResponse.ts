@@ -38,11 +38,6 @@ export type GuidanceResponse_Props = {
 export default function(props: Partial<GuidanceResponse_Props>) {
     const resource = {
         resourceType: "GuidanceResponse",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/GuidanceResponse"]
-        },
-
         ...props
     };
 

@@ -30,11 +30,6 @@ export type Substance_Props = {
 export default function(props: Partial<Substance_Props>) {
     const resource = {
         resourceType: "Substance",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Substance"]
-        },
-
         ...props
     };
 

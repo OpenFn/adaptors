@@ -36,11 +36,6 @@ export type Specimen_Props = {
 export default function(props: Partial<Specimen_Props>) {
     const resource = {
         resourceType: "Specimen",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Specimen"]
-        },
-
         ...props
     };
 

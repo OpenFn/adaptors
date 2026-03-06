@@ -34,11 +34,6 @@ export type BiologicallyDerivedProduct_Props = {
 export default function(props: Partial<BiologicallyDerivedProduct_Props>) {
     const resource = {
         resourceType: "BiologicallyDerivedProduct",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/BiologicallyDerivedProduct"]
-        },
-
         ...props
     };
 

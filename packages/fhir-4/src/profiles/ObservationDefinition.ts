@@ -36,11 +36,6 @@ export type ObservationDefinition_Props = {
 export default function(props: Partial<ObservationDefinition_Props>) {
     const resource = {
         resourceType: "ObservationDefinition",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/ObservationDefinition"]
-        },
-
         ...props
     };
 

@@ -46,11 +46,6 @@ export type CarePlan_Props = {
 export default function(props: Partial<CarePlan_Props>) {
     const resource = {
         resourceType: "CarePlan",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/CarePlan"]
-        },
-
         ...props
     };
 

@@ -38,11 +38,6 @@ export type PaymentReconciliation_Props = {
 export default function(props: Partial<PaymentReconciliation_Props>) {
     const resource = {
         resourceType: "PaymentReconciliation",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/PaymentReconciliation"]
-        },
-
         ...props
     };
 

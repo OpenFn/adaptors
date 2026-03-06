@@ -34,11 +34,6 @@ export type SupplyDelivery_Props = {
 export default function(props: Partial<SupplyDelivery_Props>) {
     const resource = {
         resourceType: "SupplyDelivery",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/SupplyDelivery"]
-        },
-
         ...props
     };
 

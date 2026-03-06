@@ -54,11 +54,6 @@ export type Task_Props = {
 export default function(props: Partial<Task_Props>) {
     const resource = {
         resourceType: "Task",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Task"]
-        },
-
         ...props
     };
 

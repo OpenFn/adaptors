@@ -31,11 +31,6 @@ export type VisionPrescription_Props = {
 export default function(props: Partial<VisionPrescription_Props>) {
     const resource = {
         resourceType: "VisionPrescription",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/VisionPrescription"]
-        },
-
         ...props
     };
 

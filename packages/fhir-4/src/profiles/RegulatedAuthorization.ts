@@ -37,11 +37,6 @@ export type RegulatedAuthorization_Props = {
 export default function(props: Partial<RegulatedAuthorization_Props>) {
     const resource = {
         resourceType: "RegulatedAuthorization",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/RegulatedAuthorization"]
-        },
-
         ...props
     };
 

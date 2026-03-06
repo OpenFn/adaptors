@@ -40,11 +40,6 @@ export type Coverage_Props = {
 export default function(props: Partial<Coverage_Props>) {
     const resource = {
         resourceType: "Coverage",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Coverage"]
-        },
-
         ...props
     };
 

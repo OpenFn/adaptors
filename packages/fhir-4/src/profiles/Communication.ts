@@ -46,11 +46,6 @@ export type Communication_Props = {
 export default function(props: Partial<Communication_Props>) {
     const resource = {
         resourceType: "Communication",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Communication"]
-        },
-
         ...props
     };
 

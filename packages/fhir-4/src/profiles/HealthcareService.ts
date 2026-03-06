@@ -47,11 +47,6 @@ export type HealthcareService_Props = {
 export default function(props: Partial<HealthcareService_Props>) {
     const resource = {
         resourceType: "HealthcareService",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/HealthcareService"]
-        },
-
         ...props
     };
 

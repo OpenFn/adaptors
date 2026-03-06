@@ -35,11 +35,6 @@ export type RelatedPerson_Props = {
 export default function(props: Partial<RelatedPerson_Props>) {
     const resource = {
         resourceType: "RelatedPerson",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/RelatedPerson"]
-        },
-
         ...props
     };
 

@@ -46,11 +46,6 @@ export type Encounter_Props = {
 export default function(props: Partial<Encounter_Props>) {
     const resource = {
         resourceType: "Encounter",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Encounter"]
-        },
-
         ...props
     };
 

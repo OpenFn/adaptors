@@ -47,11 +47,6 @@ export type DeviceRequest_Props = {
 export default function(props: Partial<DeviceRequest_Props>) {
     const resource = {
         resourceType: "DeviceRequest",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/DeviceRequest"]
-        },
-
         ...props
     };
 

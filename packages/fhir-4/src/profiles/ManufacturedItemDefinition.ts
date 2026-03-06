@@ -30,11 +30,6 @@ export type ManufacturedItemDefinition_Props = {
 export default function(props: Partial<ManufacturedItemDefinition_Props>) {
     const resource = {
         resourceType: "ManufacturedItemDefinition",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/ManufacturedItemDefinition"]
-        },
-
         ...props
     };
 

@@ -35,11 +35,6 @@ export type PaymentNotice_Props = {
 export default function(props: Partial<PaymentNotice_Props>) {
     const resource = {
         resourceType: "PaymentNotice",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/PaymentNotice"]
-        },
-
         ...props
     };
 

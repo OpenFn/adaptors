@@ -45,11 +45,6 @@ export type Media_Props = {
 export default function(props: Partial<Media_Props>) {
     const resource = {
         resourceType: "Media",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Media"]
-        },
-
         ...props
     };
 

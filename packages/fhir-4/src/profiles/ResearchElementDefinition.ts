@@ -56,11 +56,6 @@ export type ResearchElementDefinition_Props = {
 export default function(props: Partial<ResearchElementDefinition_Props>) {
     const resource = {
         resourceType: "ResearchElementDefinition",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/ResearchElementDefinition"]
-        },
-
         ...props
     };
 

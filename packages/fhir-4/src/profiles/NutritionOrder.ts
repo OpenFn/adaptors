@@ -40,11 +40,6 @@ export type NutritionOrder_Props = {
 export default function(props: Partial<NutritionOrder_Props>) {
     const resource = {
         resourceType: "NutritionOrder",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/NutritionOrder"]
-        },
-
         ...props
     };
 

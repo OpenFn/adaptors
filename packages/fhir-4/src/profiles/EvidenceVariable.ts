@@ -47,11 +47,6 @@ export type EvidenceVariable_Props = {
 export default function(props: Partial<EvidenceVariable_Props>) {
     const resource = {
         resourceType: "EvidenceVariable",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/EvidenceVariable"]
-        },
-
         ...props
     };
 

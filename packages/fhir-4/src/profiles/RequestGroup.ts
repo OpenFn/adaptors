@@ -41,11 +41,6 @@ export type RequestGroup_Props = {
 export default function(props: Partial<RequestGroup_Props>) {
     const resource = {
         resourceType: "RequestGroup",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/RequestGroup"]
-        },
-
         ...props
     };
 

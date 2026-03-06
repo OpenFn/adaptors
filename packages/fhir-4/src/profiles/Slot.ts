@@ -34,11 +34,6 @@ export type Slot_Props = {
 export default function(props: Partial<Slot_Props>) {
     const resource = {
         resourceType: "Slot",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Slot"]
-        },
-
         ...props
     };
 

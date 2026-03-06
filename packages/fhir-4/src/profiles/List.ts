@@ -36,11 +36,6 @@ export type List_Props = {
 export default function(props: Partial<List_Props>) {
     const resource = {
         resourceType: "List",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/List"]
-        },
-
         ...props
     };
 

@@ -39,11 +39,6 @@ export type AllergyIntolerance_Props = {
 export default function(props: Partial<AllergyIntolerance_Props>) {
     const resource = {
         resourceType: "AllergyIntolerance",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/AllergyIntolerance"]
-        },
-
         ...props
     };
 

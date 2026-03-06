@@ -27,6 +27,9 @@ type Options = {
 
   /** valuesets schemas */
   valueSets?: any;
+
+  // generate metadata including profile urls
+  generateMeta?: boolean;
 };
 
 const getDataTypeBuilderName = (schema: Schema): string | false => {
@@ -105,6 +108,7 @@ const generateCode = (
         fhirImportPath,
         options.valueSets,
         options.base,
+        options.generateMeta,
       );
     }
 
@@ -144,6 +148,7 @@ const generateProfile = (
   fhirImport = '../fhir',
   valueSets: ValueSets = {},
   base?: string,
+  generateMeta?: boolean,
 ) => {
   const statements = [];
 
@@ -212,8 +217,12 @@ const generateProfile = (
   );
 
   statements.push(typedef);
-
-  const fn = generateBuilder(profile, overrides, mappings.initialiser);
+  const fn = generateBuilder(
+    profile,
+    overrides,
+    mappings.initialiser,
+    generateMeta,
+  );
 
   statements.push(b.exportDefaultDeclaration(fn));
 
@@ -425,10 +434,15 @@ ${generateJsDocs(profiles, propsToIgnoreInDocs, valueSets)}
   return declarations;
 };
 
-const generateBuilder = (schema, mappings, initialiser: (r: any) => void) => {
+const generateBuilder = (
+  schema,
+  mappings,
+  initialiser: (r: any) => void,
+  generateMeta: boolean,
+) => {
   const body: StatementKind[] = [];
 
-  body.push(initResource(schema.type, schema.url));
+  body.push(initResource(schema.type, generateMeta && schema.url));
 
   body.push(...mapProps(schema, mappings));
 
@@ -1024,11 +1038,9 @@ const initResource = (resourceType: string, profileUrl?: string) => {
   return b.variableDeclaration('const', [
     b.variableDeclarator(
       b.identifier(RESOURCE_NAME),
-      b.objectExpression([
-        rt,
-        pr ?? null,
-        b.spreadProperty(b.identifier(INPUT_NAME)),
-      ]),
+      b.objectExpression(
+        [rt, pr, b.spreadProperty(b.identifier(INPUT_NAME))].filter(s => s),
+      ),
     ),
   ]);
 };

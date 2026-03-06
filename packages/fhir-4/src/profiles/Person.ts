@@ -33,11 +33,6 @@ export type Person_Props = {
 export default function(props: Partial<Person_Props>) {
     const resource = {
         resourceType: "Person",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Person"]
-        },
-
         ...props
     };
 

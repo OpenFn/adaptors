@@ -35,11 +35,6 @@ export type EpisodeOfCare_Props = {
 export default function(props: Partial<EpisodeOfCare_Props>) {
     const resource = {
         resourceType: "EpisodeOfCare",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"]
-        },
-
         ...props
     };
 

@@ -41,11 +41,6 @@ export type DiagnosticReport_Props = {
 export default function(props: Partial<DiagnosticReport_Props>) {
     const resource = {
         resourceType: "DiagnosticReport",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/DiagnosticReport"]
-        },
-
         ...props
     };
 

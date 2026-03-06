@@ -39,11 +39,6 @@ export type Invoice_Props = {
 export default function(props: Partial<Invoice_Props>) {
     const resource = {
         resourceType: "Invoice",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Invoice"]
-        },
-
         ...props
     };
 

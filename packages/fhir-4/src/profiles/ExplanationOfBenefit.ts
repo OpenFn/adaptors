@@ -66,11 +66,6 @@ export type ExplanationOfBenefit_Props = {
 export default function(props: Partial<ExplanationOfBenefit_Props>) {
     const resource = {
         resourceType: "ExplanationOfBenefit",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/ExplanationOfBenefit"]
-        },
-
         ...props
     };
 

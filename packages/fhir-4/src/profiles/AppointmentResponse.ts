@@ -31,11 +31,6 @@ export type AppointmentResponse_Props = {
 export default function(props: Partial<AppointmentResponse_Props>) {
     const resource = {
         resourceType: "AppointmentResponse",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/AppointmentResponse"]
-        },
-
         ...props
     };
 

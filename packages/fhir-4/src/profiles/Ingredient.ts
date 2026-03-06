@@ -31,11 +31,6 @@ export type Ingredient_Props = {
 export default function(props: Partial<Ingredient_Props>) {
     const resource = {
         resourceType: "Ingredient",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Ingredient"]
-        },
-
         ...props
     };
 

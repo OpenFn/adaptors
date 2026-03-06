@@ -47,11 +47,6 @@ export type ResearchStudy_Props = {
 export default function(props: Partial<ResearchStudy_Props>) {
     const resource = {
         resourceType: "ResearchStudy",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/ResearchStudy"]
-        },
-
         ...props
     };
 

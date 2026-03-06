@@ -48,11 +48,6 @@ export type Evidence_Props = {
 export default function(props: Partial<Evidence_Props>) {
     const resource = {
         resourceType: "Evidence",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Evidence"]
-        },
-
         ...props
     };
 

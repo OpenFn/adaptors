@@ -33,11 +33,6 @@ export type Group_Props = {
 export default function(props: Partial<Group_Props>) {
     const resource = {
         resourceType: "Group",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Group"]
-        },
-
         ...props
     };
 

@@ -40,11 +40,6 @@ export type Location_Props = {
 export default function(props: Partial<Location_Props>) {
     const resource = {
         resourceType: "Location",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Location"]
-        },
-
         ...props
     };
 

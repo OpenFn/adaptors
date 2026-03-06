@@ -33,11 +33,6 @@ export type DeviceMetric_Props = {
 export default function(props: Partial<DeviceMetric_Props>) {
     const resource = {
         resourceType: "DeviceMetric",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/DeviceMetric"]
-        },
-
         ...props
     };
 

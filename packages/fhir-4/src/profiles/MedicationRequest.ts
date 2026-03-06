@@ -55,11 +55,6 @@ export type MedicationRequest_Props = {
 export default function(props: Partial<MedicationRequest_Props>) {
     const resource = {
         resourceType: "MedicationRequest",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/MedicationRequest"]
-        },
-
         ...props
     };
 

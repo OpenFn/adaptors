@@ -39,11 +39,6 @@ export type Goal_Props = {
 export default function(props: Partial<Goal_Props>) {
     const resource = {
         resourceType: "Goal",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Goal"]
-        },
-
         ...props
     };
 

@@ -43,11 +43,6 @@ export type AdverseEvent_Props = {
 export default function(props: Partial<AdverseEvent_Props>) {
     const resource = {
         resourceType: "AdverseEvent",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/AdverseEvent"]
-        },
-
         ...props
     };
 

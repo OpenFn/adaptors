@@ -40,11 +40,6 @@ export type RiskAssessment_Props = {
 export default function(props: Partial<RiskAssessment_Props>) {
     const resource = {
         resourceType: "RiskAssessment",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/RiskAssessment"]
-        },
-
         ...props
     };
 

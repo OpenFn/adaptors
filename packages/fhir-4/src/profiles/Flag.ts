@@ -31,11 +31,6 @@ export type Flag_Props = {
 export default function(props: Partial<Flag_Props>) {
     const resource = {
         resourceType: "Flag",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Flag"]
-        },
-
         ...props
     };
 

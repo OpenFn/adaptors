@@ -54,11 +54,6 @@ export type PlanDefinition_Props = {
 export default function(props: Partial<PlanDefinition_Props>) {
     const resource = {
         resourceType: "PlanDefinition",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/PlanDefinition"]
-        },
-
         ...props
     };
 

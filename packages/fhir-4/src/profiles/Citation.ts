@@ -52,11 +52,6 @@ export type Citation_Props = {
 export default function(props: Partial<Citation_Props>) {
     const resource = {
         resourceType: "Citation",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Citation"]
-        },
-
         ...props
     };
 

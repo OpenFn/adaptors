@@ -43,11 +43,6 @@ export type ImagingStudy_Props = {
 export default function(props: Partial<ImagingStudy_Props>) {
     const resource = {
         resourceType: "ImagingStudy",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/ImagingStudy"]
-        },
-
         ...props
     };
 

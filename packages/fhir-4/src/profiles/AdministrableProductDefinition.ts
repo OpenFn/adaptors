@@ -33,11 +33,6 @@ export type AdministrableProductDefinition_Props = {
 export default function(props: Partial<AdministrableProductDefinition_Props>) {
     const resource = {
         resourceType: "AdministrableProductDefinition",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/AdministrableProductDefinition"]
-        },
-
         ...props
     };
 

@@ -37,11 +37,6 @@ export type PackagedProductDefinition_Props = {
 export default function(props: Partial<PackagedProductDefinition_Props>) {
     const resource = {
         resourceType: "PackagedProductDefinition",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/PackagedProductDefinition"]
-        },
-
         ...props
     };
 

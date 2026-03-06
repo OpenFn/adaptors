@@ -35,11 +35,6 @@ export type DetectedIssue_Props = {
 export default function(props: Partial<DetectedIssue_Props>) {
     const resource = {
         resourceType: "DetectedIssue",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/DetectedIssue"]
-        },
-
         ...props
     };
 

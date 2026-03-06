@@ -31,11 +31,6 @@ export type Schedule_Props = {
 export default function(props: Partial<Schedule_Props>) {
     const resource = {
         resourceType: "Schedule",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Schedule"]
-        },
-
         ...props
     };
 

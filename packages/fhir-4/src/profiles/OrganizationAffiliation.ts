@@ -35,11 +35,6 @@ export type OrganizationAffiliation_Props = {
 export default function(props: Partial<OrganizationAffiliation_Props>) {
     const resource = {
         resourceType: "OrganizationAffiliation",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/OrganizationAffiliation"]
-        },
-
         ...props
     };
 

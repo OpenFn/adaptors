@@ -34,11 +34,6 @@ export type Account_Props = {
 export default function(props: Partial<Account_Props>) {
     const resource = {
         resourceType: "Account",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Account"]
-        },
-
         ...props
     };
 

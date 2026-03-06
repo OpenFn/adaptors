@@ -54,11 +54,6 @@ export type Library_Props = {
 export default function(props: Partial<Library_Props>) {
     const resource = {
         resourceType: "Library",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/Library"]
-        },
-
         ...props
     };
 

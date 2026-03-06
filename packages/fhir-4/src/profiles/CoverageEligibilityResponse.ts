@@ -38,11 +38,6 @@ export type CoverageEligibilityResponse_Props = {
 export default function(props: Partial<CoverageEligibilityResponse_Props>) {
     const resource = {
         resourceType: "CoverageEligibilityResponse",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/CoverageEligibilityResponse"]
-        },
-
         ...props
     };
 

@@ -36,11 +36,6 @@ export type DeviceUseStatement_Props = {
 export default function(props: Partial<DeviceUseStatement_Props>) {
     const resource = {
         resourceType: "DeviceUseStatement",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/DeviceUseStatement"]
-        },
-
         ...props
     };
 

@@ -41,11 +41,6 @@ export type FamilyMemberHistory_Props = {
 export default function(props: Partial<FamilyMemberHistory_Props>) {
     const resource = {
         resourceType: "FamilyMemberHistory",
-
-        meta: {
-            profile: ["http://hl7.org/fhir/StructureDefinition/FamilyMemberHistory"]
-        },
-
         ...props
     };
 
