@@ -34,6 +34,11 @@ export type MeasureReport_Props = {
 export default function(props: Partial<MeasureReport_Props>) {
     const resource = {
         resourceType: "MeasureReport",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/MeasureReport"]
+        },
+
         ...props
     };
 
@@ -51,7 +56,12 @@ export default function(props: Partial<MeasureReport_Props>) {
     }
 
     if (!_.isNil(props.improvementNotation)) {
-        resource.improvementNotation = dt.concept(props.improvementNotation);
+        resource.improvementNotation = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/measure-improvement-notation|4.3.0",
+            props.improvementNotation
+        ));
+
+        dt.ensureConceptText(resource.improvementNotation);
     }
 
     if (!_.isNil(props.group)) {

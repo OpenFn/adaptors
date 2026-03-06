@@ -36,16 +36,30 @@ export type ObservationDefinition_Props = {
 export default function(props: Partial<ObservationDefinition_Props>) {
     const resource = {
         resourceType: "ObservationDefinition",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/ObservationDefinition"]
+        },
+
         ...props
     };
 
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
-        resource.category = dt.concept(props.category);
+
+        resource.category = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/observation-category", props.category)
+        );
+
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(props.code);
+        resource.code = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/observation-codes", props.code)
+        );
+
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.identifier)) {
@@ -54,14 +68,18 @@ export default function(props: Partial<ObservationDefinition_Props>) {
     }
 
     if (!_.isNil(props.method)) {
-        resource.method = dt.concept(props.method);
+        resource.method = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/observation-methods", props.method)
+        );
+
+        dt.ensureConceptText(resource.method);
     }
 
     if (!_.isNil(props.quantitativeDetails)) {
         let src = props.quantitativeDetails;
 
         let _quantitativeDetails = {
-            ...item
+            ...src
         };
 
         resource.quantitativeDetails = _quantitativeDetails;

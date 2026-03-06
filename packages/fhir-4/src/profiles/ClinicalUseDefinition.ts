@@ -34,6 +34,11 @@ export type ClinicalUseDefinition_Props = {
 export default function(props: Partial<ClinicalUseDefinition_Props>) {
     const resource = {
         resourceType: "ClinicalUseDefinition",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/ClinicalUseDefinition"]
+        },
+
         ...props
     };
 
@@ -44,7 +49,13 @@ export default function(props: Partial<ClinicalUseDefinition_Props>) {
 
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
-        resource.category = dt.concept(props.category);
+
+        resource.category = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/clinical-use-definition-category",
+            props.category
+        ));
+
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.subject)) {
@@ -53,14 +64,18 @@ export default function(props: Partial<ClinicalUseDefinition_Props>) {
     }
 
     if (!_.isNil(props.status)) {
-        resource.status = dt.concept(props.status);
+        resource.status = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/publication-status", props.status)
+        );
+
+        dt.ensureConceptText(resource.status);
     }
 
     if (!_.isNil(props.contraindication)) {
         let src = props.contraindication;
 
         let _contraindication = {
-            ...item
+            ...src
         };
 
         resource.contraindication = _contraindication;
@@ -70,7 +85,7 @@ export default function(props: Partial<ClinicalUseDefinition_Props>) {
         let src = props.indication;
 
         let _indication = {
-            ...item
+            ...src
         };
 
         resource.indication = _indication;
@@ -80,7 +95,7 @@ export default function(props: Partial<ClinicalUseDefinition_Props>) {
         let src = props.interaction;
 
         let _interaction = {
-            ...item
+            ...src
         };
 
         resource.interaction = _interaction;
@@ -95,7 +110,7 @@ export default function(props: Partial<ClinicalUseDefinition_Props>) {
         let src = props.undesirableEffect;
 
         let _undesirableEffect = {
-            ...item
+            ...src
         };
 
         resource.undesirableEffect = _undesirableEffect;
@@ -105,7 +120,7 @@ export default function(props: Partial<ClinicalUseDefinition_Props>) {
         let src = props.warning;
 
         let _warning = {
-            ...item
+            ...src
         };
 
         resource.warning = _warning;

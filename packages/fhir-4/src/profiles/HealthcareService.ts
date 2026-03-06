@@ -47,6 +47,11 @@ export type HealthcareService_Props = {
 export default function(props: Partial<HealthcareService_Props>) {
     const resource = {
         resourceType: "HealthcareService",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/HealthcareService"]
+        },
+
         ...props
     };
 
@@ -61,17 +66,28 @@ export default function(props: Partial<HealthcareService_Props>) {
 
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
-        resource.category = dt.concept(props.category);
+
+        resource.category = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/service-category", props.category)
+        );
+
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.type)) {
         if (!Array.isArray(props.type)) { props.type = [props.type]; }
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/service-type", props.type));
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.specialty)) {
         if (!Array.isArray(props.specialty)) { props.specialty = [props.specialty]; }
-        resource.specialty = dt.concept(props.specialty);
+
+        resource.specialty = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/c80-practice-codes", props.specialty)
+        );
+
+        dt.ensureConceptText(resource.specialty);
     }
 
     if (!_.isNil(props.location)) {
@@ -86,7 +102,13 @@ export default function(props: Partial<HealthcareService_Props>) {
 
     if (!_.isNil(props.serviceProvisionCode)) {
         if (!Array.isArray(props.serviceProvisionCode)) { props.serviceProvisionCode = [props.serviceProvisionCode]; }
-        resource.serviceProvisionCode = dt.concept(props.serviceProvisionCode);
+
+        resource.serviceProvisionCode = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/service-provision-conditions",
+            props.serviceProvisionCode
+        ));
+
+        dt.ensureConceptText(resource.serviceProvisionCode);
     }
 
     if (!_.isNil(props.eligibility)) {
@@ -105,22 +127,35 @@ export default function(props: Partial<HealthcareService_Props>) {
 
     if (!_.isNil(props.program)) {
         if (!Array.isArray(props.program)) { props.program = [props.program]; }
-        resource.program = dt.concept(props.program);
+        resource.program = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/program", props.program));
+        dt.ensureConceptText(resource.program);
     }
 
     if (!_.isNil(props.characteristic)) {
         if (!Array.isArray(props.characteristic)) { props.characteristic = [props.characteristic]; }
         resource.characteristic = dt.concept(props.characteristic);
+        dt.ensureConceptText(resource.characteristic);
     }
 
     if (!_.isNil(props.communication)) {
         if (!Array.isArray(props.communication)) { props.communication = [props.communication]; }
-        resource.communication = dt.concept(props.communication);
+
+        resource.communication = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/languages", props.communication)
+        );
+
+        dt.ensureConceptText(resource.communication);
     }
 
     if (!_.isNil(props.referralMethod)) {
         if (!Array.isArray(props.referralMethod)) { props.referralMethod = [props.referralMethod]; }
-        resource.referralMethod = dt.concept(props.referralMethod);
+
+        resource.referralMethod = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/service-referral-method",
+            props.referralMethod
+        ));
+
+        dt.ensureConceptText(resource.referralMethod);
     }
 
     if (!_.isNil(props.availableTime)) {

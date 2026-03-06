@@ -31,6 +31,11 @@ export type Ingredient_Props = {
 export default function(props: Partial<Ingredient_Props>) {
     const resource = {
         resourceType: "Ingredient",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/Ingredient"]
+        },
+
         ...props
     };
 
@@ -44,12 +49,18 @@ export default function(props: Partial<Ingredient_Props>) {
     }
 
     if (!_.isNil(props.role)) {
-        resource.role = dt.concept(props.role);
+        resource.role = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/ingredient-role", props.role));
+        dt.ensureConceptText(resource.role);
     }
 
     if (!_.isNil(props.function)) {
         if (!Array.isArray(props.function)) { props.function = [props.function]; }
-        resource.function = dt.concept(props.function);
+
+        resource.function = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/ingredient-function", props.function)
+        );
+
+        dt.ensureConceptText(resource.function);
     }
 
     if (!_.isNil(props.manufacturer)) {
@@ -70,7 +81,7 @@ export default function(props: Partial<Ingredient_Props>) {
         let src = props.substance;
 
         let _substance = {
-            ...item
+            ...src
         };
 
         resource.substance = _substance;

@@ -31,6 +31,11 @@ export type EnrollmentResponse_Props = {
 export default function(props: Partial<EnrollmentResponse_Props>) {
     const resource = {
         resourceType: "EnrollmentResponse",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/EnrollmentResponse"]
+        },
+
         ...props
     };
 

@@ -35,6 +35,11 @@ export type PaymentNotice_Props = {
 export default function(props: Partial<PaymentNotice_Props>) {
     const resource = {
         resourceType: "PaymentNotice",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/PaymentNotice"]
+        },
+
         ...props
     };
 
@@ -68,7 +73,11 @@ export default function(props: Partial<PaymentNotice_Props>) {
     }
 
     if (!_.isNil(props.paymentStatus)) {
-        resource.paymentStatus = dt.concept(props.paymentStatus);
+        resource.paymentStatus = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/payment-status", props.paymentStatus)
+        );
+
+        dt.ensureConceptText(resource.paymentStatus);
     }
 
     return resource;

@@ -34,6 +34,11 @@ export type SupplyDelivery_Props = {
 export default function(props: Partial<SupplyDelivery_Props>) {
     const resource = {
         resourceType: "SupplyDelivery",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/SupplyDelivery"]
+        },
+
         ...props
     };
 
@@ -57,14 +62,18 @@ export default function(props: Partial<SupplyDelivery_Props>) {
     }
 
     if (!_.isNil(props.type)) {
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/supplydelivery-type|4.3.0", props.type)
+        );
+
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.suppliedItem)) {
         let src = props.suppliedItem;
 
         let _suppliedItem = {
-            ...item
+            ...src
         };
 
         resource.suppliedItem = _suppliedItem;

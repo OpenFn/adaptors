@@ -36,6 +36,11 @@ export type CareTeam_Props = {
 export default function(props: Partial<CareTeam_Props>) {
     const resource = {
         resourceType: "CareTeam",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/CareTeam"]
+        },
+
         ...props
     };
 
@@ -46,7 +51,12 @@ export default function(props: Partial<CareTeam_Props>) {
 
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
-        resource.category = dt.concept(props.category);
+
+        resource.category = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/care-team-category", props.category)
+        );
+
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.subject)) {
@@ -73,7 +83,12 @@ export default function(props: Partial<CareTeam_Props>) {
 
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
-        resource.reasonCode = dt.concept(props.reasonCode);
+
+        resource.reasonCode = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/clinical-findings", props.reasonCode)
+        );
+
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {

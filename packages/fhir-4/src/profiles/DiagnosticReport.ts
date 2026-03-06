@@ -41,6 +41,11 @@ export type DiagnosticReport_Props = {
 export default function(props: Partial<DiagnosticReport_Props>) {
     const resource = {
         resourceType: "DiagnosticReport",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/DiagnosticReport"]
+        },
+
         ...props
     };
 
@@ -56,11 +61,17 @@ export default function(props: Partial<DiagnosticReport_Props>) {
 
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
-        resource.category = dt.concept(props.category);
+
+        resource.category = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/diagnostic-service-sections", props.category)
+        );
+
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(props.code);
+        resource.code = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/report-codes", props.code));
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.subject)) {
@@ -117,7 +128,12 @@ export default function(props: Partial<DiagnosticReport_Props>) {
 
     if (!_.isNil(props.conclusionCode)) {
         if (!Array.isArray(props.conclusionCode)) { props.conclusionCode = [props.conclusionCode]; }
-        resource.conclusionCode = dt.concept(props.conclusionCode);
+
+        resource.conclusionCode = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/clinical-findings", props.conclusionCode)
+        );
+
+        dt.ensureConceptText(resource.conclusionCode);
     }
 
     return resource;

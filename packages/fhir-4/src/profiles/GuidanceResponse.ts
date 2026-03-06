@@ -38,6 +38,11 @@ export type GuidanceResponse_Props = {
 export default function(props: Partial<GuidanceResponse_Props>) {
     const resource = {
         resourceType: "GuidanceResponse",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/GuidanceResponse"]
+        },
+
         ...props
     };
 
@@ -70,6 +75,7 @@ export default function(props: Partial<GuidanceResponse_Props>) {
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
         resource.reasonCode = dt.concept(props.reasonCode);
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {

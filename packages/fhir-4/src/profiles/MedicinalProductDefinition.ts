@@ -51,6 +51,11 @@ export type MedicinalProductDefinition_Props = {
 export default function(props: Partial<MedicinalProductDefinition_Props>) {
     const resource = {
         resourceType: "MedicinalProductDefinition",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/MedicinalProductDefinition"]
+        },
+
         ...props
     };
 
@@ -60,56 +65,112 @@ export default function(props: Partial<MedicinalProductDefinition_Props>) {
     }
 
     if (!_.isNil(props.type)) {
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/medicinal-product-type", props.type)
+        );
+
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.domain)) {
-        resource.domain = dt.concept(props.domain);
+        resource.domain = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/medicinal-product-domain", props.domain)
+        );
+
+        dt.ensureConceptText(resource.domain);
     }
 
     if (!_.isNil(props.status)) {
-        resource.status = dt.concept(props.status);
+        resource.status = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/publication-status", props.status)
+        );
+
+        dt.ensureConceptText(resource.status);
     }
 
     if (!_.isNil(props.combinedPharmaceuticalDoseForm)) {
-        resource.combinedPharmaceuticalDoseForm = dt.concept(props.combinedPharmaceuticalDoseForm);
+        resource.combinedPharmaceuticalDoseForm = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/combined-dose-form",
+            props.combinedPharmaceuticalDoseForm
+        ));
+
+        dt.ensureConceptText(resource.combinedPharmaceuticalDoseForm);
     }
 
     if (!_.isNil(props.route)) {
         if (!Array.isArray(props.route)) { props.route = [props.route]; }
-        resource.route = dt.concept(props.route);
+        resource.route = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/route-codes", props.route));
+        dt.ensureConceptText(resource.route);
     }
 
     if (!_.isNil(props.legalStatusOfSupply)) {
-        resource.legalStatusOfSupply = dt.concept(props.legalStatusOfSupply);
+        resource.legalStatusOfSupply = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/legal-status-of-supply",
+            props.legalStatusOfSupply
+        ));
+
+        dt.ensureConceptText(resource.legalStatusOfSupply);
     }
 
     if (!_.isNil(props.additionalMonitoringIndicator)) {
-        resource.additionalMonitoringIndicator = dt.concept(props.additionalMonitoringIndicator);
+        resource.additionalMonitoringIndicator = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/medicinal-product-additional-monitoring",
+            props.additionalMonitoringIndicator
+        ));
+
+        dt.ensureConceptText(resource.additionalMonitoringIndicator);
     }
 
     if (!_.isNil(props.specialMeasures)) {
         if (!Array.isArray(props.specialMeasures)) { props.specialMeasures = [props.specialMeasures]; }
-        resource.specialMeasures = dt.concept(props.specialMeasures);
+
+        resource.specialMeasures = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/medicinal-product-special-measures",
+            props.specialMeasures
+        ));
+
+        dt.ensureConceptText(resource.specialMeasures);
     }
 
     if (!_.isNil(props.pediatricUseIndicator)) {
-        resource.pediatricUseIndicator = dt.concept(props.pediatricUseIndicator);
+        resource.pediatricUseIndicator = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/medicinal-product-pediatric-use",
+            props.pediatricUseIndicator
+        ));
+
+        dt.ensureConceptText(resource.pediatricUseIndicator);
     }
 
     if (!_.isNil(props.classification)) {
         if (!Array.isArray(props.classification)) { props.classification = [props.classification]; }
-        resource.classification = dt.concept(props.classification);
+
+        resource.classification = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/product-classification-codes",
+            props.classification
+        ));
+
+        dt.ensureConceptText(resource.classification);
     }
 
     if (!_.isNil(props.packagedMedicinalProduct)) {
         if (!Array.isArray(props.packagedMedicinalProduct)) { props.packagedMedicinalProduct = [props.packagedMedicinalProduct]; }
-        resource.packagedMedicinalProduct = dt.concept(props.packagedMedicinalProduct);
+
+        resource.packagedMedicinalProduct = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/medicinal-product-package-type",
+            props.packagedMedicinalProduct
+        ));
+
+        dt.ensureConceptText(resource.packagedMedicinalProduct);
     }
 
     if (!_.isNil(props.ingredient)) {
         if (!Array.isArray(props.ingredient)) { props.ingredient = [props.ingredient]; }
-        resource.ingredient = dt.concept(props.ingredient);
+
+        resource.ingredient = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/substance-codes", props.ingredient)
+        );
+
+        dt.ensureConceptText(resource.ingredient);
     }
 
     if (!_.isNil(props.attachedDocument)) {

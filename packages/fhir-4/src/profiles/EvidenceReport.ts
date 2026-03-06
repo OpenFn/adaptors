@@ -41,6 +41,11 @@ export type EvidenceReport_Props = {
 export default function(props: Partial<EvidenceReport_Props>) {
     const resource = {
         resourceType: "EvidenceReport",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/EvidenceReport"]
+        },
+
         ...props
     };
 
@@ -60,14 +65,18 @@ export default function(props: Partial<EvidenceReport_Props>) {
     }
 
     if (!_.isNil(props.type)) {
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/evidence-report-type", props.type)
+        );
+
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.subject)) {
         let src = props.subject;
 
         let _subject = {
-            ...item
+            ...src
         };
 
         resource.subject = _subject;

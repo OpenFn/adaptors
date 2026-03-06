@@ -36,6 +36,11 @@ export type Specimen_Props = {
 export default function(props: Partial<Specimen_Props>) {
     const resource = {
         resourceType: "Specimen",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/Specimen"]
+        },
+
         ...props
     };
 
@@ -49,7 +54,8 @@ export default function(props: Partial<Specimen_Props>) {
     }
 
     if (!_.isNil(props.type)) {
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(dt.lookupValue("http://terminology.hl7.org/ValueSet/v2-0487", props.type));
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.subject)) {
@@ -70,7 +76,7 @@ export default function(props: Partial<Specimen_Props>) {
         let src = props.collection;
 
         let _collection = {
-            ...item
+            ...src
         };
 
         resource.collection = _collection;
@@ -106,7 +112,12 @@ export default function(props: Partial<Specimen_Props>) {
 
     if (!_.isNil(props.condition)) {
         if (!Array.isArray(props.condition)) { props.condition = [props.condition]; }
-        resource.condition = dt.concept(props.condition);
+
+        resource.condition = dt.concept(
+            dt.lookupValue("http://terminology.hl7.org/ValueSet/v2-0493", props.condition)
+        );
+
+        dt.ensureConceptText(resource.condition);
     }
 
     return resource;

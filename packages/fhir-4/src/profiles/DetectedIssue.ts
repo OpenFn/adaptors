@@ -35,6 +35,11 @@ export type DetectedIssue_Props = {
 export default function(props: Partial<DetectedIssue_Props>) {
     const resource = {
         resourceType: "DetectedIssue",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/DetectedIssue"]
+        },
+
         ...props
     };
 
@@ -44,7 +49,11 @@ export default function(props: Partial<DetectedIssue_Props>) {
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(props.code);
+        resource.code = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/detectedissue-category", props.code)
+        );
+
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.patient)) {

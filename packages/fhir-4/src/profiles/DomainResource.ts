@@ -23,6 +23,11 @@ export type DomainResource_Props = {
 export default function(props: Partial<DomainResource_Props>) {
     const resource = {
         resourceType: "DomainResource",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/DomainResource"]
+        },
+
         ...props
     };
 

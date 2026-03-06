@@ -38,6 +38,11 @@ export type CoverageEligibilityResponse_Props = {
 export default function(props: Partial<CoverageEligibilityResponse_Props>) {
     const resource = {
         resourceType: "CoverageEligibilityResponse",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/CoverageEligibilityResponse"]
+        },
+
         ...props
     };
 
@@ -82,7 +87,8 @@ export default function(props: Partial<CoverageEligibilityResponse_Props>) {
     }
 
     if (!_.isNil(props.form)) {
-        resource.form = dt.concept(props.form);
+        resource.form = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/forms", props.form));
+        dt.ensureConceptText(resource.form);
     }
 
     if (!_.isNil(props.error)) {

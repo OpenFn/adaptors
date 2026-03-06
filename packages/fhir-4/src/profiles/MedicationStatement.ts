@@ -40,6 +40,11 @@ export type MedicationStatement_Props = {
 export default function(props: Partial<MedicationStatement_Props>) {
     const resource = {
         resourceType: "MedicationStatement",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/MedicationStatement"]
+        },
+
         ...props
     };
 
@@ -60,11 +65,22 @@ export default function(props: Partial<MedicationStatement_Props>) {
 
     if (!_.isNil(props.statusReason)) {
         if (!Array.isArray(props.statusReason)) { props.statusReason = [props.statusReason]; }
-        resource.statusReason = dt.concept(props.statusReason);
+
+        resource.statusReason = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/reason-medication-status-codes",
+            props.statusReason
+        ));
+
+        dt.ensureConceptText(resource.statusReason);
     }
 
     if (!_.isNil(props.category)) {
-        resource.category = dt.concept(props.category);
+        resource.category = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/medication-statement-category",
+            props.category
+        ));
+
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.medication)) {
@@ -96,7 +112,12 @@ export default function(props: Partial<MedicationStatement_Props>) {
 
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
-        resource.reasonCode = dt.concept(props.reasonCode);
+
+        resource.reasonCode = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-code", props.reasonCode)
+        );
+
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {

@@ -33,16 +33,30 @@ export type NutritionProduct_Props = {
 export default function(props: Partial<NutritionProduct_Props>) {
     const resource = {
         resourceType: "NutritionProduct",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/NutritionProduct"]
+        },
+
         ...props
     };
 
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
-        resource.category = dt.concept(props.category);
+
+        resource.category = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/nutrition-product-category", props.category)
+        );
+
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(props.code);
+        resource.code = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/edible-substance-type", props.code)
+        );
+
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.manufacturer)) {
@@ -96,7 +110,7 @@ export default function(props: Partial<NutritionProduct_Props>) {
         let src = props.instance;
 
         let _instance = {
-            ...item
+            ...src
         };
 
         resource.instance = _instance;

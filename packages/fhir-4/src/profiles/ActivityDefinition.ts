@@ -69,6 +69,11 @@ export type ActivityDefinition_Props = {
 export default function(props: Partial<ActivityDefinition_Props>) {
     const resource = {
         resourceType: "ActivityDefinition",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/ActivityDefinition"]
+        },
+
         ...props
     };
 
@@ -84,16 +89,27 @@ export default function(props: Partial<ActivityDefinition_Props>) {
 
     if (!_.isNil(props.jurisdiction)) {
         if (!Array.isArray(props.jurisdiction)) { props.jurisdiction = [props.jurisdiction]; }
-        resource.jurisdiction = dt.concept(props.jurisdiction);
+
+        resource.jurisdiction = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/jurisdiction", props.jurisdiction)
+        );
+
+        dt.ensureConceptText(resource.jurisdiction);
     }
 
     if (!_.isNil(props.topic)) {
         if (!Array.isArray(props.topic)) { props.topic = [props.topic]; }
-        resource.topic = dt.concept(props.topic);
+
+        resource.topic = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/definition-topic", props.topic)
+        );
+
+        dt.ensureConceptText(resource.topic);
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(props.code);
+        resource.code = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-code", props.code));
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.timing)) {
@@ -126,7 +142,8 @@ export default function(props: Partial<ActivityDefinition_Props>) {
 
     if (!_.isNil(props.bodySite)) {
         if (!Array.isArray(props.bodySite)) { props.bodySite = [props.bodySite]; }
-        resource.bodySite = dt.concept(props.bodySite);
+        resource.bodySite = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site", props.bodySite));
+        dt.ensureConceptText(resource.bodySite);
     }
 
     if (!_.isNil(props.specimenRequirement)) {

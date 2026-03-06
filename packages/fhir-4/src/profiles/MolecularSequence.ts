@@ -39,6 +39,11 @@ export type MolecularSequence_Props = {
 export default function(props: Partial<MolecularSequence_Props>) {
     const resource = {
         resourceType: "MolecularSequence",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/MolecularSequence"]
+        },
+
         ...props
     };
 
@@ -67,7 +72,7 @@ export default function(props: Partial<MolecularSequence_Props>) {
         let src = props.referenceSeq;
 
         let _referenceSeq = {
-            ...item
+            ...src
         };
 
         resource.referenceSeq = _referenceSeq;

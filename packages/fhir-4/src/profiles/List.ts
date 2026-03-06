@@ -36,6 +36,11 @@ export type List_Props = {
 export default function(props: Partial<List_Props>) {
     const resource = {
         resourceType: "List",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/List"]
+        },
+
         ...props
     };
 
@@ -45,7 +50,11 @@ export default function(props: Partial<List_Props>) {
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(props.code);
+        resource.code = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/list-example-codes", props.code)
+        );
+
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.subject)) {
@@ -61,7 +70,8 @@ export default function(props: Partial<List_Props>) {
     }
 
     if (!_.isNil(props.orderedBy)) {
-        resource.orderedBy = dt.concept(props.orderedBy);
+        resource.orderedBy = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/list-order", props.orderedBy));
+        dt.ensureConceptText(resource.orderedBy);
     }
 
     if (!_.isNil(props.entry)) {
@@ -79,7 +89,11 @@ export default function(props: Partial<List_Props>) {
     }
 
     if (!_.isNil(props.emptyReason)) {
-        resource.emptyReason = dt.concept(props.emptyReason);
+        resource.emptyReason = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/list-empty-reason", props.emptyReason)
+        );
+
+        dt.ensureConceptText(resource.emptyReason);
     }
 
     return resource;

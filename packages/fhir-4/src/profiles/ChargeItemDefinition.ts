@@ -46,6 +46,11 @@ export type ChargeItemDefinition_Props = {
 export default function(props: Partial<ChargeItemDefinition_Props>) {
     const resource = {
         resourceType: "ChargeItemDefinition",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/ChargeItemDefinition"]
+        },
+
         ...props
     };
 
@@ -56,11 +61,20 @@ export default function(props: Partial<ChargeItemDefinition_Props>) {
 
     if (!_.isNil(props.jurisdiction)) {
         if (!Array.isArray(props.jurisdiction)) { props.jurisdiction = [props.jurisdiction]; }
-        resource.jurisdiction = dt.concept(props.jurisdiction);
+
+        resource.jurisdiction = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/jurisdiction", props.jurisdiction)
+        );
+
+        dt.ensureConceptText(resource.jurisdiction);
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(props.code);
+        resource.code = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/chargeitem-billingcodes", props.code)
+        );
+
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.instance)) {

@@ -37,6 +37,11 @@ export type CoverageEligibilityRequest_Props = {
 export default function(props: Partial<CoverageEligibilityRequest_Props>) {
     const resource = {
         resourceType: "CoverageEligibilityRequest",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/CoverageEligibilityRequest"]
+        },
+
         ...props
     };
 
@@ -46,7 +51,11 @@ export default function(props: Partial<CoverageEligibilityRequest_Props>) {
     }
 
     if (!_.isNil(props.priority)) {
-        resource.priority = dt.concept(props.priority);
+        resource.priority = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/process-priority", props.priority)
+        );
+
+        dt.ensureConceptText(resource.priority);
     }
 
     if (!_.isNil(props.patient)) {

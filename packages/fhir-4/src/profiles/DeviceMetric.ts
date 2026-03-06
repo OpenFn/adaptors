@@ -33,6 +33,11 @@ export type DeviceMetric_Props = {
 export default function(props: Partial<DeviceMetric_Props>) {
     const resource = {
         resourceType: "DeviceMetric",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/DeviceMetric"]
+        },
+
         ...props
     };
 
@@ -42,11 +47,19 @@ export default function(props: Partial<DeviceMetric_Props>) {
     }
 
     if (!_.isNil(props.type)) {
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/devicemetric-type", props.type)
+        );
+
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.unit)) {
-        resource.unit = dt.concept(props.unit);
+        resource.unit = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/devicemetric-type", props.unit)
+        );
+
+        dt.ensureConceptText(resource.unit);
     }
 
     if (!_.isNil(props.source)) {

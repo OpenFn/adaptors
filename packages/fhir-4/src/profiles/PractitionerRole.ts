@@ -37,6 +37,11 @@ export type PractitionerRole_Props = {
 export default function(props: Partial<PractitionerRole_Props>) {
     const resource = {
         resourceType: "PractitionerRole",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/PractitionerRole"]
+        },
+
         ...props
     };
 
@@ -55,12 +60,22 @@ export default function(props: Partial<PractitionerRole_Props>) {
 
     if (!_.isNil(props.code)) {
         if (!Array.isArray(props.code)) { props.code = [props.code]; }
-        resource.code = dt.concept(props.code);
+
+        resource.code = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/practitioner-role", props.code)
+        );
+
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.specialty)) {
         if (!Array.isArray(props.specialty)) { props.specialty = [props.specialty]; }
-        resource.specialty = dt.concept(props.specialty);
+
+        resource.specialty = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/c80-practice-codes", props.specialty)
+        );
+
+        dt.ensureConceptText(resource.specialty);
     }
 
     if (!_.isNil(props.location)) {

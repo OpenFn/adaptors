@@ -45,6 +45,11 @@ export type DeviceDefinition_Props = {
 export default function(props: Partial<DeviceDefinition_Props>) {
     const resource = {
         resourceType: "DeviceDefinition",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/DeviceDefinition"]
+        },
+
         ...props
     };
 
@@ -87,7 +92,8 @@ export default function(props: Partial<DeviceDefinition_Props>) {
     }
 
     if (!_.isNil(props.type)) {
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/device-kind", props.type));
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.specialization)) {
@@ -106,12 +112,14 @@ export default function(props: Partial<DeviceDefinition_Props>) {
 
     if (!_.isNil(props.safety)) {
         if (!Array.isArray(props.safety)) { props.safety = [props.safety]; }
-        resource.safety = dt.concept(props.safety);
+        resource.safety = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/device-safety", props.safety));
+        dt.ensureConceptText(resource.safety);
     }
 
     if (!_.isNil(props.languageCode)) {
         if (!Array.isArray(props.languageCode)) { props.languageCode = [props.languageCode]; }
         resource.languageCode = dt.concept(props.languageCode);
+        dt.ensureConceptText(resource.languageCode);
     }
 
     if (!_.isNil(props.capability)) {

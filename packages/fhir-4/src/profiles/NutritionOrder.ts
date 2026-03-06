@@ -40,6 +40,11 @@ export type NutritionOrder_Props = {
 export default function(props: Partial<NutritionOrder_Props>) {
     const resource = {
         resourceType: "NutritionOrder",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/NutritionOrder"]
+        },
+
         ...props
     };
 
@@ -67,19 +72,30 @@ export default function(props: Partial<NutritionOrder_Props>) {
 
     if (!_.isNil(props.foodPreferenceModifier)) {
         if (!Array.isArray(props.foodPreferenceModifier)) { props.foodPreferenceModifier = [props.foodPreferenceModifier]; }
-        resource.foodPreferenceModifier = dt.concept(props.foodPreferenceModifier);
+
+        resource.foodPreferenceModifier = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/encounter-diet",
+            props.foodPreferenceModifier
+        ));
+
+        dt.ensureConceptText(resource.foodPreferenceModifier);
     }
 
     if (!_.isNil(props.excludeFoodModifier)) {
         if (!Array.isArray(props.excludeFoodModifier)) { props.excludeFoodModifier = [props.excludeFoodModifier]; }
-        resource.excludeFoodModifier = dt.concept(props.excludeFoodModifier);
+
+        resource.excludeFoodModifier = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/food-type", props.excludeFoodModifier)
+        );
+
+        dt.ensureConceptText(resource.excludeFoodModifier);
     }
 
     if (!_.isNil(props.oralDiet)) {
         let src = props.oralDiet;
 
         let _oralDiet = {
-            ...item
+            ...src
         };
 
         resource.oralDiet = _oralDiet;
@@ -103,7 +119,7 @@ export default function(props: Partial<NutritionOrder_Props>) {
         let src = props.enteralFormula;
 
         let _enteralFormula = {
-            ...item
+            ...src
         };
 
         resource.enteralFormula = _enteralFormula;

@@ -33,6 +33,11 @@ export type Organization_Props = {
 export default function(props: Partial<Organization_Props>) {
     const resource = {
         resourceType: "Organization",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/Organization"]
+        },
+
         ...props
     };
 
@@ -43,7 +48,12 @@ export default function(props: Partial<Organization_Props>) {
 
     if (!_.isNil(props.type)) {
         if (!Array.isArray(props.type)) { props.type = [props.type]; }
-        resource.type = dt.concept(props.type);
+
+        resource.type = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/organization-type", props.type)
+        );
+
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.partOf)) {

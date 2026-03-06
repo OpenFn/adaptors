@@ -34,6 +34,11 @@ export type Account_Props = {
 export default function(props: Partial<Account_Props>) {
     const resource = {
         resourceType: "Account",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/Account"]
+        },
+
         ...props
     };
 
@@ -43,7 +48,8 @@ export default function(props: Partial<Account_Props>) {
     }
 
     if (!_.isNil(props.type)) {
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/account-type", props.type));
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.subject)) {

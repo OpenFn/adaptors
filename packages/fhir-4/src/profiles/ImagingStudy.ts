@@ -43,6 +43,11 @@ export type ImagingStudy_Props = {
 export default function(props: Partial<ImagingStudy_Props>) {
     const resource = {
         resourceType: "ImagingStudy",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/ImagingStudy"]
+        },
+
         ...props
     };
 
@@ -92,7 +97,12 @@ export default function(props: Partial<ImagingStudy_Props>) {
 
     if (!_.isNil(props.procedureCode)) {
         if (!Array.isArray(props.procedureCode)) { props.procedureCode = [props.procedureCode]; }
-        resource.procedureCode = dt.concept(props.procedureCode);
+
+        resource.procedureCode = dt.concept(
+            dt.lookupValue("http://www.rsna.org/RadLex_Playbook.aspx", props.procedureCode)
+        );
+
+        dt.ensureConceptText(resource.procedureCode);
     }
 
     if (!_.isNil(props.location)) {
@@ -101,7 +111,12 @@ export default function(props: Partial<ImagingStudy_Props>) {
 
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
-        resource.reasonCode = dt.concept(props.reasonCode);
+
+        resource.reasonCode = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-reason", props.reasonCode)
+        );
+
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {

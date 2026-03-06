@@ -45,6 +45,11 @@ export type Media_Props = {
 export default function(props: Partial<Media_Props>) {
     const resource = {
         resourceType: "Media",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/Media"]
+        },
+
         ...props
     };
 
@@ -64,15 +69,21 @@ export default function(props: Partial<Media_Props>) {
     }
 
     if (!_.isNil(props.type)) {
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/media-type", props.type));
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.modality)) {
-        resource.modality = dt.concept(props.modality);
+        resource.modality = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/media-modality", props.modality)
+        );
+
+        dt.ensureConceptText(resource.modality);
     }
 
     if (!_.isNil(props.view)) {
-        resource.view = dt.concept(props.view);
+        resource.view = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/media-view", props.view));
+        dt.ensureConceptText(resource.view);
     }
 
     if (!_.isNil(props.subject)) {
@@ -94,11 +105,17 @@ export default function(props: Partial<Media_Props>) {
 
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
-        resource.reasonCode = dt.concept(props.reasonCode);
+
+        resource.reasonCode = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-reason", props.reasonCode)
+        );
+
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.bodySite)) {
-        resource.bodySite = dt.concept(props.bodySite);
+        resource.bodySite = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site", props.bodySite));
+        dt.ensureConceptText(resource.bodySite);
     }
 
     if (!_.isNil(props.device)) {

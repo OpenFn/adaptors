@@ -33,6 +33,11 @@ export type AdministrableProductDefinition_Props = {
 export default function(props: Partial<AdministrableProductDefinition_Props>) {
     const resource = {
         resourceType: "AdministrableProductDefinition",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/AdministrableProductDefinition"]
+        },
+
         ...props
     };
 
@@ -47,11 +52,21 @@ export default function(props: Partial<AdministrableProductDefinition_Props>) {
     }
 
     if (!_.isNil(props.administrableDoseForm)) {
-        resource.administrableDoseForm = dt.concept(props.administrableDoseForm);
+        resource.administrableDoseForm = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/administrable-dose-form",
+            props.administrableDoseForm
+        ));
+
+        dt.ensureConceptText(resource.administrableDoseForm);
     }
 
     if (!_.isNil(props.unitOfPresentation)) {
-        resource.unitOfPresentation = dt.concept(props.unitOfPresentation);
+        resource.unitOfPresentation = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/unit-of-presentation",
+            props.unitOfPresentation
+        ));
+
+        dt.ensureConceptText(resource.unitOfPresentation);
     }
 
     if (!_.isNil(props.producedFrom)) {
@@ -61,7 +76,12 @@ export default function(props: Partial<AdministrableProductDefinition_Props>) {
 
     if (!_.isNil(props.ingredient)) {
         if (!Array.isArray(props.ingredient)) { props.ingredient = [props.ingredient]; }
-        resource.ingredient = dt.concept(props.ingredient);
+
+        resource.ingredient = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/substance-codes", props.ingredient)
+        );
+
+        dt.ensureConceptText(resource.ingredient);
     }
 
     if (!_.isNil(props.device)) {

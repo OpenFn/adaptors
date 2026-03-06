@@ -55,6 +55,11 @@ export type MedicationRequest_Props = {
 export default function(props: Partial<MedicationRequest_Props>) {
     const resource = {
         resourceType: "MedicationRequest",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/MedicationRequest"]
+        },
+
         ...props
     };
 
@@ -64,12 +69,22 @@ export default function(props: Partial<MedicationRequest_Props>) {
     }
 
     if (!_.isNil(props.statusReason)) {
-        resource.statusReason = dt.concept(props.statusReason);
+        resource.statusReason = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/medicationrequest-status-reason",
+            props.statusReason
+        ));
+
+        dt.ensureConceptText(resource.statusReason);
     }
 
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
-        resource.category = dt.concept(props.category);
+
+        resource.category = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/medicationrequest-category", props.category)
+        );
+
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.reported)) {
@@ -104,7 +119,11 @@ export default function(props: Partial<MedicationRequest_Props>) {
     }
 
     if (!_.isNil(props.performerType)) {
-        resource.performerType = dt.concept(props.performerType);
+        resource.performerType = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/performer-role", props.performerType)
+        );
+
+        dt.ensureConceptText(resource.performerType);
     }
 
     if (!_.isNil(props.recorder)) {
@@ -113,7 +132,12 @@ export default function(props: Partial<MedicationRequest_Props>) {
 
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
-        resource.reasonCode = dt.concept(props.reasonCode);
+
+        resource.reasonCode = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-code", props.reasonCode)
+        );
+
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {
@@ -131,7 +155,12 @@ export default function(props: Partial<MedicationRequest_Props>) {
     }
 
     if (!_.isNil(props.courseOfTherapyType)) {
-        resource.courseOfTherapyType = dt.concept(props.courseOfTherapyType);
+        resource.courseOfTherapyType = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/medicationrequest-course-of-therapy",
+            props.courseOfTherapyType
+        ));
+
+        dt.ensureConceptText(resource.courseOfTherapyType);
     }
 
     if (!_.isNil(props.insurance)) {
@@ -143,7 +172,7 @@ export default function(props: Partial<MedicationRequest_Props>) {
         let src = props.dispenseRequest;
 
         let _dispenseRequest = {
-            ...item
+            ...src
         };
 
         resource.dispenseRequest = _dispenseRequest;
@@ -153,7 +182,7 @@ export default function(props: Partial<MedicationRequest_Props>) {
         let src = props.substitution;
 
         let _substitution = {
-            ...item
+            ...src
         };
 
         resource.substitution = _substitution;

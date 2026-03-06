@@ -31,6 +31,11 @@ export type BodyStructure_Props = {
 export default function(props: Partial<BodyStructure_Props>) {
     const resource = {
         resourceType: "BodyStructure",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/BodyStructure"]
+        },
+
         ...props
     };
 
@@ -40,16 +45,27 @@ export default function(props: Partial<BodyStructure_Props>) {
     }
 
     if (!_.isNil(props.morphology)) {
-        resource.morphology = dt.concept(props.morphology);
+        resource.morphology = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/bodystructure-code", props.morphology)
+        );
+
+        dt.ensureConceptText(resource.morphology);
     }
 
     if (!_.isNil(props.location)) {
-        resource.location = dt.concept(props.location);
+        resource.location = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site", props.location));
+        dt.ensureConceptText(resource.location);
     }
 
     if (!_.isNil(props.locationQualifier)) {
         if (!Array.isArray(props.locationQualifier)) { props.locationQualifier = [props.locationQualifier]; }
-        resource.locationQualifier = dt.concept(props.locationQualifier);
+
+        resource.locationQualifier = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/bodystructure-relative-location",
+            props.locationQualifier
+        ));
+
+        dt.ensureConceptText(resource.locationQualifier);
     }
 
     if (!_.isNil(props.patient)) {

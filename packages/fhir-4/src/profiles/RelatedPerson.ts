@@ -35,6 +35,11 @@ export type RelatedPerson_Props = {
 export default function(props: Partial<RelatedPerson_Props>) {
     const resource = {
         resourceType: "RelatedPerson",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/RelatedPerson"]
+        },
+
         ...props
     };
 
@@ -49,7 +54,13 @@ export default function(props: Partial<RelatedPerson_Props>) {
 
     if (!_.isNil(props.relationship)) {
         if (!Array.isArray(props.relationship)) { props.relationship = [props.relationship]; }
-        resource.relationship = dt.concept(props.relationship);
+
+        resource.relationship = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/relatedperson-relationshiptype",
+            props.relationship
+        ));
+
+        dt.ensureConceptText(resource.relationship);
     }
 
     if (!_.isNil(props.communication)) {

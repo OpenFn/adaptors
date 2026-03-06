@@ -35,6 +35,11 @@ export type TestReport_Props = {
 export default function(props: Partial<TestReport_Props>) {
     const resource = {
         resourceType: "TestReport",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/TestReport"]
+        },
+
         ...props
     };
 
@@ -64,7 +69,7 @@ export default function(props: Partial<TestReport_Props>) {
         let src = props.setup;
 
         let _setup = {
-            ...item
+            ...src
         };
 
         resource.setup = _setup;
@@ -88,7 +93,7 @@ export default function(props: Partial<TestReport_Props>) {
         let src = props.teardown;
 
         let _teardown = {
-            ...item
+            ...src
         };
 
         resource.teardown = _teardown;

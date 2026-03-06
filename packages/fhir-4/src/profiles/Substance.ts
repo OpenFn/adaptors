@@ -30,6 +30,11 @@ export type Substance_Props = {
 export default function(props: Partial<Substance_Props>) {
     const resource = {
         resourceType: "Substance",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/Substance"]
+        },
+
         ...props
     };
 
@@ -40,11 +45,17 @@ export default function(props: Partial<Substance_Props>) {
 
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
-        resource.category = dt.concept(props.category);
+
+        resource.category = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/substance-category", props.category)
+        );
+
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(props.code);
+        resource.code = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/substance-code", props.code));
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.instance)) {

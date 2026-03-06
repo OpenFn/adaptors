@@ -41,6 +41,11 @@ export type RequestGroup_Props = {
 export default function(props: Partial<RequestGroup_Props>) {
     const resource = {
         resourceType: "RequestGroup",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/RequestGroup"]
+        },
+
         ...props
     };
 
@@ -65,6 +70,7 @@ export default function(props: Partial<RequestGroup_Props>) {
 
     if (!_.isNil(props.code)) {
         resource.code = dt.concept(props.code);
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.subject)) {
@@ -82,6 +88,7 @@ export default function(props: Partial<RequestGroup_Props>) {
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
         resource.reasonCode = dt.concept(props.reasonCode);
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {

@@ -50,6 +50,11 @@ export type Claim_Props = {
 export default function(props: Partial<Claim_Props>) {
     const resource = {
         resourceType: "Claim",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/Claim"]
+        },
+
         ...props
     };
 
@@ -59,11 +64,16 @@ export default function(props: Partial<Claim_Props>) {
     }
 
     if (!_.isNil(props.type)) {
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/claim-type", props.type));
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.subType)) {
-        resource.subType = dt.concept(props.subType);
+        resource.subType = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/claim-subtype", props.subType)
+        );
+
+        dt.ensureConceptText(resource.subType);
     }
 
     if (!_.isNil(props.patient)) {
@@ -83,11 +93,19 @@ export default function(props: Partial<Claim_Props>) {
     }
 
     if (!_.isNil(props.priority)) {
-        resource.priority = dt.concept(props.priority);
+        resource.priority = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/process-priority", props.priority)
+        );
+
+        dt.ensureConceptText(resource.priority);
     }
 
     if (!_.isNil(props.fundsReserve)) {
-        resource.fundsReserve = dt.concept(props.fundsReserve);
+        resource.fundsReserve = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/fundsreserve", props.fundsReserve)
+        );
+
+        dt.ensureConceptText(resource.fundsReserve);
     }
 
     if (!_.isNil(props.related)) {
@@ -116,7 +134,7 @@ export default function(props: Partial<Claim_Props>) {
         let src = props.payee;
 
         let _payee = {
-            ...item
+            ...src
         };
 
         resource.payee = _payee;
@@ -204,7 +222,7 @@ export default function(props: Partial<Claim_Props>) {
         let src = props.accident;
 
         let _accident = {
-            ...item
+            ...src
         };
 
         resource.accident = _accident;

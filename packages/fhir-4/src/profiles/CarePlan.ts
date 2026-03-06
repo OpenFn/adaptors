@@ -46,6 +46,11 @@ export type CarePlan_Props = {
 export default function(props: Partial<CarePlan_Props>) {
     const resource = {
         resourceType: "CarePlan",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/CarePlan"]
+        },
+
         ...props
     };
 
@@ -71,7 +76,12 @@ export default function(props: Partial<CarePlan_Props>) {
 
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
-        resource.category = dt.concept(props.category);
+
+        resource.category = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/care-plan-category", props.category)
+        );
+
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.subject)) {

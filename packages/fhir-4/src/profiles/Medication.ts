@@ -31,6 +31,11 @@ export type Medication_Props = {
 export default function(props: Partial<Medication_Props>) {
     const resource = {
         resourceType: "Medication",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/Medication"]
+        },
+
         ...props
     };
 
@@ -40,7 +45,11 @@ export default function(props: Partial<Medication_Props>) {
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(props.code);
+        resource.code = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/medication-codes", props.code)
+        );
+
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.manufacturer)) {
@@ -48,7 +57,11 @@ export default function(props: Partial<Medication_Props>) {
     }
 
     if (!_.isNil(props.form)) {
-        resource.form = dt.concept(props.form);
+        resource.form = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/medication-form-codes", props.form)
+        );
+
+        dt.ensureConceptText(resource.form);
     }
 
     if (!_.isNil(props.ingredient)) {
@@ -69,7 +82,7 @@ export default function(props: Partial<Medication_Props>) {
         let src = props.batch;
 
         let _batch = {
-            ...item
+            ...src
         };
 
         resource.batch = _batch;

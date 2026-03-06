@@ -37,6 +37,11 @@ export type PackagedProductDefinition_Props = {
 export default function(props: Partial<PackagedProductDefinition_Props>) {
     const resource = {
         resourceType: "PackagedProductDefinition",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/PackagedProductDefinition"]
+        },
+
         ...props
     };
 
@@ -46,7 +51,8 @@ export default function(props: Partial<PackagedProductDefinition_Props>) {
     }
 
     if (!_.isNil(props.type)) {
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/package-type", props.type));
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.packageFor)) {
@@ -55,7 +61,11 @@ export default function(props: Partial<PackagedProductDefinition_Props>) {
     }
 
     if (!_.isNil(props.status)) {
-        resource.status = dt.concept(props.status);
+        resource.status = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/publication-status", props.status)
+        );
+
+        dt.ensureConceptText(resource.status);
     }
 
     if (!_.isNil(props.legalStatusOfSupply)) {
@@ -74,7 +84,13 @@ export default function(props: Partial<PackagedProductDefinition_Props>) {
 
     if (!_.isNil(props.characteristic)) {
         if (!Array.isArray(props.characteristic)) { props.characteristic = [props.characteristic]; }
-        resource.characteristic = dt.concept(props.characteristic);
+
+        resource.characteristic = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/package-characteristic",
+            props.characteristic
+        ));
+
+        dt.ensureConceptText(resource.characteristic);
     }
 
     if (!_.isNil(props.manufacturer)) {
@@ -86,7 +102,7 @@ export default function(props: Partial<PackagedProductDefinition_Props>) {
         let src = props.package;
 
         let _package = {
-            ...item
+            ...src
         };
 
         resource.package = _package;

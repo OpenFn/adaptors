@@ -66,6 +66,11 @@ export type ExplanationOfBenefit_Props = {
 export default function(props: Partial<ExplanationOfBenefit_Props>) {
     const resource = {
         resourceType: "ExplanationOfBenefit",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/ExplanationOfBenefit"]
+        },
+
         ...props
     };
 
@@ -75,11 +80,16 @@ export default function(props: Partial<ExplanationOfBenefit_Props>) {
     }
 
     if (!_.isNil(props.type)) {
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/claim-type", props.type));
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.subType)) {
-        resource.subType = dt.concept(props.subType);
+        resource.subType = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/claim-subtype", props.subType)
+        );
+
+        dt.ensureConceptText(resource.subType);
     }
 
     if (!_.isNil(props.patient)) {
@@ -99,15 +109,27 @@ export default function(props: Partial<ExplanationOfBenefit_Props>) {
     }
 
     if (!_.isNil(props.priority)) {
-        resource.priority = dt.concept(props.priority);
+        resource.priority = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/process-priority", props.priority)
+        );
+
+        dt.ensureConceptText(resource.priority);
     }
 
     if (!_.isNil(props.fundsReserveRequested)) {
-        resource.fundsReserveRequested = dt.concept(props.fundsReserveRequested);
+        resource.fundsReserveRequested = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/fundsreserve", props.fundsReserveRequested)
+        );
+
+        dt.ensureConceptText(resource.fundsReserveRequested);
     }
 
     if (!_.isNil(props.fundsReserve)) {
-        resource.fundsReserve = dt.concept(props.fundsReserve);
+        resource.fundsReserve = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/fundsreserve", props.fundsReserve)
+        );
+
+        dt.ensureConceptText(resource.fundsReserve);
     }
 
     if (!_.isNil(props.related)) {
@@ -136,7 +158,7 @@ export default function(props: Partial<ExplanationOfBenefit_Props>) {
         let src = props.payee;
 
         let _payee = {
-            ...item
+            ...src
         };
 
         resource.payee = _payee;
@@ -232,7 +254,7 @@ export default function(props: Partial<ExplanationOfBenefit_Props>) {
         let src = props.accident;
 
         let _accident = {
-            ...item
+            ...src
         };
 
         resource.accident = _accident;
@@ -284,14 +306,15 @@ export default function(props: Partial<ExplanationOfBenefit_Props>) {
         let src = props.payment;
 
         let _payment = {
-            ...item
+            ...src
         };
 
         resource.payment = _payment;
     }
 
     if (!_.isNil(props.formCode)) {
-        resource.formCode = dt.concept(props.formCode);
+        resource.formCode = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/forms", props.formCode));
+        dt.ensureConceptText(resource.formCode);
     }
 
     if (!_.isNil(props.processNote)) {

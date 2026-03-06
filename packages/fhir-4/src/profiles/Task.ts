@@ -54,6 +54,11 @@ export type Task_Props = {
 export default function(props: Partial<Task_Props>) {
     const resource = {
         resourceType: "Task",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/Task"]
+        },
+
         ...props
     };
 
@@ -78,14 +83,17 @@ export default function(props: Partial<Task_Props>) {
 
     if (!_.isNil(props.statusReason)) {
         resource.statusReason = dt.concept(props.statusReason);
+        dt.ensureConceptText(resource.statusReason);
     }
 
     if (!_.isNil(props.businessStatus)) {
         resource.businessStatus = dt.concept(props.businessStatus);
+        dt.ensureConceptText(resource.businessStatus);
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(props.code);
+        resource.code = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/task-code", props.code));
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.focus)) {
@@ -106,7 +114,12 @@ export default function(props: Partial<Task_Props>) {
 
     if (!_.isNil(props.performerType)) {
         if (!Array.isArray(props.performerType)) { props.performerType = [props.performerType]; }
-        resource.performerType = dt.concept(props.performerType);
+
+        resource.performerType = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/performer-role", props.performerType)
+        );
+
+        dt.ensureConceptText(resource.performerType);
     }
 
     if (!_.isNil(props.owner)) {
@@ -119,6 +132,7 @@ export default function(props: Partial<Task_Props>) {
 
     if (!_.isNil(props.reasonCode)) {
         resource.reasonCode = dt.concept(props.reasonCode);
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {
@@ -139,7 +153,7 @@ export default function(props: Partial<Task_Props>) {
         let src = props.restriction;
 
         let _restriction = {
-            ...item
+            ...src
         };
 
         resource.restriction = _restriction;

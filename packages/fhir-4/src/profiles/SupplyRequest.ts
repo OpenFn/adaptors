@@ -38,6 +38,11 @@ export type SupplyRequest_Props = {
 export default function(props: Partial<SupplyRequest_Props>) {
     const resource = {
         resourceType: "SupplyRequest",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/SupplyRequest"]
+        },
+
         ...props
     };
 
@@ -47,7 +52,11 @@ export default function(props: Partial<SupplyRequest_Props>) {
     }
 
     if (!_.isNil(props.category)) {
-        resource.category = dt.concept(props.category);
+        resource.category = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/supplyrequest-kind", props.category)
+        );
+
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.item)) {
@@ -85,7 +94,12 @@ export default function(props: Partial<SupplyRequest_Props>) {
 
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
-        resource.reasonCode = dt.concept(props.reasonCode);
+
+        resource.reasonCode = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/supplyrequest-reason", props.reasonCode)
+        );
+
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {

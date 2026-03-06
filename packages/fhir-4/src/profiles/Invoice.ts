@@ -39,6 +39,11 @@ export type Invoice_Props = {
 export default function(props: Partial<Invoice_Props>) {
     const resource = {
         resourceType: "Invoice",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/Invoice"]
+        },
+
         ...props
     };
 
@@ -49,6 +54,7 @@ export default function(props: Partial<Invoice_Props>) {
 
     if (!_.isNil(props.type)) {
         resource.type = dt.concept(props.type);
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.subject)) {

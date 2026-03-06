@@ -56,6 +56,11 @@ export type ResearchElementDefinition_Props = {
 export default function(props: Partial<ResearchElementDefinition_Props>) {
     const resource = {
         resourceType: "ResearchElementDefinition",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/ResearchElementDefinition"]
+        },
+
         ...props
     };
 
@@ -71,12 +76,22 @@ export default function(props: Partial<ResearchElementDefinition_Props>) {
 
     if (!_.isNil(props.jurisdiction)) {
         if (!Array.isArray(props.jurisdiction)) { props.jurisdiction = [props.jurisdiction]; }
-        resource.jurisdiction = dt.concept(props.jurisdiction);
+
+        resource.jurisdiction = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/jurisdiction", props.jurisdiction)
+        );
+
+        dt.ensureConceptText(resource.jurisdiction);
     }
 
     if (!_.isNil(props.topic)) {
         if (!Array.isArray(props.topic)) { props.topic = [props.topic]; }
-        resource.topic = dt.concept(props.topic);
+
+        resource.topic = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/definition-topic", props.topic)
+        );
+
+        dt.ensureConceptText(resource.topic);
     }
 
     if (!_.isNil(props.characteristic)) {

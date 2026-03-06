@@ -38,6 +38,11 @@ export type PaymentReconciliation_Props = {
 export default function(props: Partial<PaymentReconciliation_Props>) {
     const resource = {
         resourceType: "PaymentReconciliation",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/PaymentReconciliation"]
+        },
+
         ...props
     };
 
@@ -77,7 +82,8 @@ export default function(props: Partial<PaymentReconciliation_Props>) {
     }
 
     if (!_.isNil(props.formCode)) {
-        resource.formCode = dt.concept(props.formCode);
+        resource.formCode = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/forms", props.formCode));
+        dt.ensureConceptText(resource.formCode);
     }
 
     if (!_.isNil(props.processNote)) {

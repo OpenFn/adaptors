@@ -28,6 +28,11 @@ export type ImmunizationRecommendation_Props = {
 export default function(props: Partial<ImmunizationRecommendation_Props>) {
     const resource = {
         resourceType: "ImmunizationRecommendation",
+
+        meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/ImmunizationRecommendation"]
+        },
+
         ...props
     };
 
