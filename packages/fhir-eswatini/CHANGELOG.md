@@ -1,5 +1,12 @@
 # @openfn/language-fhir-eswatini
 
+## 0.4.1 - 06 March 2026
+
+### Patch Changes
+
+- cb65bd0: Fix the profile url generated for all resource types
+- 4824307: Fix some valuemaps that were failing to fire (eg, LabResult.code)
+
 ## 0.4.0 - 02 March 2026
 
 ### Minor Changes
