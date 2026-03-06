@@ -1,5 +1,11 @@
 # @openfn/language-fhir-4
 
+## 0.3.1
+
+### Patch Changes
+
+- Fix profiles and link some more valuemaps
+
 ## 0.3.0 - 02 March 2026
 
 ### Minor Changes
