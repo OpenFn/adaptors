@@ -27,6 +27,9 @@ type Options = {
 
   /** valuesets schemas */
   valueSets?: any;
+
+  // generate metadata including profile urls
+  generateMeta?: boolean;
 };
 
 const getDataTypeBuilderName = (schema: Schema): string | false => {
@@ -105,6 +108,7 @@ const generateCode = (
         fhirImportPath,
         options.valueSets,
         options.base,
+        options.generateMeta,
       );
     }
 
@@ -144,6 +148,7 @@ const generateProfile = (
   fhirImport = '../fhir',
   valueSets: ValueSets = {},
   base?: string,
+  generateMeta?: boolean,
 ) => {
   const statements = [];
 
@@ -212,8 +217,12 @@ const generateProfile = (
   );
 
   statements.push(typedef);
-
-  const fn = generateBuilder(profile, overrides, mappings.initialiser);
+  const fn = generateBuilder(
+    profile,
+    overrides,
+    mappings.initialiser,
+    generateMeta,
+  );
 
   statements.push(b.exportDefaultDeclaration(fn));
 
@@ -425,10 +434,15 @@ ${generateJsDocs(profiles, propsToIgnoreInDocs, valueSets)}
   return declarations;
 };
 
-const generateBuilder = (schema, mappings, initialiser: (r: any) => void) => {
+const generateBuilder = (
+  schema,
+  mappings,
+  initialiser: (r: any) => void,
+  generateMeta: boolean,
+) => {
   const body: StatementKind[] = [];
 
-  body.push(initResource(schema.type));
+  body.push(initResource(schema.type, generateMeta && schema.url));
 
   body.push(...mapProps(schema, mappings));
 
@@ -746,12 +760,39 @@ const mapCodeableConcept = (
     statements.push(ast.program.body[0]);
   }
 
+  // the right hand side of the assignment
+  let rhs: any = b.memberExpression(
+    b.identifier(INPUT_NAME),
+    b.identifier(propName),
+  );
+
+  if (schema.valueSet) {
+    // If there's a value map involved, lookup the value before assignment
+    rhs = b.callExpression(
+      b.memberExpression(b.identifier('dt'), b.identifier('lookupValue')),
+      [b.stringLiteral(schema.valueSet), rhs],
+    );
+  }
+
   const callBuilder = b.callExpression(
     b.memberExpression(b.identifier('dt'), b.identifier('concept')),
-    [b.memberExpression(b.identifier(INPUT_NAME), b.identifier(propName))],
+    [rhs],
   );
 
   statements.push(assignToInput(propName, callBuilder));
+
+  // TODO maybe this is option driven?
+  statements.push(
+    b.expressionStatement(
+      b.callExpression(
+        b.memberExpression(
+          b.identifier('dt'),
+          b.identifier('ensureConceptText'),
+        ),
+        [b.memberExpression(b.identifier('resource'), b.identifier(propName))],
+      ),
+    ),
+  );
 
   let elseStmnt;
   const d = addDefaults(propName, mapping, schema);
@@ -904,6 +945,8 @@ const mapExtension = (propName: string, _mapping: Mapping, schema: Schema) => {
         ),
       ),
     );
+
+    // TODO maybe this is option driven?
     statements.push(
       b.expressionStatement(
         b.callExpression(
@@ -973,16 +1016,31 @@ const mapIdentifier = (name: string, _mapping: Mapping, schema: Schema) => {
   return ifPropInInput(name, statements);
 };
 
-const initResource = (resourceType: string) => {
+const initResource = (resourceType: string, profileUrl?: string) => {
   const rt = b.objectProperty(
     b.identifier('resourceType'),
     b.stringLiteral(resourceType),
   );
 
+  // setup meta.profile
+  const pr =
+    profileUrl &&
+    b.objectProperty(
+      b.identifier('meta'),
+      b.objectExpression([
+        b.objectProperty(
+          b.identifier('profile'),
+          b.arrayExpression([b.stringLiteral(profileUrl)]),
+        ),
+      ]),
+    );
+
   return b.variableDeclaration('const', [
     b.variableDeclarator(
       b.identifier(RESOURCE_NAME),
-      b.objectExpression([rt, b.spreadProperty(b.identifier(INPUT_NAME))]),
+      b.objectExpression(
+        [rt, pr, b.spreadProperty(b.identifier(INPUT_NAME))].filter(s => s),
+      ),
     ),
   ]);
 };

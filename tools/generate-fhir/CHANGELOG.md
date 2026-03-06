@@ -1,5 +1,12 @@
 # @openfn/generate-fhir
 
+## 0.7.3
+
+### Patch Changes
+
+- Properly generate profile urls automatically
+- Fix value mappings for top level codeable concepts
+
 ## 0.7.2
 
 ### Patch Changes

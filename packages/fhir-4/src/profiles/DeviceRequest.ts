@@ -106,7 +106,11 @@ export default function(props: Partial<DeviceRequest_Props>) {
     }
 
     if (!_.isNil(props.performerType)) {
-        resource.performerType = dt.concept(props.performerType);
+        resource.performerType = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/participant-role", props.performerType)
+        );
+
+        dt.ensureConceptText(resource.performerType);
     }
 
     if (!_.isNil(props.performer)) {
@@ -115,7 +119,12 @@ export default function(props: Partial<DeviceRequest_Props>) {
 
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
-        resource.reasonCode = dt.concept(props.reasonCode);
+
+        resource.reasonCode = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-code", props.reasonCode)
+        );
+
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {

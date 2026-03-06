@@ -50,7 +50,12 @@ export default function(props: Partial<FamilyMemberHistory_Props>) {
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
-        resource.dataAbsentReason = dt.concept(props.dataAbsentReason);
+        resource.dataAbsentReason = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/history-absent-reason",
+            props.dataAbsentReason
+        ));
+
+        dt.ensureConceptText(resource.dataAbsentReason);
     }
 
     if (!_.isNil(props.patient)) {
@@ -58,11 +63,19 @@ export default function(props: Partial<FamilyMemberHistory_Props>) {
     }
 
     if (!_.isNil(props.relationship)) {
-        resource.relationship = dt.concept(props.relationship);
+        resource.relationship = dt.concept(
+            dt.lookupValue("http://terminology.hl7.org/ValueSet/v3-FamilyMember", props.relationship)
+        );
+
+        dt.ensureConceptText(resource.relationship);
     }
 
     if (!_.isNil(props.sex)) {
-        resource.sex = dt.concept(props.sex);
+        resource.sex = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/administrative-gender", props.sex)
+        );
+
+        dt.ensureConceptText(resource.sex);
     }
 
     if (!_.isNil(props.born)) {
@@ -82,7 +95,12 @@ export default function(props: Partial<FamilyMemberHistory_Props>) {
 
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
-        resource.reasonCode = dt.concept(props.reasonCode);
+
+        resource.reasonCode = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/clinical-findings", props.reasonCode)
+        );
+
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {

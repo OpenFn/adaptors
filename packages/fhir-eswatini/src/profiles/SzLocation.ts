@@ -40,6 +40,11 @@ export type Location_SzLocation_Props = {
 export default function(props: Partial<Location_SzLocation_Props>) {
     const resource = {
         resourceType: "Location",
+
+        meta: {
+            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzLocation"]
+        },
+
         ...props
     };
 
@@ -58,11 +63,21 @@ export default function(props: Partial<Location_SzLocation_Props>) {
 
     if (!_.isNil(props.type)) {
         if (!Array.isArray(props.type)) { props.type = [props.type]; }
-        resource.type = dt.concept(props.type);
+
+        resource.type = dt.concept(dt.lookupValue(
+            "http://terminology.hl7.org/ValueSet/v3-ServiceDeliveryLocationRoleType",
+            props.type
+        ));
+
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.physicalType)) {
-        resource.physicalType = dt.concept(props.physicalType);
+        resource.physicalType = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/location-physical-type", props.physicalType)
+        );
+
+        dt.ensureConceptText(resource.physicalType);
     }
 
     if (!_.isNil(props.position)) {
@@ -102,10 +117,5 @@ export default function(props: Partial<Location_SzLocation_Props>) {
         resource.endpoint = dt.reference(props.endpoint);
     }
 
-    resource.meta = {
-      profile: [
-        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
-      ],
-    };
     return resource;
 }

@@ -63,7 +63,11 @@ export default function(props: Partial<ChargeItem_Props>) {
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(props.code);
+        resource.code = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/chargeitem-billingcodes", props.code)
+        );
+
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.subject)) {
@@ -107,7 +111,8 @@ export default function(props: Partial<ChargeItem_Props>) {
 
     if (!_.isNil(props.bodysite)) {
         if (!Array.isArray(props.bodysite)) { props.bodysite = [props.bodysite]; }
-        resource.bodysite = dt.concept(props.bodysite);
+        resource.bodysite = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site", props.bodysite));
+        dt.ensureConceptText(resource.bodysite);
     }
 
     if (!_.isNil(props.enterer)) {
@@ -116,7 +121,8 @@ export default function(props: Partial<ChargeItem_Props>) {
 
     if (!_.isNil(props.reason)) {
         if (!Array.isArray(props.reason)) { props.reason = [props.reason]; }
-        resource.reason = dt.concept(props.reason);
+        resource.reason = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/icd-10", props.reason));
+        dt.ensureConceptText(resource.reason);
     }
 
     if (!_.isNil(props.service)) {

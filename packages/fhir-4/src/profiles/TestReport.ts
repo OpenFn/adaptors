@@ -64,7 +64,7 @@ export default function(props: Partial<TestReport_Props>) {
         let src = props.setup;
 
         let _setup = {
-            ...item
+            ...src
         };
 
         resource.setup = _setup;
@@ -88,7 +88,7 @@ export default function(props: Partial<TestReport_Props>) {
         let src = props.teardown;
 
         let _teardown = {
-            ...item
+            ...src
         };
 
         resource.teardown = _teardown;

@@ -63,7 +63,11 @@ export default function(props: Partial<PlanDefinition_Props>) {
     }
 
     if (!_.isNil(props.type)) {
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/plan-definition-type", props.type)
+        );
+
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.subject)) {
@@ -73,12 +77,22 @@ export default function(props: Partial<PlanDefinition_Props>) {
 
     if (!_.isNil(props.jurisdiction)) {
         if (!Array.isArray(props.jurisdiction)) { props.jurisdiction = [props.jurisdiction]; }
-        resource.jurisdiction = dt.concept(props.jurisdiction);
+
+        resource.jurisdiction = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/jurisdiction", props.jurisdiction)
+        );
+
+        dt.ensureConceptText(resource.jurisdiction);
     }
 
     if (!_.isNil(props.topic)) {
         if (!Array.isArray(props.topic)) { props.topic = [props.topic]; }
-        resource.topic = dt.concept(props.topic);
+
+        resource.topic = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/definition-topic", props.topic)
+        );
+
+        dt.ensureConceptText(resource.topic);
     }
 
     if (!_.isNil(props.goal)) {

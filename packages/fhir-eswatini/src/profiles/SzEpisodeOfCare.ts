@@ -35,6 +35,11 @@ export type EpisodeOfCare_SzEpisodeOfCare_Props = {
 export default function(props: Partial<EpisodeOfCare_SzEpisodeOfCare_Props>) {
     const resource = {
         resourceType: "EpisodeOfCare",
+
+        meta: {
+            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzEpisodeOfCare"]
+        },
+
         ...props
     };
 
@@ -59,7 +64,13 @@ export default function(props: Partial<EpisodeOfCare_SzEpisodeOfCare_Props>) {
 
     if (!_.isNil(props.type)) {
         if (!Array.isArray(props.type)) { props.type = [props.type]; }
-        resource.type = dt.concept(props.type);
+
+        resource.type = dt.concept(dt.lookupValue(
+            "http://172.209.216.154:3447/fhir/ValueSet/SzEpisodeOfCareTypeVS",
+            props.type
+        ));
+
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.diagnosis)) {
@@ -103,10 +114,5 @@ export default function(props: Partial<EpisodeOfCare_SzEpisodeOfCare_Props>) {
         resource.account = dt.reference(props.account);
     }
 
-    resource.meta = {
-      profile: [
-        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
-      ],
-    };
     return resource;
 }

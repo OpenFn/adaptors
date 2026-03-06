@@ -49,6 +49,7 @@ export default function(props: Partial<Invoice_Props>) {
 
     if (!_.isNil(props.type)) {
         resource.type = dt.concept(props.type);
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.subject)) {

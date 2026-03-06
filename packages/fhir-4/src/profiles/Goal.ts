@@ -48,20 +48,37 @@ export default function(props: Partial<Goal_Props>) {
     }
 
     if (!_.isNil(props.achievementStatus)) {
-        resource.achievementStatus = dt.concept(props.achievementStatus);
+        resource.achievementStatus = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/goal-achievement", props.achievementStatus)
+        );
+
+        dt.ensureConceptText(resource.achievementStatus);
     }
 
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
-        resource.category = dt.concept(props.category);
+
+        resource.category = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/goal-category", props.category)
+        );
+
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.priority)) {
-        resource.priority = dt.concept(props.priority);
+        resource.priority = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/goal-priority", props.priority)
+        );
+
+        dt.ensureConceptText(resource.priority);
     }
 
     if (!_.isNil(props.description)) {
-        resource.description = dt.concept(props.description);
+        resource.description = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/clinical-findings", props.description)
+        );
+
+        dt.ensureConceptText(resource.description);
     }
 
     if (!_.isNil(props.subject)) {
@@ -98,7 +115,12 @@ export default function(props: Partial<Goal_Props>) {
 
     if (!_.isNil(props.outcomeCode)) {
         if (!Array.isArray(props.outcomeCode)) { props.outcomeCode = [props.outcomeCode]; }
-        resource.outcomeCode = dt.concept(props.outcomeCode);
+
+        resource.outcomeCode = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/clinical-findings", props.outcomeCode)
+        );
+
+        dt.ensureConceptText(resource.outcomeCode);
     }
 
     if (!_.isNil(props.outcomeReference)) {

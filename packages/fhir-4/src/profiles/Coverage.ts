@@ -49,7 +49,8 @@ export default function(props: Partial<Coverage_Props>) {
     }
 
     if (!_.isNil(props.type)) {
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/coverage-type", props.type));
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.policyHolder)) {
@@ -65,7 +66,11 @@ export default function(props: Partial<Coverage_Props>) {
     }
 
     if (!_.isNil(props.relationship)) {
-        resource.relationship = dt.concept(props.relationship);
+        resource.relationship = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/subscriber-relationship", props.relationship)
+        );
+
+        dt.ensureConceptText(resource.relationship);
     }
 
     if (!_.isNil(props.payor)) {

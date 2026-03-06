@@ -74,6 +74,7 @@ export default function(props: Partial<DeviceUseStatement_Props>) {
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
         resource.reasonCode = dt.concept(props.reasonCode);
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {
@@ -82,7 +83,8 @@ export default function(props: Partial<DeviceUseStatement_Props>) {
     }
 
     if (!_.isNil(props.bodySite)) {
-        resource.bodySite = dt.concept(props.bodySite);
+        resource.bodySite = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site", props.bodySite));
+        dt.ensureConceptText(resource.bodySite);
     }
 
     return resource;

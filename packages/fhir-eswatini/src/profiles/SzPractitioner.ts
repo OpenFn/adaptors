@@ -33,6 +33,11 @@ export type Practitioner_SzPractitioner_Props = {
 export default function(props: Partial<Practitioner_SzPractitioner_Props>) {
     const resource = {
         resourceType: "Practitioner",
+
+        meta: {
+            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzPractitioner"]
+        },
+
         ...props
     };
 
@@ -71,13 +76,13 @@ export default function(props: Partial<Practitioner_SzPractitioner_Props>) {
 
     if (!_.isNil(props.communication)) {
         if (!Array.isArray(props.communication)) { props.communication = [props.communication]; }
-        resource.communication = dt.concept(props.communication);
+
+        resource.communication = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/languages", props.communication)
+        );
+
+        dt.ensureConceptText(resource.communication);
     }
 
-    resource.meta = {
-      profile: [
-        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
-      ],
-    };
     return resource;
 }

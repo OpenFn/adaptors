@@ -76,11 +76,16 @@ export default function(props: Partial<Evidence_Props>) {
     }
 
     if (!_.isNil(props.synthesisType)) {
-        resource.synthesisType = dt.concept(props.synthesisType);
+        resource.synthesisType = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/synthesis-type", props.synthesisType)
+        );
+
+        dt.ensureConceptText(resource.synthesisType);
     }
 
     if (!_.isNil(props.studyType)) {
-        resource.studyType = dt.concept(props.studyType);
+        resource.studyType = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/study-type", props.studyType));
+        dt.ensureConceptText(resource.studyType);
     }
 
     if (!_.isNil(props.statistic)) {

@@ -60,11 +60,20 @@ export default function(props: Partial<Immunization_Props>) {
     }
 
     if (!_.isNil(props.statusReason)) {
-        resource.statusReason = dt.concept(props.statusReason);
+        resource.statusReason = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/immunization-status-reason",
+            props.statusReason
+        ));
+
+        dt.ensureConceptText(resource.statusReason);
     }
 
     if (!_.isNil(props.vaccineCode)) {
-        resource.vaccineCode = dt.concept(props.vaccineCode);
+        resource.vaccineCode = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/vaccine-code", props.vaccineCode)
+        );
+
+        dt.ensureConceptText(resource.vaccineCode);
     }
 
     if (!_.isNil(props.patient)) {
@@ -81,7 +90,11 @@ export default function(props: Partial<Immunization_Props>) {
     }
 
     if (!_.isNil(props.reportOrigin)) {
-        resource.reportOrigin = dt.concept(props.reportOrigin);
+        resource.reportOrigin = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/immunization-origin", props.reportOrigin)
+        );
+
+        dt.ensureConceptText(resource.reportOrigin);
     }
 
     if (!_.isNil(props.location)) {
@@ -93,11 +106,19 @@ export default function(props: Partial<Immunization_Props>) {
     }
 
     if (!_.isNil(props.site)) {
-        resource.site = dt.concept(props.site);
+        resource.site = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/immunization-site", props.site)
+        );
+
+        dt.ensureConceptText(resource.site);
     }
 
     if (!_.isNil(props.route)) {
-        resource.route = dt.concept(props.route);
+        resource.route = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/immunization-route", props.route)
+        );
+
+        dt.ensureConceptText(resource.route);
     }
 
     if (!_.isNil(props.performer)) {
@@ -116,7 +137,12 @@ export default function(props: Partial<Immunization_Props>) {
 
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
-        resource.reasonCode = dt.concept(props.reasonCode);
+
+        resource.reasonCode = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/immunization-reason", props.reasonCode)
+        );
+
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {
@@ -126,7 +152,13 @@ export default function(props: Partial<Immunization_Props>) {
 
     if (!_.isNil(props.subpotentReason)) {
         if (!Array.isArray(props.subpotentReason)) { props.subpotentReason = [props.subpotentReason]; }
-        resource.subpotentReason = dt.concept(props.subpotentReason);
+
+        resource.subpotentReason = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/immunization-subpotent-reason",
+            props.subpotentReason
+        ));
+
+        dt.ensureConceptText(resource.subpotentReason);
     }
 
     if (!_.isNil(props.education)) {
@@ -145,11 +177,22 @@ export default function(props: Partial<Immunization_Props>) {
 
     if (!_.isNil(props.programEligibility)) {
         if (!Array.isArray(props.programEligibility)) { props.programEligibility = [props.programEligibility]; }
-        resource.programEligibility = dt.concept(props.programEligibility);
+
+        resource.programEligibility = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/immunization-program-eligibility",
+            props.programEligibility
+        ));
+
+        dt.ensureConceptText(resource.programEligibility);
     }
 
     if (!_.isNil(props.fundingSource)) {
-        resource.fundingSource = dt.concept(props.fundingSource);
+        resource.fundingSource = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/immunization-funding-source",
+            props.fundingSource
+        ));
+
+        dt.ensureConceptText(resource.fundingSource);
     }
 
     if (!_.isNil(props.reaction)) {

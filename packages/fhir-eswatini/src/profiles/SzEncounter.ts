@@ -46,6 +46,11 @@ export type Encounter_SzEncounter_Props = {
 export default function(props: Partial<Encounter_SzEncounter_Props>) {
     const resource = {
         resourceType: "Encounter",
+
+        meta: {
+            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzEncounter"]
+        },
+
         ...props
     };
 
@@ -92,15 +97,24 @@ export default function(props: Partial<Encounter_SzEncounter_Props>) {
 
     if (!_.isNil(props.type)) {
         if (!Array.isArray(props.type)) { props.type = [props.type]; }
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/encounter-type", props.type));
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.serviceType)) {
-        resource.serviceType = dt.concept(props.serviceType);
+        resource.serviceType = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/service-type", props.serviceType)
+        );
+
+        dt.ensureConceptText(resource.serviceType);
     }
 
     if (!_.isNil(props.priority)) {
-        resource.priority = dt.concept(props.priority);
+        resource.priority = dt.concept(
+            dt.lookupValue("http://terminology.hl7.org/ValueSet/v3-ActPriority", props.priority)
+        );
+
+        dt.ensureConceptText(resource.priority);
     }
 
     if (!_.isNil(props.subject)) {
@@ -148,7 +162,12 @@ export default function(props: Partial<Encounter_SzEncounter_Props>) {
 
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
-        resource.reasonCode = dt.concept(props.reasonCode);
+
+        resource.reasonCode = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/encounter-reason", props.reasonCode)
+        );
+
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {
@@ -207,10 +226,5 @@ export default function(props: Partial<Encounter_SzEncounter_Props>) {
         resource.partOf = dt.reference(props.partOf);
     }
 
-    resource.meta = {
-      profile: [
-        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
-      ],
-    };
     return resource;
 }

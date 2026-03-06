@@ -58,10 +58,12 @@ export default function(props: Partial<RiskAssessment_Props>) {
 
     if (!_.isNil(props.method)) {
         resource.method = dt.concept(props.method);
+        dt.ensureConceptText(resource.method);
     }
 
     if (!_.isNil(props.code)) {
         resource.code = dt.concept(props.code);
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.subject)) {
@@ -88,6 +90,7 @@ export default function(props: Partial<RiskAssessment_Props>) {
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
         resource.reasonCode = dt.concept(props.reasonCode);
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {

@@ -70,17 +70,32 @@ export default function(props: Partial<Communication_Props>) {
     }
 
     if (!_.isNil(props.statusReason)) {
-        resource.statusReason = dt.concept(props.statusReason);
+        resource.statusReason = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/communication-not-done-reason",
+            props.statusReason
+        ));
+
+        dt.ensureConceptText(resource.statusReason);
     }
 
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
-        resource.category = dt.concept(props.category);
+
+        resource.category = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/communication-category", props.category)
+        );
+
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.medium)) {
         if (!Array.isArray(props.medium)) { props.medium = [props.medium]; }
-        resource.medium = dt.concept(props.medium);
+
+        resource.medium = dt.concept(
+            dt.lookupValue("http://terminology.hl7.org/ValueSet/v3-ParticipationMode", props.medium)
+        );
+
+        dt.ensureConceptText(resource.medium);
     }
 
     if (!_.isNil(props.subject)) {
@@ -88,7 +103,11 @@ export default function(props: Partial<Communication_Props>) {
     }
 
     if (!_.isNil(props.topic)) {
-        resource.topic = dt.concept(props.topic);
+        resource.topic = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/communication-topic", props.topic)
+        );
+
+        dt.ensureConceptText(resource.topic);
     }
 
     if (!_.isNil(props.about)) {
@@ -111,7 +130,12 @@ export default function(props: Partial<Communication_Props>) {
 
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
-        resource.reasonCode = dt.concept(props.reasonCode);
+
+        resource.reasonCode = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/clinical-findings", props.reasonCode)
+        );
+
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {

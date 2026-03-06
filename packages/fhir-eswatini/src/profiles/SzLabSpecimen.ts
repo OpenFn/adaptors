@@ -36,6 +36,11 @@ export type Specimen_SzLabSpecimen_Props = {
 export default function(props: Partial<Specimen_SzLabSpecimen_Props>) {
     const resource = {
         resourceType: "Specimen",
+
+        meta: {
+            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzLabSpecimen"]
+        },
+
         ...props
     };
 
@@ -49,7 +54,11 @@ export default function(props: Partial<Specimen_SzLabSpecimen_Props>) {
     }
 
     if (!_.isNil(props.type)) {
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(
+            dt.lookupValue("http://terminology.hl7.org/CodeSystem/v2-0487", props.type)
+        );
+
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.subject)) {
@@ -106,13 +115,13 @@ export default function(props: Partial<Specimen_SzLabSpecimen_Props>) {
 
     if (!_.isNil(props.condition)) {
         if (!Array.isArray(props.condition)) { props.condition = [props.condition]; }
-        resource.condition = dt.concept(props.condition);
+
+        resource.condition = dt.concept(
+            dt.lookupValue("http://terminology.hl7.org/ValueSet/v2-0493", props.condition)
+        );
+
+        dt.ensureConceptText(resource.condition);
     }
 
-    resource.meta = {
-      profile: [
-        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
-      ],
-    };
     return resource;
 }

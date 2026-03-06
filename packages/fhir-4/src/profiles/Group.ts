@@ -43,6 +43,7 @@ export default function(props: Partial<Group_Props>) {
 
     if (!_.isNil(props.code)) {
         resource.code = dt.concept(props.code);
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.managingEntity)) {

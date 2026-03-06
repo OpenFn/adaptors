@@ -57,11 +57,21 @@ export default function(props: Partial<MedicationAdministration_Props>) {
 
     if (!_.isNil(props.statusReason)) {
         if (!Array.isArray(props.statusReason)) { props.statusReason = [props.statusReason]; }
-        resource.statusReason = dt.concept(props.statusReason);
+
+        resource.statusReason = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/reason-medication-not-given-codes",
+            props.statusReason
+        ));
+
+        dt.ensureConceptText(resource.statusReason);
     }
 
     if (!_.isNil(props.category)) {
-        resource.category = dt.concept(props.category);
+        resource.category = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/medication-admin-category", props.category)
+        );
+
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.medication)) {
@@ -103,7 +113,13 @@ export default function(props: Partial<MedicationAdministration_Props>) {
 
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
-        resource.reasonCode = dt.concept(props.reasonCode);
+
+        resource.reasonCode = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/reason-medication-given-codes",
+            props.reasonCode
+        ));
+
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {
@@ -124,7 +140,7 @@ export default function(props: Partial<MedicationAdministration_Props>) {
         let src = props.dosage;
 
         let _dosage = {
-            ...item
+            ...src
         };
 
         resource.dosage = _dosage;

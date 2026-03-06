@@ -47,6 +47,11 @@ export type Observation_SzVitalSigns_Props = {
 export default function(props: Partial<Observation_SzVitalSigns_Props>) {
     const resource = {
         resourceType: "Observation",
+
+        meta: {
+            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzVitalSigns"]
+        },
+
         ...props
     };
 
@@ -80,7 +85,11 @@ export default function(props: Partial<Observation_SzVitalSigns_Props>) {
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(props.code);
+        resource.code = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/observation-vitalsignresult", props.code)
+        );
+
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.subject)) {
@@ -112,20 +121,35 @@ export default function(props: Partial<Observation_SzVitalSigns_Props>) {
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
-        resource.dataAbsentReason = dt.concept(props.dataAbsentReason);
+        resource.dataAbsentReason = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/data-absent-reason", props.dataAbsentReason)
+        );
+
+        dt.ensureConceptText(resource.dataAbsentReason);
     }
 
     if (!_.isNil(props.interpretation)) {
         if (!Array.isArray(props.interpretation)) { props.interpretation = [props.interpretation]; }
-        resource.interpretation = dt.concept(props.interpretation);
+
+        resource.interpretation = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/observation-interpretation",
+            props.interpretation
+        ));
+
+        dt.ensureConceptText(resource.interpretation);
     }
 
     if (!_.isNil(props.bodySite)) {
-        resource.bodySite = dt.concept(props.bodySite);
+        resource.bodySite = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site", props.bodySite));
+        dt.ensureConceptText(resource.bodySite);
     }
 
     if (!_.isNil(props.method)) {
-        resource.method = dt.concept(props.method);
+        resource.method = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/observation-methods", props.method)
+        );
+
+        dt.ensureConceptText(resource.method);
     }
 
     if (!_.isNil(props.specimen)) {
@@ -174,10 +198,5 @@ export default function(props: Partial<Observation_SzVitalSigns_Props>) {
         }
     }
 
-    resource.meta = {
-      profile: [
-        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
-      ],
-    };
     return resource;
 }

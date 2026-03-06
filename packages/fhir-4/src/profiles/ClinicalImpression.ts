@@ -53,10 +53,12 @@ export default function(props: Partial<ClinicalImpression_Props>) {
 
     if (!_.isNil(props.statusReason)) {
         resource.statusReason = dt.concept(props.statusReason);
+        dt.ensureConceptText(resource.statusReason);
     }
 
     if (!_.isNil(props.code)) {
         resource.code = dt.concept(props.code);
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.subject)) {
@@ -115,7 +117,13 @@ export default function(props: Partial<ClinicalImpression_Props>) {
 
     if (!_.isNil(props.prognosisCodeableConcept)) {
         if (!Array.isArray(props.prognosisCodeableConcept)) { props.prognosisCodeableConcept = [props.prognosisCodeableConcept]; }
-        resource.prognosisCodeableConcept = dt.concept(props.prognosisCodeableConcept);
+
+        resource.prognosisCodeableConcept = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/clinicalimpression-prognosis",
+            props.prognosisCodeableConcept
+        ));
+
+        dt.ensureConceptText(resource.prognosisCodeableConcept);
     }
 
     if (!_.isNil(props.prognosisReference)) {

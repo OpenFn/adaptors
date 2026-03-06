@@ -4357,6 +4357,7 @@ type VisionPrescription_Props = {
 
 /**
  * Set the data value index
+ * Each value will be indexed by code and display
  */
 declare const setValues: (url: any, values: any, type?: string) => void;
 /**

@@ -41,11 +41,17 @@ export default function(props: Partial<Flag_Props>) {
 
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
-        resource.category = dt.concept(props.category);
+
+        resource.category = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/flag-category", props.category)
+        );
+
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(props.code);
+        resource.code = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/flag-code", props.code));
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.subject)) {

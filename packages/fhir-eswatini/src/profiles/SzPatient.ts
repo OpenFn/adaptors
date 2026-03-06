@@ -43,6 +43,11 @@ export type Patient_SzPatient_Props = {
 export default function(props: Partial<Patient_SzPatient_Props>) {
     const resource = {
         resourceType: "Patient",
+
+        meta: {
+            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzPatient"]
+        },
+
         ...props
     };
 
@@ -150,7 +155,11 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
     }
 
     if (!_.isNil(props.maritalStatus)) {
-        resource.maritalStatus = dt.concept(props.maritalStatus);
+        resource.maritalStatus = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/marital-status", props.maritalStatus)
+        );
+
+        dt.ensureConceptText(resource.maritalStatus);
     }
 
     if (!_.isNil(props.multipleBirth)) {
@@ -209,10 +218,5 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
         }
     }
 
-    resource.meta = {
-      profile: [
-        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
-      ],
-    };
     return resource;
 }

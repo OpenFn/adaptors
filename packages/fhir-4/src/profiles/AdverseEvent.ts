@@ -52,11 +52,20 @@ export default function(props: Partial<AdverseEvent_Props>) {
 
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
-        resource.category = dt.concept(props.category);
+
+        resource.category = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/adverse-event-category", props.category)
+        );
+
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.event)) {
-        resource.event = dt.concept(props.event);
+        resource.event = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/adverse-event-type", props.event)
+        );
+
+        dt.ensureConceptText(resource.event);
     }
 
     if (!_.isNil(props.subject)) {
@@ -77,15 +86,29 @@ export default function(props: Partial<AdverseEvent_Props>) {
     }
 
     if (!_.isNil(props.seriousness)) {
-        resource.seriousness = dt.concept(props.seriousness);
+        resource.seriousness = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/adverse-event-seriousness",
+            props.seriousness
+        ));
+
+        dt.ensureConceptText(resource.seriousness);
     }
 
     if (!_.isNil(props.severity)) {
-        resource.severity = dt.concept(props.severity);
+        resource.severity = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/adverse-event-severity|4.3.0",
+            props.severity
+        ));
+
+        dt.ensureConceptText(resource.severity);
     }
 
     if (!_.isNil(props.outcome)) {
-        resource.outcome = dt.concept(props.outcome);
+        resource.outcome = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/adverse-event-outcome|4.3.0", props.outcome)
+        );
+
+        dt.ensureConceptText(resource.outcome);
     }
 
     if (!_.isNil(props.recorder)) {

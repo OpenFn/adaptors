@@ -48,15 +48,29 @@ export default function(props: Partial<AllergyIntolerance_Props>) {
     }
 
     if (!_.isNil(props.clinicalStatus)) {
-        resource.clinicalStatus = dt.concept(props.clinicalStatus);
+        resource.clinicalStatus = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/allergyintolerance-clinical|4.3.0",
+            props.clinicalStatus
+        ));
+
+        dt.ensureConceptText(resource.clinicalStatus);
     }
 
     if (!_.isNil(props.verificationStatus)) {
-        resource.verificationStatus = dt.concept(props.verificationStatus);
+        resource.verificationStatus = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/allergyintolerance-verification|4.3.0",
+            props.verificationStatus
+        ));
+
+        dt.ensureConceptText(resource.verificationStatus);
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(props.code);
+        resource.code = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/allergyintolerance-code", props.code)
+        );
+
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.patient)) {
