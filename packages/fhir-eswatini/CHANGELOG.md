@@ -1,5 +1,11 @@
 # @openfn/language-fhir-eswatini
 
+## 0.5.0
+
+### Minor Changes
+
+- 5e7a76d: Export utils from common
+
 ## 0.4.1 - 06 March 2026
 
 ### Patch Changes
