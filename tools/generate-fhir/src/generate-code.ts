@@ -411,7 +411,7 @@ const generateEntry = (
   * Create a ${resourceType} resource.
   * @public
   * @function
-  * @param {string} type - A profile type: one of ${profiles.map(p => p.id).join(',')}
+  * @param {string} type - A profile type: one of ${profiles.map(p => `\`${p.id}\``).join(', ')}
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
 ${generateJsDocs(profiles, propsToIgnoreInDocs, valueSets)}
   */
