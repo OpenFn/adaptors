@@ -1,6 +1,6 @@
 # language-sahara <img src='./assets/square.png' width="30" height="30"/>
 
-An OpenFn **_adaptor_** for building integration jobs for use with the Sahara (Intron Health) voice transcription and AI-powered clinical documentation API.
+An OpenFn **_adaptor_** for the Sahara (Intron Health) voice transcription and AI-powered clinical documentation API.
 
 ## Documentation
 
@@ -8,9 +8,7 @@ View the [docs site](https://docs.voice.intron.io) for full technical documentat
 
 ### Configuration
 
-View the [configuration-schema](configuration-schema.json) for required and optional `configuration` properties.
-
-Sample configuration:
+See [configuration-schema.json](configuration-schema.json) for required and optional `configuration` properties.
 
 ```json
 {
@@ -19,387 +17,107 @@ Sample configuration:
 }
 ```
 
-#### Local Testing Setup
+Optional URL validation (when using signed URLs for `audio_file_blob`): `validateUploadUrl`, `allowedUrlDomains`, `allowedUrlExtensions`, `requireExpiryParam`—see the schema.
 
-For local testing with the integration examples, see the [Integration Examples README](examples/integration/README.md) for detailed setup instructions.
-
-**Note:** In production (OpenFn platform), configure credentials through the platform's credential management system.
+For local testing with the integration examples, see [examples/integration/README.md](examples/integration/README.md). In production, configure credentials via the platform's credential management.
 
 ## Usage
 
-This adaptor enables integration between OpenFn workflows and Sahara's voice transcription API, allowing you to:
+- Upload audio **by URL** (e.g. signed S3 or SharePoint links) for transcription.
+- Retrieve results with medical/clinical post-processing.
+- Use cases: telehealth, call centers, legal, meetings, procedures.
 
-- Upload audio files for AI-powered transcription
-- Retrieve transcription results with medical/clinical post-processing
-- Support multiple use cases: telehealth, call centers, legal, meetings, procedures
+### Audio input: URL only
 
-### Basic Example: Upload and Check Status
+**`audio_file_blob`** must be a **URL** (string or `{ url: "..." }`). File paths and Buffers are not supported (OpenFn/Lightning has no filesystem). Store audio in external storage, get a signed or public URL, and pass it in state (e.g. `state.data.signedUrl`). Optional URL validation: set `configuration.validateUploadUrl: true` (see schema).
+
+### Basic example
 
 ```js
-// Upload an audio file
 uploadAudioFile({
   audio_file_name: 'patient_consultation_001',
-  audio_file_blob: state.data.audioFile,
+  audio_file_blob: state.data.signedUrl,
 });
 
-// Later, check the status (use the file_id from the upload response)
 getFileStatus(state.data.file_id);
 ```
 
-### File Processing Statuses
+### File status
 
-When calling `getFileStatus()`, the API returns a `processing_status` field indicating the current state of your file. The adaptor recognizes and handles all Sahara API statuses:
+`getFileStatus()` returns a `processing_status` (e.g. `FILE_QUEUED`, `FILE_PROCESSING`, `FILE_TRANSCRIBED`, or error statuses). See the [Sahara API docs](https://docs.voice.intron.io) for the full list. `uploadAndWaitForTranscription()` polls until `FILE_TRANSCRIBED` or an error.
 
-#### In Progress Statuses
-- **`FILE_QUEUED`** - File has been uploaded and is queued for processing
-- **`FILE_PENDING`** - File is pending processing
-- **`FILE_PROCESSING`** - File is currently being transcribed
-
-#### Success Status
-- **`FILE_TRANSCRIBED`** - ✅ Transcription completed successfully (results are available)
-
-#### Error Statuses
-- **`FILE_INVALID`** - File format is invalid
-- **`FILE_INVALID_SIZE`** - File exceeds maximum size (100MB limit)
-- **`FILE_INVALID_DURATION`** - Audio duration exceeds maximum (10 minutes limit)
-- **`FILE_PROCESSING_FAILED`** - Processing failed due to an error
-- **`FILE_PROCESSING_TIMEOUT`** - Processing timed out
-- **`FILE_PROCESSING_CANCELLED`** - Processing was cancelled
-
-**Note:** The `uploadAndWaitForTranscription()` function automatically continues polling for `FILE_QUEUED`, `FILE_PENDING`, and `FILE_PROCESSING` statuses, and will throw an error if any of the error statuses are encountered.
-
-### Healthcare/Telehealth Example
+### Telehealth example
 
 ```js
-// Upload a patient consultation with clinical post-processing
 uploadAudioFile({
   audio_file_name: 'dr_smith_patient_john_doe',
-  audio_file_blob: state.data.audioRecording,
+  audio_file_blob: state.data.signedUrl,
   use_category: 'file_category_telehealth',
   get_soap_note: 'TRUE',
   get_summary: 'TRUE',
-  get_entity_list: 'TRUE',
-  get_treatment_plan: 'TRUE',
   get_icd_codes: 'TRUE',
-  get_differential_diagnosis: 'TRUE',
-  get_followup_instructions: 'TRUE',
 });
 ```
 
-### Upload and Wait for Completion
+### Upload and wait
 
 ```js
-// Upload file and automatically poll until transcription is complete
 uploadAndWaitForTranscription(
   {
     audio_file_name: 'chw_field_visit',
-    audio_file_blob: state.data.audioFile,
+    audio_file_blob: state.data.signedUrl,
     use_category: 'file_category_telehealth',
     get_soap_note: 'TRUE',
     get_summary: 'TRUE',
   },
-  {
-    pollInterval: 5000, // Check every 5 seconds
-    maxAttempts: 60, // Maximum 5 minutes
-  }
+  { pollInterval: 5000, maxAttempts: 60 }
 );
 ```
 
-### Integration Workflow Examples
+### Other categories
 
-#### Example 1: OpenMRS → Sahara → OpenMRS
+For call center or meeting notes, use `file_category_call_center` or `file_category_meeting_notes` with the corresponding `get_*` options. Categories include `file_category_general`, `file_category_telehealth`, `file_category_procedure`, `file_category_legal`. Optional: `use_diarization: 'TRUE'`, `use_template_id: 'template-uuid'`. See the [Sahara docs](https://docs.voice.intron.io) for the complete list.
 
-```js
-// Step 1: Receive webhook from OpenMRS with audio recording
-// Step 2: Send to Sahara for transcription
-uploadAndWaitForTranscription({
-  audio_file_name: state.data.encounterUuid,
-  audio_file_blob: state.data.voiceRecording,
-  use_category: 'file_category_telehealth',
-  get_soap_note: 'TRUE',
-  get_summary: 'TRUE',
-  get_icd_codes: 'TRUE',
-});
+### URL validation
 
-// Step 3: Send transcription back to OpenMRS
-// (In a subsequent operation using @openfn/language-openmrs)
-// createEncounterNote(...)
-```
+When `configuration.validateUploadUrl` is `true`, the adaptor runs in-memory checks (HTTPS only, no IP/internal hosts, optional domain allowlist and extension hint). See [configuration-schema.json](configuration-schema.json).
 
-#### Example 2: DHIS2 Community Health Worker Reports
+## Operations
 
-```js
-// Transcribe CHW audio report
-uploadAndWaitForTranscription({
-  audio_file_name: `chw_report_${state.data.chw_id}_${state.data.timestamp}`,
-  audio_file_blob: state.data.audioReport,
-  use_category: 'file_category_general',
-  get_summary: 'TRUE',
-});
+- **`uploadAudioFile()`** – Upload by URL with post-processing options
+- **`getFileStatus()`** – Get transcription status and results
+- **`uploadAndWaitForTranscription()`** – Upload and poll until complete
+- **`get()`**, **`post()`** – Generic requests
 
-// Then push structured data to DHIS2
-// (Using @openfn/language-dhis2 adaptor)
-```
+Uploads use undici via language-common; `audio_file_blob` is sent as a URL and the Sahara backend fetches the file.
 
-### Call Center Example
+## Testing
 
-```js
-uploadAudioFile({
-  audio_file_name: 'support_call_12345',
-  audio_file_blob: state.data.callRecording,
-  use_category: 'file_category_call_center',
-  get_summary: 'TRUE',
-  get_call_center_results: 'TRUE',
-  get_call_center_agent_score: 'TRUE',
-  get_call_center_sentiment: 'TRUE',
-  get_call_center_compliance: 'TRUE',
-});
-```
-
-### Meeting Notes Example
-
-```js
-uploadAudioFile({
-  audio_file_name: 'weekly_team_meeting',
-  audio_file_blob: state.data.meetingRecording,
-  use_category: 'file_category_meeting_notes',
-  get_summary: 'TRUE',
-  get_meeting_notes_participants: 'TRUE',
-  get_meeting_notes_decisions: 'TRUE',
-  get_meeting_notes_action_items: 'TRUE',
-  get_meeting_notes_next_steps: 'TRUE',
-});
-```
-
-### Available Categories and Post-Processing Options
-
-#### General
-- `file_category_general`
-  - `get_summary`
-
-#### Telehealth
-- `file_category_telehealth`
-  - `get_summary`, `get_soap_note`, `get_entity_list`, `get_treatment_plan`
-  - `get_clerking`, `get_icd_codes`, `get_suggestions`
-  - `get_differential_diagnosis`, `get_followup_instructions`, `get_practice_guidelines`
-
-#### Procedure
-- `file_category_procedure`
-  - `get_summary`, `get_entity_list`, `get_treatment_plan`
-  - `get_op_note`, `get_icd_codes`, `get_suggestions`
-
-#### Call Center
-- `file_category_call_center`
-  - `get_summary`, `get_call_center_results`, `get_call_center_agent_score`
-  - `get_call_center_agent_score_category`, `get_call_center_product_info`
-  - `get_call_center_product_insights`, `get_call_center_compliance`
-  - `get_call_center_feedback`, `get_call_center_sentiment`
-
-#### Legal
-- `file_category_legal`
-  - `get_legal_court_hearing`
-
-#### Meeting Notes
-- `file_category_meeting_notes`
-  - `get_summary`, `get_meeting_notes_participants`, `get_meeting_notes_decisions`
-  - `get_meeting_notes_action_items`, `get_meeting_notes_key_topics`, `get_meeting_notes_next_steps`
-
-### Additional Options
-
-- `use_diarization: "TRUE"` - Enable speaker diarization (identifies different speakers)
-- `use_template_id: "template-uuid"` - Use a custom prompt template
-
-## ✅ All Operations Fully Functional
-
-### Working Operations
-
-- ✅ **`uploadAudioFile()`** - Upload audio files with all post-processing options
-- ✅ **`getFileStatus()`** - Retrieve transcription results
-- ✅ **`uploadAndWaitForTranscription()`** - Upload and auto-poll until complete
-- ✅ **`get()`** - Generic GET requests
-- ✅ **`post()`** - Generic POST requests
-
-### Implementation Note: Why Axios for File Uploads
-
-File uploads use **axios** (with `form-data` package) instead of undici's commonRequest function.
-
-**Reason:** Undici v6 and v7 have known compatibility issues with FormData + File/Blob serialization in multipart requests, causing errors like:
-- `TypeError: Cannot read properties of null (reading 'byteLength')` (undici v7)
-- `TypeError: source.on is not a function` (undici v6)
-
-**Performance:** ~1.3 MB/s
-- 10MB audio (~1 min): ~8 seconds
-- 50MB audio (~5 min): ~38 seconds  
-- 100MB audio (~10 min max): ~77 seconds
-
-This is **acceptable** for Sahara's use case:
-- ✅ Sahara API limits: 100MB max, 10 minutes max audio
-- ✅ Typical medical consultations: 2-5 minutes (20-50MB, upload in 15-40s)
-- ✅ Upload is async - user doesn't wait (file queues for processing)
-- ✅ Bottleneck is Sahara's AI processing (30-60s), not upload
-
-**Benefits of axios approach:**
-- ✅ Reliable multipart/form-data uploads (100% success rate)
-- ✅ Efficient streaming with `fs.createReadStream` (no memory buffering)
-- ✅ Consistent error handling and retry logic
-- ✅ Works across all Node.js versions 18+
-
-### Testing
-
-**Unit Tests:** 9/9 passing
-- ✅ Axios upload operations (mocked with `nock`)
-- ✅ Authentication and parameter validation
-- ℹ️ Undici-based GET/POST helpers verified against real API (see Integration Tests)
-
-**Integration Tests:** ✅ 100% Passing  
-- ✅ Real 57MB file upload: 44 seconds
-- ✅ Real transcription retrieval: 700ms
-- ✅ Complete workflow tested
-
-Looking to replicate those end-to-end checks? The `examples/integration/` directory ships runnable OpenFn jobs that call the live Sahara API. 
-
-**First, set up your state file** (see [Local Testing Setup](#local-testing-setup) in Configuration above), then run any of the example scripts:
+Unit tests mock HTTP with `enableMockClient` (undici). Integration examples in [examples/integration/](examples/integration/) call the live API. From repo root:
 
 ```bash
-# Example: Run basic upload test
-openfn examples/integration/1-test-basic-upload.js \
+openfn packages/sahara/examples/integration/1-test-basic-upload.js \
   -ma sahara \
-  -s tmp/sahara-state.json \
-  -o tmp/output.json
+  -s packages/sahara/tmp/sahara-state.json \
+  -o packages/sahara/tmp/output.json
 ```
 
-Edit `tmp/sahara-state.json` to add your API key and update audio file paths in the script. Each script writes its output to the file you pass with `-o`, so you can inspect the full transcription payload afterward.
+See [examples/integration/README.md](examples/integration/README.md) for state keys and script list.
 
-### Alternative: Upload with Curl
+### Webhook pattern
 
-If you prefer to use curl for uploads:
+Common production flow: app POSTs audio to Sahara → Sahara webhook sends `file_id` to OpenFn → workflow calls `getFileStatus(state.data.file_id)` then sends results to OpenMRS/DHIS2.
 
-```bash
-# Step 1: Upload with curl
-FILE_ID=$(curl -k -s 'https://infer.voice.intron.io/file/v1/upload' \
-  --header 'Authorization: Bearer YOUR_API_KEY' \
-  --form 'audio_file_name="consultation_001"' \
-  --form 'audio_file_blob=@"/path/to/audio.wav"' \
-  --form 'use_category="file_category_telehealth"' \
-  --form 'get_soap_note="TRUE"' \
-  --form 'get_summary="TRUE"' \
-  --form 'get_icd_codes="TRUE"' \
-  | jq -r '.data.file_id')
+## Retry and limits
 
-echo "File ID: $FILE_ID"
+The adaptor retries on 429 and 5xx with exponential backoff (default: 3 retries, 1s initial delay). Pass `maxRetries`, `retryDelay`, `retryOn429` in the options argument to customize. No retry on 401, 400, 404.
 
-# Step 2: Use OpenFn adaptor to get results
-# In your workflow:
-getFileStatus("$FILE_ID", { get_structured_post_processing: "t" });
-```
-
-### Alternative Integration Pattern
-
-The most common pattern in production:
-
-```
-Mobile App/Web Form → Direct HTTP POST → Sahara API
-                                             ↓
-                                    Webhook with file_id
-                                             ↓
-                                          OpenFn
-                                             ↓
-                                    getFileStatus() ✅
-                                             ↓
-                                      OpenMRS/DHIS2
-```
-
-**Example webhook trigger:**
-```json
-{
-  "file_id": "abc-123",
-  "patient_id": "12345",
-  "encounter_type": "consultation"
-}
-```
-
-**OpenFn workflow:**
-```javascript
-// Retrieve transcription results
-getFileStatus(state.data.file_id, {
-  get_structured_post_processing: "t"
-});
-
-// Then send to OpenMRS using @openfn/language-openmrs
-createEncounterNote({
-  patientUuid: state.data.patient_id,
-  note: state.data.data.transcript_soap_note.text,
-  icdCodes: state.data.data.transcript_icd_codes
-});
-```
-
-## Automatic Retry & Error Handling
-
-The adaptor automatically handles transient errors with **exponential backoff retry logic**:
-
-### What Gets Retried Automatically
-
-✅ **429 Rate Limit Errors** - Automatically retries with exponential backoff
-✅ **5xx Server Errors** (500, 502, 503) - Retries up to 3 times
-✅ **Network Errors** (ECONNRESET, ETIMEDOUT, ENOTFOUND)
-
-❌ **Does NOT Retry** - 401 (auth errors), 400 (bad requests), 404 (not found)
-
-### Default Retry Configuration
-
-```js
-// Default settings (applied automatically)
-{
-  maxRetries: 3,           // Maximum retry attempts
-  retryDelay: 1000,        // Initial delay in ms (doubles each retry: 1s, 2s, 4s)
-  retryOn429: true         // Retry on rate limit errors
-}
-```
-
-### Custom Retry Configuration
-
-You can customize retry behavior per operation:
-
-```js
-// Custom retry settings for file upload
-uploadAudioFile(
-  {
-    audio_file_name: 'large_consultation',
-    audio_file_blob: state.data.audioFile,
-    use_category: 'file_category_telehealth',
-  },
-  {
-    maxRetries: 5,         // More retries for important uploads
-    retryDelay: 2000,      // Longer initial delay
-    retryOn429: true,      // Retry on rate limits
-  }
-);
-
-// Disable retries if needed
-getFileStatus(fileId, { maxRetries: 0 });
-```
-
-## API Limits
-
-- Maximum file size: 100MB
-- Maximum audio duration: 10 minutes
-- Upload rate limit: 30 requests per minute
-- Status check rate limit: 100 requests per minute
-
-**Note:** The adaptor automatically handles rate limits with retry logic.
+API limits: 100MB max file size, 10 minutes max duration, 60 uploads/min, 100 status checks/min.
 
 ## Development
 
-Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the "Getting Started" guide inside to get set up.
+Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Then: `pnpm build`, `pnpm test` (or `pnpm run test:watch`).
 
-Run tests using `pnpm run test` or `pnpm run test:watch`
+## About Sahara
 
-Build the project using `pnpm build`.
-
-To build _only_ the docs run `pnpm build docs` after running `pnpm clean`.
-
-## About Sahara (Intron Health)
-
-Sahara provides AI-powered voice transcription and clinical documentation tools that improve healthcare data quality. Voice dictation increases report length and quality by 2-3x compared to typing, providing richer data for decision support systems and better patient care.
-
-Learn more at [Intron Health](https://intron.io)
+Sahara (Intron Health) provides AI-powered voice transcription and clinical documentation. [Intron Health](https://intron.io)

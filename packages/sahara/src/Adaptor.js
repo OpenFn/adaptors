@@ -1,5 +1,6 @@
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
+import { validateUploadUrl } from './validateUrl.js';
 
 /**
  * State object
@@ -10,33 +11,17 @@ import * as util from './Utils.js';
  **/
 
 /**
- * Options for file upload. For a complete list of available options including post-processing parameters, see [Sahara Docs](https://docs.voice.intron.io).
  * @typedef {Object} UploadOptions
- * @public
- * @property {string} audio_file_name - Name for the uploaded audio file (required)
- * @property {object} audio_file_blob - The audio file to upload (required)
+ * @property {string} audio_file_name - Name for the uploaded file (required)
+ * @property {string|{url: string}} audio_file_blob - URL or { url } (required). See Sahara docs for post-processing options.
  */
 
 /**
- * Upload an audio file for transcription. For available post-processing options, see [Sahara Docs](https://docs.voice.intron.io).
+ * Upload an audio file for transcription. audio_file_blob must be a URL (string or { url }).
  * @public
  * @function
- * @example <caption>Upload a basic audio file</caption>
- * uploadAudioFile({ 
- *   audio_file_name: "patient_consultation_1",
- *   audio_file_blob: state.data.audioFile
- * });
- * @example <caption>Upload with telehealth category and post-processing</caption>
- * uploadAudioFile({ 
- *   audio_file_name: "doctor_visit",
- *   audio_file_blob: state.data.audioFile,
- *   use_category: "file_category_telehealth",
- *   get_soap_note: "TRUE",
- *   get_summary: "TRUE",
- *   get_icd_codes: "TRUE"
- * });
- * @param {UploadOptions} uploadData - The upload options including file and metadata. See [Sahara Docs](https://docs.voice.intron.io) for all available options.
- * @param {object} options - Optional retry configuration (maxRetries, retryDelay, retryOn429)
+ * @param {UploadOptions} uploadData - Upload options and any post-processing flags
+ * @param {object} [options] - Retry options: maxRetries, retryDelay, retryOn429
  * @returns {Operation}
  * @state {SaharaState}
  */
@@ -62,15 +47,37 @@ export function uploadAudioFile(uploadData, options = {}) {
       throw new Error('audio_file_blob is required');
     }
 
-    console.log(`Uploading audio file: ${audio_file_name}`);
+    // Normalize to URL string only (no file paths or Buffers — OpenFn/Lightning compatible)
+    const urlString =
+      typeof audio_file_blob === 'string'
+        ? audio_file_blob
+        : audio_file_blob && typeof audio_file_blob.url === 'string'
+          ? audio_file_blob.url
+          : null;
+
+    if (
+      !urlString ||
+      (!urlString.startsWith('http://') && !urlString.startsWith('https://'))
+    ) {
+      throw new Error(
+        'audio_file_blob must be a URL string (http:// or https://) or an object with a url property (e.g. { url: state.data.signedUrl }). File paths and Buffers are not supported.'
+      );
+    }
+
+    if (state.configuration?.validateUploadUrl === true) {
+      validateUploadUrl(urlString, state.configuration || {});
+    }
+
+    const urlPreview =
+      urlString.slice(0, 60) + (urlString.length > 60 ? '...' : '');
+    console.log(`Uploading audio file: ${audio_file_name} (blob: ${urlPreview})`);
 
     const formData = {
       audio_file_name,
-      audio_file_blob,
+      audio_file_blob: urlString,
       ...uploadOptions,
     };
 
-    // Allow users to pass retry options if needed
     const retryOptions = {
       maxRetries: resolvedOptions.maxRetries,
       retryDelay: resolvedOptions.retryDelay,
@@ -93,17 +100,11 @@ export function uploadAudioFile(uploadData, options = {}) {
 }
 
 /**
- * Get the transcription status and results for a file
+ * Get transcription status and results for a file.
  * @public
  * @function
- * @example Get basic file status
- * getFileStatus("12a9760f-b165-4404-91d0-a65d4cdt78fs");
- * @example Get file status with structured output
- * getFileStatus("12a9760f-b165-4404-91d0-a65d4cdt78fs", { 
- *   get_structured_post_processing: "t" 
- * });
- * @param {string} fileId - The file ID returned from uploadAudioFile
- * @param {object} options - Optional query and retry parameters
+ * @param {string} fileId - File ID from upload response
+ * @param {object} [options] - Optional query (e.g. get_structured_post_processing) and retry options
  * @returns {Operation}
  * @state {SaharaState}
  */
@@ -166,24 +167,11 @@ export function getFileStatus(fileId, options = {}) {
 }
 
 /**
- * Upload an audio file and wait for transcription to complete (polls until done)
+ * Upload and poll until transcription completes.
  * @public
  * @function
- * @example Upload and wait for basic transcription
- * uploadAndWaitForTranscription({
- *   audio_file_name: "consultation",
- *   audio_file_blob: state.data.audioFile
- * });
- * @example Upload with telehealth options and wait
- * uploadAndWaitForTranscription({
- *   audio_file_name: "patient_visit",
- *   audio_file_blob: state.data.audioFile,
- *   use_category: "file_category_telehealth",
- *   get_soap_note: "TRUE",
- *   get_summary: "TRUE"
- * }, { pollInterval: 5000, maxAttempts: 60 });
- * @param {UploadOptions} uploadData - The upload options
- * @param {object} waitOptions - Polling configuration
+ * @param {UploadOptions} uploadData - Same as uploadAudioFile
+ * @param {object} [waitOptions] - pollInterval (ms), maxAttempts
  * @returns {Operation}
  * @state {SaharaState}
  */
@@ -253,13 +241,11 @@ export function uploadAndWaitForTranscription(uploadData, waitOptions = {}) {
 }
 
 /**
- * Make a GET request to Sahara API
+ * GET request to the API.
  * @public
  * @function
- * @example
- * get("/file/v1/status/file-id");
  * @param {string} path - Path to resource
- * @param {object} options - Optional request options
+ * @param {object} [options] - Optional request/retry options
  * @returns {Operation}
  * @state {SaharaState}
  */
@@ -283,14 +269,12 @@ export function get(path, options) {
 }
 
 /**
- * Make a POST request to Sahara API
+ * POST request to the API.
  * @public
  * @function
- * @example
- * post("/file/v1/upload", { audio_file_name: "test" });
  * @param {string} path - Path to resource
- * @param {object} body - Object which will be attached to the POST body
- * @param {object} options - Optional request options
+ * @param {object} body - Request body
+ * @param {object} [options] - Optional request/retry options
  * @returns {Operation}
  * @state {SaharaState}
  */

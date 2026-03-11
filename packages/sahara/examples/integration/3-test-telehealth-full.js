@@ -9,12 +9,7 @@
 
 uploadAndWaitForTranscription({
   audio_file_name: 'doctor_patient_consultation',
-  audio_file_blob: {
-    // Replace with your audio file path
-    path: 'YOUR_AUDIO_FILE_PATH_HERE'
-  },
-  
-  // Healthcare category
+  audio_file_blob: state.data.signedUrlTelehealth,
   use_category: 'file_category_telehealth',
   
   // Request all medical post-processing features

@@ -1,45 +1,48 @@
-# Sahara Adaptor – Integration Scripts
+# Sahara – Integration Scripts
 
-These jobs call the live Sahara API to exercise file uploads, polling, and the category-specific post-processing options. Use them when you want to validate the adaptor end to end with your own credentials and audio samples.
+Runnable jobs that call the live Sahara API (URL-based uploads, polling, categories). Use your own credentials and audio URLs.
 
-## Before You Run Anything
+## Setup
 
-1. **Create a local state file (ignored by git).**
+1. **Create a local state file** (from repo root):
    ```bash
-   cd /Users/mac/Documents/OpenFn/adaptors/packages/sahara
-   mkdir -p tmp
-   cp examples/integration/state.template.json tmp/sahara-state.json
+   mkdir -p packages/sahara/tmp
+   cp packages/sahara/examples/integration/state.template.json packages/sahara/tmp/sahara-state.json
    ```
-   Edit _the copy_ at `tmp/sahara-state.json` (not the template) and replace `YOUR_SAHARA_API_KEY` with your real key. Keep this file in `tmp/` so that credentials never get committed.
+   Edit _the copy_ at `packages/sahara/tmp/sahara-state.json` (not the template): replace `YOUR_SAHARA_API_KEY` with your real API key, and set the **URL** for each scenario you want to run. The state template has one key per script:
+   - `signedUrlBasic` → 1-test-basic-upload.js
+   - `signedUrlTelehealth` → 3-test-telehealth-full.js
+   - `signedUrlDiarization` → 4-test-with-diarization.js
+   - `signedUrlCallCenter` → 5-test-call-center.js
+   - `signedUrlMeeting` → 6-test-meeting-notes.js
+   - `signedUrlProcedure` → 7-test-procedure.js
+   - `signedUrlLegal` → 8-test-legal.js
+   Use signed HTTPS URLs. Supported formats include WAV, MP3, MP4, M4A, OGG, WebM, and FLAC (up to 100 MB, ~10 min).
 
-2. **Point each script at real audio.**  
-   Update the `audio_file_blob` section in the script you plan to run. You can supply a local path (`path: "/absolute/path/to/audio.m4a"`) or a URL. Sahara accepts WAV, MP3, and M4A up to 100 MB (~10 minutes).
+2. Optional: `mkdir -p packages/sahara/tmp/sahara-outputs` for output files.
 
-3. **Optional:** Create an outputs folder (`mkdir -p tmp/sahara-outputs`) if you want to keep result files separate.
+## Run
 
-## Running a Script
+From repo root (so `-ma sahara` loads the local adaptor):
 
 ```bash
-cd /Users/mac/Documents/OpenFn/adaptors/packages/sahara
-
-# Jobs that only upload (about 1–2 minutes). Make sure -s points at the file you just edited.
-openfn examples/integration/1-test-basic-upload.js \
+openfn packages/sahara/examples/integration/1-test-basic-upload.js \
   -ma sahara \
-  -s tmp/sahara-state.json \
-  -o tmp/sahara-outputs/1-basic-upload.json
+  -s packages/sahara/tmp/sahara-state.json \
+  -o packages/sahara/tmp/sahara-outputs/1-basic-upload.json
 
 # Jobs that poll until transcription completes often need a longer timeout
-openfn examples/integration/3-test-telehealth-full.js \
+openfn packages/sahara/examples/integration/3-test-telehealth-full.js \
   -ma sahara \
-  -s tmp/sahara-state.json \
-  -o tmp/sahara-outputs/3-telehealth.json \
-  --timeout 1200000   # 20 minutes
+  -s packages/sahara/tmp/sahara-state.json \
+  -o packages/sahara/tmp/sahara-outputs/3-telehealth.json \
+  --timeout 1200000
 ```
 
-Every script writes the final `state` object to the output file you pass with `-o`. Use `jq` (or your favourite JSON viewer) to inspect it:
+Output goes to the file passed with `-o`. Inspect with `jq`:
 
 ```bash
-jq . tmp/sahara-outputs/3-telehealth.json
+jq . packages/sahara/tmp/sahara-outputs/3-telehealth.json
 ```
 
 ## Script Catalog
@@ -56,10 +59,8 @@ jq . tmp/sahara-outputs/3-telehealth.json
 | `8-test-legal.js` | Court hearing format | Legal / compliance reviews |
 | `check-latest-upload.js` | Fetch most recent file | Handy when testing outside OpenFn |
 
-### Two-Step vs One-Step
-
-- **Two-step flow**: Run `1-test-basic-upload.js`, capture the `file_id` from its output, then plug that into `2-test-file-status.js` to poll manually.
-- **One-step flow (recommended)**: Use any of the scripts that call `uploadAndWaitForTranscription` (`3`–`8`). They upload, poll every few seconds, and stop as soon as `processing_status` becomes `FILE_TRANSCRIBED`.
+- **Two-step**: Run script 1, get `file_id` from output, then run script 2 with that ID.
+- **One-step**: Scripts 3–8 use `uploadAndWaitForTranscription` (upload + poll until `FILE_TRANSCRIBED`).
 
 ## Output Cheatsheet
 
@@ -74,16 +75,10 @@ jq . tmp/sahara-outputs/3-telehealth.json
 
 ## Troubleshooting
 
-- **401 Unauthorized**: Double-check the API key in `tmp/sahara-state.json`.
-- **413 File too large**: Trim the recording or compress it; Sahara caps uploads at 100 MB.
-- **429 Rate limit**: The adaptor already retries with backoff—watch the console logs to confirm.
-- **Polling stops early**: Increase the CLI timeout (for example `--timeout 1800000` for 30 minutes).
+- **401**: Check API key in your state file.
+- **413**: File over 100 MB; trim or compress.
+- **429**: Adaptor retries with backoff.
+- **Polling timeout**: Increase the CLI timeout (for example `--timeout 1800000` for 30 minutes).
 
-## Need More Context?
-
-- Main adaptor docs: `packages/sahara/README.md`
-- Unit-test overview: `packages/sahara/test/README.md`
-- Sahara product docs: https://infer.voice.intron.io/docs
-
-Happy testing!
+See `packages/sahara/README.md` and [Sahara docs](https://docs.voice.intron.io).
 

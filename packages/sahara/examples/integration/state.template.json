@@ -3,5 +3,13 @@
     "apiKey": "YOUR_SAHARA_API_KEY",
     "baseUrl": "https://infer.voice.intron.io"
   },
-  "data": {}
+  "data": {
+    "signedUrlBasic": "https://example.com/audio-basic.wav",
+    "signedUrlTelehealth": "https://example.com/audio-telehealth.wav",
+    "signedUrlDiarization": "https://example.com/audio-diarization.wav",
+    "signedUrlCallCenter": "https://example.com/audio-call-center.wav",
+    "signedUrlMeeting": "https://example.com/audio-meeting.wav",
+    "signedUrlProcedure": "https://example.com/audio-procedure.wav",
+    "signedUrlLegal": "https://example.com/audio-legal.wav"
+  }
 }

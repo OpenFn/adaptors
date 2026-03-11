@@ -7,10 +7,7 @@
 
 uploadAndWaitForTranscription({
   audio_file_name: `call_center_analysis_${Date.now()}`,
-  audio_file_blob: {
-    path: 'YOUR_AUDIO_FILE_PATH_HERE'
-  },
-  
+  audio_file_blob: state.data.signedUrlCallCenter,
   use_category: 'file_category_call_center',
   
   // Call center specific post-processing

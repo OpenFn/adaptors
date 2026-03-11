@@ -7,9 +7,7 @@
 
 uploadAndWaitForTranscription({
   audio_file_name: 'multi_speaker_conversation',
-  audio_file_blob: {
-    path: 'YOUR_AUDIO_FILE_PATH_HERE'
-  },
+  audio_file_blob: state.data.signedUrlDiarization,
   use_category: 'file_category_call_center',
   use_diarization: 'TRUE',
   get_summary: 'TRUE',

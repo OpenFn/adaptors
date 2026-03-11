@@ -29,17 +29,14 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "axios": "^1.13.1",
-    "form-data": "^4.0.4"
+    "undici": "6.20.1"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
     "mocha": "^10.7.3",
-    "nock": "^14.0.10",
-    "rimraf": "3.0.2",
-    "undici": "6.20.1"
+    "rimraf": "3.0.2"
   },
   "repository": {
     "type": "git",

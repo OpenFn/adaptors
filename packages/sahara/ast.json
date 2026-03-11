@@ -7,7 +7,7 @@
         "options"
       ],
       "docs": {
-        "description": "Upload an audio file for transcription. For available post-processing options, see [Sahara Docs](https://docs.voice.intron.io).",
+        "description": "Upload an audio file for transcription. audio_file_blob must be a URL (string or { url }).",
         "tags": [
           {
             "title": "public",
@@ -20,18 +20,8 @@
             "name": null
           },
           {
-            "title": "example",
-            "description": "uploadAudioFile({ \n  audio_file_name: \"patient_consultation_1\",\n  audio_file_blob: state.data.audioFile\n});",
-            "caption": "Upload a basic audio file"
-          },
-          {
-            "title": "example",
-            "description": "uploadAudioFile({ \n  audio_file_name: \"doctor_visit\",\n  audio_file_blob: state.data.audioFile,\n  use_category: \"file_category_telehealth\",\n  get_soap_note: \"TRUE\",\n  get_summary: \"TRUE\",\n  get_icd_codes: \"TRUE\"\n});",
-            "caption": "Upload with telehealth category and post-processing"
-          },
-          {
             "title": "param",
-            "description": "The upload options including file and metadata. See [Sahara Docs](https://docs.voice.intron.io) for all available options.",
+            "description": "Upload options and any post-processing flags",
             "type": {
               "type": "NameExpression",
               "name": "UploadOptions"
@@ -40,10 +30,13 @@
           },
           {
             "title": "param",
-            "description": "Optional retry configuration (maxRetries, retryDelay, retryOn429)",
+            "description": "Retry options: maxRetries, retryDelay, retryOn429",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
             "name": "options"
           },
@@ -70,7 +63,7 @@
         "options"
       ],
       "docs": {
-        "description": "Get the transcription status and results for a file",
+        "description": "Get transcription status and results for a file.",
         "tags": [
           {
             "title": "public",
@@ -83,16 +76,8 @@
             "name": null
           },
           {
-            "title": "example",
-            "description": "Get basic file status\ngetFileStatus(\"12a9760f-b165-4404-91d0-a65d4cdt78fs\");"
-          },
-          {
-            "title": "example",
-            "description": "Get file status with structured output\ngetFileStatus(\"12a9760f-b165-4404-91d0-a65d4cdt78fs\", { \n  get_structured_post_processing: \"t\" \n});"
-          },
-          {
             "title": "param",
-            "description": "The file ID returned from uploadAudioFile",
+            "description": "File ID from upload response",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -101,10 +86,13 @@
           },
           {
             "title": "param",
-            "description": "Optional query and retry parameters",
+            "description": "Optional query (e.g. get_structured_post_processing) and retry options",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
             "name": "options"
           },
@@ -131,7 +119,7 @@
         "waitOptions"
       ],
       "docs": {
-        "description": "Upload an audio file and wait for transcription to complete (polls until done)",
+        "description": "Upload and poll until transcription completes.",
         "tags": [
           {
             "title": "public",
@@ -144,16 +132,8 @@
             "name": null
           },
           {
-            "title": "example",
-            "description": "Upload and wait for basic transcription\nuploadAndWaitForTranscription({\n  audio_file_name: \"consultation\",\n  audio_file_blob: state.data.audioFile\n});"
-          },
-          {
-            "title": "example",
-            "description": "Upload with telehealth options and wait\nuploadAndWaitForTranscription({\n  audio_file_name: \"patient_visit\",\n  audio_file_blob: state.data.audioFile,\n  use_category: \"file_category_telehealth\",\n  get_soap_note: \"TRUE\",\n  get_summary: \"TRUE\"\n}, { pollInterval: 5000, maxAttempts: 60 });"
-          },
-          {
             "title": "param",
-            "description": "The upload options",
+            "description": "Same as uploadAudioFile",
             "type": {
               "type": "NameExpression",
               "name": "UploadOptions"
@@ -162,10 +142,13 @@
           },
           {
             "title": "param",
-            "description": "Polling configuration",
+            "description": "pollInterval (ms), maxAttempts",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
             "name": "waitOptions"
           },
@@ -192,7 +175,7 @@
         "options"
       ],
       "docs": {
-        "description": "Make a GET request to Sahara API",
+        "description": "GET request to the API.",
         "tags": [
           {
             "title": "public",
@@ -205,10 +188,6 @@
             "name": null
           },
           {
-            "title": "example",
-            "description": "get(\"/file/v1/status/file-id\");"
-          },
-          {
             "title": "param",
             "description": "Path to resource",
             "type": {
@@ -219,10 +198,13 @@
           },
           {
             "title": "param",
-            "description": "Optional request options",
+            "description": "Optional request/retry options",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
             "name": "options"
           },
@@ -250,7 +232,7 @@
         "options"
       ],
       "docs": {
-        "description": "Make a POST request to Sahara API",
+        "description": "POST request to the API.",
         "tags": [
           {
             "title": "public",
@@ -263,10 +245,6 @@
             "name": null
           },
           {
-            "title": "example",
-            "description": "post(\"/file/v1/upload\", { audio_file_name: \"test\" });"
-          },
-          {
             "title": "param",
             "description": "Path to resource",
             "type": {
@@ -277,7 +255,7 @@
           },
           {
             "title": "param",
-            "description": "Object which will be attached to the POST body",
+            "description": "Request body",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -286,10 +264,13 @@
           },
           {
             "title": "param",
-            "description": "Optional request options",
+            "description": "Optional request/retry options",
             "type": {
-              "type": "NameExpression",
-              "name": "object"
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
             },
             "name": "options"
           },

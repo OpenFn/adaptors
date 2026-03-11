@@ -7,10 +7,7 @@
 
 uploadAndWaitForTranscription({
   audio_file_name: `meeting_notes_${Date.now()}`,
-  audio_file_blob: {
-    path: 'YOUR_AUDIO_FILE_PATH_HERE'
-  },
-  
+  audio_file_blob: state.data.signedUrlMeeting,
   use_category: 'file_category_meeting_notes',
   
   // Meeting-specific post-processing

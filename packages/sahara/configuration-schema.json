@@ -17,6 +17,30 @@
       "writeOnly": true,
       "minLength": 1,
       "examples": ["your-api-key-here"]
+    },
+    "validateUploadUrl": {
+      "title": "Validate upload URL",
+      "type": "boolean",
+      "description": "When true, validate audio_file_blob URLs: HTTPS-only, valid format, no IP or internal hosts, and optional domain allowlist. No network or file I/O.",
+      "default": false
+    },
+    "allowedUrlDomains": {
+      "title": "Allowed URL domains",
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Allowed hostnames for URL uploads (e.g. s3.amazonaws.com). Used only when validateUploadUrl is true. Subdomains match (e.g. bucket.s3.amazonaws.com matches s3.amazonaws.com)."
+    },
+    "allowedUrlExtensions": {
+      "title": "Allowed URL extensions",
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Weak hint only: URL pathname must end with one of these (e.g. .wav, .mp3). Does not verify actual file content; backend validates type when processing."
+    },
+    "requireExpiryParam": {
+      "title": "Require expiry parameter",
+      "type": "boolean",
+      "description": "When true (and validateUploadUrl is true), URL must include an expiry query parameter (e.g. X-Amz-Expires, Expires).",
+      "default": false
     }
   },
   "type": "object",
