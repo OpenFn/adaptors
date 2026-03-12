@@ -1,5 +1,12 @@
 # @openfn/generate-fhir
 
+## 0.7.4
+
+### Patch Changes
+
+- 317e3c7: Alphabetically sort generated props Correctly format generated types
+  with a space and a surrounding code block: '``'
+
 ## 0.7.3
 
 ### Patch Changes
