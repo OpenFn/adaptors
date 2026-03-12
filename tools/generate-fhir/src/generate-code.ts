@@ -245,9 +245,9 @@ const generateJsDocs = (
   // TODO for now, just generate for the first schema
   // Later we have to generate a superset of all props and provide variations
   const profile = schema[0];
-  const validProps = Object.keys(profile.props).filter(
-    p => !ignore.includes(p),
-  );
+  const validProps = Object.keys(profile.props)
+    .filter(p => !ignore.includes(p))
+    .sort();
   for (const propName of validProps) {
     const prop = profile.props[propName];
 
