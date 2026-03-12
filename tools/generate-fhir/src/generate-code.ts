@@ -958,6 +958,19 @@ const mapExtension = (propName: string, _mapping: Mapping, schema: Schema) => {
         ),
       ),
     );
+  } else if (schema.type.includes('Reference')) {
+    statements.push(
+      b.expressionStatement(
+        b.assignmentExpression(
+          '=',
+          b.identifier('src'),
+          b.callExpression(
+            b.memberExpression(b.identifier('dt'), b.identifier('reference')),
+            [b.identifier('src')],
+          ),
+        ),
+      ),
+    );
   } else {
     console.warn(
       `WARNING: Failed to generate typed builder ${propName} for extension ${schema.extension}`,

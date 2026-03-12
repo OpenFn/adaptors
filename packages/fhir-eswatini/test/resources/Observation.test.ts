@@ -37,6 +37,19 @@ describe('SzLabResult', () => {
     ]);
   });
 
+  it('should create a SzLabResult with a testingLab extension (pass string)', () => {
+    const result = builders.observation('SzLabResult', {
+      testingLaboratory: 'Location/abc',
+    });
+
+    assert.deepEqual(result.extension, [
+      {
+        url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzTestingLabExtension',
+        valueReference: { reference: 'Location/abc' },
+      },
+    ]);
+  });
+
   it.skip('should create a SzLabResult with a testingLab extension (pass resource directly)', () => {
     const lab = {
       id: 'abc',
