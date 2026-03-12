@@ -1,5 +1,14 @@
 # @openfn/language-fhir-eswatini
 
+## 0.5.1 - 12 March 2026
+
+### Patch Changes
+
+- 317e3c7: Alphabetically sort generated props Correctly format generated types
+  with a space and a surrounding code block: '\`\`'
+- Updated dependencies \[317e3c7]
+  - @openfn/language-fhir-4@0.3.2
+
 ## 0.5.0
 
 ### Minor Changes

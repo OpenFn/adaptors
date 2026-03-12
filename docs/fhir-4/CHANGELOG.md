@@ -1,5 +1,12 @@
 # @openfn/language-fhir-4
 
+## 0.3.2 - 12 March 2026
+
+### Patch Changes
+
+- 317e3c7: Alphabetically sort generated props Correctly format generated types
+  with a space and a surrounding code block: '\`\`'
+
 ## 0.3.1
 
 ### Patch Changes
