@@ -1,4 +1,4 @@
-
+import { Readable } from 'node:stream';
 import { composeNextState } from '@openfn/language-common';
 import { S3Client } from '@aws-sdk/client-s3';
 
@@ -16,7 +16,8 @@ export const prepareNextState = (state, response) => {
 };
 
 export const s3ClientFromConfig = (configuration = {}) => {
-  const { accessKeyId, secretAccessKey, sessionToken, region } = configuration || {};
+  const { accessKeyId, secretAccessKey, sessionToken, region } =
+    configuration || {};
   const clientConfig = {};
   if (region) clientConfig.region = region;
   if (accessKeyId && secretAccessKey) {
@@ -29,9 +30,7 @@ export const s3ClientFromConfig = (configuration = {}) => {
   return new S3Client(clientConfig);
 };
 
-
-
-export const streamToBuffer = async (stream) => {
+export const streamToBuffer = async stream => {
   if (Buffer.isBuffer(stream)) return stream;
   if (typeof stream.arrayBuffer === 'function') {
     const ab = await stream.arrayBuffer();
@@ -39,19 +38,20 @@ export const streamToBuffer = async (stream) => {
   }
   if (stream instanceof Readable) {
     const chunks = [];
-    for await (const chunk of stream) chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+    for await (const chunk of stream)
+      chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
     return Buffer.concat(chunks);
   }
   return Buffer.from(String(stream));
 };
 
-export const prepareS3GetResponse = async (response) => {
- const buffer = await streamToBuffer(response.Body);
- try{
-  return  JSON.parse(buffer.toString('utf8'));
- } catch (e){
-  return buffer;
- }
+export const prepareS3GetResponse = async response => {
+  const buffer = await streamToBuffer(response.Body);
+  try {
+    return JSON.parse(buffer.toString('utf8'));
+  } catch (e) {
+    return buffer;
+  }
 };
 
 export const preparePutResponse = (response, Bucket, Key) => {
@@ -65,5 +65,3 @@ export const preparePutResponse = (response, Bucket, Key) => {
     statusCode: 200,
   };
 };
-
-
