@@ -1,5 +1,11 @@
 # @openfn/language-fhir-eswatini
 
+## 0.5.2 - 13 March 2026
+
+### Patch Changes
+
+- Fix an issue mapping reference values to extensions
+
 ## 0.5.1 - 12 March 2026
 
 ### Patch Changes
