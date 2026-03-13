@@ -59,6 +59,7 @@ export default function(props: Partial<Observation_SzLabResult_Props>) {
 
     if (!_.isNil(props.authorizer)) {
         let src = props.authorizer;
+        src = dt.reference(src);
         delete resource.authorizer;
 
         dt.addExtension(
@@ -70,6 +71,7 @@ export default function(props: Partial<Observation_SzLabResult_Props>) {
 
     if (!_.isNil(props.testingLaboratory)) {
         let src = props.testingLaboratory;
+        src = dt.reference(src);
         delete resource.testingLaboratory;
 
         dt.addExtension(

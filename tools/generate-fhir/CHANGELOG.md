@@ -1,5 +1,11 @@
 # @openfn/generate-fhir
 
+## 0.7.5
+
+### Patch Changes
+
+- When mapping property extensions, ensure that reference types get mapped
+
 ## 0.7.4
 
 ### Patch Changes
