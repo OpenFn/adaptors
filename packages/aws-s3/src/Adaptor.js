@@ -1,17 +1,21 @@
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
-import {PutObjectCommand, ListObjectsV2Command, GetObjectCommand} from '@aws-sdk/client-s3';
+import {
+  PutObjectCommand,
+  ListObjectsV2Command,
+  GetObjectCommand,
+} from '@aws-sdk/client-s3';
 
 /**
  * S3 operation input params used by `put`, `get`, and `list`.
  * @typedef {Object} S3Params
- * @property {string} bucket - S3 bucket name (required).
- * @property {string} key - Object key for `put`/`get` (required for those ops).
- * @property {any} [body] - Body for `put` (string, Buffer, or stream).
- * @property {string} [contentType] - Optional content type for `put`.
- * @property {string} [prefix] - Prefix for `list` operation.
- * @property {number} [maxKeys] - Max keys for `list`.
- * @property {string} [continuationToken] - Continuation token for `list` pagination.
+ * @property {string} key - Object key for `put`/`get` (required for those ops)
+ * @property {any} [body] - Body for `put` (string, Buffer, or stream)
+ * @property {string} [bucket] - S3 bucket name (overrides configuration value)
+ * @property {string} [contentType] - Optional content type for `put`
+ * @property {string} [prefix] - Prefix for `list` operation
+ * @property {number} [maxKeys] - Max keys for `list`
+ * @property {string} [continuationToken] - Continuation token for `list` pagination
  */
 
 /**
@@ -28,15 +32,16 @@ import {PutObjectCommand, ListObjectsV2Command, GetObjectCommand} from '@aws-sdk
 export function put(params) {
   return async state => {
     const [resolvedParams] = expandReferences(state, params);
+
     const awsParams = {
-      Bucket: resolvedParams.bucket,
+      Bucket: resolvedParams.bucket ?? state.configuration?.bucket,
       Key: resolvedParams.key,
       Body: resolvedParams.body,
       ContentType: resolvedParams.contentType,
       ACL: resolvedParams.acl || resolvedParams.ACL,
       ServerSideEncryption: resolvedParams.serverSideEncryption,
     };
-    
+
     const client = util.s3ClientFromConfig(state.configuration);
     const resp = await client.send(new PutObjectCommand(awsParams));
     const newData = {
@@ -47,8 +52,6 @@ export function put(params) {
     return { ...state, data: newData };
   };
 }
-  
-
 
 /**
  * List objects in a bucket (by prefix).
@@ -62,14 +65,15 @@ export function put(params) {
  * @state {Object} state - On success sets `state.data` to the list of objects and `state.response` to the raw S3 response metadata.
  */
 
-export function list(params) {
+export function list(params = {}) {
   return async state => {
     const [resolvedParams] = expandReferences(state, params);
     const awsParams = {
-      Bucket: resolvedParams.bucket, 
-      Prefix: resolvedParams.prefix ,
-      MaxKeys: resolvedParams.maxKeys, 
-      ContinuationToken: resolvedParams.continuationToken || resolvedParams.ContinuationToken,
+      Bucket: resolvedParams.bucket ?? state.configuration?.bucket,
+      Prefix: resolvedParams.prefix,
+      MaxKeys: resolvedParams.maxKeys,
+      ContinuationToken:
+        resolvedParams.continuationToken || resolvedParams.ContinuationToken,
     };
     const client = util.s3ClientFromConfig(state.configuration);
     const resp = await client.send(new ListObjectsV2Command(awsParams));
@@ -96,29 +100,28 @@ export function get(params) {
     const [resolvedParams] = expandReferences(state, params);
 
     const awsParams = {
-      Bucket: resolvedParams.bucket,
+      Bucket: resolvedParams.bucket ?? state.configuration?.bucket,
       Key: resolvedParams.key,
     };
-    
+
     const client = util.s3ClientFromConfig(state.configuration);
     const resp = await client.send(new GetObjectCommand(awsParams));
     const buffer = await util.streamToBuffer(resp.Body);
-    
-    let data;
-    
-    try{
-      data = JSON.parse(buffer.toString('utf8'));
-    } catch (e){
-      data = {
-      base64: buffer.toString('base64'),
-      contentType: resp.ContentType || '',
-      contentLength: resp.ContentLength || buffer.length
-    };
-    }
-    return util.prepareNextState(state, {body: data});
-};
-}
 
+    let data;
+
+    try {
+      data = JSON.parse(buffer.toString('utf8'));
+    } catch (e) {
+      data = {
+        base64: buffer.toString('base64'),
+        contentType: resp.ContentType || '',
+        contentLength: resp.ContentLength || buffer.length,
+      };
+    }
+    return util.prepareNextState(state, { body: data });
+  };
+}
 
 export {
   as,

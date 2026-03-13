@@ -4,13 +4,13 @@
     "accessKeyId": {
       "title": "AWS Access Key ID",
       "type": "string",
-      "description": "AWS access key id. Prefer using environment credentials or the default provider chain.",
+      "description": "AWS access key id",
       "examples": ["AKIA..."]
     },
     "secretAccessKey": {
       "title": "AWS Secret Access Key",
       "type": "string",
-      "description": "AWS secret key. Prefer using environment credentials or the default provider chain.",
+      "description": "AWS secret key",
       "writeOnly": true
     },
     "sessionToken": {
@@ -30,6 +30,11 @@
       "type": "string",
       "description": "Optional S3 endpoint (useful for LocalStack or S3-compatible services).",
       "format": "uri"
+    },
+    "bucket": {
+      "title": "Bucket",
+      "type": "string",
+      "description": "Optional bucket name to use"
     }
   },
   "type": "object",

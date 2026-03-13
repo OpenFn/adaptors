@@ -8,27 +8,12 @@ API.
 View the [docs site](https://docs.openfn.org/adaptors/packages/aws-s3-docs) for
 full technical documentation.
 
-# aws-s3 — Minimal API
-
-This document describes the minimal public API for the `@openfn/language-aws-s3`
-adaptor. It focuses only on three simple, commonly-used operations: `put`,
-`get`, and `list`.
-
-Usage principles
-
-- Keep jobs small and explicit. Use the camelCase public API (`bucket`, `key`,
-  `body`, `contentType`).
-- The adaptor uses the AWS SDK v3 `S3Client` under the hood and the default
-  credential provider chain unless credentials are provided in
-  `state.configuration`.
+The adaptor uses the AWS SDK `@aws-sdk/client-s3`.
 
 Operations
 
 - `put(params)` — Put an object into a bucket.
   - Params: `{ bucket, key, body, contentType?, acl?, serverSideEncryption? }`
-  - Writes the given `body` to S3.
-  - Returns an operation that merges metadata (bucket, key, etag) into the job
-    `state`.
 
 - `get(params)` — Retrieve an object from a bucket.
   - Params: `{ bucket, key }`
@@ -39,8 +24,6 @@ Operations
 
 - `list(params)` — List objects in a bucket.
   - Params: `{ bucket, prefix?, maxKeys?, continuationToken? }`
-  - Returns an array of S3 `Contents` in `state.data` (each item contains at
-    least `Key` and other S3 metadata).
 
 Examples
 
@@ -55,12 +38,8 @@ get({ bucket: 'openfn-test', key: 'patients/1.json' });
 list({ bucket: 'openfn-test', prefix: 'patients/' });
 ```
 
-Notes
-
-- Do not commit real AWS credentials into source control. Use environment
-  variables, CI secrets, or the default provider chain.
-- The adaptor reads objects into memory for parsing/base64 conversion; avoid
-  very large objects or implement streaming outside this adaptor.
+Do not commit real AWS credentials into source control. Use environment
+variables, CI secrets, or the default provider chain.
 
 ## Development
 
