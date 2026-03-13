@@ -41,7 +41,7 @@
     "rimraf": "3.0.2",
     "ts-node": "10.9.1",
     "typescript": "5.9.2",
-    "undici": "^7.19.2"
+    "undici": "^7.24.0"
   },
   "repository": {
     "type": "git",
