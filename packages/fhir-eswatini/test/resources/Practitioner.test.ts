@@ -95,14 +95,20 @@ describe('SzPractitioner', () => {
 
   it('should map identifier type shorthand to a coding', () => {
     const resource = builders.practitioner('SzPractitioner', {
-      identifier: [
-        {
-          use: 'official',
-          system: 'http://homeaffairs.sys',
-          value: '9101010000001',
-          type: 'PI',
-        },
-      ],
+     identifier: [
+      {
+        type: builders.concept([
+          'PI',
+          'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzPersonIdentificationsCS',
+          {
+            display: 'Personal ID Number',
+          },
+        ]),
+        system: 'http://homeaffairs.sys',
+        value: '9101010000001',
+        use: 'official',
+      },
+    ],
     });
     assert.deepEqual(resource.identifier[0].type, {
       coding: [
