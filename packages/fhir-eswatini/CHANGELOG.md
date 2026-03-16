@@ -1,5 +1,14 @@
 # @openfn/language-fhir-eswatini
 
+## 0.6.0 - 16 March 2026
+
+### Minor Changes
+
+- 1c9696a: Update adaptor API:
+
+  - Export `log` from common
+  - Add `mapValues` operation as a convenience for `datatypes.setValueMap()`
+
 ## 0.5.2 - 13 March 2026
 
 ### Patch Changes
