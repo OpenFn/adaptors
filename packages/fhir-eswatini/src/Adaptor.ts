@@ -1,6 +1,6 @@
 import { expandReferences } from '@openfn/language-common/util';
-
 export { createBundle, uploadBundle } from '@openfn/language-fhir-4';
+import * as builders from './builders';
 
 // TODO would like a smarter way to track this
 const BASE_URL = 'http://172.209.216.154';
@@ -49,12 +49,36 @@ export function addToBundle(resources: any | any[], name: string = 'bundle') {
   };
 }
 
+/**
+ * Set value mappings against a value-set.
+ * Pass the URL of the valueset you want to provide mappings for.
+ * For each mapping, the key is the input string, and the  value is either
+ * a code string or a full object value to map
+ * @public
+ * @function
+ * @param {string} url - The URL of the value set you are providing mappings for
+ * @param {object} [mappings] - object of mappings
+ * @example <caption>Create a custom mapping for Patient.inkhundla</caption>
+ * mapValues('http://172.209.216.154:3447/fhir/ValueSet/SzTinkhundlaVS', {
+ *  // Maps input value "lobamba" to mapping code "3"
+ *  lobamba: '3',
+ * });
+ * @returns Operation
+ */
+export function mapValues(url: string, mappings: string) {
+  return state => {
+    builders.setValues(url, mappings);
+
+    return state;
+  };
+}
 export {
   combine,
   dataPath,
   dataValue,
   dateFns,
   cursor,
+  log,
   each,
   field,
   fields,
