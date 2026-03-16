@@ -52,13 +52,17 @@ export function addToBundle(resources: any | any[], name: string = 'bundle') {
 /**
  * Set value mappings against a value-set.
  * Pass the URL of the valueset you want to provide mappings for.
- *
+ * For each mapping, the key is the input string, and the  value is either
+ * a code string or a full object value to map
  * @public
  * @function
- * @param {string} resources - A resource or array of resources to add to the bundle
- * @param {object} [name] - A name (key) for this bundle on state (defaults to `bundle`)
- * @example <caption>Add a new patient resource to the default bundle</caption>
- * addToBundle(b.patient($.patientDetails))
+ * @param {string} url - The URL of the value set you are providing mappings for
+ * @param {object} [mappings] - object of mappings
+ * @example <caption>Create a custom mapping for Patient.inkhundla</caption>
+ * mapValues('http://172.209.216.154:3447/fhir/ValueSet/SzTinkhundlaVS', {
+ *  // Maps input value "lobamba" to mapping code "3"
+ *  lobamba: '3',
+ * });
  * @returns Operation
  */
 export function mapValues(url: string, mappings: string) {
@@ -68,7 +72,6 @@ export function mapValues(url: string, mappings: string) {
     return state;
   };
 }
-
 export {
   combine,
   dataPath,
