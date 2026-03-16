@@ -57,6 +57,60 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "mapValues",
+      "params": [
+        "url",
+        "mappings"
+      ],
+      "docs": {
+        "description": "Set value mappings against a value-set.\nPass the URL of the valueset you want to provide mappings for.\nFor each mapping, the key is the input string, and the  value is either\na code string or a full object value to map",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "The URL of the value set you are providing mappings for",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "url"
+          },
+          {
+            "title": "param",
+            "description": "object of mappings",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "mappings"
+          },
+          {
+            "title": "example",
+            "description": "mapValues('http://172.209.216.154:3447/fhir/ValueSet/SzTinkhundlaVS', {\n // Maps input value \"lobamba\" to mapping code \"3\"\n lobamba: '3',\n});",
+            "caption": "Create a custom mapping for Patient.inkhundla"
+          },
+          {
+            "title": "returns",
+            "description": "Operation",
+            "type": null
+          }
+        ]
+      },
+      "valid": true
     }
   ],
   "exports": [],
@@ -622,6 +676,55 @@
         ]
       },
       "valid": false
+    },
+    {
+      "name": "log",
+      "params": [
+        "args"
+      ],
+      "docs": {
+        "description": "Outputs a message, like calling `console.log`. Use this at the top level of your job code, but not inside callbacks.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "log('Patient List::', $.patients);",
+            "caption": "Log values from state"
+          },
+          {
+            "title": "example",
+            "description": "fn((state) => {\n  console.log(state.data);\n  return state;\n})",
+            "caption": "Use console.log inside a callback or fn block"
+          },
+          {
+            "title": "param",
+            "description": "A value or message to display in the logs",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "args"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ]
 }
