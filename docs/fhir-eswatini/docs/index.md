@@ -1,6 +1,8 @@
 <dl>
 <dt>
     <a href="#addtobundle">addToBundle(resources, [name])</a></dt>
+<dt>
+    <a href="#mapvalues">mapValues(url, [mappings])</a></dt>
 </dl>
 
 This adaptor exports the following namespaced functions:
@@ -93,6 +95,33 @@ This operation writes the following keys to state:
 **Example:** Add a new patient resource to the default bundle
 ```js
 addToBundle(b.patient($.patientDetails))
+```
+
+* * *
+
+### mapValues
+
+<p><code>mapValues(url, [mappings]) ⇒</code></p>
+
+Set value mappings against a value-set.
+Pass the URL of the valueset you want to provide mappings for.
+For each mapping, the key is the input string, and the  value is either
+a code string or a full object value to map
+
+**Returns**: Operation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| url | <code>string</code> | The URL of the value set you are providing mappings for |
+| [mappings] | <code>object</code> | object of mappings |
+
+
+**Example:** Create a custom mapping for Patient.inkhundla
+```js
+mapValues('http://172.209.216.154:3447/fhir/ValueSet/SzTinkhundlaVS', {
+ // Maps input value "lobamba" to mapping code "3"
+ lobamba: '3',
+});
 ```
 
 * * *
