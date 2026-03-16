@@ -1,6 +1,6 @@
 import { expandReferences } from '@openfn/language-common/util';
-
 export { createBundle, uploadBundle } from '@openfn/language-fhir-4';
+import * as builders from './builders';
 
 // TODO would like a smarter way to track this
 const BASE_URL = 'http://172.209.216.154';
@@ -49,12 +49,33 @@ export function addToBundle(resources: any | any[], name: string = 'bundle') {
   };
 }
 
+/**
+ * Set value mappings against a value-set.
+ * Pass the URL of the valueset you want to provide mappings for.
+ *
+ * @public
+ * @function
+ * @param {string} resources - A resource or array of resources to add to the bundle
+ * @param {object} [name] - A name (key) for this bundle on state (defaults to `bundle`)
+ * @example <caption>Add a new patient resource to the default bundle</caption>
+ * addToBundle(b.patient($.patientDetails))
+ * @returns Operation
+ */
+export function mapValues(url: string, mappings: string) {
+  return state => {
+    builders.setValues(url, mappings);
+
+    return state;
+  };
+}
+
 export {
   combine,
   dataPath,
   dataValue,
   dateFns,
   cursor,
+  log,
   each,
   field,
   fields,
