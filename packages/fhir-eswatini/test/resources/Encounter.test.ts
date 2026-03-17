@@ -124,5 +124,36 @@ describe('SzEncounter', () => {
     assert.deepEqual(resource, sampleBasic);
   });
 
+   it.skip('should correctly map location', () => {
+    const resource = builders.encounter('SzEncounter', {
+      location: [
+        {
+          location: 'Location/H044',
+          status: 'completed',
+        },
+      ],
+    });
+    assert.deepEqual(resource.location, [
+      {
+        location: { reference: 'Location/H044' },
+        status: 'completed',
+      },
+    ]);
+  });
+   it.skip('should correctly map participant', () => {
+    const resource = builders.encounter('SzEncounter', {
+      participant: [
+        {
+          individual: 'Practitioner/P001',
+        },
+      ],
+    });
+    assert.deepEqual(resource.participant, [
+      {
+        individual: { reference: 'Practitioner/P001' },
+      },
+    ]);
+  });
+
   // TODO: map to a base fhir 4 value (if they want those)
 });
