@@ -144,13 +144,13 @@
           },
           {
             "title": "example",
-            "description": "list({folderId: '<id-of-folder-here>'})",
+            "description": "list('<id-of-folder-here>')",
             "caption": "List files of a directory"
           },
           {
             "title": "example",
-            "description": "list()",
-            "caption": "List files at the root of google drive"
+            "description": "list('<id-of-folder-here>',\n {\n   fields: ['id', 'name', 'modifiedTime'],\n   limit: 1,\n   orderBy: 'modifiedTime desc'\n})",
+            "caption": "Get the latest modified file in folder"
           },
           {
             "title": "param",
@@ -174,54 +174,6 @@
             "name": "options"
           },
           {
-            "title": "param",
-            "description": "Fields to return in the response. Defaults to 'files(id, name, mimeType, createdTime, modifiedTime)'.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "options.fields"
-          },
-          {
-            "title": "param",
-            "description": "Custom query string for filtering files (see Google Drive API query syntax).",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "options.query"
-          },
-          {
-            "title": "param",
-            "description": "Maximum number of files to return",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "number"
-              }
-            },
-            "name": "options.limit"
-          },
-          {
-            "title": "param",
-            "description": "Order in which to sort the results. Defaults to 'modifiedTime desc'.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "options.orderBy"
-          },
-          {
             "title": "state",
             "description": "{DriveState}"
           },
@@ -235,7 +187,7 @@
           }
         ]
       },
-      "valid": false
+      "valid": true
     },
     {
       "name": "update",

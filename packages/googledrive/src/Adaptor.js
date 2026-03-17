@@ -147,15 +147,16 @@ export function get(fileIdOrName) {
  * Lists files from a directory or root.
  * @public
  * @example <caption>List files of a directory</caption>
- * list({folderId: '<id-of-folder-here>'})
- * @example <caption>List files at the root of google drive</caption>
- * list()
+ * list('<id-of-folder-here>')
+ * @example <caption>Get the latest modified file in folder</caption>
+ * list('<id-of-folder-here>',
+ *  {
+ *    fields: ['id', 'name', 'modifiedTime'],
+ *    limit: 1,
+ *    orderBy: 'modifiedTime desc'
+ * })
  * @param {string} folderId - ID of the folder to list files from. If not provided, lists files from the root.
  * @param {Object} [options] - Options for listing files
- * @param {string} [options.fields] - Fields to return in the response. Defaults to 'files(id, name, mimeType, createdTime, modifiedTime)'.
- * @param {string} [options.query] - Custom query string for filtering files (see Google Drive API query syntax).
- * @param {number} [options.limit] - Maximum number of files to return
- * @param {string} [options.orderBy] - Order in which to sort the results. Defaults to 'modifiedTime desc'.
  * @state {DriveState}
  * @returns {Operation} An operation that retrieves a list of files.
  */
