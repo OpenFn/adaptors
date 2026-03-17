@@ -147,10 +147,6 @@ Lists files from a directory or root.
 | --- | --- | --- |
 | folderId | <code>string</code> | ID of the folder to list files from. If not provided, lists files from the root. |
 | [options] | <code>Object</code> | Options for listing files |
-| [options.fields] | <code>string</code> | Fields to return in the response. Defaults to 'files(id, name, mimeType, createdTime, modifiedTime)'. |
-| [options.query] | <code>string</code> | Custom query string for filtering files (see Google Drive API query syntax). |
-| [options.limit] | <code>number</code> | Maximum number of files to return |
-| [options.orderBy] | <code>string</code> | Order in which to sort the results. Defaults to 'modifiedTime desc'. |
 
 This operation writes the following keys to state:
 
@@ -161,11 +157,16 @@ This operation writes the following keys to state:
 
 **Example:** List files of a directory
 ```js
-list({folderId: '<id-of-folder-here>'})
+list('<id-of-folder-here>')
 ```
-**Example:** List files at the root of google drive
+**Example:** Get the latest modified file in folder
 ```js
-list()
+list('<id-of-folder-here>',
+ {
+   fields: ['id', 'name', 'modifiedTime'],
+   limit: 1,
+   orderBy: 'modifiedTime desc'
+})
 ```
 
 * * *
