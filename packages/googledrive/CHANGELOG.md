@@ -1,5 +1,11 @@
 # @openfn/language-googledrive
 
+## 3.0.2 - 17 March 2026
+
+### Patch Changes
+
+- fc6fc99: Updated docs for the `list` function
+
 ## 3.0.1 - 24 February 2026
 
 ### Patch Changes
