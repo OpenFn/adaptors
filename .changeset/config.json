@@ -1,0 +1,19 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@2.2.0/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": [
+    "@openfn/buildtools",
+    "@openfn/generate",
+    "@openfn/metadata",
+    "@openfn/migrate-adaptor",
+    "@openfn/parse-jsdoc",
+    "@openfn/slack-notify",
+    "import-tests"
+  ]
+}
