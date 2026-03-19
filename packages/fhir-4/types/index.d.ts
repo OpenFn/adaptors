@@ -3,3 +3,4 @@ export default Adaptor;
 export * from './Adaptor';
 export * as builders from './builders';
 export * as b from './builders';
+export * as datatypes from './datatypes';

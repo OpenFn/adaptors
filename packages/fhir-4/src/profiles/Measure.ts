@@ -11,22 +11,22 @@ type MaybeArray<T> = T | T[];
 export type Measure_Props = {
     approvalDate?: string;
     author?: FHIR.ContactDetail[];
-    clinicalRecommendationStatement?: FHIR.markdown;
+    clinicalRecommendationStatement?: string;
     compositeScoring?: string[] | FHIR.CodeableConcept;
     contact?: FHIR.ContactDetail[];
     contained?: any[];
-    copyright?: FHIR.markdown;
+    copyright?: string;
     date?: string;
-    definition?: FHIR.markdown[];
-    description?: FHIR.markdown;
-    disclaimer?: FHIR.markdown;
+    definition?: string[];
+    description?: string;
+    disclaimer?: string;
     editor?: FHIR.ContactDetail[];
     effectivePeriod?: FHIR.Period;
     endorser?: FHIR.ContactDetail[];
     experimental?: boolean;
     extension?: FHIR.Extension[];
     group?: FHIR.BackboneElement[];
-    guidance?: FHIR.markdown;
+    guidance?: string;
     id?: string;
     identifier?: MaybeArray<string | FHIR.Identifier>;
     implicitRules?: string;
@@ -39,9 +39,9 @@ export type Measure_Props = {
     modifierExtension?: FHIR.Extension[];
     name?: string;
     publisher?: string;
-    purpose?: FHIR.markdown;
+    purpose?: string;
     rateAggregation?: string;
-    rationale?: FHIR.markdown;
+    rationale?: string;
     relatedArtifact?: FHIR.RelatedArtifact[];
     reviewer?: FHIR.ContactDetail[];
     riskAdjustment?: string;
@@ -79,29 +79,54 @@ export default function(props: Partial<Measure_Props>) {
 
     if (!_.isNil(props.jurisdiction)) {
         if (!Array.isArray(props.jurisdiction)) { props.jurisdiction = [props.jurisdiction]; }
-        resource.jurisdiction = dt.concept(props.jurisdiction);
+
+        resource.jurisdiction = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/jurisdiction", props.jurisdiction)
+        );
+
+        dt.ensureConceptText(resource.jurisdiction);
     }
 
     if (!_.isNil(props.topic)) {
         if (!Array.isArray(props.topic)) { props.topic = [props.topic]; }
-        resource.topic = dt.concept(props.topic);
+
+        resource.topic = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/definition-topic", props.topic)
+        );
+
+        dt.ensureConceptText(resource.topic);
     }
 
     if (!_.isNil(props.scoring)) {
-        resource.scoring = dt.concept(props.scoring);
+        resource.scoring = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/measure-scoring", props.scoring)
+        );
+
+        dt.ensureConceptText(resource.scoring);
     }
 
     if (!_.isNil(props.compositeScoring)) {
-        resource.compositeScoring = dt.concept(props.compositeScoring);
+        resource.compositeScoring = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/composite-measure-scoring",
+            props.compositeScoring
+        ));
+
+        dt.ensureConceptText(resource.compositeScoring);
     }
 
     if (!_.isNil(props.type)) {
         if (!Array.isArray(props.type)) { props.type = [props.type]; }
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/measure-type", props.type));
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.improvementNotation)) {
-        resource.improvementNotation = dt.concept(props.improvementNotation);
+        resource.improvementNotation = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/measure-improvement-notation|4.3.0",
+            props.improvementNotation
+        ));
+
+        dt.ensureConceptText(resource.improvementNotation);
     }
 
     if (!_.isNil(props.group)) {

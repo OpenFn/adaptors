@@ -12,7 +12,7 @@ export type RegulatedAuthorization_Props = {
     basis?: MaybeArray<string[] | FHIR.CodeableConcept>;
     case?: FHIR.BackboneElement;
     contained?: any[];
-    description?: FHIR.markdown;
+    description?: string;
     extension?: FHIR.Extension[];
     holder?: string | FHIR.Reference;
     id?: string;
@@ -51,25 +51,43 @@ export default function(props: Partial<RegulatedAuthorization_Props>) {
     }
 
     if (!_.isNil(props.type)) {
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/regulated-authorization-type", props.type)
+        );
+
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.region)) {
         if (!Array.isArray(props.region)) { props.region = [props.region]; }
-        resource.region = dt.concept(props.region);
+        resource.region = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/jurisdiction", props.region));
+        dt.ensureConceptText(resource.region);
     }
 
     if (!_.isNil(props.status)) {
-        resource.status = dt.concept(props.status);
+        resource.status = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/publication-status", props.status)
+        );
+
+        dt.ensureConceptText(resource.status);
     }
 
     if (!_.isNil(props.intendedUse)) {
-        resource.intendedUse = dt.concept(props.intendedUse);
+        resource.intendedUse = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/product-intended-use", props.intendedUse)
+        );
+
+        dt.ensureConceptText(resource.intendedUse);
     }
 
     if (!_.isNil(props.basis)) {
         if (!Array.isArray(props.basis)) { props.basis = [props.basis]; }
-        resource.basis = dt.concept(props.basis);
+
+        resource.basis = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/regulated-authorization-basis", props.basis)
+        );
+
+        dt.ensureConceptText(resource.basis);
     }
 
     if (!_.isNil(props.holder)) {
@@ -84,7 +102,7 @@ export default function(props: Partial<RegulatedAuthorization_Props>) {
         let src = props.case;
 
         let _case = {
-            ...item
+            ...src
         };
 
         resource.case = _case;

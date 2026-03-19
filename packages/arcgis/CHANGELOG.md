@@ -1,5 +1,13 @@
 # @openfn/language-arcgis
 
+## 1.0.5 - 24 February 2026
+
+### Patch Changes
+
+- 856f85c: Security updates
+- Updated dependencies \[856f85c]
+  - @openfn/language-common@3.2.3
+
 ## 1.0.4 - 09 February 2026
 
 ### Patch Changes
@@ -29,7 +37,7 @@
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 1.0.0
+## 1.0.0 - 16 October 2025
 
 ### Major Changes
 
@@ -40,6 +48,6 @@
 - Updated dependencies \[408a3a2]
   - @openfn/language-common@3.1.1
 
-## 0.0.1
+## 0.0.1 - 06 October 2025
 
 Initial release.

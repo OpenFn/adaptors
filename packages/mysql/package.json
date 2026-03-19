@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-mysql",
   "label": "MySQL",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "A MySQL Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "main": "dist/index.cjs",

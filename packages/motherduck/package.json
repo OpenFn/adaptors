@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-motherduck",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "OpenFn MotherDuck cloud database adaptor",
   "type": "module",
   "exports": {
@@ -38,7 +38,7 @@
     "deep-eql": "4.1.1",
     "mocha": "^10.7.3",
     "rimraf": "3.0.2",
-    "undici": "^5.22.1"
+    "undici": "^7.19.2"
   },
   "repository": {
     "type": "git",

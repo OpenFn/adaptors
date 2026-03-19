@@ -39,11 +39,21 @@ export default function(props: Partial<ManufacturedItemDefinition_Props>) {
     }
 
     if (!_.isNil(props.manufacturedDoseForm)) {
-        resource.manufacturedDoseForm = dt.concept(props.manufacturedDoseForm);
+        resource.manufacturedDoseForm = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/manufactured-dose-form",
+            props.manufacturedDoseForm
+        ));
+
+        dt.ensureConceptText(resource.manufacturedDoseForm);
     }
 
     if (!_.isNil(props.unitOfPresentation)) {
-        resource.unitOfPresentation = dt.concept(props.unitOfPresentation);
+        resource.unitOfPresentation = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/unit-of-presentation",
+            props.unitOfPresentation
+        ));
+
+        dt.ensureConceptText(resource.unitOfPresentation);
     }
 
     if (!_.isNil(props.manufacturer)) {
@@ -53,7 +63,12 @@ export default function(props: Partial<ManufacturedItemDefinition_Props>) {
 
     if (!_.isNil(props.ingredient)) {
         if (!Array.isArray(props.ingredient)) { props.ingredient = [props.ingredient]; }
-        resource.ingredient = dt.concept(props.ingredient);
+
+        resource.ingredient = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/substance-codes", props.ingredient)
+        );
+
+        dt.ensureConceptText(resource.ingredient);
     }
 
     if (!_.isNil(props.property)) {

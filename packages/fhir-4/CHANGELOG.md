@@ -1,10 +1,56 @@
 # @openfn/language-fhir-4
 
+## 0.3.2 - 12 March 2026
+
+### Patch Changes
+
+- 317e3c7: Alphabetically sort generated props Correctly format generated types
+  with a space and a surrounding code block: '\`\`'
+
+## 0.3.1
+
+### Patch Changes
+
+- Fix profiles and link some more valuemaps
+
+## 0.3.0 - 02 March 2026
+
+### Minor Changes
+
+- 355f383: Add a `createBundle` helper
+
+### Patch Changes
+
+- 3a9915b: When mapping coding values, also index on the display value. This is
+  useful for codings where the code is not intuitive, but the display value is.
+
+## 0.2.10 - 24 February 2026
+
+### Patch Changes
+
+- 213115b: Add `ensureConceptText` utility to datatypes
+- 6ef5351: Map more primitive types (eg, markdown -> string)
+
+## 0.2.9 - 24 February 2026
+
+### Patch Changes
+
+- 856f85c: Security updates
+- Updated dependencies \[856f85c]
+  - @openfn/language-common@3.2.3
+
+## 0.2.8 - 24 February 2026
+
+### Patch Changes
+
+- 3c52750: Update coding builder to accept coding objects as a single argument
+- 81dd8bd: Default system key for mapped value in lookupValue
+
 ## 0.2.7 - 09 February 2026
 
 ### Patch Changes
 
-- d935dda: Update d.ts defintion structure
+- d935dda: Update d.ts definition structure
 - a78d53e: Rebuild on latest generator (should be no behaviour differences)"
 
 ## 0.2.6

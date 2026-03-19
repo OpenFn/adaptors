@@ -1,5 +1,13 @@
 # @openfn/language-dagu
 
+## 1.1.2 - 24 February 2026
+
+### Patch Changes
+
+- 856f85c: Security updates
+- Updated dependencies \[856f85c]
+  - @openfn/language-common@3.2.3
+
 ## 1.1.1 - 09 February 2026
 
 ### Patch Changes
@@ -14,6 +22,6 @@
 
 - Forwarding custom http headers to built in `getAccessToken` request
 
-## 1.0.0
+## 1.0.0 - 20 November 2025
 
 Initial release (renamed from `eapts`)

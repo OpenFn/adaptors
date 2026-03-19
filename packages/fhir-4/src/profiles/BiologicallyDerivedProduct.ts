@@ -44,6 +44,7 @@ export default function(props: Partial<BiologicallyDerivedProduct_Props>) {
 
     if (!_.isNil(props.productCode)) {
         resource.productCode = dt.concept(props.productCode);
+        dt.ensureConceptText(resource.productCode);
     }
 
     if (!_.isNil(props.request)) {
@@ -60,7 +61,7 @@ export default function(props: Partial<BiologicallyDerivedProduct_Props>) {
         let src = props.collection;
 
         let _collection = {
-            ...item
+            ...src
         };
 
         resource.collection = _collection;
@@ -84,7 +85,7 @@ export default function(props: Partial<BiologicallyDerivedProduct_Props>) {
         let src = props.manipulation;
 
         let _manipulation = {
-            ...item
+            ...src
         };
 
         resource.manipulation = _manipulation;

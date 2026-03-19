@@ -24,7 +24,7 @@ export type Invoice_Props = {
     modifierExtension?: FHIR.Extension[];
     note?: FHIR.Annotation[];
     participant?: FHIR.BackboneElement[];
-    paymentTerms?: FHIR.markdown;
+    paymentTerms?: string;
     recipient?: string | FHIR.Reference;
     status?: string;
     subject?: string | FHIR.Reference;
@@ -49,6 +49,7 @@ export default function(props: Partial<Invoice_Props>) {
 
     if (!_.isNil(props.type)) {
         resource.type = dt.concept(props.type);
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.subject)) {

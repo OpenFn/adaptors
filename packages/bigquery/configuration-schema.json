@@ -8,7 +8,7 @@
             "type": "string",
             "description": "",
             "examples": [
-                "service_acconut"
+                "service_account"
             ]
         },
         "project_id": {
@@ -23,6 +23,7 @@
             "title": "Private Key Id",
             "type": "string",
             "description": "Private key id",
+            "writeOnly": true,
             "examples": [
                 "670b9e3c8c366e83aa569dd57cbfc5c575b72e42"
             ]
@@ -31,6 +32,7 @@
             "title": "Private Key",
             "type": "string",
             "description": "Private key",
+            "writeOnly": true,
             "examples": [
                 "-----BEGIN PRIVATE KEY-----\nblah\nmoreblah=\n-----END PRIVATE KEY-----\n"
             ]

@@ -66,7 +66,11 @@ export default function(props: Partial<MedicationDispense_Props>) {
     }
 
     if (!_.isNil(props.category)) {
-        resource.category = dt.concept(props.category);
+        resource.category = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/medicationdispense-category", props.category)
+        );
+
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.medication)) {
@@ -111,7 +115,11 @@ export default function(props: Partial<MedicationDispense_Props>) {
     }
 
     if (!_.isNil(props.type)) {
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(
+            dt.lookupValue("http://terminology.hl7.org/ValueSet/v3-ActPharmacySupplyType", props.type)
+        );
+
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.destination)) {
@@ -127,7 +135,7 @@ export default function(props: Partial<MedicationDispense_Props>) {
         let src = props.substitution;
 
         let _substitution = {
-            ...item
+            ...src
         };
 
         resource.substitution = _substitution;

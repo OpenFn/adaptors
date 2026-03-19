@@ -1,5 +1,19 @@
 # @openfn/language-zoho
 
+## 0.4.26 - 25 February 2026
+
+### Patch Changes
+
+- 9133458: Add missing writeOnly to sensitive credential fields and fix typos in
+  configuration schemas
+
+## 0.4.25 - 24 February 2026
+
+### Patch Changes
+
+- Updated dependencies \[856f85c]
+  - @openfn/language-common@3.2.3
+
 ## 0.4.24 - 09 February 2026
 
 ### Patch Changes
@@ -29,7 +43,7 @@
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 0.4.20
+## 0.4.20 - 16 October 2025
 
 ### Patch Changes
 

@@ -48,20 +48,38 @@ export default function(props: Partial<Location_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.operationalStatus)) {
+        let src = props.operationalStatus;
+        if (typeof src === 'string') {
+          src = dt.lookupValue('http://terminology.hl7.org/ValueSet/v2-0116', src);
+         }
+        resource.operationalStatus = dt.coding(src);
+    }
+
     if (!_.isNil(props.type)) {
         if (!Array.isArray(props.type)) { props.type = [props.type]; }
-        resource.type = dt.concept(props.type);
+
+        resource.type = dt.concept(dt.lookupValue(
+            "http://terminology.hl7.org/ValueSet/v3-ServiceDeliveryLocationRoleType",
+            props.type
+        ));
+
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.physicalType)) {
-        resource.physicalType = dt.concept(props.physicalType);
+        resource.physicalType = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/location-physical-type", props.physicalType)
+        );
+
+        dt.ensureConceptText(resource.physicalType);
     }
 
     if (!_.isNil(props.position)) {
         let src = props.position;
 
         let _position = {
-            ...item
+            ...src
         };
 
         resource.position = _position;

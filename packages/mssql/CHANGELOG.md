@@ -1,5 +1,24 @@
 # @openfn/language-mssql
 
+## 7.0.4 - 06 March 2026
+
+### Patch Changes
+
+- 81c1bfa: Add missiong titles in configuration-schema
+
+## 7.0.3 - 04 March 2026
+
+### Patch Changes
+
+- Add new config option: requestTimeout. Defaults to 10 minutes
+
+## 7.0.2 - 24 February 2026
+
+### Patch Changes
+
+- Updated dependencies \[856f85c]
+  - @openfn/language-common@3.2.3
+
 ## 7.0.1 - 09 February 2026
 
 ### Patch Changes
@@ -36,7 +55,7 @@
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 6.0.4
+## 6.0.4 - 16 October 2025
 
 ### Patch Changes
 

@@ -59,11 +59,16 @@ export default function(props: Partial<ClaimResponse_Props>) {
     }
 
     if (!_.isNil(props.type)) {
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/claim-type", props.type));
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.subType)) {
-        resource.subType = dt.concept(props.subType);
+        resource.subType = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/claim-subtype", props.subType)
+        );
+
+        dt.ensureConceptText(resource.subType);
     }
 
     if (!_.isNil(props.patient)) {
@@ -83,7 +88,8 @@ export default function(props: Partial<ClaimResponse_Props>) {
     }
 
     if (!_.isNil(props.payeeType)) {
-        resource.payeeType = dt.concept(props.payeeType);
+        resource.payeeType = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/payeetype", props.payeeType));
+        dt.ensureConceptText(resource.payeeType);
     }
 
     if (!_.isNil(props.item)) {
@@ -132,18 +138,23 @@ export default function(props: Partial<ClaimResponse_Props>) {
         let src = props.payment;
 
         let _payment = {
-            ...item
+            ...src
         };
 
         resource.payment = _payment;
     }
 
     if (!_.isNil(props.fundsReserve)) {
-        resource.fundsReserve = dt.concept(props.fundsReserve);
+        resource.fundsReserve = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/fundsreserve", props.fundsReserve)
+        );
+
+        dt.ensureConceptText(resource.fundsReserve);
     }
 
     if (!_.isNil(props.formCode)) {
-        resource.formCode = dt.concept(props.formCode);
+        resource.formCode = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/forms", props.formCode));
+        dt.ensureConceptText(resource.formCode);
     }
 
     if (!_.isNil(props.processNote)) {

@@ -18,7 +18,7 @@
             "description": "The username to log in to OCL",
             "minLength": 1,
             "examples": [
-                "usernmame"
+                "username"
             ]
         },
         "password": {

@@ -1,5 +1,20 @@
 # @openfn/language-satusehat
 
+## 3.0.10 - 25 February 2026
+
+### Patch Changes
+
+- 9133458: Add missing writeOnly to sensitive credential fields and fix typos in
+  configuration schemas
+
+## 3.0.9 - 24 February 2026
+
+### Patch Changes
+
+- 856f85c: Security updates
+- Updated dependencies \[856f85c]
+  - @openfn/language-common@3.2.3
+
 ## 3.0.8 - 09 February 2026
 
 ### Patch Changes
@@ -29,7 +44,7 @@
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 3.0.4
+## 3.0.4 - 16 October 2025
 
 ### Patch Changes
 

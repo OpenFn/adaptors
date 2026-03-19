@@ -51,6 +51,14 @@ export default function(props: Partial<ImagingStudy_Props>) {
         resource.identifier = dt.identifier(props.identifier);
     }
 
+    if (!_.isNil(props.modality)) {
+        let src = props.modality;
+        if (typeof src === 'string') {
+          src = dt.lookupValue('http://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_29.html', src);
+         }
+        resource.modality = dt.coding(src);
+    }
+
     if (!_.isNil(props.subject)) {
         resource.subject = dt.reference(props.subject);
     }
@@ -84,7 +92,12 @@ export default function(props: Partial<ImagingStudy_Props>) {
 
     if (!_.isNil(props.procedureCode)) {
         if (!Array.isArray(props.procedureCode)) { props.procedureCode = [props.procedureCode]; }
-        resource.procedureCode = dt.concept(props.procedureCode);
+
+        resource.procedureCode = dt.concept(
+            dt.lookupValue("http://www.rsna.org/RadLex_Playbook.aspx", props.procedureCode)
+        );
+
+        dt.ensureConceptText(resource.procedureCode);
     }
 
     if (!_.isNil(props.location)) {
@@ -93,7 +106,12 @@ export default function(props: Partial<ImagingStudy_Props>) {
 
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
-        resource.reasonCode = dt.concept(props.reasonCode);
+
+        resource.reasonCode = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-reason", props.reasonCode)
+        );
+
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {

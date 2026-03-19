@@ -65,7 +65,11 @@ export default function(props: Partial<Contract_Props>) {
     }
 
     if (!_.isNil(props.legalState)) {
-        resource.legalState = dt.concept(props.legalState);
+        resource.legalState = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/contract-legalstate", props.legalState)
+        );
+
+        dt.ensureConceptText(resource.legalState);
     }
 
     if (!_.isNil(props.instantiatesCanonical)) {
@@ -73,11 +77,21 @@ export default function(props: Partial<Contract_Props>) {
     }
 
     if (!_.isNil(props.contentDerivative)) {
-        resource.contentDerivative = dt.concept(props.contentDerivative);
+        resource.contentDerivative = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/contract-content-derivative",
+            props.contentDerivative
+        ));
+
+        dt.ensureConceptText(resource.contentDerivative);
     }
 
     if (!_.isNil(props.expirationType)) {
-        resource.expirationType = dt.concept(props.expirationType);
+        resource.expirationType = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/contract-expiration-type",
+            props.expirationType
+        ));
+
+        dt.ensureConceptText(resource.expirationType);
     }
 
     if (!_.isNil(props.subject)) {
@@ -105,7 +119,8 @@ export default function(props: Partial<Contract_Props>) {
     }
 
     if (!_.isNil(props.scope)) {
-        resource.scope = dt.concept(props.scope);
+        resource.scope = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/contract-scope", props.scope));
+        dt.ensureConceptText(resource.scope);
     }
 
     if (!_.isNil(props.topic)) {
@@ -114,19 +129,25 @@ export default function(props: Partial<Contract_Props>) {
     }
 
     if (!_.isNil(props.type)) {
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/contract-type", props.type));
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.subType)) {
         if (!Array.isArray(props.subType)) { props.subType = [props.subType]; }
-        resource.subType = dt.concept(props.subType);
+
+        resource.subType = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/contract-subtype", props.subType)
+        );
+
+        dt.ensureConceptText(resource.subType);
     }
 
     if (!_.isNil(props.contentDefinition)) {
         let src = props.contentDefinition;
 
         let _contentDefinition = {
-            ...item
+            ...src
         };
 
         resource.contentDefinition = _contentDefinition;

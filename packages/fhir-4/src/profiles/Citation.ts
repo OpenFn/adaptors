@@ -15,10 +15,10 @@ export type Citation_Props = {
     classification?: FHIR.BackboneElement[];
     contact?: FHIR.ContactDetail[];
     contained?: any[];
-    copyright?: FHIR.markdown;
+    copyright?: string;
     currentState?: MaybeArray<string[] | FHIR.CodeableConcept>;
     date?: string;
-    description?: FHIR.markdown;
+    description?: string;
     editor?: FHIR.ContactDetail[];
     effectivePeriod?: FHIR.Period;
     endorser?: FHIR.ContactDetail[];
@@ -35,7 +35,7 @@ export type Citation_Props = {
     name?: string;
     note?: FHIR.Annotation[];
     publisher?: string;
-    purpose?: FHIR.markdown;
+    purpose?: string;
     relatesTo?: FHIR.BackboneElement[];
     reviewer?: FHIR.ContactDetail[];
     status?: string;
@@ -62,7 +62,12 @@ export default function(props: Partial<Citation_Props>) {
 
     if (!_.isNil(props.jurisdiction)) {
         if (!Array.isArray(props.jurisdiction)) { props.jurisdiction = [props.jurisdiction]; }
-        resource.jurisdiction = dt.concept(props.jurisdiction);
+
+        resource.jurisdiction = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/jurisdiction", props.jurisdiction)
+        );
+
+        dt.ensureConceptText(resource.jurisdiction);
     }
 
     if (!_.isNil(props.summary)) {
@@ -95,7 +100,12 @@ export default function(props: Partial<Citation_Props>) {
 
     if (!_.isNil(props.currentState)) {
         if (!Array.isArray(props.currentState)) { props.currentState = [props.currentState]; }
-        resource.currentState = dt.concept(props.currentState);
+
+        resource.currentState = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/citation-status-type", props.currentState)
+        );
+
+        dt.ensureConceptText(resource.currentState);
     }
 
     if (!_.isNil(props.statusDate)) {
@@ -130,7 +140,7 @@ export default function(props: Partial<Citation_Props>) {
         let src = props.citedArtifact;
 
         let _citedArtifact = {
-            ...item
+            ...src
         };
 
         resource.citedArtifact = _citedArtifact;

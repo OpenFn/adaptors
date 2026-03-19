@@ -53,7 +53,11 @@ export default function(props: Partial<Patient_Props>) {
     }
 
     if (!_.isNil(props.maritalStatus)) {
-        resource.maritalStatus = dt.concept(props.maritalStatus);
+        resource.maritalStatus = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/marital-status", props.maritalStatus)
+        );
+
+        dt.ensureConceptText(resource.maritalStatus);
     }
 
     if (!_.isNil(props.multipleBirth)) {

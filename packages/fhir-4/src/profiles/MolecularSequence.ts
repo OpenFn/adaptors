@@ -67,7 +67,7 @@ export default function(props: Partial<MolecularSequence_Props>) {
         let src = props.referenceSeq;
 
         let _referenceSeq = {
-            ...item
+            ...src
         };
 
         resource.referenceSeq = _referenceSeq;

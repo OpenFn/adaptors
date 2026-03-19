@@ -12,7 +12,7 @@ export type SubstanceDefinition_Props = {
     classification?: MaybeArray<string[] | FHIR.CodeableConcept>;
     code?: FHIR.BackboneElement[];
     contained?: any[];
-    description?: FHIR.markdown;
+    description?: string;
     domain?: string[] | FHIR.CodeableConcept;
     extension?: FHIR.Extension[];
     grade?: MaybeArray<string[] | FHIR.CodeableConcept>;
@@ -51,21 +51,35 @@ export default function(props: Partial<SubstanceDefinition_Props>) {
     }
 
     if (!_.isNil(props.status)) {
-        resource.status = dt.concept(props.status);
+        resource.status = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/publication-status", props.status)
+        );
+
+        dt.ensureConceptText(resource.status);
     }
 
     if (!_.isNil(props.classification)) {
         if (!Array.isArray(props.classification)) { props.classification = [props.classification]; }
         resource.classification = dt.concept(props.classification);
+        dt.ensureConceptText(resource.classification);
     }
 
     if (!_.isNil(props.domain)) {
-        resource.domain = dt.concept(props.domain);
+        resource.domain = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/medicinal-product-domain", props.domain)
+        );
+
+        dt.ensureConceptText(resource.domain);
     }
 
     if (!_.isNil(props.grade)) {
         if (!Array.isArray(props.grade)) { props.grade = [props.grade]; }
-        resource.grade = dt.concept(props.grade);
+
+        resource.grade = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/substance-grade", props.grade)
+        );
+
+        dt.ensureConceptText(resource.grade);
     }
 
     if (!_.isNil(props.informationSource)) {
@@ -129,7 +143,7 @@ export default function(props: Partial<SubstanceDefinition_Props>) {
         let src = props.structure;
 
         let _structure = {
-            ...item
+            ...src
         };
 
         resource.structure = _structure;
@@ -181,7 +195,7 @@ export default function(props: Partial<SubstanceDefinition_Props>) {
         let src = props.sourceMaterial;
 
         let _sourceMaterial = {
-            ...item
+            ...src
         };
 
         resource.sourceMaterial = _sourceMaterial;

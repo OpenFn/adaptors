@@ -1,5 +1,13 @@
 # @openfn/language-hubtel
 
+## 1.0.18 - 24 February 2026
+
+### Patch Changes
+
+- 856f85c: Security updates
+- Updated dependencies \[856f85c]
+  - @openfn/language-common@3.2.3
+
 ## 1.0.17 - 09 February 2026
 
 ### Patch Changes
@@ -29,7 +37,7 @@
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 1.0.13
+## 1.0.13 - 16 October 2025
 
 ### Patch Changes
 

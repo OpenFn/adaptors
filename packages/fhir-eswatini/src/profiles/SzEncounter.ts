@@ -12,7 +12,7 @@ export type Encounter_SzEncounter_Props = {
     account?: FHIR.Reference[];
     appointment?: FHIR.Reference[];
     basedOn?: FHIR.Reference[];
-    class?: FHIR.Coding;
+    class?: "OPD" | "IPD" | "CO" | "SO" | "Outpatient Department" | "Inpatient Department" | "Community Outreach" | "Schools Outreach";
     classHistory?: FHIR.BackboneElement[];
     contained?: any[];
     diagnosis?: FHIR.BackboneElement[];
@@ -46,6 +46,11 @@ export type Encounter_SzEncounter_Props = {
 export default function(props: Partial<Encounter_SzEncounter_Props>) {
     const resource = {
         resourceType: "Encounter",
+
+        meta: {
+            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzEncounter"]
+        },
+
         ...props
     };
 
@@ -68,6 +73,14 @@ export default function(props: Partial<Encounter_SzEncounter_Props>) {
         }
     }
 
+    if (!_.isNil(props.class)) {
+        let src = props.class;
+        if (typeof src === 'string') {
+          src = dt.lookupValue('http://172.209.216.154:3447/fhir/ValueSet/SzEncounterClassificationVS', src);
+         }
+        resource.class = dt.coding(src);
+    }
+
     if (!_.isNil(props.classHistory)) {
         let src = props.classHistory;
         if (!Array.isArray(src)) { src = [src]; }
@@ -84,15 +97,24 @@ export default function(props: Partial<Encounter_SzEncounter_Props>) {
 
     if (!_.isNil(props.type)) {
         if (!Array.isArray(props.type)) { props.type = [props.type]; }
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/encounter-type", props.type));
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.serviceType)) {
-        resource.serviceType = dt.concept(props.serviceType);
+        resource.serviceType = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/service-type", props.serviceType)
+        );
+
+        dt.ensureConceptText(resource.serviceType);
     }
 
     if (!_.isNil(props.priority)) {
-        resource.priority = dt.concept(props.priority);
+        resource.priority = dt.concept(
+            dt.lookupValue("http://terminology.hl7.org/ValueSet/v3-ActPriority", props.priority)
+        );
+
+        dt.ensureConceptText(resource.priority);
     }
 
     if (!_.isNil(props.subject)) {
@@ -132,7 +154,7 @@ export default function(props: Partial<Encounter_SzEncounter_Props>) {
         let src = props.period;
 
         let _period = {
-            ...item
+            ...src
         };
 
         resource.period = _period;
@@ -140,7 +162,12 @@ export default function(props: Partial<Encounter_SzEncounter_Props>) {
 
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
-        resource.reasonCode = dt.concept(props.reasonCode);
+
+        resource.reasonCode = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/encounter-reason", props.reasonCode)
+        );
+
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {
@@ -171,7 +198,7 @@ export default function(props: Partial<Encounter_SzEncounter_Props>) {
         let src = props.hospitalization;
 
         let _hospitalization = {
-            ...item
+            ...src
         };
 
         resource.hospitalization = _hospitalization;
@@ -199,10 +226,5 @@ export default function(props: Partial<Encounter_SzEncounter_Props>) {
         resource.partOf = dt.reference(props.partOf);
     }
 
-    resource.meta = {
-      profile: [
-        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
-      ],
-    };
     return resource;
 }

@@ -13,7 +13,7 @@ const configuration = {
   username: 'admin',
   password: 'district',
   // If these tests are failing, check that this URL is correct!
-  hostUrl: 'https://play.im.dhis2.org/stable-2-40-7-1',
+  hostUrl: 'https://play.im.dhis2.org/stable-2-40-11',
   apiVersion: '42',
 };
 
@@ -61,7 +61,7 @@ describe('Integration tests', () => {
       const finalState = await execute(
         create('programs', state => state.data, {
           atomicMode: 'OBJECT',
-        })
+        }),
       )(state);
 
       expect(finalState.data.status).to.eq('OK');
@@ -85,8 +85,8 @@ describe('Integration tests', () => {
           }),
           {
             atomicMode: 'OBJECT',
-          }
-        )
+          },
+        ),
       )(state);
 
       expect(finalState.data.status).to.eq('OK');
@@ -110,7 +110,7 @@ describe('Integration tests', () => {
       const finalState = await execute(
         create('trackedEntityInstances', state => state.data, {
           atomicMode: 'OBJECT',
-        })
+        }),
       )(state);
 
       expect(finalState.data.status).to.eq('OK');
@@ -128,7 +128,7 @@ describe('Integration tests', () => {
       };
 
       const finalState = await execute(
-        create('dataValueSets', state => state.data)
+        create('dataValueSets', state => state.data),
       )(state);
 
       expect(finalState.data.status).to.eq('OK');
@@ -160,7 +160,7 @@ describe('Integration tests', () => {
       };
 
       const finalState = await execute(
-        create('dataValueSets', state => state.data)
+        create('dataValueSets', state => state.data),
       )(state);
 
       expect(finalState.data.status).to.eq('OK');
@@ -178,8 +178,8 @@ describe('Integration tests', () => {
         update(
           'programs',
           state => state.eventProgram,
-          getRandomProgramPayload()
-        )
+          getRandomProgramPayload(),
+        ),
       )(state);
       expect(response.data.status).to.eq('OK');
     });
@@ -218,7 +218,7 @@ describe('Integration tests', () => {
         },
       };
       const finalState = await execute(
-        update('events', '', state => state.data)
+        update('events', '', state => state.data),
       )(state);
       expect(finalState.data.status).to.eql('OK');
     });
@@ -239,7 +239,7 @@ describe('Integration tests', () => {
       };
 
       const finalState = await execute(
-        update('trackedEntityInstances', 'bmshzEacgxa', state => state.data)
+        update('trackedEntityInstances', 'bmshzEacgxa', state => state.data),
       )(state);
 
       expect(finalState.data.status).to.eq('OK');
@@ -267,7 +267,7 @@ describe('Integration tests', () => {
         },
       };
       const finalState = await execute(
-        update('dataSets', 'QX4ZTUbOt3a', state => state.data)
+        update('dataSets', 'QX4ZTUbOt3a', state => state.data),
       )(state);
       expect(finalState.data.status).to.eql('OK');
     });
@@ -286,7 +286,7 @@ describe('Integration tests', () => {
           orgUnit: state.orgUnit,
           period: '201401',
           fields: '*',
-        })
+        }),
       )(state);
 
       expect(finalState.data.dataValues.length).to.gte(1);
@@ -303,7 +303,7 @@ describe('Integration tests', () => {
           program: state.program,
           orgUnit: state.orgUnit,
           filter: ['w75KJ2mc4zz:Eq:Sarama'],
-        })
+        }),
       )(state);
 
       expect(finalState.data.instances.length).to.eq(2);
@@ -313,7 +313,7 @@ describe('Integration tests', () => {
           program: state.program,
           ou: state.orgUnit,
           filter: ['w75KJ2mc4zz:Eq:NotSarama', 'zDhUuAYrxNC:Eq:NotJackson'],
-        })
+        }),
       )(state);
 
       expect(finalState2.data.trackedEntityInstances.length).to.eq(0);
@@ -334,7 +334,7 @@ describe('Integration tests', () => {
             'flGbXLXCrEo:Eq:124-not-a-real-id', // case ID
             'zDhUuAYrxNC:Eq:Thompson',
           ],
-        })
+        }),
       )(state);
 
       expect(finalState.data.trackedEntityInstances.length).to.eq(0);
@@ -347,7 +347,7 @@ describe('Integration tests', () => {
         data: {},
       };
       const response = await execute(
-        get('programs', { orgUnit: state.orgUnit })
+        get('programs', { orgUnit: state.orgUnit }),
       )(state);
 
       expect(response.data.programs.length).to.gte(1);
@@ -390,8 +390,8 @@ describe('Integration tests', () => {
             ou: state.orgUnit,
             filter: ['w75KJ2mc4zz:Eq:John', 'zDhUuAYrxNC:Eq:Thompson'],
           },
-          state => state.data
-        )
+          state => state.data,
+        ),
       )(state);
 
       expect(finalState.data.httpStatus).to.eq('OK');
@@ -419,8 +419,8 @@ describe('Integration tests', () => {
             ou: state.orgUnit,
             filter: ['w75KJ2mc4zz:Eq:Qassim'],
           },
-          state => state.data
-        )
+          state => state.data,
+        ),
       )(state);
 
       expect(finalState.data.httpStatus).to.eq('OK');
@@ -464,10 +464,10 @@ describe('Integration tests', () => {
                 ou: state.orgUnit,
                 filter: ['w75KJ2mc4zz:Eq:Luwam'],
               },
-              state => state.data
-            )
+              state => state.data,
+            ),
           )(state),
-        '409: Upsert failed: Multiple records found for a non-unique attribute.'
+        '409: Upsert failed: Multiple records found for a non-unique attribute.',
       );
     });
   });

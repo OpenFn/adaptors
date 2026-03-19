@@ -1,5 +1,46 @@
 # @openfn/generate-fhir
 
+## 0.7.5
+
+### Patch Changes
+
+- When mapping property extensions, ensure that reference types get mapped
+
+## 0.7.4
+
+### Patch Changes
+
+- 317e3c7: Alphabetically sort generated props Correctly format generated types
+  with a space and a surrounding code block: '``'
+
+## 0.7.3
+
+### Patch Changes
+
+- Properly generate profile urls automatically
+- Fix value mappings for top level codeable concepts
+
+## 0.7.2
+
+### Patch Changes
+
+- 7ae2a7a: - Fix a docs issue for addToBundle
+  - Fix encounter.period (and other props) which report "item is not defined"
+
+## 0.7.1
+
+- Fix an issue where a singleton prop with a typedef would throw an error (item
+  is not defined)
+
+## 0.7.0
+
+- Support mapping extensions to simple properties
+- Temporary fix to extensions to basic datatypes (date)
+
+## 0.6.0
+
+Enable mapping of valuesets
+
 ## 0.4.2
 
 ### Minor Changes

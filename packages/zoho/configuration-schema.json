@@ -17,7 +17,7 @@
             "writeOnly": true,
             "minLength": 1,
             "examples": [
-                "secreauthtoken"
+                "secretauthtoken"
             ]
         },
         "apiVersion": {

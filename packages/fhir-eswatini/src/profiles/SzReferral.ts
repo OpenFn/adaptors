@@ -41,6 +41,7 @@ export type ServiceRequest_SzReferral_Props = {
     quantity?: FHIR.Quantity | FHIR.Ratio | FHIR.Range;
     reasonCode?: FHIR.CodeableConcept[];
     reasonReference?: FHIR.Reference[];
+    recipient?: any[] | boolean[] | string[] | number[] | FHIR.Address[] | FHIR.Age[] | FHIR.Annotation[] | FHIR.Attachment[] | FHIR.CodeableConcept[] | FHIR.Coding[] | FHIR.ContactPoint[] | FHIR.Count[] | FHIR.Distance[] | FHIR.Duration[] | FHIR.HumanName[] | FHIR.Identifier[] | FHIR.Money[] | FHIR.Period[] | FHIR.Quantity[] | FHIR.Range[] | FHIR.Ratio[] | FHIR.Reference[] | FHIR.SampledData[] | FHIR.Signature[] | FHIR.Timing[] | FHIR.ContactDetail[] | FHIR.Contributor[] | FHIR.DataRequirement[] | FHIR.Expression[] | FHIR.ParameterDefinition[] | FHIR.RelatedArtifact[] | FHIR.TriggerDefinition[] | FHIR.UsageContext[] | FHIR.Dosage[] | FHIR.Meta[];
     relevantHistory?: FHIR.Reference[];
     replaces?: FHIR.Reference[];
     requester?: FHIR.Reference;
@@ -56,8 +57,26 @@ export type ServiceRequest_SzReferral_Props = {
 export default function(props: Partial<ServiceRequest_SzReferral_Props>) {
     const resource = {
         resourceType: "ServiceRequest",
+
+        meta: {
+            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzReferral"]
+        },
+
         ...props
     };
+
+    if (!_.isNil(props.recipient)) {
+        let src = props.recipient;
+        src = dt.concept(src);
+        dt.ensureConceptText(src);
+        delete resource.recipient;
+
+        dt.addExtension(
+            resource,
+            "http://172.209.216.154:3447/fhir/StructureDefinition/SzReferralRecipientExtension",
+            src
+        );
+    }
 
     if (!_.isNil(props.identifier)) {
         if (!Array.isArray(props.identifier)) { props.identifier = [props.identifier]; }
@@ -80,16 +99,28 @@ export default function(props: Partial<ServiceRequest_SzReferral_Props>) {
 
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
-        resource.category = dt.concept(props.category);
+
+        resource.category = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/servicerequest-category", props.category)
+        );
+
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(props.code);
+        resource.code = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-code", props.code));
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.orderDetail)) {
         if (!Array.isArray(props.orderDetail)) { props.orderDetail = [props.orderDetail]; }
-        resource.orderDetail = dt.concept(props.orderDetail);
+
+        resource.orderDetail = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/servicerequest-orderdetail",
+            props.orderDetail
+        ));
+
+        dt.ensureConceptText(resource.orderDetail);
     }
 
     if (!_.isNil(props.quantity)) {
@@ -120,7 +151,11 @@ export default function(props: Partial<ServiceRequest_SzReferral_Props>) {
     }
 
     if (!_.isNil(props.performerType)) {
-        resource.performerType = dt.concept(props.performerType);
+        resource.performerType = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/participant-role", props.performerType)
+        );
+
+        dt.ensureConceptText(resource.performerType);
     }
 
     if (!_.isNil(props.performer)) {
@@ -130,7 +165,13 @@ export default function(props: Partial<ServiceRequest_SzReferral_Props>) {
 
     if (!_.isNil(props.locationCode)) {
         if (!Array.isArray(props.locationCode)) { props.locationCode = [props.locationCode]; }
-        resource.locationCode = dt.concept(props.locationCode);
+
+        resource.locationCode = dt.concept(dt.lookupValue(
+            "http://terminology.hl7.org/ValueSet/v3-ServiceDeliveryLocationRoleType",
+            props.locationCode
+        ));
+
+        dt.ensureConceptText(resource.locationCode);
     }
 
     if (!_.isNil(props.locationReference)) {
@@ -140,7 +181,12 @@ export default function(props: Partial<ServiceRequest_SzReferral_Props>) {
 
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
-        resource.reasonCode = dt.concept(props.reasonCode);
+
+        resource.reasonCode = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-reason", props.reasonCode)
+        );
+
+        dt.ensureConceptText(resource.reasonCode);
     }
 
     if (!_.isNil(props.reasonReference)) {
@@ -165,7 +211,8 @@ export default function(props: Partial<ServiceRequest_SzReferral_Props>) {
 
     if (!_.isNil(props.bodySite)) {
         if (!Array.isArray(props.bodySite)) { props.bodySite = [props.bodySite]; }
-        resource.bodySite = dt.concept(props.bodySite);
+        resource.bodySite = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site", props.bodySite));
+        dt.ensureConceptText(resource.bodySite);
     }
 
     if (!_.isNil(props.relevantHistory)) {
@@ -173,10 +220,5 @@ export default function(props: Partial<ServiceRequest_SzReferral_Props>) {
         resource.relevantHistory = dt.reference(props.relevantHistory);
     }
 
-    resource.meta = {
-      profile: [
-        `http://172.209.216.154:3447/fhir/StructureDefinition/Sz${resource.resourceType}`,
-      ],
-    };
     return resource;
 }

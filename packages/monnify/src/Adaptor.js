@@ -14,6 +14,8 @@ import * as util from './Utils.js';
  * @typedef {Object} ListQueryOptions
  * @property {Number} pageNo - The page number. Please note that Monnify pagination starts at 0 not 1. (Default: 0)
  * @property {Number} pageSize - The page size. (Default: 100)
+ * @property {Date} startDate - The lower date range
+ * @property {Date} endDate - The higher date range
  * @property {Record<string, any>} [otherOptions] - Additional options.
  **/
 
@@ -56,9 +58,11 @@ export function get(path, options = {}) {
 
 /**
  * Fetch a list of items.
- * @example <caption>Get all transactions</caption>
+ * @example <caption>Get transactions within a date range. (Default range is the current date)</caption>
  * list('/api/v2/disbursements/search-transactions', {
- *     sourceAccountNumber: 4864192954
+ *     sourceAccountNumber: 4864192954,
+ *     startDate: new Date('2025-11-15'),
+ *     endDate: Date.now()
  * });
  * 
  * @example <caption>Get all transactions for a specific page and page number.</caption>
@@ -108,9 +112,9 @@ export function list(path, query = {}) {
  * @returns {Operation}
  * @state {HttpState}
  */
-export function post(path, body,options = {}) {
+export function post(path, body, options = {}) {
   return async state => {
-    const [resolvedPath,resolvedBody, resolvedOptions] = expandReferences(state, path,body, options);
+    const [resolvedPath, resolvedBody, resolvedOptions] = expandReferences(state, path, body, options);
 
     const response = await util.request(
       state.configuration,

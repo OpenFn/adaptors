@@ -53,7 +53,12 @@ export default function(props: Partial<ImmunizationEvaluation_Props>) {
     }
 
     if (!_.isNil(props.targetDisease)) {
-        resource.targetDisease = dt.concept(props.targetDisease);
+        resource.targetDisease = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/immunization-evaluation-target-disease",
+            props.targetDisease
+        ));
+
+        dt.ensureConceptText(resource.targetDisease);
     }
 
     if (!_.isNil(props.immunizationEvent)) {
@@ -61,12 +66,23 @@ export default function(props: Partial<ImmunizationEvaluation_Props>) {
     }
 
     if (!_.isNil(props.doseStatus)) {
-        resource.doseStatus = dt.concept(props.doseStatus);
+        resource.doseStatus = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/immunization-evaluation-dose-status",
+            props.doseStatus
+        ));
+
+        dt.ensureConceptText(resource.doseStatus);
     }
 
     if (!_.isNil(props.doseStatusReason)) {
         if (!Array.isArray(props.doseStatusReason)) { props.doseStatusReason = [props.doseStatusReason]; }
-        resource.doseStatusReason = dt.concept(props.doseStatusReason);
+
+        resource.doseStatusReason = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/immunization-evaluation-dose-status-reason",
+            props.doseStatusReason
+        ));
+
+        dt.ensureConceptText(resource.doseStatusReason);
     }
 
     if (!_.isNil(props.doseNumber)) {

@@ -1,5 +1,12 @@
 # @openfn/language-surveycto
 
+## 3.0.7 - 24 February 2026
+
+### Patch Changes
+
+- Updated dependencies \[856f85c]
+  - @openfn/language-common@3.2.3
+
 ## 3.0.6 - 09 February 2026
 
 ### Patch Changes
@@ -8,7 +15,7 @@
 - Updated dependencies \[8ad6b98]
   - @openfn/language-common@3.2.2
 
-## 3.0.5
+## 3.0.5 - 26 January 2026
 
 ### Patch Changes
 
@@ -35,14 +42,14 @@
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 3.0.1
+## 3.0.1 - 16 October 2025
 
 ### Patch Changes
 
 - Updated dependencies \[408a3a2]
   - @openfn/language-common@3.1.1
 
-## 3.0.0
+## 3.0.0 - 02 October 2025
 
 ### Major Changes
 

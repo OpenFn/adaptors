@@ -15,4 +15,5 @@ type RequestOptions = {
     query?: Record<string, string>;
 };
 export declare const request: (method: any, path: any, options: RequestOptions) => any;
+export declare function sortBundle(entries: any[]): any[];
 export {};

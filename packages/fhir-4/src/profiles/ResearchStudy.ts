@@ -14,7 +14,7 @@ export type ResearchStudy_Props = {
     condition?: MaybeArray<string[] | FHIR.CodeableConcept>;
     contact?: FHIR.ContactDetail[];
     contained?: any[];
-    description?: FHIR.markdown;
+    description?: string;
     enrollment?: MaybeArray<string | FHIR.Reference>;
     extension?: FHIR.Extension[];
     focus?: MaybeArray<string[] | FHIR.CodeableConcept>;
@@ -66,36 +66,58 @@ export default function(props: Partial<ResearchStudy_Props>) {
     }
 
     if (!_.isNil(props.primaryPurposeType)) {
-        resource.primaryPurposeType = dt.concept(props.primaryPurposeType);
+        resource.primaryPurposeType = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/research-study-prim-purp-type",
+            props.primaryPurposeType
+        ));
+
+        dt.ensureConceptText(resource.primaryPurposeType);
     }
 
     if (!_.isNil(props.phase)) {
-        resource.phase = dt.concept(props.phase);
+        resource.phase = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/research-study-phase", props.phase)
+        );
+
+        dt.ensureConceptText(resource.phase);
     }
 
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
         resource.category = dt.concept(props.category);
+        dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.focus)) {
         if (!Array.isArray(props.focus)) { props.focus = [props.focus]; }
         resource.focus = dt.concept(props.focus);
+        dt.ensureConceptText(resource.focus);
     }
 
     if (!_.isNil(props.condition)) {
         if (!Array.isArray(props.condition)) { props.condition = [props.condition]; }
-        resource.condition = dt.concept(props.condition);
+
+        resource.condition = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-code", props.condition)
+        );
+
+        dt.ensureConceptText(resource.condition);
     }
 
     if (!_.isNil(props.keyword)) {
         if (!Array.isArray(props.keyword)) { props.keyword = [props.keyword]; }
         resource.keyword = dt.concept(props.keyword);
+        dt.ensureConceptText(resource.keyword);
     }
 
     if (!_.isNil(props.location)) {
         if (!Array.isArray(props.location)) { props.location = [props.location]; }
-        resource.location = dt.concept(props.location);
+
+        resource.location = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/jurisdiction", props.location)
+        );
+
+        dt.ensureConceptText(resource.location);
     }
 
     if (!_.isNil(props.enrollment)) {
@@ -117,7 +139,12 @@ export default function(props: Partial<ResearchStudy_Props>) {
     }
 
     if (!_.isNil(props.reasonStopped)) {
-        resource.reasonStopped = dt.concept(props.reasonStopped);
+        resource.reasonStopped = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/research-study-reason-stopped",
+            props.reasonStopped
+        ));
+
+        dt.ensureConceptText(resource.reasonStopped);
     }
 
     if (!_.isNil(props.arm)) {

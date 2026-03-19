@@ -32,7 +32,7 @@ export type MedicationKnowledge_Props = {
     monitoringProgram?: FHIR.BackboneElement[];
     monograph?: FHIR.BackboneElement[];
     packaging?: FHIR.BackboneElement;
-    preparationInstruction?: FHIR.markdown;
+    preparationInstruction?: string;
     productType?: MaybeArray<string[] | FHIR.CodeableConcept>;
     regulatory?: FHIR.BackboneElement[];
     relatedMedicationKnowledge?: FHIR.BackboneElement[];
@@ -49,7 +49,11 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
     };
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(props.code);
+        resource.code = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/medication-codes", props.code)
+        );
+
+        dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.manufacturer)) {
@@ -57,7 +61,11 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
     }
 
     if (!_.isNil(props.doseForm)) {
-        resource.doseForm = dt.concept(props.doseForm);
+        resource.doseForm = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/medication-form-codes", props.doseForm)
+        );
+
+        dt.ensureConceptText(resource.doseForm);
     }
 
     if (!_.isNil(props.relatedMedicationKnowledge)) {
@@ -82,6 +90,7 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
     if (!_.isNil(props.productType)) {
         if (!Array.isArray(props.productType)) { props.productType = [props.productType]; }
         resource.productType = dt.concept(props.productType);
+        dt.ensureConceptText(resource.productType);
     }
 
     if (!_.isNil(props.monograph)) {
@@ -114,7 +123,12 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
 
     if (!_.isNil(props.intendedRoute)) {
         if (!Array.isArray(props.intendedRoute)) { props.intendedRoute = [props.intendedRoute]; }
-        resource.intendedRoute = dt.concept(props.intendedRoute);
+
+        resource.intendedRoute = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/route-codes", props.intendedRoute)
+        );
+
+        dt.ensureConceptText(resource.intendedRoute);
     }
 
     if (!_.isNil(props.cost)) {
@@ -177,7 +191,7 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
         let src = props.packaging;
 
         let _packaging = {
-            ...item
+            ...src
         };
 
         resource.packaging = _packaging;

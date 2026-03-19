@@ -1,5 +1,13 @@
 # @openfn/language-fhir
 
+## 5.0.15 - 24 February 2026
+
+### Patch Changes
+
+- 856f85c: Security updates
+- Updated dependencies \[856f85c]
+  - @openfn/language-common@3.2.3
+
 ## 5.0.14 - 09 February 2026
 
 ### Patch Changes
@@ -29,7 +37,7 @@
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 5.0.10
+## 5.0.10 - 16 October 2025
 
 ### Patch Changes
 

@@ -6,28 +6,21 @@
       "description": "The database instance server URL or IP address",
       "type": "string",
       "minLength": 1,
-      "examples": [
-        "something.database.windows.net",
-        "192.168.12.10"
-      ]
+      "examples": ["something.database.windows.net", "192.168.12.10"]
     },
     "database": {
       "title": "Database",
       "type": "string",
       "description": "The database name",
       "minLength": 1,
-      "examples": [
-        "demo-db"
-      ]
+      "examples": ["demo-db"]
     },
     "userName": {
       "title": "Username",
       "type": "string",
       "description": "Username",
       "minLength": 1,
-      "examples": [
-        "admin"
-      ]
+      "examples": ["admin"]
     },
     "password": {
       "title": "Password",
@@ -35,41 +28,38 @@
       "description": "Password",
       "writeOnly": true,
       "minLength": 1,
-      "examples": [
-        "@super(!)Password"
-      ]
+      "examples": ["@super(!)Password"]
     },
     "port": {
       "title": "Port",
       "description": "Database instance port",
       "type": "integer",
       "default": 1433,
-      "examples": [
-        1432
-      ]
+      "examples": [1432]
     },
     "encrypt": {
       "type": "boolean",
+      "title": "Encrypt",
+      "description": "Encrypt connection to database",
       "default": true,
-      "examples": [
-        false
-      ]
+      "examples": [false]
     },
     "trustServerCertificate": {
       "type": "boolean",
+      "title": "Trust Server Certificate",
       "default": false,
-       "description": "Trust self-signed certificates (not recommended for production)",
-      "examples": [
-        true
-      ]
+      "description": "Trust self-signed certificates (not recommended for production)",
+      "examples": [true]
+    },
+    "requestTimeout": {
+      "title": "Request Timeout",
+      "description": "Number of milliseconds before a request times out. Default is 600000 (10 minutes). Set to 0 for no timeout.",
+      "type": "integer",
+      "default": 600000,
+      "examples": [300000]
     }
   },
   "type": "object",
   "additionalProperties": true,
-  "required": [
-    "server",
-    "database",
-    "userName",
-    "password"
-  ]
+  "required": ["server", "database", "userName", "password"]
 }

@@ -5,6 +5,7 @@
       "title": "API Key",
       "type": "string",
       "description": "Your Nexmo API Key",
+      "writeOnly": true,
       "minLength": 1,
       "examples": [
         "mYaP1K3y"

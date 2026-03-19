@@ -25,6 +25,7 @@ function createConnection(state) {
     port = 1433,
     encrypt = true,
     trustServerCertificate = false, // Default: false for security (validates SSL certificates)
+    requestTimeout = 600000, // Default: 10 minutes.
   } = state.configuration;
 
   if (!server) {
@@ -43,6 +44,7 @@ function createConnection(state) {
       encrypt,
       rowCollectionOnRequestCompletion: true,
       trustServerCertificate,
+      requestTimeout,
     },
   };
 
@@ -196,7 +198,7 @@ function queryHandler(state, query, callback, options) {
  * @function
  * @param {object} params - Payload data for the SQL query
  * @param {string} params.query - The SQL query to execute
- * @param {object} params.options - Optional query options
+ * @param {object} [params.options] - Optional query options
  * @returns {Operation}
  */
 export function sql(params) {

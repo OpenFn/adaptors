@@ -10,7 +10,7 @@ type MaybeArray<T> = T | T[];
 
 export type EvidenceReport_Props = {
     author?: FHIR.ContactDetail[];
-    citeAs?: string | FHIR.Reference | FHIR.markdown;
+    citeAs?: string | FHIR.Reference | string;
     contact?: FHIR.ContactDetail[];
     contained?: any[];
     editor?: FHIR.ContactDetail[];
@@ -60,14 +60,18 @@ export default function(props: Partial<EvidenceReport_Props>) {
     }
 
     if (!_.isNil(props.type)) {
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/evidence-report-type", props.type)
+        );
+
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.subject)) {
         let src = props.subject;
 
         let _subject = {
-            ...item
+            ...src
         };
 
         resource.subject = _subject;

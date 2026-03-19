@@ -77,7 +77,12 @@ export default function(props: Partial<Device_Props>) {
 
     if (!_.isNil(props.statusReason)) {
         if (!Array.isArray(props.statusReason)) { props.statusReason = [props.statusReason]; }
-        resource.statusReason = dt.concept(props.statusReason);
+
+        resource.statusReason = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/device-status-reason", props.statusReason)
+        );
+
+        dt.ensureConceptText(resource.statusReason);
     }
 
     if (!_.isNil(props.deviceName)) {
@@ -95,7 +100,8 @@ export default function(props: Partial<Device_Props>) {
     }
 
     if (!_.isNil(props.type)) {
-        resource.type = dt.concept(props.type);
+        resource.type = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/device-type", props.type));
+        dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.specialization)) {
@@ -155,6 +161,7 @@ export default function(props: Partial<Device_Props>) {
     if (!_.isNil(props.safety)) {
         if (!Array.isArray(props.safety)) { props.safety = [props.safety]; }
         resource.safety = dt.concept(props.safety);
+        dt.ensureConceptText(resource.safety);
     }
 
     if (!_.isNil(props.parent)) {

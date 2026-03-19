@@ -68,7 +68,11 @@ export default function(props: Partial<PaymentNotice_Props>) {
     }
 
     if (!_.isNil(props.paymentStatus)) {
-        resource.paymentStatus = dt.concept(props.paymentStatus);
+        resource.paymentStatus = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/payment-status", props.paymentStatus)
+        );
+
+        dt.ensureConceptText(resource.paymentStatus);
     }
 
     return resource;

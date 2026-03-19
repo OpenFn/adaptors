@@ -1,5 +1,12 @@
 # @openfn/language-dynamics
 
+## 0.5.29 - 24 February 2026
+
+### Patch Changes
+
+- Updated dependencies \[856f85c]
+  - @openfn/language-common@3.2.3
+
 ## 0.5.28 - 09 February 2026
 
 ### Patch Changes
@@ -35,7 +42,7 @@
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 0.5.23
+## 0.5.23 - 16 October 2025
 
 ### Patch Changes
 

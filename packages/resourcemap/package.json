@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-resourcemap",
   "label": "Resourcemap",
-  "version": "0.4.27",
+  "version": "0.4.28",
   "description": "OpenFn Resourcemap adaptor for geospatial platform operations",
   "main": "dist/index.cjs",
   "scripts": {
