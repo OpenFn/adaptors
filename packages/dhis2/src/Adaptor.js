@@ -1,4 +1,7 @@
-import { execute as commonExecute } from '@openfn/language-common';
+import {
+  execute as commonExecute,
+  composeNextState,
+} from '@openfn/language-common';
 import { expandReferences, throwError } from '@openfn/language-common/util';
 import {
   handleResponse,
@@ -252,13 +255,15 @@ export function create(path, data, params = {}) {
  * get('programs', { orgUnit: 'TSyzvBiovKh', limit: 2 });
  * @function
  * @param {string} path - Path to the resource
- * @param {object} params - Object of query parameters to include in the request
- * @options {number} [options.limit] - Optional limit to the number of records returned. By default, this is 10,000.
- * @options {number} [options.offset] - Optional offset for pagination. By default, this is 1.
+ * @param {object} params - Object of query parameters to include in the request including limit and offset for pagination
+ * @options {number} [params.limit] - Optional limit to the number of records returned. By default, this is 10,000.
+ * @options {number} [params.offset] - Optional offset for page numbers. By default, this is 1.
+ * @options {number} [params.pageSize] - Optional page size to be used in paginated requests. By default, this is 10,000. If `limit` is set and `pageSize` is not, then `pageSize` will default to the value of `limit`.
+ * @param {function} onPageDownloaded - Optional callback function that is called after each page is downloaded in a paginated request.
  * @state data - the resource returned by DHIS2
  * @returns {Operation}
  */
-export function get(path, params = {}) {
+export function get(path, params = {},onPageDownloaded = state => state) {
   return async state => {
     const [resolvedPath, resolvedParams] = expandReferences(
       state,
@@ -270,18 +275,20 @@ export function get(path, params = {}) {
 
     const fullPath = prefixVersionToPath(state.configuration, {}, resolvedPath);
 
-    const { results, dataKey, totalPages } = await getWithPagination(
-      state.configuration,
-      fullPath,
-      { limit, offset, query: queryParams },
-    );
+    const { results, dataKey, totalPages, state: callbackState } =
+      await getWithPagination(
+        state,
+        fullPath,
+        { limit, offset, query: queryParams },
+        onPageDownloaded,
+      );
 
     console.log(
       `Retrieved ${results.length} ${dataKey} from ${resolvedPath} across ${totalPages} pages`,
     );
 
     const body = dataKey ? { [dataKey]: results } : results;
-    return handleResponse({ body }, state);
+    return composeNextState(callbackState, body);
   };
 }
 

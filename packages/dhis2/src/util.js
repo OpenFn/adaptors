@@ -131,6 +131,14 @@ export function handleResponse(result, state) {
   return nextState;
 }
 
+export const handleGetResponse = (result,state, callback) => {
+  const { body } = result;
+
+  return callback({
+  ...composeNextState(state, body),
+  });
+};
+
 export function prettyJson(data) {
   return JSON.stringify(data, null, 2);
 }
@@ -164,17 +172,23 @@ export function prefixVersionToPath(
   return urlPath;
 }
 
-export const getWithPagination = async (configuration, path, options = {}) => {
+export const getWithPagination = async (
+  state,
+  path,
+  options = {},
+  onPageDownloaded,
+) => {
   const { limit, offset = 1, ...requestOptions } = options;
-  const maxResults = requestOptions.query?.pageSize ?? limit ?? Infinity;
+  const maxResults = limit ?? Infinity;
   const pageSize = requestOptions.query?.pageSize || limit || 10000;
   let page = offset;
   let results = [];
   let dataKey;
   let hasNextPage = false;
+  let currentState = state;
 
   do {
-    const response = await request(configuration, {
+    const response = await request(state.configuration, {
       method: 'GET',
       path,
       options: {
@@ -199,7 +213,14 @@ export const getWithPagination = async (configuration, path, options = {}) => {
       results.push(...(body[dataKey] || []));
     } else {
       // No array key found (e.g. single resource), return body as-is
-      return { results: body, dataKey: null, totalPages: 1 };
+      return { results: body, dataKey: null, totalPages: 1, state: currentState };
+    }
+
+    if (onPageDownloaded) {
+      const pageBody = { [dataKey]: body[dataKey] };
+      currentState = await onPageDownloaded(
+        composeNextState(currentState, pageBody),
+      );
     }
 
     hasNextPage = !!body?.pager?.nextPage;
@@ -207,7 +228,7 @@ export const getWithPagination = async (configuration, path, options = {}) => {
   } while (hasNextPage && results.length < maxResults);
 
   const totalPages = page - offset;
-  return { results, dataKey, totalPages };
+  return { results, dataKey, totalPages, state: currentState };
 };
 
 export const configureAuth = (auth, headers = {}) => {
