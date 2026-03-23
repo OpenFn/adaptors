@@ -5,7 +5,6 @@ import {
 } from '@openfn/language-common/util';
 import nodepath from 'node:path';
 
-
 let access_token;
 
 export const prepareNextState = (state, response) => {
@@ -27,7 +26,7 @@ export const getAccessToken = async (configuration, headers) => {
   const { body } = await commonRequest('POST', '/account/login', {
     headers: {
       'content-type': 'application/json',
-      ...headers
+      ...headers,
     },
     baseUrl,
     parseAs: 'json',
@@ -40,15 +39,21 @@ export const getAccessToken = async (configuration, headers) => {
   return body.token.access_token;
 };
 
-function encodeFormBody(data) {
-  const params = new URLSearchParams();
+export function encodeFormBody(data) {
+  const form = new FormData();
   for (const [key, value] of Object.entries(data)) {
-    params.append(
+    form.append(
       key,
-      typeof value === 'object' && value !== null ? JSON.stringify(value) : String(value)
+      typeof value === 'object' && value !== null
+        ? JSON.stringify(value)
+        : String(value),
     );
   }
-  return params.toString();
+  const response = new Response(form);
+  return {
+    body: response.body,
+    contentType: response.headers.get('content-type'),
+  };
 }
 
 export const request = async (configuration = {}, method, path, options) => {
@@ -63,8 +68,10 @@ export const request = async (configuration = {}, method, path, options) => {
   let requestHeaders = { ...headers };
 
   if (contentType === 'form') {
-    requestHeaders['content-type'] = 'application/x-www-form-urlencoded';
-    requestBody = encodeFormBody(body);
+    const { body: formBody, contentType: formContentType } =
+      encodeFormBody(body);
+    requestBody = formBody;
+    requestHeaders['content-type'] = formContentType;
   } else {
     requestHeaders['content-type'] = 'application/json';
   }

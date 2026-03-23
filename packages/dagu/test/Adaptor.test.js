@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 import testData from './fixtures.json' with { type: 'json' };
 import { request, post, get } from '../src/Adaptor.js';
+import { encodeFormBody } from '../src/Utils.js';
 
 const testServer = enableMockClient('https://fake.dagu.com');
 
@@ -10,6 +11,75 @@ const configuration = {
   username: 'abcdefghijkl',
   password: '12154545'
 }
+
+/**
+ * encodeFormBody is tested in isolation here to document WHY a manual
+ * multipart serialiser is needed instead of native FormData.
+ *
+ * undici's commonRequest uses dispatcher.request() internally. That API does
+ * not serialise FormData bodies — only the fetch() API does (via extractBody).
+ * Passing native FormData to dispatcher.request() throws:
+ *   "Cannot read properties of null (reading 'byteLength')"
+ * because the dispatcher tries to read byteLength on a FormData object that
+ * has no such property. Manually building a multipart string sidesteps this
+ * entirely and keeps the boundary consistent between header and body.
+ */
+// Helper to consume a ReadableStream into a string
+async function readStream(stream) {
+  const chunks = [];
+  for await (const chunk of stream) {
+    chunks.push(typeof chunk === 'string' ? chunk : new TextDecoder().decode(chunk));
+  }
+  return chunks.join('');
+}
+
+/**
+ * encodeFormBody is tested in isolation here to document WHY a manual
+ * serialiser wrapper is needed instead of passing FormData directly to commonRequest.
+ *
+ * undici's commonRequest uses dispatcher.request() internally. That API does
+ * not serialise FormData bodies — only the fetch() API does (via extractBody).
+ * Passing native FormData to dispatcher.request() throws:
+ *   "Cannot read properties of null (reading 'byteLength')"
+ * because the dispatcher tries to read byteLength on a FormData object.
+ *
+ * Wrapping FormData in a Response triggers the same extractBody() serialisation
+ * that fetch() uses. The resulting ReadableStream is an async iterable that
+ * dispatcher.request() handles natively.
+ */
+describe('encodeFormBody', () => {
+  it('returns a multipart/form-data content-type with a boundary', () => {
+    const { contentType } = encodeFormBody({ key: 'value' });
+    expect(contentType).to.match(/^multipart\/form-data; boundary=/);
+  });
+
+  it('includes each flat field as a named form part', async () => {
+    const { body, contentType } = encodeFormBody({ start: 0, length: -1, draw: 1 });
+    const boundary = contentType.split('boundary=')[1];
+    const bodyStr = await readStream(body);
+
+    expect(bodyStr).to.include(`--${boundary}`);
+    expect(bodyStr).to.include('Content-Disposition: form-data; name="start"');
+    expect(bodyStr).to.include('Content-Disposition: form-data; name="length"');
+    expect(bodyStr).to.include('Content-Disposition: form-data; name="draw"');
+    expect(bodyStr).to.include(`--${boundary}--`);
+  });
+
+  it('JSON-stringifies nested objects so they survive as form field values', async () => {
+    const nested = { filter: [{ fieldName: 'patientName', operator: 'Eq', value: 'Lee Lee' }] };
+    const { body } = encodeFormBody({ additionalParameters: nested });
+    const bodyStr = await readStream(body);
+
+    expect(bodyStr).to.include('name="additionalParameters"');
+    expect(bodyStr).to.include(JSON.stringify(nested));
+  });
+
+  it('uses a unique boundary on each call', () => {
+    const { contentType: ct1 } = encodeFormBody({ a: '1' });
+    const { contentType: ct2 } = encodeFormBody({ a: '1' });
+    expect(ct1).to.not.equal(ct2);
+  });
+});
 
 // Keep this describe block at the start to make sure it runs without a stale access token existing in util.js 
 describe('request with custom headers', () => {
@@ -174,9 +244,8 @@ describe('post', () => {
     expect(finalState.data).to.eql(testData.request.response);
   })
 
-  it('sends body as URL-encoded form when contentType is "form"', async () => {
+  it('sends body as multipart/form-data when contentType is "form"', async () => {
     let capturedHeaders;
-    let capturedBody;
 
     testServer
       .intercept({
@@ -185,7 +254,6 @@ describe('post', () => {
       })
       .reply(200, (req) => {
         capturedHeaders = req.headers;
-        capturedBody = req.body;
         return testData.request.response;
       });
 
@@ -205,10 +273,6 @@ describe('post', () => {
     )(state);
 
     expect(finalState.data).to.eql(testData.request.response);
-    expect(capturedHeaders['content-type']).to.equal('application/x-www-form-urlencoded');
-    expect(capturedBody).to.include('start=0');
-    expect(capturedBody).to.include('draw=1');
-    // nested objects are JSON-stringified
-    expect(capturedBody).to.include('additionalParameters=');
+    expect(capturedHeaders['content-type']).to.match(/^multipart\/form-data; boundary=/);
   });
 });
