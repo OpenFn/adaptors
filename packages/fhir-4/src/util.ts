@@ -49,11 +49,11 @@ export const logResponse = (response, query) => {
     }
     const message = `${method} ${urlWithQuery} - ${statusCode} in ${duration}ms`;
     if (response instanceof Error) {
-      console.error(message);
-      console.error('response body: ');
-      console.error(response.body || '[no body]');
+      logger.error(message);
+      logger.error('response body: ');
+      logger.error(response.body || '[no body]');
     } else {
-      console.log(message);
+      logger.log(message);
     }
   }
   return response;
@@ -109,22 +109,22 @@ export const request = (method, path, options: RequestOptions) => {
 };
 
 // Util function to nicely print validation errors coming back from a fhir response
-function logValidationErrors(response, logger = console) {
+export function logValidationErrors(response, logger = console) {
+  console.log(JSON.stringify(response));
   const error = JSON.parse(response.body);
 
   if (error.issue && error.issue.length) {
     delete response.body;
-    response.validationIssues = error.issue;
 
-    console.log();
-    console.error('FHIR server reports validation issues:');
-    console.log(error.issue);
+    logger.log();
+    logger.error('FHIR server reports validation issues:');
+    logger.log(error.issue);
     const errCount = error.issue.reduce(
       (count, e) => (e.severity === 'error' ? count + 1 : count),
       0,
     );
     if (errCount) {
-      console.error(` - ${errCount} Errors`);
+      logger.error(` - ${errCount} Errors`);
     }
 
     const warnCount = error.issue.reduce(
@@ -132,16 +132,16 @@ function logValidationErrors(response, logger = console) {
       0,
     );
     if (warnCount) {
-      console.error(` - ${warnCount} Warnings`);
+      logger.error(` - ${warnCount} Warnings`);
     }
-    console.log();
+    logger.log();
 
     // group by resource
     // How does this look for a bundle though?
     const groups = {};
 
     // const groups = _.groupBy(error.issue, e => e.path);
-    // console.log(groups);
+    // logger.log(groups);
     error.issue.forEach(issue => {
       try {
         // generate a useful location string
@@ -155,22 +155,23 @@ function logValidationErrors(response, logger = console) {
         groups[id][issue.severity] ??= [];
         groups[id][issue.severity].push(issue.diagnostics);
       } catch (e) {
-        console.log('error parsing issue at ', issue.location);
+        logger.log('error parsing issue at ', issue.location);
       }
     });
 
     // Now log everything
     for (const resource in groups) {
-      console.log(`${resource} issues:`);
+      logger.log(`${resource} issues:`);
       ['error', 'warning'].forEach(type => {
-        console.log(`  ${type}s:`.toUpperCase());
+        logger.log(`  ${type}s:`.toUpperCase());
 
         for (const e of groups[resource][type]) {
-          console.log('    -', e);
+          logger.log('    -', e);
         }
-        console.log();
+        logger.log();
       });
     }
+    response.validationIssues = groups;
   } else {
     response.body = error;
   }
