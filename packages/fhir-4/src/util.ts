@@ -110,7 +110,6 @@ export const request = (method, path, options: RequestOptions) => {
 
 // Util function to nicely print validation errors coming back from a fhir response
 export function logValidationErrors(response, logger = console) {
-  console.log(JSON.stringify(response));
   const error = JSON.parse(response.body);
 
   if (error.issue && error.issue.length) {
@@ -118,7 +117,6 @@ export function logValidationErrors(response, logger = console) {
 
     logger.log();
     logger.error('FHIR server reports validation issues:');
-    logger.log(error.issue);
     const errCount = error.issue.reduce(
       (count, e) => (e.severity === 'error' ? count + 1 : count),
       0,
