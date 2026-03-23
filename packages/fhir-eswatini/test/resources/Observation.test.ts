@@ -31,7 +31,7 @@ describe('SzLabResult', () => {
 
     assert.deepEqual(result.extension, [
       {
-        url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzTestingLabExtension',
+        url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzTestingLabExtension',
         valueReference: { reference: 'Location/abc' },
       },
     ]);
@@ -44,7 +44,7 @@ describe('SzLabResult', () => {
 
     assert.deepEqual(result.extension, [
       {
-        url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzTestingLabExtension',
+        url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzTestingLabExtension',
         valueReference: { reference: 'Location/abc' },
       },
     ]);
@@ -63,7 +63,7 @@ describe('SzLabResult', () => {
 
     assert.deepEqual(result.extension, [
       {
-        url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzTestingLabExtension',
+        url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzTestingLabExtension',
         valueReference: { reference: 'Location/abc' },
       },
     ]);
@@ -89,7 +89,7 @@ describe('SzLabResult', () => {
       },
       meta: {
         profile: [
-          'http://172.209.216.154:3447/fhir/StructureDefinition/SzLabResult',
+          'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzLabResult',
         ],
       },
     });
@@ -103,22 +103,22 @@ describe('SzLabResult', () => {
       id: '9DEEB700-F330-40BE-B0C8-DDD12C960857',
       meta: {
         profile: [
-          'http://172.209.216.154:3447/fhir/StructureDefinition/SzLabResult',
+          'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzLabResult',
         ],
       },
       //   text: {
       //     status: 'extensions',
-      //     div: '<div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: Observation 9DEEB700-F330-40BE-B0C8-DDD12C960857</b></p><a name="9DEEB700-F330-40BE-B0C8-DDD12C960857"> </a><a name="hc9DEEB700-F330-40BE-B0C8-DDD12C960857"> </a><div style="display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%"><p style="margin-bottom: 0px"/><p style="margin-bottom: 0px">Profile: <a href="StructureDefinition-SzLabResult.html">Eswatini Lab Result Profile</a></p></div><p><b>Extention: Eswatini Lab Result Authorizer</b>: <a href="Practitioner-576E19CD-CED4-47A0-8BF7-3B030153E245.html">Practitioner Thabile Celiwe Dlamini </a></p><p><b>Extention: Eswatini Testing Laboratory</b>: <a href="Location-BD06C72F-FCCE-42E0-BF55-E72C298DF11E.html">Location Mbabane Central Laboratory</a></p><p><b>status</b>: Final</p><p><b>category</b>: <span title="Codes:{http://terminology.hl7.org/CodeSystem/observation-category laboratory}">Laboratory</span></p><p><b>code</b>: <span title="Codes:{http://172.209.216.154:3447/fhir/CodeSystem/SzTestParameterCodeCS PSCD}">HIV Viral Load</span></p><p><b>subject</b>: <a href="Patient-13EA147E-8E3B-498C-8D35-6FCB8BC6DEFB.html">Celucolo Celani Sacolo  Male, DoB: 2000-01-01 ( Medical Record Number: Client Management Information System#M001010101-1\u00a0(use:\u00a0usual,\u00a0))</a></p><p><b>encounter</b>: <a href="Encounter-C4ACF791-2B64-4A45-8E6E-87A5B1295032.html">Encounter: status = finished; class = Out Patient Department (Code System: Encounter Classification#OPD); period = 2023-10-01 10:00:00+0000 --&gt; (ongoing)</a></p><p><b>performer</b>: <a href="Practitioner-576E19CD-CED4-47A0-8BF7-3B030153E245.html">Practitioner Thabile Celiwe Dlamini </a></p><p><b>value</b>: 16.5 Copies/ml</p><p><b>interpretation</b>: <span title="Codes:{http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation L}">Low</span></p><p><b>specimen</b>: <a href="Specimen-D1FB3038-1B78-44E1-8244-897F243284B4.html">Specimen: status = available; type = Blood</a></p></div>',
+      //     div: '<div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: Observation 9DEEB700-F330-40BE-B0C8-DDD12C960857</b></p><a name="9DEEB700-F330-40BE-B0C8-DDD12C960857"> </a><a name="hc9DEEB700-F330-40BE-B0C8-DDD12C960857"> </a><div style="display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%"><p style="margin-bottom: 0px"/><p style="margin-bottom: 0px">Profile: <a href="StructureDefinition-SzLabResult.html">Eswatini Lab Result Profile</a></p></div><p><b>Extention: Eswatini Lab Result Authorizer</b>: <a href="Practitioner-576E19CD-CED4-47A0-8BF7-3B030153E245.html">Practitioner Thabile Celiwe Dlamini </a></p><p><b>Extention: Eswatini Testing Laboratory</b>: <a href="Location-BD06C72F-FCCE-42E0-BF55-E72C298DF11E.html">Location Mbabane Central Laboratory</a></p><p><b>status</b>: Final</p><p><b>category</b>: <span title="Codes:{http://terminology.hl7.org/CodeSystem/observation-category laboratory}">Laboratory</span></p><p><b>code</b>: <span title="Codes:{https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzTestParameterCodeCS PSCD}">HIV Viral Load</span></p><p><b>subject</b>: <a href="Patient-13EA147E-8E3B-498C-8D35-6FCB8BC6DEFB.html">Celucolo Celani Sacolo  Male, DoB: 2000-01-01 ( Medical Record Number: Client Management Information System#M001010101-1\u00a0(use:\u00a0usual,\u00a0))</a></p><p><b>encounter</b>: <a href="Encounter-C4ACF791-2B64-4A45-8E6E-87A5B1295032.html">Encounter: status = finished; class = Out Patient Department (Code System: Encounter Classification#OPD); period = 2023-10-01 10:00:00+0000 --&gt; (ongoing)</a></p><p><b>performer</b>: <a href="Practitioner-576E19CD-CED4-47A0-8BF7-3B030153E245.html">Practitioner Thabile Celiwe Dlamini </a></p><p><b>value</b>: 16.5 Copies/ml</p><p><b>interpretation</b>: <span title="Codes:{http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation L}">Low</span></p><p><b>specimen</b>: <a href="Specimen-D1FB3038-1B78-44E1-8244-897F243284B4.html">Specimen: status = available; type = Blood</a></p></div>',
       //   },
       extension: [
         {
-          url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzAuthorizerExtension',
+          url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzAuthorizerExtension',
           valueReference: {
             reference: 'Practitioner/576E19CD-CED4-47A0-8BF7-3B030153E245',
           },
         },
         {
-          url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzTestingLabExtension',
+          url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzTestingLabExtension',
           valueReference: {
             reference: 'Location/BD06C72F-FCCE-42E0-BF55-E72C298DF11E',
           },
@@ -142,7 +142,7 @@ describe('SzLabResult', () => {
         coding: [
           {
             system:
-              'http://172.209.216.154:3447/fhir/CodeSystem/SzTestParameterCodeCS',
+              'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzTestParameterCodeCS',
             code: 'PSCD',
             display: 'HIV Viral Load',
           },
