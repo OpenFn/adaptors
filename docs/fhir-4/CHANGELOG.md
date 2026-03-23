@@ -1,5 +1,11 @@
 # @openfn/language-fhir-4
 
+## 0.4.0
+
+### Minor Changes
+
+- 51fdf24: When validation fails on upload, log nice error messages
+
 ## 0.3.2 - 12 March 2026
 
 ### Patch Changes
