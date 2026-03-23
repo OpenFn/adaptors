@@ -76,7 +76,7 @@ export const request = (method, path, options: RequestOptions) => {
   assertRelativeUrl(path);
 
   const { configuration, ...otherOptions } = options;
-  const fullPath = nodepath.join(configuration.apiPath ?? '', path);
+  const fullPath = nodepath.join(configuration.apiPath ?? '/fhir', path);
   const headers = addAuth(options);
   const opts = {
     ...otherOptions,
@@ -103,14 +103,6 @@ export const request = (method, path, options: RequestOptions) => {
         e.headers['content-type'].match(/fhir\+json/)
       ) {
         logValidationErrors(e);
-        // const error = JSON.parse(e.body);
-        // e.body = error;
-        // if (error.issue && error.issue.length) {
-        //   console.error('Error from FHIR server:');
-        //   error.issue.forEach(issue => {
-        //     console.error(issue.diagnostics);
-        //   });
-        // }
       }
       throw e;
     });
@@ -126,7 +118,7 @@ function logValidationErrors(response, logger = console) {
 
     console.log();
     console.error('FHIR server reports validation issues:');
-
+    console.log(error.issue);
     const errCount = error.issue.reduce(
       (count, e) => (e.severity === 'error' ? count + 1 : count),
       0,
@@ -151,19 +143,30 @@ function logValidationErrors(response, logger = console) {
     // const groups = _.groupBy(error.issue, e => e.path);
     // console.log(groups);
     error.issue.forEach(issue => {
-      const id = issue.location[0];
-      groups[id] ??= {};
-      groups[id][issue.severity] ??= [];
-      groups[id][issue.severity].push(issue.diagnostics);
+      try {
+        // generate a useful location string
+        // If this is a bundle, pull out the resource and UUID
+        // else just show the first location item
+        let id = issue.location[0];
+        if (id.startsWith('Bundle')) {
+          id = id.split('*').at(1);
+        }
+        groups[id] ??= {};
+        groups[id][issue.severity] ??= [];
+        groups[id][issue.severity].push(issue.diagnostics);
+      } catch (e) {
+        console.log('error parsing issue at ', issue.location);
+      }
     });
 
     // Now log everything
     for (const resource in groups) {
+      console.log(`${resource} issues:`);
       ['error', 'warning'].forEach(type => {
-        console.log(`${type}s:`.toUpperCase());
+        console.log(`  ${type}s:`.toUpperCase());
 
         for (const e of groups[resource][type]) {
-          console.log('  -', e);
+          console.log('    -', e);
         }
         console.log();
       });
