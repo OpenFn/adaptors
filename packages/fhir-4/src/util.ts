@@ -1,4 +1,5 @@
 import nodepath from 'node:path';
+import _ from 'lodash-es';
 
 import { composeNextState } from '@openfn/language-common';
 import {
@@ -48,11 +49,11 @@ export const logResponse = (response, query) => {
     }
     const message = `${method} ${urlWithQuery} - ${statusCode} in ${duration}ms`;
     if (response instanceof Error) {
-      console.error(message);
-      console.error('response body: ');
-      console.error(response.body || '[no body]');
+      logger.error(message);
+      logger.error('response body: ');
+      logger.error(response.body || '[no body]');
     } else {
-      console.log(message);
+      logger.log(message);
     }
   }
   return response;
@@ -75,7 +76,7 @@ export const request = (method, path, options: RequestOptions) => {
   assertRelativeUrl(path);
 
   const { configuration, ...otherOptions } = options;
-  const fullPath = nodepath.join(configuration.apiPath ?? '', path);
+  const fullPath = nodepath.join(configuration.apiPath ?? '/fhir', path);
   const headers = addAuth(options);
   const opts = {
     ...otherOptions,
@@ -94,24 +95,87 @@ export const request = (method, path, options: RequestOptions) => {
   // TODO add common error handlers for 404, 401
   return commonRequest(method, fullPath, opts)
     .then(logResponse)
+    .then()
     .catch(async e => {
       if (
         e.headers &&
         'content-type' in e.headers &&
         e.headers['content-type'].match(/fhir\+json/)
       ) {
-        const error = JSON.parse(e.body);
-        e.body = error;
-        if (error.issue && error.issue.length) {
-          console.error('Error from FHIR server:');
-          error.issue.forEach(issue => {
-            console.error(issue.diagnostics);
-          });
-        }
+        logValidationErrors(e);
       }
       throw e;
     });
 };
+
+// Util function to nicely print validation errors coming back from a fhir response
+export function logValidationErrors(response, logger = console) {
+  const error = JSON.parse(response.body);
+
+  if (error.issue && error.issue.length) {
+    delete response.body;
+
+    logger.log();
+    logger.error('FHIR server reports validation issues:');
+    const errCount = error.issue.reduce(
+      (count, e) => (e.severity === 'error' ? count + 1 : count),
+      0,
+    );
+    if (errCount) {
+      logger.error(` - ${errCount} Errors`);
+    }
+
+    const warnCount = error.issue.reduce(
+      (count, e) => (e.severity === 'error' ? count + 1 : count),
+      0,
+    );
+    if (warnCount) {
+      logger.error(` - ${warnCount} Warnings`);
+    }
+    logger.log();
+
+    // group by resource
+    // How does this look for a bundle though?
+    const groups = {};
+
+    // const groups = _.groupBy(error.issue, e => e.path);
+    // logger.log(groups);
+    error.issue.forEach(issue => {
+      try {
+        // generate a useful location string
+        // If this is a bundle, pull out the resource and UUID
+        // else just show the first location item
+        let id = issue.location[0];
+        if (id.startsWith('Bundle')) {
+          id = id.split('*').at(1);
+        }
+        groups[id] ??= {};
+        groups[id][issue.severity] ??= [];
+        groups[id][issue.severity].push(issue.diagnostics);
+      } catch (e) {
+        logger.log('error parsing issue at ', issue.location);
+      }
+    });
+
+    // Now log everything
+    for (const resource in groups) {
+      logger.log(`${resource} issues:`);
+      ['error', 'warning'].forEach(type => {
+        logger.log(`  ${type}s:`.toUpperCase());
+
+        for (const e of groups[resource][type]) {
+          logger.log('    -', e);
+        }
+        logger.log();
+      });
+    }
+    response.validationIssues = groups;
+  } else {
+    response.body = error;
+  }
+
+  return response;
+}
 
 function collectRefs(value: any): string[] {
   if (!value || typeof value !== 'object') return [];
