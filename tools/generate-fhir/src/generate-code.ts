@@ -1,3 +1,4 @@
+import nodepath from 'node:path';
 import { namedTypes as n, builders as b, ASTNode } from 'ast-types';
 import { print, parse } from 'recast';
 
@@ -101,6 +102,7 @@ const generateCode = (
           {
             initialiser: mappings.initialiser,
             typeShorthands: mappings.typeShorthands,
+            baseUrl: mappings.baseUrl,
           },
           mappings.overrides?.[resourceType],
         ),
@@ -222,6 +224,7 @@ const generateProfile = (
     overrides,
     mappings.initialiser,
     generateMeta,
+    mappings.baseUrl,
   );
 
   statements.push(b.exportDefaultDeclaration(fn));
@@ -439,10 +442,18 @@ const generateBuilder = (
   mappings,
   initialiser: (r: any) => void,
   generateMeta: boolean,
+  baseUrl?: string,
 ) => {
   const body: StatementKind[] = [];
 
-  body.push(initResource(schema.type, generateMeta && schema.url));
+  let url = schema.url;
+
+  if (baseUrl) {
+    const parsedSchemaUrl = new URL(schema.url);
+    url = nodepath.join(baseUrl, parsedSchemaUrl.pathname);
+  }
+
+  body.push(initResource(schema.type, generateMeta && url));
 
   body.push(...mapProps(schema, mappings));
 

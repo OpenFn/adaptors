@@ -1,5 +1,12 @@
 # @openfn/generate-fhir
 
+## 0.7.6
+
+### Patch Changes
+
+- Support `baseUrl` on mappings, which will be used in generated profiles in
+  place of the default URLs
+
 ## 0.7.5
 
 ### Patch Changes

@@ -50,7 +50,7 @@ export default function(props: Partial<MedicationDispense_SzMedicationDispense_P
 
         meta: {
             profile: [
-                "http://172.209.216.154:3447/fhir/StructureDefinition/SzMedicationDispense"
+                "https:/hapifhir.eswatinihie.com/fhir/StructureDefinition/SzMedicationDispense"
             ]
         },
 

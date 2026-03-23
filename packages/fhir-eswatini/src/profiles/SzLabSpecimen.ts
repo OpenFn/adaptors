@@ -38,7 +38,7 @@ export default function(props: Partial<Specimen_SzLabSpecimen_Props>) {
         resourceType: "Specimen",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzLabSpecimen"]
+            profile: ["https:/hapifhir.eswatinihie.com/fhir/StructureDefinition/SzLabSpecimen"]
         },
 
         ...props

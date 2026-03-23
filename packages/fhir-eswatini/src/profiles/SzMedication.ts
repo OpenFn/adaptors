@@ -33,7 +33,7 @@ export default function(props: Partial<Medication_SzMedication_Props>) {
         resourceType: "Medication",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzMedication"]
+            profile: ["https:/hapifhir.eswatinihie.com/fhir/StructureDefinition/SzMedication"]
         },
 
         ...props

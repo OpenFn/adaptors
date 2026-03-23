@@ -37,7 +37,7 @@ export default function(props: Partial<EpisodeOfCare_SzEpisodeOfCare_Props>) {
         resourceType: "EpisodeOfCare",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzEpisodeOfCare"]
+            profile: ["https:/hapifhir.eswatinihie.com/fhir/StructureDefinition/SzEpisodeOfCare"]
         },
 
         ...props

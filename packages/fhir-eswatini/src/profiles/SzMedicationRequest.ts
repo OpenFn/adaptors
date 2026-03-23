@@ -57,7 +57,9 @@ export default function(props: Partial<MedicationRequest_SzMedicationRequest_Pro
         resourceType: "MedicationRequest",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzMedicationRequest"]
+            profile: [
+                "https:/hapifhir.eswatinihie.com/fhir/StructureDefinition/SzMedicationRequest"
+            ]
         },
 
         ...props

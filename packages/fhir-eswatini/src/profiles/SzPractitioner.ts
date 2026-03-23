@@ -35,7 +35,7 @@ export default function(props: Partial<Practitioner_SzPractitioner_Props>) {
         resourceType: "Practitioner",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzPractitioner"]
+            profile: ["https:/hapifhir.eswatinihie.com/fhir/StructureDefinition/SzPractitioner"]
         },
 
         ...props

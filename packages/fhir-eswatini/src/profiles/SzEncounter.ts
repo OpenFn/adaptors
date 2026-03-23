@@ -48,7 +48,7 @@ export default function(props: Partial<Encounter_SzEncounter_Props>) {
         resourceType: "Encounter",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzEncounter"]
+            profile: ["https:/hapifhir.eswatinihie.com/fhir/StructureDefinition/SzEncounter"]
         },
 
         ...props

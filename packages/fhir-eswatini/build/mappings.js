@@ -1,9 +1,11 @@
 // Add resource and profile mappings here to improve your generated adaptor
 
 export default {
+  baseUrl: 'https://hapifhir.eswatinihie.com',
+
   generateMeta: true,
   include: [],
-  // include: ['Observation'],
+  // include: ['Patient'],
   exclude: [],
   overrides: {},
 

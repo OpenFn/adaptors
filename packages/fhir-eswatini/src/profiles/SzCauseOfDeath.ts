@@ -49,7 +49,7 @@ export default function(props: Partial<Observation_SzCauseOfDeath_Props>) {
         resourceType: "Observation",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzCauseOfDeath"]
+            profile: ["https:/hapifhir.eswatinihie.com/fhir/StructureDefinition/SzCauseOfDeath"]
         },
 
         ...props

@@ -53,7 +53,7 @@ export default function(props: Partial<Procedure_SzProcedure_Props>) {
         resourceType: "Procedure",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzProcedure"]
+            profile: ["https:/hapifhir.eswatinihie.com/fhir/StructureDefinition/SzProcedure"]
         },
 
         ...props

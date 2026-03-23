@@ -50,7 +50,7 @@ export default function(props: Partial<Observation_SzClinicalObservation_Props>)
 
         meta: {
             profile: [
-                "http://172.209.216.154:3447/fhir/StructureDefinition/SzClinicalObservation"
+                "https:/hapifhir.eswatinihie.com/fhir/StructureDefinition/SzClinicalObservation"
             ]
         },
 

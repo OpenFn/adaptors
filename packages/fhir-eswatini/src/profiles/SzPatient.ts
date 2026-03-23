@@ -45,7 +45,7 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
         resourceType: "Patient",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzPatient"]
+            profile: ["https:/hapifhir.eswatinihie.com/fhir/StructureDefinition/SzPatient"]
         },
 
         ...props

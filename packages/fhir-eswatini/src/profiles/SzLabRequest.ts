@@ -58,7 +58,7 @@ export default function(props: Partial<ServiceRequest_SzLabRequest_Props>) {
         resourceType: "ServiceRequest",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzLabRequest"]
+            profile: ["https:/hapifhir.eswatinihie.com/fhir/StructureDefinition/SzLabRequest"]
         },
 
         ...props

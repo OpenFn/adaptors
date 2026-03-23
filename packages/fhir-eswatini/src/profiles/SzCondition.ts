@@ -42,7 +42,7 @@ export default function(props: Partial<Condition_SzCondition_Props>) {
         resourceType: "Condition",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzCondition"]
+            profile: ["https:/hapifhir.eswatinihie.com/fhir/StructureDefinition/SzCondition"]
         },
 
         ...props

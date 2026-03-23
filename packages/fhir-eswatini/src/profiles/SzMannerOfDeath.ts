@@ -49,7 +49,7 @@ export default function(props: Partial<Observation_SzMannerOfDeath_Props>) {
         resourceType: "Observation",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzMannerOfDeath"]
+            profile: ["https:/hapifhir.eswatinihie.com/fhir/StructureDefinition/SzMannerOfDeath"]
         },
 
         ...props

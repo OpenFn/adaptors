@@ -51,7 +51,7 @@ export default function(props: Partial<Observation_SzLabResult_Props>) {
         resourceType: "Observation",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzLabResult"]
+            profile: ["https:/hapifhir.eswatinihie.com/fhir/StructureDefinition/SzLabResult"]
         },
 
         ...props

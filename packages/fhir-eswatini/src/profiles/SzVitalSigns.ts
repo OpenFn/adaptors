@@ -49,7 +49,7 @@ export default function(props: Partial<Observation_SzVitalSigns_Props>) {
         resourceType: "Observation",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzVitalSigns"]
+            profile: ["https:/hapifhir.eswatinihie.com/fhir/StructureDefinition/SzVitalSigns"]
         },
 
         ...props

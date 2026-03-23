@@ -35,7 +35,7 @@ export default function(props: Partial<Organization_SzOrganization_Props>) {
         resourceType: "Organization",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzOrganization"]
+            profile: ["https:/hapifhir.eswatinihie.com/fhir/StructureDefinition/SzOrganization"]
         },
 
         ...props

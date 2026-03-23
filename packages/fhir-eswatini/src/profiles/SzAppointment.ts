@@ -47,7 +47,7 @@ export default function(props: Partial<Appointment_SzAppointment_Props>) {
         resourceType: "Appointment",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzAppointment"]
+            profile: ["https:/hapifhir.eswatinihie.com/fhir/StructureDefinition/SzAppointment"]
         },
 
         ...props

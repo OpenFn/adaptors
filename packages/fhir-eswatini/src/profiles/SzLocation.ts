@@ -42,7 +42,7 @@ export default function(props: Partial<Location_SzLocation_Props>) {
         resourceType: "Location",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzLocation"]
+            profile: ["https:/hapifhir.eswatinihie.com/fhir/StructureDefinition/SzLocation"]
         },
 
         ...props

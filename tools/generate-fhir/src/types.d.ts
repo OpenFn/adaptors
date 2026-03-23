@@ -22,6 +22,9 @@ export type MappingSpec = {
   // Allow builder shorthand values to be captured in typings
   // eg, a refernce can be a string or Reference
   typeShorthands?: Record<string, string[]>;
+
+  /** Override the base URL used for generated resources */
+  baseUrl?: string;
 };
 
 export type Mapping = {

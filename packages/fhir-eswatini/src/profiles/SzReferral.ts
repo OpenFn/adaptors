@@ -59,7 +59,7 @@ export default function(props: Partial<ServiceRequest_SzReferral_Props>) {
         resourceType: "ServiceRequest",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzReferral"]
+            profile: ["https:/hapifhir.eswatinihie.com/fhir/StructureDefinition/SzReferral"]
         },
 
         ...props
