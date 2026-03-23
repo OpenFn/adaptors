@@ -1,5 +1,17 @@
 # @openfn/language-fhir-eswatini
 
+## 0.7.0
+
+### Minor Changes
+
+- 51fdf24: When validation fails on upload, log nice error messages
+- da2cf33: Export `read`,`search`,`update`,`delete` and `create` from fhir-4.
+
+### Patch Changes
+
+- Updated dependencies [51fdf24]
+  - @openfn/language-fhir-4@0.4.0
+
 ## 0.6.1 - 16 March 2026
 
 ### Patch Changes
