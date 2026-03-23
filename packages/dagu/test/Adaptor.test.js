@@ -12,19 +12,7 @@ const configuration = {
   password: '12154545'
 }
 
-/**
- * encodeFormBody is tested in isolation here to document WHY a manual
- * multipart serialiser is needed instead of native FormData.
- *
- * undici's commonRequest uses dispatcher.request() internally. That API does
- * not serialise FormData bodies — only the fetch() API does (via extractBody).
- * Passing native FormData to dispatcher.request() throws:
- *   "Cannot read properties of null (reading 'byteLength')"
- * because the dispatcher tries to read byteLength on a FormData object that
- * has no such property. Manually building a multipart string sidesteps this
- * entirely and keeps the boundary consistent between header and body.
- */
-// Helper to consume a ReadableStream into a string
+// Reads a ReadableStream to a string for test assertions
 async function readStream(stream) {
   const chunks = [];
   for await (const chunk of stream) {
@@ -33,20 +21,13 @@ async function readStream(stream) {
   return chunks.join('');
 }
 
-/**
- * encodeFormBody is tested in isolation here to document WHY a manual
- * serialiser wrapper is needed instead of passing FormData directly to commonRequest.
- *
- * undici's commonRequest uses dispatcher.request() internally. That API does
- * not serialise FormData bodies — only the fetch() API does (via extractBody).
- * Passing native FormData to dispatcher.request() throws:
- *   "Cannot read properties of null (reading 'byteLength')"
- * because the dispatcher tries to read byteLength on a FormData object.
- *
- * Wrapping FormData in a Response triggers the same extractBody() serialisation
- * that fetch() uses. The resulting ReadableStream is an async iterable that
- * dispatcher.request() handles natively.
- */
+// encodeFormBody wraps FormData in a Response to trigger the same extractBody()
+// serialisation that undici's fetch() API uses internally. This is necessary
+// because commonRequest uses dispatcher.request(), which does NOT serialise
+// FormData — passing FormData directly throws:
+//   "Cannot read properties of null (reading 'byteLength')"
+// The Response body is a ReadableStream (async iterable) that dispatcher.request()
+// handles natively, with the boundary consistent between body and content-type.
 describe('encodeFormBody', () => {
   it('returns a multipart/form-data content-type with a boundary', () => {
     const { contentType } = encodeFormBody({ key: 'value' });
