@@ -1,4 +1,5 @@
 import nodepath from 'node:path';
+import _ from 'lodash-es';
 
 import { composeNextState } from '@openfn/language-common';
 import {
@@ -94,24 +95,85 @@ export const request = (method, path, options: RequestOptions) => {
   // TODO add common error handlers for 404, 401
   return commonRequest(method, fullPath, opts)
     .then(logResponse)
+    .then()
     .catch(async e => {
       if (
         e.headers &&
         'content-type' in e.headers &&
         e.headers['content-type'].match(/fhir\+json/)
       ) {
-        const error = JSON.parse(e.body);
-        e.body = error;
-        if (error.issue && error.issue.length) {
-          console.error('Error from FHIR server:');
-          error.issue.forEach(issue => {
-            console.error(issue.diagnostics);
-          });
-        }
+        logValidationErrors(e);
+        // const error = JSON.parse(e.body);
+        // e.body = error;
+        // if (error.issue && error.issue.length) {
+        //   console.error('Error from FHIR server:');
+        //   error.issue.forEach(issue => {
+        //     console.error(issue.diagnostics);
+        //   });
+        // }
       }
       throw e;
     });
 };
+
+// Util function to nicely print validation errors coming back from a fhir response
+function logValidationErrors(response, logger = console) {
+  const error = JSON.parse(response.body);
+
+  if (error.issue && error.issue.length) {
+    delete response.body;
+    response.validationIssues = error.issue;
+
+    console.log();
+    console.error('FHIR server reports validation issues:');
+
+    const errCount = error.issue.reduce(
+      (count, e) => (e.severity === 'error' ? count + 1 : count),
+      0,
+    );
+    if (errCount) {
+      console.error(` - ${errCount} Errors`);
+    }
+
+    const warnCount = error.issue.reduce(
+      (count, e) => (e.severity === 'error' ? count + 1 : count),
+      0,
+    );
+    if (warnCount) {
+      console.error(` - ${warnCount} Warnings`);
+    }
+    console.log();
+
+    // group by resource
+    // How does this look for a bundle though?
+    const groups = {};
+
+    // const groups = _.groupBy(error.issue, e => e.path);
+    // console.log(groups);
+    error.issue.forEach(issue => {
+      const id = issue.location[0];
+      groups[id] ??= {};
+      groups[id][issue.severity] ??= [];
+      groups[id][issue.severity].push(issue.diagnostics);
+    });
+
+    // Now log everything
+    for (const resource in groups) {
+      ['error', 'warning'].forEach(type => {
+        console.log(`${type}s:`.toUpperCase());
+
+        for (const e of groups[resource][type]) {
+          console.log('  -', e);
+        }
+        console.log();
+      });
+    }
+  } else {
+    response.body = error;
+  }
+
+  return response;
+}
 
 function collectRefs(value: any): string[] {
   if (!value || typeof value !== 'object') return [];

@@ -17,7 +17,7 @@ const entry = (
   request: { method: 'PUT', url: `${resourceType}/${id}` },
 });
 
-describe.only('sortBundle', () => {
+describe('sortBundle', () => {
   it('should place resources with no dependencies before those that depend on them', () => {
     const encounter = entry('Encounter', 'e1', {
       subject: { reference: 'Patient/p1' },

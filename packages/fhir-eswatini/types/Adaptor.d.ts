@@ -1,4 +1,4 @@
-export { createBundle, uploadBundle } from '@openfn/language-fhir-4';
+export { read, search, update, delete, create, createBundle, uploadBundle, } from '@openfn/language-fhir-4';
 /**
  * Add a resource to a bundle on state, using the `name` as the key (or `bundle` by default).
  * The resource will be upserted (via PUT).
