@@ -1,6 +1,15 @@
 import { expandReferences } from '@openfn/language-common/util';
-export { createBundle, uploadBundle } from '@openfn/language-fhir-4';
 import * as builders from './builders';
+
+export {
+  read,
+  search,
+  update,
+  delete,
+  create,
+  createBundle,
+  uploadBundle,
+} from '@openfn/language-fhir-4';
 
 // TODO would like a smarter way to track this
 const BASE_URL = 'http://172.209.216.154';
