@@ -40,25 +40,44 @@ export const getAccessToken = async (configuration, headers) => {
   return body.token.access_token;
 };
 
+function encodeFormBody(data) {
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries(data)) {
+    params.append(
+      key,
+      typeof value === 'object' && value !== null ? JSON.stringify(value) : String(value)
+    );
+  }
+  return params.toString();
+}
+
 export const request = async (configuration = {}, method, path, options) => {
-  const { baseUrl  } = configuration;
+  const { baseUrl } = configuration;
 
-  if(!access_token)
-      access_token = await getAccessToken(configuration, options.headers)
+  if (!access_token)
+    access_token = await getAccessToken(configuration, options.headers);
 
-  const { query = {}, body = {} } = options;
+  const { query = {}, body = {}, contentType, headers = {} } = options;
+
+  let requestBody = body;
+  let requestHeaders = { ...headers };
+
+  if (contentType === 'form') {
+    requestHeaders['content-type'] = 'application/x-www-form-urlencoded';
+    requestBody = encodeFormBody(body);
+  } else {
+    requestHeaders['content-type'] = 'application/json';
+  }
+
+  requestHeaders['Authorization'] = `Bearer ${access_token}`;
 
   const opts = {
+    ...options,
     parseAs: 'json',
     baseUrl,
-    headers: {
-      'content-type': 'application/json',
-      Authorization: `Bearer ${access_token}`,
-      ...options.headers,
-    },
-    body,
+    headers: requestHeaders,
+    body: requestBody,
     query,
-    ...options,
   };
 
   const safePath = nodepath.join(path);

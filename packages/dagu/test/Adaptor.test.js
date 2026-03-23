@@ -173,4 +173,42 @@ describe('post', () => {
 
     expect(finalState.data).to.eql(testData.request.response);
   })
+
+  it('sends body as URL-encoded form when contentType is "form"', async () => {
+    let capturedHeaders;
+    let capturedBody;
+
+    testServer
+      .intercept({
+        path: '/Patient/Prescription/History',
+        method: 'POST',
+      })
+      .reply(200, (req) => {
+        capturedHeaders = req.headers;
+        capturedBody = req.body;
+        return testData.request.response;
+      });
+
+    const state = { configuration };
+
+    const finalState = await post(
+      'Patient/Prescription/History',
+      {
+        start: 0,
+        length: -1,
+        draw: 1,
+        additionalParameters: {
+          filter: [{ fieldName: 'patientName', operator: 'Eq', value: 'Lee Lee' }],
+        },
+      },
+      { contentType: 'form' }
+    )(state);
+
+    expect(finalState.data).to.eql(testData.request.response);
+    expect(capturedHeaders['content-type']).to.equal('application/x-www-form-urlencoded');
+    expect(capturedBody).to.include('start=0');
+    expect(capturedBody).to.include('draw=1');
+    // nested objects are JSON-stringified
+    expect(capturedBody).to.include('additionalParameters=');
+  });
 });
