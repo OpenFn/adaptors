@@ -241,7 +241,7 @@ describe('SzVitalSigns', () => {
     ]);
   });
 
-  it.only('should accept a value as a quantity', () => {
+  it('should accept a value as a quantity', () => {
     const resource = builders.observation('SzVitalSigns', {
       value: {
         value: 75,
