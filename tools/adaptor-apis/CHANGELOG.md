@@ -1,5 +1,11 @@
 # @openfn/adaptor-apis
 
+## 0.3.0
+
+### Minor Changes
+
+- Support `@latest` adaptor versions
+
 ## 0.2.3
 
 ### Patch Changes
