@@ -30,6 +30,12 @@ importers:
       '@openfn/parse-jsdoc':
         specifier: workspace:^1.0.0
         version: link:tools/parse-jsdoc
+      '@types/chai':
+        specifier: ^5.2.2
+        version: 5.2.2
+      '@types/mocha':
+        specifier: ^10.0.10
+        version: 10.0.10
       chokidar-cli:
         specifier: ^3.0.0
         version: 3.0.0
@@ -19131,7 +19137,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 20.19.33
+      '@types/node': 18.17.5
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
