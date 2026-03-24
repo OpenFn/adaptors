@@ -64,6 +64,16 @@ The module does a couple of things:
 - This includes functions exported from common
 - Optionally writes compiled docs to disk
 
+## @latest
+
+Since version 0.2.4, `adaptor-apis` is compatible with @latest versions.
+
+When fetching latest, note that:
+
+- the local file system cache will be skipped (latest will always re-download
+  files)
+- Files will be pulled from the main on github, not a tagged build
+
 ## CLI Usage
 
 You can generate docs for any single adaptor from this repo:
