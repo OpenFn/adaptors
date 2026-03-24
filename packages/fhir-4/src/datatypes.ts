@@ -417,6 +417,9 @@ export const composite = (object, key, value) => {
   } else if (value.reference) {
     k.push('Reference');
   }
+  if (value.value && typeof value.value === 'number') {
+    k.push('Quantity');
+  }
   // if the incoming value is a reference or another resource, make it a reference
   // TODO Is this a bit cheeky? A bit presumptuous?
   else if (value.id && value.meta && value.resourceType) {

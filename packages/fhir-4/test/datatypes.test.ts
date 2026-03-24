@@ -370,4 +370,10 @@ describe('composite', () => {
     b.composite(obj, 'value', 'hello world');
     expect(obj).to.have.property('valueString', 'hello world');
   });
+
+  it('should identify Quantity objects', () => {
+    const obj: any = {};
+    b.composite(obj, 'value', { value: 70, unit: 'kg' });
+    expect(obj.valueQuantity).to.eql({ value: 70, unit: 'kg' });
+  });
 });
