@@ -182,7 +182,11 @@ const fetchFilesList = async (
   dir: string,
   filterDir: string[] = [],
 ): Promise<any[]> => {
-  const url = `https://api.github.com/repos/openfn/adaptors/contents/${dir}?ref=${specifier}`;
+  let url = `https://api.github.com/repos/openfn/adaptors/contents/${dir}`;
+  if (!specifier.endsWith('@latest')) {
+    url += `?ref=${specifier}`;
+  }
+
   const headers: HeadersInit = {
     Accept: 'application/vnd.github+json',
     'X-GitHub-Api-Version': '2022-11-28',
@@ -248,6 +252,10 @@ export const preinstallAdaptor = async (
   const outputDir = `${installDir}/${shortName}@${version}`;
 
   try {
+    if (specifier.endsWith('@latest')) {
+      console.log('Skipping cache for @latest version');
+      throw {};
+    }
     const pkg = await loadPkg(outputDir);
     console.log('Using cached files for', pkg.name, pkg.version);
   } catch (e) {
