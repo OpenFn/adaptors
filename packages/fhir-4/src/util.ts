@@ -49,11 +49,11 @@ export const logResponse = (response, query) => {
     }
     const message = `${method} ${urlWithQuery} - ${statusCode} in ${duration}ms`;
     if (response instanceof Error) {
-      logger.error(message);
-      logger.error('response body: ');
-      logger.error(response.body || '[no body]');
+      console.error(message);
+      console.error('response body: ');
+      console.error(response.body || '[no body]');
     } else {
-      logger.log(message);
+      console.log(message);
     }
   }
   return response;
@@ -114,7 +114,6 @@ export function logValidationErrors(response, logger = console) {
 
   if (error.issue && error.issue.length) {
     delete response.body;
-
     logger.log();
     logger.error('FHIR server reports validation issues:');
     const errCount = error.issue.reduce(
@@ -138,22 +137,29 @@ export function logValidationErrors(response, logger = console) {
     // How does this look for a bundle though?
     const groups = {};
 
-    // const groups = _.groupBy(error.issue, e => e.path);
-    // logger.log(groups);
     error.issue.forEach(issue => {
       try {
-        // generate a useful location string
-        // If this is a bundle, pull out the resource and UUID
-        // else just show the first location item
-        let id = issue.location[0];
-        if (id.startsWith('Bundle')) {
-          id = id.split('*').at(1);
+        let id = 'unidentified resource';
+        if (issue.location) {
+          // generate a useful location string
+          // If this is a bundle, pull out the resource and UUID
+          // else just show the first location item
+          id = issue.location[0];
+          if (id.startsWith('Bundle')) {
+            id = id.split('*').at(1) ?? id;
+          }
+        } else {
+          console.log({ issue });
         }
         groups[id] ??= {};
         groups[id][issue.severity] ??= [];
-        groups[id][issue.severity].push(issue.diagnostics);
+
+        const path = issue.location[0];
+        groups[id][issue.severity][path] ??= [];
+        groups[id][issue.severity][path].push(issue.diagnostics);
       } catch (e) {
         logger.log('error parsing issue at ', issue.location);
+        console.log(e);
       }
     });
 
@@ -161,12 +167,18 @@ export function logValidationErrors(response, logger = console) {
     for (const resource in groups) {
       logger.log(`${resource} issues:`);
       ['error', 'warning'].forEach(type => {
-        logger.log(`  ${type}s:`.toUpperCase());
+        if (type in groups[resource]) {
+          logger.log(`  ${type}s:`.toUpperCase());
 
-        for (const e of groups[resource][type]) {
-          logger.log('    -', e);
+          for (const path in groups[resource][type]) {
+            logger.log();
+            logger.log('  ', path);
+            for (const message of groups[resource][type][path]) {
+              logger.log('    -', message);
+            }
+          }
+          logger.log();
         }
-        logger.log();
       });
     }
     response.validationIssues = groups;
