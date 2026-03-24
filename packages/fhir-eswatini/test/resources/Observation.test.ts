@@ -95,10 +95,9 @@ describe('SzLabResult', () => {
     });
   });
 
-
-  it.skip('should create a SzLabResult with a catagory ', () => {
+  it.skip('should create a SzLabResult with a category ', () => {
     const result = builders.observation('SzLabResult', {
-      category:'Laboratory'
+      category: 'Laboratory',
     });
 
     assert.deepEqual(result.category, {
@@ -121,7 +120,6 @@ describe('SzLabResult', () => {
       },
     });
   });
-
 
   // TODO!
   it.skip('should build an example resource', () => {
@@ -243,7 +241,7 @@ describe('SzVitalSigns', () => {
     ]);
   });
 
-  it.skip('should accept a value as a quantity', () => {
+  it.only('should accept a value as a quantity', () => {
     const resource = builders.observation('SzVitalSigns', {
       value: {
         value: 75,
@@ -251,9 +249,9 @@ describe('SzVitalSigns', () => {
       },
     });
 
-    expect(resource.valueQuantity).eql([
-        value: 75,
-        unit: 'kg',
-    ]);
+    expect(resource.valueQuantity).eql({
+      value: 75,
+      unit: 'kg',
+    });
   });
 });
