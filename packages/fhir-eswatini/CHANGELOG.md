@@ -1,5 +1,13 @@
 # @openfn/language-fhir-eswatini
 
+## 0.7.1
+
+### Patch Changes
+
+- c5e2b2b: Fix an issue in validation issue reporting
+- Updated dependencies [c5e2b2b]
+  - @openfn/language-fhir-4@0.4.1
+
 ## 0.7.0
 
 ### Minor Changes
