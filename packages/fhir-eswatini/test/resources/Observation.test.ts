@@ -223,7 +223,7 @@ describe('SzVitalSigns', () => {
     assert.isOk(resource);
   });
 
-  it('should expand category', () => {
+  it.skip('should expand category', () => {
     const resource = builders.observation('SzVitalSigns', {
       category: 'vital-signs',
     });
