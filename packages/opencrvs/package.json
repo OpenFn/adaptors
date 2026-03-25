@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-opencrvs",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "OpenFn adaptor for OpenCRVS",
   "type": "module",
   "exports": {

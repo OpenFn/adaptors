@@ -95,6 +95,32 @@ describe('SzLabResult', () => {
     });
   });
 
+  it.skip('should create a SzLabResult with a category ', () => {
+    const result = builders.observation('SzLabResult', {
+      category: 'Laboratory',
+    });
+
+    assert.deepEqual(result.category, {
+      resourceType: 'Observation',
+      code: {
+        coding: [
+          {
+            code: 'CD4',
+            display: 'CD4 Count',
+            system:
+              'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzTestParameterCodeCS',
+          },
+        ],
+        text: 'CD4 Count',
+      },
+      meta: {
+        profile: [
+          'http://172.209.216.154:3447/fhir/StructureDefinition/SzLabResult',
+        ],
+      },
+    });
+  });
+
   // TODO!
   it.skip('should build an example resource', () => {
     // http://172.209.216.154/Observation-9DEEB700-F330-40BE-B0C8-DDD12C960857.json.html
@@ -195,5 +221,37 @@ describe('SzVitalSigns', () => {
   it('should create a simple SzVitalSigns', () => {
     const resource = builders.observation('SzVitalSigns', {});
     assert.isOk(resource);
+  });
+
+  it.skip('should expand category', () => {
+    const resource = builders.observation('SzVitalSigns', {
+      category: 'vital-signs',
+    });
+    console.log(resource);
+    expect(resource.category).eql([
+      {
+        coding: [
+          {
+            system:
+              'http://terminology.hl7.org/CodeSystem/observation-category',
+            code: 'vital-signs',
+          },
+        ],
+      },
+    ]);
+  });
+
+  it('should accept a value as a quantity', () => {
+    const resource = builders.observation('SzVitalSigns', {
+      value: {
+        value: 75,
+        unit: 'kg',
+      },
+    });
+
+    expect(resource.valueQuantity).eql({
+      value: 75,
+      unit: 'kg',
+    });
   });
 });
