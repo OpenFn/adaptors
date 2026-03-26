@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import https from 'https';
 import Koa from 'koa';
 import Router from '@koa/router';
+import { koaBody } from 'koa-body';
 
 import { execute, get, post } from '../src/index.js';
 
@@ -18,6 +19,17 @@ router.get('/new-location', ctx => {
 router.get('/new-location-1', ctx => {
   ctx.body = { ok: true };
 });
+router.post(
+  '/form',
+  koaBody({ multipart: true, urlencoded: false, json: false, text: false }),
+  ctx => {
+    if (!ctx.is('multipart/form-data')) {
+      ctx.status = 500;
+      return;
+    }
+    ctx.body = ctx.request.body;
+  }
+);
 router.all('(.*)', ctx => {
   ctx.type = 'text/plain';
   ctx.body = 'Hello, World!';
@@ -64,6 +76,45 @@ describe('Integration tests', () => {
 
     expect(data).to.eql('Hello, World!');
     expect(response.method).to.eql('POST');
+  });
+
+  it('should post formdata and return json', async () => {
+    const state = {
+      configuration: {
+        baseUrl: `http://localhost:${httpServer.address().port}`,
+      },
+      data: {},
+    };
+    const { data, response } = await execute(
+      post('/form', { name: 'Joe', age: '30' }, { contentType: 'form' }),
+    )(state);
+
+    expect(response.statusCode).to.eql(200);
+    expect(data).to.eql({ name: 'Joe', age: '30' });
+  });
+
+  it('should return 500 when posting an empty body to /form', async () => {
+    const state = {
+      configuration: {
+        baseUrl: `http://localhost:${httpServer.address().port}`,
+      },
+      data: {},
+    };
+    const error = await execute(post('/form', null))(state).catch(e => e);
+    expect(error.statusCode).to.eql(500);
+  });
+
+  it('should return 500 when posting json to /form', async () => {
+    const state = {
+      configuration: {
+        baseUrl: `http://localhost:${httpServer.address().port}`,
+      },
+      data: {},
+    };
+    const error = await execute(post('/form', { name: 'Joe' }))(state).catch(
+      e => e,
+    );
+    expect(error.statusCode).to.eql(500);
   });
 
   it('can follow redirects', async () => {
