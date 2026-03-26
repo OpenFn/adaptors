@@ -5,7 +5,7 @@ const sampleBasic = {
   resourceType: 'Practitioner',
   meta: {
     profile: [
-      'http://172.209.216.154:3447/fhir/StructureDefinition/SzPractitioner',
+      'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzPractitioner',
     ],
   },
   gender: 'female',
@@ -16,7 +16,7 @@ const sampleBasic = {
           {
             code: 'PI',
             system:
-              'http://172.209.216.154:3447/fhir/CodeSystem/SzPersonIdentificationsCS',
+              'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzPersonIdentificationsCS',
             display: 'Personal ID Number',
           },
         ],
@@ -95,20 +95,20 @@ describe('SzPractitioner', () => {
 
   it('should map identifier type shorthand to a coding', () => {
     const resource = builders.practitioner('SzPractitioner', {
-     identifier: [
-      {
-        type: builders.concept([
-          'PI',
-          'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzPersonIdentificationsCS',
-          {
-            display: 'Personal ID Number',
-          },
-        ]),
-        system: 'http://homeaffairs.sys',
-        value: '9101010000001',
-        use: 'official',
-      },
-    ],
+      identifier: [
+        {
+          type: builders.concept([
+            'PI',
+            'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzPersonIdentificationsCS',
+            {
+              display: 'Personal ID Number',
+            },
+          ]),
+          system: 'http://homeaffairs.sys',
+          value: '9101010000001',
+          use: 'official',
+        },
+      ],
     });
     assert.deepEqual(resource.identifier[0].type, {
       coding: [
@@ -122,8 +122,6 @@ describe('SzPractitioner', () => {
     });
   });
 
-
-
   it('should build the full sampleBasic resource', () => {
     const resource = builders.practitioner('SzPractitioner', {
       gender: 'female',
@@ -134,7 +132,7 @@ describe('SzPractitioner', () => {
               {
                 code: 'PI',
                 system:
-                  'http://172.209.216.154:3447/fhir/CodeSystem/SzPersonIdentificationsCS',
+                  'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzPersonIdentificationsCS',
                 display: 'Personal ID Number',
               },
             ],
@@ -154,4 +152,3 @@ describe('SzPractitioner', () => {
     assert.deepEqual(resource, sampleBasic);
   });
 });
-

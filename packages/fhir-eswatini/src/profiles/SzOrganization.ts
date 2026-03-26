@@ -35,7 +35,7 @@ export default function(props: Partial<Organization_SzOrganization_Props>) {
         resourceType: "Organization",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzOrganization"]
+            profile: ["https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzOrganization"]
         },
 
         ...props
@@ -50,7 +50,7 @@ export default function(props: Partial<Organization_SzOrganization_Props>) {
         if (!Array.isArray(props.type)) { props.type = [props.type]; }
 
         resource.type = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/organization-type", props.type)
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/organization-type|4.0.1", props.type)
         );
 
         dt.ensureConceptText(resource.type);

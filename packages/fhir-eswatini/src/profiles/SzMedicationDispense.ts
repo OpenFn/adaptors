@@ -50,7 +50,7 @@ export default function(props: Partial<MedicationDispense_SzMedicationDispense_P
 
         meta: {
             profile: [
-                "http://172.209.216.154:3447/fhir/StructureDefinition/SzMedicationDispense"
+                "https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzMedicationDispense"
             ]
         },
 
@@ -73,9 +73,10 @@ export default function(props: Partial<MedicationDispense_SzMedicationDispense_P
     }
 
     if (!_.isNil(props.category)) {
-        resource.category = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/medicationdispense-category", props.category)
-        );
+        resource.category = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/medicationdispense-category|4.0.1",
+            props.category
+        ));
 
         dt.ensureConceptText(resource.category);
     }

@@ -36,7 +36,9 @@ const sampleBasic = {
   ],
   gender: 'male',
   meta: {
-    profile: ['http://172.209.216.154:3447/fhir/StructureDefinition/SzPatient'],
+    profile: [
+      'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzPatient',
+    ],
   },
 };
 
@@ -44,7 +46,9 @@ const sampleFull = {
   resourceType: 'Patient',
   id: 'SampleSzMalariaPatient',
   meta: {
-    profile: ['http://172.209.216.154:3447/fhir/StructureDefinition/SzPatient'],
+    profile: [
+      'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzPatient',
+    ],
   },
   // text: {
   //   status: 'generated',
@@ -77,7 +81,7 @@ const sampleFull = {
     //   },
     // },
     {
-      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzInkhundlaExtension',
+      url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzInkhundlaExtension',
       valueCodeableConcept: {
         coding: [
           {
@@ -91,7 +95,7 @@ const sampleFull = {
       },
     },
     {
-      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzChiefdomExtension',
+      url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzChiefdomExtension',
       valueCodeableConcept: {
         coding: [
           {
@@ -105,7 +109,7 @@ const sampleFull = {
       },
     },
     {
-      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzRegistrationDate',
+      url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzRegistrationDate',
       valueDateTime: '2025-06-01T10:00:00Z',
     },
   ],
@@ -290,7 +294,7 @@ describe('SzPatient', () => {
         coding: [
           {
             system:
-              'http://172.209.216.154:3447/fhir/CodeSystem/SzTinkhundlaCS',
+              'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzTinkhundlaCS',
             code: '3',
             display: 'LOBAMBA',
           },
@@ -301,12 +305,12 @@ describe('SzPatient', () => {
 
     // And the extension should be properly mapped
     assert.deepEqual(resource.extension[0], {
-      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzInkhundlaExtension',
+      url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzInkhundlaExtension',
       valueCodeableConcept: {
         coding: [
           {
             system:
-              'http://172.209.216.154:3447/fhir/CodeSystem/SzTinkhundlaCS',
+              'https://hapifhir.eswatinihie.com/fhir/CodeSystem/SzTinkhundlaCS',
             code: '3',
             display: 'LOBAMBA',
           },
@@ -326,7 +330,7 @@ describe('SzPatient', () => {
 
     // And the extension should be properly mapped
     assert.deepEqual(resource.extension[0], {
-      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzInkhundlaExtension',
+      url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzInkhundlaExtension',
 
       // This structure is actually pretty hard to generate
       // mostly because of the text field
@@ -348,9 +352,12 @@ describe('SzPatient', () => {
 
   it('should map extension inkundla with a custom mapped string value', () => {
     // Define mappings in job code
-    b.setValues('http://172.209.216.154:3447/fhir/ValueSet/SzTinkhundlaVS', {
-      LO: '3',
-    });
+    b.setValues(
+      'https://hapifhir.eswatinihie.com/fhir/ValueSet/SzTinkhundlaVS|0.1.0',
+      {
+        LO: '3',
+      },
+    );
 
     const resource = b.patient('SzPatient', {
       // Now I can pass whatever value I want and it'll magically map
@@ -359,7 +366,7 @@ describe('SzPatient', () => {
 
     // And the extension should be properly mapped
     assert.deepEqual(resource.extension[0], {
-      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzInkhundlaExtension',
+      url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzInkhundlaExtension',
 
       // This structure is actually pretty hard to generate
       // mostly because of the text field
@@ -386,7 +393,7 @@ describe('SzPatient', () => {
 
     // And the extension should be properly mapped
     assert.deepEqual(resource.extension[0], {
-      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzChiefdomExtension',
+      url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzChiefdomExtension',
       valueCodeableConcept: {
         coding: [
           {
@@ -408,7 +415,7 @@ describe('SzPatient', () => {
 
     // And the extension should be properly mapped
     assert.deepEqual(resource.extension[0], {
-      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzRegistrationDate',
+      url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzRegistrationDate',
       valueDateTime: '2025-06-01T10:00:00Z',
     });
   });

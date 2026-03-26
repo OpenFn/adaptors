@@ -51,7 +51,7 @@ export default function(props: Partial<Observation_SzLabResult_Props>) {
         resourceType: "Observation",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzLabResult"]
+            profile: ["https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzLabResult"]
         },
 
         ...props
@@ -64,7 +64,7 @@ export default function(props: Partial<Observation_SzLabResult_Props>) {
 
         dt.addExtension(
             resource,
-            "http://172.209.216.154:3447/fhir/StructureDefinition/SzAuthorizerExtension",
+            "https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzAuthorizerExtension",
             src
         );
     }
@@ -76,7 +76,7 @@ export default function(props: Partial<Observation_SzLabResult_Props>) {
 
         dt.addExtension(
             resource,
-            "http://172.209.216.154:3447/fhir/StructureDefinition/SzTestingLabExtension",
+            "https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzTestingLabExtension",
             src
         );
     }
@@ -100,7 +100,7 @@ export default function(props: Partial<Observation_SzLabResult_Props>) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
 
         resource.category = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/observation-category", props.category)
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/observation-category|4.0.1", props.category)
         );
 
         dt.ensureConceptText(resource.category);
@@ -108,7 +108,7 @@ export default function(props: Partial<Observation_SzLabResult_Props>) {
 
     if (!_.isNil(props.code)) {
         resource.code = dt.concept(dt.lookupValue(
-            "http://172.209.216.154:3447/fhir/ValueSet/SzTestParameterCodeVS",
+            "https://hapifhir.eswatinihie.com/fhir/ValueSet/SzTestParameterCodeVS",
             props.code
         ));
 
@@ -144,9 +144,10 @@ export default function(props: Partial<Observation_SzLabResult_Props>) {
     }
 
     if (!_.isNil(props.dataAbsentReason)) {
-        resource.dataAbsentReason = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/data-absent-reason", props.dataAbsentReason)
-        );
+        resource.dataAbsentReason = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/data-absent-reason|4.0.1",
+            props.dataAbsentReason
+        ));
 
         dt.ensureConceptText(resource.dataAbsentReason);
     }
@@ -155,7 +156,7 @@ export default function(props: Partial<Observation_SzLabResult_Props>) {
         if (!Array.isArray(props.interpretation)) { props.interpretation = [props.interpretation]; }
 
         resource.interpretation = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/observation-interpretation",
+            "http://hl7.org/fhir/ValueSet/observation-interpretation|4.0.1",
             props.interpretation
         ));
 
@@ -163,13 +164,16 @@ export default function(props: Partial<Observation_SzLabResult_Props>) {
     }
 
     if (!_.isNil(props.bodySite)) {
-        resource.bodySite = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site", props.bodySite));
+        resource.bodySite = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site|4.0.1", props.bodySite)
+        );
+
         dt.ensureConceptText(resource.bodySite);
     }
 
     if (!_.isNil(props.method)) {
         resource.method = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/observation-methods", props.method)
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/observation-methods|4.0.1", props.method)
         );
 
         dt.ensureConceptText(resource.method);

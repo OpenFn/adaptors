@@ -5,7 +5,7 @@ const sampleBasic = {
   resourceType: 'Encounter',
   meta: {
     profile: [
-      'http://172.209.216.154:3447/fhir/StructureDefinition/SzEncounter',
+      'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzEncounter',
     ],
   },
   status: 'finished',
@@ -124,7 +124,7 @@ describe('SzEncounter', () => {
     assert.deepEqual(resource, sampleBasic);
   });
 
-   it.skip('should correctly map location', () => {
+  it.skip('should correctly map location', () => {
     const resource = builders.encounter('SzEncounter', {
       location: [
         {
@@ -140,7 +140,7 @@ describe('SzEncounter', () => {
       },
     ]);
   });
-   it.skip('should correctly map participant', () => {
+  it.skip('should correctly map participant', () => {
     const resource = builders.encounter('SzEncounter', {
       participant: [
         {

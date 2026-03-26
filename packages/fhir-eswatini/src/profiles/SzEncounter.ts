@@ -48,7 +48,7 @@ export default function(props: Partial<Encounter_SzEncounter_Props>) {
         resourceType: "Encounter",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzEncounter"]
+            profile: ["https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzEncounter"]
         },
 
         ...props
@@ -76,7 +76,7 @@ export default function(props: Partial<Encounter_SzEncounter_Props>) {
     if (!_.isNil(props.class)) {
         let src = props.class;
         if (typeof src === 'string') {
-          src = dt.lookupValue('http://172.209.216.154:3447/fhir/ValueSet/SzEncounterClassificationVS', src);
+          src = dt.lookupValue('https://hapifhir.eswatinihie.com/fhir/ValueSet/SzEncounterClassificationVS|0.1.0', src);
          }
         resource.class = dt.coding(src);
     }
@@ -97,13 +97,17 @@ export default function(props: Partial<Encounter_SzEncounter_Props>) {
 
     if (!_.isNil(props.type)) {
         if (!Array.isArray(props.type)) { props.type = [props.type]; }
-        resource.type = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/encounter-type", props.type));
+
+        resource.type = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/encounter-type|4.0.1", props.type)
+        );
+
         dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.serviceType)) {
         resource.serviceType = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/service-type", props.serviceType)
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/service-type|4.0.1", props.serviceType)
         );
 
         dt.ensureConceptText(resource.serviceType);
@@ -111,7 +115,7 @@ export default function(props: Partial<Encounter_SzEncounter_Props>) {
 
     if (!_.isNil(props.priority)) {
         resource.priority = dt.concept(
-            dt.lookupValue("http://terminology.hl7.org/ValueSet/v3-ActPriority", props.priority)
+            dt.lookupValue("http://terminology.hl7.org/ValueSet/v3-ActPriority|3.0.0", props.priority)
         );
 
         dt.ensureConceptText(resource.priority);
@@ -164,7 +168,7 @@ export default function(props: Partial<Encounter_SzEncounter_Props>) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
 
         resource.reasonCode = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/encounter-reason", props.reasonCode)
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/encounter-reason|4.0.1", props.reasonCode)
         );
 
         dt.ensureConceptText(resource.reasonCode);

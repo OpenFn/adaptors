@@ -166,7 +166,6 @@ async function fetchValueSet(url) {
 
       try {
         const json = await response.json();
-        console.log(JSON.stringify(json));
         valueSetCache[safeUrl] = json;
       } catch (e) {
         console.log(e);

@@ -33,7 +33,7 @@ export default function(props: Partial<Medication_SzMedication_Props>) {
         resourceType: "Medication",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzMedication"]
+            profile: ["https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzMedication"]
         },
 
         ...props
@@ -45,9 +45,10 @@ export default function(props: Partial<Medication_SzMedication_Props>) {
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(
-            dt.lookupValue("http://172.209.216.154:3447/fhir/ValueSet/SzProductCodeVS", props.code)
-        );
+        resource.code = dt.concept(dt.lookupValue(
+            "https://hapifhir.eswatinihie.com/fhir/ValueSet/SzProductCodeVS",
+            props.code
+        ));
 
         dt.ensureConceptText(resource.code);
     }
@@ -58,7 +59,7 @@ export default function(props: Partial<Medication_SzMedication_Props>) {
 
     if (!_.isNil(props.form)) {
         resource.form = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/medication-form-codes", props.form)
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/medication-form-codes|4.0.1", props.form)
         );
 
         dt.ensureConceptText(resource.form);

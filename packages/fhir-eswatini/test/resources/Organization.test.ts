@@ -5,7 +5,7 @@ const sampleBasic = {
   resourceType: 'Organization',
   meta: {
     profile: [
-      'http://172.209.216.154:3447/fhir/StructureDefinition/SzOrganization',
+      'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzOrganization',
     ],
   },
   active: true,
@@ -95,4 +95,3 @@ describe('SzOrganization', () => {
     assert.deepEqual(resource, sampleBasic);
   });
 });
-

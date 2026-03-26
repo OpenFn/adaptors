@@ -42,7 +42,7 @@ export default function(props: Partial<Condition_SzCondition_Props>) {
         resourceType: "Condition",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzCondition"]
+            profile: ["https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzCondition"]
         },
 
         ...props
@@ -75,7 +75,7 @@ export default function(props: Partial<Condition_SzCondition_Props>) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
 
         resource.category = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-category", props.category)
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-category|4.0.1", props.category)
         );
 
         dt.ensureConceptText(resource.category);
@@ -83,20 +83,27 @@ export default function(props: Partial<Condition_SzCondition_Props>) {
 
     if (!_.isNil(props.severity)) {
         resource.severity = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-severity", props.severity)
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-severity|4.0.1", props.severity)
         );
 
         dt.ensureConceptText(resource.severity);
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-code", props.code));
+        resource.code = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-code|4.0.1", props.code)
+        );
+
         dt.ensureConceptText(resource.code);
     }
 
     if (!_.isNil(props.bodySite)) {
         if (!Array.isArray(props.bodySite)) { props.bodySite = [props.bodySite]; }
-        resource.bodySite = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site", props.bodySite));
+
+        resource.bodySite = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site|4.0.1", props.bodySite)
+        );
+
         dt.ensureConceptText(resource.bodySite);
     }
 

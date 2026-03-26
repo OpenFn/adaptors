@@ -45,7 +45,7 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
         resourceType: "Patient",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzPatient"]
+            profile: ["https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzPatient"]
         },
 
         ...props
@@ -65,7 +65,7 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
     if (!_.isNil(props.inkhundla)) {
         let src = props.inkhundla;
         if (typeof src === 'string') {
-          src = dt.lookupValue('http://172.209.216.154:3447/fhir/ValueSet/SzTinkhundlaVS', src);
+          src = dt.lookupValue('https://hapifhir.eswatinihie.com/fhir/ValueSet/SzTinkhundlaVS|0.1.0', src);
          }
         src = dt.concept(src);
         dt.ensureConceptText(src);
@@ -73,7 +73,7 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
 
         dt.addExtension(
             resource,
-            "http://172.209.216.154:3447/fhir/StructureDefinition/SzInkhundlaExtension",
+            "https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzInkhundlaExtension",
             src
         );
     }
@@ -81,7 +81,7 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
     if (!_.isNil(props.chiefdom)) {
         let src = props.chiefdom;
         if (typeof src === 'string') {
-          src = dt.lookupValue('http://172.209.216.154:3447/fhir/ValueSet/SzChiefdomVS', src);
+          src = dt.lookupValue('https://hapifhir.eswatinihie.com/fhir/ValueSet/SzChiefdomVS|0.1.0', src);
          }
         src = dt.concept(src);
         dt.ensureConceptText(src);
@@ -89,7 +89,7 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
 
         dt.addExtension(
             resource,
-            "http://172.209.216.154:3447/fhir/StructureDefinition/SzChiefdomExtension",
+            "https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzChiefdomExtension",
             src
         );
     }
@@ -100,7 +100,7 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
 
         dt.addExtension(
             resource,
-            "http://172.209.216.154:3447/fhir/StructureDefinition/SzRegistrationDate",
+            "https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzRegistrationDate",
             src
         );
     }
@@ -113,7 +113,7 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
         for (let item of src) {
             let _identifier = dt.identifier(item, [], {
                 "use": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.1",
-                "type": "http://172.209.216.154:3447/fhir/ValueSet/PersonIdentifiersVS"
+                "type": "https://hapifhir.eswatinihie.com/fhir/ValueSet/PersonIdentifiersVS|0.1.0"
             });
 
             _identifier = dt.mapSystems(_identifier);
@@ -156,7 +156,7 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
 
     if (!_.isNil(props.maritalStatus)) {
         resource.maritalStatus = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/marital-status", props.maritalStatus)
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/marital-status|4.0.1", props.maritalStatus)
         );
 
         dt.ensureConceptText(resource.maritalStatus);
