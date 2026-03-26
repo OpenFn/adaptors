@@ -1,5 +1,11 @@
 # @openfn/language-fhir-eswatini
 
+## 0.7.2
+
+### Patch Changes
+
+- cb80145: Update profile definitions from IG (includes updated profile URLs)
+
 ## 0.7.1
 
 ### Patch Changes
