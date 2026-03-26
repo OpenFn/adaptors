@@ -1,52 +1,43 @@
 import { expect } from 'chai';
-import http from 'http';
 import https from 'https';
+import Koa from 'koa';
+import Router from '@koa/router';
 
 import { execute, get, post } from '../src/index.js';
 
 import { ca, key, cert } from './helpers/certs.js';
 
-const port = 8080;
-const httpServer = http.createServer((req, res) => {
-  switch (req.url) {
-    case '/redirect':
-      res.writeHead(301, { Location: `http://localhost:${port}/new-location` });
-      res.end();
-      break;
-    case '/new-location':
-      res.writeHead(302, {
-        Location: `http://localhost:${port}/new-location-1`,
-      });
-      res.end();
-      break;
-    case '/new-location-1':
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ ok: true }));
-      break;
-    default:
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.end('Hello, World!');
-      break;
-  }
+const router = new Router();
+router.get('/redirect', ctx => {
+  ctx.status = 301;
+  ctx.redirect(`http://localhost:${httpServer.address().port}/new-location`);
 });
+router.get('/new-location', ctx => {
+  ctx.redirect(`http://localhost:${httpServer.address().port}/new-location-1`);
+});
+router.get('/new-location-1', ctx => {
+  ctx.body = { ok: true };
+});
+router.all('(.*)', ctx => {
+  ctx.type = 'text/plain';
+  ctx.body = 'Hello, World!';
+});
+
+const app = new Koa();
+app.use(router.routes());
+const httpServer = app.listen(8080);
 
 // Create an HTTPS server for handling the redirected request
-const httpsPort = 1443;
-const certOptions = { key, cert };
-const httpsServer = https.createServer(certOptions || {}, (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Hello, HTTPS World!');
+const httpsApp = new Koa();
+httpsApp.use(async ctx => {
+  ctx.type = 'text/plain';
+  ctx.body = 'Hello, HTTPS World!';
 });
+const httpsServer = https.createServer({ key, cert }, httpsApp.callback());
 
 describe('Integration tests', () => {
-  before(() => {
-    httpServer.listen(port, () => {
-      console.log(`HTTP server is running on http://localhost:${port}/`);
-    });
-
-    httpsServer.listen(httpsPort, () => {
-      console.log(`HTTPS server is running on https://localhost:${httpsPort}/`);
-    });
+  before(done => {
+    httpsServer.listen(1443, done);
   });
 
   it('can make a GET request', async () => {
@@ -86,7 +77,7 @@ describe('Integration tests', () => {
     const { data } = await execute(
       get('/redirect', {
         headers: { followAllRedirects: true },
-      })
+      }),
     )(state);
 
     expect(data).to.eql({ ok: true });
@@ -108,7 +99,7 @@ describe('Integration tests', () => {
           requestCert: false,
           rejectUnauthorized: true,
         },
-      })
+      }),
     )(state);
 
     expect(data).to.eql('Hello, HTTPS World!');
