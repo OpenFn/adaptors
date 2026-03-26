@@ -28,7 +28,7 @@ router.post(
       return;
     }
     ctx.body = ctx.request.body;
-  }
+  },
 );
 router.all('(.*)', ctx => {
   ctx.type = 'text/plain';
@@ -91,6 +91,23 @@ describe('Integration tests', () => {
 
     expect(response.statusCode).to.eql(200);
     expect(data).to.eql({ name: 'Joe', age: '30' });
+  });
+
+  // This doesn't work because the http adaptor assumes JSON
+  // But that's OK!
+  it.skip('can post a raw FormData object without a content type', async () => {
+    const form = new FormData();
+    form.append('name', 'Joe');
+
+    const state = {
+      configuration: {
+        baseUrl: `http://localhost:${httpServer.address().port}`,
+      },
+      data: {},
+    };
+
+    const error = await execute(post('/form', form))(state).catch(e => e);
+    expect(error.statusCode).to.eql(500);
   });
 
   it('should return 500 when posting an empty body to /form', async () => {
