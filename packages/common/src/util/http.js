@@ -4,7 +4,7 @@ import querystring from 'node:querystring';
 import path from 'node:path';
 import throwError from './throw-error.js';
 import { encode } from './base64.js';
-import { MockAgent, Agent, interceptors } from 'undici';
+import { MockAgent, Agent, interceptors, FormData } from 'undici';
 import _ from 'lodash';
 
 // Maps undici dispatchers to keys (where a key is the base url + encoded options)
@@ -348,6 +348,121 @@ export async function request(method, fullUrlOrPath, options = {}) {
     requestResponse.query = queryParams;
   }
   return requestResponse;
+}
+
+/**
+ * Describes a file to be appended as a `Blob` in `blob` mode.
+ *
+ * @typedef {Object} BlobEntry
+ * @property {BlobPart} blob - The raw content (Buffer, string, ArrayBuffer, etc.)
+ * @property {string} type - The MIME type (e.g. `'image/jpeg'`, `'application/pdf'`)
+ * @property {string} filename - The filename sent with the FormData field
+ */
+
+/**
+ * Controls how values are encoded into FormData fields:
+ * - `json` — primitives are converted with `String(value)`; objects and arrays with `JSON.stringify(value)`; `Blob`/`File` instances are appended directly
+ * - `raw`  — values are appended as-is; the caller is responsible for ensuring correct types
+ * - `blob` — every value must be a {@link BlobEntry}; each is wrapped in a `Blob` and appended with its filename
+ *
+ * @typedef {'json' | 'raw' | 'blob'} EncodeMode
+ */
+
+/**
+ * Encodes a plain data object into a `FormData` instance.
+ *
+ * Supports three encoding modes:
+ *
+ * **`json` (default)** — primitives become strings, objects/arrays become JSON strings:
+ * ```js
+ * const form = encodeFormBody({ username: 'john', address: { city: 'Arusha' } });
+ * form.get('username'); // → "john"
+ * form.get('address');  // → '{"city":"Arusha"}'
+ * ```
+ *
+ * **`raw`** — values are appended without transformation:
+ * ```js
+ * const form = encodeFormBody({ username: 'john', role: 'admin' }, 'raw');
+ * form.get('username'); // → "john"
+ * form.get('role');     // → "admin"
+ * ```
+ *
+ * **`blob`** — every value must be a {@link BlobEntry}:
+ * ```js
+ * const form = encodeFormBody({
+ *   avatar: { blob: buffer, type: 'image/jpeg', filename: 'photo.jpg' },
+ * }, 'blob');
+ * form.get('avatar'); // → Blob { type: 'image/jpeg' }
+ * ```
+ *
+ * @param {Record<string, string | number | boolean | object | BlobEntry>} data - The object to encode
+ * @param {EncodeMode} [mode='json'] - The encoding mode to use
+ * @throws {Error} If `mode` is `'blob'` and a value is not a valid {@link BlobEntry}
+ * @throws {Error} If an unrecognised `mode` is provided
+ * @returns {FormData} The populated FormData instance
+ */
+export function encodeFormBody(data, mode = 'json') {
+  const form = new FormData();
+
+  for (const [key, value] of Object.entries(data)) {
+    if (value === null || value === undefined) continue;
+
+    switch (mode) {
+      case 'json': {
+        if (value instanceof Blob || value instanceof File) {
+          form.append(key, value);
+          break;
+        }
+        form.append(
+          key,
+          typeof value === 'object' ? JSON.stringify(value) : String(value),
+        );
+        break;
+      }
+
+      case 'raw': {
+        // append as-is — caller is responsible for value types
+        form.append(key, value);
+        break;
+      }
+
+      case 'blob': {
+        if (!isBlobEntry(value)) {
+          throw new Error(
+            `encodeFormBody: expected BlobEntry for key "${key}" in blob mode, got ${typeof value}`,
+          );
+        }
+        form.append(
+          key,
+          new Blob([value.blob], { type: value.type }),
+          value.filename,
+        );
+        break;
+      }
+
+      default:
+        throw new Error(`encodeFormBody: unknown mode "${mode}"`);
+    }
+  }
+
+  return form;
+}
+
+/**
+ * Returns `true` if `value` has the shape of a {@link BlobEntry}.
+ *
+ * @param {unknown} value - The value to check
+ * @returns {value is BlobEntry}
+ * @private
+ */
+function isBlobEntry(value) {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'blob' in value &&
+    'type' in value &&
+    'filename' in value
+  );
 }
 
 function encodeRequestBody(body) {
