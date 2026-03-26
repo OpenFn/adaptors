@@ -233,7 +233,7 @@ const generate = async (
         // If this is an extension property, override the path and
         // type definition
         path = el.sliceName;
-        extUrl = el.type[0].profile?.[0];
+        extUrl = el.type[0].profile?.[0].split('|')[0];
         if (extUrl) {
           const ext = Object.values(fullSpec).find(s => s.url === extUrl);
           // find the value

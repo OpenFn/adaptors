@@ -1,5 +1,11 @@
 # @openfn/generate-fhir
 
+## 0.7.6
+
+### Patch Changes
+
+- When generating schemas, handle version suffixes on extension names
+
 ## 0.7.5
 
 ### Patch Changes

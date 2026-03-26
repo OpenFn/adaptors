@@ -576,7 +576,7 @@ export function organization(type: any, props?: any) {
   * @param {boolean} [props.active] - Whether this patient's record is in active use
   * @param {Address} [props.address] - An address for the individual
   * @param {date} [props.birthDate] - Date of birth: YYYY-MM-DD
-  * @param {Extension} [props.chiefdom] - Extention: Eswatini Chiefdom
+  * @param {string} [props.chiefdom] - Extention: Eswatini Chiefdom. Accepts all values from https://hapifhir.eswatinihie.com/fhir/ValueSet/SzChiefdomVS|0.1.0
   * @param {BackboneElement} [props.communication] - A language which may be used to communicate with the patient about his or her health
   * @param {BackboneElement} [props.contact] - A contact party (e.g. guardian, partner, friend) for the patient
   * @param {Resource} [props.contained] - Contained, inline Resources
@@ -587,7 +587,7 @@ export function organization(type: any, props?: any) {
   * @param {string} [props.id] - Logical id of this artifact
   * @param {Identifier} [props.identifier] - Patient's Identification Number
   * @param {string} [props.implicitRules] - A set of rules under which this content was created
-  * @param {Extension} [props.inkhundla] - Extention: Eswatini Inkhundla
+  * @param {string} [props.inkhundla] - Extention: Eswatini Inkhundla. Accepts all values from https://hapifhir.eswatinihie.com/fhir/ValueSet/SzTinkhundlaVS|0.1.0
   * @param {string} [props.language] - Language of the resource content. Accepts all values from http://hl7.org/fhir/ValueSet/languages|4.0.1
   * @param {BackboneElement} [props.link] - Link to another patient resource that concerns the same actual person
   * @param {Reference} [props.managingOrganization] - Organization that is the custodian of the patient record
@@ -598,7 +598,7 @@ export function organization(type: any, props?: any) {
   * @param {HumanName} [props.name] - Patient's name
   * @param {Extension} [props.nationality] - Nationality.
   * @param {Attachment} [props.photo] - Image of the patient
-  * @param {Extension} [props.registrationDate] - Date the patient was registered
+  * @param {dateTime} [props.registrationDate] - Date the patient was registered
   * @param {ContactPoint} [props.telecom] - A contact detail for the individual
   * @param {Narrative} [props.text] - Text summary of the resource, for human interpretation
   */

@@ -3,7 +3,7 @@
 export default {
   generateMeta: true,
   include: [],
-  // include: ['Observation'],
+  // include: ['Patient'],
   exclude: [],
   overrides: {},
 

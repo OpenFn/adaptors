@@ -305,7 +305,7 @@ describe('SzPatient', () => {
 
     // And the extension should be properly mapped
     assert.deepEqual(resource.extension[0], {
-      url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzInkhundlaExtension|0.1.0',
+      url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzInkhundlaExtension',
       valueCodeableConcept: {
         coding: [
           {
@@ -350,10 +350,10 @@ describe('SzPatient', () => {
     assert.isOk(resource);
   });
 
-  it.only('should map extension inkundla with a custom mapped string value', () => {
+  it('should map extension inkundla with a custom mapped string value', () => {
     // Define mappings in job code
     b.setValues(
-      'https://hapifhir.eswatinihie.com/fhir/ValueSet/SzTinkhundlaVS',
+      'https://hapifhir.eswatinihie.com/fhir/ValueSet/SzTinkhundlaVS|0.1.0',
       {
         LO: '3',
       },
@@ -415,7 +415,7 @@ describe('SzPatient', () => {
 
     // And the extension should be properly mapped
     assert.deepEqual(resource.extension[0], {
-      url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzRegistrationDate|0.1.0',
+      url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzRegistrationDate',
       valueDateTime: '2025-06-01T10:00:00Z',
     });
   });
