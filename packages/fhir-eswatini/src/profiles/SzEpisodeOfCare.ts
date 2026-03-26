@@ -37,7 +37,9 @@ export default function(props: Partial<EpisodeOfCare_SzEpisodeOfCare_Props>) {
         resourceType: "EpisodeOfCare",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzEpisodeOfCare"]
+            profile: [
+                "https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzEpisodeOfCare"
+            ]
         },
 
         ...props
@@ -66,7 +68,7 @@ export default function(props: Partial<EpisodeOfCare_SzEpisodeOfCare_Props>) {
         if (!Array.isArray(props.type)) { props.type = [props.type]; }
 
         resource.type = dt.concept(dt.lookupValue(
-            "http://172.209.216.154:3447/fhir/ValueSet/SzEpisodeOfCareTypeVS",
+            "https://hapifhir.eswatinihie.com/fhir/ValueSet/SzEpisodeOfCareTypeVS",
             props.type
         ));
 

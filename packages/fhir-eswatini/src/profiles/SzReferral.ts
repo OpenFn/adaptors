@@ -59,7 +59,7 @@ export default function(props: Partial<ServiceRequest_SzReferral_Props>) {
         resourceType: "ServiceRequest",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzReferral"]
+            profile: ["https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzReferral"]
         },
 
         ...props
@@ -73,7 +73,7 @@ export default function(props: Partial<ServiceRequest_SzReferral_Props>) {
 
         dt.addExtension(
             resource,
-            "http://172.209.216.154:3447/fhir/StructureDefinition/SzReferralRecipientExtension",
+            "https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzReferralRecipientExtension",
             src
         );
     }
@@ -100,15 +100,19 @@ export default function(props: Partial<ServiceRequest_SzReferral_Props>) {
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
 
-        resource.category = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/servicerequest-category", props.category)
-        );
+        resource.category = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/servicerequest-category|4.0.1",
+            props.category
+        ));
 
         dt.ensureConceptText(resource.category);
     }
 
     if (!_.isNil(props.code)) {
-        resource.code = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-code", props.code));
+        resource.code = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-code|4.0.1", props.code)
+        );
+
         dt.ensureConceptText(resource.code);
     }
 
@@ -116,7 +120,7 @@ export default function(props: Partial<ServiceRequest_SzReferral_Props>) {
         if (!Array.isArray(props.orderDetail)) { props.orderDetail = [props.orderDetail]; }
 
         resource.orderDetail = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/servicerequest-orderdetail",
+            "http://hl7.org/fhir/ValueSet/servicerequest-orderdetail|4.0.1",
             props.orderDetail
         ));
 
@@ -152,7 +156,7 @@ export default function(props: Partial<ServiceRequest_SzReferral_Props>) {
 
     if (!_.isNil(props.performerType)) {
         resource.performerType = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/participant-role", props.performerType)
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/participant-role|4.0.1", props.performerType)
         );
 
         dt.ensureConceptText(resource.performerType);
@@ -183,7 +187,7 @@ export default function(props: Partial<ServiceRequest_SzReferral_Props>) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
 
         resource.reasonCode = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-reason", props.reasonCode)
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-reason|4.0.1", props.reasonCode)
         );
 
         dt.ensureConceptText(resource.reasonCode);
@@ -211,7 +215,11 @@ export default function(props: Partial<ServiceRequest_SzReferral_Props>) {
 
     if (!_.isNil(props.bodySite)) {
         if (!Array.isArray(props.bodySite)) { props.bodySite = [props.bodySite]; }
-        resource.bodySite = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site", props.bodySite));
+
+        resource.bodySite = dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site|4.0.1", props.bodySite)
+        );
+
         dt.ensureConceptText(resource.bodySite);
     }
 

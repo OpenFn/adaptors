@@ -47,7 +47,7 @@ export default function(props: Partial<Appointment_SzAppointment_Props>) {
         resourceType: "Appointment",
 
         meta: {
-            profile: ["http://172.209.216.154:3447/fhir/StructureDefinition/SzAppointment"]
+            profile: ["https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzAppointment"]
         },
 
         ...props
@@ -60,7 +60,7 @@ export default function(props: Partial<Appointment_SzAppointment_Props>) {
 
     if (!_.isNil(props.cancelationReason)) {
         resource.cancelationReason = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/appointment-cancellation-reason",
+            "http://hl7.org/fhir/ValueSet/appointment-cancellation-reason|4.0.1",
             props.cancelationReason
         ));
 
@@ -70,9 +70,10 @@ export default function(props: Partial<Appointment_SzAppointment_Props>) {
     if (!_.isNil(props.serviceCategory)) {
         if (!Array.isArray(props.serviceCategory)) { props.serviceCategory = [props.serviceCategory]; }
 
-        resource.serviceCategory = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/service-category", props.serviceCategory)
-        );
+        resource.serviceCategory = dt.concept(dt.lookupValue(
+            "http://hl7.org/fhir/ValueSet/service-category|4.0.1",
+            props.serviceCategory
+        ));
 
         dt.ensureConceptText(resource.serviceCategory);
     }
@@ -81,7 +82,7 @@ export default function(props: Partial<Appointment_SzAppointment_Props>) {
         if (!Array.isArray(props.serviceType)) { props.serviceType = [props.serviceType]; }
 
         resource.serviceType = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/service-type", props.serviceType)
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/service-type|4.0.1", props.serviceType)
         );
 
         dt.ensureConceptText(resource.serviceType);
@@ -91,7 +92,7 @@ export default function(props: Partial<Appointment_SzAppointment_Props>) {
         if (!Array.isArray(props.specialty)) { props.specialty = [props.specialty]; }
 
         resource.specialty = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/c80-practice-codes", props.specialty)
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/c80-practice-codes|4.0.1", props.specialty)
         );
 
         dt.ensureConceptText(resource.specialty);
@@ -109,7 +110,7 @@ export default function(props: Partial<Appointment_SzAppointment_Props>) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
 
         resource.reasonCode = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/encounter-reason", props.reasonCode)
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/encounter-reason|4.0.1", props.reasonCode)
         );
 
         dt.ensureConceptText(resource.reasonCode);
