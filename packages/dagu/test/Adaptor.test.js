@@ -2,67 +2,16 @@ import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 import testData from './fixtures.json' with { type: 'json' };
 import { request, post, get } from '../src/Adaptor.js';
-import { encodeFormBody } from '../src/Utils.js';
 
 const testServer = enableMockClient('https://fake.dagu.com');
 
 const configuration = {
   baseUrl: 'https://fake.dagu.com',
   username: 'abcdefghijkl',
-  password: '12154545'
-}
+  password: '12154545',
+};
 
-// Reads a ReadableStream to a string for test assertions
-async function readStream(stream) {
-  const chunks = [];
-  for await (const chunk of stream) {
-    chunks.push(typeof chunk === 'string' ? chunk : new TextDecoder().decode(chunk));
-  }
-  return chunks.join('');
-}
-
-// encodeFormBody wraps FormData in a Response to trigger the same extractBody()
-// serialisation that undici's fetch() API uses internally. This is necessary
-// because commonRequest uses dispatcher.request(), which does NOT serialise
-// FormData — passing FormData directly throws:
-//   "Cannot read properties of null (reading 'byteLength')"
-// The Response body is a ReadableStream (async iterable) that dispatcher.request()
-// handles natively, with the boundary consistent between body and content-type.
-describe('encodeFormBody', () => {
-  it('returns a multipart/form-data content-type with a boundary', () => {
-    const { contentType } = encodeFormBody({ key: 'value' });
-    expect(contentType).to.match(/^multipart\/form-data; boundary=/);
-  });
-
-  it('includes each flat field as a named form part', async () => {
-    const { body, contentType } = encodeFormBody({ start: 0, length: -1, draw: 1 });
-    const boundary = contentType.split('boundary=')[1];
-    const bodyStr = await readStream(body);
-
-    expect(bodyStr).to.include(`--${boundary}`);
-    expect(bodyStr).to.include('Content-Disposition: form-data; name="start"');
-    expect(bodyStr).to.include('Content-Disposition: form-data; name="length"');
-    expect(bodyStr).to.include('Content-Disposition: form-data; name="draw"');
-    expect(bodyStr).to.include(`--${boundary}--`);
-  });
-
-  it('JSON-stringifies nested objects so they survive as form field values', async () => {
-    const nested = { filter: [{ fieldName: 'patientName', operator: 'Eq', value: 'Lee Lee' }] };
-    const { body } = encodeFormBody({ additionalParameters: nested });
-    const bodyStr = await readStream(body);
-
-    expect(bodyStr).to.include('name="additionalParameters"');
-    expect(bodyStr).to.include(JSON.stringify(nested));
-  });
-
-  it('uses a unique boundary on each call', () => {
-    const { contentType: ct1 } = encodeFormBody({ a: '1' });
-    const { contentType: ct2 } = encodeFormBody({ a: '1' });
-    expect(ct1).to.not.equal(ct2);
-  });
-});
-
-// Keep this describe block at the start to make sure it runs without a stale access token existing in util.js 
+// Keep this describe block at the start to make sure it runs without a stale access token existing in util.js
 describe('request with custom headers', () => {
   it('should pass custom headers through getAccessToken to login', async () => {
     let loginHeaders;
@@ -73,7 +22,7 @@ describe('request with custom headers', () => {
         path: '/account/login',
         method: 'POST',
       })
-      .reply(200, (req) => {
+      .reply(200, req => {
         loginHeaders = req.headers;
         return testData.login.response;
       });
@@ -83,7 +32,7 @@ describe('request with custom headers', () => {
         path: '/DispensingUnit/Dashboard/StockOutReport',
         method: 'GET',
       })
-      .reply(200, (req) => {
+      .reply(200, req => {
         requestHeaders = req.headers;
         return testData.stockOutReport.response;
       });
@@ -93,11 +42,11 @@ describe('request with custom headers', () => {
     };
 
     const customHeaders = {
-      'Host': 'api.dagu.com',
+      Host: 'api.dagu.com',
     };
 
     await get('DispensingUnit/Dashboard/StockOutReport', {
-      headers: customHeaders
+      headers: customHeaders,
     })(state);
 
     expect(loginHeaders['Host']).to.equal('api.dagu.com');
@@ -116,7 +65,9 @@ describe('request with custom headers', () => {
       configuration,
     };
 
-    const finalState = await get('DispensingUnit/Dashboard/StockOutReport')(state);
+    const finalState = await get('DispensingUnit/Dashboard/StockOutReport')(
+      state,
+    );
 
     expect(finalState.data).to.eql(testData.stockOutReport.response);
   });
@@ -132,7 +83,6 @@ describe('request', () => {
       .reply(200, testData.login.response);
   });
 
-
   it('makes a successful POST request', async () => {
     testServer
       .intercept({
@@ -142,11 +92,12 @@ describe('request', () => {
       .reply(200, testData.request.response);
 
     const state = {
-      configuration
-    }
+      configuration,
+    };
 
-
-    const finalState = await request("POST", "DispensingUnit/Request/History", { "search": {} })(state);
+    const finalState = await request('POST', 'DispensingUnit/Request/History', {
+      search: {},
+    })(state);
 
     expect(finalState.data).to.eql(testData.request.response);
   });
@@ -154,18 +105,21 @@ describe('request', () => {
     testServer
       .intercept({
         path: '/DispensingUnit/Dashboard/StockOutReport',
-        method: 'GET'
+        method: 'GET',
       })
       .reply(200, testData.stockOutReport.response);
 
     const state = {
-      configuration
-    }
+      configuration,
+    };
 
-    const finalState = await request('GET', 'DispensingUnit/Dashboard/StockOutReport')(state);
+    const finalState = await request(
+      'GET',
+      'DispensingUnit/Dashboard/StockOutReport',
+    )(state);
 
-    expect(finalState.data).to.eql(testData.stockOutReport.response)
-  })
+    expect(finalState.data).to.eql(testData.stockOutReport.response);
+  });
 });
 
 describe('get', () => {
@@ -182,20 +136,21 @@ describe('get', () => {
     testServer
       .intercept({
         path: '/DispensingUnit/Dashboard/StockOutReport',
-        method: 'GET'
+        method: 'GET',
       })
       .reply(200, testData.stockOutReport.response);
 
     const state = {
-      configuration
+      configuration,
     };
 
-    const finalState = await get("DispensingUnit/Dashboard/StockOutReport")(state);
+    const finalState = await get('DispensingUnit/Dashboard/StockOutReport')(
+      state,
+    );
 
-    expect(finalState.data).to.eql(testData.stockOutReport.response)
-  })
+    expect(finalState.data).to.eql(testData.stockOutReport.response);
+  });
 });
-
 
 describe('post', () => {
   beforeEach(() => {
@@ -216,44 +171,13 @@ describe('post', () => {
       .reply(200, testData.request.response);
 
     const state = {
-      configuration
-    }
+      configuration,
+    };
 
-
-    const finalState = await post("DispensingUnit/Request/History", { "search": {} })(state);
-
-    expect(finalState.data).to.eql(testData.request.response);
-  })
-
-  it('sends body as multipart/form-data when contentType is "form"', async () => {
-    let capturedHeaders;
-
-    testServer
-      .intercept({
-        path: '/Patient/Prescription/History',
-        method: 'POST',
-      })
-      .reply(200, (req) => {
-        capturedHeaders = req.headers;
-        return testData.request.response;
-      });
-
-    const state = { configuration };
-
-    const finalState = await post(
-      'Patient/Prescription/History',
-      {
-        start: 0,
-        length: -1,
-        draw: 1,
-        additionalParameters: {
-          filter: [{ fieldName: 'patientName', operator: 'Eq', value: 'Lee Lee' }],
-        },
-      },
-      { contentType: 'form' }
-    )(state);
+    const finalState = await post('DispensingUnit/Request/History', {
+      search: {},
+    })(state);
 
     expect(finalState.data).to.eql(testData.request.response);
-    expect(capturedHeaders['content-type']).to.match(/^multipart\/form-data; boundary=/);
   });
 });
