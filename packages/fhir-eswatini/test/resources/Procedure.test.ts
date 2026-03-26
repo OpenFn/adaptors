@@ -5,7 +5,7 @@ const sampleBasic = {
   resourceType: 'Procedure',
   meta: {
     profile: [
-      'http://172.209.216.154:3447/fhir/StructureDefinition/SzProcedure',
+      'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzProcedure',
     ],
   },
   status: 'completed',
@@ -76,7 +76,11 @@ describe('SzProcedure', () => {
 
   it('should map code using array shorthand', () => {
     const resource = builders.procedure('SzProcedure', {
-      code: ['123455', 'http://snomed.info/sct', { display: 'Isoniazid Preventive Therapy' }],
+      code: [
+        '123455',
+        'http://snomed.info/sct',
+        { display: 'Isoniazid Preventive Therapy' },
+      ],
     });
     assert.deepEqual(resource.code, {
       coding: [
@@ -99,7 +103,11 @@ describe('SzProcedure', () => {
         'https://terminology.hl7.org/CodeSystem/procedure-category',
         { display: 'Treatment' },
       ],
-      code: ['123455', 'http://snomed.info/sct', { display: 'Isoniazid Preventive Therapy' }],
+      code: [
+        '123455',
+        'http://snomed.info/sct',
+        { display: 'Isoniazid Preventive Therapy' },
+      ],
     });
     assert.deepEqual(resource, sampleBasic);
   });

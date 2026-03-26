@@ -21,7 +21,7 @@ describe('mapValues', () => {
   it('should set a value map', () => {
     const state = {};
 
-    mapValues('http://172.209.216.154:3447/fhir/ValueSet/SzTinkhundlaVS', {
+    mapValues('https://hapifhir.eswatinihie.com/fhir/ValueSet/SzTinkhundlaVS', {
       abc: '3',
     })(state);
 
@@ -30,7 +30,7 @@ describe('mapValues', () => {
     });
 
     assert.deepEqual(resource.extension[0], {
-      url: 'http://172.209.216.154:3447/fhir/StructureDefinition/SzInkhundlaExtension',
+      url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzInkhundlaExtension',
 
       valueCodeableConcept: {
         coding: [
