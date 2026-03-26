@@ -2,6 +2,7 @@ import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
   logResponse,
+  encodeFormBody,
 } from '@openfn/language-common/util';
 import nodepath from 'node:path';
 
@@ -39,23 +40,6 @@ export const getAccessToken = async (configuration, headers) => {
   return body.token.access_token;
 };
 
-export function encodeFormBody(data) {
-  const form = new FormData();
-  for (const [key, value] of Object.entries(data)) {
-    form.append(
-      key,
-      typeof value === 'object' && value !== null
-        ? JSON.stringify(value)
-        : String(value),
-    );
-  }
-  const response = new Response(form);
-  return {
-    body: response.body,
-    contentType: response.headers.get('content-type'),
-  };
-}
-
 export const request = async (configuration = {}, method, path, options) => {
   const { baseUrl } = configuration;
 
@@ -68,10 +52,7 @@ export const request = async (configuration = {}, method, path, options) => {
   let requestHeaders = { ...headers };
 
   if (contentType === 'form') {
-    const { body: formBody, contentType: formContentType } =
-      encodeFormBody(body);
-    requestBody = formBody;
-    requestHeaders['content-type'] = formContentType;
+    requestBody = encodeFormBody(body);
   } else {
     requestHeaders['content-type'] = 'application/json';
   }
