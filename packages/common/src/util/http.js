@@ -351,55 +351,18 @@ export async function request(method, fullUrlOrPath, options = {}) {
 }
 
 /**
- * Describes a file to be appended as a `Blob` in `blob` mode.
+ * Encodes a plain object into a `FormData` instance.
  *
- * @typedef {Object} BlobEntry
- * @property {BlobPart} blob - The raw content (Buffer, string, ArrayBuffer, etc.)
- * @property {string} type - The MIME type (e.g. `'image/jpeg'`, `'application/pdf'`)
- * @property {string} filename - The filename sent with the FormData field
- */
-
-/**
- * Controls how values are encoded into FormData fields:
- * - `json` — primitives are converted with `String(value)`; objects and arrays with `JSON.stringify(value)`; `Blob`/`File` instances are appended directly
- * - `raw`  — values are appended as-is; the caller is responsible for ensuring correct types
- * - `blob` — every value must be a {@link BlobEntry}; each is wrapped in a `Blob` and appended with its filename
+ * Three modes are supported via the `mode` parameter:
+ * - `json` (default) — primitives as strings, objects/arrays as JSON strings, Blob/File as-is
+ * - `raw` — values appended as-is, caller is responsible for types
+ * - `blob` — each value must be `{ blob, type, filename }` and is wrapped in a `Blob`
  *
- * @typedef {'json' | 'raw' | 'blob'} EncodeMode
- */
-
-/**
- * Encodes a plain data object into a `FormData` instance.
+ * Null and undefined values are skipped.
  *
- * Supports three encoding modes:
- *
- * **`json` (default)** — primitives become strings, objects/arrays become JSON strings:
- * ```js
- * const form = encodeFormBody({ username: 'john', address: { city: 'Arusha' } });
- * form.get('username'); // → "john"
- * form.get('address');  // → '{"city":"Arusha"}'
- * ```
- *
- * **`raw`** — values are appended without transformation:
- * ```js
- * const form = encodeFormBody({ username: 'john', role: 'admin' }, 'raw');
- * form.get('username'); // → "john"
- * form.get('role');     // → "admin"
- * ```
- *
- * **`blob`** — every value must be a {@link BlobEntry}:
- * ```js
- * const form = encodeFormBody({
- *   avatar: { blob: buffer, type: 'image/jpeg', filename: 'photo.jpg' },
- * }, 'blob');
- * form.get('avatar'); // → Blob { type: 'image/jpeg' }
- * ```
- *
- * @param {Record<string, string | number | boolean | object | BlobEntry>} data - The object to encode
- * @param {EncodeMode} [mode='json'] - The encoding mode to use
- * @throws {Error} If `mode` is `'blob'` and a value is not a valid {@link BlobEntry}
- * @throws {Error} If an unrecognised `mode` is provided
- * @returns {FormData} The populated FormData instance
+ * @param {Object} data - The object to encode
+ * @param {'json' | 'raw' | 'blob'} [mode='json'] - Encoding mode
+ * @returns {FormData}
  */
 export function encodeFormBody(data, mode = 'json') {
   const form = new FormData();
@@ -449,11 +412,8 @@ export function encodeFormBody(data, mode = 'json') {
 }
 
 /**
- * Returns `true` if `value` has the shape of a {@link BlobEntry}.
- *
- * @param {unknown} value - The value to check
- * @returns {value is BlobEntry}
- * @private
+ * @param {*} value
+ * @returns {boolean}
  */
 function isBlobEntry(value) {
   return (
