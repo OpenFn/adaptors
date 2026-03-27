@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [22.20.0]
+        node-version: [22.20.0, 24.14.0]
 
     steps:
       - uses: actions/checkout@v3
@@ -31,7 +31,6 @@ jobs:
         run: pnpm run test:git
       - name: Unit Tests
         run: pnpm run test
-     
 
   next:
     name: 'Publish @next'
