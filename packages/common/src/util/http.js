@@ -4,7 +4,7 @@ import querystring from 'node:querystring';
 import path from 'node:path';
 import throwError from './throw-error.js';
 import { encode } from './base64.js';
-import { MockAgent, Agent, interceptors } from 'undici';
+import { MockAgent, Agent, interceptors, FormData } from 'undici';
 import _ from 'lodash';
 
 // Maps undici dispatchers to keys (where a key is the base url + encoded options)
@@ -348,6 +348,81 @@ export async function request(method, fullUrlOrPath, options = {}) {
     requestResponse.query = queryParams;
   }
   return requestResponse;
+}
+
+/**
+ * Encodes a plain object into a `FormData` instance.
+ *
+ * Three modes are supported via the `mode` parameter:
+ * - `json` (default) — primitives as strings, objects/arrays as JSON strings, Blob/File as-is
+ * - `raw` — values appended as-is, caller is responsible for types
+ * - `blob` — each value must be `{ blob, type, filename }` and is wrapped in a `Blob`
+ *
+ * Null and undefined values are skipped.
+ *
+ * @param {Object} data - The object to encode
+ * @param {'json' | 'raw' | 'blob'} [mode='json'] - Encoding mode
+ * @returns {FormData}
+ */
+export function encodeFormBody(data, mode = 'json') {
+  const form = new FormData();
+
+  for (const [key, value] of Object.entries(data)) {
+    if (value === null || value === undefined) continue;
+
+    switch (mode) {
+      case 'json': {
+        if (value instanceof Blob || value instanceof File) {
+          form.append(key, value);
+          break;
+        }
+        form.append(
+          key,
+          typeof value === 'object' ? JSON.stringify(value) : String(value),
+        );
+        break;
+      }
+
+      case 'raw': {
+        // append as-is — caller is responsible for value types
+        form.append(key, value);
+        break;
+      }
+
+      case 'blob': {
+        if (!isBlobEntry(value)) {
+          throw new Error(
+            `encodeFormBody: expected BlobEntry for key "${key}" in blob mode, got ${typeof value}`,
+          );
+        }
+        form.append(
+          key,
+          new Blob([value.blob], { type: value.type }),
+          value.filename,
+        );
+        break;
+      }
+
+      default:
+        throw new Error(`encodeFormBody: unknown mode "${mode}"`);
+    }
+  }
+
+  return form;
+}
+
+/**
+ * @param {*} value
+ * @returns {boolean}
+ */
+function isBlobEntry(value) {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'blob' in value &&
+    'type' in value &&
+    'filename' in value
+  );
 }
 
 function encodeRequestBody(body) {
