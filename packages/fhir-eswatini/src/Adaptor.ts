@@ -12,7 +12,7 @@ export {
 } from '@openfn/language-fhir-4';
 
 // TODO would like a smarter way to track this
-const BASE_URL = 'http://172.209.216.154';
+const BASE_URL = 'https://hapifhir.eswatinihie.com';
 
 /**
  * Add a resource to a bundle on state, using the `name` as the key (or `bundle` by default).
