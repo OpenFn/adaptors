@@ -132,9 +132,8 @@ export default function(props: Partial<Observation_SzVitalSigns_Props>) {
     if (!_.isNil(props.interpretation)) {
         if (!Array.isArray(props.interpretation)) { props.interpretation = [props.interpretation]; }
 
-        resource.interpretation = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/observation-interpretation|4.0.1",
-            props.interpretation
+        resource.interpretation = props.interpretation.map((x) => dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/observation-interpretation|4.0.1", x)
         ));
 
         dt.ensureConceptText(resource.interpretation);

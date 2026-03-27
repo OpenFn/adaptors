@@ -766,18 +766,42 @@ const mapCodeableConcept = (
     b.identifier(propName),
   );
 
+  let callBuilder;
   if (schema.valueSet) {
     // If there's a value map involved, lookup the value before assignment
-    rhs = b.callExpression(
-      b.memberExpression(b.identifier('dt'), b.identifier('lookupValue')),
-      [b.stringLiteral(schema.valueSet), rhs],
-    );
-  }
+    if (schema.isArray) {
+      callBuilder = b.callExpression(
+        b.memberExpression(rhs, b.identifier('map')),
+        [
+          b.arrowFunctionExpression(
+            [b.tsParameterProperty(b.identifier('x'))],
+            b.callExpression(
+              b.memberExpression(b.identifier('dt'), b.identifier('concept')),
+              [
+                b.callExpression(
+                  b.memberExpression(
+                    b.identifier('dt'),
+                    b.identifier('lookupValue'),
+                  ),
+                  [b.stringLiteral(schema.valueSet), b.identifier('x')],
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    } else {
+      rhs = b.callExpression(
+        b.memberExpression(b.identifier('dt'), b.identifier('lookupValue')),
+        [b.stringLiteral(schema.valueSet), rhs],
+      );
 
-  const callBuilder = b.callExpression(
-    b.memberExpression(b.identifier('dt'), b.identifier('concept')),
-    [rhs],
-  );
+      callBuilder = b.callExpression(
+        b.memberExpression(b.identifier('dt'), b.identifier('concept')),
+        [rhs],
+      );
+    }
+  }
 
   statements.push(assignToInput(propName, callBuilder));
 

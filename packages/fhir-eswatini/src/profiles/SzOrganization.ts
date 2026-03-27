@@ -49,8 +49,8 @@ export default function(props: Partial<Organization_SzOrganization_Props>) {
     if (!_.isNil(props.type)) {
         if (!Array.isArray(props.type)) { props.type = [props.type]; }
 
-        resource.type = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/organization-type|4.0.1", props.type)
+        resource.type = props.type.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/organization-type|4.0.1", x))
         );
 
         dt.ensureConceptText(resource.type);
