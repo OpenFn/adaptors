@@ -1,7 +1,7 @@
 import { composeNextState } from '@openfn/language-common';
 import { throwError, expandReferences } from '@openfn/language-common/util';
 import { assertValidResourceId, prepareNextState, request } from './util';
-import { sortBundle } from './util.js';
+import { cleanResponseObject, sortBundle } from './util.js';
 
 /**
  * Fetch a single FHIR resource.
@@ -249,6 +249,9 @@ export function create(resource: any) {
     const response = await request('POST', $resource.resourceType as string, {
       configuration: state.configuration,
       body: $resource,
+    }).catch(e => {
+      cleanResponseObject(state, e);
+      throw e;
     });
 
     console.log(`Created ${response.body.id}`);
@@ -396,6 +399,9 @@ export function uploadBundle(bundle: string | any = 'bundle') {
     const response = await request('POST', '/', {
       configuration: state.configuration,
       body: data,
+    }).catch(e => {
+      cleanResponseObject(state, e);
+      throw e;
     });
 
     return prepareNextState(state, response);
