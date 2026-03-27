@@ -127,7 +127,7 @@ describe('sortBundle', () => {
 });
 
 describe('logValidationErrors', () => {
-  it.only('should extract errors for a single resource', () => {
+  it('should extract errors for a single resource', () => {
     // This is what you might get when uploading a single resource
     const response = {
       statusCode: 422,
