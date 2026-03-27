@@ -141,8 +141,8 @@ export default function(props: Partial<Procedure_SzProcedure_Props>) {
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
 
-        resource.reasonCode = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-reason|4.0.1", props.reasonCode)
+        resource.reasonCode = props.reasonCode.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-reason|4.0.1", x))
         );
 
         dt.ensureConceptText(resource.reasonCode);
@@ -156,8 +156,8 @@ export default function(props: Partial<Procedure_SzProcedure_Props>) {
     if (!_.isNil(props.bodySite)) {
         if (!Array.isArray(props.bodySite)) { props.bodySite = [props.bodySite]; }
 
-        resource.bodySite = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site|4.0.1", props.bodySite)
+        resource.bodySite = props.bodySite.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site|4.0.1", x))
         );
 
         dt.ensureConceptText(resource.bodySite);
@@ -179,8 +179,8 @@ export default function(props: Partial<Procedure_SzProcedure_Props>) {
     if (!_.isNil(props.complication)) {
         if (!Array.isArray(props.complication)) { props.complication = [props.complication]; }
 
-        resource.complication = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-code|4.0.1", props.complication)
+        resource.complication = props.complication.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-code|4.0.1", x))
         );
 
         dt.ensureConceptText(resource.complication);
@@ -194,8 +194,8 @@ export default function(props: Partial<Procedure_SzProcedure_Props>) {
     if (!_.isNil(props.followUp)) {
         if (!Array.isArray(props.followUp)) { props.followUp = [props.followUp]; }
 
-        resource.followUp = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-followup|4.0.1", props.followUp)
+        resource.followUp = props.followUp.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-followup|4.0.1", x))
         );
 
         dt.ensureConceptText(resource.followUp);
@@ -223,8 +223,8 @@ export default function(props: Partial<Procedure_SzProcedure_Props>) {
     if (!_.isNil(props.usedCode)) {
         if (!Array.isArray(props.usedCode)) { props.usedCode = [props.usedCode]; }
 
-        resource.usedCode = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/device-kind|4.0.1", props.usedCode)
+        resource.usedCode = props.usedCode.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/device-kind|4.0.1", x))
         );
 
         dt.ensureConceptText(resource.usedCode);

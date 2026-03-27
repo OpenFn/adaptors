@@ -1,5 +1,12 @@
 # @openfn/language-fhir-4
 
+## 0.4.2 - 27 March 2026
+
+### Patch Changes
+
+- 028c62c: Significantly better error reporting from validation results
+- d179474: Fix an issue where array types are not properly mapped
+
 ## 0.4.1
 
 ### Patch Changes

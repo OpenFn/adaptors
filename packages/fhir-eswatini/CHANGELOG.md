@@ -1,5 +1,16 @@
 # @openfn/language-fhir-eswatini
 
+## 0.7.3 - 27 March 2026
+
+### Patch Changes
+
+- 5127fb2: Fix URL used in bundle generation
+- 028c62c: Significantly better error reporting from validation results
+- d179474: Fix an issue where array types are not properly mapped
+- Updated dependencies \[028c62c]
+- Updated dependencies \[d179474]
+  - @openfn/language-fhir-4@0.4.2
+
 ## 0.7.2
 
 ### Patch Changes
@@ -11,7 +22,7 @@
 ### Patch Changes
 
 - c5e2b2b: Fix an issue in validation issue reporting
-- Updated dependencies [c5e2b2b]
+- Updated dependencies \[c5e2b2b]
   - @openfn/language-fhir-4@0.4.1
 
 ## 0.7.0
@@ -23,7 +34,7 @@
 
 ### Patch Changes
 
-- Updated dependencies [51fdf24]
+- Updated dependencies \[51fdf24]
   - @openfn/language-fhir-4@0.4.0
 
 ## 0.6.1 - 16 March 2026

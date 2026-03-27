@@ -82,9 +82,8 @@ export default function(props: Partial<MedicationRequest_SzMedicationRequest_Pro
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
 
-        resource.category = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/medicationrequest-category|4.0.1",
-            props.category
+        resource.category = props.category.map((x) => dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/medicationrequest-category|4.0.1", x)
         ));
 
         dt.ensureConceptText(resource.category);
@@ -136,8 +135,8 @@ export default function(props: Partial<MedicationRequest_SzMedicationRequest_Pro
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
 
-        resource.reasonCode = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-code|4.0.1", props.reasonCode)
+        resource.reasonCode = props.reasonCode.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-code|4.0.1", x))
         );
 
         dt.ensureConceptText(resource.reasonCode);

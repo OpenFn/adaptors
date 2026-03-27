@@ -108,9 +108,8 @@ export default function(props: Partial<ServiceRequest_SzLabRequest_Props>) {
     if (!_.isNil(props.orderDetail)) {
         if (!Array.isArray(props.orderDetail)) { props.orderDetail = [props.orderDetail]; }
 
-        resource.orderDetail = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/servicerequest-orderdetail|4.0.1",
-            props.orderDetail
+        resource.orderDetail = props.orderDetail.map((x) => dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/servicerequest-orderdetail|4.0.1", x)
         ));
 
         dt.ensureConceptText(resource.orderDetail);
@@ -159,10 +158,10 @@ export default function(props: Partial<ServiceRequest_SzLabRequest_Props>) {
     if (!_.isNil(props.locationCode)) {
         if (!Array.isArray(props.locationCode)) { props.locationCode = [props.locationCode]; }
 
-        resource.locationCode = dt.concept(dt.lookupValue(
+        resource.locationCode = props.locationCode.map((x) => dt.concept(dt.lookupValue(
             "http://terminology.hl7.org/ValueSet/v3-ServiceDeliveryLocationRoleType",
-            props.locationCode
-        ));
+            x
+        )));
 
         dt.ensureConceptText(resource.locationCode);
     }
@@ -175,8 +174,8 @@ export default function(props: Partial<ServiceRequest_SzLabRequest_Props>) {
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
 
-        resource.reasonCode = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-reason|4.0.1", props.reasonCode)
+        resource.reasonCode = props.reasonCode.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-reason|4.0.1", x))
         );
 
         dt.ensureConceptText(resource.reasonCode);
@@ -205,8 +204,8 @@ export default function(props: Partial<ServiceRequest_SzLabRequest_Props>) {
     if (!_.isNil(props.bodySite)) {
         if (!Array.isArray(props.bodySite)) { props.bodySite = [props.bodySite]; }
 
-        resource.bodySite = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site|4.0.1", props.bodySite)
+        resource.bodySite = props.bodySite.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site|4.0.1", x))
         );
 
         dt.ensureConceptText(resource.bodySite);

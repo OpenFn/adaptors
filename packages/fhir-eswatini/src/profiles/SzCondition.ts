@@ -74,8 +74,8 @@ export default function(props: Partial<Condition_SzCondition_Props>) {
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
 
-        resource.category = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-category|4.0.1", props.category)
+        resource.category = props.category.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-category|4.0.1", x))
         );
 
         dt.ensureConceptText(resource.category);
@@ -100,8 +100,8 @@ export default function(props: Partial<Condition_SzCondition_Props>) {
     if (!_.isNil(props.bodySite)) {
         if (!Array.isArray(props.bodySite)) { props.bodySite = [props.bodySite]; }
 
-        resource.bodySite = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site|4.0.1", props.bodySite)
+        resource.bodySite = props.bodySite.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site|4.0.1", x))
         );
 
         dt.ensureConceptText(resource.bodySite);

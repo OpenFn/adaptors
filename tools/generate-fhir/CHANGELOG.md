@@ -1,5 +1,11 @@
 # @openfn/generate-fhir
 
+## 0.7.7
+
+### Patch Changes
+
+- d179474: Ensure that value mapping works properly for array types
+
 ## 0.7.6
 
 ### Patch Changes

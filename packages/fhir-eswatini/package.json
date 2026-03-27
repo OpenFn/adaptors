@@ -1,12 +1,12 @@
 {
   "name": "@openfn/language-fhir-eswatini",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "OpenFn fhir-eswatini adaptor",
   "scripts": {
     "build": "pnpm clean && build-adaptor fhir-eswatini src ast docs",
     "build:src": "pnpm generate-fhir fhir-eswatini --base fhir-4",
     "build:spec": "pnpm generate-fhir fhir-eswatini --respec",
-    "test": "TS_NODE_TRANSPILE_ONLY=true mocha --experimental-specifier-resolution=node --no-warnings  --loader=ts-node/esm test/**/*.test.ts",
+    "test": "TS_NODE_TRANSPILE_ONLY=true mocha --experimental-specifier-resolution=node --no-warnings  --loader=ts-node/esm **/*.test.ts",
     "clean": "rimraf dist docs",
     "pack": "pnpm pack --pack-destination ../../dist"
   },
@@ -15,8 +15,8 @@
   "type": "module",
   "fhir": {
     "specUrl": "http://172.209.216.154/definitions.json.zip",
-    "adaptorGeneratedDate": "2026-03-26T17:45:34.361Z",
-    "generatorVersion": "0.7.6",
+    "adaptorGeneratedDate": "2026-03-27T12:36:21.440Z",
+    "generatorVersion": "0.7.7",
     "options": {}
   },
   "dependencies": {

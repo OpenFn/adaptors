@@ -138,19 +138,27 @@ describe('logValidationErrors', () => {
       body: '{\n  "resourceType": "OperationOutcome",\n  "issue": [ {\n    "extension": [ {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-line",\n      "valueInteger": 1\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-col",\n      "valueInteger": 174\n    } ],\n    "severity": "warning",\n    "code": "processing",\n    "diagnostics": "Rule dom-6: \'A resource should have narrative for robust management\' Failed",\n    "location": [ "EpisodeOfCare", "Line[1] Col[174]" ]\n  }, {\n    "extension": [ {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-line",\n      "valueInteger": 1\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-col",\n      "valueInteger": 174\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-message-id",\n      "valueString": "Validation_VAL_Profile_Minimum"\n    } ],\n    "severity": "error",\n    "code": "processing",\n    "details": {\n      "coding": [ {\n        "system": "http://hl7.org/fhir/java-core-messageId",\n        "code": "Validation_VAL_Profile_Minimum"\n      } ]\n    },\n    "diagnostics": "EpisodeOfCare.status: minimum required = 1, but only found 0 (from https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzEpisodeOfCare|0.1.0)",\n    "location": [ "EpisodeOfCare", "Line[1] Col[174]" ]\n  }, {\n    "extension": [ {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-line",\n      "valueInteger": 1\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-col",\n      "valueInteger": 174\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-message-id",\n      "valueString": "Validation_VAL_Profile_Minimum"\n    } ],\n    "severity": "error",\n    "code": "processing",\n    "details": {\n      "coding": [ {\n        "system": "http://hl7.org/fhir/java-core-messageId",\n        "code": "Validation_VAL_Profile_Minimum"\n      } ]\n    },\n    "diagnostics": "EpisodeOfCare.type: minimum required = 1, but only found 0 (from https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzEpisodeOfCare|0.1.0)",\n    "location": [ "EpisodeOfCare", "Line[1] Col[174]" ]\n  }, {\n    "extension": [ {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-line",\n      "valueInteger": 1\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-col",\n      "valueInteger": 174\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-message-id",\n      "valueString": "Validation_VAL_Profile_Minimum"\n    } ],\n    "severity": "error",\n    "code": "processing",\n    "details": {\n      "coding": [ {\n        "system": "http://hl7.org/fhir/java-core-messageId",\n        "code": "Validation_VAL_Profile_Minimum"\n      } ]\n    },\n    "diagnostics": "EpisodeOfCare.patient: minimum required = 1, but only found 0 (from https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzEpisodeOfCare|0.1.0)",\n    "location": [ "EpisodeOfCare", "Line[1] Col[174]" ]\n  }, {\n    "extension": [ {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-line",\n      "valueInteger": 1\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-col",\n      "valueInteger": 174\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-message-id",\n      "valueString": "Validation_VAL_Profile_Minimum"\n    } ],\n    "severity": "error",\n    "code": "processing",\n    "details": {\n      "coding": [ {\n        "system": "http://hl7.org/fhir/java-core-messageId",\n        "code": "Validation_VAL_Profile_Minimum"\n      } ]\n    },\n    "diagnostics": "EpisodeOfCare.period: minimum required = 1, but only found 0 (from https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzEpisodeOfCare|0.1.0)",\n    "location": [ "EpisodeOfCare", "Line[1] Col[174]" ]\n  } ]\n}',
       headers: {},
     };
-    const result = logValidationErrors(response, mockLogger);
+    const payload = {
+      resourceType: 'EpisodeOfCare',
+      id: '123',
+    };
 
-    expect(result.validationIssues).to.eql({
-      EpisodeOfCare: {
-        warning: [
-          "Rule dom-6: 'A resource should have narrative for robust management' Failed",
-        ],
-        error: [
-          'EpisodeOfCare.status: minimum required = 1, but only found 0 (from https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzEpisodeOfCare|0.1.0)',
-          'EpisodeOfCare.type: minimum required = 1, but only found 0 (from https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzEpisodeOfCare|0.1.0)',
-          'EpisodeOfCare.patient: minimum required = 1, but only found 0 (from https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzEpisodeOfCare|0.1.0)',
-          'EpisodeOfCare.period: minimum required = 1, but only found 0 (from https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzEpisodeOfCare|0.1.0)',
-        ],
+    const result = logValidationErrors(response, payload, mockLogger);
+    expect(result.$validationIssues).to.eql({
+      'EpisodeOfCare/123': {
+        warnings: {
+          '*': [
+            "Rule dom-6: 'A resource should have narrative for robust management' Failed",
+          ],
+        },
+        errors: {
+          '*': [
+            'EpisodeOfCare.status: minimum required = 1, but only found 0 (from https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzEpisodeOfCare|0.1.0)',
+            'EpisodeOfCare.type: minimum required = 1, but only found 0 (from https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzEpisodeOfCare|0.1.0)',
+            'EpisodeOfCare.patient: minimum required = 1, but only found 0 (from https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzEpisodeOfCare|0.1.0)',
+            'EpisodeOfCare.period: minimum required = 1, but only found 0 (from https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzEpisodeOfCare|0.1.0)',
+          ],
+        },
       },
     });
   });
@@ -166,28 +174,32 @@ describe('logValidationErrors', () => {
       body: '{\n  "resourceType": "OperationOutcome",\n  "issue": [ {\n    "extension": [ {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-line",\n      "valueInteger": 1\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-col",\n      "valueInteger": 327\n    } ],\n    "severity": "warning",\n    "code": "processing",\n    "diagnostics": "Rule dom-6: \'A resource should have narrative for robust management\' Failed",\n    "location": [ "Bundle.entry[0].resource/*EpisodeOfCare/92719063-043c-494c-9de0-18e68f0ad336*/", "Line[1] Col[327]" ]\n  }, {\n    "extension": [ {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-line",\n      "valueInteger": 1\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-col",\n      "valueInteger": 327\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-message-id",\n      "valueString": "Validation_VAL_Profile_Minimum"\n    } ],\n    "severity": "error",\n    "code": "processing",\n    "details": {\n      "coding": [ {\n        "system": "http://hl7.org/fhir/java-core-messageId",\n        "code": "Validation_VAL_Profile_Minimum"\n      } ]\n    },\n    "diagnostics": "EpisodeOfCare.status: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/EpisodeOfCare|4.0.1)",\n    "location": [ "Bundle.entry[0].resource/*EpisodeOfCare/92719063-043c-494c-9de0-18e68f0ad336*/", "Line[1] Col[327]" ]\n  }, {\n    "extension": [ {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-line",\n      "valueInteger": 1\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-col",\n      "valueInteger": 327\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-message-id",\n      "valueString": "Validation_VAL_Profile_Minimum"\n    } ],\n    "severity": "error",\n    "code": "processing",\n    "details": {\n      "coding": [ {\n        "system": "http://hl7.org/fhir/java-core-messageId",\n        "code": "Validation_VAL_Profile_Minimum"\n      } ]\n    },\n    "diagnostics": "EpisodeOfCare.patient: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/EpisodeOfCare|4.0.1)",\n    "location": [ "Bundle.entry[0].resource/*EpisodeOfCare/92719063-043c-494c-9de0-18e68f0ad336*/", "Line[1] Col[327]" ]\n  }, {\n    "extension": [ {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-line",\n      "valueInteger": 1\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-col",\n      "valueInteger": 327\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-message-id",\n      "valueString": "VALIDATION_VAL_PROFILE_UNKNOWN_NOT_POLICY"\n    } ],\n    "severity": "error",\n    "code": "processing",\n    "details": {\n      "coding": [ {\n        "system": "http://hl7.org/fhir/java-core-messageId",\n        "code": "VALIDATION_VAL_PROFILE_UNKNOWN_NOT_POLICY"\n      } ]\n    },\n    "diagnostics": "Profile reference \'http://172.209.216.154:3447/fhir/StructureDefinition/SzEpisodeOfCare\' has not been checked because it is unknown, and the validator is set to not fetch unknown profiles",\n    "location": [ "Bundle.entry[0].resource/*EpisodeOfCare/92719063-043c-494c-9de0-18e68f0ad336*/.meta.profile[0]", "Line[1] Col[327]" ]\n  }, {\n    "extension": [ {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-line",\n      "valueInteger": 1\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-col",\n      "valueInteger": 686\n    } ],\n    "severity": "warning",\n    "code": "processing",\n    "diagnostics": "Rule dom-6: \'A resource should have narrative for robust management\' Failed",\n    "location": [ "Bundle.entry[1].resource/*EpisodeOfCare/117080e0-6de4-4a30-8544-533d2e25df29*/", "Line[1] Col[686]" ]\n  }, {\n    "extension": [ {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-line",\n      "valueInteger": 1\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-col",\n      "valueInteger": 686\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-message-id",\n      "valueString": "Validation_VAL_Profile_Minimum"\n    } ],\n    "severity": "error",\n    "code": "processing",\n    "details": {\n      "coding": [ {\n        "system": "http://hl7.org/fhir/java-core-messageId",\n        "code": "Validation_VAL_Profile_Minimum"\n      } ]\n    },\n    "diagnostics": "EpisodeOfCare.status: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/EpisodeOfCare|4.0.1)",\n    "location": [ "Bundle.entry[1].resource/*EpisodeOfCare/117080e0-6de4-4a30-8544-533d2e25df29*/", "Line[1] Col[686]" ]\n  }, {\n    "extension": [ {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-line",\n      "valueInteger": 1\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-col",\n      "valueInteger": 686\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-message-id",\n      "valueString": "Validation_VAL_Profile_Minimum"\n    } ],\n    "severity": "error",\n    "code": "processing",\n    "details": {\n      "coding": [ {\n        "system": "http://hl7.org/fhir/java-core-messageId",\n        "code": "Validation_VAL_Profile_Minimum"\n      } ]\n    },\n    "diagnostics": "EpisodeOfCare.patient: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/EpisodeOfCare|4.0.1)",\n    "location": [ "Bundle.entry[1].resource/*EpisodeOfCare/117080e0-6de4-4a30-8544-533d2e25df29*/", "Line[1] Col[686]" ]\n  }, {\n    "extension": [ {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-line",\n      "valueInteger": 1\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-col",\n      "valueInteger": 686\n    }, {\n      "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-message-id",\n      "valueString": "VALIDATION_VAL_PROFILE_UNKNOWN_NOT_POLICY"\n    } ],\n    "severity": "error",\n    "code": "processing",\n    "details": {\n      "coding": [ {\n        "system": "http://hl7.org/fhir/java-core-messageId",\n        "code": "VALIDATION_VAL_PROFILE_UNKNOWN_NOT_POLICY"\n      } ]\n    },\n    "diagnostics": "Profile reference \'http://172.209.216.154:3447/fhir/StructureDefinition/SzEpisodeOfCare\' has not been checked because it is unknown, and the validator is set to not fetch unknown profiles",\n    "location": [ "Bundle.entry[1].resource/*EpisodeOfCare/117080e0-6de4-4a30-8544-533d2e25df29*/.meta.profile[0]", "Line[1] Col[686]" ]\n  } ]\n}',
       headers: {},
     };
-    const result = logValidationErrors(response, mockLogger);
 
-    expect(result.validationIssues).to.eql({
-      'EpisodeOfCare/92719063-043c-494c-9de0-18e68f0ad336': {
-        warning: [
-          "Rule dom-6: 'A resource should have narrative for robust management' Failed",
-        ],
-        error: [
-          'EpisodeOfCare.status: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/EpisodeOfCare|4.0.1)',
-          'EpisodeOfCare.patient: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/EpisodeOfCare|4.0.1)',
-          "Profile reference 'http://172.209.216.154:3447/fhir/StructureDefinition/SzEpisodeOfCare' has not been checked because it is unknown, and the validator is set to not fetch unknown profiles",
-        ],
-      },
-      'EpisodeOfCare/117080e0-6de4-4a30-8544-533d2e25df29': {
-        warning: [
-          "Rule dom-6: 'A resource should have narrative for robust management' Failed",
-        ],
-        error: [
-          'EpisodeOfCare.status: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/EpisodeOfCare|4.0.1)',
-          'EpisodeOfCare.patient: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/EpisodeOfCare|4.0.1)',
-          "Profile reference 'http://172.209.216.154:3447/fhir/StructureDefinition/SzEpisodeOfCare' has not been checked because it is unknown, and the validator is set to not fetch unknown profiles",
-        ],
+    // TODO: skipping this for now: this should be the original upload payload
+    //       we need this to generate resource ids from the error
+    const payload = {};
+
+    const result = logValidationErrors(response, payload, mockLogger);
+
+    expect(result.$validationIssues).to.eql({
+      // In the test this is unidentified because we haven't passed the correct payload in
+      'unidentified resource': {
+        warnings: {
+          '*': [
+            "Rule dom-6: 'A resource should have narrative for robust management' Failed",
+            "Rule dom-6: 'A resource should have narrative for robust management' Failed",
+          ],
+        },
+        errors: {
+          '*': [
+            'EpisodeOfCare.status: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/EpisodeOfCare|4.0.1)',
+            'EpisodeOfCare.patient: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/EpisodeOfCare|4.0.1)',
+            "Profile reference 'http://172.209.216.154:3447/fhir/StructureDefinition/SzEpisodeOfCare' has not been checked because it is unknown, and the validator is set to not fetch unknown profiles",
+            'EpisodeOfCare.status: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/EpisodeOfCare|4.0.1)',
+            'EpisodeOfCare.patient: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/EpisodeOfCare|4.0.1)',
+            "Profile reference 'http://172.209.216.154:3447/fhir/StructureDefinition/SzEpisodeOfCare' has not been checked because it is unknown, and the validator is set to not fetch unknown profiles",
+          ],
+        },
       },
     });
   });

@@ -1,17 +1,25 @@
 # @openfn/language-ihris
 
+## 1.0.13 - 27 March 2026
+
+### Patch Changes
+
+- Updated dependencies \[028c62c]
+- Updated dependencies \[d179474]
+  - @openfn/language-fhir-4@0.4.2
+
 ## 1.0.12
 
 ### Patch Changes
 
-- Updated dependencies [c5e2b2b]
+- Updated dependencies \[c5e2b2b]
   - @openfn/language-fhir-4@0.4.1
 
 ## 1.0.11
 
 ### Patch Changes
 
-- Updated dependencies [51fdf24]
+- Updated dependencies \[51fdf24]
   - @openfn/language-fhir-4@0.4.0
 
 ## 1.0.10 - 12 March 2026

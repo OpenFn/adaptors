@@ -31,7 +31,7 @@ export function addAuth(options) {
 }
 
 export const prepareNextState = (state, response) => {
-  const { body, ...responseWithoutBody } = response;
+  const { body, validationErrors, ...responseWithoutBody } = response;
 
   return {
     ...composeNextState(state, body),
@@ -102,16 +102,15 @@ export const request = (method, path, options: RequestOptions) => {
         'content-type' in e.headers &&
         e.headers['content-type'].match(/fhir\+json/)
       ) {
-        logValidationErrors(e);
+        logValidationErrors(e, opts.body);
       }
       throw e;
     });
 };
 
 // Util function to nicely print validation errors coming back from a fhir response
-export function logValidationErrors(response, logger = console) {
+export function logValidationErrors(response, payload, logger = console) {
   const error = JSON.parse(response.body);
-
   if (error.issue && error.issue.length) {
     delete response.body;
     logger.log();
@@ -139,24 +138,44 @@ export function logValidationErrors(response, logger = console) {
 
     error.issue.forEach(issue => {
       try {
-        let id = 'unidentified resource';
+        let resourceId = 'unidentified resource';
+        // first we identify the resource in question
+        // Which might mean pulling it out of the bundle
         if (issue.location) {
-          // generate a useful location string
-          // If this is a bundle, pull out the resource and UUID
-          // else just show the first location item
-          id = issue.location[0];
-          if (id.startsWith('Bundle')) {
-            id = id.split('*').at(1) ?? id;
+          let idx = issue.location[0].match(/Bundle.entry\[(\d+)\]/);
+          if (idx && idx.length >= 2) {
+            idx = idx[1];
+            const resource = _.get(payload, `entry[${idx}]`)?.resource;
+            if (resource) {
+              resourceId = `${resource.resourceType}/${resource.id}`;
+            }
+          } else {
+            if (payload.resourceType && payload.id) {
+              resourceId = `${payload.resourceType}/${payload.id}`;
+            }
           }
-        } else {
-          console.log({ issue });
         }
-        groups[id] ??= {};
-        groups[id][issue.severity] ??= [];
 
-        const path = issue.location[0];
-        groups[id][issue.severity][path] ??= [];
-        groups[id][issue.severity][path].push(issue.diagnostics);
+        const type = `${issue.severity}s`;
+        groups[resourceId] ??= {};
+
+        let path = '*';
+        // Now find the path to which the validation refers
+        // If no path, just use *
+        if (issue.location[0].match(/\.resource\./)) {
+          // Match path like Bundle.entry[6].resource.category.coding[0]
+          path = issue.location[0].split(/\.resource\./)[1];
+        } else if (issue.location.includes(`*${resourceId}*`)) {
+          // match a path like Bundle.entry[6].resource.category.coding[0]
+          const suffix = issue.location[0].split(/\.resource\./)[1];
+          if (suffix && suffix.length > 1) {
+            path = suffix;
+          }
+        }
+        groups[resourceId][type] ??= {};
+
+        groups[resourceId][type][path] ??= [];
+        groups[resourceId][type][path].push(issue.diagnostics);
       } catch (e) {
         logger.log('error parsing issue at ', issue.location);
         console.log(e);
@@ -166,27 +185,46 @@ export function logValidationErrors(response, logger = console) {
     // Now log everything
     for (const resource in groups) {
       logger.log(`${resource} issues:`);
-      ['error', 'warning'].forEach(type => {
+      ['errors', 'warnings'].forEach(type => {
         if (type in groups[resource]) {
-          logger.log(`  ${type}s:`.toUpperCase());
+          logger.log(`  ${type}:`.toUpperCase());
 
           for (const path in groups[resource][type]) {
             logger.log();
             logger.log('  ', path);
             for (const message of groups[resource][type][path]) {
-              logger.log('    -', message);
+              const fn = type === 'error' ? console.error : console.warn;
+              fn('    -', message);
             }
           }
           logger.log();
         }
       });
     }
-    response.validationIssues = groups;
+
+    // Note that this will get extracted by cleanResponseObject
+    logger.log('Issues will be written to state.fhirValidationIssues');
+    response.$validationIssues = groups;
   } else {
     response.body = error;
   }
 
   return response;
+}
+
+// Util function which takes the validation errors
+// array off of the response object and writes it to state
+// This is useful because
+// a) the validation array looks really ugly when logged to the CLI or app
+// b) validation errors have been pretty-printed already
+// c) users might want to do some automation/analysis on the validation errors
+export function cleanResponseObject(state, response) {
+  if (response.$validationIssues) {
+    state.fhirValidationIssues ??= {};
+    Object.assign(state.fhirValidationIssues, response.$validationIssues);
+    delete response.$validationIssues;
+  }
+  return state;
 }
 
 function collectRefs(value: any): string[] {

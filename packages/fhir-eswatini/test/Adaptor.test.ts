@@ -12,7 +12,7 @@ describe('addToBundle', () => {
 
     expect(state.bundle.entry.length).to.equal(1);
     expect(state.bundle.entry[0].fullUrl).to.equal(
-      'http://172.209.216.154/fhir/Patient/joe',
+      'https://hapifhir.eswatinihie.com/fhir/Patient/joe',
     );
   });
 });
@@ -21,9 +21,12 @@ describe('mapValues', () => {
   it('should set a value map', () => {
     const state = {};
 
-    mapValues('https://hapifhir.eswatinihie.com/fhir/ValueSet/SzTinkhundlaVS', {
-      abc: '3',
-    })(state);
+    mapValues(
+      'https://hapifhir.eswatinihie.com/fhir/ValueSet/SzTinkhundlaVS|0.1.0',
+      {
+        abc: '3',
+      },
+    )(state);
 
     const resource = b.patient('SzPatient', {
       inkhundla: 'abc',
