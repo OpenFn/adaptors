@@ -25,7 +25,7 @@
     "@openfn/language-common": "workspace:*",
     "axios": "^1.13.5",
     "md5": "^2.3.0",
-    "undici": "^7.19.2"
+    "undici": "^7.24.0"
   },
   "devDependencies": {
     "assertion-error": "^1.1.0",
