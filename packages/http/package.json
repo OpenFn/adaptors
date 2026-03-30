@@ -40,8 +40,11 @@
     "cheerio-tableparser": "^1.0.1"
   },
   "devDependencies": {
+    "@koa/router": "^13.1.0",
     "chai": "^4.3.10",
+    "koa-body": "^6.0.1",
     "deep-eql": "4.1.1",
+    "koa": "^3.1.2",
     "mocha-suppress-logs": "^0.4.1",
     "rimraf": "^3.0.2"
   },
