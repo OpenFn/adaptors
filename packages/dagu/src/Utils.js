@@ -49,13 +49,15 @@ export const request = async (configuration = {}, method, path, options) => {
   const { query = {}, body = {}, contentType, headers = {} } = options;
 
   let requestBody = body;
-  let requestHeaders = { Authorization: `Bearer ${access_token}`, ...headers };
+  let requestHeaders = { ...headers };
 
   if (contentType === 'form') {
     requestBody = encodeFormBody(body);
   } else {
     requestHeaders['content-type'] = 'application/json';
   }
+
+  requestHeaders['Authorization'] = `Bearer ${access_token}`;
 
   const opts = {
     ...options,
