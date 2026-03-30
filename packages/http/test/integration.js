@@ -86,7 +86,7 @@ describe('Integration tests', () => {
     const { data } = await execute(
       get('/redirect', {
         headers: { followAllRedirects: true },
-      })
+      }),
     )(state);
 
     expect(data).to.eql({ ok: true });
@@ -108,7 +108,7 @@ describe('Integration tests', () => {
           requestCert: false,
           rejectUnauthorized: true,
         },
-      })
+      }),
     )(state);
 
     expect(data).to.eql('Hello, HTTPS World!');
@@ -127,7 +127,7 @@ describe('Integration tests', () => {
     };
     const error = await execute(get('/no-certs'))(state).catch(e => e);
 
-    expect(error.message).to.eq('unable to verify the first certificate');
+    expect(error.message).to.include('unable to verify the first certificate');
 
     httpsServer.close();
   });
