@@ -24,7 +24,6 @@ import generateCode from '../src/generate-code';
  * That would test the result of the code, rather than the content of it
  */
 
-// Minimal dt mock
 const dt = {
   identifier: (id, system?) => {
     const make = i => {
@@ -38,11 +37,6 @@ const dt = {
     const make = r => (typeof r === 'string' ? { reference: r } : r);
     return Array.isArray(ref) ? ref.map(make) : make(ref);
   },
-  concept: codings => {
-    if (codings?.coding) return codings;
-    const arr = Array.isArray(codings) ? codings : [codings];
-    return { coding: arr.map(c => (typeof c === 'string' ? { code: c } : c)) };
-  },
   lookupValue: (_url, code) => code,
   ensureConceptText: () => {},
   composite: (obj, key, value) => {
@@ -53,13 +47,14 @@ const dt = {
     resource.extension ??= [];
     resource.extension.push({ url, value });
   },
+  concept: codings => {
+    const arr = Array.isArray(codings) ? codings : [codings];
+    return { coding: arr.map(c => (typeof c === 'string' ? { code: c } : c)) };
+  },
   coding: src => (typeof src === 'string' ? { code: src } : src),
-  mapSystems: obj => obj,
-  mapValues: obj => obj,
 };
 
-// Use esbuild.
-const compileProfile = (code: string) => {
+const compileBuilder = (code: string) => {
   const { code: cjs } = transformSync(code, { loader: 'ts', format: 'cjs' });
   const mod = { exports: {} as any };
   const mockRequire = (path: string) => {
@@ -75,7 +70,7 @@ const compileProfile = (code: string) => {
   return mod.exports.default;
 };
 
-const generateProfile = (resourceType, props) => {
+const generateBuilder = (resourceType, props) => {
   const schema = {
     [resourceType]: [
       {
@@ -136,82 +131,47 @@ test.skip('should generate a simpler signature', t => {
   // eval the builder (will this work??)
 });
 
-// Patient schema based on FHIR R4 spec (http://hl7.org/fhir/R4/patient.html).
-const patientCode = generateProfile('Patient', {
-  birthDate: {
-    type: ['date'],
-    isArray: false,
-    desc: 'The date of birth for the individual',
-  },
-  identifier: {
-    type: ['Identifier'],
-    isArray: true,
-    desc: 'An identifier for this patient',
-  },
-  managingOrganization: {
-    type: ['Reference'],
-    isArray: false,
-    desc: 'Organization that is the custodian of the patient record',
-  },
-  generalPractitioner: {
-    type: ['Reference'],
-    isArray: true,
-    desc: "Patient's nominated primary care provider",
-  },
-  maritalStatus: {
-    type: ['CodeableConcept'],
-    isArray: false,
-    desc: 'Marital (civil) status of a patient',
-    valueSet: 'http://hl7.org/fhir/ValueSet/marital-status',
-  },
-  deceased: {
-    type: ['boolean', 'dateTime'],
-    isArray: false,
-    desc: 'Indicates if the individual is deceased or not',
-    isComposite: true,
-  },
-  contact: {
-    type: ['BackboneElement'],
-    isArray: true,
-    desc: 'A contact party (e.g. guardian, partner, friend) for the patient',
-    typeDef: {
-      customExt: {
-        extension: { url: 'http://example.org/ext/custom' },
-        type: 'string',
-        desc: 'A custom extension for testing',
-      },
-    },
-  },
-});
-
-test('patient: sets resourceType', t => {
-  const builder = compileProfile(patientCode);
+test('sets resourceType', t => {
+  const profiles = generateBuilder('Patient', {});
+  const builder = compileBuilder(profiles);
   const result = builder({});
   t.is(result.resourceType, 'Patient');
 });
 
-test('patient: spreads extra props through', t => {
-  const builder = compileProfile(patientCode);
+test('spreads simple props through', t => {
+  const code = generateBuilder('Patient', {
+    birthDate: { type: ['date'], isArray: false, desc: 'date of birth' },
+  });
+  const builder = compileBuilder(code);
   const result = builder({ birthDate: '1990-01-01', customField: 42 });
   t.is(result.birthDate, '1990-01-01');
   t.is(result.customField, 42);
 });
 
-test('patient: builds identifier', t => {
-  const builder = compileProfile(patientCode);
+test('builds identifier', t => {
+  const code = generateBuilder('Patient', {
+    identifier: { type: ['Identifier'], isArray: true, desc: 'patient id' },
+  });
+  const builder = compileBuilder(code);
   const result = builder({ identifier: 'MRN-123' });
   t.true(Array.isArray(result.identifier));
   t.is(result.identifier[0].value, 'MRN-123');
 });
 
-test('patient: builds reference', t => {
-  const builder = compileProfile(patientCode);
+test('builds single reference', t => {
+  const code = generateBuilder('Patient', {
+    managingOrganization: { type: ['Reference'], isArray: false, desc: 'org' },
+  });
+  const builder = compileBuilder(code);
   const result = builder({ managingOrganization: 'Organization/1' });
   t.deepEqual(result.managingOrganization, { reference: 'Organization/1' });
 });
 
-test('patient: builds reference array', t => {
-  const builder = compileProfile(patientCode);
+test('builds reference array', t => {
+  const code = generateBuilder('Patient', {
+    generalPractitioner: { type: ['Reference'], isArray: true, desc: 'gp' },
+  });
+  const builder = compileBuilder(code);
   const result = builder({
     generalPractitioner: ['Practitioner/1', 'Practitioner/2'],
   });
@@ -220,30 +180,64 @@ test('patient: builds reference array', t => {
   t.is(result.generalPractitioner[0].reference, 'Practitioner/1');
 });
 
-test('patient: builds CodeableConcept', t => {
-  const builder = compileProfile(patientCode);
+test('builds CodeableConcept', t => {
+  const code = generateBuilder('Patient', {
+    maritalStatus: {
+      type: ['CodeableConcept'],
+      isArray: false,
+      desc: 'marital status',
+      valueSet: 'http://hl7.org/fhir/ValueSet/marital-status',
+    },
+  });
+  const builder = compileBuilder(code);
   const result = builder({ maritalStatus: 'M' });
   t.truthy(result.maritalStatus);
   t.is(result.maritalStatus.coding[0].code, 'M');
 });
 
-test('patient: builds composite value[x]', t => {
-  const builder = compileProfile(patientCode);
+test('builds composite value[x]', t => {
+  const code = generateBuilder('Patient', {
+    deceased: {
+      type: ['boolean', 'dateTime'],
+      isArray: false,
+      desc: 'deceased',
+      isComposite: true,
+    },
+  });
+  const builder = compileBuilder(code);
   const result = builder({ deceased: true });
   t.is(result.deceasedBoolean, true);
   t.is(result.deceased, undefined);
 });
 
-test('patient: builds typeDef with nested extension', t => {
-  const builder = compileProfile(patientCode);
+test('builds typeDef with nested extension', t => {
+  const code = generateBuilder('Patient', {
+    contact: {
+      type: ['BackboneElement'],
+      isArray: true,
+      desc: 'contact party',
+      typeDef: {
+        customExt: {
+          extension: { url: 'http://example.org/ext/custom' },
+          type: 'string',
+          desc: 'custom ext',
+        },
+      },
+    },
+  });
+  const builder = compileBuilder(code);
   const result = builder({ contact: [{ name: 'Smith', customExt: 'hello' }] });
   t.true(Array.isArray(result.contact));
   t.is(result.contact[0].extension[0].url, 'http://example.org/ext/custom');
   t.is(result.contact[0].extension[0].value, 'hello');
 });
 
-test('patient: skips nil properties', t => {
-  const builder = compileProfile(patientCode);
+test('skips nil properties', t => {
+  const code = generateBuilder('Patient', {
+    identifier: { type: ['Identifier'], isArray: true, desc: 'id' },
+    managingOrganization: { type: ['Reference'], isArray: false, desc: 'org' },
+  });
+  const builder = compileBuilder(code);
   const result = builder({});
   t.is(result.identifier, undefined);
   t.is(result.managingOrganization, undefined);
