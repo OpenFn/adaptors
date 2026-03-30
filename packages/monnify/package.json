@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-monnify",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "OpenFn monnify adaptor",
   "type": "module",
   "exports": {

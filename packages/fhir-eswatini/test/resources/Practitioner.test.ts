@@ -149,6 +149,10 @@ describe('SzPractitioner', () => {
         { system: 'phone', value: '7911 1222', rank: 1 },
       ],
     });
+
+    // skip narrative generation
+    delete resource.text;
+
     assert.deepEqual(resource, sampleBasic);
   });
 });

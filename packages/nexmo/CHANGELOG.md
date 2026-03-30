@@ -1,5 +1,12 @@
 # @openfn/language-nexmo
 
+## 0.5.32 - 30 March 2026
+
+### Patch Changes
+
+- Updated dependencies \[295655f]
+  - @openfn/language-common@3.3.0
+
 ## 0.5.31 - 25 February 2026
 
 ### Patch Changes

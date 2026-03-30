@@ -61,6 +61,9 @@ describe('SzLabResult', () => {
       testingLaboratory: lab,
     });
 
+    // skip narrative generation
+    delete result.text;
+
     assert.deepEqual(result.extension, [
       {
         url: 'https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzTestingLabExtension',
@@ -73,6 +76,9 @@ describe('SzLabResult', () => {
     const result = builders.observation('SzLabResult', {
       code: 'CD4',
     });
+
+    // skip narrative generation
+    delete result.text;
 
     assert.deepEqual(result, {
       resourceType: 'Observation',

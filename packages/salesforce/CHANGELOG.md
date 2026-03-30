@@ -1,5 +1,12 @@
 # @openfn/language-salesforce
 
+## 9.0.7 - 30 March 2026
+
+### Patch Changes
+
+- Updated dependencies \[295655f]
+  - @openfn/language-common@3.3.0
+
 ## 9.0.6 - 25 February 2026
 
 ### Patch Changes

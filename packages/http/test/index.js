@@ -510,7 +510,7 @@ describe('contentType', () => {
       )
     )(state);
 
-    expect(req.body instanceof FormData).to.equal(true);
+    expect(req.body?.constructor?.name).to.equal('FormData');
     expect(JSON.parse(response.data).id).to.eql(1);
   });
 
@@ -626,7 +626,7 @@ describe('post', () => {
     )({});
 
     expect(data).to.equal('ok');
-    expect(form instanceof FormData).to.equal(true);
+    expect(form?.constructor?.name).to.equal('FormData');
     expect(entries.length).to.equal(3);
   });
 

@@ -12,6 +12,7 @@ import {
   ERROR_URL_MISMATCH,
   logResponse,
   generateAgentKey,
+  encodeFormBody,
 } from '../../src/util/http.js';
 import { encode } from '../../src/util/base64.js';
 
@@ -1342,5 +1343,48 @@ describe('redirect handling', () => {
     expect(redirectCount).to.eq(2);
     expect(result.statusCode).to.eq(200);
     expect(result.body).to.deep.equal({ ok: true });
+  });
+});
+
+describe('encodeFormBody', () => {
+  it('encodes a string value', () => {
+    const form = encodeFormBody({ name: 'alice' });
+    expect(form.get('name')).to.equal('alice');
+  });
+
+  it('encodes a number value as a string', () => {
+    const form = encodeFormBody({ age: 30 });
+    expect(form.get('age')).to.equal('30');
+  });
+
+  it('encodes a boolean value as a string', () => {
+    const form = encodeFormBody({ active: true });
+    expect(form.get('active')).to.equal('true');
+  });
+
+  it('encodes an object value as a JSON string', () => {
+    const form = encodeFormBody({ address: { city: 'Nairobi' } });
+    expect(form.get('address')).to.equal('{"city":"Nairobi"}');
+  });
+
+  it('encodes an array value as a JSON string', () => {
+    const form = encodeFormBody({ tags: ['a', 'b'] });
+    expect(form.get('tags')).to.equal('["a","b"]');
+  });
+
+  it('skips null values', () => {
+    const form = encodeFormBody({ x: null });
+    expect(form.has('x')).to.be.false;
+  });
+
+  it('skips undefined values', () => {
+    const form = encodeFormBody({ x: undefined });
+    expect(form.has('x')).to.be.false;
+  });
+
+  it('appends a Blob value directly without stringification', () => {
+    const blob = new Blob(['data'], { type: 'text/plain' });
+    const form = encodeFormBody({ file: blob });
+    expect(form.get('file')).to.be.instanceof(Blob);
   });
 });

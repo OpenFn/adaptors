@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-ping",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "OpenFn ping adaptor",
   "type": "module",
   "exports": {

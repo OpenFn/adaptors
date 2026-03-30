@@ -14,8 +14,8 @@ import * as util from './Utils.js';
  * @typedef {Object} RequestOptions
  * @public
  * @property {object|string} body - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).
+ * @property {string} contentType - Set to `'form'` to send the body as multipart FormData instead of JSON. The `content-type` header will be set automatically (including the multipart boundary).
  * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
- * @property {object} form - Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body.
  * @property {object} query - An object of query parameters to be encoded into the URL.
  * @property {object} headers - An object of headers to append to the request.
  * @property {string} parseAs - Parse the response body as json, text or stream. By default will use the response headers.
@@ -40,8 +40,10 @@ export function get(path, options) {
 
 /**
  * Make a POST request
- * @example
+ * @example <caption>Post JSON body</caption>
  * post("Patient/CheckPrescription", { "prescriptionRowGuid": "3fa85f64-5717-4562-b3fc-2c963f66afa6" });
+ * @example <caption>Post as form data</caption>
+ * post("Patient/Prescription/History", { start: 0, length: 10, draw: 1, additionalParameters: { filter: [] } }, { contentType: "form" });
  * @function
  * @public
  * @param {string} path - Path to resource
@@ -79,7 +81,7 @@ export function request(method, path, body, options = {}) {
       {
         body: resolvedBody,
         ...resolvedoptions,
-      }
+      },
     );
 
     return util.prepareNextState(state, response);

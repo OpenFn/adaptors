@@ -1,5 +1,12 @@
 # @openfn/language-redis
 
+## 1.3.18 - 30 March 2026
+
+### Patch Changes
+
+- Updated dependencies \[295655f]
+  - @openfn/language-common@3.3.0
+
 ## 1.3.17 - 25 February 2026
 
 ### Patch Changes
