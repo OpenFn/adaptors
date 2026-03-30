@@ -1,5 +1,14 @@
 ## 3.0.1 - 11 July 2025
 
+## 3.3.0 - 30 March 2026
+
+### Minor Changes
+
+- 295655f: - Add `encodeFormBody` utility for encoding plain objects into
+  `FormData`. Primitives are converted to strings, objects and arrays are JSON
+  stringified, `Blob` and `File` values are appended as-is, and null/undefined
+  values are skipped.
+
 ## 3.2.3 - 24 February 2026
 
 ### Patch Changes

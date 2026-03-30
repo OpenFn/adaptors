@@ -1,5 +1,15 @@
 # @openfn/language-fhir-eswatini
 
+## 0.7.4 - 30 March 2026
+
+### Patch Changes
+
+- acb567b: Add minimal narrative content to each generated resource
+- Updated dependencies \[295655f]
+- Updated dependencies \[acb567b]
+  - @openfn/language-common@3.3.0
+  - @openfn/language-fhir-4@0.5.0
+
 ## 0.7.3 - 27 March 2026
 
 ### Patch Changes

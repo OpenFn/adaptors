@@ -114,9 +114,13 @@ This operation writes the following keys to state:
 | response | the response from the HTTP server, including headers, statusCode, body, etc |
 | references | an array of all previous data objects used in the Job |
 
-**Example**
+**Example:** Post JSON body
 ```js
 post("Patient/CheckPrescription", { "prescriptionRowGuid": "3fa85f64-5717-4562-b3fc-2c963f66afa6" });
+```
+**Example:** Post as form data
+```js
+post("Patient/Prescription/History", { start: 0, length: 10, draw: 1, additionalParameters: { filter: [] } }, { contentType: "form" });
 ```
 
 * * *
@@ -179,8 +183,8 @@ Options provided to the HTTP request
 | Name | Type | Description |
 | --- | --- | --- |
 | body | <code>object</code> \| <code>string</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |
+| contentType | <code>string</code> | Set to `'form'` to send the body as multipart FormData instead of JSON. The `content-type` header will be set automatically (including the multipart boundary). |
 | errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |
-| form | <code>object</code> | Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body. |
 | query | <code>object</code> | An object of query parameters to be encoded into the URL. |
 | headers | <code>object</code> | An object of headers to append to the request. |
 | parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |
