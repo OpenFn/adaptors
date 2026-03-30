@@ -380,7 +380,6 @@ export function uploadBundle(
 ) {
   return async state => {
     let [$bundle, $options] = expandReferences(state, bundle, options);
-    console.log({ $options });
     let data;
     if (typeof $bundle === 'string') {
       data = state[$bundle];
