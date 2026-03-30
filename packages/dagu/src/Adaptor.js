@@ -42,7 +42,7 @@ export function get(path, options) {
  * Make a POST request
  * @example <caption>Post JSON body</caption>
  * post("Patient/CheckPrescription", { "prescriptionRowGuid": "3fa85f64-5717-4562-b3fc-2c963f66afa6" });
- * @example <caption>Post as URL-encoded form data</caption>
+ * @example <caption>Post as form data</caption>
  * post("Patient/Prescription/History", { start: 0, length: 10, draw: 1, additionalParameters: { filter: [] } }, { contentType: "form" });
  * @function
  * @public

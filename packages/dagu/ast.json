@@ -76,7 +76,7 @@
           {
             "title": "example",
             "description": "post(\"Patient/Prescription/History\", { start: 0, length: 10, draw: 1, additionalParameters: { filter: [] } }, { contentType: \"form\" });",
-            "caption": "Post as URL-encoded form data"
+            "caption": "Post as form data"
           },
           {
             "title": "function",
