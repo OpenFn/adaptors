@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import * as util  from './util/index.js';
-const  { request, expandReferences } = util;
+import * as util from './util/index.js';
+const { request, expandReferences } = util;
 
 const { set } = _;
 /**
@@ -101,12 +101,12 @@ const req = function (method, url, options) {
       state,
       method,
       url,
-      options
+      options,
     );
     const { body, ...responseWithoutBody } = await request(
       resolvedMethod,
       resolvedUrl,
-      resolvedOptions
+      resolvedOptions,
     );
     return {
       ...state,

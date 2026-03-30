@@ -4,7 +4,7 @@ import querystring from 'node:querystring';
 import path from 'node:path';
 import throwError from './throw-error.js';
 import { encode } from './base64.js';
-import { MockAgent, Agent, interceptors } from 'undici';
+import { MockAgent, Agent, interceptors, FormData } from 'undici';
 import _ from 'lodash';
 
 // Maps undici dispatchers to keys (where a key is the base url + encoded options)
@@ -348,6 +348,36 @@ export async function request(method, fullUrlOrPath, options = {}) {
     requestResponse.query = queryParams;
   }
   return requestResponse;
+}
+
+/**
+ * Encodes a plain object into a `FormData` instance.
+ *
+ * - Primitives are converted to strings
+ * - Objects and arrays are JSON stringified
+ * - `Blob` and `File` values are appended as-is
+ * - Null and undefined values are skipped
+ *
+ * @param {Object} data - The object to encode
+ * @returns {FormData}
+ */
+export function encodeFormBody(data) {
+  const form = new FormData();
+
+  for (const [key, value] of Object.entries(data)) {
+    if (value === null || value === undefined) continue;
+
+    if (value instanceof Blob || value instanceof File) {
+      form.append(key, value);
+    } else {
+      form.append(
+        key,
+        typeof value === 'object' ? JSON.stringify(value) : String(value),
+      );
+    }
+  }
+
+  return form;
 }
 
 function encodeRequestBody(body) {

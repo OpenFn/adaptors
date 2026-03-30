@@ -3,6 +3,7 @@ import {
   request as commonRequest,
   makeBasicAuthHeader,
   expandReferences,
+  encodeFormBody,
   logResponse,
   encode,
   decode,
@@ -23,14 +24,6 @@ function addAuth(configuration, headers) {
   } else if (username && password) {
     Object.assign(headers, makeBasicAuthHeader(username, password));
   }
-}
-
-function encodeFormBody(data) {
-  const form = new FormData();
-  for (const [key, value] of Object.entries(data)) {
-    form.append(key, value);
-  }
-  return form;
 }
 
 export function getTLSOptions(state, requestOptions) {
@@ -74,13 +67,13 @@ export function request(method, path, params) {
     const [resolvedPath, resolvedParams = {}] = expandReferences(
       state,
       path,
-      params
+      params,
     );
 
     let { body, contentType = 'json', headers = {}, parseAs } = resolvedParams;
 
     const contentTypeHeader = Object.keys(headers).find(
-      key => key.toLowerCase() === 'content-type'
+      key => key.toLowerCase() === 'content-type',
     );
 
     if (contentType === 'form') {
@@ -113,7 +106,7 @@ export function request(method, path, params) {
 
     if (resolvedParams.agentOptions) {
       console.warn(
-        'WARNING: The `agentOptions` option has been deprecated. Add `tls` to state.configuration instead.'
+        'WARNING: The `agentOptions` option has been deprecated. Add `tls` to state.configuration instead.',
       );
     }
 
