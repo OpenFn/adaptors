@@ -364,7 +364,6 @@ export function addToBundle(resources: any | any[], name: string = 'bundle') {
  * @public
  * @function
  * @param {string/object} bundle - A bundle object or name of a bundle on state
- * @param {object} options - Advanced options to customize the HTTP POST request.
  * @example <caption>Upload the default bundle</caption>
  * uploadBundle()
  * @example <caption>Create and a bundle with a custom name</caption>
@@ -374,12 +373,9 @@ export function addToBundle(resources: any | any[], name: string = 'bundle') {
  * uploadBundle($.patientsBundle)
  * @returns Operation
  */
-export function uploadBundle(
-  bundle: string | any = 'bundle',
-  options: any = {},
-) {
+export function uploadBundle(bundle: string | any = 'bundle') {
   return async state => {
-    let [$bundle, $options] = expandReferences(state, bundle, options);
+    let [$bundle] = expandReferences(state, bundle);
     let data;
     if (typeof $bundle === 'string') {
       data = state[$bundle];
@@ -403,7 +399,6 @@ export function uploadBundle(
     const response = await request('POST', '/', {
       configuration: state.configuration,
       body: data,
-      ...$options,
     }).catch(e => {
       cleanResponseObject(state, e);
       throw e;
