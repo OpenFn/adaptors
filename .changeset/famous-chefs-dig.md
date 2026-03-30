@@ -2,5 +2,5 @@
 '@openfn/language-dagu': minor
 ---
 
-- Add `contentType` support in `RequestOptions`. You can now set `contentType`
-  to `'form'` to send the body as multipart FormData instead of JSON.
+- Add `contentType: 'form'` option to send a request body as multipart
+  FormData instead of JSON.

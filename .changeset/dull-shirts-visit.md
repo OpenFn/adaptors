@@ -2,5 +2,5 @@
 '@openfn/language-http': patch
 ---
 
-Remove inline `encodeFormBody` from `@openfn/language-http` and use the shared
-implementation from `@openfn/language-common`
+Form body encoding now uses the shared `encodeFormBody` utility from
+`@openfn/language-common`. No behavioural changes.
