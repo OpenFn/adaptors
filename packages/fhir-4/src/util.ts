@@ -1,4 +1,4 @@
-import nodepath from 'node:path';
+if import nodepath from 'node:path';
 import _ from 'lodash-es';
 
 import { composeNextState } from '@openfn/language-common';
@@ -18,18 +18,24 @@ export function assertValidResourceId(id: string) {
   }
 }
 export function addAuth(options) {
-  if (options?.headers?.Authorization) {
+  if (options.headers?.Authorization) {
     return;
   }
 
-  const { username, password, access_token } = options.configuration;
+  const { username, password, access_token, authorization } =
+    options.configuration;
 
-  if (access_token) {
+  if (authorization) {
+    return { Authorization: authorization };
+  }
+
+  if (access_token || authorization) {
     return { Authorization: `Bearer ${access_token}` };
-  } else if (username && password) {
+  } 
+
+  if (username && password) {
     return { ...makeBasicAuthHeader(username, password) };
   }
-  return;
 }
 
 export const prepareNextState = (state, response) => {
@@ -114,7 +120,6 @@ export const request = (method, path, options: RequestOptions) => {
 export function logValidationErrors(response, payload, logger = console) {
   const error = JSON.parse(response.body);
   if (error.issue && error.issue.length) {
-    console.log(JSON.stringify(error, null, 2));
     delete response.body;
     logger.log();
     logger.error('FHIR server reports validation issues:');
