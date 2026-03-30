@@ -78,7 +78,7 @@ describe('Integration tests', () => {
     expect(response.method).to.eql('POST');
   });
 
-  it('should post formdata and return json', async () => {
+  it('should post formdata with a contenttype and return json', async () => {
     const state = {
       configuration: {
         baseUrl: `http://localhost:${httpServer.address().port}`,
@@ -93,9 +93,9 @@ describe('Integration tests', () => {
     expect(data).to.eql({ name: 'Joe', age: '30' });
   });
 
-  // This doesn't work because the http adaptor assumes JSON
-  // But that's OK!
-  it.skip('can post a raw FormData object without a content type', async () => {
+  // This test exists because right now, users must pass the FormData content type
+  // Maybe later, if we expose FormData to job code, we can do something better
+  it('should fail when posting a raw FormData object without a content type', async () => {
     const form = new FormData();
     form.append('name', 'Joe');
 
