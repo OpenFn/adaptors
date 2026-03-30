@@ -114,6 +114,7 @@ export const request = (method, path, options: RequestOptions) => {
 export function logValidationErrors(response, payload, logger = console) {
   const error = JSON.parse(response.body);
   if (error.issue && error.issue.length) {
+    console.log(JSON.stringify(error, null, 2));
     delete response.body;
     logger.log();
     logger.error('FHIR server reports validation issues:');

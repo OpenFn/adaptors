@@ -220,9 +220,8 @@ export default function(props: Partial<MedicationRequest_SzMedicationRequest_Pro
 
     resource.text = {
       status: 'generated',
-      div: `
-<div xmlns=\"http://www.w3.org/1999/xhtml\">
-      <h2>${resource.resourceType}: ${resource.id}</h2>
+      div: `<div xmlns=\"http://www.w3.org/1999/xhtml\">
+      <h2>${resource.resourceType}: ${resource.id || '(anon)'}</h2>
 </div>`,
     };
     return resource;

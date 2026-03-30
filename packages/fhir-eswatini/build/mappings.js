@@ -28,8 +28,7 @@ export default {
   initialiser: resource => {
     resource.text = {
       status: 'generated',
-      div: `
-<div xmlns=\"http://www.w3.org/1999/xhtml\">
+      div: `<div xmlns=\"http://www.w3.org/1999/xhtml\">
       <h2>${resource.resourceType}: ${resource.id || '(anon)'}</h2>
 </div>`,
     };
