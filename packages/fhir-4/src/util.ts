@@ -1,4 +1,4 @@
-if import nodepath from 'node:path';
+import nodepath from 'node:path';
 import _ from 'lodash-es';
 
 import { composeNextState } from '@openfn/language-common';
@@ -31,7 +31,7 @@ export function addAuth(options) {
 
   if (access_token || authorization) {
     return { Authorization: `Bearer ${access_token}` };
-  } 
+  }
 
   if (username && password) {
     return { ...makeBasicAuthHeader(username, password) };
