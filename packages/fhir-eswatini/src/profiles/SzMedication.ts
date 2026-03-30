@@ -89,5 +89,12 @@ export default function(props: Partial<Medication_SzMedication_Props>) {
         resource.batch = _batch;
     }
 
+    resource.text = {
+      status: 'generated',
+      div: `
+<div xmlns=\"http://www.w3.org/1999/xhtml\">
+      <h2>${resource.resourceType}: ${resource.id}</h2>
+</div>`,
+    };
     return resource;
 }

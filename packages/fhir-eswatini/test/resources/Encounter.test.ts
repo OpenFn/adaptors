@@ -121,6 +121,10 @@ describe('SzEncounter', () => {
       ],
       serviceProvider: 'Organization/SampleSzOrganization',
     });
+
+    // skip narrative generation
+    delete resource.text;
+
     assert.deepEqual(resource, sampleBasic);
   });
 

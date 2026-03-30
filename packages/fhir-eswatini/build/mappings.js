@@ -25,4 +25,14 @@ export default {
     'http://172.209.216.154:3447',
     'https://hapifhir.eswatinihie.com',
   ],
+  initialiser: resource => {
+    resource.text = {
+      status: 'generated',
+      div: `
+<div xmlns=\"http://www.w3.org/1999/xhtml\">
+      <h2>${resource.resourceType}: ${resource.id || '(anon)'}</h2>
+</div>`,
+    };
+    return resource;
+  },
 };

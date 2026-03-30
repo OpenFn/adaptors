@@ -109,6 +109,10 @@ describe('SzProcedure', () => {
         { display: 'Isoniazid Preventive Therapy' },
       ],
     });
+
+    // skip narrative generation
+    delete resource.text;
+
     assert.deepEqual(resource, sampleBasic);
   });
 });

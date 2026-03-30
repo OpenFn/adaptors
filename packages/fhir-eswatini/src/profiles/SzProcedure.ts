@@ -230,5 +230,12 @@ export default function(props: Partial<Procedure_SzProcedure_Props>) {
         dt.ensureConceptText(resource.usedCode);
     }
 
+    resource.text = {
+      status: 'generated',
+      div: `
+<div xmlns=\"http://www.w3.org/1999/xhtml\">
+      <h2>${resource.resourceType}: ${resource.id}</h2>
+</div>`,
+    };
     return resource;
 }
