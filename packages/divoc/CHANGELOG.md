@@ -1,5 +1,12 @@
 # @openfn/language-divoc
 
+## 0.1.17 - 30 March 2026
+
+### Patch Changes
+
+- Updated dependencies \[295655f]
+  - @openfn/language-common@3.3.0
+
 ## 0.1.16 - 24 February 2026
 
 ### Patch Changes

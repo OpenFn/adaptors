@@ -1,5 +1,12 @@
 # @openfn/language-cartodb
 
+## 0.4.29 - 30 March 2026
+
+### Patch Changes
+
+- Updated dependencies \[295655f]
+  - @openfn/language-common@3.3.0
+
 ## 0.4.28 - 25 February 2026
 
 ### Patch Changes

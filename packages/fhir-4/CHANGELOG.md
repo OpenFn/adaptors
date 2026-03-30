@@ -1,5 +1,17 @@
 # @openfn/language-fhir-4
 
+## 0.5.0 - 30 March 2026
+
+### Minor Changes
+
+- acb567b: Add new configuration: `authorization`, which allows the
+  Authorization header to be set directly
+
+### Patch Changes
+
+- Updated dependencies \[295655f]
+  - @openfn/language-common@3.3.0
+
 ## 0.4.2 - 27 March 2026
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @openfn/language-ghana-nia
 
+## 0.1.20 - 30 March 2026
+
+### Patch Changes
+
+- Updated dependencies \[295655f]
+  - @openfn/language-common@3.3.0
+
 ## 0.1.19 - 24 February 2026
 
 ### Patch Changes
