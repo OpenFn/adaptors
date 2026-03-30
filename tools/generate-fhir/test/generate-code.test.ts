@@ -1,4 +1,6 @@
 import test from 'ava';
+import _ from 'lodash';
+import { transformSync } from 'esbuild';
 import generateCode from '../src/generate-code';
 
 /**
@@ -21,6 +23,57 @@ import generateCode from '../src/generate-code';
  *
  * That would test the result of the code, rather than the content of it
  */
+
+// Minimal dt mock
+const dt = {
+  identifier: (id, system?) => {
+    const make = i => {
+      const o = typeof i === 'string' ? { value: i } : { ...i };
+      if (system) o.system = system;
+      return o;
+    };
+    return Array.isArray(id) ? id.map(make) : make(id);
+  },
+  reference: ref => {
+    const make = r => (typeof r === 'string' ? { reference: r } : r);
+    return Array.isArray(ref) ? ref.map(make) : make(ref);
+  },
+  concept: codings => {
+    if (codings?.coding) return codings;
+    const arr = Array.isArray(codings) ? codings : [codings];
+    return { coding: arr.map(c => (typeof c === 'string' ? { code: c } : c)) };
+  },
+  lookupValue: (_url, code) => code,
+  ensureConceptText: () => {},
+  composite: (obj, key, value) => {
+    const suffix = { boolean: 'Boolean', string: 'String', number: 'Integer' };
+    obj[key + (suffix[typeof value] || 'String')] = value;
+  },
+  addExtension: (resource, url, value) => {
+    resource.extension ??= [];
+    resource.extension.push({ url, value });
+  },
+  coding: src => (typeof src === 'string' ? { code: src } : src),
+  mapSystems: obj => obj,
+  mapValues: obj => obj,
+};
+
+// Use esbuild.
+const compileProfile = (code: string) => {
+  const { code: cjs } = transformSync(code, { loader: 'ts', format: 'cjs' });
+  const mod = { exports: {} as any };
+  const mockRequire = (path: string) => {
+    if (path === 'lodash') return _;
+    if (path.includes('datatypes')) return dt;
+    return {};
+  };
+  new Function('require', 'module', 'exports', cjs)(
+    mockRequire,
+    mod,
+    mod.exports,
+  );
+  return mod.exports.default;
+};
 
 const generateProfile = (resourceType, props) => {
   const schema = {
@@ -131,35 +184,67 @@ const patientCode = generateProfile('Patient', {
   },
 });
 
-test('patient: sets resourceType and spreads input props', t => {
-  t.regex(patientCode, /resourceType: "Patient"/);
-  t.regex(patientCode, /\.\.\.props/);
+test('patient: sets resourceType', t => {
+  const builder = compileProfile(patientCode);
+  const result = builder({});
+  t.is(result.resourceType, 'Patient');
 });
 
-test('patient: does not generate dt calls for simple types', t => {
-  t.notRegex(patientCode, /dt\.\w+\(.*birthDate/);
+test('patient: spreads extra props through', t => {
+  const builder = compileProfile(patientCode);
+  const result = builder({ birthDate: '1990-01-01', customField: 42 });
+  t.is(result.birthDate, '1990-01-01');
+  t.is(result.customField, 42);
 });
 
-test('patient: generates dt.identifier', t => {
-  t.regex(patientCode, /dt\.identifier\(props\.identifier\)/);
+test('patient: builds identifier', t => {
+  const builder = compileProfile(patientCode);
+  const result = builder({ identifier: 'MRN-123' });
+  t.true(Array.isArray(result.identifier));
+  t.is(result.identifier[0].value, 'MRN-123');
 });
 
-test('patient: generates dt.reference', t => {
-  t.regex(patientCode, /dt\.reference\(props\.managingOrganization\)/);
+test('patient: builds reference', t => {
+  const builder = compileProfile(patientCode);
+  const result = builder({ managingOrganization: 'Organization/1' });
+  t.deepEqual(result.managingOrganization, { reference: 'Organization/1' });
 });
 
-test('patient: coerces Reference to array when isArray', t => {
-  t.regex(patientCode, /Array\.isArray/);
-  t.regex(patientCode, /dt\.reference\(props\.generalPractitioner\)/);
+test('patient: builds reference array', t => {
+  const builder = compileProfile(patientCode);
+  const result = builder({
+    generalPractitioner: ['Practitioner/1', 'Practitioner/2'],
+  });
+  t.true(Array.isArray(result.generalPractitioner));
+  t.is(result.generalPractitioner.length, 2);
+  t.is(result.generalPractitioner[0].reference, 'Practitioner/1');
 });
 
-test('patient: generates dt.concept and dt.lookupValue for CodeableConcept', t => {
-  t.regex(patientCode, /dt\.concept/);
-  t.regex(patientCode, /dt\.lookupValue/);
-  t.regex(patientCode, /marital-status/);
+test('patient: builds CodeableConcept', t => {
+  const builder = compileProfile(patientCode);
+  const result = builder({ maritalStatus: 'M' });
+  t.truthy(result.maritalStatus);
+  t.is(result.maritalStatus.coding[0].code, 'M');
 });
 
-test('patient: generates typeDef mapping with nested extensions', t => {
-  t.regex(patientCode, /dt\.addExtension/);
-  t.regex(patientCode, /http:\/\/example\.org\/ext\/custom/);
+test('patient: builds composite value[x]', t => {
+  const builder = compileProfile(patientCode);
+  const result = builder({ deceased: true });
+  t.is(result.deceasedBoolean, true);
+  t.is(result.deceased, undefined);
+});
+
+test('patient: builds typeDef with nested extension', t => {
+  const builder = compileProfile(patientCode);
+  const result = builder({ contact: [{ name: 'Smith', customExt: 'hello' }] });
+  t.true(Array.isArray(result.contact));
+  t.is(result.contact[0].extension[0].url, 'http://example.org/ext/custom');
+  t.is(result.contact[0].extension[0].value, 'hello');
+});
+
+test('patient: skips nil properties', t => {
+  const builder = compileProfile(patientCode);
+  const result = builder({});
+  t.is(result.identifier, undefined);
+  t.is(result.managingOrganization, undefined);
 });
