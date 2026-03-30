@@ -2,4 +2,5 @@
 '@openfn/language-fhir-4': minor
 ---
 
-Allow request options to be passed to uploadBundle
+Add new configuration: `authorization`, which allows the Authorization header to
+be set directly
