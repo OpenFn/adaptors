@@ -12,7 +12,6 @@ import {
 
 import patient from './fixtures/Patient' with { type: 'json' };
 import { createBundle } from '../src/Adaptor.js';
-import { identifier } from '../src/datatypes.js';
 
 const testServer = enableMockClient('https://fhir.example.com');
 

@@ -15,6 +15,9 @@ describe('SzEpisodeOfCare', () => {
       status: 'active',
     });
 
+    // skip narrative generation
+    delete resource.text;
+
     expect(resource).eql({
       resourceType: 'EpisodeOfCare',
       meta: {

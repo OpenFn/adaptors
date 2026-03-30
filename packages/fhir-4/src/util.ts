@@ -18,16 +18,24 @@ export function assertValidResourceId(id: string) {
   }
 }
 export function addAuth(options) {
-  if (options?.headers?.Authorization) return;
+  if (options.headers?.Authorization) {
+    return;
+  }
 
-  const { username, password, access_token } = options.configuration;
+  const { username, password, access_token, authorization } =
+    options.configuration;
 
-  if (access_token) {
+  if (authorization) {
+    return { Authorization: authorization };
+  }
+
+  if (access_token || authorization) {
     return { Authorization: `Bearer ${access_token}` };
-  } else if (username && password) {
+  }
+
+  if (username && password) {
     return { ...makeBasicAuthHeader(username, password) };
   }
-  return {};
 }
 
 export const prepareNextState = (state, response) => {
@@ -77,15 +85,15 @@ export const request = (method, path, options: RequestOptions) => {
 
   const { configuration, ...otherOptions } = options;
   const fullPath = nodepath.join(configuration.apiPath ?? '/fhir', path);
-  const headers = addAuth(options);
   const opts = {
     ...otherOptions,
     headers: Object.assign(
-      headers,
+      {},
       {
         accept: 'application/fhir+json',
         'content-type': 'application/fhir+json',
       },
+      addAuth(options),
       options.headers,
     ),
     baseUrl: configuration.baseUrl,

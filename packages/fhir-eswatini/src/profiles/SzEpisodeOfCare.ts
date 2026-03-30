@@ -115,5 +115,11 @@ export default function(props: Partial<EpisodeOfCare_SzEpisodeOfCare_Props>) {
         resource.account = dt.reference(props.account);
     }
 
+    resource.text = {
+      status: 'generated',
+      div: `<div xmlns=\"http://www.w3.org/1999/xhtml\">
+      <h2>${resource.resourceType}: ${resource.id || '(anon)'}</h2>
+</div>`,
+    };
     return resource;
 }

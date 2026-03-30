@@ -174,6 +174,18 @@ describe('SzPatient', () => {
     assert.isOk(resource);
   });
 
+  it('should create a SzPatient with minimal narrative', () => {
+    const resource = b.patient('SzPatient', {
+      id: 'bob',
+    });
+
+    expect(resource.text.div.trim()).eql(
+      `<div xmlns="http://www.w3.org/1999/xhtml">
+      <h2>Patient: bob</h2>
+</div>`.trim(),
+    );
+  });
+
   it('should create a basic SzPatient', () => {
     // TODO profile names should be code assisted
     const resource = b.patient('SzPatient', {
@@ -203,6 +215,10 @@ describe('SzPatient', () => {
         },
       ],
     });
+
+    // skip narrative generation
+    delete resource.text;
+
     // console.log(JSON.stringify(resource, null, 2));
     assert.deepEqual(resource, sampleBasic);
   });
@@ -254,6 +270,10 @@ describe('SzPatient', () => {
         },
       ],
     });
+
+    // skip narrative generation
+    delete resource.text;
+
     // console.log(JSON.stringify(resource, null, 2));
     assert.deepEqual(resource, sampleFull);
   });

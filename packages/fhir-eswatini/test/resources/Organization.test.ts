@@ -9,16 +9,17 @@ const sampleBasic = {
     ],
   },
   active: true,
-  type: {
-    coding: [
-      {
-        code: 'prov',
-        system: 'http://terminology.hl7.org/CodeSystem/organization-type',
-        display: 'Healthcare Provider',
-      },
-    ],
-    text: 'Healthcare Provider',
-  },
+  type: [
+    {
+      coding: [
+        {
+          code: 'prov',
+          system: 'http://terminology.hl7.org/CodeSystem/organization-type',
+          display: 'Healthcare Provider',
+        },
+      ],
+    },
+  ],
   name: 'Mbabane Public Health Unit',
   alias: ['Mbabane PHU'],
 };
@@ -62,7 +63,11 @@ describe('SzOrganization', () => {
         display: 'Healthcare Provider',
       },
     });
-    assert.deepEqual(resource.type, {
+
+    // skip narrative generation
+    delete resource.text;
+
+    assert.deepEqual(resource.type[0], {
       coding: [
         {
           code: 'prov',
@@ -70,7 +75,6 @@ describe('SzOrganization', () => {
           display: 'Healthcare Provider',
         },
       ],
-      text: 'Healthcare Provider',
     });
   });
 
@@ -92,6 +96,10 @@ describe('SzOrganization', () => {
         display: 'Healthcare Provider',
       },
     });
+
+    // skip narrative generation
+    delete resource.text;
+
     assert.deepEqual(resource, sampleBasic);
   });
 });

@@ -79,5 +79,11 @@ export default function(props: Partial<Organization_SzOrganization_Props>) {
         resource.endpoint = dt.reference(props.endpoint);
     }
 
+    resource.text = {
+      status: 'generated',
+      div: `<div xmlns=\"http://www.w3.org/1999/xhtml\">
+      <h2>${resource.resourceType}: ${resource.id || '(anon)'}</h2>
+</div>`,
+    };
     return resource;
 }
