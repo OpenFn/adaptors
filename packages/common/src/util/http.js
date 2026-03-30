@@ -353,43 +353,27 @@ export async function request(method, fullUrlOrPath, options = {}) {
 /**
  * Encodes a plain object into a `FormData` instance.
  *
- * Two modes are supported via the `mode` parameter:
- * - `json` (default) — primitives as strings, objects/arrays as JSON strings, Blob/File as-is
- * - `raw` — values appended as-is, caller is responsible for types
- *
- * Null and undefined values are skipped.
+ * - Primitives are converted to strings
+ * - Objects and arrays are JSON stringified
+ * - `Blob` and `File` values are appended as-is
+ * - Null and undefined values are skipped
  *
  * @param {Object} data - The object to encode
- * @param {'json' | 'raw'} [mode='json'] - Encoding mode
  * @returns {FormData}
  */
-export function encodeFormBody(data, mode = 'json') {
+export function encodeFormBody(data) {
   const form = new FormData();
 
   for (const [key, value] of Object.entries(data)) {
     if (value === null || value === undefined) continue;
 
-    switch (mode) {
-      case 'json': {
-        if (value instanceof Blob || value instanceof File) {
-          form.append(key, value);
-          break;
-        }
-        form.append(
-          key,
-          typeof value === 'object' ? JSON.stringify(value) : String(value),
-        );
-        break;
-      }
-
-      case 'raw': {
-        // append as-is — caller is responsible for value types
-        form.append(key, value);
-        break;
-      }
-
-      default:
-        throw new Error(`encodeFormBody: unknown mode "${mode}"`);
+    if (value instanceof Blob || value instanceof File) {
+      form.append(key, value);
+    } else {
+      form.append(
+        key,
+        typeof value === 'object' ? JSON.stringify(value) : String(value),
+      );
     }
   }
 

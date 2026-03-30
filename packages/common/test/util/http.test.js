@@ -1347,67 +1347,44 @@ describe('redirect handling', () => {
 });
 
 describe('encodeFormBody', () => {
-  describe('json mode (default)', () => {
-    it('encodes a string value', () => {
-      const form = encodeFormBody({ name: 'alice' });
-      expect(form.get('name')).to.equal('alice');
-    });
-
-    it('encodes a number value as a string', () => {
-      const form = encodeFormBody({ age: 30 });
-      expect(form.get('age')).to.equal('30');
-    });
-
-    it('encodes a boolean value as a string', () => {
-      const form = encodeFormBody({ active: true });
-      expect(form.get('active')).to.equal('true');
-    });
-
-    it('encodes an object value as a JSON string', () => {
-      const form = encodeFormBody({ address: { city: 'Nairobi' } });
-      expect(form.get('address')).to.equal('{"city":"Nairobi"}');
-    });
-
-    it('encodes an array value as a JSON string', () => {
-      const form = encodeFormBody({ tags: ['a', 'b'] });
-      expect(form.get('tags')).to.equal('["a","b"]');
-    });
-
-    it('skips null values', () => {
-      const form = encodeFormBody({ x: null });
-      expect(form.has('x')).to.be.false;
-    });
-
-    it('skips undefined values', () => {
-      const form = encodeFormBody({ x: undefined });
-      expect(form.has('x')).to.be.false;
-    });
-
-    it('appends a Blob value directly without stringification', () => {
-      const blob = new Blob(['data'], { type: 'text/plain' });
-      const form = encodeFormBody({ file: blob });
-      expect(form.get('file')).to.be.instanceof(Blob);
-    });
+  it('encodes a string value', () => {
+    const form = encodeFormBody({ name: 'alice' });
+    expect(form.get('name')).to.equal('alice');
   });
 
-  describe('raw mode', () => {
-    it('appends a string value as-is', () => {
-      const form = encodeFormBody({ key: 'val' }, 'raw');
-      expect(form.get('key')).to.equal('val');
-    });
+  it('encodes a number value as a string', () => {
+    const form = encodeFormBody({ age: 30 });
+    expect(form.get('age')).to.equal('30');
   });
 
-  describe('unknown mode', () => {
-    it('throws for an unrecognised mode', () => {
-      expect(() => encodeFormBody({ x: 1 }, 'xml')).to.throw(
-        'encodeFormBody: unknown mode "xml"'
-      );
-    });
+  it('encodes a boolean value as a string', () => {
+    const form = encodeFormBody({ active: true });
+    expect(form.get('active')).to.equal('true');
+  });
 
-    it('throws for blob mode (no longer supported)', () => {
-      expect(() => encodeFormBody({ x: 1 }, 'blob')).to.throw(
-        'encodeFormBody: unknown mode "blob"'
-      );
-    });
+  it('encodes an object value as a JSON string', () => {
+    const form = encodeFormBody({ address: { city: 'Nairobi' } });
+    expect(form.get('address')).to.equal('{"city":"Nairobi"}');
+  });
+
+  it('encodes an array value as a JSON string', () => {
+    const form = encodeFormBody({ tags: ['a', 'b'] });
+    expect(form.get('tags')).to.equal('["a","b"]');
+  });
+
+  it('skips null values', () => {
+    const form = encodeFormBody({ x: null });
+    expect(form.has('x')).to.be.false;
+  });
+
+  it('skips undefined values', () => {
+    const form = encodeFormBody({ x: undefined });
+    expect(form.has('x')).to.be.false;
+  });
+
+  it('appends a Blob value directly without stringification', () => {
+    const blob = new Blob(['data'], { type: 'text/plain' });
+    const form = encodeFormBody({ file: blob });
+    expect(form.get('file')).to.be.instanceof(Blob);
   });
 });

@@ -3,5 +3,6 @@
 ---
 
 - Add `encodeFormBody` utility for encoding plain objects into `FormData`.
-  Supports `json` mode (default — primitives as strings, objects/arrays as JSON)
-  and `raw` mode (values appended as-is).
+  Primitives are converted to strings, objects and arrays are JSON stringified,
+  `Blob` and `File` values are appended as-is, and null/undefined values are
+  skipped.
