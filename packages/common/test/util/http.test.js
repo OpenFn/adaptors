@@ -1397,35 +1397,16 @@ describe('encodeFormBody', () => {
     });
   });
 
-  describe('blob mode', () => {
-    it('appends a valid BlobEntry as a Blob', () => {
-      const entry = {
-        blob: Buffer.from('hello'),
-        type: 'image/jpeg',
-        filename: 'photo.jpg',
-      };
-      const form = encodeFormBody({ avatar: entry }, 'blob');
-      expect(form.get('avatar')).to.be.instanceof(Blob);
-    });
-
-    it('throws when a value is missing the blob property', () => {
-      const entry = { type: 'image/jpeg', filename: 'x.jpg' };
-      expect(() => encodeFormBody({ avatar: entry }, 'blob')).to.throw(
-        'encodeFormBody: expected BlobEntry for key "avatar" in blob mode'
-      );
-    });
-
-    it('throws when a value is a plain string instead of a BlobEntry', () => {
-      expect(() => encodeFormBody({ avatar: 'notablobentry' }, 'blob')).to.throw(
-        'encodeFormBody: expected BlobEntry for key "avatar" in blob mode'
-      );
-    });
-  });
-
   describe('unknown mode', () => {
     it('throws for an unrecognised mode', () => {
       expect(() => encodeFormBody({ x: 1 }, 'xml')).to.throw(
         'encodeFormBody: unknown mode "xml"'
+      );
+    });
+
+    it('throws for blob mode (no longer supported)', () => {
+      expect(() => encodeFormBody({ x: 1 }, 'blob')).to.throw(
+        'encodeFormBody: unknown mode "blob"'
       );
     });
   });
