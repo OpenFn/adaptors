@@ -58,15 +58,9 @@ export const request = async (state, method, path, options) => {
   };
 
   const opts = {
-    // Force the response to be parsed as JSON
     parseAs: 'json',
-
-    // Set the baseUrl from the config object
     baseUrl,
-
     ...options,
-
-    // You can add extra headers here if you want to
     headers,
   };
 
