@@ -16,13 +16,13 @@
       "minLength": 1,
       "examples": ["https://siuben-endpoint.com"]
     },
-    "Username": {
+    "username": {
       "title": "Username",
       "type": "string",
       "description": "Username",
       "examples": ["test"]
     },
-    "Password": {
+    "password": {
       "title": "Password",
       "type": "string",
       "description": "Password",
@@ -32,5 +32,5 @@
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["Password", "Username", "baseUrl"]
+  "required": ["password", "username", "baseUrl"]
 }

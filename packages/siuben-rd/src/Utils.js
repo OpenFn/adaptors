@@ -20,10 +20,10 @@ export const prepareNextState = (state, response) => {
 
 export async function authorize(state) {
   const { configuration } = state;
-  const { baseUrl, Username, Password } = configuration;
+  const { baseUrl, username, password } = configuration;
 
   const options = {
-    body: JSON.stringify({ Username, Password }),
+    body: JSON.stringify({ username, password }),
     headers: {
       'Content-Type': 'application/json',
     },

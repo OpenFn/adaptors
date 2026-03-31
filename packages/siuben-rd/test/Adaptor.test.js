@@ -9,8 +9,8 @@ const testServer = enableMockClient(baseUrl);
 
 const configuration = {
   baseUrl,
-  Username: 'admin',
-  Password: 'secret',
+  username: 'admin',
+  password: 'secret',
 };
 
 // Helper to mock the /authenticate endpoint that runs via execute()
