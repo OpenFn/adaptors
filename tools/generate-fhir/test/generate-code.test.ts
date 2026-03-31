@@ -85,160 +85,126 @@ const generateBuilder = (resourceType, props) => {
   return profiles[resourceType];
 };
 
-test.skip('should generate a single builder and profile', t => {
-  const schema = {
-    Patient: [
-      {
-        id: 'patient',
-        type: 'Patient',
-        url: 'https://ihir.openfn.org/patient',
-        props: {
-          id: {
-            type: 'string',
-            isArray: false,
-            desc: 'Logical id of this artifact',
-            isComposite: false,
-          },
-          name: {
-            type: 'HumanName',
-            isArray: true,
-            desc: 'A name associated with the patient',
-          },
-        },
-      },
-    ],
-  };
-
-  const result = generateCode(schema, {});
-
-  const { builders, profiles } = result;
-  // find the import
-  t.regex(builders, /import Patient_patient from "\.\/profiles\/patient";/i);
-  // find the named export
-  t.regex(builders, /export function patient\(type, props\)/);
-  // trap the key mapping line
-  t.regex(builders, /"patient": Patient_patient/);
-
-  // Find the default export
-  t.regex(profiles.patient, /export default function\(props\)/i);
-  // Track the datatype import
-  t.regex(profiles.patient, /import \* as util from ".\/utils\.js";/i);
-  // Track the right resource type is being created
-  t.regex(profiles.patient, /resourceType: "Patient"/i);
-});
-
-test.skip('should generate a simpler signature', t => {
-  // eval the builder (will this work??)
-});
-
 test('sets resourceType', t => {
-  const profiles = generateBuilder('Patient', {});
-  const builder = compileBuilder(profiles);
+  const profile = {};
+  const schema = generateBuilder('Patient', profile);
+  const builder = compileBuilder(schema);
   const result = builder({});
   t.is(result.resourceType, 'Patient');
 });
 
-test('spreads simple props through', t => {
-  const code = generateBuilder('Patient', {
-    birthDate: { type: ['date'], isArray: false, desc: 'date of birth' },
-  });
-  const builder = compileBuilder(code);
+test('spreads unknown props through', t => {
+  const profile = {};
+  const schema = generateBuilder('Patient', profile);
+  const builder = compileBuilder(schema);
   const result = builder({ birthDate: '1990-01-01', customField: 42 });
   t.is(result.birthDate, '1990-01-01');
   t.is(result.customField, 42);
 });
 
+test('isArray wraps a single value into an array', t => {
+  const profile = {
+    x: { type: ['Reference'], isArray: true },
+  };
+  const schema = generateBuilder('Patient', profile);
+  const builder = compileBuilder(schema);
+  const result = builder({ x: 'Org/1' });
+  t.deepEqual(result.x, [{ reference: 'Org/1' }]);
+});
+
+test('isArray keeps an existing array as-is', t => {
+  const profile = {
+    x: { type: ['Reference'], isArray: true },
+  };
+  const schema = generateBuilder('Patient', profile);
+  const builder = compileBuilder(schema);
+  const result = builder({ x: ['Org/1', 'Org/2'] });
+  t.true(Array.isArray(result.x));
+  t.is(result.x.length, 2);
+});
+
 test('builds identifier', t => {
-  const code = generateBuilder('Patient', {
-    identifier: { type: ['Identifier'], isArray: true, desc: 'patient id' },
-  });
-  const builder = compileBuilder(code);
+  const profile = {
+    identifier: { type: ['Identifier'] },
+  };
+  const schema = generateBuilder('Patient', profile);
+  const builder = compileBuilder(schema);
+
+  const calls: any[] = [];
+  const orig = dt.identifier;
+  dt.identifier = (...args) => {
+    calls.push(args);
+    return 'MOCK';
+  };
+
   const result = builder({ identifier: 'MRN-123' });
-  t.true(Array.isArray(result.identifier));
-  t.is(result.identifier[0].value, 'MRN-123');
+  dt.identifier = orig;
+
+  t.is(calls.length, 1);
+  t.deepEqual(calls[0], ['MRN-123']);
+  t.is(result.identifier, 'MOCK');
 });
 
 test('builds single reference', t => {
-  const code = generateBuilder('Patient', {
-    managingOrganization: { type: ['Reference'], isArray: false, desc: 'org' },
-  });
-  const builder = compileBuilder(code);
-  const result = builder({ managingOrganization: 'Organization/1' });
-  t.deepEqual(result.managingOrganization, { reference: 'Organization/1' });
-});
-
-test('builds reference array', t => {
-  const code = generateBuilder('Patient', {
-    generalPractitioner: { type: ['Reference'], isArray: true, desc: 'gp' },
-  });
-  const builder = compileBuilder(code);
-  const result = builder({
-    generalPractitioner: ['Practitioner/1', 'Practitioner/2'],
-  });
-  t.true(Array.isArray(result.generalPractitioner));
-  t.is(result.generalPractitioner.length, 2);
-  t.is(result.generalPractitioner[0].reference, 'Practitioner/1');
+  const profile = {
+    x: { type: ['Reference'] },
+  };
+  const schema = generateBuilder('Patient', profile);
+  const builder = compileBuilder(schema);
+  const result = builder({ x: 'Organization/1' });
+  t.deepEqual(result.x, { reference: 'Organization/1' });
 });
 
 test('builds CodeableConcept', t => {
-  const code = generateBuilder('Patient', {
-    maritalStatus: {
+  const profile = {
+    x: {
       type: ['CodeableConcept'],
-      isArray: false,
-      desc: 'marital status',
       valueSet: 'http://hl7.org/fhir/ValueSet/marital-status',
     },
-  });
-  const builder = compileBuilder(code);
-  const result = builder({ maritalStatus: 'M' });
-  t.truthy(result.maritalStatus);
-  t.is(result.maritalStatus.coding[0].code, 'M');
+  };
+  const schema = generateBuilder('Patient', profile);
+  const builder = compileBuilder(schema);
+  const result = builder({ x: 'M' });
+  t.is(result.x.coding[0].code, 'M');
 });
 
 test('builds composite value[x]', t => {
-  const code = generateBuilder('Patient', {
-    deceased: {
-      type: ['boolean', 'dateTime'],
-      isArray: false,
-      desc: 'deceased',
-      isComposite: true,
-    },
-  });
-  const builder = compileBuilder(code);
+  const profile = {
+    deceased: { type: ['boolean', 'dateTime'], isComposite: true },
+  };
+  const schema = generateBuilder('Patient', profile);
+  const builder = compileBuilder(schema);
   const result = builder({ deceased: true });
   t.is(result.deceasedBoolean, true);
   t.is(result.deceased, undefined);
 });
 
 test('builds typeDef with nested extension', t => {
-  const code = generateBuilder('Patient', {
+  const profile = {
     contact: {
       type: ['BackboneElement'],
       isArray: true,
-      desc: 'contact party',
       typeDef: {
         customExt: {
           extension: { url: 'http://example.org/ext/custom' },
           type: 'string',
-          desc: 'custom ext',
         },
       },
     },
-  });
-  const builder = compileBuilder(code);
-  const result = builder({ contact: [{ name: 'Smith', customExt: 'hello' }] });
-  t.true(Array.isArray(result.contact));
+  };
+  const schema = generateBuilder('Patient', profile);
+  const builder = compileBuilder(schema);
+  const result = builder({ contact: [{ customExt: 'hello' }] });
   t.is(result.contact[0].extension[0].url, 'http://example.org/ext/custom');
   t.is(result.contact[0].extension[0].value, 'hello');
 });
 
 test('skips nil properties', t => {
-  const code = generateBuilder('Patient', {
-    identifier: { type: ['Identifier'], isArray: true, desc: 'id' },
-    managingOrganization: { type: ['Reference'], isArray: false, desc: 'org' },
-  });
-  const builder = compileBuilder(code);
+  const profile = {
+    x: { type: ['Reference'] },
+  };
+  const schema = generateBuilder('Patient', profile);
+  const builder = compileBuilder(schema);
   const result = builder({});
-  t.is(result.identifier, undefined);
-  t.is(result.managingOrganization, undefined);
+  t.is(result.x, undefined);
 });
