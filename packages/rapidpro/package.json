@@ -22,7 +22,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "undici": "^7.19.2"
+    "undici": "^6.24.0"
   },
   "devDependencies": {
     "chai": "^3.4.0",
