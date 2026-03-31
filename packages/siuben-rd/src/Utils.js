@@ -32,16 +32,9 @@ export async function authorize(state) {
     parseAs: 'json',
   };
   try {
-    const response = await commonRequest('POST', '/authenticate', options).then(
-      response => ({
-        ...state,
-        configuration: {
-          ...configuration,
-          access_token: response.body.Token,
-        },
-      }),
-    );
-    return response;
+    const response = await commonRequest('POST', '/authenticate', options);
+    state.configuration.access_token = response.body.Token;
+    return state;
   } catch (error) {
     console.error('Error authenticating SIUBEN');
     throw new Error(error);
