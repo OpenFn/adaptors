@@ -25,14 +25,7 @@ import generateCode from '../src/generate-code';
  */
 
 const dt = {
-  identifier: (id, system?) => {
-    const make = i => {
-      const o = typeof i === 'string' ? { value: i } : { ...i };
-      if (system) o.system = system;
-      return o;
-    };
-    return Array.isArray(id) ? id.map(make) : make(id);
-  },
+  identifier: v => ({ __id: v }),
   reference: ref => {
     const make = r => (typeof r === 'string' ? { reference: r } : r);
     return Array.isArray(ref) ? ref.map(make) : make(ref);
@@ -123,26 +116,14 @@ test('isArray keeps an existing array as-is', t => {
   t.is(result.x.length, 2);
 });
 
-test('builds identifier', t => {
+test('calls dt.identifier for Identifier type', t => {
   const profile = {
     identifier: { type: ['Identifier'] },
   };
   const schema = generateBuilder('Patient', profile);
   const builder = compileBuilder(schema);
-
-  const calls: any[] = [];
-  const orig = dt.identifier;
-  dt.identifier = (...args) => {
-    calls.push(args);
-    return 'MOCK';
-  };
-
   const result = builder({ identifier: 'MRN-123' });
-  dt.identifier = orig;
-
-  t.is(calls.length, 1);
-  t.deepEqual(calls[0], ['MRN-123']);
-  t.is(result.identifier, 'MOCK');
+  t.deepEqual(result.identifier, { __id: 'MRN-123' });
 });
 
 test('builds single reference', t => {
