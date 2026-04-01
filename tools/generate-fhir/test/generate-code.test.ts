@@ -3,49 +3,39 @@ import _ from 'lodash';
 import { transformSync } from 'esbuild';
 import generateCode from '../src/generate-code';
 
-/**
- * I'm thinking its about time to add unit tests here
- * but won't it be a bit of a nightmare?
- * We generate quite a lot of code per schema
- *
- * We can either:
- * 1) test whole generated code files
- * 2) test partial string matches within a code file
- * 3) test for particular AST structures within the generated code
- *
- * They all seem kind of awful. And is this going to slow me down, like a lot?
- * Aren't we better off using unit tests within each adaptor to test the resulting logic
- * Rather than testing the builders themselves?
- *
- * Well, I would like some unit tests here, but I'd also like them to be lightweight
- *
- * 4) generate code, eval it, and then actually run it
- *
- * That would test the result of the code, rather than the content of it
- */
+const mock = (impl: Function = (v: any) => v) => {
+  const fn: any = (...args: any[]) => {
+    fn.calls++;
+    return impl(...args);
+  };
+  fn.calls = 0;
+  fn.reset = () => { fn.calls = 0; };
+  return fn;
+};
 
-const dt = {
-  identifier: v => ({ __id: v }),
-  reference: ref => {
-    const make = r => (typeof r === 'string' ? { reference: r } : r);
-    return Array.isArray(ref) ? ref.map(make) : make(ref);
-  },
-  lookupValue: (_url, code) => code,
-  ensureConceptText: () => {},
-  composite: (obj, key, value) => {
-    const suffix = { boolean: 'Boolean', string: 'String', number: 'Integer' };
+const dt: any = {
+  identifier: mock(),
+  reference: mock(),
+  concept: mock(),
+  coding: mock(),
+  lookupValue: mock((_url: any, code: any) => code),
+  mapSystems: mock(),
+  ensureConceptText: mock(() => {}),
+  composite: mock((obj: any, key: any, value: any) => {
+    const suffix: any = { boolean: 'Boolean', string: 'String', number: 'Integer' };
     obj[key + (suffix[typeof value] || 'String')] = value;
-  },
-  addExtension: (resource, url, value) => {
+  }),
+  addExtension: mock((resource: any, url: any, value: any) => {
     resource.extension ??= [];
     resource.extension.push({ url, value });
-  },
-  concept: codings => {
-    const arr = Array.isArray(codings) ? codings : [codings];
-    return { coding: arr.map(c => (typeof c === 'string' ? { code: c } : c)) };
-  },
-  coding: src => (typeof src === 'string' ? { code: src } : src),
+  }),
 };
+
+test.afterEach(() => {
+  Object.values(dt).forEach((fn: any) => fn.reset?.());
+});
+
+const run = test.serial;
 
 const compileBuilder = (code: string) => {
   const { code: cjs } = transformSync(code, { loader: 'ts', format: 'cjs' });
@@ -63,7 +53,7 @@ const compileBuilder = (code: string) => {
   return mod.exports.default;
 };
 
-const generateBuilder = (resourceType, props) => {
+const generateBuilder = (resourceType: any, props: any) => {
   const schema = {
     [resourceType]: [
       {
@@ -74,11 +64,11 @@ const generateBuilder = (resourceType, props) => {
       },
     ],
   };
-  const { profiles } = generateCode(schema, {});
+  const { profiles } = generateCode(schema as any, {});
   return profiles[resourceType];
 };
 
-test('sets resourceType', t => {
+run('sets resourceType', t => {
   const profile = {};
   const schema = generateBuilder('Patient', profile);
   const builder = compileBuilder(schema);
@@ -86,7 +76,7 @@ test('sets resourceType', t => {
   t.is(result.resourceType, 'Patient');
 });
 
-test('spreads unknown props through', t => {
+run('spreads unknown props through', t => {
   const profile = {};
   const schema = generateBuilder('Patient', profile);
   const builder = compileBuilder(schema);
@@ -95,17 +85,18 @@ test('spreads unknown props through', t => {
   t.is(result.customField, 42);
 });
 
-test('isArray wraps a single value into an array', t => {
+run('isArray wraps a single value into an array', t => {
   const profile = {
     x: { type: ['Reference'], isArray: true },
   };
   const schema = generateBuilder('Patient', profile);
   const builder = compileBuilder(schema);
   const result = builder({ x: 'Org/1' });
-  t.deepEqual(result.x, [{ reference: 'Org/1' }]);
+  t.deepEqual(result.x, ['Org/1']);
+  t.is(dt.reference.calls, 1);
 });
 
-test('isArray keeps an existing array as-is', t => {
+run('isArray keeps an existing array as-is', t => {
   const profile = {
     x: { type: ['Reference'], isArray: true },
   };
@@ -114,29 +105,32 @@ test('isArray keeps an existing array as-is', t => {
   const result = builder({ x: ['Org/1', 'Org/2'] });
   t.true(Array.isArray(result.x));
   t.is(result.x.length, 2);
+  t.is(dt.reference.calls, 1);
 });
 
-test('calls dt.identifier for Identifier type', t => {
+run('calls dt.identifier for Identifier type', t => {
   const profile = {
     identifier: { type: ['Identifier'] },
   };
   const schema = generateBuilder('Patient', profile);
   const builder = compileBuilder(schema);
   const result = builder({ identifier: 'MRN-123' });
-  t.deepEqual(result.identifier, { __id: 'MRN-123' });
+  t.is(result.identifier, 'MRN-123');
+  t.is(dt.identifier.calls, 1);
 });
 
-test('builds single reference', t => {
+run('builds single reference', t => {
   const profile = {
     x: { type: ['Reference'] },
   };
   const schema = generateBuilder('Patient', profile);
   const builder = compileBuilder(schema);
   const result = builder({ x: 'Organization/1' });
-  t.deepEqual(result.x, { reference: 'Organization/1' });
+  t.is(result.x, 'Organization/1');
+  t.is(dt.reference.calls, 1);
 });
 
-test('builds CodeableConcept', t => {
+run('builds CodeableConcept', t => {
   const profile = {
     x: {
       type: ['CodeableConcept'],
@@ -146,21 +140,23 @@ test('builds CodeableConcept', t => {
   const schema = generateBuilder('Patient', profile);
   const builder = compileBuilder(schema);
   const result = builder({ x: 'M' });
-  t.is(result.x.coding[0].code, 'M');
+  t.is(result.x, 'M');
+  t.is(dt.concept.calls, 1);
 });
 
-test('builds composite value[x]', t => {
+run('builds composite value[x]', t => {
   const profile = {
-    deceased: { type: ['boolean', 'dateTime'], isComposite: true },
+    deceased: { type: ['boolean'], isComposite: true },
   };
   const schema = generateBuilder('Patient', profile);
   const builder = compileBuilder(schema);
   const result = builder({ deceased: true });
   t.is(result.deceasedBoolean, true);
   t.is(result.deceased, undefined);
+  t.is(dt.composite.calls, 1);
 });
 
-test('builds typeDef with nested extension', t => {
+run('builds typeDef with nested extension', t => {
   const profile = {
     contact: {
       type: ['BackboneElement'],
@@ -178,9 +174,10 @@ test('builds typeDef with nested extension', t => {
   const result = builder({ contact: [{ customExt: 'hello' }] });
   t.is(result.contact[0].extension[0].url, 'http://example.org/ext/custom');
   t.is(result.contact[0].extension[0].value, 'hello');
+  t.is(dt.addExtension.calls, 1);
 });
 
-test('skips nil properties', t => {
+run('skips nil properties', t => {
   const profile = {
     x: { type: ['Reference'] },
   };
