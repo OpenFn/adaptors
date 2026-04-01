@@ -25,6 +25,11 @@
     "test:git": "pnpm exec scripts/status-check.sh",
     "version": "pnpm changeset version && pnpm run changelog"
   },
+  "pnpm": {
+    "overrides": {
+      "axios": "1.13.5"
+    }
+  },
   "author": "Open Function Group",
   "license": "ISC",
   "devDependencies": {
