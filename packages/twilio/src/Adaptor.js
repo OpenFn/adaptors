@@ -51,7 +51,6 @@ export function sendSMS(params) {
     return client.messages
       .create({ body, from, to })
       .then(response => {
-        console.log(response);
         if (response.errorCode) {
           throw response.errorCode;
         }
