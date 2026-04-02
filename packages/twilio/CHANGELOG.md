@@ -1,5 +1,11 @@
 # @openfn/language-twilio
 
+## 1.0.11 - 02 April 2026
+
+### Patch Changes
+
+- f29c8d8: Remove double promise to sendsms function
+
 ## 1.0.10 - 30 March 2026
 
 ### Patch Changes
