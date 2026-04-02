@@ -1,5 +1,11 @@
 # @openfn/language-opencrvs
 
+## 1.0.25 - 02 April 2026
+
+### Patch Changes
+
+- Fix OpenCRVS logos
+
 ## 1.0.24 - 30 March 2026
 
 ### Patch Changes
