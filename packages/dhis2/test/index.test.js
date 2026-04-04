@@ -61,7 +61,196 @@ describe('execute', () => {
   });
 });
 
-describe(' get', () => {
+describe('getWithPagination', () => {
+  const state = {
+    configuration,
+  };
+
+  it('should auto-paginate when pager has nextPage', async () => {
+
+    const data = Array.from({ length: 20000 }, (_, i) => ({ id: `prog${i + 1}` }));
+    testServer
+      .intercept({
+        path: getPath('programs'),
+        method: 'GET',
+        query: { pageSize: 10000, page: 1 },
+      })
+      .reply(200, {
+        pager: { page: 1, pageCount: 2, nextPage: `${hostUrl}/api/programs?page=2` },
+        programs: data.slice(0, 10000),
+      });
+
+    testServer
+      .intercept({
+        path: getPath('programs'),
+        method: 'GET',
+        query: { pageSize: 10000, page: 2 },
+      })
+      .reply(200, {
+        pager: { page: 2, pageCount: 2 },
+        programs: data.slice(10000, 20000),
+      });
+
+    const finalState = await execute(
+      get('programs'),
+    )(state);
+
+    expect(finalState.data).to.eql({
+      programs: data,
+    });
+  });
+
+  it('should stop after one page when limit is satisfied', async () => {
+    testServer
+      .intercept({
+        path: getPath('programs'),
+        method: 'GET',
+        query: { pageSize: 3, page: 1 },
+      })
+      .reply(200, {
+        pager: { page: 1, pageCount: 3, nextPage: `${hostUrl}/api/programs?page=2` },
+        programs: [{ id: 'prog1' }, { id: 'prog2' }, { id: 'prog3' }],
+      });
+
+    const finalState = await execute(
+      get('programs', { limit: 3 }),
+    )(state);
+
+    expect(finalState.data).to.eql({
+      programs: [{ id: 'prog1' }, { id: 'prog2' }, { id: 'prog3' }],
+    });
+  });
+
+  it('should not paginate when there is no pager.nextPage', async () => {
+    testServer
+      .intercept({
+        path: getPath('programs'),
+        method: 'GET',
+        query: { pageSize: 10000, page: 1 },
+      })
+      .reply(200, {
+        pager: { page: 1, pageCount: 1 },
+        programs: [{ id: 'prog1' }],
+      });
+
+    const finalState = await execute(
+      get('programs'),
+    )(state);
+
+    expect(finalState.data).to.eql({
+      programs: [{ id: 'prog1' }],
+    });
+  });
+
+  it('should use default pageSize of 10000 when no limit is given', async () => {
+    testServer
+      .intercept({
+        path: getPath('dataElements'),
+        method: 'GET',
+        query: { pageSize: 10000, page: 1 },
+      })
+      .reply(200, {
+        pager: { page: 1, pageCount: 1 },
+        dataElements: [{ id: 'de1' }],
+      });
+
+    const finalState = await execute(
+      get('dataElements'),
+    )(state);
+
+    expect(finalState.data).to.eql({
+      dataElements: [{ id: 'de1' }],
+    });
+  });
+
+  it('should start from offset page when offset is provided', async () => {
+    testServer
+      .intercept({
+        path: getPath('programs'),
+        method: 'GET',
+        query: { pageSize: 10000, page: 3 },
+      })
+      .reply(200, {
+        pager: { page: 3, pageCount: 3 },
+        programs: [{ id: 'prog5' }, { id: 'prog6' }],
+      });
+
+    const finalState = await execute(
+      get('programs', { offset: 3 }),
+    )(state);
+
+    expect(finalState.data).to.eql({
+      programs: [{ id: 'prog5' }, { id: 'prog6' }],
+    });
+  });
+
+  it('should return body as-is for single resource requests if no array key is provided', async () => {
+    testServer
+      .intercept({
+        path: getPath('programs/uid123'),
+        method: 'GET',
+        query: { pageSize: 10000, page: 1 },
+      })
+      .reply(200, {
+        id: 'uid123',
+        name: 'Child Programme',
+      });
+
+    const finalState = await execute(
+      get('programs/uid123'),
+    )(state);
+
+    expect(finalState.data).to.eql({
+      id: 'uid123',
+      name: 'Child Programme',
+    });
+  });
+
+  it('should strip pager metadata from the response', async () => {
+    testServer
+      .intercept({
+        path: getPath('programs'),
+        method: 'GET',
+        query: { pageSize: 10000, page: 1 },
+      })
+      .reply(200, {
+        pager: { page: 1, pageCount: 1, total: 2 },
+        programs: [{ id: 'prog1' }, { id: 'prog2' }],
+      });
+
+    const finalState = await execute(
+      get('programs'),
+    )(state);
+
+    expect(finalState.data).to.eql({
+      programs: [{ id: 'prog1' }, { id: 'prog2' }],
+    });
+    expect(finalState.data.pager).to.be.undefined;
+  });
+
+  it('should respect user-provided pageSize in query over limit', async () => {
+    testServer
+      .intercept({
+        path: getPath('programs'),
+        method: 'GET',
+        query: { pageSize: 5, page: 1 },
+      })
+      .reply(200, {
+        pager: { page: 1, pageCount: 1 },
+        programs: [{ id: 'prog1' }, { id: 'prog2' }],
+      });
+
+    const finalState = await execute(
+      get('programs', { pageSize: 5, limit: 100 }),
+    )(state);
+
+    expect(finalState.data).to.eql({
+      programs: [{ id: 'prog1' }, { id: 'prog2' }],
+    });
+  });
+})
+
+describe('get', () => {
   const state = {
     configuration,
     data: {},
@@ -73,6 +262,8 @@ describe(' get', () => {
       period: 201401,
       orgUnit: 'DiszpKrYNg8',
       filter: ['this:Eq:that', 'then:gt:2'],
+      pageSize: 10000,
+      page: 1,
     };
     testServer
       .intercept({
@@ -92,7 +283,7 @@ describe(' get', () => {
       get('dataValueSets', {
         ...query,
         fields: '*',
-      })
+      }),
     )(state);
 
     expect(finalState.data).to.eql({
@@ -106,6 +297,8 @@ describe(' get', () => {
       dataSet: 'pBOMPrpg1QX',
       period: 201401,
       orgUnit: ['DiszpKrYNg8', 'otherThing'],
+      pageSize: 10000,
+      page: 1,
     };
 
     testServer
@@ -126,7 +319,7 @@ describe(' get', () => {
       get('dataValueSets', {
         ...query,
         fields: '*',
-      })
+      }),
     )(state);
 
     expect(finalState.data).to.eql({
@@ -140,6 +333,10 @@ describe(' get', () => {
       .intercept({
         path: getPath('dataValueSets'),
         method: 'GET',
+        query: {
+          pageSize: 10000,
+          page: 1,
+        },
       })
       .reply(200, {
         httpStatus: 'OK',
@@ -209,7 +406,7 @@ describe('create', () => {
       });
 
     const finalState = await execute(create('events', state => state.data))(
-      state
+      state,
     );
 
     expect(finalState.data).to.eql({
@@ -231,7 +428,10 @@ describe('create', () => {
       });
 
     const finalState = await execute(
-      create('events', { program: 'abc', orgUnit: state => state.data.orgUnit })
+      create('events', {
+        program: 'abc',
+        orgUnit: state => state.data.orgUnit,
+      }),
     )(state);
 
     expect(finalState.data).to.eql({
@@ -267,7 +467,7 @@ describe('update', () => {
       update('dataValueSets', 'AsQj6cDsUq4', state => ({
         ...state.data,
         date: state.data.currentDate,
-      }))
+      })),
     )(state);
 
     expect(finalState.data).to.eql({
@@ -292,7 +492,7 @@ describe('update', () => {
         program: dataValue('program'),
         orgUnit: 'hardcoded',
         date: resp => resp.data.currentDate,
-      })
+      }),
     )(state);
 
     expect(finalState.data).to.eql({
@@ -339,8 +539,8 @@ describe('upsert', () => {
         {
           orgUnit: 'DiszpKrYNg8',
           trackedEntityType: 'nEenWmSyUEp',
-        }
-      )
+        },
+      ),
     )(state);
 
     expect(finalState.references).to.eql([
@@ -385,8 +585,8 @@ describe('upsert', () => {
         {
           orgUnit: 'DiszpKrYNg8',
           trackedEntityType: 'nEenWmSyUEp',
-        }
-      )
+        },
+      ),
     )(state);
 
     expect(finalState.references).to.eql([
@@ -439,10 +639,10 @@ describe('upsert', () => {
             {
               orgUnit: 'TSyzvBiovKh',
               trackedEntityType: 'nEenWmSyUEp',
-            }
-          )
+            },
+          ),
         )(state),
-      '409: Upsert failed: Multiple records found for a non-unique attribute.'
+      '409: Upsert failed: Multiple records found for a non-unique attribute.',
     );
   });
 
@@ -470,7 +670,7 @@ describe('upsert', () => {
             },
           ],
         },
-      ])
+      ]),
     )(state);
 
     expect(finalState.data).to.eql({
@@ -499,7 +699,7 @@ describe('URL builders', () => {
       const finalURL = util.prefixVersionToPath(
         fixture.configuration,
         fixture.options,
-        fixture.resourceType
+        fixture.resourceType,
       );
       const expectedURL = 'https://play.dhis2.org/2.36.4/api/dataValueSets';
 
@@ -513,7 +713,7 @@ describe('URL builders', () => {
       const finalURL = util.prefixVersionToPath(
         configuration,
         fixture.options,
-        fixture.resourceType
+        fixture.resourceType,
       );
       const expectedURL = `https://play.dhis2.org/2.36.4/api/${configuration.apiVersion}/dataValueSets`;
 
@@ -527,7 +727,7 @@ describe('URL builders', () => {
       const finalURL = util.prefixVersionToPath(
         fixture.configuration,
         options,
-        fixture.resourceType
+        fixture.resourceType,
       );
       const expectedURL = 'https://play.dhis2.org/2.36.4/api/33/dataValueSets';
 
@@ -545,7 +745,7 @@ describe('URL builders', () => {
       const finalURL = util.prefixVersionToPath(
         fixture.configuration,
         options,
-        fixture.resourceType
+        fixture.resourceType,
       );
 
       const expectedURL = 'https://play.dhis2.org/2.36.4/api/33/dataValueSets';
