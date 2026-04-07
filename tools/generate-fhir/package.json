@@ -18,6 +18,7 @@
     "@types/node": "18.17.5",
     "ast-types": "^0.14.2",
     "ava": "^5.1.1",
+    "esbuild": "^0.27.4",
     "gunzip-maybe": "^1.4.2",
     "inquirer": "^9.2.15",
     "lodash": "^4.17.23",
