@@ -13,19 +13,16 @@ const configuration = {
   password: 'secret',
 };
 
-const mockAuth = () => {
-  testServer
-    .intercept({
-      path: '/authentication/request',
-      method: 'POST',
-    })
-    .reply(200, { token: 'fake-token' });
-};
+testServer
+  .intercept({
+    path: '/authentication/request',
+    method: 'POST',
+  })
+  .reply(200, { token: 'fake-token' })
+  .persist();
 
 describe('http.get', () => {
   it('should make an authenticated GET request', async () => {
-    mockAuth();
-
     testServer
       .intercept({
         path: '/consulta',
@@ -44,8 +41,6 @@ describe('http.get', () => {
   });
 
   it('should make a GET request with query parameters', async () => {
-    mockAuth();
-
     testServer
       .intercept({
         path: '/consulta',
@@ -76,8 +71,6 @@ describe('http.get', () => {
 
 describe('http.post', () => {
   it('should make an authenticated POST request with a body', async () => {
-    mockAuth();
-
     testServer
       .intercept({
         path: '/registros',
@@ -106,8 +99,6 @@ describe('http.post', () => {
 
 describe('http.request', () => {
   it('should make a GET request', async () => {
-    mockAuth();
-
     testServer
       .intercept({
         path: '/consulta/123',
@@ -125,8 +116,6 @@ describe('http.request', () => {
   });
 
   it('should throw an error if the server returns 403', async () => {
-    mockAuth();
-
     testServer
       .intercept({
         path: '/restricted',
