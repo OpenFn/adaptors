@@ -1,5 +1,13 @@
 # @openfn/language-postgresql
 
+## 8.0.4 - 07 April 2026
+
+### Patch Changes
+
+- Updated dependencies \[add9748]
+- Updated dependencies \[a9b7597]
+  - @openfn/language-common@3.3.1
+
 ## 8.0.3 - 30 March 2026
 
 ### Patch Changes

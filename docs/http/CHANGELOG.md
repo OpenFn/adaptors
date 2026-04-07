@@ -1,5 +1,13 @@
 # @openfn/language-http
 
+## 7.2.10 - 07 April 2026
+
+### Patch Changes
+
+- Updated dependencies \[add9748]
+- Updated dependencies \[a9b7597]
+  - @openfn/language-common@3.3.1
+
 ## 7.2.9 - 30 March 2026
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 v0.1.6
 
+## 0.6.14 - 07 April 2026
+
+### Patch Changes
+
+- Updated dependencies \[add9748]
+- Updated dependencies \[a9b7597]
+  - @openfn/language-common@3.3.1
+
 ## 0.6.13 - 30 March 2026
 
 ### Patch Changes

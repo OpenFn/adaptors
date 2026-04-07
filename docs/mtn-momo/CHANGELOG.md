@@ -1,5 +1,14 @@
 # @openfn/language-mtn-momo
 
+## 1.1.12 - 07 April 2026
+
+### Patch Changes
+
+- add9748: Update dependencies (undici)
+- Updated dependencies \[add9748]
+- Updated dependencies \[a9b7597]
+  - @openfn/language-common@3.3.1
+
 ## 1.1.11 - 30 March 2026
 
 ### Patch Changes
