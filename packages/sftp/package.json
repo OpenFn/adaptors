@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-sftp",
   "label": "SFTP",
-  "version": "3.0.10",
+  "version": "3.0.11",
   "description": "OpenFn adaptor for SFTP",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -35,7 +35,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "lodash": "^4.17.23",
+    "lodash": "^4.18.1",
     "ssh2-sftp-client": "9.0.4"
   },
   "devDependencies": {

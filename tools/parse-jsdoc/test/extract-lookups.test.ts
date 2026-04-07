@@ -1,10 +1,10 @@
 import test from 'ava';
 import path from 'node:path';
-import extractLookups from '../src/extract-lookups';
+import extractLookups from '../src/extract-magic';
 
 test('should extract lookups for function parameters', async t => {
   const result = await extractLookups(
-    path.resolve('test/fixtures/operation-const.js')
+    path.resolve('test/fixtures/operation-const.js'),
   );
 
   t.falsy(result.operation.x);

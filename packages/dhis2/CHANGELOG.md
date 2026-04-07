@@ -1,5 +1,14 @@
 # @openfn/language-dhis2
 
+## 8.0.12 - 07 April 2026
+
+### Patch Changes
+
+- a9b7597: Update dependencies (lodash)
+- Updated dependencies \[add9748]
+- Updated dependencies \[a9b7597]
+  - @openfn/language-common@3.3.1
+
 ## 8.0.11 - 30 March 2026
 
 ### Patch Changes

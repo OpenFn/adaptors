@@ -1,5 +1,12 @@
 ## 3.0.1 - 11 July 2025
 
+## 3.3.1 - 07 April 2026
+
+### Patch Changes
+
+- add9748: Update dependencies (undici)
+- a9b7597: Update dependencies (lodash)
+
 ## 3.3.0 - 30 March 2026
 
 ### Minor Changes
