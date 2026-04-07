@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-siuben-rd",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "OpenFn siuben-rd adaptor",
   "type": "module",
   "exports": {

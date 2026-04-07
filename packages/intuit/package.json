@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-intuit",
   "label": "Intuit",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "OpenFn adaptor for Intuit (QuickBooks)",
   "type": "module",
   "exports": {

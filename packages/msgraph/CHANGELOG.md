@@ -1,5 +1,14 @@
 # @openfn/language-msgraph
 
+## 0.8.13 - 07 April 2026
+
+### Patch Changes
+
+- add9748: Update dependencies (undici)
+- Updated dependencies \[add9748]
+- Updated dependencies \[a9b7597]
+  - @openfn/language-common@3.3.1
+
 ## 0.8.12 - 30 March 2026
 
 ### Patch Changes
