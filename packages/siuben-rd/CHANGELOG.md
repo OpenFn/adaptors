@@ -4,6 +4,7 @@
 
 ### Patch Changes
 
+- Update icons to have a transparent background
 - add9748: Update dependencies (undici)
 - Updated dependencies \[add9748]
 - Updated dependencies \[a9b7597]
