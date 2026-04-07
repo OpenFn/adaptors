@@ -700,8 +700,8 @@ importers:
         specifier: ^4.12.0
         version: 4.12.0
       lodash-es:
-        specifier: ^4.17.23
-        version: 4.17.23
+        specifier: ^4.18.1
+        version: 4.18.1
       swc-loader:
         specifier: ^0.2.6
         version: 0.2.6(@swc/core@1.10.9)(webpack@5.102.0(@swc/core@1.10.9))
@@ -9501,8 +9501,8 @@ packages:
   lodash-compat@3.10.2:
     resolution: {integrity: sha512-k8SE/OwvWfYZqx3MA/Ry1SHBDWre8Z8tCs0Ba0bF5OqVNvymxgFZ/4VDtbTxzTvcoG11JpTMFsaeZp/yGYvFnA==}
 
-  lodash-es@4.17.23:
-    resolution: {integrity: sha512-kVI48u3PZr38HdYz98UmfPnXl2DXrpdctLrFLCd3kOx1xUkOmpFPx7gCWWM5MPkL/fD8zb+Ph0QzjGFs4+hHWg==}
+  lodash-es@4.18.1:
+    resolution: {integrity: sha512-J8xewKD/Gk22OZbhpOVSwcs60zhd95ESDwezOFuA3/099925PdHJ7OFHNTGtajL3AlZkykD32HykiMo+BIBI8A==}
 
   lodash-fp@0.10.4:
     resolution: {integrity: sha512-KJUJA9HNSHpRlFEnpmcNpO8Ig2UG0aHvWeYIZoXTZ6aXHVeREsdHcU/uHkYX6VtXGUnPoh47gLgeFzsUY8PJtQ==}
@@ -14785,7 +14785,7 @@ snapshots:
       glob: 11.0.3
       human-id: 4.1.2
       lodash: 4.18.1
-      lodash-es: 4.17.23
+      lodash-es: 4.18.1
       ohm-js: 17.5.0
       yaml: 2.8.2
 
@@ -20164,7 +20164,7 @@ snapshots:
 
   lodash-compat@3.10.2: {}
 
-  lodash-es@4.17.23: {}
+  lodash-es@4.18.1: {}
 
   lodash-fp@0.10.4:
     dependencies:
