@@ -20,9 +20,9 @@ export const prepareNextState = (state, response) => {
   };
 };
 
-export const authorize = async (configuration) => {
+export const authorize = async configuration => {
   const { username, password, baseUrl } = configuration;
-  
+
   const options = {
     body: JSON.stringify({ username, password }),
     headers: {
@@ -32,14 +32,13 @@ export const authorize = async (configuration) => {
     baseUrl,
     parseAs: 'json',
   };
-  
+
   try {
     const response = await commonRequest('POST', '/auth/login', options);
-    
+
     if (response.headers['set-cookie']) {
       return response.headers['set-cookie'].split(';')[0];
     }
-    
 
     throw new Error('No authentication cookie received from server');
   } catch (err) {
@@ -47,16 +46,20 @@ export const authorize = async (configuration) => {
     console.log(err.body);
     throw err;
   }
-}
+};
 
-export const request = async (configuration = {}, method, path, options = {}) => {
+export const request = async (
+  configuration = {},
+  method,
+  path,
+  options = {},
+) => {
   const { baseUrl, username, password } = configuration;
-    const { headers = {}, parseAs = 'json', ...otherOptions } = options;
+  const { headers = {}, parseAs = 'json', ...otherOptions } = options;
   let authHeaders = {};
-  
-    let cookieHeader = { 'Cookie': (options.headers?.Cookie || cookie) };
-    authHeaders = cookieHeader;
 
+  let cookieHeader = { Cookie: options.headers?.Cookie || cookie };
+  authHeaders = cookieHeader;
 
   const opts = {
     parseAs,
@@ -68,7 +71,6 @@ export const request = async (configuration = {}, method, path, options = {}) =>
       ...headers,
     },
   };
-
 
   const safePath = nodepath.join(path);
 
