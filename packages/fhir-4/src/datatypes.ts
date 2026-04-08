@@ -127,6 +127,23 @@ export const extendSystemMap = newMappings => {
 };
 
 /**
+ * An identifier for a resource — e.g. a national ID, medical record number,
+ * or any code used to identify something across systems.
+ *
+ * Can be a string (used as the `value`) or an object.
+ *
+ * @typedef {Object} Identifier
+ * @property {string} [value] - The value that is unique
+ * @property {string} [system] - The namespace for the identifier value
+ * @property {string} [use] - usual | official | temp | secondary | old (If known)
+ * @property {string|CodeableConcept} [type] - Description of identifier
+ * @property {Period} [period] - Time period when id is/was valid for use
+ * @property {string|Reference} [assigner] - Organization that issued id (may be just text)
+ * @property {Extension[]} [extension] - Additional content defined by implementations
+ * @property {string} [id] - Unique id for inter-element referencing
+ */
+
+/**
  * Create an Identifier. Systems will be mapped against the system map. Pass extensions as extra arguments.
  * @public
  * @function
