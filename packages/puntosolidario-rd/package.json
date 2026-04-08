@@ -36,7 +36,7 @@
     "deep-eql": "4.1.1",
     "mocha": "^10.7.3",
     "rimraf": "3.0.2",
-    "undici": "^5.22.1"
+    "undici": "^7.19.2"
   },
   "repository": {
     "type": "git",

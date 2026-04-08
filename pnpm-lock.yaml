@@ -2401,8 +2401,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^5.22.1
-        version: 5.29.0
+        specifier: ^7.19.2
+        version: 7.19.2
 
   packages/rapidpro:
     dependencies:
