@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-chatgpt",
   "label": "ChatGPT",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "description": "OpenFn adaptor for ChatGPT",
   "type": "module",
   "exports": {
@@ -38,7 +38,7 @@
     "deep-eql": "4.1.1",
     "mocha": "^10.8.2",
     "rimraf": "3.0.2",
-    "undici": "^7.19.2"
+    "undici": "^7.24.7"
   },
   "repository": {
     "type": "git",

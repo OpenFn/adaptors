@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-fhir-ndr-et",
   "label": "FHIR NDR Ehtiopia",
-  "version": "0.1.27",
+  "version": "0.1.28",
   "description": "OpenFn fhir adaptor for NDR HIV in Ehtiopia",
   "type": "module",
   "exports": {
@@ -45,7 +45,7 @@
     "@openfn/language-fhir": "workspace:*",
     "@types/fhir": "^0.0.41",
     "ast-types": "^0.14.2",
-    "lodash": "^4.17.23",
+    "lodash": "^4.18.1",
     "recast": "^0.23.9",
     "typescript": "4.8.4",
     "yauzl": "^3.1.3"
@@ -55,7 +55,7 @@
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
     "rimraf": "3.0.2",
-    "undici": "^7.19.2"
+    "undici": "^7.24.7"
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,16 @@
 # @openfn/language-fhir-ndr-et
 
+## 0.1.28 - 07 April 2026
+
+### Patch Changes
+
+- add9748: Update dependencies (undici)
+- a9b7597: Update dependencies (lodash)
+- Updated dependencies \[add9748]
+- Updated dependencies \[a9b7597]
+  - @openfn/language-common@3.3.1
+  - @openfn/language-fhir@5.0.17
+
 ## 0.1.27 - 30 March 2026
 
 ### Patch Changes

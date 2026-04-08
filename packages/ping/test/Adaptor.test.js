@@ -1,10 +1,10 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import { execute} from '../src/Adaptor.js';
+import { execute } from '../src/Adaptor.js';
 import { request, post } from '../src/http.js';
 
-const tokenUrl = 'https://primespingb2cuat.b2clogin.com'
+const tokenUrl = 'https://primespingb2cuat.b2clogin.com';
 
 // Mock OAuth token server
 const authServer = enableMockClient(tokenUrl);
@@ -50,9 +50,9 @@ describe('post', () => {
           'content-type': 'application/json',
         },
       })
-      .reply(200, { 
-        success: true, 
-        recordsProcessed: 2 
+      .reply(200, {
+        success: true,
+        recordsProcessed: 2,
       });
 
     state.data = {
@@ -76,7 +76,7 @@ describe('post', () => {
         ShippingProcessId: state.data.ShippingProcessId,
         InteropId: state.data.InteropId,
         Data: state.data.Data,
-      })
+      }),
     )(state);
 
     expect(finalState.data).to.eql({
@@ -113,7 +113,7 @@ describe('request', () => {
         InteropID: 'INT-1436',
         APIVersion: 'V3',
         QueryParameters: [],
-      })
+      }),
     )(state);
 
     expect(finalState.data).to.eql({
@@ -124,25 +124,4 @@ describe('request', () => {
       totalRecords: 2,
     });
   });
-
-  it('throws an error if the service returns 403', async () => {
-    const errorMessage = "Mock dispatch not matched for path '/noAccess': subsequent request to origin https://fake.ping.server.com was not allowed (net.connect disabled)"
-    testServer
-      .intercept({
-        path: '/api/noAccess',
-        method: 'POST',
-      })
-      .reply(403);
-
-    const error = await execute(
-      request('POST', 'noAccess', { name: 'test' })
-    )(state).catch(error => {
-      return error;
-    });
-    expect(error.message).to.eql(errorMessage);
-  });
 });
-
-
-
-

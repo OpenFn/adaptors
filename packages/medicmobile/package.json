@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-medicmobile",
   "label": "Medic Mobile",
-  "version": "0.5.28",
+  "version": "0.5.29",
   "description": "OpenFn adaptor for Medic Mobile",
   "main": "dist/index.cjs",
   "scripts": {
@@ -22,7 +22,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "lodash": "^4.17.23",
+    "lodash": "^4.18.1",
     "query-string": "^8.1.0",
     "request": "^2.88.2"
   },

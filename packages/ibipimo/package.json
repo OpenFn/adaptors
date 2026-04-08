@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-ibipimo",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "OpenFn ibipimo adaptor",
   "type": "module",
   "exports": {
@@ -39,7 +39,7 @@
     "mocha": "^10.8.2",
     "rimraf": "3.0.2",
     "sinon": "^21.0.1",
-    "undici": "^7.19.2"
+    "undici": "^7.24.7"
   },
   "repository": {
     "type": "git",

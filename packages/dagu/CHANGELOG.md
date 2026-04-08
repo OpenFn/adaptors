@@ -1,5 +1,14 @@
 # @openfn/language-dagu
 
+## 1.2.1 - 07 April 2026
+
+### Patch Changes
+
+- add9748: Update dependencies (undici)
+- Updated dependencies \[add9748]
+- Updated dependencies \[a9b7597]
+  - @openfn/language-common@3.3.1
+
 ## 1.2.0 - 30 March 2026
 
 ### Minor Changes
