@@ -127,10 +127,7 @@ export const extendSystemMap = newMappings => {
 };
 
 /**
- * An identifier for a resource — e.g. a national ID, medical record number,
- * or any code used to identify something across systems.
- *
- * Can be a string (used as the `value`) or an object.
+ * An identifier for a resource
  *
  * @typedef {Object} Identifier
  * @property {string} [value] - The value that is unique
