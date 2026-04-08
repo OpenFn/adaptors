@@ -5,8 +5,8 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  node-forge: 1.3.2
   request>form-data: ^2.5.5
-  node-forge: ^1.3.2
   tar: ^7.5.4
 
 importers:
@@ -2379,6 +2379,31 @@ importers:
       sinon:
         specifier: ^9.2.3
         version: 9.2.3
+
+  packages/puntosolidario-rd:
+    dependencies:
+      '@openfn/language-common':
+        specifier: workspace:*
+        version: link:../common
+    devDependencies:
+      assertion-error:
+        specifier: 2.0.0
+        version: 2.0.0
+      chai:
+        specifier: 4.3.6
+        version: 4.3.6
+      deep-eql:
+        specifier: 4.1.1
+        version: 4.1.1
+      mocha:
+        specifier: ^10.7.3
+        version: 10.8.2
+      rimraf:
+        specifier: 3.0.2
+        version: 3.0.2
+      undici:
+        specifier: ^7.19.2
+        version: 7.24.7
 
   packages/rapidpro:
     dependencies:
@@ -19735,7 +19760,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 20.19.33
+      '@types/node': 18.17.5
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
