@@ -1,6 +1,6 @@
 import { expandReferences } from '@openfn/language-common/util';
 import { request } from './fhir.utils.js';
-import { prepareNextState } from './utils.js';
+import { prepareNextState } from './Utils.js';
 
 /**
  * iHRIS FHIR requests parameters options.

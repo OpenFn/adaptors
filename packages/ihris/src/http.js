@@ -1,5 +1,5 @@
 import { expandReferences } from '@openfn/language-common/util';
-import * as util from './utils.js';
+import * as util from './Utils.js';
 
 /**
  * State object
@@ -34,14 +34,14 @@ export function get(resource, options = {}) {
     const [resolvedResource, resolvedOptions] = expandReferences(
       state,
       resource,
-      options
+      options,
     );
 
     const response = await util.request(
       state.configuration,
       'GET',
       resolvedResource,
-      resolvedOptions
+      resolvedOptions,
     );
 
     return util.prepareNextState(state, response);
@@ -101,8 +101,12 @@ export function get(resource, options = {}) {
  */
 export function post(resource, body, options = {}) {
   return async state => {
-    const [resolvedResource, resolvedBody, resolvedOptions] =
-      expandReferences(state, resource, body, options);
+    const [resolvedResource, resolvedBody, resolvedOptions] = expandReferences(
+      state,
+      resource,
+      body,
+      options,
+    );
 
     const response = await util.request(
       state.configuration,
@@ -111,7 +115,7 @@ export function post(resource, body, options = {}) {
       {
         body: resolvedBody,
         ...resolvedOptions,
-      }
+      },
     );
 
     return util.prepareNextState(state, response);
@@ -187,8 +191,12 @@ export function post(resource, body, options = {}) {
  */
 export function put(resource, body, options = {}) {
   return async state => {
-    const [resolvedResource, resolvedBody, resolvedOptions] =
-      expandReferences(state, resource, body, options);
+    const [resolvedResource, resolvedBody, resolvedOptions] = expandReferences(
+      state,
+      resource,
+      body,
+      options,
+    );
 
     const response = await util.request(
       state.configuration,
@@ -197,7 +205,7 @@ export function put(resource, body, options = {}) {
       {
         body: resolvedBody,
         ...resolvedOptions,
-      }
+      },
     );
 
     return util.prepareNextState(state, response);
@@ -213,7 +221,6 @@ export function put(resource, body, options = {}) {
  * @property {object} headers - An object of headers to append to the request.
  * @property {string} parseAs - Parse the response body as json, text or stream. By default will use the response headers.
  */
-
 
 /**
  * Make a general HTTP request to iHRIS
@@ -247,13 +254,9 @@ export function request(method, path, body, options = {}) {
       {
         body: resolvedBody,
         ...resolvedOptions,
-      }
+      },
     );
 
     return util.prepareNextState(state, response);
   };
 }
-
-
-
-

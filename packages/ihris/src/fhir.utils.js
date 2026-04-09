@@ -3,11 +3,13 @@ import {
   logResponse,
 } from '@openfn/language-common/util';
 
-import { authorize } from './utils.js';
+import { authorize } from './Utils.js';
 
 // Cached auth promise — concurrent requests share one login call.
 let cookiePromise;
-export const _resetAuth = () => { cookiePromise = undefined; };
+export const _resetAuth = () => {
+  cookiePromise = undefined;
+};
 
 export async function request(state, method, path, data, params) {
   const { baseUrl, username, password } = state.configuration;
