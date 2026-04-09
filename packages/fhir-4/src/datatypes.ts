@@ -2,6 +2,7 @@ import _ from 'lodash';
 
 import type * as FHIR from './fhir';
 export type * from './fhir';
+import './typedefs';
 
 let systemMap = {};
 
@@ -125,20 +126,6 @@ export const setSystemMap = newMappings => state => {
 export const extendSystemMap = newMappings => {
   Object.assign(systemMap, newMappings);
 };
-
-/**
- * An identifier for a resource
- *
- * @typedef {Object} Identifier
- * @property {string} [value] - The value that is unique
- * @property {string} [system] - The namespace for the identifier value
- * @property {string} [use] - usual | official | temp | secondary | old (If known)
- * @property {string|CodeableConcept} [type] - Description of identifier
- * @property {Period} [period] - Time period when id is/was valid for use
- * @property {string|Reference} [assigner] - Organization that issued id (may be just text)
- * @property {Extension[]} [extension] - Additional content defined by implementations
- * @property {string} [id] - Unique id for inter-element referencing
- */
 
 /**
  * Create an Identifier. Systems will be mapped against the system map. Pass extensions as extra arguments.
