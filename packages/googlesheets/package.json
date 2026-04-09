@@ -34,7 +34,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "googleapis": "100.0.0"
+    "googleapis": "171.4.0"
   },
   "devDependencies": {
     "assertion-error": "1.1.0",
