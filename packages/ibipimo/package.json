@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-ibipimo",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "OpenFn ibipimo adaptor",
   "type": "module",
   "exports": {
