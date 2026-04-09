@@ -1,9 +1,9 @@
 import { expandReferences } from '@openfn/language-common/util';
 import { request } from './fhir.utils.js';
-import { prepareNextState } from './Utils.js';
+import { prepareNextState } from './utils.js';
 
 /**
- * OpenMRS FHIR requests parameters options.
+ * iHRIS FHIR requests parameters options.
  * This combines {@link https://fhir.openmrs.org/artifacts.html | FHIR search parameters}, {@link https://www.hl7.org/fhir/R4/search.html resource-specific parameters}, and pagination options.
  * @typedef {Object} FhirParameters
  * @public
@@ -24,20 +24,34 @@ import { prepareNextState } from './Utils.js';
  * @property {string} content - Full-text search on resource content (_content in FHIR)
  * @property {string} list - Search resources included in a particular list (_list in FHIR)
  * @property {string} has - Perform search based on reference chains (_has in FHIR)
- * @property {string} getPagesOffset - Offset for pagination, used to skip a number of results (_getpagesoffset in OpenMRS)
- * @property {string} getPages - Get specific pages of resources (_getpages in OpenMRS)
+ * @property {string} getPagesOffset - Offset for pagination, used to skip a number of results (_getpagesoffset in iHRIS)
+ * @property {string} getPages - Get specific pages of resources (_getpages in iHRIS)
  * @property {string} bundleType - Type of bundle to return (e.g., searchset, batch, history) (_bundleType in FHIR)
  */
 
 /**
- * Make a get request to any FHIR endpoint in OpenMRS
+ * State object
+ * @typedef {Object} FhirState
+ * @property data - the parsed response body
+ * @property response - the response from the FHIR server, including headers, statusCode, body, etc
+ * @property references - an array of all previous data objects used in the Job
+ * @private
+ **/
+/**
+ * Make a get request to any FHIR endpoint in iHRIS
  * @example <caption>Get encounters based on lastUpdated field</caption>
  * fhir.get('Encounter', { count: 100, lastUpdated: 'ge2024-01-01T00:00:00Z' })
+ * @example <caption>Get all active practitioner roles for a location</caption>
+ * fhir.get('PractitionerRole', {
+ *   count: 500,
+ *   active: true,
+ *   location: 1234,
+ *   include: 'PractitionerRole:practitioner',
+ * })
  * @function
  * @public
  * @param {string} path - Path to resource
  * @param {FhirParameters} query - Request parameters
- * @param {function} [callback] - Optional callback to handle the response
  * @state {FhirState}
  * @returns {Operation}
  */
