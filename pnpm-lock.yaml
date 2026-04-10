@@ -505,8 +505,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       axios:
-        specifier: ^1.13.5
-        version: 1.13.5
+        specifier: ^1.15.0
+        version: 1.15.0
       lodash:
         specifier: ^4.18.1
         version: 4.18.1
@@ -1029,8 +1029,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       axios:
-        specifier: ^1.13.5
-        version: 1.13.5
+        specifier: ^1.15.0
+        version: 1.15.0
     devDependencies:
       assertion-error:
         specifier: ^1.0.1
@@ -1437,8 +1437,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       axios:
-        specifier: ^1.13.5
-        version: 1.13.5
+        specifier: ^1.15.0
+        version: 1.15.0
       md5:
         specifier: ^2.3.0
         version: 2.3.0
@@ -6148,8 +6148,8 @@ packages:
   axios@0.27.2:
     resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
 
-  axios@1.13.5:
-    resolution: {integrity: sha512-cz4ur7Vb0xS4/KUN0tPWe44eqxrIu31me+fbang3ijiNscE129POzipJJA6zniq2C/Z6sJCjMimjS8Lc/GAs8Q==}
+  axios@1.15.0:
+    resolution: {integrity: sha512-wWyJDlAatxk30ZJer+GeCWS209sA42X+N5jU2jy6oHTp7ufw8uzUTVFBX9+wTfAlhiJXGS0Bq7X6efruWjuK9Q==}
 
   babel-cli@6.26.0:
     resolution: {integrity: sha512-wau+BDtQfuSBGQ9PzzFL3REvR9Sxnd4LKwtcHAiPjhugA7K/80vpHXafj+O5bAqJOuSefjOx5ZJnNSR2J1Qw6Q==}
@@ -7390,8 +7390,8 @@ packages:
   electron-to-chromium@1.5.230:
     resolution: {integrity: sha512-A6A6Fd3+gMdaed9wX83CvHYJb4UuapPD5X5SLq72VZJzxHSY0/LUweGXRWmQlh2ln7KV7iw7jnwXK7dlPoOnHQ==}
 
-  electron-to-chromium@1.5.333:
-    resolution: {integrity: sha512-skNh4FsE+IpCJV7xAQGbQ4eyOGvcEctVBAk7a5KPzxC3alES9rLrT+2IsPRPgeQr8LVxdJr8BHQ9481+TOr0xg==}
+  electron-to-chromium@1.5.334:
+    resolution: {integrity: sha512-mgjZAz7Jyx1SRCwEpy9wefDS7GvNPazLthHg8eQMJ76wBdGQQDW33TCrUTvQ4wzpmOrv2zrFoD3oNufMdyMpog==}
 
   emittery@1.2.0:
     resolution: {integrity: sha512-KxdRyyFcS85pH3dnU8Y5yFUm2YJdaHwcBZWrfG8o89ZY9a13/f9itbN+YG3ELbBo9Pg5zvIozstmuV8bX13q6g==}
@@ -10376,8 +10376,9 @@ packages:
     resolution: {integrity: sha512-CvexbZtbov6jW2eXAvLukXjXUW1TzFaivC46BpWc/3BpcCysb5Vffu+B3XHMm8lVEuy2Mm4XGex8hBSg1yapPg==}
     engines: {node: '>=12.0.0'}
 
-  proxy-from-env@1.1.0:
-    resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
+  proxy-from-env@2.1.0:
+    resolution: {integrity: sha512-cJ+oHTW1VAEa8cJslgmUZrc+sjRKgAKl3Zyse6+PV38hZe/V6Z14TbCuXcan9F9ghlz4QrFr2c92TNF82UkYHA==}
+    engines: {node: '>=10'}
 
   psl@1.15.0:
     resolution: {integrity: sha512-JZd3gMVBAVQkSs6HdNZo9Sdo0LNcQeMNP3CozBJb3JYC/QUYZTnKxP+f8oWRX4rHP5EurWxqAHTSwUCjlNKa1w==}
@@ -14212,7 +14213,7 @@ snapshots:
 
   '@opengovsg/formsg-sdk@0.15.0':
     dependencies:
-      axios: 1.13.5
+      axios: 1.15.0
       tweetnacl: 1.0.3
       tweetnacl-util: 0.15.1
     transitivePeerDependencies:
@@ -15639,11 +15640,11 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  axios@1.13.5:
+  axios@1.15.0:
     dependencies:
       follow-redirects: 1.15.11
       form-data: 4.0.5
-      proxy-from-env: 1.1.0
+      proxy-from-env: 2.1.0
     transitivePeerDependencies:
       - debug
 
@@ -16371,7 +16372,7 @@ snapshots:
     dependencies:
       baseline-browser-mapping: 2.10.16
       caniuse-lite: 1.0.30001787
-      electron-to-chromium: 1.5.333
+      electron-to-chromium: 1.5.334
       node-releases: 2.0.37
       update-browserslist-db: 1.2.3(browserslist@4.28.2)
 
@@ -17259,7 +17260,7 @@ snapshots:
 
   electron-to-chromium@1.5.230: {}
 
-  electron-to-chromium@1.5.333: {}
+  electron-to-chromium@1.5.334: {}
 
   emittery@1.2.0: {}
 
@@ -18090,7 +18091,7 @@ snapshots:
 
   frappe-js-sdk@1.11.0:
     dependencies:
-      axios: 1.13.5
+      axios: 1.15.0
     transitivePeerDependencies:
       - debug
 
@@ -19488,7 +19489,7 @@ snapshots:
 
   mailgun.js@9.2.0:
     dependencies:
-      axios: 1.13.5
+      axios: 1.15.0
       base-64: 1.0.0
       url-join: 4.0.1
     transitivePeerDependencies:
@@ -20613,7 +20614,7 @@ snapshots:
       '@types/node': 18.17.5
       long: 5.3.2
 
-  proxy-from-env@1.1.0: {}
+  proxy-from-env@2.1.0: {}
 
   psl@1.15.0:
     dependencies:
@@ -21644,7 +21645,7 @@ snapshots:
       cookiejar: 2.1.4
       debug: 3.2.7
       extend: 3.0.2
-      form-data: 2.5.4
+      form-data: 2.5.5
       formidable: 1.2.6
       methods: 1.1.2
       mime: 1.6.0
