@@ -2,7 +2,7 @@ import { describe, it, beforeEach } from 'mocha';
 import { expect } from 'chai';
 
 import { http } from '../src/index.js';
-import { _resetAuth } from '../src/utils.js';
+import { _resetAuth } from '../src/Utils.js';
 import { testServer } from './helpers.js';
 
 describe('http namespace', () => {

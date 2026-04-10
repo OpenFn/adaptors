@@ -1,7 +1,7 @@
 import { describe, it, beforeEach } from 'mocha';
 import { expect } from 'chai';
 
-import { request, _resetAuth } from '../src/utils.js';
+import { request, _resetAuth } from '../src/Utils.js';
 import { testServer } from './helpers.js';
 
 const makeConfig = (overrides = {}) => ({
@@ -14,7 +14,11 @@ const makeConfig = (overrides = {}) => ({
 const authReply = (cookie = 'session=abc123') =>
   testServer
     .intercept({ path: '/auth/login', method: 'POST' })
-    .reply(200, { success: true }, { headers: { 'set-cookie': [`${cookie}; Path=/`] } });
+    .reply(
+      200,
+      { success: true },
+      { headers: { 'set-cookie': [`${cookie}; Path=/`] } },
+    );
 
 describe('Utils.js - request', () => {
   beforeEach(() => _resetAuth());
@@ -30,7 +34,12 @@ describe('Utils.js - request', () => {
         })
         .reply(200, { resourceType: 'Practitioner' });
 
-      const response = await request(makeConfig(), 'GET', '/fhir/Practitioner', {});
+      const response = await request(
+        makeConfig(),
+        'GET',
+        '/fhir/Practitioner',
+        {},
+      );
       expect(response.body.resourceType).to.eql('Practitioner');
     });
 
@@ -85,7 +94,9 @@ describe('Utils.js - request', () => {
         .intercept({ path: '/auth/login', method: 'POST' })
         .reply(401, { error: 'Unauthorized' });
 
-      await request(makeConfig(), 'GET', '/fhir/Practitioner', {}).catch(() => {});
+      await request(makeConfig(), 'GET', '/fhir/Practitioner', {}).catch(
+        () => {},
+      );
 
       // cookiePromise was cleared — next request re-authenticates
       authReply('session=retry123');
@@ -97,7 +108,12 @@ describe('Utils.js - request', () => {
         })
         .reply(200, { resourceType: 'Practitioner' });
 
-      const response = await request(makeConfig(), 'GET', '/fhir/Practitioner', {});
+      const response = await request(
+        makeConfig(),
+        'GET',
+        '/fhir/Practitioner',
+        {},
+      );
       expect(response.body.resourceType).to.eql('Practitioner');
     });
   });
