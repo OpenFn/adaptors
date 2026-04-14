@@ -148,7 +148,7 @@ a string key.
 | Param | Type | Description |
 | --- | --- | --- |
 | name | <code>string</code> | The name of the collection to fetch from |
-| keygen |  | a function which generates a key for each value: (value, index) => key. Pass a string to set a static key for a single item. |
+| keygen |  | a function which generates a key for each value: (value, state, index) => key. Pass a string to set a static key for a single item. |
 | values |  | an array of values to set, or a single value. |
 
 
