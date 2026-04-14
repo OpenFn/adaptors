@@ -86,7 +86,7 @@ export function get(name, query = {}) {
       })(scopedState);
 
       console.log(
-        `Collections: Fetched total of ${data.length} values from "${name}"`
+        `Collections: Fetched total of ${data.length} values from "${name}"`,
       );
 
       data.cursor = scopedState.data.cursor;
@@ -96,7 +96,7 @@ export function get(name, query = {}) {
       const response = await request(
         state,
         getClient(state),
-        `${resolvedName}/${key}`
+        `${resolvedName}/${key}`,
       );
 
       if (response.statusCode === 204) {
@@ -127,7 +127,7 @@ export function get(name, query = {}) {
  * @public
  * @function
  * @param {string} name - The name of the collection to fetch from
- * @param keygen - a function which generates a key for each value: (value, index) => key. Pass a string to set a static key for a single item.
+ * @param keygen - a function which generates a key for each value: (value, state, index) => key. Pass a string to set a static key for a single item.
  * @param values - an array of values to set, or a single value.
  * @example <caption>Set a number of values using each value's id property as a key</caption>
  * collections.set('my-collection', (item) => item.id, $.data)
@@ -157,7 +157,7 @@ export function set(name, keyGen, values) {
     const [resolvedName, resolvedValues] = expandReferences(
       state,
       name,
-      values
+      values,
     );
 
     let kvPairs;
@@ -194,7 +194,7 @@ export function set(name, keyGen, values) {
       const batch = kvPairs.splice(0, batchSize);
 
       console.log(
-        `Collections: uploading batch of ${batch.length} values to "${name}"...`
+        `Collections: uploading batch of ${batch.length} values to "${name}"...`,
       );
       const response = await request(state, getClient(state), resolvedName, {
         method: 'POST',
@@ -206,7 +206,7 @@ export function set(name, keyGen, values) {
 
       if (response.statusCode >= 400) {
         console.log(
-          `Collections: Error setting ${batch.length} values in "${name}"`
+          `Collections: Error setting ${batch.length} values in "${name}"`,
         );
         const text = await response.body.text();
         const e = new Error('ERROR from collections server:' + 400);
@@ -340,7 +340,7 @@ export function each(name, query = {}, callback = () => {}) {
       count += batchSize;
 
       console.log(
-        `Collections: fetched chunk of ${batchSize} values from "${name}"`
+        `Collections: fetched chunk of ${batchSize} values from "${name}"`,
       );
     } while (cursor && count < limit);
 
