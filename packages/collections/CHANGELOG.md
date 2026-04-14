@@ -1,5 +1,11 @@
 # @openfn/language-collections
 
+## 0.8.6 - 14 April 2026
+
+### Patch Changes
+
+- 0df6720: Add docs for a missing argument on `keygen` param
+
 ## 0.8.5 - 07 April 2026
 
 ### Patch Changes
