@@ -102,7 +102,7 @@ const searchParams = {
 const fhirPaginationParams = {
   getPagesOffset: '_getpagesoffset',
   getPages: '_getpages',
-  budleType: '_bundletype',
+  bundleType: '_bundletype',
 };
 
 // Function to map user-friendly params to FHIR params

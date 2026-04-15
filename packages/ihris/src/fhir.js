@@ -8,6 +8,7 @@ import { prepareNextState } from './Utils.js';
  * @typedef {Object} FhirParameters
  * @public
  * @property {string} count - Number of results to return (_count in FHIR)
+ * @property {string} sort - Sorting criteria for the results (_sort in FHIR)
  * @property {string} include - Resources to include in the response (_include in FHIR)
  * @property {string} revinclude - Reverse includes to include in the response (_revinclude in FHIR)
  * @property {string} summary - Summary mode for the response (_summary in FHIR)
