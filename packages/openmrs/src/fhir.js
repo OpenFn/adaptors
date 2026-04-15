@@ -8,6 +8,7 @@ import { prepareNextState } from './Utils.js';
  * @typedef {Object} FhirParameters
  * @public
  * @property {string} count - Number of results to return (_count in FHIR)
+ * @property {string} sort - Sorting criteria for the results (_sort in FHIR)
  * @property {string} include - Resources to include in the response (_include in FHIR)
  * @property {string} revinclude - Reverse includes to include in the response (_revinclude in FHIR)
  * @property {string} summary - Summary mode for the response (_summary in FHIR)
@@ -46,7 +47,7 @@ export function get(path, query, callback = s => s) {
     const [resolvedPath, resolvedQuery = {}] = expandReferences(
       state,
       path,
-      query
+      query,
     );
 
     const response = await request(
@@ -54,7 +55,7 @@ export function get(path, query, callback = s => s) {
       'GET',
       resolvedPath,
       {},
-      resolvedQuery
+      resolvedQuery,
     );
     return prepareNextState(state, response, callback);
   };
