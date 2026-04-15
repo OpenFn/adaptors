@@ -515,6 +515,13 @@ const generateInlineType = (typeDef: PropDef) => {
 // Add types we want documented here.
 const typedefsToGenerate = [
   'Identifier',
+  'Reference',
+  'CodeableConcept',
+  'Period',
+  'HumanName',
+  'ContactPoint',
+  'Address',
+  'Coding',
 ];
 
 /**
