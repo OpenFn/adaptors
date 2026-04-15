@@ -37,7 +37,7 @@ export async function request(state, method, path, data, params) {
     logResponse(response);
 
     if (allResponses) {
-      allResponses.body.entry.push(...response.body.entry);
+      allResponses.body.entry.push(...(response.body.entry ?? []));
     } else {
       allResponses = response;
     }
