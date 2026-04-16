@@ -1,5 +1,11 @@
 # @openfn/language-twilio
 
+## 1.0.13
+
+### Patch Changes
+
+- 53d1e16: Replace `require('twilio')` with static ESM import
+
 ## 1.0.12 - 07 April 2026
 
 ### Patch Changes
