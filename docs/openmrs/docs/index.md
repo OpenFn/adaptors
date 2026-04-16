@@ -626,6 +626,7 @@ This combines [ FHIR search parameters](https://fhir.openmrs.org/artifacts.html)
 | Name | Type | Description |
 | --- | --- | --- |
 | count | <code>string</code> | Number of results to return (_count in FHIR) |
+| sort | <code>string</code> | Sorting criteria for the results (_sort in FHIR) |
 | include | <code>string</code> | Resources to include in the response (_include in FHIR) |
 | revinclude | <code>string</code> | Reverse includes to include in the response (_revinclude in FHIR) |
 | summary | <code>string</code> | Summary mode for the response (_summary in FHIR) |
