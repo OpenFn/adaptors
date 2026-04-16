@@ -1,39 +1,54 @@
 import {
   request as commonRequest,
-  makeBasicAuthHeader,
   logResponse,
 } from '@openfn/language-common/util';
 
-export async function request(state, method, path, data, params) {
-  const {
-    instanceUrl,
-    username,
-    password,
-    fhirVersion = 'R4',
-  } = state.configuration;
-  const headers = makeBasicAuthHeader(username, password);
+import { authorize } from './Utils.js';
 
-  const queryParams = mapParams(params);
+// Cached auth promise — concurrent requests share one login call.
+let cookiePromise;
+export const _resetAuth = () => {
+  cookiePromise = undefined;
+};
+
+export async function request(state, method, path, data, params) {
+  const { baseUrl, username, password } = state.configuration;
+  const { headers = {}, parseAs = 'json', ...queryOpts } = params;
+
+  if (!cookiePromise && username && password) {
+    cookiePromise = authorize({ baseUrl, username, password }).catch(err => {
+      cookiePromise = undefined; // clear on failure so next request retries
+      throw err;
+    });
+  }
+
+  const cookie = cookiePromise ? await cookiePromise : undefined;
+
+  const queryParams = mapParams(queryOpts);
 
   const options = {
     body: data,
     headers: {
+      'content-type': 'application/fhir+json',
+      ...(cookie && { Cookie: cookie }),
       ...headers,
-      'content-type': 'application/json',
     },
     query: queryParams,
-    parseAs: 'json',
+    parseAs,
   };
 
-  const url = `${instanceUrl}/ws/fhir2/${fhirVersion}/${path}`;
+  let currentUrl = `${baseUrl}/fhir/${path}`;
 
   let allResponses;
-  let query = options?.query;
-  let allowPagination = isNaN(query?._getpagesoffset);
+  let currentQuery = options?.query;
+  let allowPagination = isNaN(currentQuery?._getpagesoffset);
 
   do {
-    const requestOptions = query ? { ...options, query } : options;
-    const response = await commonRequest(method, url, requestOptions);
+    const requestOptions = currentQuery
+      ? { ...options, query: currentQuery }
+      : options;
+
+    const response = await commonRequest(method, currentUrl, requestOptions);
     logResponse(response);
 
     if (allResponses) {
@@ -45,10 +60,11 @@ export async function request(state, method, path, data, params) {
     if (nextUrl) {
       console.log(`Fetched ${response.body.entry.length} results`);
       console.log(`Fetching next page from ${nextUrl}`);
+      // iHRIS pagination changes the path (e.g. /fhir/Practitioner → /fhir),
+      // so extract both the path and query params from the next link.
       const urlObj = new URL(nextUrl);
-      const params = new URLSearchParams(urlObj.search);
-      const paramsObject = Object.fromEntries(params.entries());
-      query = { ...query, ...paramsObject };
+      currentUrl = `${urlObj.origin}${urlObj.pathname}`;
+      currentQuery = Object.fromEntries(new URLSearchParams(urlObj.search));
     } else {
       delete allResponses.body.link;
       break;
@@ -83,7 +99,7 @@ const searchParams = {
   containedType: '_containedType',
 };
 
-const openMRSPagingParams = {
+const fhirPaginationParams = {
   getPagesOffset: '_getpagesoffset',
   getPages: '_getpages',
   bundleType: '_bundletype',
@@ -95,7 +111,7 @@ function mapParams(passedParams) {
   const allParams = {
     ...paramsForAllResources,
     ...searchParams,
-    ...openMRSPagingParams,
+    ...fhirPaginationParams,
   };
 
   for (const key in passedParams) {

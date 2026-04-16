@@ -1,5 +1,12 @@
 # @openfn/language-ihris
 
+## 1.1.0
+
+### Minor Changes
+
+- dea8c5d: Add `fhir.get()` function which handles pagination and user-friendly
+  query parameters.
+
 ## 1.0.15 - 07 April 2026
 
 ### Patch Changes
