@@ -1,5 +1,11 @@
 # @openfn/language-openmrs
 
+## 5.3.11
+
+### Patch Changes
+
+- 2625f63: Fix `bundleType` typo and include `sort` in FhirParameters
+
 ## 5.3.10 - 07 April 2026
 
 ### Patch Changes
