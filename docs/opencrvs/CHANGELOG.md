@@ -1,5 +1,12 @@
 # @openfn/language-opencrvs
 
+## 1.0.27 - 17 April 2026
+
+### Patch Changes
+
+- Updated dependencies
+  - @openfn/language-fhir-4@0.5.2
+
 ## 1.0.26 - 07 April 2026
 
 ### Patch Changes
