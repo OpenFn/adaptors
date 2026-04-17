@@ -1,5 +1,11 @@
 # @openfn/language-gmail
 
+## 2.0.14 - 17 April 2026
+
+### Patch Changes
+
+- c226622: Update googleapis library
+
 ## 2.0.13 - 07 April 2026
 
 ### Patch Changes
