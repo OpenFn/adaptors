@@ -1,6 +1,6 @@
 # @openfn/language-openmrs
 
-## 5.3.11
+## 5.3.11 - 17 April 2026
 
 ### Patch Changes
 

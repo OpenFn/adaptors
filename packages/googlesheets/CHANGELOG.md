@@ -1,5 +1,11 @@
 # @openfn/language-googlesheets
 
+## 4.0.12 - 17 April 2026
+
+### Patch Changes
+
+- c226622: Update googleapis library
+
 ## 4.0.11 - 07 April 2026
 
 ### Patch Changes
