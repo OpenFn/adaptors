@@ -1,5 +1,11 @@
 # @openfn/language-ibipimo
 
+## 1.0.5 - 14 April 2026
+
+### Patch Changes
+
+- cf6a24d: Security updates
+
 ## 1.0.4 - 07 April 2026
 
 ### Patch Changes

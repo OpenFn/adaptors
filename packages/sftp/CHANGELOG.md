@@ -1,5 +1,11 @@
 # @openfn/language-sftp
 
+## 3.0.12 - 14 April 2026
+
+### Patch Changes
+
+- cf6a24d: Security updates
+
 ## 3.0.11 - 07 April 2026
 
 ### Patch Changes

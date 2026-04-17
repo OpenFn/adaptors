@@ -1,13 +1,8 @@
 {
-  "name": "@openfn/language-googlesheets",
-  "label": "Google Sheets",
-  "version": "4.0.12",
-  "description": "A Google Sheets Language Pack for OpenFn",
-  "homepage": "https://docs.openfn.org",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/openfn/adaptors.git"
-  },
+  "name": "@openfn/language-puntosolidario-rd",
+  "version": "1.0.0",
+  "description": "OpenFn puntosolidario-rd adaptor",
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -17,7 +12,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "pnpm clean && build-adaptor googlesheets",
+    "build": "pnpm clean && build-adaptor puntosolidario-rd",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
     "clean": "rimraf dist types docs",
@@ -33,17 +28,20 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@openfn/language-common": "workspace:*",
-    "googleapis": "171.4.0"
+    "@openfn/language-common": "workspace:*"
   },
   "devDependencies": {
-    "assertion-error": "1.1.0",
+    "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
-    "nock": "13.2.9",
-    "rimraf": "3.0.2"
+    "mocha": "^10.7.3",
+    "rimraf": "3.0.2",
+    "undici": "^7.19.2"
   },
-  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openfn/adaptors.git"
+  },
   "types": "types/index.d.ts",
   "main": "dist/index.cjs"
 }

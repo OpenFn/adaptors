@@ -1,11 +1,18 @@
 # @openfn/language-ihris
 
-## 1.0.16 - 17 April 2026
+## 1.1.1 - 17 April 2026
 
 ### Patch Changes
 
 - Updated dependencies
   - @openfn/language-fhir-4@0.5.2
+
+## 1.1.0 - 17 April 2026
+
+### Minor Changes
+
+- dea8c5d: Add `fhir.get()` function which handles pagination and user-friendly
+  query parameters.
 
 ## 1.0.15 - 07 April 2026
 

@@ -1,23 +1,25 @@
 import { describe, it, beforeEach } from 'mocha';
 import { expect } from 'chai';
-import { enableMockClient } from '@openfn/language-common/util';
 
 import { http } from '../src/index.js';
-
-const testServer = enableMockClient('https://ihris.example.com');
+import { _resetAuth } from '../src/Utils.js';
+import { testServer } from './helpers.js';
 
 describe('http namespace', () => {
-  const state = {
-    configuration: {
-      baseUrl: 'https://ihris.example.com',
-      username: 'admin@ihris.org',
-      password: 'admin123',
-    },
-    data: {},
-    references: [],
-  };
+  let state;
 
   beforeEach(() => {
+    _resetAuth();
+    state = {
+      configuration: {
+        baseUrl: 'https://ihris.example.com',
+        username: 'admin@ihris.org',
+        password: 'admin123',
+      },
+      data: {},
+      references: [],
+    };
+
     testServer
       .intercept({
         path: '/auth/login',
@@ -32,7 +34,7 @@ describe('http namespace', () => {
         { success: true },
         {
           headers: { 'set-cookie': ['session=abc123; Path=/'] },
-        }
+        },
       );
   });
 
@@ -93,12 +95,12 @@ describe('http namespace', () => {
       const finalState = await http.request(
         'POST',
         '/fhir/PractitionerRole',
-        newRole
+        newRole,
       )(state);
       expect(finalState.data.id).to.eql('PR10001');
       expect(finalState.data.resourceType).to.eql('PractitionerRole');
       expect(finalState.data.practitioner.reference).to.eql(
-        'Practitioner/P10004'
+        'Practitioner/P10004',
       );
     });
 
@@ -143,7 +145,7 @@ describe('http namespace', () => {
         {},
         {
           query: { active: 'true', _count: '10' },
-        }
+        },
       )(state);
 
       expect(finalState.data.resourceType).to.eql('Bundle');
@@ -360,7 +362,7 @@ describe('http namespace', () => {
 
       const finalState = await http.post(
         '/fhir/Practitioner',
-        newPractitioner
+        newPractitioner,
       )(state);
 
       expect(finalState.data.id).to.eql('P10010');
@@ -423,13 +425,13 @@ describe('http namespace', () => {
 
       const finalState = await http.post(
         '/fhir/PractitionerRole',
-        newRole
+        newRole,
       )(state);
 
       expect(finalState.data.id).to.eql('PR10001');
       expect(finalState.data.resourceType).to.eql('PractitionerRole');
       expect(finalState.data.practitioner.reference).to.eql(
-        'Practitioner/P10004'
+        'Practitioner/P10004',
       );
     });
   });
@@ -474,7 +476,7 @@ describe('http namespace', () => {
 
       const finalState = await http.put(
         '/fhir/Practitioner/P10004',
-        updatedPractitioner
+        updatedPractitioner,
       )(state);
 
       expect(finalState.data.name[0].family).to.eql('Johnson-Williams');

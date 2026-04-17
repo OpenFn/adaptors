@@ -1,5 +1,11 @@
 # @openfn/language-primero
 
+## 4.0.12 - 14 April 2026
+
+### Patch Changes
+
+- cf6a24d: Security updates
+
 ## 4.0.11 - 07 April 2026
 
 ### Patch Changes

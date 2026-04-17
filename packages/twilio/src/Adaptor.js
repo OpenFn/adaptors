@@ -1,5 +1,6 @@
 import { execute as commonExecute, composeNextState } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
+import twilio from 'twilio';
 
 /**
  * Execute a sequence of operations.
@@ -46,7 +47,7 @@ export function sendSMS(params) {
     const [resolvedParams] = expandReferences(state, params);
     const { body, from, to } = resolvedParams;
 
-    const client = require('twilio')(accountSid, authToken);
+    const client = twilio(accountSid, authToken);
 
     return client.messages
       .create({ body, from, to })

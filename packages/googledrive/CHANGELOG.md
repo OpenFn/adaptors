@@ -1,5 +1,11 @@
 # @openfn/language-googledrive
 
+## 3.0.5 - 17 April 2026
+
+### Patch Changes
+
+- c226622: Update googleapis library
+
 ## 3.0.4 - 07 April 2026
 
 ### Patch Changes

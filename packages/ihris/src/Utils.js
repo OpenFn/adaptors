@@ -5,7 +5,9 @@ import {
 } from '@openfn/language-common/util';
 import nodepath from 'node:path';
 
-let cookie;
+// Cached auth promise — concurrent requests share one login call.
+let cookiePromise;
+export const _resetAuth = () => { cookiePromise = undefined; };
 
 export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
@@ -20,9 +22,9 @@ export const prepareNextState = (state, response) => {
   };
 };
 
-export const authorize = async (configuration) => {
+export const authorize = async configuration => {
   const { username, password, baseUrl } = configuration;
-  
+
   const options = {
     body: JSON.stringify({ username, password }),
     headers: {
@@ -32,14 +34,13 @@ export const authorize = async (configuration) => {
     baseUrl,
     parseAs: 'json',
   };
-  
+
   try {
     const response = await commonRequest('POST', '/auth/login', options);
-    
+
     if (response.headers['set-cookie']) {
       return response.headers['set-cookie'].split(';')[0];
     }
-    
 
     throw new Error('No authentication cookie received from server');
   } catch (err) {
@@ -47,16 +48,25 @@ export const authorize = async (configuration) => {
     console.log(err.body);
     throw err;
   }
-}
+};
 
-export const request = async (configuration = {}, method, path, options = {}) => {
+export const request = async (
+  configuration = {},
+  method,
+  path,
+  options = {},
+) => {
   const { baseUrl, username, password } = configuration;
-    const { headers = {}, parseAs = 'json', ...otherOptions } = options;
-  let authHeaders = {};
-  
-    let cookieHeader = { 'Cookie': (options.headers?.Cookie || cookie) };
-    authHeaders = cookieHeader;
+  const { headers = {}, parseAs = 'json', ...otherOptions } = options;
 
+  if (!cookiePromise && username && password) {
+    cookiePromise = authorize(configuration).catch(err => {
+      cookiePromise = undefined; // clear on failure so next request retries
+      throw err;
+    });
+  }
+
+  const cookie = cookiePromise ? await cookiePromise : undefined;
 
   const opts = {
     parseAs,
@@ -64,17 +74,11 @@ export const request = async (configuration = {}, method, path, options = {}) =>
     ...otherOptions,
     headers: {
       'content-type': 'application/fhir+json',
-      ...authHeaders,
+      ...(cookie && { Cookie: cookie }),
       ...headers,
     },
   };
 
-
   const safePath = nodepath.join(path);
-
-  if (!opts.headers.Cookie && !cookie && username && password) {
-    cookie = await authorize(configuration);
-    opts.headers.Cookie = cookie;
-  }
   return commonRequest(method, safePath, opts).then(logResponse);
 };
