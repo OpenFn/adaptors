@@ -78,8 +78,8 @@ export default function(props: Partial<Device_Props>) {
     if (!_.isNil(props.statusReason)) {
         if (!Array.isArray(props.statusReason)) { props.statusReason = [props.statusReason]; }
 
-        resource.statusReason = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/device-status-reason", props.statusReason)
+        resource.statusReason = props.statusReason.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/device-status-reason", x))
         );
 
         dt.ensureConceptText(resource.statusReason);

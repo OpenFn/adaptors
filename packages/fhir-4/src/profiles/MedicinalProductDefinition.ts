@@ -94,7 +94,11 @@ export default function(props: Partial<MedicinalProductDefinition_Props>) {
 
     if (!_.isNil(props.route)) {
         if (!Array.isArray(props.route)) { props.route = [props.route]; }
-        resource.route = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/route-codes", props.route));
+
+        resource.route = props.route.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/route-codes", x))
+        );
+
         dt.ensureConceptText(resource.route);
     }
 
@@ -119,9 +123,8 @@ export default function(props: Partial<MedicinalProductDefinition_Props>) {
     if (!_.isNil(props.specialMeasures)) {
         if (!Array.isArray(props.specialMeasures)) { props.specialMeasures = [props.specialMeasures]; }
 
-        resource.specialMeasures = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/medicinal-product-special-measures",
-            props.specialMeasures
+        resource.specialMeasures = props.specialMeasures.map((x) => dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/medicinal-product-special-measures", x)
         ));
 
         dt.ensureConceptText(resource.specialMeasures);
@@ -139,9 +142,8 @@ export default function(props: Partial<MedicinalProductDefinition_Props>) {
     if (!_.isNil(props.classification)) {
         if (!Array.isArray(props.classification)) { props.classification = [props.classification]; }
 
-        resource.classification = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/product-classification-codes",
-            props.classification
+        resource.classification = props.classification.map((x) => dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/product-classification-codes", x)
         ));
 
         dt.ensureConceptText(resource.classification);
@@ -150,9 +152,8 @@ export default function(props: Partial<MedicinalProductDefinition_Props>) {
     if (!_.isNil(props.packagedMedicinalProduct)) {
         if (!Array.isArray(props.packagedMedicinalProduct)) { props.packagedMedicinalProduct = [props.packagedMedicinalProduct]; }
 
-        resource.packagedMedicinalProduct = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/medicinal-product-package-type",
-            props.packagedMedicinalProduct
+        resource.packagedMedicinalProduct = props.packagedMedicinalProduct.map((x) => dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/medicinal-product-package-type", x)
         ));
 
         dt.ensureConceptText(resource.packagedMedicinalProduct);
@@ -161,8 +162,8 @@ export default function(props: Partial<MedicinalProductDefinition_Props>) {
     if (!_.isNil(props.ingredient)) {
         if (!Array.isArray(props.ingredient)) { props.ingredient = [props.ingredient]; }
 
-        resource.ingredient = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/substance-codes", props.ingredient)
+        resource.ingredient = props.ingredient.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/substance-codes", x))
         );
 
         dt.ensureConceptText(resource.ingredient);

@@ -46,9 +46,8 @@ export default function(props: Partial<AppointmentResponse_Props>) {
     if (!_.isNil(props.participantType)) {
         if (!Array.isArray(props.participantType)) { props.participantType = [props.participantType]; }
 
-        resource.participantType = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/encounter-participant-type",
-            props.participantType
+        resource.participantType = props.participantType.map((x) => dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/encounter-participant-type", x)
         ));
 
         dt.ensureConceptText(resource.participantType);

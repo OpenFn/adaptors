@@ -107,7 +107,11 @@ export default function(props: Partial<DeviceDefinition_Props>) {
 
     if (!_.isNil(props.safety)) {
         if (!Array.isArray(props.safety)) { props.safety = [props.safety]; }
-        resource.safety = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/device-safety", props.safety));
+
+        resource.safety = props.safety.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/device-safety", x))
+        );
+
         dt.ensureConceptText(resource.safety);
     }
 

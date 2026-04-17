@@ -53,8 +53,8 @@ export default function(props: Partial<AdverseEvent_Props>) {
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
 
-        resource.category = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/adverse-event-category", props.category)
+        resource.category = props.category.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/adverse-event-category", x))
         );
 
         dt.ensureConceptText(resource.category);

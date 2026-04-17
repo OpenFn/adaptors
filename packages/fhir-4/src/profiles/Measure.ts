@@ -80,8 +80,8 @@ export default function(props: Partial<Measure_Props>) {
     if (!_.isNil(props.jurisdiction)) {
         if (!Array.isArray(props.jurisdiction)) { props.jurisdiction = [props.jurisdiction]; }
 
-        resource.jurisdiction = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/jurisdiction", props.jurisdiction)
+        resource.jurisdiction = props.jurisdiction.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/jurisdiction", x))
         );
 
         dt.ensureConceptText(resource.jurisdiction);
@@ -90,8 +90,8 @@ export default function(props: Partial<Measure_Props>) {
     if (!_.isNil(props.topic)) {
         if (!Array.isArray(props.topic)) { props.topic = [props.topic]; }
 
-        resource.topic = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/definition-topic", props.topic)
+        resource.topic = props.topic.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/definition-topic", x))
         );
 
         dt.ensureConceptText(resource.topic);
@@ -116,7 +116,11 @@ export default function(props: Partial<Measure_Props>) {
 
     if (!_.isNil(props.type)) {
         if (!Array.isArray(props.type)) { props.type = [props.type]; }
-        resource.type = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/measure-type", props.type));
+
+        resource.type = props.type.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/measure-type", x))
+        );
+
         dt.ensureConceptText(resource.type);
     }
 

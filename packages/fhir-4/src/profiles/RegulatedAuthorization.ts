@@ -60,7 +60,11 @@ export default function(props: Partial<RegulatedAuthorization_Props>) {
 
     if (!_.isNil(props.region)) {
         if (!Array.isArray(props.region)) { props.region = [props.region]; }
-        resource.region = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/jurisdiction", props.region));
+
+        resource.region = props.region.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/jurisdiction", x))
+        );
+
         dt.ensureConceptText(resource.region);
     }
 
@@ -83,9 +87,9 @@ export default function(props: Partial<RegulatedAuthorization_Props>) {
     if (!_.isNil(props.basis)) {
         if (!Array.isArray(props.basis)) { props.basis = [props.basis]; }
 
-        resource.basis = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/regulated-authorization-basis", props.basis)
-        );
+        resource.basis = props.basis.map((x) => dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/regulated-authorization-basis", x)
+        ));
 
         dt.ensureConceptText(resource.basis);
     }

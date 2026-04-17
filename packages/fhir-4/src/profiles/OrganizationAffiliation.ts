@@ -59,8 +59,8 @@ export default function(props: Partial<OrganizationAffiliation_Props>) {
     if (!_.isNil(props.code)) {
         if (!Array.isArray(props.code)) { props.code = [props.code]; }
 
-        resource.code = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/organization-role", props.code)
+        resource.code = props.code.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/organization-role", x))
         );
 
         dt.ensureConceptText(resource.code);
@@ -69,8 +69,8 @@ export default function(props: Partial<OrganizationAffiliation_Props>) {
     if (!_.isNil(props.specialty)) {
         if (!Array.isArray(props.specialty)) { props.specialty = [props.specialty]; }
 
-        resource.specialty = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/c80-practice-codes", props.specialty)
+        resource.specialty = props.specialty.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/c80-practice-codes", x))
         );
 
         dt.ensureConceptText(resource.specialty);

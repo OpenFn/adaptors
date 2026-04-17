@@ -85,8 +85,8 @@ export default function(props: Partial<ActivityDefinition_Props>) {
     if (!_.isNil(props.jurisdiction)) {
         if (!Array.isArray(props.jurisdiction)) { props.jurisdiction = [props.jurisdiction]; }
 
-        resource.jurisdiction = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/jurisdiction", props.jurisdiction)
+        resource.jurisdiction = props.jurisdiction.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/jurisdiction", x))
         );
 
         dt.ensureConceptText(resource.jurisdiction);
@@ -95,8 +95,8 @@ export default function(props: Partial<ActivityDefinition_Props>) {
     if (!_.isNil(props.topic)) {
         if (!Array.isArray(props.topic)) { props.topic = [props.topic]; }
 
-        resource.topic = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/definition-topic", props.topic)
+        resource.topic = props.topic.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/definition-topic", x))
         );
 
         dt.ensureConceptText(resource.topic);
@@ -137,7 +137,11 @@ export default function(props: Partial<ActivityDefinition_Props>) {
 
     if (!_.isNil(props.bodySite)) {
         if (!Array.isArray(props.bodySite)) { props.bodySite = [props.bodySite]; }
-        resource.bodySite = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site", props.bodySite));
+
+        resource.bodySite = props.bodySite.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site", x))
+        );
+
         dt.ensureConceptText(resource.bodySite);
     }
 

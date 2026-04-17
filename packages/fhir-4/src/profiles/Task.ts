@@ -110,8 +110,8 @@ export default function(props: Partial<Task_Props>) {
     if (!_.isNil(props.performerType)) {
         if (!Array.isArray(props.performerType)) { props.performerType = [props.performerType]; }
 
-        resource.performerType = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/performer-role", props.performerType)
+        resource.performerType = props.performerType.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/performer-role", x))
         );
 
         dt.ensureConceptText(resource.performerType);

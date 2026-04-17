@@ -65,8 +65,8 @@ export default function(props: Partial<Appointment_Props>) {
     if (!_.isNil(props.serviceCategory)) {
         if (!Array.isArray(props.serviceCategory)) { props.serviceCategory = [props.serviceCategory]; }
 
-        resource.serviceCategory = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/service-category", props.serviceCategory)
+        resource.serviceCategory = props.serviceCategory.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/service-category", x))
         );
 
         dt.ensureConceptText(resource.serviceCategory);
@@ -75,8 +75,8 @@ export default function(props: Partial<Appointment_Props>) {
     if (!_.isNil(props.serviceType)) {
         if (!Array.isArray(props.serviceType)) { props.serviceType = [props.serviceType]; }
 
-        resource.serviceType = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/service-type", props.serviceType)
+        resource.serviceType = props.serviceType.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/service-type", x))
         );
 
         dt.ensureConceptText(resource.serviceType);
@@ -85,8 +85,8 @@ export default function(props: Partial<Appointment_Props>) {
     if (!_.isNil(props.specialty)) {
         if (!Array.isArray(props.specialty)) { props.specialty = [props.specialty]; }
 
-        resource.specialty = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/c80-practice-codes", props.specialty)
+        resource.specialty = props.specialty.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/c80-practice-codes", x))
         );
 
         dt.ensureConceptText(resource.specialty);
@@ -103,8 +103,8 @@ export default function(props: Partial<Appointment_Props>) {
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
 
-        resource.reasonCode = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/encounter-reason", props.reasonCode)
+        resource.reasonCode = props.reasonCode.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/encounter-reason", x))
         );
 
         dt.ensureConceptText(resource.reasonCode);

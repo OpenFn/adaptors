@@ -68,10 +68,9 @@ export default function(props: Partial<NutritionOrder_Props>) {
     if (!_.isNil(props.foodPreferenceModifier)) {
         if (!Array.isArray(props.foodPreferenceModifier)) { props.foodPreferenceModifier = [props.foodPreferenceModifier]; }
 
-        resource.foodPreferenceModifier = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/encounter-diet",
-            props.foodPreferenceModifier
-        ));
+        resource.foodPreferenceModifier = props.foodPreferenceModifier.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/encounter-diet", x))
+        );
 
         dt.ensureConceptText(resource.foodPreferenceModifier);
     }
@@ -79,8 +78,8 @@ export default function(props: Partial<NutritionOrder_Props>) {
     if (!_.isNil(props.excludeFoodModifier)) {
         if (!Array.isArray(props.excludeFoodModifier)) { props.excludeFoodModifier = [props.excludeFoodModifier]; }
 
-        resource.excludeFoodModifier = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/food-type", props.excludeFoodModifier)
+        resource.excludeFoodModifier = props.excludeFoodModifier.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/food-type", x))
         );
 
         dt.ensureConceptText(resource.excludeFoodModifier);

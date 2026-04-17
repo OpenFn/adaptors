@@ -108,8 +108,8 @@ export default function(props: Partial<Specimen_Props>) {
     if (!_.isNil(props.condition)) {
         if (!Array.isArray(props.condition)) { props.condition = [props.condition]; }
 
-        resource.condition = dt.concept(
-            dt.lookupValue("http://terminology.hl7.org/ValueSet/v2-0493", props.condition)
+        resource.condition = props.condition.map(
+            (x) => dt.concept(dt.lookupValue("http://terminology.hl7.org/ValueSet/v2-0493", x))
         );
 
         dt.ensureConceptText(resource.condition);

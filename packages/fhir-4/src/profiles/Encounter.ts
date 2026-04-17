@@ -92,7 +92,11 @@ export default function(props: Partial<Encounter_Props>) {
 
     if (!_.isNil(props.type)) {
         if (!Array.isArray(props.type)) { props.type = [props.type]; }
-        resource.type = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/encounter-type", props.type));
+
+        resource.type = props.type.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/encounter-type", x))
+        );
+
         dt.ensureConceptText(resource.type);
     }
 
@@ -148,8 +152,8 @@ export default function(props: Partial<Encounter_Props>) {
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
 
-        resource.reasonCode = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/encounter-reason", props.reasonCode)
+        resource.reasonCode = props.reasonCode.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/encounter-reason", x))
         );
 
         dt.ensureConceptText(resource.reasonCode);

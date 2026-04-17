@@ -51,8 +51,8 @@ export default function(props: Partial<Ingredient_Props>) {
     if (!_.isNil(props.function)) {
         if (!Array.isArray(props.function)) { props.function = [props.function]; }
 
-        resource.function = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/ingredient-function", props.function)
+        resource.function = props.function.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/ingredient-function", x))
         );
 
         dt.ensureConceptText(resource.function);

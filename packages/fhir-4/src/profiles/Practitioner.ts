@@ -58,8 +58,8 @@ export default function(props: Partial<Practitioner_Props>) {
     if (!_.isNil(props.communication)) {
         if (!Array.isArray(props.communication)) { props.communication = [props.communication]; }
 
-        resource.communication = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/languages", props.communication)
+        resource.communication = props.communication.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/languages", x))
         );
 
         dt.ensureConceptText(resource.communication);

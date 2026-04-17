@@ -80,10 +80,9 @@ export default function(props: Partial<PackagedProductDefinition_Props>) {
     if (!_.isNil(props.characteristic)) {
         if (!Array.isArray(props.characteristic)) { props.characteristic = [props.characteristic]; }
 
-        resource.characteristic = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/package-characteristic",
-            props.characteristic
-        ));
+        resource.characteristic = props.characteristic.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/package-characteristic", x))
+        );
 
         dt.ensureConceptText(resource.characteristic);
     }
