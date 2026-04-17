@@ -1,5 +1,11 @@
 # @openfn/generate-fhir
 
+## 0.7.8
+
+### Patch Changes
+
+- Generate typedefs for core data types
+
 ## 0.7.7
 
 ### Patch Changes
