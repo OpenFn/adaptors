@@ -55,9 +55,8 @@ export default function(props: Partial<BodyStructure_Props>) {
     if (!_.isNil(props.locationQualifier)) {
         if (!Array.isArray(props.locationQualifier)) { props.locationQualifier = [props.locationQualifier]; }
 
-        resource.locationQualifier = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/bodystructure-relative-location",
-            props.locationQualifier
+        resource.locationQualifier = props.locationQualifier.map((x) => dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/bodystructure-relative-location", x)
         ));
 
         dt.ensureConceptText(resource.locationQualifier);

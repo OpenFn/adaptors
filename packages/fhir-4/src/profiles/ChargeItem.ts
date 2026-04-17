@@ -111,7 +111,11 @@ export default function(props: Partial<ChargeItem_Props>) {
 
     if (!_.isNil(props.bodysite)) {
         if (!Array.isArray(props.bodysite)) { props.bodysite = [props.bodysite]; }
-        resource.bodysite = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site", props.bodysite));
+
+        resource.bodysite = props.bodysite.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/body-site", x))
+        );
+
         dt.ensureConceptText(resource.bodysite);
     }
 
@@ -121,7 +125,11 @@ export default function(props: Partial<ChargeItem_Props>) {
 
     if (!_.isNil(props.reason)) {
         if (!Array.isArray(props.reason)) { props.reason = [props.reason]; }
-        resource.reason = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/icd-10", props.reason));
+
+        resource.reason = props.reason.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/icd-10", x))
+        );
+
         dt.ensureConceptText(resource.reason);
     }
 

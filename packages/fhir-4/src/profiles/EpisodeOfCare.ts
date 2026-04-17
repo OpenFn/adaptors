@@ -60,8 +60,8 @@ export default function(props: Partial<EpisodeOfCare_Props>) {
     if (!_.isNil(props.type)) {
         if (!Array.isArray(props.type)) { props.type = [props.type]; }
 
-        resource.type = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/episodeofcare-type", props.type)
+        resource.type = props.type.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/episodeofcare-type", x))
         );
 
         dt.ensureConceptText(resource.type);

@@ -58,9 +58,8 @@ export default function(props: Partial<MedicationAdministration_Props>) {
     if (!_.isNil(props.statusReason)) {
         if (!Array.isArray(props.statusReason)) { props.statusReason = [props.statusReason]; }
 
-        resource.statusReason = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/reason-medication-not-given-codes",
-            props.statusReason
+        resource.statusReason = props.statusReason.map((x) => dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/reason-medication-not-given-codes", x)
         ));
 
         dt.ensureConceptText(resource.statusReason);
@@ -114,9 +113,8 @@ export default function(props: Partial<MedicationAdministration_Props>) {
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
 
-        resource.reasonCode = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/reason-medication-given-codes",
-            props.reasonCode
+        resource.reasonCode = props.reasonCode.map((x) => dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/reason-medication-given-codes", x)
         ));
 
         dt.ensureConceptText(resource.reasonCode);

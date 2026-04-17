@@ -9,7 +9,7 @@ import fetchSpec, { Meta } from './fetch-spec';
 import generateSchema from './generate-schema';
 import generateCode from './generate-code';
 import withDisclaimer from './util/disclaimer';
-import generateDTS, { generateDataTypes } from './generate-dts';
+import generateDTS, { generateDataTypes, generateTypedefs } from './generate-dts';
 import generateTests from './generate-tests';
 
 import toolPkg from '../package.json' assert { type: 'json' };
@@ -209,6 +209,11 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
       const dtsPath = path.resolve(adaptorPath, 'src/fhir.ts');
       console.log('Writing datatype schemas to ', dtsPath);
       await writeFile(dtsPath, withDisclaimer(src));
+
+      const typedefs = generateTypedefs(dtSchema, mappings);
+      const typedefsPath = path.resolve(adaptorPath, 'src/typedefs.js');
+      console.log('Writing JSDoc typedefs to ', typedefsPath);
+      await writeFile(typedefsPath, withDisclaimer(typedefs));
     } catch (e) {
       console.log('Skipping datatype generation');
     }

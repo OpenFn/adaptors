@@ -136,8 +136,8 @@ export default function(props: Partial<Contract_Props>) {
     if (!_.isNil(props.subType)) {
         if (!Array.isArray(props.subType)) { props.subType = [props.subType]; }
 
-        resource.subType = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/contract-subtype", props.subType)
+        resource.subType = props.subType.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/contract-subtype", x))
         );
 
         dt.ensureConceptText(resource.subType);

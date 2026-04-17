@@ -47,10 +47,10 @@ export default function(props: Partial<SpecimenDefinition_Props>) {
     if (!_.isNil(props.patientPreparation)) {
         if (!Array.isArray(props.patientPreparation)) { props.patientPreparation = [props.patientPreparation]; }
 
-        resource.patientPreparation = dt.concept(dt.lookupValue(
+        resource.patientPreparation = props.patientPreparation.map((x) => dt.concept(dt.lookupValue(
             "http://hl7.org/fhir/ValueSet/prepare-patient-prior-specimen-collection",
-            props.patientPreparation
-        ));
+            x
+        )));
 
         dt.ensureConceptText(resource.patientPreparation);
     }
@@ -58,8 +58,8 @@ export default function(props: Partial<SpecimenDefinition_Props>) {
     if (!_.isNil(props.collection)) {
         if (!Array.isArray(props.collection)) { props.collection = [props.collection]; }
 
-        resource.collection = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/specimen-collection", props.collection)
+        resource.collection = props.collection.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/specimen-collection", x))
         );
 
         dt.ensureConceptText(resource.collection);

@@ -138,8 +138,8 @@ export default function(props: Partial<Immunization_Props>) {
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
 
-        resource.reasonCode = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/immunization-reason", props.reasonCode)
+        resource.reasonCode = props.reasonCode.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/immunization-reason", x))
         );
 
         dt.ensureConceptText(resource.reasonCode);
@@ -153,9 +153,8 @@ export default function(props: Partial<Immunization_Props>) {
     if (!_.isNil(props.subpotentReason)) {
         if (!Array.isArray(props.subpotentReason)) { props.subpotentReason = [props.subpotentReason]; }
 
-        resource.subpotentReason = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/immunization-subpotent-reason",
-            props.subpotentReason
+        resource.subpotentReason = props.subpotentReason.map((x) => dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/immunization-subpotent-reason", x)
         ));
 
         dt.ensureConceptText(resource.subpotentReason);
@@ -178,9 +177,8 @@ export default function(props: Partial<Immunization_Props>) {
     if (!_.isNil(props.programEligibility)) {
         if (!Array.isArray(props.programEligibility)) { props.programEligibility = [props.programEligibility]; }
 
-        resource.programEligibility = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/immunization-program-eligibility",
-            props.programEligibility
+        resource.programEligibility = props.programEligibility.map((x) => dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/immunization-program-eligibility", x)
         ));
 
         dt.ensureConceptText(resource.programEligibility);

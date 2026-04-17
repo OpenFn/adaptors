@@ -59,10 +59,10 @@ export default function(props: Partial<Location_Props>) {
     if (!_.isNil(props.type)) {
         if (!Array.isArray(props.type)) { props.type = [props.type]; }
 
-        resource.type = dt.concept(dt.lookupValue(
+        resource.type = props.type.map((x) => dt.concept(dt.lookupValue(
             "http://terminology.hl7.org/ValueSet/v3-ServiceDeliveryLocationRoleType",
-            props.type
-        ));
+            x
+        )));
 
         dt.ensureConceptText(resource.type);
     }

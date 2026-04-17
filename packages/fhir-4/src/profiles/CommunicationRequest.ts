@@ -75,8 +75,8 @@ export default function(props: Partial<CommunicationRequest_Props>) {
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
 
-        resource.category = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/communication-category", props.category)
+        resource.category = props.category.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/communication-category", x))
         );
 
         dt.ensureConceptText(resource.category);
@@ -85,9 +85,9 @@ export default function(props: Partial<CommunicationRequest_Props>) {
     if (!_.isNil(props.medium)) {
         if (!Array.isArray(props.medium)) { props.medium = [props.medium]; }
 
-        resource.medium = dt.concept(
-            dt.lookupValue("http://terminology.hl7.org/ValueSet/v3-ParticipationMode", props.medium)
-        );
+        resource.medium = props.medium.map((x) => dt.concept(
+            dt.lookupValue("http://terminology.hl7.org/ValueSet/v3-ParticipationMode", x)
+        ));
 
         dt.ensureConceptText(resource.medium);
     }
@@ -140,8 +140,8 @@ export default function(props: Partial<CommunicationRequest_Props>) {
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
 
-        resource.reasonCode = dt.concept(
-            dt.lookupValue("http://terminology.hl7.org/ValueSet/v3-ActReason", props.reasonCode)
+        resource.reasonCode = props.reasonCode.map(
+            (x) => dt.concept(dt.lookupValue("http://terminology.hl7.org/ValueSet/v3-ActReason", x))
         );
 
         dt.ensureConceptText(resource.reasonCode);

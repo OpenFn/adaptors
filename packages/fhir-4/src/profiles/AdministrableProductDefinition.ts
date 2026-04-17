@@ -72,8 +72,8 @@ export default function(props: Partial<AdministrableProductDefinition_Props>) {
     if (!_.isNil(props.ingredient)) {
         if (!Array.isArray(props.ingredient)) { props.ingredient = [props.ingredient]; }
 
-        resource.ingredient = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/substance-codes", props.ingredient)
+        resource.ingredient = props.ingredient.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/substance-codes", x))
         );
 
         dt.ensureConceptText(resource.ingredient);

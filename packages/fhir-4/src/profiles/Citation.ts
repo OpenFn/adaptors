@@ -63,8 +63,8 @@ export default function(props: Partial<Citation_Props>) {
     if (!_.isNil(props.jurisdiction)) {
         if (!Array.isArray(props.jurisdiction)) { props.jurisdiction = [props.jurisdiction]; }
 
-        resource.jurisdiction = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/jurisdiction", props.jurisdiction)
+        resource.jurisdiction = props.jurisdiction.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/jurisdiction", x))
         );
 
         dt.ensureConceptText(resource.jurisdiction);
@@ -101,8 +101,8 @@ export default function(props: Partial<Citation_Props>) {
     if (!_.isNil(props.currentState)) {
         if (!Array.isArray(props.currentState)) { props.currentState = [props.currentState]; }
 
-        resource.currentState = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/citation-status-type", props.currentState)
+        resource.currentState = props.currentState.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/citation-status-type", x))
         );
 
         dt.ensureConceptText(resource.currentState);

@@ -65,9 +65,8 @@ export default function(props: Partial<VerificationResult_Props>) {
     if (!_.isNil(props.validationProcess)) {
         if (!Array.isArray(props.validationProcess)) { props.validationProcess = [props.validationProcess]; }
 
-        resource.validationProcess = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/verificationresult-validation-process",
-            props.validationProcess
+        resource.validationProcess = props.validationProcess.map((x) => dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/verificationresult-validation-process", x)
         ));
 
         dt.ensureConceptText(resource.validationProcess);

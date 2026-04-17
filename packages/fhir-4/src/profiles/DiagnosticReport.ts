@@ -57,9 +57,9 @@ export default function(props: Partial<DiagnosticReport_Props>) {
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
 
-        resource.category = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/diagnostic-service-sections", props.category)
-        );
+        resource.category = props.category.map((x) => dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/diagnostic-service-sections", x)
+        ));
 
         dt.ensureConceptText(resource.category);
     }
@@ -124,8 +124,8 @@ export default function(props: Partial<DiagnosticReport_Props>) {
     if (!_.isNil(props.conclusionCode)) {
         if (!Array.isArray(props.conclusionCode)) { props.conclusionCode = [props.conclusionCode]; }
 
-        resource.conclusionCode = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/clinical-findings", props.conclusionCode)
+        resource.conclusionCode = props.conclusionCode.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/clinical-findings", x))
         );
 
         dt.ensureConceptText(resource.conclusionCode);

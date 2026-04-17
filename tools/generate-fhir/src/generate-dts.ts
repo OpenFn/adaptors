@@ -309,6 +309,36 @@ const createTypeNode = (
   return node;
 };
 
+/**
+ * Resolve a schema prop to type string for JSDoc.
+ */
+const resolveTypeString = (
+  incomingType: string | string[],
+  isArray?: boolean,
+  shorthands?: string[],
+): string => {
+  const tm = typeMap as Record<string, string>;
+  let types: string[];
+  if (Array.isArray(incomingType)) {
+    types = incomingType.map(t => tm[t] ?? t);
+  } else {
+    types = [tm[incomingType] ?? incomingType];
+  }
+
+  if (shorthands?.length) {
+    types = [...shorthands, ...types];
+  }
+
+  // Deduplicate
+  types = Array.from(new Set(types));
+
+  let result = types.join('|');
+  if (isArray && !shorthands?.length) {
+    result += '[]';
+  }
+  return result;
+};
+
 export const generateType = (
   resourceName: string,
   schema: Schema,
@@ -479,6 +509,65 @@ const generateInlineType = (typeDef: PropDef) => {
     );
   }
   return b.createTypeLiteralNode(props);
+};
+
+// Datatypes to generate JSDoc @typedef blocks for.
+// Add types we want documented here.
+const typedefsToGenerate = [
+  'Identifier',
+  'Reference',
+  'CodeableConcept',
+  'Period',
+  'HumanName',
+  'ContactPoint',
+  'Address',
+  'Coding',
+];
+
+/**
+ * Generate JSDoc @typedef blocks for FHIR datatypes.
+ */
+export const generateTypedefs = (
+  schema: Record<string, Schema[]>,
+  mappings: MappingSpec = {},
+): string => {
+  const tm = typeMap as Record<string, string>;
+  const blocks: string[] = [];
+
+  for (const resourceType in schema) {
+    const profile = schema[resourceType][0];
+
+    // Skip primitives that map to plain JS types
+    if (profile.id in tm) {
+      continue;
+    }
+
+    // Only generate typedefs for types in the hardcoded list
+    if (!typedefsToGenerate.includes(profile.id)) {
+      continue;
+    }
+
+    const lines: string[] = [];
+    lines.push(` * @typedef {Object} ${profile.id}`);
+
+    const allKeys = Object.keys(profile.props).sort();
+    for (const key of allKeys) {
+      const s = profile.props[key];
+      if (!s || !s.type) continue;
+
+      // Look up shorthands for the first type
+      const primaryType = Array.isArray(s.type) ? s.type[0] : s.type;
+      const shorthands = mappings.typeShorthands?.[primaryType];
+
+      const typeStr = resolveTypeString(s.type, s.isArray, shorthands);
+      const desc = s.desc || '';
+      lines.push(` * @property {${typeStr}} [${key}] - ${desc}`);
+    }
+
+    blocks.push(`/**\n${lines.join('\n')}\n */`);
+  }
+
+  return blocks.join('\n\n') + '\n';
 };
 
 export default generateDTS;

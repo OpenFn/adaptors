@@ -56,8 +56,8 @@ export default function(props: Partial<Questionnaire_Props>) {
     if (!_.isNil(props.jurisdiction)) {
         if (!Array.isArray(props.jurisdiction)) { props.jurisdiction = [props.jurisdiction]; }
 
-        resource.jurisdiction = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/jurisdiction", props.jurisdiction)
+        resource.jurisdiction = props.jurisdiction.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/jurisdiction", x))
         );
 
         dt.ensureConceptText(resource.jurisdiction);

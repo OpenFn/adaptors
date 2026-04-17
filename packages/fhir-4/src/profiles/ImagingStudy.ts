@@ -93,8 +93,8 @@ export default function(props: Partial<ImagingStudy_Props>) {
     if (!_.isNil(props.procedureCode)) {
         if (!Array.isArray(props.procedureCode)) { props.procedureCode = [props.procedureCode]; }
 
-        resource.procedureCode = dt.concept(
-            dt.lookupValue("http://www.rsna.org/RadLex_Playbook.aspx", props.procedureCode)
+        resource.procedureCode = props.procedureCode.map(
+            (x) => dt.concept(dt.lookupValue("http://www.rsna.org/RadLex_Playbook.aspx", x))
         );
 
         dt.ensureConceptText(resource.procedureCode);
@@ -107,8 +107,8 @@ export default function(props: Partial<ImagingStudy_Props>) {
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
 
-        resource.reasonCode = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-reason", props.reasonCode)
+        resource.reasonCode = props.reasonCode.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/procedure-reason", x))
         );
 
         dt.ensureConceptText(resource.reasonCode);

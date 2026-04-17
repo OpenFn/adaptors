@@ -58,8 +58,8 @@ export default function(props: Partial<Goal_Props>) {
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
 
-        resource.category = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/goal-category", props.category)
+        resource.category = props.category.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/goal-category", x))
         );
 
         dt.ensureConceptText(resource.category);
@@ -116,8 +116,8 @@ export default function(props: Partial<Goal_Props>) {
     if (!_.isNil(props.outcomeCode)) {
         if (!Array.isArray(props.outcomeCode)) { props.outcomeCode = [props.outcomeCode]; }
 
-        resource.outcomeCode = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/clinical-findings", props.outcomeCode)
+        resource.outcomeCode = props.outcomeCode.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/clinical-findings", x))
         );
 
         dt.ensureConceptText(resource.outcomeCode);

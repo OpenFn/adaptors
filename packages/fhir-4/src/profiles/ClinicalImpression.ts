@@ -118,9 +118,8 @@ export default function(props: Partial<ClinicalImpression_Props>) {
     if (!_.isNil(props.prognosisCodeableConcept)) {
         if (!Array.isArray(props.prognosisCodeableConcept)) { props.prognosisCodeableConcept = [props.prognosisCodeableConcept]; }
 
-        resource.prognosisCodeableConcept = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/clinicalimpression-prognosis",
-            props.prognosisCodeableConcept
+        resource.prognosisCodeableConcept = props.prognosisCodeableConcept.map((x) => dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/clinicalimpression-prognosis", x)
         ));
 
         dt.ensureConceptText(resource.prognosisCodeableConcept);

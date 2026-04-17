@@ -507,7 +507,12 @@ const mapProps = (schema, mappings) => {
         // spec.type.includes('Code') ||
         spec.type.includes('CodeableConcept')
       ) {
-        props.push(mapCodeableConcept(key, mappings[key], spec));
+        try {
+          props.push(mapCodeableConcept(key, mappings[key], spec));
+        } catch (e) {
+          console.log(key, spec);
+          throw e;
+        }
       } else {
         // TODO what happens if the type is like `reference | identifier`? Such contrasting types?
         if (spec.type.includes('Reference')) {
@@ -795,12 +800,14 @@ const mapCodeableConcept = (
         b.memberExpression(b.identifier('dt'), b.identifier('lookupValue')),
         [b.stringLiteral(schema.valueSet), rhs],
       );
-
-      callBuilder = b.callExpression(
-        b.memberExpression(b.identifier('dt'), b.identifier('concept')),
-        [rhs],
-      );
     }
+  }
+
+  if (!callBuilder) {
+    callBuilder = b.callExpression(
+      b.memberExpression(b.identifier('dt'), b.identifier('concept')),
+      [rhs],
+    );
   }
 
   statements.push(assignToInput(propName, callBuilder));

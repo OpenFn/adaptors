@@ -2,6 +2,7 @@ import _ from 'lodash';
 
 import type * as FHIR from './fhir';
 export type * from './fhir';
+import './typedefs';
 
 let systemMap = {};
 

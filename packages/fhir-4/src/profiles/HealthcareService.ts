@@ -62,8 +62,8 @@ export default function(props: Partial<HealthcareService_Props>) {
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
 
-        resource.category = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/service-category", props.category)
+        resource.category = props.category.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/service-category", x))
         );
 
         dt.ensureConceptText(resource.category);
@@ -71,15 +71,19 @@ export default function(props: Partial<HealthcareService_Props>) {
 
     if (!_.isNil(props.type)) {
         if (!Array.isArray(props.type)) { props.type = [props.type]; }
-        resource.type = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/service-type", props.type));
+
+        resource.type = props.type.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/service-type", x))
+        );
+
         dt.ensureConceptText(resource.type);
     }
 
     if (!_.isNil(props.specialty)) {
         if (!Array.isArray(props.specialty)) { props.specialty = [props.specialty]; }
 
-        resource.specialty = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/c80-practice-codes", props.specialty)
+        resource.specialty = props.specialty.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/c80-practice-codes", x))
         );
 
         dt.ensureConceptText(resource.specialty);
@@ -98,9 +102,8 @@ export default function(props: Partial<HealthcareService_Props>) {
     if (!_.isNil(props.serviceProvisionCode)) {
         if (!Array.isArray(props.serviceProvisionCode)) { props.serviceProvisionCode = [props.serviceProvisionCode]; }
 
-        resource.serviceProvisionCode = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/service-provision-conditions",
-            props.serviceProvisionCode
+        resource.serviceProvisionCode = props.serviceProvisionCode.map((x) => dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/service-provision-conditions", x)
         ));
 
         dt.ensureConceptText(resource.serviceProvisionCode);
@@ -122,7 +125,11 @@ export default function(props: Partial<HealthcareService_Props>) {
 
     if (!_.isNil(props.program)) {
         if (!Array.isArray(props.program)) { props.program = [props.program]; }
-        resource.program = dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/program", props.program));
+
+        resource.program = props.program.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/program", x))
+        );
+
         dt.ensureConceptText(resource.program);
     }
 
@@ -135,8 +142,8 @@ export default function(props: Partial<HealthcareService_Props>) {
     if (!_.isNil(props.communication)) {
         if (!Array.isArray(props.communication)) { props.communication = [props.communication]; }
 
-        resource.communication = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/languages", props.communication)
+        resource.communication = props.communication.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/languages", x))
         );
 
         dt.ensureConceptText(resource.communication);
@@ -145,10 +152,9 @@ export default function(props: Partial<HealthcareService_Props>) {
     if (!_.isNil(props.referralMethod)) {
         if (!Array.isArray(props.referralMethod)) { props.referralMethod = [props.referralMethod]; }
 
-        resource.referralMethod = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/service-referral-method",
-            props.referralMethod
-        ));
+        resource.referralMethod = props.referralMethod.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/service-referral-method", x))
+        );
 
         dt.ensureConceptText(resource.referralMethod);
     }

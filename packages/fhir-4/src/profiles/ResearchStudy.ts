@@ -97,8 +97,8 @@ export default function(props: Partial<ResearchStudy_Props>) {
     if (!_.isNil(props.condition)) {
         if (!Array.isArray(props.condition)) { props.condition = [props.condition]; }
 
-        resource.condition = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-code", props.condition)
+        resource.condition = props.condition.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/condition-code", x))
         );
 
         dt.ensureConceptText(resource.condition);
@@ -113,8 +113,8 @@ export default function(props: Partial<ResearchStudy_Props>) {
     if (!_.isNil(props.location)) {
         if (!Array.isArray(props.location)) { props.location = [props.location]; }
 
-        resource.location = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/jurisdiction", props.location)
+        resource.location = props.location.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/jurisdiction", x))
         );
 
         dt.ensureConceptText(resource.location);

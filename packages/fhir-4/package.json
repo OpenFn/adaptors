@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-fhir-4",
   "label": "FHIR r4",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "OpenFn FHIR r4 adaptor",
   "scripts": {
     "build": "pnpm clean && build-adaptor fhir-4 src docs",
@@ -18,8 +18,8 @@
   "type": "module",
   "fhir": {
     "specUrl": "https://hl7.org/fhir/R4B/definitions.json.zip",
-    "adaptorGeneratedDate": "2026-03-12T12:17:41.447Z",
-    "generatorVersion": "0.7.3",
+    "adaptorGeneratedDate": "2026-04-17T08:28:36.946Z",
+    "generatorVersion": "0.7.8",
     "options": {
       "simpleBuilders": true
     }

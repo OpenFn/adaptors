@@ -124,8 +124,8 @@ export default function(props: Partial<MedicationKnowledge_Props>) {
     if (!_.isNil(props.intendedRoute)) {
         if (!Array.isArray(props.intendedRoute)) { props.intendedRoute = [props.intendedRoute]; }
 
-        resource.intendedRoute = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/route-codes", props.intendedRoute)
+        resource.intendedRoute = props.intendedRoute.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/route-codes", x))
         );
 
         dt.ensureConceptText(resource.intendedRoute);

@@ -90,8 +90,8 @@ export default function(props: Partial<SupplyRequest_Props>) {
     if (!_.isNil(props.reasonCode)) {
         if (!Array.isArray(props.reasonCode)) { props.reasonCode = [props.reasonCode]; }
 
-        resource.reasonCode = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/supplyrequest-reason", props.reasonCode)
+        resource.reasonCode = props.reasonCode.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/supplyrequest-reason", x))
         );
 
         dt.ensureConceptText(resource.reasonCode);

@@ -68,8 +68,8 @@ export default function(props: Partial<Observation_Props>) {
     if (!_.isNil(props.category)) {
         if (!Array.isArray(props.category)) { props.category = [props.category]; }
 
-        resource.category = dt.concept(
-            dt.lookupValue("http://hl7.org/fhir/ValueSet/observation-category", props.category)
+        resource.category = props.category.map(
+            (x) => dt.concept(dt.lookupValue("http://hl7.org/fhir/ValueSet/observation-category", x))
         );
 
         dt.ensureConceptText(resource.category);
@@ -122,9 +122,8 @@ export default function(props: Partial<Observation_Props>) {
     if (!_.isNil(props.interpretation)) {
         if (!Array.isArray(props.interpretation)) { props.interpretation = [props.interpretation]; }
 
-        resource.interpretation = dt.concept(dt.lookupValue(
-            "http://hl7.org/fhir/ValueSet/observation-interpretation",
-            props.interpretation
+        resource.interpretation = props.interpretation.map((x) => dt.concept(
+            dt.lookupValue("http://hl7.org/fhir/ValueSet/observation-interpretation", x)
         ));
 
         dt.ensureConceptText(resource.interpretation);
