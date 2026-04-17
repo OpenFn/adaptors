@@ -1,5 +1,12 @@
 # @openfn/language-fhir-4
 
+## 0.5.2 - 17 April 2026
+
+### Patch Changes
+
+- - Rebuild with latest generator
+  - Add basic type interfaces to docs
+
 ## 0.5.1 - 07 April 2026
 
 ### Patch Changes
