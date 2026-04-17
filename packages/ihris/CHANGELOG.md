@@ -1,6 +1,6 @@
 # @openfn/language-ihris
 
-## 1.1.0
+## 1.1.0 - 17 April 2026
 
 ### Minor Changes
 
