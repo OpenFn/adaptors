@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The base URL (https://stelab.org) for the API",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://stelab.org"]
+    },
+    "apiKey": {
+      "title": "API Key",
+      "type": "string",
+      "description": "API Key",
+      "examples": ["your-api-key-here"]
+    },
+    "apiPath": {
+      "title": "API Path",
+      "type": "string",
+      "description": "API Path",
+      "examples": ["api/v1"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["apiKey", "baseUrl"]
+}
