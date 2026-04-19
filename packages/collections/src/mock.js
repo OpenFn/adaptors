@@ -170,12 +170,12 @@ export function createServer(url = 'https://app.openfn.org') {
 
     try {
       let { name, key } = parsePath(req.path);
-
+      const projectId = req.query?.project_id ?? null;
       let body;
       let statusCode = 200;
 
       if (key) {
-        const collection = api.getCollection();
+        const collection = api.getCollection(projectId, name);
         const result = collection[key];
         if (!result) {
           body = {};
@@ -195,7 +195,7 @@ export function createServer(url = 'https://app.openfn.org') {
         const limit = params.get('limit') ?? Infinity;
         const cursor = params.get('cursor') ?? 0;
 
-        const { items, cursor: finalCursor } = api.fetch(name, key, {
+        const { items, cursor: finalCursor } = api.fetch(projectId, name, key, {
           limit,
           cursor,
         });
@@ -216,6 +216,9 @@ export function createServer(url = 'https://app.openfn.org') {
       if (e.message === COLLECTION_NOT_FOUND) {
         return { statusCode: 404 };
       }
+      if (e.message === MULTIPLE_MATCHES) {
+        return { statusCode: 409 };
+      }
     }
     return { statusCode: 500 };
   };
@@ -233,10 +236,11 @@ export function createServer(url = 'https://app.openfn.org') {
     try {
       const { name, key } = parsePath(req.path);
       const body = JSON.parse(req.body);
+      const projectId = req.query?.project_id ?? null;
 
       for (const { key, value } of body.items) {
         // TODO error if key or value not set
-        api.upsert(name, key, value);
+        api.upsert(projectId, name, key, value);
         upserted++;
       }
 
@@ -251,6 +255,9 @@ export function createServer(url = 'https://app.openfn.org') {
       if (e.message === COLLECTION_NOT_FOUND) {
         return { statusCode: 404 };
       }
+      if (e.message === MULTIPLE_MATCHES) {
+        return { statusCode: 409 };
+      }
     }
   };
 
@@ -263,12 +270,13 @@ export function createServer(url = 'https://app.openfn.org') {
 
     try {
       let { name, key } = parsePath(req.path);
+      const projectId = req.query?.project_id ?? null;
       if (!key) {
         const params = new URLSearchParams(req.query || req.path.split('?')[1]);
         key = params.get('key') ?? '*';
       }
 
-      const keys = api.remove(name, key);
+      const keys = api.remove(projectId, name, key);
 
       return {
         statusCode: 200,
@@ -280,6 +288,9 @@ export function createServer(url = 'https://app.openfn.org') {
     } catch (e) {
       if (e.message === COLLECTION_NOT_FOUND) {
         return { statusCode: 404 };
+      }
+      if (e.message === MULTIPLE_MATCHES) {
+        return { statusCode: 409 };
       }
     }
   };
