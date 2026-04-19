@@ -467,6 +467,10 @@ export const request = async (state, client, path, options = {}) => {
 
   const { headers: _h, query: _q, ...otherOptions } = options;
   const query = parseQuery(options);
+  if (state.configuration.project_id) {
+    query.project_id = state.configuration.project_id;
+  }
+
   const args = {
     path: nodepath.posix.join(basePath, path),
     headers,

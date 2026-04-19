@@ -10,6 +10,7 @@ const { api } = client;
 setMockClient(client);
 
 const COLLECTION = 'my-collection';
+const PROJECT = 'project1';
 
 afterEach(() => {
   api.reset();
@@ -17,14 +18,14 @@ afterEach(() => {
 
 // Set up a simple collection with some defaults
 const init = items => {
-  api.createCollection(COLLECTION);
+  api.createCollection(PROJECT, COLLECTION);
 
   if (items) {
     for (const [key, value] of items) {
-      api.upsert(COLLECTION, key, JSON.stringify(value));
+      api.upsert(PROJECT, COLLECTION, key, JSON.stringify(value));
     }
   } else {
-    api.upsert(COLLECTION, 'x', JSON.stringify({ id: 'x' }));
+    api.upsert(PROJECT, COLLECTION, 'x', JSON.stringify({ id: 'x' }));
   }
 
   const state = {
@@ -156,7 +157,7 @@ describe('each', () => {
       (_state, value, key) => {
         count++;
         expect(key).to.match(/(bz1|bz2)/);
-      }
+      },
     )(state);
 
     expect(count).to.eql(2);
@@ -296,7 +297,7 @@ describe('get', () => {
     ]);
 
     const result = await collections.get(COLLECTION, { key: '*', limit: 2 })(
-      state
+      state,
     );
 
     expect(result.data.length).to.equal(2);
@@ -329,7 +330,7 @@ describe('get', () => {
     ]);
 
     const result = await collections.get(COLLECTION, { key: 'b*', limit: 1 })(
-      state
+      state,
     );
 
     expect(result.data.cursor).to.eql('2');
@@ -344,7 +345,7 @@ describe('get', () => {
 
     const result = await collections.get(
       () => COLLECTION,
-      () => 'b*'
+      () => 'b*',
     )(state);
 
     expect(result.data).to.eql([
@@ -751,5 +752,49 @@ describe('streamResponse', () => {
 
     expect(callbackValue).to.eql('str');
     expect(cursor).to.equal('b');
+  });
+});
+
+describe('project id', () => {
+  // Tests to ensure that the new adaptor includes project_id in the request, when available
+  // Not a lot to do here tbh because this is done at a very low level with not much logic
+
+  it('should send a request even if project_id is not on the credential', async () => {
+    const { state } = init();
+    const response = await collections.get(COLLECTION, 'x')(state);
+    console.log(response);
+    expect(response.data).to.eql({ id: 'x' });
+  });
+
+  it('should include project_id in a requests if it is on the credential', async () => {
+    const { state } = init();
+    state.configuration.project_id = PROJECT;
+    const response = await collections.get(COLLECTION, 'x')(state);
+    console.log(response);
+    expect(response.data).to.eql({ id: 'x' });
+  });
+
+  it('should throw if the wrong project_id is is sent', async () => {
+    const { state } = init();
+    state.configuration.project_id = 'blah';
+    try {
+      await collections.get(COLLECTION, 'x')(state);
+    } catch (e) {
+      expect(e.message).to.match(/COLLECTION_NOT_FOUND/);
+    }
+  });
+
+  it('should throw if the no project_id is send and projects conflict', async () => {
+    const { state } = init();
+
+    // create another collection with the same name in a different project
+    // This should error
+    api.createCollection('project2', COLLECTION);
+
+    try {
+      await collections.get(COLLECTION, 'x')(state);
+    } catch (e) {
+      expect(e.code).to.equal(409);
+    }
   });
 });

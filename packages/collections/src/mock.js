@@ -213,7 +213,7 @@ export function createServer(url = 'https://app.openfn.org') {
         },
       };
     } catch (e) {
-      if (e.message === COLLECTION_NOT_FOUND) {
+      if (e.message === COLLECTION_NOT_FOUND || e.message === UNKNOWN_PROJECT) {
         return { statusCode: 404 };
       }
       if (e.message === MULTIPLE_MATCHES) {
