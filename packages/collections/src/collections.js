@@ -506,6 +506,7 @@ export const handleError = async (response, path, endpoint, project_id) => {
         'Set state.configuration.project_id before using the collections API';
       throw e;
     } else {
+      const [collection] = path.split('/');
       // We should never get here - if there's a project ID there should never be a conflcit
       const e = new Error('COLLECTION_CONFLICT');
       e.code = 'COLLECTION_CONFLICT';

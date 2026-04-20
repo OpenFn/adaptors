@@ -90,13 +90,13 @@ export function API() {
     return result;
   };
 
-  const asJSON = (name, key) => {
+  const asJSON = (projectId, name, key) => {
     const col = getCollection(projectId, name);
-    return JSON.parse(collections[name][key]);
+    return JSON.parse(col[key]);
   };
   const count = (projectId, name) => {
     const col = getCollection(projectId, name);
-    return Object.keys(collections[name]).length;
+    return Object.keys(col).length;
   };
 
   // TODO strictly speaking this should support patterns

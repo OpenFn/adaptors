@@ -32,6 +32,7 @@ const init = items => {
     configuration: {
       collections_token: 'x.y.z',
       collections_endpoint: 'https://app.openfn.org/collections',
+      project_id: PROJECT,
     },
   };
   return { state };
@@ -72,11 +73,12 @@ describe('each', () => {
 
     let count = 0;
 
+    const col = api.getCollection(PROJECT, COLLECTION);
     await collections.each(COLLECTION, '*', (state, value, key) => {
       count++;
       expect(state).to.eql(state);
 
-      const item = JSON.parse(api.byKey(COLLECTION, key));
+      const item = JSON.parse(col[key]);
       expect(item).not.to.be.undefined;
       expect(item).to.eql(value);
     })(state);
@@ -92,12 +94,12 @@ describe('each', () => {
     const { state } = init(items);
 
     let count = 0;
-
+    const col = api.getCollection(PROJECT, COLLECTION);
     await collections.each(COLLECTION, '*', (state, value, key) => {
       count++;
       expect(state).to.eql(state);
 
-      const item = JSON.parse(api.byKey(COLLECTION, key));
+      const item = JSON.parse(col[key]);
       expect(item).not.to.be.undefined;
       expect(item).to.eql(value);
     })(state);
@@ -462,7 +464,7 @@ describe('set', () => {
 
     await collections.set(COLLECTION, key, item)(state);
 
-    const result = api.asJSON(COLLECTION, key);
+    const result = api.asJSON(PROJECT, COLLECTION, key);
     expect(result).to.eql(item);
   });
 
@@ -474,7 +476,7 @@ describe('set', () => {
 
     await collections.set(COLLECTION, key, () => item)(state);
 
-    const result = api.asJSON(COLLECTION, key);
+    const result = api.asJSON(PROJECT, COLLECTION, key);
     expect(result).to.eql(item);
   });
 
@@ -486,7 +488,7 @@ describe('set', () => {
 
     await collections.set(COLLECTION, key, item)(state);
 
-    const result = api.asJSON(COLLECTION, key);
+    const result = api.asJSON(PROJECT, COLLECTION, key);
     expect(result).to.eql(item);
   });
 
@@ -498,7 +500,7 @@ describe('set', () => {
 
     await collections.set(COLLECTION, (_key, state) => state.key, item)(state);
 
-    const result = api.asJSON(COLLECTION, 'x');
+    const result = api.asJSON(PROJECT, COLLECTION, 'x');
     expect(result).to.eql(item);
   });
 
@@ -510,7 +512,7 @@ describe('set', () => {
 
     await collections.set(COLLECTION, key, state => item)(state);
 
-    const result = api.asJSON(COLLECTION, key);
+    const result = api.asJSON(PROJECT, COLLECTION, key);
     expect(result).to.eql(item);
   });
 
@@ -522,10 +524,10 @@ describe('set', () => {
 
     await collections.set(COLLECTION, keygen, items)(state);
 
-    const x = api.asJSON(COLLECTION, items[0].id);
+    const x = api.asJSON(PROJECT, COLLECTION, items[0].id);
     expect(x).to.eql(items[0]);
 
-    const y = api.asJSON(COLLECTION, items[1].id);
+    const y = api.asJSON(PROJECT, COLLECTION, items[1].id);
     expect(y).to.eql(items[1]);
   });
 
@@ -538,10 +540,10 @@ describe('set', () => {
 
     await collections.set(COLLECTION, keygen, items)(state);
 
-    const x = api.asJSON(COLLECTION, 'x');
+    const x = api.asJSON(PROJECT, COLLECTION, 'x');
     expect(x).to.eql([{ id: 'x' }]);
 
-    const y = api.asJSON(COLLECTION, 'y');
+    const y = api.asJSON(PROJECT, COLLECTION, 'y');
     expect(y).to.eql([{ id: 'y' }]);
   });
 
@@ -550,7 +552,7 @@ describe('set', () => {
     const { state } = init();
 
     // the collection has one item by default
-    expect(api.count(COLLECTION)).to.equal(1);
+    expect(api.count(PROJECT, COLLECTION)).to.equal(1);
 
     const items = new Array(2499).fill(1).map((_item, idx) => ({
       id: `${idx}`,
@@ -559,7 +561,7 @@ describe('set', () => {
 
     await collections.set(COLLECTION, keygen, items)(state);
 
-    expect(api.count(COLLECTION)).to.equal(2500);
+    expect(api.count(PROJECT, COLLECTION)).to.equal(2500);
   });
 });
 
@@ -591,25 +593,24 @@ describe('remove', () => {
 
   it('should remove an item', async () => {
     const { state } = init();
-    api.upsert(COLLECTION, 'x', { id: 'x' });
+    api.upsert(PROJECT, COLLECTION, 'x', { id: 'x' });
 
     await collections.remove(COLLECTION, 'x')(state);
 
-    const result = api.byKey(COLLECTION, 'x');
-    expect(result).to.be.undefined;
+    const col = api.getCollection(PROJECT, COLLECTION);
+    expect(col.x).to.be.undefined;
   });
 
   it('should remove several items', async () => {
     const { state } = init();
-    api.upsert(COLLECTION, 'x', { id: 'x' });
-    api.upsert(COLLECTION, 'y', { id: 'y' });
+    api.upsert(PROJECT, COLLECTION, 'x', { id: 'x' });
+    api.upsert(PROJECT, COLLECTION, 'y', { id: 'y' });
 
     await collections.remove(COLLECTION, '*')(state);
 
-    const x = api.byKey(COLLECTION, 'x');
-    expect(x).to.be.undefined;
-    const y = api.byKey(COLLECTION, 'y');
-    expect(y).to.be.undefined;
+    const col = api.getCollection(PROJECT, COLLECTION);
+    expect(col.x).to.be.undefined;
+    expect(col.y).to.be.undefined;
   });
 });
 
