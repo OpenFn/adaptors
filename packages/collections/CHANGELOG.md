@@ -11,6 +11,7 @@
 ### Patch Changes
 
 - 0df6720: Add docs for a missing argument on `keygen` param
+- Add support for `project_id` on config
 
 ## 0.8.5 - 07 April 2026
 
