@@ -9,15 +9,27 @@ beforeEach(() => {
   ({ api, request } = createServer());
 });
 
-// TODO: support query options
-// TODO support timestamps
 describe('GET', () => {
-  it('should return 200 for a valid collection', async () => {
-    api.createCollection('my-collection');
+  it('should return 200 for a valid collection by name only', async () => {
+    api.createCollection('project1', 'my-collection');
 
     const response = await request({
       method: 'GET',
       path: 'collections/my-collection',
+    });
+    expect(response.statusCode).to.equal(200);
+  });
+
+  it('should return 200 for a valid collection with a project Id', async () => {
+    api.createCollection('project1', 'my-collection');
+    api.createCollection('project2', 'my-collection');
+
+    const response = await request({
+      method: 'GET',
+      path: 'collections/my-collection',
+      query: {
+        project_id: 'project2',
+      },
     });
     expect(response.statusCode).to.equal(200);
   });
@@ -31,7 +43,7 @@ describe('GET', () => {
   });
 
   it('should return 403 if no credential', async () => {
-    api.createCollection('my-collection');
+    api.createCollection('project1', 'my-collection');
 
     const response = await request({
       method: 'GET',
@@ -41,10 +53,21 @@ describe('GET', () => {
     expect(response.statusCode).to.equal(403);
   });
 
-  it('/collection/name/key should return a single item', async () => {
-    api.createCollection('my-collection');
+  it('should return 409 for an ambiguous request', async () => {
+    api.createCollection('project1', 'my-collection');
+    api.createCollection('project2', 'my-collection');
 
-    api.upsert('my-collection', 'x', { id: 'x' });
+    const response = await request({
+      method: 'GET',
+      path: 'collections/my-collection',
+    });
+    expect(response.statusCode).to.equal(409);
+  });
+
+  it('/collection/name/key should return a single item', async () => {
+    api.createCollection('project1', 'my-collection');
+
+    api.upsert('project1', 'my-collection', 'x', { id: 'x' });
 
     const response = await request({
       method: 'GET',
@@ -58,11 +81,11 @@ describe('GET', () => {
   });
 
   it('/collection/name should stream all results', async () => {
-    api.createCollection('my-collection');
+    api.createCollection('project1', 'my-collection');
 
-    api.upsert('my-collection', 'x', 'xx');
-    api.upsert('my-collection', 'y', 'yy');
-    api.upsert('my-collection', 'z', 'zz');
+    api.upsert('project1', 'my-collection', 'x', 'xx');
+    api.upsert('project1', 'my-collection', 'y', 'yy');
+    api.upsert('project1', 'my-collection', 'z', 'zz');
 
     const response = await request({
       method: 'GET',
@@ -80,11 +103,11 @@ describe('GET', () => {
   });
 
   it('/collection/name?key=* should stream some results', async () => {
-    api.createCollection('my-collection');
+    api.createCollection('project1', 'my-collection');
 
-    api.upsert('my-collection', 'ax', 'x');
-    api.upsert('my-collection', 'ay', 'y');
-    api.upsert('my-collection', 'az', 'z');
+    api.upsert('project1', 'my-collection', 'ax', 'x');
+    api.upsert('project1', 'my-collection', 'ay', 'y');
+    api.upsert('project1', 'my-collection', 'az', 'z');
 
     const response = await request({
       method: 'GET',
@@ -98,11 +121,11 @@ describe('GET', () => {
   });
 
   it('should limit and offset results and return a cursor', async () => {
-    api.createCollection('my-collection');
+    api.createCollection('project1', 'my-collection');
 
-    api.upsert('my-collection', 'x', 'xx');
-    api.upsert('my-collection', 'y', 'yy');
-    api.upsert('my-collection', 'z', 'zz');
+    api.upsert('project1', 'my-collection', 'x', 'xx');
+    api.upsert('project1', 'my-collection', 'y', 'yy');
+    api.upsert('project1', 'my-collection', 'z', 'zz');
 
     const response = await request({
       method: 'GET',
@@ -122,13 +145,28 @@ describe('GET', () => {
 });
 
 describe('POST', () => {
-  it('should return 200 for a valid collection', async () => {
-    api.createCollection('my-collection');
+  it('should return 200 for a valid collection with name only', async () => {
+    api.createCollection('project1', 'my-collection');
 
     const response = await request({
       method: 'POST',
       path: 'collections/my-collection',
       data: { items: [] },
+    });
+    expect(response.statusCode).to.equal(200);
+  });
+
+  it('should return 200 for a valid collection with projectId', async () => {
+    api.createCollection('project1', 'my-collection');
+    api.createCollection('project2', 'my-collection');
+
+    const response = await request({
+      method: 'POST',
+      path: 'collections/my-collection',
+      data: { items: [] },
+      query: {
+        project_id: 'project2',
+      },
     });
     expect(response.statusCode).to.equal(200);
   });
@@ -144,7 +182,7 @@ describe('POST', () => {
   });
 
   it('should return 403 if no credential', async () => {
-    api.createCollection('my-collection');
+    api.createCollection('project1', 'my-collection');
 
     const response = await request({
       method: 'POST',
@@ -154,8 +192,20 @@ describe('POST', () => {
     expect(response.statusCode).to.equal(403);
   });
 
+  it('should return 409 for for an ambiguous request', async () => {
+    api.createCollection('project1', 'my-collection');
+    api.createCollection('project2', 'my-collection');
+
+    const response = await request({
+      method: 'POST',
+      path: 'collections/my-collection',
+      data: { items: [{}] },
+    });
+    expect(response.statusCode).to.equal(409);
+  });
+
   it('should upsert a new item', async () => {
-    api.createCollection('my-collection');
+    api.createCollection('project1', 'my-collection');
 
     const item = { key: 'x', value: { id: 'x' } };
 
@@ -167,12 +217,13 @@ describe('POST', () => {
 
     expect(response.statusCode).to.equal(200);
 
-    const result = api.byKey('my-collection', item.key);
+    const collection = api.getCollection('project1', 'my-collection');
+    const result = collection[item.key];
     expect(result).to.eql(item.value);
   });
 
   it('should return a JSON summary', async () => {
-    api.createCollection('my-collection');
+    api.createCollection('project1', 'my-collection');
 
     const item = { key: 'x', value: { id: 'x' } };
 
@@ -190,12 +241,26 @@ describe('POST', () => {
 });
 
 describe('DELETE', () => {
-  it('should return 200 for a valid collection', async () => {
-    api.createCollection('my-collection');
+  it('should return 200 for a valid collection by name only', async () => {
+    api.createCollection('project1', 'my-collection');
 
     const response = await request({
       method: 'DELETE',
       path: 'collections/my-collection',
+    });
+    expect(response.statusCode).to.equal(200);
+  });
+
+  it('should return 200 for a valid collection with a project id', async () => {
+    api.createCollection('project1', 'my-collection');
+    api.createCollection('project2', 'my-collection');
+
+    const response = await request({
+      method: 'DELETE',
+      path: 'collections/my-collection',
+      query: {
+        project_id: 'project1',
+      },
     });
     expect(response.statusCode).to.equal(200);
   });
@@ -210,7 +275,7 @@ describe('DELETE', () => {
   });
 
   it('should return 403 if no credential', async () => {
-    api.createCollection('my-collection');
+    api.createCollection('project1', 'my-collection');
 
     const response = await request({
       method: 'DELETE',
@@ -220,9 +285,20 @@ describe('DELETE', () => {
     expect(response.statusCode).to.equal(403);
   });
 
+  it('should return 409 for an ambiguous request', async () => {
+    api.createCollection('project1', 'my-collection');
+    api.createCollection('project2', 'my-collection');
+
+    const response = await request({
+      method: 'DELETE',
+      path: 'collections/my-collection',
+    });
+    expect(response.statusCode).to.equal(409);
+  });
+
   it('should remove an item', async () => {
-    api.createCollection('my-collection');
-    api.upsert('my-collection', 'x', { id: 'x' });
+    api.createCollection('project1', 'my-collection');
+    api.upsert('project1', 'my-collection', 'x', { id: 'x' });
 
     const response = await request({
       method: 'DELETE',
@@ -231,14 +307,14 @@ describe('DELETE', () => {
 
     expect(response.statusCode).to.equal(200);
 
-    const result = api.byKey('my-collection', 'x');
-    expect(result).to.be.undefined;
+    const collection = api.getCollection('project1', 'my-collection');
+    expect(collection.x).to.be.undefined;
   });
 
   it('should remove items by pattern', async () => {
-    api.createCollection('my-collection');
-    api.upsert('my-collection', 'x', { id: 'x' });
-    api.upsert('my-collection', 'y', { id: 'y' });
+    api.createCollection('project1', 'my-collection');
+    api.upsert('project1', 'my-collection', 'x', { id: 'x' });
+    api.upsert('project1', 'my-collection', 'y', { id: 'y' });
 
     const response = await request({
       method: 'DELETE',
@@ -250,15 +326,14 @@ describe('DELETE', () => {
 
     expect(response.statusCode).to.equal(200);
 
-    const x = api.byKey('my-collection', 'x');
-    expect(x).to.be.undefined;
-    const y = api.byKey('my-collection', 'y');
-    expect(y).to.be.undefined;
+    const collection = api.getCollection('project1', 'my-collection');
+    expect(collection.x).to.be.undefined;
+    expect(collection.y).to.be.undefined;
   });
 
   it('should return a JSON summary', async () => {
-    api.createCollection('my-collection');
-    api.upsert('my-collection', 'x', { id: 'x' });
+    api.createCollection('project1', 'my-collection');
+    api.upsert('project1', 'my-collection', 'x', { id: 'x' });
 
     const response = await request({
       method: 'DELETE',

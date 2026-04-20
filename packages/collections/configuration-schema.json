@@ -23,6 +23,13 @@
       "description": "Access token for the collection",
       "writeOnly": true,
       "examples": ["x.y.z"]
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string",
+      "description": "The project id for the run",
+      "writeOnly": true,
+      "examples": ["46569296-9d82-4a32-8737-fbe64b7851cf"]
     }
   },
   "type": "object",

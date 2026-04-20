@@ -1,38 +1,62 @@
 import { MockAgent } from 'undici';
 
-const COLLECTION_NOT_FOUND = 'COLLECTION_NOT_FOUND';
-const INVALID_AUTH = 'INVALID_AUTH';
+export const MULTIPLE_MATCHES = 'MULTIPLE_MATCHES_FOUND';
+export const UNKNOWN_PROJECT = 'INVALID_PROJECT_ID';
+export const COLLECTION_NOT_FOUND = 'COLLECTION_NOT_FOUND';
+export const INVALID_AUTH = 'INVALID_AUTH';
 
 // This is a simple collections API backend to handle the actual logic of a collection
 // It is not designed to match lightning in any way
 export function API() {
-  let collections = {};
+  let collectionsByProject = {};
+  let collectionsByName = {};
 
-  const createCollection = (name, values = {}) => {
-    collections[name] = values;
+  // To simulate lightning, a project MUST  be created with a project id
+  const createCollection = (projectId, name, values = {}) => {
+    (collectionsByProject[projectId] ??= {})[name] = values;
+    (collectionsByName[name] ??= []).push(values);
+  };
+
+  // Find a collection by name or project id
+  const getCollection = (projectId, name) => {
+    if (projectId) {
+      if (!(projectId in collectionsByProject)) {
+        throw new Error(UNKNOWN_PROJECT);
+      }
+      if (!(name in collectionsByProject[projectId])) {
+        throw new Error(COLLECTION_NOT_FOUND);
+      }
+
+      return collectionsByProject[projectId][name];
+    } else {
+      const results = collectionsByName[name] ?? [];
+      if (results.length === 0) {
+        throw new Error(COLLECTION_NOT_FOUND);
+      }
+      if (results.length > 1) {
+        throw new Error(MULTIPLE_MATCHES);
+      }
+      return collectionsByName[name][0];
+    }
   };
 
   const reset = () => {
-    collections = api.collections = {};
+    api.collectionsByProject = collectionsByProject = {};
+    api.collectionsByName = collectionsByName = {};
   };
 
-  // This is a string store: values are expected to be strings
-  const upsert = (name, key, value) => {
-    if (!(name in collections)) {
-      throw new Error(COLLECTION_NOT_FOUND);
-    }
+  // Note that is a string store: values are expected to be strings
+  const upsert = (projectId, name, key, value) => {
+    const col = getCollection(projectId, name);
 
-    collections[name][key] = value;
+    col[key] = value;
   };
 
-  const fetch = (name, key, query = {}) => {
+  const fetch = (projectId, name, key, query = {}) => {
     const { cursor = 0, limit = Infinity } = query;
 
-    if (!(name in collections)) {
-      throw new Error(COLLECTION_NOT_FOUND);
-    }
+    const col = getCollection(projectId, name);
 
-    const col = collections[name];
     const items = [];
 
     let idx = 0;
@@ -66,33 +90,19 @@ export function API() {
     return result;
   };
 
-  // internal dev only api
-  const byKey = (name, key) => {
-    if (!(name in collections)) {
-      throw new Error(COLLECTION_NOT_FOUND);
-    }
-    return collections[name][key];
+  const asJSON = (projectId, name, key) => {
+    const col = getCollection(projectId, name);
+    return JSON.parse(col[key]);
   };
-  const asJSON = (name, key) => {
-    if (!(name in collections)) {
-      throw new Error(COLLECTION_NOT_FOUND);
-    }
-    return JSON.parse(collections[name][key]);
-  };
-  const count = name => {
-    if (!(name in collections)) {
-      throw new Error(COLLECTION_NOT_FOUND);
-    }
-    return Object.keys(collections[name]).length;
+  const count = (projectId, name) => {
+    const col = getCollection(projectId, name);
+    return Object.keys(col).length;
   };
 
   // TODO strictly speaking this should support patterns
   // but keeping it super simple in the mock for now
-  const remove = (name, key) => {
-    if (!(name in collections)) {
-      throw new Error(COLLECTION_NOT_FOUND);
-    }
-    const col = collections[name];
+  const remove = (projectId, name, key) => {
+    const col = getCollection(projectId, name);
 
     const regex = new RegExp(key.replace('*', '(.*)'));
     const removed = [];
@@ -107,15 +117,16 @@ export function API() {
   };
 
   const api = {
-    collections,
+    asJSON,
+    collectionsByName,
+    collectionsByProject,
+    count,
     createCollection,
+    fetch,
+    getCollection,
+    remove,
     reset,
     upsert,
-    fetch,
-    remove,
-    byKey,
-    asJSON,
-    count,
   };
 
   return api;
@@ -159,13 +170,13 @@ export function createServer(url = 'https://app.openfn.org') {
 
     try {
       let { name, key } = parsePath(req.path);
-
+      const projectId = req.query?.project_id ?? null;
       let body;
       let statusCode = 200;
 
       if (key) {
-        // get one
-        const result = api.byKey(name, key);
+        const collection = api.getCollection(projectId, name);
+        const result = collection[key];
         if (!result) {
           body = {};
           statusCode = 204;
@@ -184,7 +195,7 @@ export function createServer(url = 'https://app.openfn.org') {
         const limit = params.get('limit') ?? Infinity;
         const cursor = params.get('cursor') ?? 0;
 
-        const { items, cursor: finalCursor } = api.fetch(name, key, {
+        const { items, cursor: finalCursor } = api.fetch(projectId, name, key, {
           limit,
           cursor,
         });
@@ -202,8 +213,11 @@ export function createServer(url = 'https://app.openfn.org') {
         },
       };
     } catch (e) {
-      if (e.message === COLLECTION_NOT_FOUND) {
+      if (e.message === COLLECTION_NOT_FOUND || e.message === UNKNOWN_PROJECT) {
         return { statusCode: 404 };
+      }
+      if (e.message === MULTIPLE_MATCHES) {
+        return { statusCode: 409 };
       }
     }
     return { statusCode: 500 };
@@ -222,10 +236,11 @@ export function createServer(url = 'https://app.openfn.org') {
     try {
       const { name, key } = parsePath(req.path);
       const body = JSON.parse(req.body);
+      const projectId = req.query?.project_id ?? null;
 
       for (const { key, value } of body.items) {
         // TODO error if key or value not set
-        api.upsert(name, key, value);
+        api.upsert(projectId, name, key, value);
         upserted++;
       }
 
@@ -240,6 +255,9 @@ export function createServer(url = 'https://app.openfn.org') {
       if (e.message === COLLECTION_NOT_FOUND) {
         return { statusCode: 404 };
       }
+      if (e.message === MULTIPLE_MATCHES) {
+        return { statusCode: 409 };
+      }
     }
   };
 
@@ -252,12 +270,13 @@ export function createServer(url = 'https://app.openfn.org') {
 
     try {
       let { name, key } = parsePath(req.path);
+      const projectId = req.query?.project_id ?? null;
       if (!key) {
         const params = new URLSearchParams(req.query || req.path.split('?')[1]);
         key = params.get('key') ?? '*';
       }
 
-      const keys = api.remove(name, key);
+      const keys = api.remove(projectId, name, key);
 
       return {
         statusCode: 200,
@@ -269,6 +288,9 @@ export function createServer(url = 'https://app.openfn.org') {
     } catch (e) {
       if (e.message === COLLECTION_NOT_FOUND) {
         return { statusCode: 404 };
+      }
+      if (e.message === MULTIPLE_MATCHES) {
+        return { statusCode: 409 };
       }
     }
   };

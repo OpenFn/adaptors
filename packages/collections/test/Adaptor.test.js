@@ -10,6 +10,7 @@ const { api } = client;
 setMockClient(client);
 
 const COLLECTION = 'my-collection';
+const PROJECT = 'project1';
 
 afterEach(() => {
   api.reset();
@@ -17,20 +18,21 @@ afterEach(() => {
 
 // Set up a simple collection with some defaults
 const init = items => {
-  api.createCollection(COLLECTION);
+  api.createCollection(PROJECT, COLLECTION);
 
   if (items) {
     for (const [key, value] of items) {
-      api.upsert(COLLECTION, key, JSON.stringify(value));
+      api.upsert(PROJECT, COLLECTION, key, JSON.stringify(value));
     }
   } else {
-    api.upsert(COLLECTION, 'x', JSON.stringify({ id: 'x' }));
+    api.upsert(PROJECT, COLLECTION, 'x', JSON.stringify({ id: 'x' }));
   }
 
   const state = {
     configuration: {
       collections_token: 'x.y.z',
       collections_endpoint: 'https://app.openfn.org/collections',
+      project_id: PROJECT,
     },
   };
   return { state };
@@ -71,11 +73,12 @@ describe('each', () => {
 
     let count = 0;
 
+    const col = api.getCollection(PROJECT, COLLECTION);
     await collections.each(COLLECTION, '*', (state, value, key) => {
       count++;
       expect(state).to.eql(state);
 
-      const item = JSON.parse(api.byKey(COLLECTION, key));
+      const item = JSON.parse(col[key]);
       expect(item).not.to.be.undefined;
       expect(item).to.eql(value);
     })(state);
@@ -91,12 +94,12 @@ describe('each', () => {
     const { state } = init(items);
 
     let count = 0;
-
+    const col = api.getCollection(PROJECT, COLLECTION);
     await collections.each(COLLECTION, '*', (state, value, key) => {
       count++;
       expect(state).to.eql(state);
 
-      const item = JSON.parse(api.byKey(COLLECTION, key));
+      const item = JSON.parse(col[key]);
       expect(item).not.to.be.undefined;
       expect(item).to.eql(value);
     })(state);
@@ -156,7 +159,7 @@ describe('each', () => {
       (_state, value, key) => {
         count++;
         expect(key).to.match(/(bz1|bz2)/);
-      }
+      },
     )(state);
 
     expect(count).to.eql(2);
@@ -296,7 +299,7 @@ describe('get', () => {
     ]);
 
     const result = await collections.get(COLLECTION, { key: '*', limit: 2 })(
-      state
+      state,
     );
 
     expect(result.data.length).to.equal(2);
@@ -329,7 +332,7 @@ describe('get', () => {
     ]);
 
     const result = await collections.get(COLLECTION, { key: 'b*', limit: 1 })(
-      state
+      state,
     );
 
     expect(result.data.cursor).to.eql('2');
@@ -344,7 +347,7 @@ describe('get', () => {
 
     const result = await collections.get(
       () => COLLECTION,
-      () => 'b*'
+      () => 'b*',
     )(state);
 
     expect(result.data).to.eql([
@@ -461,7 +464,7 @@ describe('set', () => {
 
     await collections.set(COLLECTION, key, item)(state);
 
-    const result = api.asJSON(COLLECTION, key);
+    const result = api.asJSON(PROJECT, COLLECTION, key);
     expect(result).to.eql(item);
   });
 
@@ -473,7 +476,7 @@ describe('set', () => {
 
     await collections.set(COLLECTION, key, () => item)(state);
 
-    const result = api.asJSON(COLLECTION, key);
+    const result = api.asJSON(PROJECT, COLLECTION, key);
     expect(result).to.eql(item);
   });
 
@@ -485,7 +488,7 @@ describe('set', () => {
 
     await collections.set(COLLECTION, key, item)(state);
 
-    const result = api.asJSON(COLLECTION, key);
+    const result = api.asJSON(PROJECT, COLLECTION, key);
     expect(result).to.eql(item);
   });
 
@@ -497,7 +500,7 @@ describe('set', () => {
 
     await collections.set(COLLECTION, (_key, state) => state.key, item)(state);
 
-    const result = api.asJSON(COLLECTION, 'x');
+    const result = api.asJSON(PROJECT, COLLECTION, 'x');
     expect(result).to.eql(item);
   });
 
@@ -509,7 +512,7 @@ describe('set', () => {
 
     await collections.set(COLLECTION, key, state => item)(state);
 
-    const result = api.asJSON(COLLECTION, key);
+    const result = api.asJSON(PROJECT, COLLECTION, key);
     expect(result).to.eql(item);
   });
 
@@ -521,10 +524,10 @@ describe('set', () => {
 
     await collections.set(COLLECTION, keygen, items)(state);
 
-    const x = api.asJSON(COLLECTION, items[0].id);
+    const x = api.asJSON(PROJECT, COLLECTION, items[0].id);
     expect(x).to.eql(items[0]);
 
-    const y = api.asJSON(COLLECTION, items[1].id);
+    const y = api.asJSON(PROJECT, COLLECTION, items[1].id);
     expect(y).to.eql(items[1]);
   });
 
@@ -537,10 +540,10 @@ describe('set', () => {
 
     await collections.set(COLLECTION, keygen, items)(state);
 
-    const x = api.asJSON(COLLECTION, 'x');
+    const x = api.asJSON(PROJECT, COLLECTION, 'x');
     expect(x).to.eql([{ id: 'x' }]);
 
-    const y = api.asJSON(COLLECTION, 'y');
+    const y = api.asJSON(PROJECT, COLLECTION, 'y');
     expect(y).to.eql([{ id: 'y' }]);
   });
 
@@ -549,7 +552,7 @@ describe('set', () => {
     const { state } = init();
 
     // the collection has one item by default
-    expect(api.count(COLLECTION)).to.equal(1);
+    expect(api.count(PROJECT, COLLECTION)).to.equal(1);
 
     const items = new Array(2499).fill(1).map((_item, idx) => ({
       id: `${idx}`,
@@ -558,7 +561,7 @@ describe('set', () => {
 
     await collections.set(COLLECTION, keygen, items)(state);
 
-    expect(api.count(COLLECTION)).to.equal(2500);
+    expect(api.count(PROJECT, COLLECTION)).to.equal(2500);
   });
 });
 
@@ -590,25 +593,24 @@ describe('remove', () => {
 
   it('should remove an item', async () => {
     const { state } = init();
-    api.upsert(COLLECTION, 'x', { id: 'x' });
+    api.upsert(PROJECT, COLLECTION, 'x', { id: 'x' });
 
     await collections.remove(COLLECTION, 'x')(state);
 
-    const result = api.byKey(COLLECTION, 'x');
-    expect(result).to.be.undefined;
+    const col = api.getCollection(PROJECT, COLLECTION);
+    expect(col.x).to.be.undefined;
   });
 
   it('should remove several items', async () => {
     const { state } = init();
-    api.upsert(COLLECTION, 'x', { id: 'x' });
-    api.upsert(COLLECTION, 'y', { id: 'y' });
+    api.upsert(PROJECT, COLLECTION, 'x', { id: 'x' });
+    api.upsert(PROJECT, COLLECTION, 'y', { id: 'y' });
 
     await collections.remove(COLLECTION, '*')(state);
 
-    const x = api.byKey(COLLECTION, 'x');
-    expect(x).to.be.undefined;
-    const y = api.byKey(COLLECTION, 'y');
-    expect(y).to.be.undefined;
+    const col = api.getCollection(PROJECT, COLLECTION);
+    expect(col.x).to.be.undefined;
+    expect(col.y).to.be.undefined;
   });
 });
 
@@ -751,5 +753,47 @@ describe('streamResponse', () => {
 
     expect(callbackValue).to.eql('str');
     expect(cursor).to.equal('b');
+  });
+});
+
+describe('project id', () => {
+  // Tests to ensure that the new adaptor includes project_id in the request, when available
+  // Not a lot to do here tbh because this is done at a very low level with not much logic
+
+  it('should send a request even if project_id is not on the credential', async () => {
+    const { state } = init();
+    const response = await collections.get(COLLECTION, 'x')(state);
+    expect(response.data).to.eql({ id: 'x' });
+  });
+
+  it('should include project_id in a requests if it is on the credential', async () => {
+    const { state } = init();
+    state.configuration.project_id = PROJECT;
+    const response = await collections.get(COLLECTION, 'x')(state);
+    expect(response.data).to.eql({ id: 'x' });
+  });
+
+  it('should throw if the wrong project_id is is sent', async () => {
+    const { state } = init();
+    state.configuration.project_id = 'blah';
+    try {
+      await collections.get(COLLECTION, 'x')(state);
+    } catch (e) {
+      expect(e.message).to.match(/COLLECTION_NOT_FOUND/);
+    }
+  });
+
+  it('should throw if the no project_id is send and projects conflict', async () => {
+    const { state } = init();
+
+    // create another collection with the same name in a different project
+    // This should error
+    api.createCollection('project2', COLLECTION);
+
+    try {
+      await collections.get(COLLECTION, 'x')(state);
+    } catch (e) {
+      expect(e.code).to.equal(409);
+    }
   });
 });
