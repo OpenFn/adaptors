@@ -20,14 +20,16 @@ export const prepareNextState = (state, response) => {
 };
 
 export const request = async (configuration, method, path, params) => {
-  const { baseUrl, apiKey, apiPath = 'api/v1' } = configuration;
+  const { baseUrl, apiKey, apiPath = 'api/v1', cookie } = configuration;
   let { body, headers = {}, errors, ...otherOptions } = params || {};
 
+  console.log(cookie);
   const requestHeaders = {
     ...headers,
     Authorization: `Bearer ${apiKey}`,
     'content-type': 'application/x-www-form-urlencoded',
     accept: 'application/json',
+    Cookie: `sid=${cookie}`,
   };
 
   body = new URLSearchParams(body).toString();
@@ -66,6 +68,7 @@ export const fetchCookie = async state => {
     throw new Error('SID cookie not found in response');
   }
   console.log('Fetched SID cookie');
+
   state.configuration.cookie = sidCookie.split(';')[0].split('=')[1];
   return state;
 };
