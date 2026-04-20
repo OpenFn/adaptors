@@ -1,10 +1,17 @@
 # @openfn/language-collections
 
+## 0.9.0 - 20 April 2026
+
+### Minor Changes
+
+- Add support for project_id on config
+
 ## 0.8.6 - 14 April 2026
 
 ### Patch Changes
 
 - 0df6720: Add docs for a missing argument on `keygen` param
+- Add support for `project_id` on config
 
 ## 0.8.5 - 07 April 2026
 
