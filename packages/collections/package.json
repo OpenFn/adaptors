@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-collections",
   "label": "Collections",
-  "version": "0.8.6",
+  "version": "0.9.0",
   "description": "Collections Adaptor for OpenFn",
   "type": "module",
   "exports": {

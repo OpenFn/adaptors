@@ -1,5 +1,11 @@
 # @openfn/language-collections
 
+## 0.9.0 - 20 April 2026
+
+### Minor Changes
+
+- Add support for project_id on config
+
 ## 0.8.6 - 14 April 2026
 
 ### Patch Changes
