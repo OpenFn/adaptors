@@ -763,7 +763,6 @@ describe('project id', () => {
   it('should send a request even if project_id is not on the credential', async () => {
     const { state } = init();
     const response = await collections.get(COLLECTION, 'x')(state);
-    console.log(response);
     expect(response.data).to.eql({ id: 'x' });
   });
 
@@ -771,7 +770,6 @@ describe('project id', () => {
     const { state } = init();
     state.configuration.project_id = PROJECT;
     const response = await collections.get(COLLECTION, 'x')(state);
-    console.log(response);
     expect(response.data).to.eql({ id: 'x' });
   });
 
