@@ -481,12 +481,40 @@ export const request = async (state, client, path, options = {}) => {
 
   const response = await client.request(args);
   if (response.statusCode >= 400) {
-    await handleError(response, path, state.configuration.collections_endpoint);
+    await handleError(
+      response,
+      path,
+      state.configuration.collections_endpoint,
+      query.project_id,
+    );
   }
   return response;
 };
 
-export const handleError = async (response, path, endpoint) => {
+export const handleError = async (response, path, endpoint, project_id) => {
+  if (response.statusCode === 409) {
+    if (!project_id) {
+      const [collection] = path.split('/');
+      const e = new Error('NO_PROJECT_ID');
+
+      // 409 means a the collection name could not be resolved - probably there was no project id
+      e.code = 'NO_PROJECT_ID';
+      e.description = `The collection "${collection}" matched multiple collections on the server and project_id was omitted`;
+      e.collection = collection;
+      e.endpoint = endpoint;
+      e.fix =
+        'Set state.configuration.project_id before using the collections API';
+      throw e;
+    } else {
+      // We should never get here - if there's a project ID there should never be a conflcit
+      const e = new Error('COLLECTION_CONFLICT');
+      e.code = 'COLLECTION_CONFLICT';
+      e.description = `Multiple collections named "${collection}" were found on the server`;
+      e.collection = collection;
+      e.endpoint = endpoint;
+      e.fix = 'Contact your system administrator';
+    }
+  }
   if (response.statusCode === 404) {
     const [collection] = path.split('/');
     console.error(`Error! Collection ${collection} does not exist`);
