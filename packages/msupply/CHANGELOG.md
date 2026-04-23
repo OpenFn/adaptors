@@ -1,5 +1,11 @@
 # @openfn/language-msupply
 
+## 1.0.17 - 23 April 2026
+
+### Patch Changes
+
+- 427da5c: Remove uuid package dependency in favour of native node.js solution
+
 ## 1.0.16 - 07 April 2026
 
 ### Patch Changes
