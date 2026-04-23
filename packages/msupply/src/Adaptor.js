@@ -1,7 +1,11 @@
+import crypto from 'node:crypto';
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
-import { getItemsQueryString, insertOutboundShipmentQuery, upsertOutboundShipmentQuery } from './queries.js'
-import { v4 as uuidv4 } from 'uuid';
+import {
+  getItemsQueryString,
+  insertOutboundShipmentQuery,
+  upsertOutboundShipmentQuery,
+} from './queries.js';
 
 /**
  * State object
@@ -11,7 +15,6 @@ import { v4 as uuidv4 } from 'uuid';
  * @property references - an array of all previous data objects used in the Job
  * @private
  **/
-
 
 /**
  * @typedef {Object} RequestBody
@@ -25,7 +28,6 @@ import { v4 as uuidv4 } from 'uuid';
  * @property {string} storeId - The msupply store id  the list is being fetched from
  */
 
-
 /**
  * @typedef {Object} InsertOutboundShipmentvariables
  * @property {string} otherPartyId - The recieving party id
@@ -37,7 +39,6 @@ import { v4 as uuidv4 } from 'uuid';
  * @property {Object} input - The payload for the target shipment
  * @property {string} storeId - The id of the store the shipment is being made from
  */
-
 
 /**
  * Get the list of items in the catalogue
@@ -59,14 +60,13 @@ export function getItemsWithStats(variables) {
     let opts = {
       body: {
         query: getItemsQueryString,
-        variables: resolvedVariables
+        variables: resolvedVariables,
       },
-    }
+    };
     const response = await util.request(state, opts);
-    return util.prepareNextState(state, response)
-  }
+    return util.prepareNextState(state, response);
+  };
 }
-
 
 /**
  * Create an outbound shipment.
@@ -89,14 +89,14 @@ export function insertOutboundShipment(variables) {
       body: {
         query: insertOutboundShipmentQuery,
         variables: {
-          id: uuidv4(),
-          ...resolvedVariables
-        }
+          id: crypto.randomUUID(),
+          ...resolvedVariables,
+        },
       },
-    }
+    };
     const response = await util.request(state, opts);
-    return util.prepareNextState(state, response)
-  }
+    return util.prepareNextState(state, response);
+  };
 }
 
 /**
@@ -126,15 +126,14 @@ export function upsertOutboundShipment(variables) {
     let opts = {
       body: {
         query: upsertOutboundShipmentQuery,
-        variables: resolvedVariables
+        variables: resolvedVariables,
       },
-    }
+    };
 
     const response = await util.request(state, opts);
-    return util.prepareNextState(state, response)
-  }
+    return util.prepareNextState(state, response);
+  };
 }
-
 
 /**
  * Make a generic GraphQL request
@@ -153,17 +152,18 @@ export function upsertOutboundShipment(variables) {
  */
 export function query(query, variables = {}) {
   return async state => {
-    const [resolvedQuery, resolvedVariables] = expandReferences(state, query, variables);
-
-    const response = await util.request(
+    const [resolvedQuery, resolvedVariables] = expandReferences(
       state,
-      {
-        body: {
-          query: resolvedQuery,
-          variables: resolvedVariables,
-        },
-      }
+      query,
+      variables,
     );
+
+    const response = await util.request(state, {
+      body: {
+        query: resolvedQuery,
+        variables: resolvedVariables,
+      },
+    });
 
     return util.prepareNextState(state, response);
   };
