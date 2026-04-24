@@ -12,7 +12,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "createBucket(\"my-new-bucket\");"
+            "description": "createBucket(\"my-new-bucket\");",
+            "caption": "Create a bucket"
           },
           {
             "title": "function",
@@ -86,7 +87,8 @@
         "tags": [
           {
             "title": "example",
-            "description": "listObjects(\"my-bucket\", { prefix: \"openmrs/2025-04/\", recursive: true });"
+            "description": "listObjects(\"my-bucket\", { prefix: \"openmrs/2025-04/\", recursive: true });",
+            "caption": "List objects in a bucket"
           },
           {
             "title": "function",
@@ -524,207 +526,6 @@
               "name": "string"
             },
             "name": "objectName"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{HttpState}"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "get",
-      "params": [
-        "path",
-        "options"
-      ],
-      "docs": {
-        "description": "Make a GET request",
-        "tags": [
-          {
-            "title": "example",
-            "description": "get(\"patients\");"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Path to resource",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "Optional request options",
-            "type": {
-              "type": "NameExpression",
-              "name": "RequestOptions"
-            },
-            "name": "options"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{HttpState}"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "post",
-      "params": [
-        "path",
-        "body",
-        "options"
-      ],
-      "docs": {
-        "description": "Make a POST request",
-        "tags": [
-          {
-            "title": "example",
-            "description": "post(\"patient\", { \"name\": \"Bukayo\" });"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Path to resource",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "Object which will be attached to the POST body",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "body"
-          },
-          {
-            "title": "param",
-            "description": "Optional request options",
-            "type": {
-              "type": "NameExpression",
-              "name": "RequestOptions"
-            },
-            "name": "options"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{HttpState}"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "request",
-      "params": [
-        "method",
-        "path",
-        "body",
-        "options"
-      ],
-      "docs": {
-        "description": "Make a general HTTP request",
-        "tags": [
-          {
-            "title": "example",
-            "description": "request(\"POST\", \"patient\", { \"name\": \"Bukayo\" });"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "HTTP method to use",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "method"
-          },
-          {
-            "title": "param",
-            "description": "Path to resource",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "Object which will be attached to the POST body",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "body"
-          },
-          {
-            "title": "param",
-            "description": "Optional request options",
-            "type": {
-              "type": "NameExpression",
-              "name": "RequestOptions"
-            },
-            "name": "options"
           },
           {
             "title": "returns",
@@ -1398,6 +1199,80 @@
             "type": {
               "type": "NameExpression",
               "name": "string"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "parseCsv",
+      "params": [
+        "csvData",
+        "parsingOptions",
+        "callback"
+      ],
+      "docs": {
+        "description": "Takes a CSV file string or stream and parsing options as input, and returns a promise that\nresolves to the parsed CSV data as an array of objects.\nOptions for `parsingOptions` include:\n- `delimiter` {string/Buffer/[string/Buffer]} - Defines the character(s) used to delineate the fields inside a record. Default: `','`\n- `quote` {string/Buffer/[string/Buffer]} - Defines the characters used to surround a field. Default: `'\"'`\n- `escape` {Buffer/string/null/boolean} - Set the escape character as one character/byte only. Default: `\"`\n- `columns` {boolean / array / function} - Generates record in the form of object literals. Default: `true`\n- `bom` {boolean} - Strips the {@link https://en.wikipedia.org/wiki/Byte_order_mark byte order mark (BOM)} from the input string or buffer. Default: `true`\n- `trim` {boolean} - Ignore whitespace characters immediately around the `delimiter`. Default: `true`\n- `ltrim` {boolean} - Ignore whitespace characters from the left side of a CSV field. Default: `true`\n- `rtrim` {boolean} - Ignore whitespace characters from the right side of a CSV field. Default: `true`\n- `chunkSize` {number} - The size of each chunk of CSV data. Default: `Infinity`\n- `skip_empty_lines` {boolean} - Ignore empty lines in the CSV file. Default: `true`",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "A CSV string or a readable stream",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "String"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "Stream"
+                }
+              ]
+            },
+            "name": "csvData"
+          },
+          {
+            "title": "param",
+            "description": "Optional. Parsing options for converting CSV to JSON.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
+            },
+            "name": "parsingOptions"
+          },
+          {
+            "title": "param",
+            "description": "(Optional) callback function. If used it will be called state and an array of rows.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            },
+            "name": "callback"
+          },
+          {
+            "title": "returns",
+            "description": "The function returns a Promise that resolves to the result of parsing a CSV `stringOrStream`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
             }
           }
         ]
