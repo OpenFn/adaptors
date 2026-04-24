@@ -97,7 +97,10 @@ export function createBucket(bucketName, region = 'us-east-1', options = {}) {
         resolvedOptions,
       );
       console.log(`Bucket "${resolvedBucketName}" created successfully`);
-      return composeNextState(state, { bucketName: resolvedBucketName, created: true });
+      return composeNextState(state, {
+        bucketName: resolvedBucketName,
+        created: true,
+      });
     } catch (error) {
       throw new Error(
         `Error creating bucket:{${resolvedBucketName}}. ${error.message}`,
@@ -115,7 +118,7 @@ export function createBucket(bucketName, region = 'us-east-1', options = {}) {
  * @param {string} bucketName - Bucket to list objects from
  * @param {object} [options={}] - Optional list filters
  * @param {string} [options.prefix=""] - Prefix used to filter object names
- * @param {boolean} [options.recursive=true] - Whether to list objects recursively
+ * @param {boolean} [options.recursive=true] - Whether to list objects recursively. Defaults to true
  * @returns {Operation}
  * @state {HttpState}
  */

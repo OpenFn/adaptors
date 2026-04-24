@@ -16,6 +16,11 @@
             "caption": "Create a bucket"
           },
           {
+            "title": "example",
+            "description": "createBucket(\"my-new-bucket\", \"us-east-1\", { ObjectLocking: true });",
+            "caption": "Create a bucket with object locking enabled"
+          },
+          {
             "title": "function",
             "description": null,
             "name": null
@@ -49,7 +54,7 @@
           },
           {
             "title": "param",
-            "description": "Extra options passed to MinIO makeBucket",
+            "description": "Options to create a bucket",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -59,6 +64,19 @@
             },
             "name": "options",
             "default": "{}"
+          },
+          {
+            "title": "param",
+            "description": "Enable object locking on the bucket",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "boolean"
+              }
+            },
+            "name": "options.ObjectLocking",
+            "default": "false"
           },
           {
             "title": "returns",
@@ -74,7 +92,7 @@
           }
         ]
       },
-      "valid": true
+      "valid": false
     },
     {
       "name": "listObjects",
@@ -137,7 +155,7 @@
           },
           {
             "title": "param",
-            "description": "Whether to list objects recursively",
+            "description": "Whether to list objects recursively. Defaults to true",
             "type": {
               "type": "OptionalType",
               "expression": {
