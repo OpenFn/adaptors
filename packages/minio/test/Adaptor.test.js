@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import { EventEmitter } from 'node:events';
 
 import {
+  createBucket,
   getObject,
   getObjectTags,
   listObjects,
@@ -20,6 +21,66 @@ const state = {
   },
   data: {},
 };
+
+describe('createBucket', () => {
+  afterEach(() => {
+    setMockClient(null);
+  });
+
+  it('creates a bucket and returns state.data with bucketName and created: true', async () => {
+    let capturedArgs;
+
+    setMockClient({
+      makeBucket(bucketName, region, options) {
+        capturedArgs = { bucketName, region, options };
+        return Promise.resolve();
+      },
+    });
+
+    const finalState = await createBucket('my-new-bucket')(state);
+
+    expect(capturedArgs).to.eql({
+      bucketName: 'my-new-bucket',
+      region: 'us-east-1',
+      options: {},
+    });
+    expect(finalState.data).to.eql({ bucketName: 'my-new-bucket', created: true });
+  });
+
+  it('passes ObjectLocking option through to makeBucket', async () => {
+    let capturedArgs;
+
+    setMockClient({
+      makeBucket(bucketName, region, options) {
+        capturedArgs = { bucketName, region, options };
+        return Promise.resolve();
+      },
+    });
+
+    await createBucket('my-locked-bucket', 'eu-west-1', { ObjectLocking: true })(state);
+
+    expect(capturedArgs).to.eql({
+      bucketName: 'my-locked-bucket',
+      region: 'eu-west-1',
+      options: { ObjectLocking: true },
+    });
+  });
+
+  it('throws when the bucket already exists', async () => {
+    setMockClient({
+      makeBucket() {
+        return Promise.reject(new Error('BucketAlreadyOwnedByYou'));
+      },
+    });
+
+    try {
+      await createBucket('my-new-bucket')(state);
+      expect.fail('Expected an error to be thrown');
+    } catch (err) {
+      expect(err.message).to.include('BucketAlreadyOwnedByYou');
+    }
+  });
+});
 
 describe('listObjects', () => {
   afterEach(() => {
@@ -274,5 +335,24 @@ describe('getObject', () => {
     expect(finalState.data).to.eql({ keep: true });
     expect(Buffer.isBuffer(finalState.result.objectBody)).to.equal(true);
     expect(finalState.result.objectBody.toString()).to.equal('raw object body');
+  });
+
+  it('throws an S3Error when SSL is false', async () => {
+    setMockClient({
+      getObject() {
+        const err = new Error('');
+        err.name = 'S3Error';
+        return Promise.reject(err);
+      },
+    });
+
+    const insecureState = { ...state, configuration: { ...state.configuration, useSSL: false } };
+
+    try {
+      await getObject('bucket-a', 'file.txt')(insecureState);
+      expect.fail('Expected S3Error to be thrown');
+    } catch (err) {
+      expect(err.name).to.equal('S3Error');
+    }
   });
 });

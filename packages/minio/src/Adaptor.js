@@ -33,6 +33,7 @@ export function execute(...operations) {
     return commonExecute(
       createClient,
       ...operations,
+      destroyClient,
     )({ ...initialState, ...state });
   };
 }
@@ -56,6 +57,11 @@ function createClient(state) {
   return state;
 }
 
+function destroyClient(state) {
+  client = undefined;
+  return state;
+}
+
 /**
  * State object
  * @typedef {Object} HttpState
@@ -64,16 +70,18 @@ function createClient(state) {
  * @property references - an array of all previous data objects used in the Job
  **/
 
-
 /**
  * Create a new bucket
  * @example <caption> Create a bucket</caption>
  * createBucket("my-new-bucket");
+ * @example <caption>Create a bucket with object locking enabled</caption>
+ * createBucket("my-new-bucket", "us-east-1", { ObjectLocking: true });
  * @function
  * @public
  * @param {string} bucketName - Name of the bucket to create
  * @param {string} [region="us-east-1"] - Bucket region
- * @param {object} [options={}] - Extra options passed to MinIO makeBucket
+ * @param {object} [options={}] - Options to create a bucket
+ * @param {boolean} [options.ObjectLocking=false] - Enable object locking on the bucket
  * @returns {Operation}
  * @state {HttpState}
  */
@@ -81,7 +89,6 @@ export function createBucket(bucketName, region = 'us-east-1', options = {}) {
   return async state => {
     const [resolvedBucketName, resolvedRegion, resolvedOptions] =
       expandReferences(state, bucketName, region, options);
-    let response;
 
     try {
       await client.makeBucket(
@@ -89,16 +96,13 @@ export function createBucket(bucketName, region = 'us-east-1', options = {}) {
         resolvedRegion,
         resolvedOptions,
       );
-      response = `Bucket {${resolvedBucketName}} created successfully`;
+      console.log(`Bucket "${resolvedBucketName}" created successfully`);
+      return composeNextState(state, { bucketName: resolvedBucketName, created: true });
     } catch (error) {
       throw new Error(
-        `Error creating bucket:{${error.bucketname}}. ${error.message}`,
+        `Error creating bucket:{${resolvedBucketName}}. ${error.message}`,
       );
     }
-
-    const nextState = composeNextState(state, response);
-    return nextState;
-
   };
 }
 
@@ -132,7 +136,9 @@ export function listObjects(bucketName, options = {}) {
         objects.push(obj);
       });
       stream.on('end', function () {
-        console.log(`Finished listing ${objects.length} objects in bucket {${resolvedBucketName}} with prefix {${prefix}}`);
+        console.log(
+          `Finished listing ${objects.length} objects in bucket {${resolvedBucketName}} with prefix {${prefix}}`,
+        );
         resolve(objects);
       });
       stream.on('error', function (err) {
@@ -143,7 +149,6 @@ export function listObjects(bucketName, options = {}) {
     return composeNextState(state, data);
   };
 }
-
 
 /**
  * Get an object from a bucket
@@ -188,6 +193,7 @@ export function getObject(bucketName, objectName, options = {}) {
           });
         })
         .catch(err => {
+          console.log({ err });
           console.error(
             `Failed to get object "${resolvedObjectName}" from bucket "${resolvedBucketName}": [${err.code}] ${err.message}`,
           );
@@ -230,8 +236,12 @@ export function getObject(bucketName, objectName, options = {}) {
  */
 export function putObject(bucketName, objectName, data, options = {}) {
   return async state => {
-    const [resolvedBucketName, resolvedObjectName, resolvedData, resolvedOptions] =
-      expandReferences(state, bucketName, objectName, data, options);
+    const [
+      resolvedBucketName,
+      resolvedObjectName,
+      resolvedData,
+      resolvedOptions,
+    ] = expandReferences(state, bucketName, objectName, data, options);
 
     const { format = 'json', contentType, metadata = {} } = resolvedOptions;
 
@@ -279,8 +289,12 @@ export function putObject(bucketName, objectName, data, options = {}) {
  */
 export function setObjectTags(bucketName, objectName, tags, putOpts = {}) {
   return async state => {
-    const [resolvedBucketName, resolvedObjectName, resolvedTags, resolvedPutOpts] =
-      expandReferences(state, bucketName, objectName, tags, putOpts);
+    const [
+      resolvedBucketName,
+      resolvedObjectName,
+      resolvedTags,
+      resolvedPutOpts,
+    ] = expandReferences(state, bucketName, objectName, tags, putOpts);
 
     try {
       await client.setObjectTagging(
@@ -316,8 +330,11 @@ export function setObjectTags(bucketName, objectName, tags, putOpts = {}) {
  */
 export function getObjectTags(bucketName, objectName) {
   return async state => {
-    const [resolvedBucketName, resolvedObjectName] =
-      expandReferences(state, bucketName, objectName);
+    const [resolvedBucketName, resolvedObjectName] = expandReferences(
+      state,
+      bucketName,
+      objectName,
+    );
 
     try {
       const tags = await client.getObjectTagging(
@@ -336,9 +353,6 @@ export function getObjectTags(bucketName, objectName) {
     }
   };
 }
-
-
-
 
 export {
   as,
