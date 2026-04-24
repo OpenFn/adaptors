@@ -41,7 +41,8 @@
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
     "nock": "13.2.9",
-    "rimraf": "3.0.2"
+    "rimraf": "3.0.2",
+    "sinon": "^21.1.2"
   },
   "type": "module",
   "types": "types/index.d.ts",
