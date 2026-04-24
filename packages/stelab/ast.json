@@ -51,7 +51,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
+            "description": "{StelabState}"
           }
         ]
       },
@@ -118,7 +118,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
+            "description": "{StelabState}"
           }
         ]
       },
@@ -195,7 +195,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
+            "description": "{StelabState}"
           }
         ]
       },

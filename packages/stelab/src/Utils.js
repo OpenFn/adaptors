@@ -20,16 +20,14 @@ export const prepareNextState = (state, response) => {
 };
 
 export const request = async (configuration, method, path, params) => {
-  const { baseUrl, apiKey, apiPath = 'api/v1', cookie } = configuration;
+  const { baseUrl, apiKey, apiPath = 'api/v1' } = configuration;
   let { body, headers = {}, errors, ...otherOptions } = params || {};
 
-  console.log(cookie);
   const requestHeaders = {
     ...headers,
     Authorization: `Bearer ${apiKey}`,
     'content-type': 'application/x-www-form-urlencoded',
     accept: 'application/json',
-    Cookie: `sid=${cookie}`,
   };
 
   body = new URLSearchParams(body).toString();
@@ -54,21 +52,4 @@ export const request = async (configuration, method, path, params) => {
       logResponse(err);
       throw err;
     });
-};
-
-export const fetchCookie = async state => {
-  const { baseUrl, apiKey, apiPath = 'api/v1' } = state.configuration;
-  const safePath = nodepath.join(`${apiPath}/me`);
-  const response = await commonRequest('GET', safePath, {
-    baseUrl,
-    headers: { Authorization: `Bearer ${apiKey}`, accept: 'application/json' },
-  });
-  const sidCookie = response.headers['set-cookie'];
-  if (!sidCookie.startsWith('sid=')) {
-    throw new Error('SID cookie not found in response');
-  }
-  console.log('Fetched SID cookie');
-
-  state.configuration.cookie = sidCookie.split(';')[0].split('=')[1];
-  return state;
 };

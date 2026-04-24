@@ -1,10 +1,9 @@
-import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
 
 /**
  * State object
- * @typedef {Object} HttpState
+ * @typedef {Object} StelabState
  * @property data - the parsed response body
  * @property response - the response from the HTTP server, including headers, statusCode, body, etc
  * @property references - an array of all previous data objects used in the Job
@@ -16,38 +15,12 @@ import * as util from './Utils.js';
  * @public
  * @property {object|string} body - body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).
  * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
- * @property {object} form - Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body.
  * @property {object} query - An object of query parameters to be encoded into the URL.
  * @property {object} headers - An object of headers to append to the request.
  * @property {string} parseAs - Parse the response body as json, text or stream. By default will use the response headers.
  * @property {number} timeout - Request timeout in ms. Default: 300 seconds.
  * @property {object} tls - TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions
  */
-
-/**
- * Execute a sequence of operations
- * Wraps `language-common/execute`, and prepends initial state for http.
- * @example
- * execute(
- *   get('foo'),
- *   post('bar', $.data)
- * )(state)
- * @param {Operations} operations - Operations to be performed.
- * @returns {Operation}
- */
-export function execute(...operations) {
-  const initialState = {
-    references: [],
-    data: null,
-  };
-
-  return state => {
-    return commonExecute(
-      util.fetchCookie,
-      ...operations,
-    )({ ...initialState, ...state });
-  };
-}
 
 /**
  * Make a GET request
@@ -58,7 +31,7 @@ export function execute(...operations) {
  * @param {string} path - Path to resource
  * @param {RequestOptions} options - Optional request options
  * @returns {Operation}
- * @state {HttpState}
+ * @state {StelabState}
  */
 export function get(path, options) {
   return request('GET', path, null, options);
@@ -74,7 +47,7 @@ export function get(path, options) {
  * @param {object} body - Object which will be attached to the POST body
  * @param {RequestOptions} options - Optional request options
  * @returns {Operation}
- * @state {HttpState}
+ * @state {StelabState}
  */
 export function post(path, body, options) {
   return request('POST', path, body, options);
@@ -91,7 +64,7 @@ export function post(path, body, options) {
  * @param {object} body - Object which will be attached to the POST body
  * @param {RequestOptions} options - Optional request options
  * @returns {Operation}
- * @state {HttpState}
+ * @state {StelabState}
  */
 export function request(method, path, body, options = {}) {
   return async state => {
