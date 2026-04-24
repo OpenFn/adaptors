@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "endPoint": {
+      "title": "End Point",
+      "description": "MinIO server hostname or IP",
+      "minLength": 1,
+      "examples": ["play.min.io"]
+    },
+    "port": {
+      "title": "Port",
+      "type": "number",
+      "description": "Port number",
+      "examples": [9000]
+    },
+    "useSSL": {
+      "title": "Use SSL",
+      "type": "boolean",
+      "description": "Whether to use SSL",
+      "default":true,
+      "examples": [true]
+    },
+    "accessKey": {
+      "title": "Access Key",
+      "type": "string",
+      "description": "Access key for MinIO",
+      "writeOnly": true,
+      "examples": ["Q3AM3UQ867SPQQA43P2F"]
+    },
+    "secretKey": {
+      "title": "Secret Key",
+      "type": "string",
+      "description": "Secret key for MinIO",
+      "writeOnly": true,
+      "examples": ["zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["endPoint", "port", "accessKey", "secretKey"]
+}
