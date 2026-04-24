@@ -149,7 +149,7 @@ export function appendValues(params, callback = s => s) {
  *   ],
  * })
  * @example
- * <caption>Update multiple non-contiguous ranges</caption>
+ * <caption>Update multiple ranges</caption>
  * batchUpdateValues({
  *   spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',
  *   data: [
