@@ -139,6 +139,7 @@ export function appendValues(params, callback = s => s) {
 /**
  * Batch update values in a Spreadsheet.
  * @example
+ * <caption>Update a single range</caption>
  * batchUpdateValues({
  *   spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',
  *   range: 'Sheet1!A1:E1',
@@ -147,13 +148,25 @@ export function appendValues(params, callback = s => s) {
  *     ['Really now!', '$100', '1', '3/20/2016'],
  *   ],
  * })
+ * @example
+ * <caption>Update multiple ranges</caption>
+ * batchUpdateValues({
+ *   spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',
+ *   data: [
+ *     { range: 'Sheet1!A1', values: [['value1']] },
+ *     { range: 'Sheet1!B5', values: [['value2']] },
+ *     { range: 'Sheet1!D10:E11', values: [['a', 'b'], ['c', 'd']] },
+ *   ],
+ *   valueInputOption: 'RAW',
+ * })
  * @function
  * @public
  * @param {Object} params - Data object to add to the spreadsheet.
  * @param {string} [params.spreadsheetId] The spreadsheet ID.
- * @param {string} [params.range] The range of values to update.
+ * @param {string} [params.range] The range of values to update (single-range form).
  * @param {string} [params.valueInputOption] (Optional) Value update options. Defaults to 'USER_ENTERED'
- * @param {array} [params.values] A 2d array of values to update.
+ * @param {array} [params.values] A 2d array of values to update (single-range form).
+ * @param {array} [params.data] An array of ValueRange objects `({ range, values })` for updating multiple ranges at once.
  * @param {function} callback - (Optional) callback function
  * @returns {Operation} spreadsheet information
  */
@@ -166,20 +179,27 @@ export function batchUpdateValues(params, callback = s => s) {
       range,
       valueInputOption = 'USER_ENTERED',
       values,
+      data,
     } = resolvedParams;
 
-    if (!values || values.length === 0) {
-      console.log('Warning: empty values array');
-      return state;
+    let rangeData;
+
+    if (data !== undefined) {
+      if (!data || data.length === 0) {
+        console.log('Warning: empty data array');
+        return state;
+      }
+      rangeData = data;
+    } else {
+      if (!values || values.length === 0) {
+        console.log('Warning: empty values array');
+        return state;
+      }
+      rangeData = [{ range, values }];
     }
 
     const resource = {
-      data: [
-        {
-          range,
-          values,
-        },
-      ],
+      data: rangeData,
       valueInputOption,
     };
     try {
