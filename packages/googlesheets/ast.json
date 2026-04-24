@@ -100,7 +100,13 @@
         "tags": [
           {
             "title": "example",
-            "description": "batchUpdateValues({\n  spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  range: 'Sheet1!A1:E1',\n  values: [\n    ['From expression', '$15', '2', '3/15/2016'],\n    ['Really now!', '$100', '1', '3/20/2016'],\n  ],\n})"
+            "description": "batchUpdateValues({\n  spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  range: 'Sheet1!A1:E1',\n  values: [\n    ['From expression', '$15', '2', '3/15/2016'],\n    ['Really now!', '$100', '1', '3/20/2016'],\n  ],\n})",
+            "caption": "Update a single range"
+          },
+          {
+            "title": "example",
+            "description": "batchUpdateValues({\n  spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  data: [\n    { range: 'Sheet1!A1', values: [['value1']] },\n    { range: 'Sheet1!B5', values: [['value2']] },\n    { range: 'Sheet1!D10:E11', values: [['a', 'b'], ['c', 'd']] },\n  ],\n  valueInputOption: 'RAW',\n})",
+            "caption": "Update multiple ranges"
           },
           {
             "title": "function",
@@ -135,7 +141,7 @@
           },
           {
             "title": "param",
-            "description": "The range of values to update.",
+            "description": "The range of values to update (single-range form).",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -159,7 +165,7 @@
           },
           {
             "title": "param",
-            "description": "A 2d array of values to update.",
+            "description": "A 2d array of values to update (single-range form).",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -168,6 +174,18 @@
               }
             },
             "name": "params.values"
+          },
+          {
+            "title": "param",
+            "description": "An array of ValueRange objects `({ range, values })` for updating multiple ranges at once.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "array"
+              }
+            },
+            "name": "params.data"
           },
           {
             "title": "param",
