@@ -17,7 +17,10 @@ appendValues({
 });
 
 // Now
-appendValues('1abc...', { range: 'Sheet1!A1:E1', values: [['a', 'b']] });
+appendValues(
+  '1abc...',
+  [{ range: 'Sheet1!A1:E1', values: [['a', 'b']] }],
+);
 ```
 
 **`batchUpdateValues`**
@@ -31,7 +34,7 @@ batchUpdateValues({
   valueInputOption: 'RAW',
 });
 
-// Now — accepts an array of range/values objects
+// Now
 batchUpdateValues(
   '1abc...',
   [{ range: 'Sheet1!A1', values: [['a']] }],
