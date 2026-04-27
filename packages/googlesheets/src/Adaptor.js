@@ -95,10 +95,9 @@ export function execute(...operations) {
  * @param {array} data.values - A 2d array of values to append.
  * @param {Object} [options] - Optional settings.
  * @param {string} [options.valueInputOption] - Defaults to 'USER_ENTERED'.
- * @param {function} [callback] - Optional callback function.
  * @returns {Operation}
  */
-export function appendValues(spreadsheetId, data, options = {}, callback = s => s) {
+export function appendValues(spreadsheetId, data, options = {}) {
   return state => {
     const [resolvedSpreadsheetId, resolvedData, resolvedOptions] = expandReferences(
       state,
@@ -133,12 +132,10 @@ export function appendValues(spreadsheetId, data, options = {}, callback = s => 
           } else {
             console.log('Success! Here is the response from Google:');
             console.log(response.data);
-            resolve(
-              callback({
-                ...composeNextState(state, response.data),
-                response,
-              })
-            );
+            resolve({
+              ...composeNextState(state, response.data),
+              response,
+            });
           }
         }
       );
@@ -172,10 +169,9 @@ export function appendValues(spreadsheetId, data, options = {}, callback = s => 
  * @param {Array<{range: string, values: array}>} data - Array of range/values objects to update.
  * @param {Object} [options] - Optional settings.
  * @param {string} [options.valueInputOption] - Defaults to 'USER_ENTERED'.
- * @param {function} [callback] - Optional callback function.
  * @returns {Operation} spreadsheet information
  */
-export function batchUpdateValues(spreadsheetId, data, options = {}, callback = s => s) {
+export function batchUpdateValues(spreadsheetId, data, options = {}) {
   return async state => {
     const [resolvedSpreadsheetId, resolvedData, resolvedOptions] = expandReferences(
       state,
@@ -200,7 +196,7 @@ export function batchUpdateValues(spreadsheetId, data, options = {}, callback = 
         resource,
       });
       console.log('%d cells updated.', response.data.totalUpdatedCells);
-      return callback({ ...composeNextState(state, response.data), response });
+      return { ...composeNextState(state, response.data), response };
     } catch (err) {
       logError(err);
       throw err;
