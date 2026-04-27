@@ -3,8 +3,9 @@
     {
       "name": "appendValues",
       "params": [
-        "params",
-        "callback"
+        "spreadsheetId",
+        "data",
+        "options"
       ],
       "docs": {
         "description": "Add an array of rows to the spreadsheet.\nhttps://developers.google.com/sheets/api/samples/writing#append_values",
@@ -16,7 +17,7 @@
           },
           {
             "title": "example",
-            "description": "appendValues({\n  spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  range: 'Sheet1!A1:E1',\n  values: [\n    ['From expression', '$15', '2', '3/15/2016'],\n    ['Really now!', '$100', '1', '3/20/2016'],\n  ],\n})"
+            "description": "appendValues(\n  '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  {\n    range: 'Sheet1!A1:E1',\n    values: [\n      ['From expression', '$15', '2', '3/15/2016'],\n      ['Really now!', '$100', '1', '3/20/2016'],\n    ],\n  }\n)"
           },
           {
             "title": "function",
@@ -25,57 +26,63 @@
           },
           {
             "title": "param",
-            "description": "Data object to add to the spreadsheet.",
+            "description": "The spreadsheet ID.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "spreadsheetId"
+          },
+          {
+            "title": "param",
+            "description": "Data to append.",
             "type": {
               "type": "NameExpression",
               "name": "Object"
             },
-            "name": "params"
+            "name": "data"
           },
           {
             "title": "param",
-            "description": "The spreadsheet ID.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "params.spreadsheetId"
-          },
-          {
-            "title": "param",
-            "description": "The range of values to update.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "params.range"
-          },
-          {
-            "title": "param",
-            "description": "A 2d array of values to update.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "array"
-              }
-            },
-            "name": "params.values"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
+            "description": "The range to append to.",
             "type": {
               "type": "NameExpression",
-              "name": "function"
+              "name": "string"
             },
-            "name": "callback"
+            "name": "data.range"
+          },
+          {
+            "title": "param",
+            "description": "A 2d array of values to append.",
+            "type": {
+              "type": "NameExpression",
+              "name": "array"
+            },
+            "name": "data.values"
+          },
+          {
+            "title": "param",
+            "description": "Optional settings.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "Defaults to 'USER_ENTERED'.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "options.valueInputOption"
           },
           {
             "title": "returns",
@@ -92,21 +99,22 @@
     {
       "name": "batchUpdateValues",
       "params": [
-        "params",
-        "callback"
+        "spreadsheetId",
+        "data",
+        "options"
       ],
       "docs": {
         "description": "Batch update values in a Spreadsheet.",
         "tags": [
           {
             "title": "example",
-            "description": "batchUpdateValues({\n  spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  range: 'Sheet1!A1:E1',\n  values: [\n    ['From expression', '$15', '2', '3/15/2016'],\n    ['Really now!', '$100', '1', '3/20/2016'],\n  ],\n})",
+            "description": "batchUpdateValues(\n  '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  [{ range: 'Sheet1!A1:E1', values: [['From expression', '$15'], ['Really now!', '$100']] }],\n  { valueInputOption: 'RAW' }\n)",
             "caption": "Update a single range"
           },
           {
             "title": "example",
-            "description": "batchUpdateValues({\n  spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  data: [\n    { range: 'Sheet1!A1', values: [['value1']] },\n    { range: 'Sheet1!B5', values: [['value2']] },\n    { range: 'Sheet1!D10:E11', values: [['a', 'b'], ['c', 'd']] },\n  ],\n  valueInputOption: 'RAW',\n})",
-            "caption": "Update multiple ranges"
+            "description": "batchUpdateValues(\n  '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  [\n    { range: 'Sheet1!A1', values: [['value1']] },\n    { range: 'Sheet1!B5', values: [['value2']] },\n    { range: 'Sheet1!D10:E11', values: [['a', 'b'], ['c', 'd']] },\n  ],\n  { valueInputOption: 'RAW' }\n)",
+            "caption": "Update multiple non-contiguous ranges"
           },
           {
             "title": "function",
@@ -120,81 +128,71 @@
           },
           {
             "title": "param",
-            "description": "Data object to add to the spreadsheet.",
-            "type": {
-              "type": "NameExpression",
-              "name": "Object"
-            },
-            "name": "params"
-          },
-          {
-            "title": "param",
             "description": "The spreadsheet ID.",
             "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "params.spreadsheetId"
-          },
-          {
-            "title": "param",
-            "description": "The range of values to update (single-range form).",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "params.range"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Value update options. Defaults to 'USER_ENTERED'",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            "name": "params.valueInputOption"
-          },
-          {
-            "title": "param",
-            "description": "A 2d array of values to update (single-range form).",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "array"
-              }
-            },
-            "name": "params.values"
-          },
-          {
-            "title": "param",
-            "description": "An array of ValueRange objects `({ range, values })` for updating multiple ranges at once.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "array"
-              }
-            },
-            "name": "params.data"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) callback function",
-            "type": {
               "type": "NameExpression",
-              "name": "function"
+              "name": "string"
             },
-            "name": "callback"
+            "name": "spreadsheetId"
+          },
+          {
+            "title": "param",
+            "description": "Array of range/values objects to update.",
+            "type": {
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
+                {
+                  "type": "RecordType",
+                  "fields": [
+                    {
+                      "type": "FieldType",
+                      "key": "range",
+                      "value": {
+                        "type": "NameExpression",
+                        "name": "string"
+                      }
+                    },
+                    {
+                      "type": "FieldType",
+                      "key": "values",
+                      "value": {
+                        "type": "NameExpression",
+                        "name": "array"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Optional settings.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "param",
+            "description": "Defaults to 'USER_ENTERED'.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            "name": "options.valueInputOption"
           },
           {
             "title": "returns",
@@ -212,8 +210,7 @@
       "name": "getValues",
       "params": [
         "spreadsheetId",
-        "range",
-        "callback"
+        "range"
       ],
       "docs": {
         "description": "Gets cell values from a Spreadsheet.",
@@ -249,15 +246,6 @@
               "name": "string"
             },
             "name": "range"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",

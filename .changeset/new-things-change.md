@@ -39,7 +39,5 @@ batchUpdateValues(
 );
 ```
 
-**`getValues`**
-
-Signature unchanged. Callback parameter has been removed; use `fn()` to transform the response instead.
+Callback parameter has been removed from `appendValues()`, `batchUpdateValues()`, and `getValues()` in favor of a promise-based API.
 
