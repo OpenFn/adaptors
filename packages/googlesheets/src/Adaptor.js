@@ -80,11 +80,11 @@ export function execute(...operations) {
  * @example
  * appendValues(
  *   '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',
- *   [{ range: 'Sheet1!A1:E1', values: [['From expression', '$15', '2', '3/15/2016'], ['Really now!', '$100', '1', '3/20/2016']] }]
+ *   { range: 'Sheet1!A1:E1', values: [['From expression', '$15', '2', '3/15/2016'], ['Really now!', '$100', '1', '3/20/2016']] }
  * )
  * @function
  * @param {string} spreadsheetId - The spreadsheet ID.
- * @param {Array<{range: string, values: array}>} data - Array containing a single range/values object to append.
+ * @param {{range: string, values: array}} data - A single range/values object to append.
  * @param {Object} [options] - Optional settings.
  * @param {string} [options.valueInputOption] - Defaults to 'USER_ENTERED'.
  * @returns {Operation}
@@ -97,7 +97,7 @@ export function appendValues(spreadsheetId, data, options = {}) {
       data,
       options
     );
-    const { range, values } = resolvedData[0];
+    const { range, values } = resolvedData;
     const { valueInputOption = 'USER_ENTERED' } = resolvedOptions;
 
     if (!values || values.length === 0) {

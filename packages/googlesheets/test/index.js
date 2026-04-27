@@ -47,7 +47,7 @@ describe('append', () =>{
 
     const result = await appendValues(
       '123-456-789',
-      [{ range: 'Sheet!A1:E1', values: null }],
+      { range: 'Sheet!A1:E1', values: null },
     )(state);
     expect(result).to.eql(state);
   });
