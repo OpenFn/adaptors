@@ -19,7 +19,7 @@ appendValues({
 // Now
 appendValues(
   '1abc...',
-  [{ range: 'Sheet1!A1:E1', values: [['a', 'b']] }],
+  { range: 'Sheet1!A1:E1', values: [['a', 'b']] },
 );
 ```
 
