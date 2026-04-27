@@ -450,6 +450,9 @@ importers:
       undici:
         specifier: ^7.24.7
         version: 7.24.7
+      xlsx:
+        specifier: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
+        version: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
     devDependencies:
       chai:
         specifier: 4.3.6
@@ -1795,9 +1798,6 @@ importers:
       undici:
         specifier: ^7.24.7
         version: 7.24.7
-      xlsx:
-        specifier: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
-        version: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
     devDependencies:
       assertion-error:
         specifier: 2.0.0

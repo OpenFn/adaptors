@@ -1,8 +1,7 @@
-import xlsx from 'xlsx';
 import { fetch } from 'undici';
 import { Readable, Writable } from 'node:stream';
 import { composeNextState, asData } from '@openfn/language-common';
-import { expandReferences } from '@openfn/language-common/util';
+import { expandReferences, sheetToBuffer } from '@openfn/language-common/util';
 
 export function assertDrive(state, driveName) {
   if (!state.drives[driveName]) {
@@ -136,11 +135,6 @@ function makeAuthHeader(accessToken) {
   return accessToken ? `Bearer ${accessToken}` : null;
 }
 
-const defaultSheetOptions = {
-  bookType: 'xlsx',
-  wsName: 'Sheet',
-};
-
 /**
  * The function `sheetToBuffer` takes in rows, options and optional callback, It creates a workbook
  * and worksheet using the rows, appends the worksheet to the workbook, and returns the workbook as a
@@ -166,19 +160,7 @@ export function sheetToBuffer(rows, options, callback) {
     const resolvedRows = asData(rows, state);
     const [resolvedOptions] = expandReferences(state, options);
 
-    const { wsName, bookType } = {
-      ...defaultSheetOptions,
-      ...resolvedOptions,
-    };
-
-    const workbook = xlsx.utils.book_new();
-    const worksheet = xlsx.utils.json_to_sheet(resolvedRows);
-
-    xlsx.utils.book_append_sheet(workbook, worksheet, wsName);
-
-    const buffer = xlsx.write(workbook, { type: 'buffer', bookType });
-
-    console.log(`Creating sheet buffer with bookType '${bookType}'`);
+    const buffer = sheetToBuffer(resolvedRows, resolvedOptions);
 
     const nextState = { ...state, buffer };
 
