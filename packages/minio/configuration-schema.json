@@ -10,13 +10,13 @@
     "port": {
       "title": "Port",
       "type": "integer",
-      "description": "Port number",
+      "description": "MinIO port number",
       "examples": [9000]
     },
     "useSSL": {
       "title": "Use SSL",
       "type": "boolean",
-      "description": "Whether to use SSL",
+      "description": "Whether to use SSL in MinIO connection",
       "default":true,
       "examples": [true]
     },
