@@ -37,5 +37,5 @@
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["endPoint", "port", "accessKey", "secretKey"]
+  "required": ["endPoint", "accessKey", "secretKey"]
 }
