@@ -9,7 +9,7 @@
     },
     "port": {
       "title": "Port",
-      "type": "number",
+      "type": "integer",
       "description": "Port number",
       "examples": [9000]
     },
