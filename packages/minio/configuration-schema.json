@@ -9,14 +9,14 @@
     },
     "port": {
       "title": "Port",
-      "type": "number",
-      "description": "Port number",
+      "type": "integer",
+      "description": "MinIO port number",
       "examples": [9000]
     },
     "useSSL": {
       "title": "Use SSL",
       "type": "boolean",
-      "description": "Whether to use SSL",
+      "description": "Whether to use SSL in MinIO connection",
       "default":true,
       "examples": [true]
     },
@@ -37,5 +37,5 @@
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["endPoint", "port", "accessKey", "secretKey"]
+  "required": ["endPoint", "accessKey", "secretKey"]
 }
