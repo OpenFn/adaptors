@@ -1590,6 +1590,9 @@ importers:
       csv-stringify:
         specifier: ^6.7.0
         version: 6.7.0
+      minio:
+        specifier: ^8.0.7
+        version: 8.0.7
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -1600,9 +1603,6 @@ importers:
       deep-eql:
         specifier: 4.1.1
         version: 4.1.1
-      minio:
-        specifier: ^8.0.7
-        version: 8.0.7
       mocha:
         specifier: ^10.7.3
         version: 10.8.2
