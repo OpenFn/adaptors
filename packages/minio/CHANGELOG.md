@@ -6,7 +6,7 @@
 
 - Move `minio` SDK from `devDependency` to `dependency` in `package.json`
 
-## 1.0.1
+## 1.0.1 - 29 April 2026
 
 ### Patch Changes
 
