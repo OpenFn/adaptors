@@ -1,5 +1,11 @@
 # @openfn/language-minio
 
+## 1.0.2
+
+### Patch Changes
+
+- Move `minio` SDK from `devDependency` to `dependency` in `package.json`
+
 ## 1.0.1
 
 ### Patch Changes
