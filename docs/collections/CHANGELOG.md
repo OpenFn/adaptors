@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- Add support for project_id on config
+- Add support for project\_id on config
 
 ## 0.8.6 - 14 April 2026
 

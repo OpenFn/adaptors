@@ -1,5 +1,11 @@
 # @openfn/language-browserless
 
+## 1.0.4 - 29 April 2026
+
+### Patch Changes
+
+- 4e5efe2: Make baseUrl a plain string in the credential configuration schema.
+
 ## 1.0.3 - 07 April 2026
 
 ### Patch Changes
