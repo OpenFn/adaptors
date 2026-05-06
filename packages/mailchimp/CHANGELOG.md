@@ -1,5 +1,11 @@
 # @openfn/language-mailchimp
 
+## 1.0.31 - 06 May 2026
+
+### Patch Changes
+
+- 6c14547: fix a typo in `console.warn`
+
 ## 1.0.30 - 07 April 2026
 
 ### Patch Changes
