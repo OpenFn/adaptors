@@ -1,6 +1,6 @@
 # @openfn/language-minio
 
-## 1.0.2
+## 1.0.2 - 06 May 2026
 
 ### Patch Changes
 
