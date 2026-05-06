@@ -1,7 +1,7 @@
 import { fetch } from 'undici';
 import { Readable, Writable } from 'node:stream';
 import { composeNextState, asData } from '@openfn/language-common';
-import { expandReferences, sheetToBuffer } from '@openfn/language-common/util';
+import { expandReferences, rowsToBuffer } from '@openfn/language-common/util';
 
 export function assertDrive(state, driveName) {
   if (!state.drives[driveName]) {

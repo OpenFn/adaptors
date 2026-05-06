@@ -1,6 +1,7 @@
 import { expect } from 'chai';
+import xlsx from 'xlsx';
 import * as util from '../../src/util/index.js';
-const { encode, decode, uuid } = util;
+const { encode, decode, uuid, rowsToBuffer } = util;
 
 describe('uuid', () => {
   it('should generate a uuid', () => {
@@ -25,7 +26,7 @@ describe('encode', () => {
   });
   it('should encode a string to Base64 while skipping the JSON stringification step', () => {
     expect(encode('Hello World', { parseJson: false })).to.eql(
-      'SGVsbG8gV29ybGQ='
+      'SGVsbG8gV29ybGQ=',
     );
   });
 
@@ -60,7 +61,7 @@ describe('decode', () => {
   });
   it('should decode a Base64 string back to its original string without needing to JSON parse', () => {
     expect(decode('SGVsbG8gV29ybGQ=', { parseJson: false })).to.eql(
-      'Hello World'
+      'Hello World',
     );
   });
 
@@ -73,3 +74,50 @@ describe('decode', () => {
   });
 });
 
+describe('rowsToBuffer', () => {
+  const rows = [
+    { Name: 'Alice', Age: 30 },
+    { Name: 'Bob', Age: 25 },
+  ];
+
+  it('should return a Buffer', () => {
+    const result = rowsToBuffer(rows, {});
+    expect(Buffer.isBuffer(result)).to.be.true;
+  });
+
+  it('should produce a valid xlsx workbook by default', () => {
+    const result = rowsToBuffer(rows, {});
+    const wb = xlsx.read(result, { type: 'buffer' });
+    expect(wb.SheetNames).to.include('Sheet');
+  });
+
+  it('should use the provided wsName', () => {
+    const result = rowsToBuffer(rows, { wsName: 'Patient Data' });
+    const wb = xlsx.read(result, { type: 'buffer' });
+    expect(wb.SheetNames).to.include('Patient Data');
+  });
+
+  it('should write correct row data into the worksheet', () => {
+    const result = rowsToBuffer(rows, { wsName: 'Data' });
+    const wb = xlsx.read(result, { type: 'buffer' });
+    const ws = wb.Sheets['Data'];
+    const parsed = xlsx.utils.sheet_to_json(ws);
+    expect(parsed).to.eql(rows);
+  });
+
+  it('should support csv bookType', () => {
+    const result = rowsToBuffer(rows, { bookType: 'csv' });
+    expect(Buffer.isBuffer(result)).to.be.true;
+    const text = result.toString();
+    expect(text).to.include('Alice');
+    expect(text).to.include('Bob');
+  });
+
+  it('should handle an empty rows array', () => {
+    const result = rowsToBuffer([], { wsName: 'Empty' });
+    const wb = xlsx.read(result, { type: 'buffer' });
+    const ws = wb.Sheets['Empty'];
+    const parsed = xlsx.utils.sheet_to_json(ws);
+    expect(parsed).to.eql([]);
+  });
+});

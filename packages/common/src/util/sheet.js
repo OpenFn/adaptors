@@ -1,13 +1,13 @@
 import xlsx from 'xlsx';
 
 /**
- * The function `sheetToBuffer` takes in rows and options, It creates a workbook
+ * The function `rowsToBuffer` takes in rows and options, It creates a workbook
  * and worksheet using the rows, appends the worksheet to the workbook, and returns the workbook as a
  * buffer.
  * @public
  * @example
  * <caption>Create a buffer containing excel file with `xlsx` output format  </caption>
- * sheetToBuffer(
+ * rowsToBuffer(
  *   [
  *     ["Name", "Age"],
  *     ["John", 20],
@@ -26,7 +26,7 @@ import xlsx from 'xlsx';
  * for the function. It can have the following properties:
  * @returns a buffer containing the Excel file.
  */
-export function sheetToBuffer(rows, options) {
+export function rowsToBuffer(rows, options) {
   const { wsName = 'Sheet', bookType = 'xlsx' } = options;
 
   const workbook = xlsx.utils.book_new();
