@@ -1,44 +1,110 @@
 {
   "CREATE": {
+    "Analyze Image Content With Vision (Legacy)": {
+      "description": "Upload an image and send a message or question about it. Powered by Chat Completions API.",
+      "code": ""
+    },
+    "Analyze Images": {
+      "description": "(Recommended) Upload an image(s) and send a message or question about it. Powered by Responses API.",
+      "code": ""
+    },
     "Analyze Text": {
-      "description": "Summarize, classify, or otherwise analyze a block of text.",
-      "code": "// Ask the model to analyze a block of text.\n// The chat completion is written to state.data.\nprompt(\n  `Analyze the following text and return the key themes, tone and any action items.\\n\\nTEXT:\\n${JSON.stringify($.data.text)}`,\n  {\n    // Pick a chat-completions capable model.\n    model: 'gpt-4o-mini',\n    // Keep output deterministic for analysis tasks.\n    temperature: 0.2,\n  }\n);"
-    },
-    "Summarize Text (Legacy)": {
-      "description": "Condense a block of text into a short summary.",
-      "code": "// Summarize a chunk of text.\nprompt(\n  `Summarize the text below in 3 short bullet points.\\n\\nTEXT:\\n${$.data.text}`,\n  {\n    model: 'gpt-4o-mini',\n    temperature: 0.2,\n  }\n);"
-    },
-    "Classify Text (Legacy)": {
-      "description": "Assign a piece of text to one of the categories you supply.",
-      "code": "// Classify text into one of the supplied categories.\nconst categories = ['billing', 'support', 'sales', 'other'];\n\nprompt(\n  `Pick the single best category for the message below. Reply with the\\ncategory string only, nothing else.\\n\\nCATEGORIES: ${categories.join(', ')}\\n\\nMESSAGE:\\n${$.data.message}`,\n  {\n    model: 'gpt-4o-mini',\n    temperature: 0,\n  }\n);"
+      "description": "(Recommended) Summarize, classify, and analyze text. Powered by Responses API.",
+      "code": ""
     },
     "Analyze Text Sentiment (Legacy)": {
-      "description": "Score the overall sentiment of a block of text.",
-      "code": "// Return a sentiment label + score for a block of text.\nprompt(\n  `Rate the sentiment of the text below. Reply as JSON:\\n{ \"label\": \"positive\" | \"neutral\" | \"negative\", \"score\": number between -1 and 1 }\\n\\nTEXT:\\n${$.data.text}`,\n  {\n    model: 'gpt-4o-mini',\n    temperature: 0,\n    // Force the model to emit valid JSON.\n    response_format: { type: 'json_object' },\n  }\n);"
+      "description": "Generate an analysis of the overall sentiment of a block of text. Powered by Chat Completions API.",
+      "code": ""
     },
-    "Extract Structured Data": {
-      "description": "Pull structured fields out of unstructured text using a JSON schema.",
-      "code": "// Extract structured fields from unstructured text.\n// The model is constrained to a JSON schema; result lands on state.data.\nprompt(\n  `Extract the contact details from the message below.\\n\\nMESSAGE:\\n${$.data.message}`,\n  {\n    model: 'gpt-4o-mini',\n    temperature: 0,\n    response_format: {\n      type: 'json_schema',\n      json_schema: {\n        name: 'contact',\n        schema: {\n          type: 'object',\n          properties: {\n            name:  { type: 'string' },\n            email: { type: 'string' },\n            phone: { type: 'string' },\n          },\n          required: ['name'],\n          additionalProperties: false,\n        },\n      },\n    },\n  }\n);"
+    "Check Moderations": {
+      "description": "Classifies if text is potentially harmful.",
+      "code": ""
     },
-    "Write an Email": {
-      "description": "Draft an email body from a prompt, ready for a follow-up send step.",
-      "code": "// Draft an email body for use in a later send step.\nprompt(\n  `Write a friendly email to ${$.data.recipientName} confirming their\\nappointment on ${$.data.appointmentDate}. Sign it from \\\"OpenFn Team\\\".`,\n  {\n    model: 'gpt-4o-mini',\n    temperature: 0.7,\n  }\n);"
-    },
-    "Send Prompt": {
-      "description": "Send an open-ended prompt to OpenAI and capture the reply.",
-      "code": "// Free-form prompt. Reply is on state.data.\nprompt(\n  `What are three risks to watch for in the following plan?\\n\\n${$.data.plan}`,\n  {\n    model: 'gpt-4o-mini',\n    temperature: 0.5,\n  }\n);"
-    },
-    "Analyze Image Content With Vision (Legacy)": {
-      "description": "Send an image and a question about it to a vision-capable model.",
-      "code": "// Ask a question about an image (URL or base64 data URI).\n// Override `messages` to attach an image part alongside the text.\nprompt(null, {\n  model: 'gpt-4o-mini',\n  messages: [\n    {\n      role: 'user',\n      content: [\n        { type: 'text', text: 'Describe what is happening in this image.' },\n        { type: 'image_url', image_url: { url: $.data.imageUrl } },\n      ],\n    },\n  ],\n});"
-    },
-    "Conversation (Legacy)": {
-      "description": "Send a multi-turn chat to OpenAI, optionally preserving prior turns.",
-      "code": "// Multi-turn chat. Provide the full message history via `messages`.\n// `prompt`'s first arg is ignored here because we override `messages`.\nprompt(null, {\n  model: 'gpt-4o-mini',\n  messages: [\n    { role: 'system', content: 'You are a concise assistant.' },\n    ...($.state.history || []),\n    { role: 'user', content: $.data.userMessage },\n  ],\n  temperature: 0.5,\n});"
+    "Classify Text (Legacy)": {
+      "description": "Classify your text into one of your provided categories. Powered by Chat Completions API.",
+      "code": ""
     },
     "Conversation": {
-      "description": "Send a chat turn using the Responses API, with optional tool use such as web search.",
-      "code": "// Use the Responses API (via deepResearch) for tool-aware chat.\n// Default tool is web_search_preview; pass your own `tools` to override.\ndeepResearch(\n  `User question: ${$.data.userMessage}\\n\\nAnswer concisely.`,\n  {\n    model: 'gpt-4o',\n    tools: [{ type: 'web_search_preview' }],\n  }\n);"
+      "description": "(Recommended) Send a chat to OpenAI, optionally storing messages for continuous conversation. This enhanced action can also help with web search, file search, and advanced tooling such as MCP. Powered by Responses API.",
+      "code": ""
+    },
+    "Conversation (Legacy)": {
+      "description": "Sends a Chat to OpenAI and generates a Completion, optionally storing messages as we do. Powered by Chat Completions API.",
+      "code": ""
+    },
+    "Convert Text to Speech": {
+      "description": "Converts a given text to speech.",
+      "code": ""
+    },
+    "Create Embedding": {
+      "description": "Generate vector embeddings for text input.",
+      "code": ""
+    },
+    "Create Image Edit": {
+      "description": "Creates a new image by editing an existing image with a prompt.",
+      "code": ""
+    },
+    "Create Transcription": {
+      "description": "Creates a new transcription, using Whisper, from an audio or video file.",
+      "code": ""
+    },
+    "Create Translation": {
+      "description": "Creates a new translation.",
+      "code": ""
+    },
+    "Create Video": {
+      "description": "Create a new video generation job using Sora. Returns a video job ID that can be used to check the render status.",
+      "code": ""
+    },
+    "Extract Structured Data": {
+      "description": "(Recommended) Improved structured data extraction with better formatting options and more reliable schema adherence. Powered by Responses API.",
+      "code": ""
+    },
+    "Extract Structured Data (Legacy)": {
+      "description": "Sends unstructured text and returns structured data using OpenAI's \"Function Calling\" capability. Powered by Chat Completions API.",
+      "code": ""
+    },
+    "Generate An Image": {
+      "description": "Generates an image using a relevant OpenAI model.",
+      "code": ""
+    },
+    "Send Prompt": {
+      "description": "Sends a prompt to OpenAI and generates a completion. Note: this uses the legacy OpenAI Completions API. We recommend using Conversation or Conversation With Assistant actions instead, which are powered by the latest OpenAI APIs.",
+      "code": ""
+    },
+    "Summarize Text (Legacy)": {
+      "description": "Enter a block of text and generate a summary. Powered by Chat Completions API.",
+      "code": ""
+    },
+    "Write an Email": {
+      "description": "Writes the content of an email based on your provided prompt for use in a subsequent step.",
+      "code": ""
+    },
+    "API Request (Beta)": {
+      "description": "This is an advanced action which makes a raw HTTP request that includes this integration's authentication.",
+      "code": ""
+    }
+  },
+  "SEARCH": {
+    "Find Conversation": {
+      "description": "Find a conversation for native OpenAI conversation management.",
+      "code": ""
+    },
+    "Find File": {
+      "description": "Finds a file by filename. Optionally, create a file if none are found.",
+      "code": ""
+    },
+    "Find Response": {
+      "description": "Find a stored Responses API result by response ID for audit trails and debugging.",
+      "code": ""
+    },
+    "Get Video": {
+      "description": "Retrieve the status and details of a video generation job created with Sora. Use this to check if a video is ready for download.",
+      "code": ""
+    },
+    "Search Embeddings": {
+      "description": "This best matches a query string (like \"big animal\") to a list of document strings (like \"mouse\", \"cat\", \"buffalo\", and \"blue whale\").",
+      "code": ""
     }
   }
 }

@@ -1,39 +1,25 @@
 {
-  "Rows": {
-    "Insert Row": {
-      "description": "Add a single row to a table.",
-      "code": ""
-    },
-    "Insert Multiple Rows": {
-      "description": "Add many rows to a table in a single statement.",
+  "CREATE": {
+    "New Row": {
+      "description": "Adds a new row.",
       "code": ""
     },
     "Update Row": {
-      "description": "Modify the values of an existing row matched by a unique column.",
-      "code": ""
-    },
-    "Upsert Row": {
-      "description": "Insert a row, or update it if a conflict is hit on the unique key.",
+      "description": "Updates an existing row.",
       "code": ""
     }
   },
-  "Search": {
+  "SEARCH": {
     "Find Row": {
-      "description": "Look up a single row using a column/value filter.",
+      "description": "Finds a row in a table via a lookup column.",
       "code": ""
     },
     "Find Row via Custom Query": {
-      "description": "Locate a row using a custom SQL query you control.",
+      "description": "Finds a row in a table via a custom query you control.",
       "code": ""
     },
     "Find Rows via Custom Query": {
-      "description": "Retrieve many rows using a custom SQL query.",
-      "code": ""
-    }
-  },
-  "Schema": {
-    "Describe Table": {
-      "description": "Return the column definitions for a table.",
+      "description": "Finds multiple rows in a table via a custom query you control.",
       "code": ""
     }
   }

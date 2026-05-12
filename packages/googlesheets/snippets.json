@@ -1,25 +1,117 @@
 {
-  "Rows": {
-    "Create Spreadsheet Row": {
-      "description": "Append a new row of values to a sheet.",
+  "CREATE": {
+    "Change Sheet Properties": {
+      "description": "Update Google Sheets properties like frozen rows/columns, sheet position, and visibility settings.",
+      "code": ""
+    },
+    "Clear Spreadsheet Row(s)": {
+      "description": "Clears the contents of the selected row(s) while keeping the row(s) intact in the spreadsheet.",
+      "code": ""
+    },
+    "Copy Range": {
+      "description": "Copy data from one range to another within a Google Sheets spreadsheet, with options for what to paste (values, formatting, etc.).",
+      "code": ""
+    },
+    "Copy Worksheet": {
+      "description": "Creates a new worksheet by copying an existing worksheet.",
+      "code": ""
+    },
+    "Create Conditional Formatting Rule": {
+      "description": "Apply conditional formatting to cells in a Google Sheets spreadsheet based on their values.",
       "code": ""
     },
     "Create Multiple Spreadsheet Rows": {
-      "description": "Append several rows of values at once.",
+      "description": "Create one or more new rows in a specific spreadsheet (with line item support).",
+      "code": ""
+    },
+    "Create Spreadsheet": {
+      "description": "Creates a new spreadsheet. Choose from a blank spreadsheet, a copy of an existing one, or one with headers.",
+      "code": ""
+    },
+    "Create Spreadsheet Column": {
+      "description": "Create a new column in a specific spreadsheet.",
+      "code": ""
+    },
+    "Create Spreadsheet Row": {
+      "description": "Create a new row in a specific spreadsheet.",
+      "code": ""
+    },
+    "Create Spreadsheet Row at Top": {
+      "description": "Creates a new spreadsheet row at the top of a spreadsheet (after the header row).",
+      "code": ""
+    },
+    "Create Worksheet": {
+      "description": "Creates a new worksheet in a Google Sheet.",
+      "code": ""
+    },
+    "Delete Sheet": {
+      "description": "Permanently delete a worksheet from a Google Sheets spreadsheet. Warning: This action cannot be undone.",
+      "code": ""
+    },
+    "Delete Spreadsheet Row(s)": {
+      "description": "Deletes the selected row(s) from the spreadsheet. This action removes the row(s) and all associated data.",
+      "code": ""
+    },
+    "Format Cell Range": {
+      "description": "Apply date, number, or style formatting (colors, bold, italic, strikethrough) to a range of cells in a Google Sheets spreadsheet.",
+      "code": ""
+    },
+    "Format Spreadsheet Row": {
+      "description": "Format a row in a specific spreadsheet.",
+      "code": ""
+    },
+    "Rename Sheet": {
+      "description": "Rename a worksheet in a Google Sheets spreadsheet.",
+      "code": ""
+    },
+    "Set Data Validation": {
+      "description": "Set data validation rules on a range of cells in Google Sheets to control what data can be entered.",
+      "code": ""
+    },
+    "Sort Range": {
+      "description": "Sort data within a specified range in Google Sheets by a chosen column in ascending or descending order.",
       "code": ""
     },
     "Update Spreadsheet Row": {
-      "description": "Overwrite the values of a specific row or range.",
+      "description": "Update a row in a specific spreadsheet with optional formatting.",
+      "code": ""
+    },
+    "Update Spreadsheet Row(s)": {
+      "description": "Update one or more rows in a specific spreadsheet (with line item support).",
+      "code": ""
+    },
+    "API Request (Beta)": {
+      "description": "This is an advanced action which makes a raw HTTP request that includes this integration's authentication.",
       "code": ""
     }
   },
-  "Search": {
+  "SEARCH": {
+    "Find Worksheet": {
+      "description": "Finds a worksheet by title. Optionally, create a worksheet if none are found.",
+      "code": ""
+    },
     "Get Data Range": {
-      "description": "Read the values from a specific A1-notation range.",
+      "description": "Get data from a specific range in a Google Spreadsheet using A1 notation (e.g., \"A1:D10\", \"B2:E5\").",
+      "code": ""
+    },
+    "Get Many Spreadsheet Rows (Advanced)": {
+      "description": "Return up to 1,500 rows as a single JSON value or as line items.",
+      "code": ""
+    },
+    "Get Row by ID": {
+      "description": "Get a specific spreadsheet row by its row number (ID). Row 1 is typically the header row.",
+      "code": ""
+    },
+    "Get Spreadsheet by ID": {
+      "description": "Get a specific Google Spreadsheet by its ID. Returns the raw spreadsheet data from the Google Sheets API.",
       "code": ""
     },
     "Lookup Spreadsheet Row": {
-      "description": "Find a row whose value in a given column matches a lookup value.",
+      "description": "Find a specific spreadsheet row based on a column and value. If found, it returns the entire row. Optionally, create a spreadsheet row if none are found.",
+      "code": ""
+    },
+    "Lookup Spreadsheet Rows (Advanced)": {
+      "description": "Find up to 500 rows based on a column and value as line items.",
       "code": ""
     }
   }

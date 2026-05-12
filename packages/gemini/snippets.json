@@ -1,7 +1,39 @@
 {
-  "Messages": {
+  "CREATE": {
+    "Conversation": {
+      "description": "Sends a chat message, optionally storing messages as you go.",
+      "code": ""
+    },
+    "Generate Audio": {
+      "description": "Generate audio from text using Gemini text-to-speech models. Useful for voice responses and audio prompts.",
+      "code": ""
+    },
+    "Generate Image": {
+      "description": "Generate an image from a text prompt using Gemini or Imagen models.",
+      "code": ""
+    },
+    "Generate Video": {
+      "description": "Generate a video from a text prompt using Veo models.",
+      "code": ""
+    },
     "Send Prompt": {
-      "description": "Send a prompt to a Gemini model and capture the generated response.",
+      "description": "Sends a prompt and generates a response.",
+      "code": ""
+    },
+    "Understand Audio": {
+      "description": "Generate a text response from an audio clip using Gemini models. Useful for summaries, transcripts, and questions about the audio.",
+      "code": ""
+    },
+    "Understand Document": {
+      "description": "Generate a text response from a document using Gemini models. Useful for summaries, key points, and questions about the document.",
+      "code": ""
+    },
+    "Understand Video": {
+      "description": "Generate a text response from a video using Gemini models. Useful for summaries, key events, and Q&A about the video.",
+      "code": ""
+    },
+    "Understand YouTube Video": {
+      "description": "Generate a text response from a YouTube video using Gemini models. Useful for summaries, key moments, and questions about the video.",
       "code": ""
     }
   }

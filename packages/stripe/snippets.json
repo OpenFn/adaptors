@@ -1,41 +1,89 @@
 {
-  "Customers": {
-    "Find Customer": {
-      "description": "Look up a customer by their Stripe ID, or list customers matched by email.",
+  "CREATE": {
+    "Cancel Subscription": {
+      "description": "Cancels a subscription.",
+      "code": ""
+    },
+    "Confirm Payment": {
+      "description": "Confirms an existing payment, also known as a PaymentIntent.",
+      "code": ""
+    },
+    "Create Checkout Session": {
+      "description": "Creates a new Checkout Session.",
+      "code": ""
+    },
+    "Create Customer": {
+      "description": "Creates a new customer.",
+      "code": ""
+    },
+    "Create Invoice": {
+      "description": "Creates a new invoice.",
+      "code": ""
+    },
+    "Create Payment": {
+      "description": "Creates a new payment, also known as a PaymentIntent.",
+      "code": ""
+    },
+    "Create Payment Link": {
+      "description": "Creates a payment link.",
+      "code": ""
+    },
+    "Create Price": {
+      "description": "Creates a price.",
+      "code": ""
+    },
+    "Create Product": {
+      "description": "Creates a new product.",
+      "code": ""
+    },
+    "Create Subscription": {
+      "description": "Creates a new subscription.",
+      "code": ""
+    },
+    "Deactivate Payment Link": {
+      "description": "Deactivates a payment link.",
+      "code": ""
+    },
+    "Update Customer": {
+      "description": "Updates an existing customer.",
+      "code": ""
+    },
+    "API Request (Beta)": {
+      "description": "This is an advanced action which makes a raw HTTP request that includes this integration's authentication.",
       "code": ""
     }
   },
-  "Charges": {
-    "Find Charge": {
-      "description": "Retrieve an existing charge by its Stripe ID.",
-      "code": ""
-    }
-  },
-  "Payments": {
-    "Find Payment": {
-      "description": "Retrieve an existing payment intent by its Stripe ID.",
-      "code": ""
-    }
-  },
-  "Invoices": {
-    "Find Invoice": {
-      "description": "Retrieve an existing invoice by its Stripe ID.",
-      "code": ""
-    }
-  },
-  "Subscriptions": {
-    "Find Subscription": {
-      "description": "Retrieve a subscription by ID, or list a customer's subscriptions.",
-      "code": ""
-    }
-  },
-  "Balance": {
+  "SEARCH": {
     "Find Account Balance": {
-      "description": "Retrieve the current Stripe account balance.",
+      "description": "Finds the account balance for your stripe account",
+      "code": ""
+    },
+    "Find Account by ID": {
+      "description": "Finds a Stripe account by its ID.",
       "code": ""
     },
     "Find Balance Transactions": {
-      "description": "List the transactions that have affected the account balance.",
+      "description": "Finds transactions that have contributed to the Stripe account balance, such as charges, transfers, and more.",
+      "code": ""
+    },
+    "Find Charge": {
+      "description": "Finds an existing charge by its Stripe ID.",
+      "code": ""
+    },
+    "Find Customer": {
+      "description": "Finds an existing customer by their Stripe ID or email address.",
+      "code": ""
+    },
+    "Find Invoice": {
+      "description": "Finds an existing invoice by its Stripe ID.",
+      "code": ""
+    },
+    "Find Payment": {
+      "description": "Finds an existing payment intent by its Stripe ID.",
+      "code": ""
+    },
+    "Find Subscription": {
+      "description": "Finds an existing subscription.",
       "code": ""
     }
   }

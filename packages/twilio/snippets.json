@@ -1,7 +1,19 @@
 {
-  "Messaging": {
+  "CREATE": {
+    "Call Phone": {
+      "description": "Call a number or numbers and say a message.",
+      "code": ""
+    },
     "Send SMS": {
-      "description": "Send a text message to a phone number through your Twilio account.",
+      "description": "Send a SMS to a number or numbers.",
+      "code": ""
+    },
+    "Send WhatsApp Message": {
+      "description": "Send a WhatsApp message to one or more recipients.",
+      "code": ""
+    },
+    "API Request (Beta)": {
+      "description": "This is an advanced action which makes a raw HTTP request that includes this integration's authentication.",
       "code": ""
     }
   }

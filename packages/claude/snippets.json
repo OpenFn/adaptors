@@ -1,7 +1,29 @@
 {
-  "Messages": {
+  "CREATE": {
+    "Delete File": {
+      "description": "Delete a file from Anthropic",
+      "code": ""
+    },
+    "Download File": {
+      "description": "Download file content from Anthropic",
+      "code": ""
+    },
     "Send Message": {
-      "description": "Send a prompt to Claude and capture the model's reply on state.",
+      "description": "Sends a message to Claude and the model generates the next message in the conversation, storing the messages as you go.",
+      "code": ""
+    },
+    "Upload File": {
+      "description": "Upload a file to Anthropic",
+      "code": ""
+    }
+  },
+  "SEARCH": {
+    "Get File Metadata": {
+      "description": "Get metadata for a specific file",
+      "code": ""
+    },
+    "List Files": {
+      "description": "List all files uploaded to Anthropic",
       "code": ""
     }
   }
