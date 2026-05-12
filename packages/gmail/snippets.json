@@ -38,13 +38,13 @@
     },
     "Send Email": {
       "description": "Create and send a new email message.",
-      "code": ""
+      "code": "// Send a new email through Gmail.\n// Pass a single message object, or an array to send several in one step.\nsendMessage({\n  // Recipient address (or an array of addresses).\n  to: 'recipient@example.org',\n  // Subject line.\n  subject: 'Hello from OpenFn',\n  // Message body. Plain text by default; pass html: true for HTML.\n  body: `Hi there,\\n\\nThis email was sent from an OpenFn workflow.`,\n  // Optional CC / BCC.\n  // cc: 'cc@example.org',\n  // bcc: 'bcc@example.org',\n  // Optional file attachments.\n  // attachments: [{ filename: 'report.csv', content: $.csv }],\n});"
     }
   },
   "SEARCH": {
     "Find Email": {
       "description": "Finds an email message. Optionally, create an email if none are found.",
-      "code": ""
+      "code": "// Find emails matching a Gmail search query.\n// Results land on state.data as an array of message contents.\ngetContentsFromMessages({\n  // Standard Gmail search syntax (from:, subject:, after:, has:attachment, ...).\n  query: 'from:billing@example.org subject:invoice after:2026/01/01',\n  // Which fields to pull back per message.\n  contents: ['from', 'date', 'subject', 'body'],\n  // Cap the number of messages returned.\n  maxResults: 25,\n});"
     },
     "Get Attachment by Filename": {
       "description": "Retrieves a specific Gmail message attachment by Filename.",

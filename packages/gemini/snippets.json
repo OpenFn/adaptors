@@ -2,7 +2,7 @@
   "CREATE": {
     "Conversation": {
       "description": "Sends a chat message, optionally storing messages as you go.",
-      "code": ""
+      "code": "// Multi-turn chat. Pass an array of Content objects as the first argument;\n// the adaptor forwards it as `contents` to generateContent.\nprompt(\n  [\n    { role: 'user',  parts: [{ text: 'Hi there!' }] },\n    { role: 'model', parts: [{ text: 'Hello — how can I help?' }] },\n    { role: 'user',  parts: [{ text: $.data.userMessage }] },\n  ],\n  {\n    model: 'gemini-2.5-flash',\n  }\n);"
     },
     "Generate Audio": {
       "description": "Generate audio from text using Gemini text-to-speech models. Useful for voice responses and audio prompts.",
@@ -10,7 +10,7 @@
     },
     "Generate Image": {
       "description": "Generate an image from a text prompt using Gemini or Imagen models.",
-      "code": ""
+      "code": "// Generate an image from a text prompt.\n// The base64-encoded image is written to state.\ngenerateImage(\n  `A flat-design illustration of: ${$.data.subject}`,\n  {\n    // Image-capable model — defaults to gemini-3-pro-image-preview.\n    model: 'gemini-3-pro-image-preview',\n    // Output size hint (e.g. '1K', '2K').\n    imageSize: '1K',\n    // Aspect ratio: '1:1', '16:9', '9:16', '4:3', '3:4'.\n    aspectRatio: '16:9',\n  }\n);"
     },
     "Generate Video": {
       "description": "Generate a video from a text prompt using Veo models.",
@@ -18,7 +18,7 @@
     },
     "Send Prompt": {
       "description": "Sends a prompt and generates a response.",
-      "code": ""
+      "code": "// Send a prompt to Gemini.\n// The text reply is written to state.data.response.\nprompt(\n  `Summarize this text: ${JSON.stringify($.data)}`,\n  {\n    // Gemini model id (see https://ai.google.dev/gemini-api/docs/models).\n    model: 'gemini-2.5-flash',\n    config: {\n      temperature: 0.7,\n    },\n  }\n);"
     },
     "Understand Audio": {
       "description": "Generate a text response from an audio clip using Gemini models. Useful for summaries, transcripts, and questions about the audio.",

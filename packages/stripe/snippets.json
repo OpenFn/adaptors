@@ -56,35 +56,35 @@
   "SEARCH": {
     "Find Account Balance": {
       "description": "Finds the account balance for your stripe account",
-      "code": ""
+      "code": "// Retrieve the current balance for the connected Stripe account.\nget('balance', '');"
     },
     "Find Account by ID": {
       "description": "Finds a Stripe account by its ID.",
-      "code": ""
+      "code": "// Retrieve a connected account by its acct_* ID.\nget('accounts', $.data.accountId);"
     },
     "Find Balance Transactions": {
       "description": "Finds transactions that have contributed to the Stripe account balance, such as charges, transfers, and more.",
-      "code": ""
+      "code": "// List recent balance transactions.\nlist('balance_transactions', {\n  // Page size (max 100).\n  limit: 25,\n});"
     },
     "Find Charge": {
       "description": "Finds an existing charge by its Stripe ID.",
-      "code": ""
+      "code": "// Fetch a single charge by its ch_* ID.\nget('charges', $.data.chargeId);"
     },
     "Find Customer": {
       "description": "Finds an existing customer by their Stripe ID or email address.",
-      "code": ""
+      "code": "// Look up by customer ID.\nget('customers', $.data.customerId);\n\n// Or — find by email by listing with a filter.\n// list('customers', { email: $.data.email, limit: 1 });"
     },
     "Find Invoice": {
       "description": "Finds an existing invoice by its Stripe ID.",
-      "code": ""
+      "code": "// Fetch a single invoice by its in_* ID.\nget('invoices', $.data.invoiceId);"
     },
     "Find Payment": {
       "description": "Finds an existing payment intent by its Stripe ID.",
-      "code": ""
+      "code": "// Fetch a single payment intent by its pi_* ID.\nget('payment_intents', $.data.paymentIntentId);"
     },
     "Find Subscription": {
       "description": "Finds an existing subscription.",
-      "code": ""
+      "code": "// Look up by subscription ID.\nget('subscriptions', $.data.subscriptionId);\n\n// Or — list every subscription for a given customer.\n// list('subscriptions', { customer: $.data.customerId, status: 'active' });"
     }
   }
 }

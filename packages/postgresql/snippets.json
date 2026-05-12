@@ -2,25 +2,25 @@
   "CREATE": {
     "New Row": {
       "description": "Adds a new row.",
-      "code": ""
+      "code": "// Insert one row into a table.\n// The new row is returned on state.data.\ninsert(\n  // Target table name.\n  'users',\n  // The record as a plain object (column => value).\n  { name: 'Elodie', email: 'elodie@example.org', age: 31 },\n  // Optional settings.\n  {\n    // Print the generated SQL to the run log (handy while developing).\n    writeSql: true,\n    // Treat these literal strings in the payload as SQL NULL.\n    setNull: [\"''\", \"'undefined'\"],\n  }\n);"
     },
     "Update Row": {
       "description": "Updates an existing row.",
-      "code": ""
+      "code": "// Update an existing row using a parameterised SQL statement.\n// $1, $2... are bound from the `values` array (safe against SQL injection).\nsql(\n  'UPDATE users SET email = $1, updated_at = NOW() WHERE id = $2;',\n  {\n    values: [$.data.email, $.data.id],\n    writeSql: true,\n  }\n);"
     }
   },
   "SEARCH": {
     "Find Row": {
       "description": "Finds a row in a table via a lookup column.",
-      "code": ""
+      "code": "// Fetch a single row's value from a relation.\n// Result is written to state.data.\nfindValue({\n  // The column to return (or 'id' / uuid column).\n  uuid: 'id',\n  // The table or view to query.\n  relation: 'users',\n  // Equality filter (combined with AND).\n  where: { email: $.data.email },\n  // Optional operator override per column.\n  operator: { email: '=' },\n});"
     },
     "Find Row via Custom Query": {
       "description": "Finds a row in a table via a custom query you control.",
-      "code": ""
+      "code": "// Run an arbitrary SELECT. Results are on state.data.rows.\nsql(\n  'SELECT * FROM users WHERE email = $1 LIMIT 1;',\n  {\n    values: [$.data.email],\n    writeSql: true,\n  }\n);"
     },
     "Find Rows via Custom Query": {
       "description": "Finds multiple rows in a table via a custom query you control.",
-      "code": ""
+      "code": "// Run an arbitrary SELECT returning many rows.\nsql(\n  'SELECT id, name, email FROM users WHERE created_at > $1 ORDER BY id;',\n  {\n    values: ['2026-01-01'],\n  }\n);"
     }
   }
 }

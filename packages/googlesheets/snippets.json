@@ -6,7 +6,7 @@
     },
     "Clear Spreadsheet Row(s)": {
       "description": "Clears the contents of the selected row(s) while keeping the row(s) intact in the spreadsheet.",
-      "code": ""
+      "code": "// Clear cell contents in a row (or rows) by writing empty strings.\n// The row(s) themselves stay in place; only the values are wiped.\nbatchUpdateValues({\n  spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  valueInputOption: 'USER_ENTERED',\n  data: [\n    {\n      // A1 range covering the row(s) to clear.\n      range: 'Sheet1!A5:Z5',\n      // One inner array per row, sized to the range.\n      values: [Array(26).fill('')],\n    },\n  ],\n});"
     },
     "Copy Range": {
       "description": "Copy data from one range to another within a Google Sheets spreadsheet, with options for what to paste (values, formatting, etc.).",
@@ -22,7 +22,7 @@
     },
     "Create Multiple Spreadsheet Rows": {
       "description": "Create one or more new rows in a specific spreadsheet (with line item support).",
-      "code": ""
+      "code": "// Append many rows in one call.\n// Each inner array is one row; cells must line up with your columns.\nappendValues({\n  spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  range: 'Sheet1!A1:D1',\n  values: $.data.records.map(r => [r.name, r.email, r.amount, r.date]),\n});"
     },
     "Create Spreadsheet": {
       "description": "Creates a new spreadsheet. Choose from a blank spreadsheet, a copy of an existing one, or one with headers.",
@@ -34,7 +34,7 @@
     },
     "Create Spreadsheet Row": {
       "description": "Create a new row in a specific spreadsheet.",
-      "code": ""
+      "code": "// Append a single row to the bottom of a sheet.\nappendValues({\n  // Spreadsheet ID — the long string from the sheet's URL.\n  spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  // Where to append. Sheet name + column range.\n  range: 'Sheet1!A1:D1',\n  // Outer array = rows, inner arrays = cells in column order.\n  values: [\n    [$.data.name, $.data.email, $.data.amount, $.data.date],\n  ],\n});"
     },
     "Create Spreadsheet Row at Top": {
       "description": "Creates a new spreadsheet row at the top of a spreadsheet (after the header row).",
@@ -74,11 +74,11 @@
     },
     "Update Spreadsheet Row": {
       "description": "Update a row in a specific spreadsheet with optional formatting.",
-      "code": ""
+      "code": "// Overwrite the values of a single row.\nbatchUpdateValues({\n  spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  // Parse cell input like a user typed it (formulas, dates, etc.).\n  valueInputOption: 'USER_ENTERED',\n  data: [\n    {\n      range: 'Sheet1!A5:D5',\n      values: [[$.data.name, $.data.email, $.data.amount, $.data.date]],\n    },\n  ],\n});"
     },
     "Update Spreadsheet Row(s)": {
       "description": "Update one or more rows in a specific spreadsheet (with line item support).",
-      "code": ""
+      "code": "// Overwrite multiple ranges in one batch.\nbatchUpdateValues({\n  spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  valueInputOption: 'USER_ENTERED',\n  data: $.data.updates.map(u => ({\n    range: u.range,\n    values: [u.row],\n  })),\n});"
     },
     "API Request (Beta)": {
       "description": "This is an advanced action which makes a raw HTTP request that includes this integration's authentication.",
@@ -92,15 +92,15 @@
     },
     "Get Data Range": {
       "description": "Get data from a specific range in a Google Spreadsheet using A1 notation (e.g., \"A1:D10\", \"B2:E5\").",
-      "code": ""
+      "code": "// Read values from an A1 range. Result is on state.data as a 2d array.\ngetValues(\n  // Spreadsheet ID.\n  '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  // A1 range — sheet name + range.\n  'Sheet1!A1:D100'\n);"
     },
     "Get Many Spreadsheet Rows (Advanced)": {
       "description": "Return up to 1,500 rows as a single JSON value or as line items.",
-      "code": ""
+      "code": "// Pull a wide range and return all rows.\ngetValues(\n  '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  // Open-ended range — fetches every populated row in the column span.\n  'Sheet1!A2:Z'\n);"
     },
     "Get Row by ID": {
       "description": "Get a specific spreadsheet row by its row number (ID). Row 1 is typically the header row.",
-      "code": ""
+      "code": "// Fetch a single row by its row number (1-based).\nconst rowId = $.data.rowId;\ngetValues(\n  '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  // Build an A1 range that spans only that row.\n  `Sheet1!A${rowId}:Z${rowId}`\n);"
     },
     "Get Spreadsheet by ID": {
       "description": "Get a specific Google Spreadsheet by its ID. Returns the raw spreadsheet data from the Google Sheets API.",
@@ -108,11 +108,11 @@
     },
     "Lookup Spreadsheet Row": {
       "description": "Find a specific spreadsheet row based on a column and value. If found, it returns the entire row. Optionally, create a spreadsheet row if none are found.",
-      "code": ""
+      "code": "// Read a range, then filter in the callback to find the matching row.\ngetValues(\n  '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  'Sheet1!A1:D100',\n  // Callback receives state with rows on state.data.values.\n  state => {\n    const [header, ...rows] = state.data.values || [];\n    // Match on the second column (index 1).\n    state.match = rows.find(r => r[1] === $.data.email);\n    return state;\n  }\n);"
     },
     "Lookup Spreadsheet Rows (Advanced)": {
       "description": "Find up to 500 rows based on a column and value as line items.",
-      "code": ""
+      "code": "// Read a range, then filter in the callback for all matches.\ngetValues(\n  '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  'Sheet1!A1:D500',\n  state => {\n    const [header, ...rows] = state.data.values || [];\n    state.matches = rows.filter(r => r[1] === $.data.email);\n    return state;\n  }\n);"
     }
   }
 }
