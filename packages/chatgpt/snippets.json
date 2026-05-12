@@ -1,5 +1,5 @@
 {
-  "Text": {
+  "CREATE": {
     "Analyze Text": {
       "description": "Summarize, classify, or otherwise analyze a block of text.",
       "code": "// Ask the model to analyze a block of text.\n// The chat completion is written to state.data.\nprompt(\n  `Analyze the following text and return the key themes, tone and any action items.\\n\\nTEXT:\\n${JSON.stringify($.data.text)}`,\n  {\n    // Pick a chat-completions capable model.\n    model: 'gpt-4o-mini',\n    // Keep output deterministic for analysis tasks.\n    temperature: 0.2,\n  }\n);"
@@ -27,15 +27,11 @@
     "Send Prompt": {
       "description": "Send an open-ended prompt to OpenAI and capture the reply.",
       "code": "// Free-form prompt. Reply is on state.data.\nprompt(\n  `What are three risks to watch for in the following plan?\\n\\n${$.data.plan}`,\n  {\n    model: 'gpt-4o-mini',\n    temperature: 0.5,\n  }\n);"
-    }
-  },
-  "Vision": {
+    },
     "Analyze Image Content With Vision (Legacy)": {
       "description": "Send an image and a question about it to a vision-capable model.",
       "code": "// Ask a question about an image (URL or base64 data URI).\n// Override `messages` to attach an image part alongside the text.\nprompt(null, {\n  model: 'gpt-4o-mini',\n  messages: [\n    {\n      role: 'user',\n      content: [\n        { type: 'text', text: 'Describe what is happening in this image.' },\n        { type: 'image_url', image_url: { url: $.data.imageUrl } },\n      ],\n    },\n  ],\n});"
-    }
-  },
-  "Conversation": {
+    },
     "Conversation (Legacy)": {
       "description": "Send a multi-turn chat to OpenAI, optionally preserving prior turns.",
       "code": "// Multi-turn chat. Provide the full message history via `messages`.\n// `prompt`'s first arg is ignored here because we override `messages`.\nprompt(null, {\n  model: 'gpt-4o-mini',\n  messages: [\n    { role: 'system', content: 'You are a concise assistant.' },\n    ...($.state.history || []),\n    { role: 'user', content: $.data.userMessage },\n  ],\n  temperature: 0.5,\n});"
