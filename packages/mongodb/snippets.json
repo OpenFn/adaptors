@@ -2,7 +2,7 @@
   "CREATE": {
     "Insert New Document": {
       "description": "Inserts a new document into a MongoDB collection.",
-      "code": ""
+      "code": "// Insert one or more documents into a collection.\ninsertDocuments({\n  // Database name.\n  database: 'my_db',\n  // Collection name.\n  collection: 'users',\n  // One or many documents.\n  documents: [\n    { email: $.data.email, name: $.data.name },\n  ],\n});"
     }
   }
 }

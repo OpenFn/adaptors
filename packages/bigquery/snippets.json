@@ -2,7 +2,7 @@
   "CREATE": {
     "Insert Row": {
       "description": "Add a row to a BigQuery table.",
-      "code": ""
+      "code": "// Load file(s) into a BigQuery table.\n// The adaptor batches rows from disk; for one-off row inserts you typically\n// write the row(s) to a local file first and point `load` at it.\nload(\n  // 1) Path to the local directory containing files to load.\n  './tmp/files',\n  // 2) GCP project id.\n  $.configuration.projectId,\n  // 3) Dataset id.\n  'my_dataset',\n  // 4) Target table id.\n  'my_table',\n  {\n    // Column types (BQ schema string).\n    schema: 'name:STRING,email:STRING,amount:NUMERIC',\n    // Append rather than replace.\n    writeDisposition: 'WRITE_APPEND',\n    // Skip header row(s) if loading CSV.\n    skipLeadingRows: 1,\n    createDisposition: 'CREATE_IF_NEEDED',\n  }\n);"
     }
   },
   "SEARCH": {

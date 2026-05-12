@@ -2,49 +2,49 @@
   "CREATE": {
     "Create Customer": {
       "description": "Creates a new customer.",
-      "code": ""
+      "code": "// Create a customer via the QuickBooks REST API.\n// The intuit adaptor exposes a thin HTTP wrapper (http.post / http.get).\nhttp.post(`/v3/company/${$.configuration.realmId}/customer`, {\n  DisplayName: $.data.name,\n  PrimaryEmailAddr: { Address: $.data.email },\n  PrimaryPhone:     { FreeFormNumber: $.data.phone },\n});"
     },
     "Create Estimate": {
       "description": "Creates a new estimate.",
-      "code": ""
+      "code": "// Create an estimate.\nhttp.post(`/v3/company/${$.configuration.realmId}/estimate`, {\n  CustomerRef: { value: $.data.customerId },\n  Line: $.data.lineItems,\n});"
     },
     "Create Expense": {
       "description": "Creates a new expense.",
-      "code": ""
+      "code": "// Create an expense (Purchase with PaymentType=Cash/Check/CreditCard).\nhttp.post(`/v3/company/${$.configuration.realmId}/purchase`, {\n  PaymentType: 'Cash',\n  AccountRef:  { value: $.data.accountId },\n  Line: $.data.lineItems,\n});"
     },
     "Create Invoice": {
       "description": "Creates a new invoice.",
-      "code": ""
+      "code": "// Create an invoice.\nhttp.post(`/v3/company/${$.configuration.realmId}/invoice`, {\n  CustomerRef: { value: $.data.customerId },\n  Line: $.data.lineItems,\n});"
     },
     "Create Payment": {
       "description": "Records a new payment.",
-      "code": ""
+      "code": "// Record a payment against an invoice.\nhttp.post(`/v3/company/${$.configuration.realmId}/payment`, {\n  CustomerRef: { value: $.data.customerId },\n  TotalAmt:    $.data.amount,\n  Line: [\n    {\n      Amount: $.data.amount,\n      LinkedTxn: [{ TxnId: $.data.invoiceId, TxnType: 'Invoice' }],\n    },\n  ],\n});"
     },
     "Create Sales Receipt": {
       "description": "Creates a new sales receipt.",
-      "code": ""
+      "code": "// Create a sales receipt.\nhttp.post(`/v3/company/${$.configuration.realmId}/salesreceipt`, {\n  CustomerRef: { value: $.data.customerId },\n  Line: $.data.lineItems,\n});"
     },
     "Send Invoice": {
       "description": "Sends an invoice to a customer.",
-      "code": ""
+      "code": "// Send an existing invoice by email.\n// The sendTo querystring overrides the customer's email on file.\nhttp.post(\n  `/v3/company/${$.configuration.realmId}/invoice/${$.data.invoiceId}/send?sendTo=${encodeURIComponent($.data.email)}`,\n  // QuickBooks requires an empty JSON body on this endpoint.\n  {}\n);"
     },
     "Update Customer": {
       "description": "Updates an existing customer.",
-      "code": ""
+      "code": "// Sparse update on a customer (Id + SyncToken required).\nhttp.post(`/v3/company/${$.configuration.realmId}/customer`, {\n  Id:        $.data.customerId,\n  SyncToken: $.data.syncToken,\n  sparse:    true,\n  PrimaryEmailAddr: { Address: $.data.email },\n});"
     },
     "API Request (Beta)": {
       "description": "Raw HTTP request with authentication.",
-      "code": ""
+      "code": "// Make an arbitrary GET or POST against QuickBooks.\nhttp.get(`/v3/company/${$.configuration.realmId}/companyinfo/${$.configuration.realmId}`);"
     }
   },
   "SEARCH": {
     "Find Customer": {
       "description": "Find a customer by name or email.",
-      "code": ""
+      "code": "// Look up a customer with a QuickBooks query.\n// Quote string literals with single quotes.\nhttp.get(\n  `/v3/company/${$.configuration.realmId}/query` +\n  `?query=` + encodeURIComponent(\n    `select * from Customer where PrimaryEmailAddr = '${$.data.email}'`\n  )\n);"
     },
     "Find Invoice": {
       "description": "Find an invoice.",
-      "code": ""
+      "code": "// Look up an invoice by DocNumber.\nhttp.get(\n  `/v3/company/${$.configuration.realmId}/query` +\n  `?query=` + encodeURIComponent(\n    `select * from Invoice where DocNumber = '${$.data.docNumber}'`\n  )\n);"
     },
     "Find or Create Customer": {
       "description": "Find or create a customer.",

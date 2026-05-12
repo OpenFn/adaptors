@@ -2,21 +2,21 @@
   "CREATE": {
     "New Row": {
       "description": "Adds a new row.",
-      "code": ""
+      "code": "// Insert a row into a MySQL table.\ninsert(\n  'users',\n  { name: 'Elodie', email: 'elodie@example.org', age: 31 }\n);"
     },
     "Update Row": {
       "description": "Updates an existing row.",
-      "code": ""
+      "code": "// Update a row using a parameterised query.\n// MySQL placeholders are positional `?` values.\nsql(\n  'UPDATE users SET email = ?, updated_at = NOW() WHERE id = ?;',\n  { values: [$.data.email, $.data.id] }\n);"
     }
   },
   "SEARCH": {
     "Find Row": {
       "description": "Finds a row in a table via a lookup column.",
-      "code": ""
+      "code": "// Fetch one row by equality filter.\nsql(\n  'SELECT * FROM users WHERE email = ? LIMIT 1;',\n  { values: [$.data.email] }\n);"
     },
     "Find Row via Custom Query": {
       "description": "Finds a row in a table via a custom query you control.",
-      "code": ""
+      "code": "// Run a custom SELECT.\nsql(\n  'SELECT id, name, email FROM users WHERE created_at > ? ORDER BY id;',\n  { values: ['2026-01-01'] }\n);"
     }
   }
 }

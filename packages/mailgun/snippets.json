@@ -14,7 +14,7 @@
     },
     "Send Email": {
       "description": "Sends an email using your Mailgun account.",
-      "code": ""
+      "code": "// Send an email via Mailgun.\nsend({\n  // Sender address. Use a domain you've verified in Mailgun.\n  from: `OpenFn <noreply@${$.configuration.domain}>`,\n  // Recipient (string, or array for multiple).\n  to: $.data.recipient,\n  subject: $.data.subject,\n  // Plain-text and / or HTML bodies.\n  text: $.data.body,\n  // html: `<p>${$.data.body}</p>`,\n});"
     },
     "Validate Email": {
       "description": "Validates an email address and returns deliverability results.",

@@ -2,85 +2,85 @@
   "CREATE": {
     "Create Account": {
       "description": "Creates a new account.",
-      "code": ""
+      "code": "// Create an Account record in Dynamics.\ncreateEntity({\n  // Plural-cased Dataverse entity set.\n  entityName: 'accounts',\n  body: {\n    name: $.data.name,\n    emailaddress1: $.data.email,\n    telephone1: $.data.phone,\n  },\n});"
     },
     "Create Case/Incident": {
       "description": "Creates a new case/incident.",
-      "code": ""
+      "code": "// Create a Case (incident) record.\ncreateEntity({\n  entityName: 'incidents',\n  body: {\n    title: $.data.title,\n    description: $.data.description,\n    // Lookup back to the parent account using an @odata.bind reference.\n    'customerid_account@odata.bind': `/accounts(${$.data.accountId})`,\n  },\n});"
     },
     "Create Contact": {
       "description": "Creates a new contact.",
-      "code": ""
+      "code": "// Create a Contact record.\ncreateEntity({\n  entityName: 'contacts',\n  body: {\n    firstname: $.data.firstName,\n    lastname:  $.data.lastName,\n    emailaddress1: $.data.email,\n  },\n});"
     },
     "Create Custom Entity": {
       "description": "Creates a new custom entity record.",
-      "code": ""
+      "code": "// Create a record in a custom entity. Use the entity's plural set name.\ncreateEntity({\n  entityName: 'my_custom_entities',\n  body: $.data.record,\n});"
     },
     "Create Invoice": {
       "description": "Creates a new invoice.",
-      "code": ""
+      "code": "// Create an Invoice.\ncreateEntity({\n  entityName: 'invoices',\n  body: {\n    name: $.data.invoiceName,\n    'customerid_account@odata.bind': `/accounts(${$.data.accountId})`,\n    totalamount: $.data.total,\n  },\n});"
     },
     "Create Lead": {
       "description": "Creates a new lead.",
-      "code": ""
+      "code": "// Create a Lead.\ncreateEntity({\n  entityName: 'leads',\n  body: {\n    firstname: $.data.firstName,\n    lastname:  $.data.lastName,\n    emailaddress1: $.data.email,\n    subject: $.data.subject,\n  },\n});"
     },
     "Create Opportunity": {
       "description": "Creates a new opportunity.",
-      "code": ""
+      "code": "// Create an Opportunity.\ncreateEntity({\n  entityName: 'opportunities',\n  body: {\n    name: $.data.opportunityName,\n    'customerid_account@odata.bind': `/accounts(${$.data.accountId})`,\n    estimatedvalue: $.data.estimatedValue,\n  },\n});"
     },
     "Create Order": {
       "description": "Creates a new order.",
-      "code": ""
+      "code": "// Create a Sales Order.\ncreateEntity({\n  entityName: 'salesorders',\n  body: {\n    name: $.data.orderName,\n    'customerid_account@odata.bind': `/accounts(${$.data.accountId})`,\n  },\n});"
     },
     "Update Account": {
       "description": "Updates an account.",
-      "code": ""
+      "code": "// Update fields on an existing Account.\nupdateEntity({\n  entityName: 'accounts',\n  // The record's GUID.\n  entityId: $.data.accountId,\n  body: {\n    telephone1: $.data.phone,\n    emailaddress1: $.data.email,\n  },\n});"
     },
     "Update Contact": {
       "description": "Updates a contact.",
-      "code": ""
+      "code": "// Update fields on an existing Contact.\nupdateEntity({\n  entityName: 'contacts',\n  entityId: $.data.contactId,\n  body: {\n    emailaddress1: $.data.email,\n    telephone1: $.data.phone,\n  },\n});"
     },
     "Update Custom Entity": {
       "description": "Updates a custom entity.",
-      "code": ""
+      "code": "// Update a custom entity record.\nupdateEntity({\n  entityName: 'my_custom_entities',\n  entityId: $.data.recordId,\n  body: $.data.fields,\n});"
     },
     "Update Lead": {
       "description": "Updates a lead.",
-      "code": ""
+      "code": "// Update fields on an existing Lead.\nupdateEntity({\n  entityName: 'leads',\n  entityId: $.data.leadId,\n  body: {\n    statuscode: 3, // qualified\n    emailaddress1: $.data.email,\n  },\n});"
     },
     "Update Record": {
       "description": "Updates an existing record.",
-      "code": ""
+      "code": "// Update a record on any entity, by GUID.\nupdateEntity({\n  entityName: $.data.entityName,\n  entityId:   $.data.recordId,\n  body:       $.data.fields,\n});"
     }
   },
   "SEARCH": {
     "Find Account": {
       "description": "Finds an account by name.",
-      "code": ""
+      "code": "// Look up Accounts by name using an OData filter.\nquery({\n  entityName: 'accounts',\n  // OData $filter; quote string values with single quotes.\n  filter: `name eq '${$.data.name}'`,\n  // Only return the columns we care about.\n  select: ['accountid', 'name', 'emailaddress1'],\n});"
     },
     "Find Campaign Response": {
       "description": "Finds a campaign response.",
-      "code": ""
+      "code": "// Look up Campaign Responses.\nquery({\n  entityName: 'campaignresponses',\n  filter: `_regardingobjectid_value eq ${$.data.campaignId}`,\n});"
     },
     "Find Contact": {
       "description": "Finds a contact by email address or other searchable field.",
-      "code": ""
+      "code": "// Look up a Contact by email.\nquery({\n  entityName: 'contacts',\n  filter: `emailaddress1 eq '${$.data.email}'`,\n  select: ['contactid', 'firstname', 'lastname', 'emailaddress1'],\n});"
     },
     "Find Custom Entity": {
       "description": "Finds a custom entity.",
-      "code": ""
+      "code": "// Look up records on a custom entity.\nquery({\n  entityName: 'my_custom_entities',\n  filter: `my_externalid eq '${$.data.externalId}'`,\n});"
     },
     "Find Invoice": {
       "description": "Finds an invoice.",
-      "code": ""
+      "code": "// Look up an Invoice by name or number.\nquery({\n  entityName: 'invoices',\n  filter: `name eq '${$.data.invoiceName}'`,\n});"
     },
     "Find Lead": {
       "description": "Finds a lead by email address or other searchable field.",
-      "code": ""
+      "code": "// Look up a Lead by email.\nquery({\n  entityName: 'leads',\n  filter: `emailaddress1 eq '${$.data.email}'`,\n});"
     },
     "Find Opportunity": {
       "description": "Finds an opportunity by subject or other searchable field.",
-      "code": ""
+      "code": "// Look up an Opportunity by name.\nquery({\n  entityName: 'opportunities',\n  filter: `name eq '${$.data.opportunityName}'`,\n});"
     },
     "Find or Create Account": {
       "description": "Finds an account by name.",

@@ -10,7 +10,7 @@
     },
     "Create Page Post": {
       "description": "Create a new page \"stream\" post on a page.",
-      "code": ""
+      "code": "// Post a message to your Facebook Page feed.\n// The postMessage helper wraps the Graph API /{page-id}/feed endpoint.\npostMessage({\n  recipient: { id: $.configuration.pageId },\n  message: {\n    text: `New update from OpenFn: ${$.data.summary}`,\n  },\n});"
     },
     "Create Page Video": {
       "description": "Uploads a video to your Facebook Page and posts it to the stream.",
