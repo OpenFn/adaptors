@@ -2,7 +2,7 @@
   "Messages": {
     "Send Prompt": {
       "description": "Send a prompt to a Gemini model and capture the generated response.",
-      "code": "// Send a prompt to Gemini.\n// The text reply is written to state.data.\nprompt(\n  // 1) The prompt text. Reference upstream state with $.\n  `Summarize this text: ${JSON.stringify($.data)}`,\n  {\n    // 2) Gemini model id (see https://ai.google.dev/gemini-api/docs/models).\n    model: 'gemini-2.5-flash',\n    // 3) Optional generation tuning.\n    temperature: 0.7,\n  }\n);"
+      "code": ""
     }
   }
 }

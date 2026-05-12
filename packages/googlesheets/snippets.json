@@ -2,25 +2,25 @@
   "Rows": {
     "Create Spreadsheet Row": {
       "description": "Append a new row of values to a sheet.",
-      "code": "// Append a single row to the bottom of a sheet.\nappendValues({\n  // 1) Spreadsheet ID — the long string from the sheet's URL.\n  spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  // 2) Where to append. Use the sheet name + column range.\n  range: 'Sheet1!A1:D1',\n  // 3) Outer array = rows, inner arrays = cells in column order.\n  values: [\n    [$.data.name, $.data.email, $.data.amount, $.data.date],\n  ],\n});"
+      "code": ""
     },
     "Create Multiple Spreadsheet Rows": {
       "description": "Append several rows of values at once.",
-      "code": "// Append many rows in one call.\n// Each inner array is one row; cells must line up with your columns.\nappendValues({\n  spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  range: 'Sheet1!A1:D1',\n  values: $.data.records.map(r => [r.name, r.email, r.amount, r.date]),\n});"
+      "code": ""
     },
     "Update Spreadsheet Row": {
       "description": "Overwrite the values of a specific row or range.",
-      "code": "// Overwrite one or more ranges with new values.\n// Each entry in `data` targets a specific A1 range.\nbatchUpdateValues({\n  spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  // Cells are parsed like a user typed them (formulas, dates, etc.).\n  valueInputOption: 'USER_ENTERED',\n  data: [\n    {\n      range: 'Sheet1!A5:D5',\n      values: [[$.data.name, $.data.email, $.data.amount, $.data.date]],\n    },\n  ],\n});"
+      "code": ""
     }
   },
   "Search": {
     "Get Data Range": {
       "description": "Read the values from a specific A1-notation range.",
-      "code": "// Read values from a range. Result is on state.data as a 2d array.\ngetValues(\n  // 1) Spreadsheet ID.\n  '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  // 2) A1 range — sheet name + range.\n  'Sheet1!A1:D100'\n);"
+      "code": ""
     },
     "Lookup Spreadsheet Row": {
       "description": "Find a row whose value in a given column matches a lookup value.",
-      "code": "// Read the column, then filter in JS to find the matching row.\ngetValues(\n  '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  'Sheet1!A1:D100',\n  // The callback receives state with the rows on state.data.values.\n  state => {\n    const [header, ...rows] = state.data.values || [];\n    // Match on the second column (index 1).\n    state.match = rows.find(r => r[1] === $.data.email);\n    return state;\n  }\n);"
+      "code": ""
     }
   }
 }

@@ -2,41 +2,41 @@
   "Customers": {
     "Find Customer": {
       "description": "Look up a customer by their Stripe ID, or list customers matched by email.",
-      "code": "// Look up a specific customer by ID.\n// state.data will hold the customer object.\nget('customers', $.data.customerId);\n\n// Or — search by email by listing with a filter.\n// list('customers', { email: 'jane@example.org', limit: 1 });"
+      "code": ""
     }
   },
   "Charges": {
     "Find Charge": {
       "description": "Retrieve an existing charge by its Stripe ID.",
-      "code": "// Fetch a single charge.\nget('charges', $.data.chargeId);"
+      "code": ""
     }
   },
   "Payments": {
     "Find Payment": {
       "description": "Retrieve an existing payment intent by its Stripe ID.",
-      "code": "// Fetch a single payment intent.\nget('payment_intents', $.data.paymentIntentId);"
+      "code": ""
     }
   },
   "Invoices": {
     "Find Invoice": {
       "description": "Retrieve an existing invoice by its Stripe ID.",
-      "code": "// Fetch a single invoice.\nget('invoices', $.data.invoiceId);"
+      "code": ""
     }
   },
   "Subscriptions": {
     "Find Subscription": {
       "description": "Retrieve a subscription by ID, or list a customer's subscriptions.",
-      "code": "// Look up by subscription ID.\nget('subscriptions', $.data.subscriptionId);\n\n// Or — list every subscription for a given customer.\n// list('subscriptions', { customer: $.data.customerId, status: 'active' });"
+      "code": ""
     }
   },
   "Balance": {
     "Find Account Balance": {
       "description": "Retrieve the current Stripe account balance.",
-      "code": "// Get the available/pending balance for the connected account.\nget('balance', '');"
+      "code": ""
     },
     "Find Balance Transactions": {
       "description": "List the transactions that have affected the account balance.",
-      "code": "// List recent balance transactions.\nlist('balance_transactions', {\n  // Page size (max 100).\n  limit: 25,\n});"
+      "code": ""
     }
   }
 }
