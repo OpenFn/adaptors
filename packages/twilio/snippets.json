@@ -1,0 +1,8 @@
+{
+  "Messaging": {
+    "Send SMS": {
+      "description": "Send a text message to a phone number through your Twilio account.",
+      "code": "// Send a single SMS via Twilio.\n// state.references is populated with Twilio's API response.\nsendSMS({\n  // 1) Message body (max 1600 chars, billed per 160-char segment).\n  body: `Hi ${$.data.name}, your appointment is confirmed.`,\n  // 2) Your Twilio sending number, in E.164 format (e.g. +14155551212).\n  from: $.configuration.fromNumber,\n  // 3) Recipient, in E.164 format.\n  to: $.data.phone,\n});"
+    }
+  }
+}

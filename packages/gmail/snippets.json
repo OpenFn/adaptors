@@ -1,0 +1,14 @@
+{
+  "Email": {
+    "Send Email": {
+      "description": "Compose and dispatch a new email message from your Gmail account.",
+      "code": "// Send a new email through Gmail.\n// Pass a single message object, or an array to send several in one step.\nsendMessage({\n  // 1) Recipient address (or array of addresses).\n  to: 'recipient@example.org',\n  // 2) Subject line.\n  subject: 'Hello from OpenFn',\n  // 3) Message body. Plain text by default; pass html: true for HTML.\n  body: `Hi there,\\n\\nThis email was sent from an OpenFn workflow.`,\n  // 4) Optional CC / BCC.\n  // cc: 'cc@example.org',\n  // bcc: 'bcc@example.org',\n  // 5) Optional file attachments.\n  // attachments: [{ filename: 'report.csv', content: $.csv }],\n});"
+    }
+  },
+  "Search": {
+    "Find Email": {
+      "description": "Locate one or more email messages that match a Gmail search query.",
+      "code": "// Find emails matching a Gmail search query.\n// Results land on state.data as an array of message contents.\ngetContentsFromMessages({\n  // 1) Standard Gmail search syntax (from:, subject:, after:, has:attachment, ...).\n  query: 'from:billing@example.org subject:invoice after:2026/01/01',\n  // 2) Which fields to pull back per message.\n  contents: ['from', 'date', 'subject', 'body'],\n  // 3) Cap the number of messages returned.\n  maxResults: 25,\n});"
+    }
+  }
+}

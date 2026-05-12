@@ -1,0 +1,40 @@
+{
+  "Rows": {
+    "Insert Row": {
+      "description": "Add a single row to a table.",
+      "code": "// Insert one row into a table.\n// The new row is returned on state.data.\ninsert(\n  // 1) Target table name.\n  'users',\n  // 2) The record as a plain object (column => value).\n  { name: 'Elodie', email: 'elodie@example.org', age: 31 },\n  // 3) Optional settings.\n  {\n    // Print the generated SQL to the run log (handy while developing).\n    writeSql: true,\n    // Treat these literal strings in the payload as SQL NULL.\n    setNull: [\"''\", \"'undefined'\"],\n  }\n);"
+    },
+    "Insert Multiple Rows": {
+      "description": "Add many rows to a table in a single statement.",
+      "code": "// Insert many rows in one batch.\n// Pass an array literal, or a function that derives the array from state.\ninsertMany(\n  'users',\n  state => state.data.records,\n  { writeSql: true }\n);"
+    },
+    "Update Row": {
+      "description": "Modify the values of an existing row matched by a unique column.",
+      "code": "// Update an existing row using a parameterised SQL statement.\n// $1, $2... are bound from the `values` array (safe against SQL injection).\nsql(\n  'UPDATE users SET email = $1, updated_at = NOW() WHERE id = $2;',\n  {\n    values: [$.data.email, $.data.id],\n    writeSql: true,\n  }\n);"
+    },
+    "Upsert Row": {
+      "description": "Insert a row, or update it if a conflict is hit on the unique key.",
+      "code": "// Insert-or-update against a unique constraint.\nupsert(\n  // 1) Target table.\n  'users',\n  // 2) Conflict target: either a column name with a UNIQUE constraint,\n  //    or the literal 'ON CONSTRAINT <constraint_name>'.\n  'email',\n  // 3) Record to write.\n  { name: 'Elodie', email: 'elodie@example.org', age: 31 },\n  { writeSql: true }\n);"
+    }
+  },
+  "Search": {
+    "Find Row": {
+      "description": "Look up a single row using a column/value filter.",
+      "code": "// Fetch a single row's value from a relation.\n// Result is written to state.data.\nfindValue({\n  // The column to return (or 'id' / uuid column).\n  uuid: 'id',\n  // The table or view to query.\n  relation: 'users',\n  // Equality filter (combined with AND).\n  where: { email: $.data.email },\n  // Optional operator override per column.\n  operator: { email: '=' },\n});"
+    },
+    "Find Row via Custom Query": {
+      "description": "Locate a row using a custom SQL query you control.",
+      "code": "// Run an arbitrary SELECT. Results are on state.data.rows.\nsql(\n  'SELECT * FROM users WHERE email = $1 LIMIT 1;',\n  {\n    values: [$.data.email],\n    writeSql: true,\n  }\n);"
+    },
+    "Find Rows via Custom Query": {
+      "description": "Retrieve many rows using a custom SQL query.",
+      "code": "// Run an arbitrary SELECT returning many rows.\n// Available on state.data.rows.\nsql(\n  'SELECT id, name, email FROM users WHERE created_at > $1 ORDER BY id;',\n  {\n    values: ['2026-01-01'],\n  }\n);"
+    }
+  },
+  "Schema": {
+    "Describe Table": {
+      "description": "Return the column definitions for a table.",
+      "code": "// Inspect a table's columns and types.\n// Result is written to state.data.\ndescribeTable('users');"
+    }
+  }
+}
