@@ -1,0 +1,66 @@
+{
+  "CREATE": {
+    "Add Task to Section of Project": {
+      "description": "Adds a Task to a Section of a Project.",
+      "code": ""
+    },
+    "Create Comment/Story": {
+      "description": "Adds a comment or story to a task.",
+      "code": ""
+    },
+    "Create Duplicate Task": {
+      "description": "Duplicates an existing task.",
+      "code": ""
+    },
+    "Create Project": {
+      "description": "Adds a new project.",
+      "code": ""
+    },
+    "Create Section": {
+      "description": "Creates a new section within a project.",
+      "code": ""
+    },
+    "Create Task": {
+      "description": "Creates a new task in Asana with specified details.",
+      "code": ""
+    },
+    "Create Task From Template": {
+      "description": "Creates a new task in Asana from a selected template.",
+      "code": ""
+    },
+    "Update Task": {
+      "description": "Updates multiple properties of an existing Asana task.",
+      "code": ""
+    },
+    "API Request (Beta)": {
+      "description": "Raw HTTP request with authentication.",
+      "code": ""
+    }
+  },
+  "SEARCH": {
+    "Find All Tasks From Project": {
+      "description": "Searches for all tasks in a specific project with optional filters.",
+      "code": ""
+    },
+    "Find Project": {
+      "description": "Finds an existing project.",
+      "code": ""
+    },
+    "Find Section in Project": {
+      "description": "Finds an existing section within a workspace project.",
+      "code": ""
+    },
+    "Find Task Comments": {
+      "description": "Finds comments for a specific task.",
+      "code": ""
+    },
+    "Find Tasks in Workspace": {
+      "description": "Searches for tasks in a workspace using Asana's search API (premium only).",
+      "code": ""
+    },
+    "Find User": {
+      "description": "Finds an existing user of your Asana account.",
+      "code": ""
+    }
+  }
+}

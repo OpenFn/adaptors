@@ -1,0 +1,86 @@
+{
+  "CREATE": {
+    "Copy File": {
+      "description": "Create a copy of the specified file.",
+      "code": ""
+    },
+    "Copy File from Another Service": {
+      "description": "Copies an existing file from another service to Google Drive.",
+      "code": ""
+    },
+    "Create File From Text": {
+      "description": "Create a new file from plain text.",
+      "code": ""
+    },
+    "Create Folder": {
+      "description": "Create a new, empty folder.",
+      "code": ""
+    },
+    "Create Shared Drive": {
+      "description": "Create a new shared drive (Team Drive) in Google Drive.",
+      "code": ""
+    },
+    "Create Shortcut": {
+      "description": "Create a shortcut to a file.",
+      "code": ""
+    },
+    "Delete File": {
+      "description": "Delete a file in Google Drive (requires file ID).",
+      "code": ""
+    },
+    "Export File": {
+      "description": "Export Google Workspace files to different formats (PDF, Word, Excel, etc.).",
+      "code": ""
+    },
+    "Move File": {
+      "description": "Move a file from one folder to another.",
+      "code": ""
+    },
+    "Permanently Delete File": {
+      "description": "Permanently delete a file from Google Drive. Cannot be undone.",
+      "code": ""
+    },
+    "Remove File Access": {
+      "description": "Remove specific user access to a file.",
+      "code": ""
+    },
+    "Upload File": {
+      "description": "Uploads a file to the given path.",
+      "code": ""
+    },
+    "API Request (Beta)": {
+      "description": "Raw HTTP request with authentication.",
+      "code": ""
+    }
+  },
+  "SEARCH": {
+    "Find a File": {
+      "description": "Search for a specific file by name.",
+      "code": ""
+    },
+    "Find a Folder": {
+      "description": "Search for a specific folder by name.",
+      "code": ""
+    },
+    "Find or Create File": {
+      "description": "Finds or creates a specific file.",
+      "code": ""
+    },
+    "Find or Create Folder": {
+      "description": "Finds or creates a specific folder.",
+      "code": ""
+    },
+    "List File Permissions": {
+      "description": "List all users who have access to a file.",
+      "code": ""
+    },
+    "Retrieve File or Folder by ID": {
+      "description": "Get a file or folder by its ID.",
+      "code": ""
+    },
+    "Retrieve Files": {
+      "description": "GET request to the Google Drive API to retrieve a list of files.",
+      "code": ""
+    }
+  }
+}

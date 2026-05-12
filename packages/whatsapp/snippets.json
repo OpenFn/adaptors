@@ -1,0 +1,16 @@
+{
+  "CREATE": {
+    "Send Freeform Message": {
+      "description": "Send a freeform text message (within 24-hour window only).",
+      "code": ""
+    },
+    "Send Media Message": {
+      "description": "Send a media message (document, image, video, or audio) within 24-hour window.",
+      "code": ""
+    },
+    "Send Template Message": {
+      "description": "Sends an approved template message.",
+      "code": ""
+    }
+  }
+}

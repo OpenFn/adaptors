@@ -1,0 +1,26 @@
+{
+  "CREATE": {
+    "Create Lead": {
+      "description": "Creates a lead.",
+      "code": ""
+    },
+    "Create/Update Module Entry": {
+      "description": "Creates or updates a module entry.",
+      "code": ""
+    },
+    "Relate Module Entry": {
+      "description": "Relates an entry in this module with an entry in another module.",
+      "code": ""
+    }
+  },
+  "SEARCH": {
+    "Find Module Entry": {
+      "description": "Finds an entry in a module.",
+      "code": ""
+    },
+    "Find Multiple Module Entries": {
+      "description": "Finds multiple entries in a module (with line item support).",
+      "code": ""
+    }
+  }
+}

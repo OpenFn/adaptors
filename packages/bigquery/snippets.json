@@ -1,0 +1,18 @@
+{
+  "CREATE": {
+    "Insert Row": {
+      "description": "Add a row to a BigQuery table.",
+      "code": ""
+    }
+  },
+  "SEARCH": {
+    "Find Row": {
+      "description": "Find a specific row in a BigQuery table.",
+      "code": ""
+    },
+    "Run a Query": {
+      "description": "Execute a SQL query against your BigQuery dataset.",
+      "code": ""
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "CREATE": {
+    "Add Contact to Campaign": {
+      "description": "Adds an existing contact to an existing campaign.",
+      "code": ""
+    },
+    "Add File to Record": {
+      "description": "Adds an existing file to an existing Record.",
+      "code": ""
+    },
+    "Create Record": {
+      "description": "Creates a new record of a specified Salesforce object.",
+      "code": ""
+    },
+    "Send Email": {
+      "description": "Sends an email using Salesforce Simple Email Actions.",
+      "code": ""
+    },
+    "Update Lead": {
+      "description": "Updates an existing lead.",
+      "code": ""
+    },
+    "Update Record": {
+      "description": "Updates an existing record of a specified Salesforce object.",
+      "code": ""
+    },
+    "API Request (Beta)": {
+      "description": "Raw HTTP request with authentication.",
+      "code": ""
+    }
+  },
+  "SEARCH": {
+    "Execute SOQL Query": {
+      "description": "Custom SOQL SELECT queries with aggregate function support.",
+      "code": ""
+    },
+    "Execute SOSL Search": {
+      "description": "Custom SOSL queries for text-based searches across multiple objects.",
+      "code": ""
+    },
+    "Find Child Records": {
+      "description": "Finds Child Records for a given Parent ID.",
+      "code": ""
+    },
+    "Find Record": {
+      "description": "Finds a record by up to two fields and values.",
+      "code": ""
+    },
+    "Find Record (SOQL)": {
+      "description": "Finds a record using a SOQL WHERE clause.",
+      "code": ""
+    },
+    "Find Records (Line Items)": {
+      "description": "Finds records by a field and value (with line-item support).",
+      "code": ""
+    },
+    "Find Records (SOQL)": {
+      "description": "Finds one or more records using a SOQL WHERE clause (with line item support).",
+      "code": ""
+    },
+    "Get Notes and Attachments": {
+      "description": "Gets all notes and attachments for a record.",
+      "code": ""
+    }
+  }
+}

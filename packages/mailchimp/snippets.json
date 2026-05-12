@@ -1,0 +1,82 @@
+{
+  "CREATE": {
+    "Add Note to Subscriber": {
+      "description": "Adds a new note to an existing subscriber.",
+      "code": ""
+    },
+    "Add/Update Subscriber": {
+      "description": "Add a new subscriber or update an existing one.",
+      "code": ""
+    },
+    "Archive Subscriber": {
+      "description": "Archives an existing subscriber.",
+      "code": ""
+    },
+    "Create Audience": {
+      "description": "Creates a new audience in your MailChimp account.",
+      "code": ""
+    },
+    "Create Campaign": {
+      "description": "Creates a campaign draft.",
+      "code": ""
+    },
+    "Create Custom Event": {
+      "description": "Creates a custom event for an existing subscriber.",
+      "code": ""
+    },
+    "Create Tag": {
+      "description": "Creates a new tag.",
+      "code": ""
+    },
+    "Permanently Delete Member": {
+      "description": "Deletes all personally identifiable information related to a member.",
+      "code": ""
+    },
+    "Remove Subscriber from Tag": {
+      "description": "Removes a subscriber from a tag within an audience.",
+      "code": ""
+    },
+    "Unsubscribe or Delete Contact": {
+      "description": "Unsubscribe or delete a contact by email address.",
+      "code": ""
+    },
+    "API Request (Beta)": {
+      "description": "Raw HTTP request with authentication.",
+      "code": ""
+    }
+  },
+  "SEARCH": {
+    "Campaign Report": {
+      "description": "Get report details for a specific sent campaign.",
+      "code": ""
+    },
+    "Click Report": {
+      "description": "Get report details for specific link clicks.",
+      "code": ""
+    },
+    "Find a Campaign": {
+      "description": "Finds an existing campaign.",
+      "code": ""
+    },
+    "Find a Subscriber": {
+      "description": "Searches for a subscriber on your MailChimp audience.",
+      "code": ""
+    },
+    "Find Customer": {
+      "description": "Finds a customer by email address.",
+      "code": ""
+    },
+    "Find or Create Campaign": {
+      "description": "Finds an existing campaign.",
+      "code": ""
+    },
+    "Find or Create Subscriber": {
+      "description": "Searches for a subscriber on your MailChimp audience.",
+      "code": ""
+    },
+    "Find Tag": {
+      "description": "Find a tag.",
+      "code": ""
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "CREATE": {
+    "Custom Request": {
+      "description": "Fire off a custom request by providing raw details.",
+      "code": ""
+    },
+    "PUT Request": {
+      "description": "Fire off a single PUT request as a form or JSON.",
+      "code": ""
+    },
+    "POST Request": {
+      "description": "Fire off a single POST request as a form or JSON.",
+      "code": ""
+    }
+  },
+  "SEARCH": {
+    "GET Request": {
+      "description": "Fire off a single GET request with optional querystrings.",
+      "code": ""
+    }
+  }
+}

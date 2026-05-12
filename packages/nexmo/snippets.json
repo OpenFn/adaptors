@@ -1,0 +1,12 @@
+{
+  "CREATE": {
+    "Send SMS": {
+      "description": "Send an SMS message.",
+      "code": ""
+    },
+    "Make Call": {
+      "description": "Make a voice call.",
+      "code": ""
+    }
+  }
+}

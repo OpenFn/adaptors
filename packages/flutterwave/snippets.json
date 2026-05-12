@@ -1,0 +1,26 @@
+{
+  "CREATE": {
+    "Create Payment Plan": {
+      "description": "Creates a new payment plan.",
+      "code": ""
+    },
+    "Create Transfer": {
+      "description": "Creates a new transfer.",
+      "code": ""
+    },
+    "API Request (Beta)": {
+      "description": "Raw HTTP request with authentication.",
+      "code": ""
+    }
+  },
+  "SEARCH": {
+    "Find Transaction": {
+      "description": "Find a transaction by the transaction id or payment reference.",
+      "code": ""
+    },
+    "Find Transfer": {
+      "description": "Find a transfer by the transfer reference.",
+      "code": ""
+    }
+  }
+}

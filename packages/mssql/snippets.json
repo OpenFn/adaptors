@@ -1,0 +1,26 @@
+{
+  "CREATE": {
+    "New Row": {
+      "description": "Adds a new row.",
+      "code": ""
+    },
+    "Update Row": {
+      "description": "Updates an existing row.",
+      "code": ""
+    }
+  },
+  "SEARCH": {
+    "Find Row": {
+      "description": "Finds a row in a table via a lookup column.",
+      "code": ""
+    },
+    "Find Row via Custom Query": {
+      "description": "Finds a row in a table via a custom query you control.",
+      "code": ""
+    },
+    "Find Rows via Custom Query": {
+      "description": "Finds multiple rows in a table via a custom query you control.",
+      "code": ""
+    }
+  }
+}

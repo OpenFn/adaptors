@@ -1,0 +1,102 @@
+{
+  "CREATE": {
+    "Create Account": {
+      "description": "Creates a new account.",
+      "code": ""
+    },
+    "Create Case/Incident": {
+      "description": "Creates a new case/incident.",
+      "code": ""
+    },
+    "Create Contact": {
+      "description": "Creates a new contact.",
+      "code": ""
+    },
+    "Create Custom Entity": {
+      "description": "Creates a new custom entity record.",
+      "code": ""
+    },
+    "Create Invoice": {
+      "description": "Creates a new invoice.",
+      "code": ""
+    },
+    "Create Lead": {
+      "description": "Creates a new lead.",
+      "code": ""
+    },
+    "Create Opportunity": {
+      "description": "Creates a new opportunity.",
+      "code": ""
+    },
+    "Create Order": {
+      "description": "Creates a new order.",
+      "code": ""
+    },
+    "Update Account": {
+      "description": "Updates an account.",
+      "code": ""
+    },
+    "Update Contact": {
+      "description": "Updates a contact.",
+      "code": ""
+    },
+    "Update Custom Entity": {
+      "description": "Updates a custom entity.",
+      "code": ""
+    },
+    "Update Lead": {
+      "description": "Updates a lead.",
+      "code": ""
+    },
+    "Update Record": {
+      "description": "Updates an existing record.",
+      "code": ""
+    }
+  },
+  "SEARCH": {
+    "Find Account": {
+      "description": "Finds an account by name.",
+      "code": ""
+    },
+    "Find Campaign Response": {
+      "description": "Finds a campaign response.",
+      "code": ""
+    },
+    "Find Contact": {
+      "description": "Finds a contact by email address or other searchable field.",
+      "code": ""
+    },
+    "Find Custom Entity": {
+      "description": "Finds a custom entity.",
+      "code": ""
+    },
+    "Find Invoice": {
+      "description": "Finds an invoice.",
+      "code": ""
+    },
+    "Find Lead": {
+      "description": "Finds a lead by email address or other searchable field.",
+      "code": ""
+    },
+    "Find Opportunity": {
+      "description": "Finds an opportunity by subject or other searchable field.",
+      "code": ""
+    },
+    "Find or Create Account": {
+      "description": "Finds an account by name.",
+      "code": ""
+    },
+    "Find or Create Custom Entity": {
+      "description": "Finds a custom entity.",
+      "code": ""
+    },
+    "Find or Create Lead": {
+      "description": "Finds a lead.",
+      "code": ""
+    },
+    "Find or Create Order": {
+      "description": "Finds an order.",
+      "code": ""
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "CREATE": {
+    "Create Customer": {
+      "description": "Creates a new customer.",
+      "code": ""
+    },
+    "Create Estimate": {
+      "description": "Creates a new estimate.",
+      "code": ""
+    },
+    "Create Expense": {
+      "description": "Creates a new expense.",
+      "code": ""
+    },
+    "Create Invoice": {
+      "description": "Creates a new invoice.",
+      "code": ""
+    },
+    "Create Payment": {
+      "description": "Records a new payment.",
+      "code": ""
+    },
+    "Create Sales Receipt": {
+      "description": "Creates a new sales receipt.",
+      "code": ""
+    },
+    "Send Invoice": {
+      "description": "Sends an invoice to a customer.",
+      "code": ""
+    },
+    "Update Customer": {
+      "description": "Updates an existing customer.",
+      "code": ""
+    },
+    "API Request (Beta)": {
+      "description": "Raw HTTP request with authentication.",
+      "code": ""
+    }
+  },
+  "SEARCH": {
+    "Find Customer": {
+      "description": "Find a customer by name or email.",
+      "code": ""
+    },
+    "Find Invoice": {
+      "description": "Find an invoice.",
+      "code": ""
+    },
+    "Find or Create Customer": {
+      "description": "Find or create a customer.",
+      "code": ""
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "CREATE": {
+    "Insert New Document": {
+      "description": "Inserts a new document into a MongoDB collection.",
+      "code": ""
+    }
+  }
+}
