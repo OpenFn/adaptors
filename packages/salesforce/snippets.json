@@ -1,0 +1,66 @@
+{
+  "CREATE": {
+    "Add Contact to Campaign": {
+      "description": "Adds an existing contact to an existing campaign.",
+      "code": "// Add an existing Contact to an existing Campaign by inserting a CampaignMember.\ncreate('CampaignMember', {\n  CampaignId: $.data.campaignId,\n  ContactId:  $.data.contactId,\n  Status:     'Sent',\n});"
+    },
+    "Add File to Record": {
+      "description": "Adds an existing file to an existing Record.",
+      "code": ""
+    },
+    "Create Record": {
+      "description": "Creates a new record of a specified Salesforce object.",
+      "code": "// Create a record on any sObject.\ncreate(\n  // 1) API name of the sObject.\n  'Account',\n  // 2) Field values, or an array of objects for bulk insert.\n  {\n    Name: $.data.accountName,\n    Industry: $.data.industry,\n  }\n);"
+    },
+    "Send Email": {
+      "description": "Sends an email using Salesforce Simple Email Actions.",
+      "code": ""
+    },
+    "Update Lead": {
+      "description": "Updates an existing lead.",
+      "code": "// Update an existing Lead (Id is required in the payload).\nupdate('Lead', {\n  Id: $.data.leadId,\n  Status: 'Qualified',\n  Email:  $.data.email,\n});"
+    },
+    "Update Record": {
+      "description": "Updates an existing record of a specified Salesforce object.",
+      "code": "// Update any sObject record. Id field is required.\nupdate($.data.sObjectName, {\n  Id: $.data.recordId,\n  ...$.data.fields,\n});"
+    },
+    "API Request (Beta)": {
+      "description": "Raw HTTP request with authentication.",
+      "code": "// Make a raw, authenticated request against the Salesforce REST API.\nsfRequest({\n  method: 'GET',\n  url: '/services/data/v59.0/limits',\n});"
+    }
+  },
+  "SEARCH": {
+    "Execute SOQL Query": {
+      "description": "Custom SOQL SELECT queries with aggregate function support.",
+      "code": "// Run a SOQL query.\nquery(\n  `SELECT Id, Name, Email FROM Contact WHERE Email = '${$.data.email}' LIMIT 1`\n);"
+    },
+    "Execute SOSL Search": {
+      "description": "Custom SOSL queries for text-based searches across multiple objects.",
+      "code": ""
+    },
+    "Find Child Records": {
+      "description": "Finds Child Records for a given Parent ID.",
+      "code": "// Find child Contacts for a given Account using SOQL.\nquery(\n  `SELECT Id, Name FROM Contact WHERE AccountId = '${$.data.accountId}'`\n);"
+    },
+    "Find Record": {
+      "description": "Finds a record by up to two fields and values.",
+      "code": "// Find one record by a couple of fields.\nquery(\n  `SELECT Id, Name FROM Account WHERE Name = '${$.data.name}' AND Industry = '${$.data.industry}' LIMIT 1`\n);"
+    },
+    "Find Record (SOQL)": {
+      "description": "Finds a record using a SOQL WHERE clause.",
+      "code": "// Find a record using a SOQL WHERE clause you control.\nquery(\n  `SELECT Id, Name FROM Account WHERE ${$.data.whereClause} LIMIT 1`\n);"
+    },
+    "Find Records (Line Items)": {
+      "description": "Finds records by a field and value (with line-item support).",
+      "code": "// Find many records by a single field/value match.\nquery(\n  `SELECT Id, Name, Email FROM Contact WHERE AccountId = '${$.data.accountId}' LIMIT 200`\n);"
+    },
+    "Find Records (SOQL)": {
+      "description": "Finds one or more records using a SOQL WHERE clause (with line item support).",
+      "code": "// Find many records using a SOQL WHERE clause you control.\nquery(\n  `SELECT Id, Name FROM Account WHERE ${$.data.whereClause} LIMIT 200`\n);"
+    },
+    "Get Notes and Attachments": {
+      "description": "Gets all notes and attachments for a record.",
+      "code": "// Pull ContentDocumentLink rows for a record to enumerate attached files.\nquery(\n  `SELECT ContentDocumentId, ContentDocument.Title, ContentDocument.FileType ` +\n  `FROM ContentDocumentLink WHERE LinkedEntityId = '${$.data.recordId}'`\n);"
+    }
+  }
+}

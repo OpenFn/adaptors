@@ -1,0 +1,12 @@
+{
+  "CREATE": {
+    "Send SMS": {
+      "description": "Send an SMS message.",
+      "code": "// Send an SMS via Vonage / Nexmo.\nsendSMS(\n  // 1) Sender id (alphanumeric or your Vonage number, E.164).\n  $.configuration.fromNumber,\n  // 2) Recipient, E.164 format.\n  $.data.phone,\n  // 3) Message body.\n  `Hi ${$.data.name}, your appointment is confirmed.`\n);"
+    },
+    "Make Call": {
+      "description": "Make a voice call.",
+      "code": ""
+    }
+  }
+}
