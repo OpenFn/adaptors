@@ -10,7 +10,7 @@ take?), as well how to actually implement the API.
 An adaptor sits between the OpenFn platform (ie, app.openfn.org) and some
 backing service or system (le, Salesforce, Primero).
 
-It's job is to provide a clean, high-level JavaScript interface to uses writing
+It's job is to provide a clean, high-level JavaScript interface to users writing
 workflows in OpenFn.
 
 Users who write OpenFn job code are usually inexperienced programmers, and
@@ -28,7 +28,7 @@ For example: at the time of writing our
 exposes `get`, `post`, `put` and `request` functions which allow you to easily
 access the REST API, with minimal URL construction. This makes the whole
 openlmis API available to implementations - although job code may need to work
-hard to prepare and parse data. An for users who don't know openlmis very well,
+hard to prepare and parse data. And for users who don't know openlmis very well,
 this might not be a very easy interface to use.
 
 On the other hand, our
