@@ -1,6 +1,6 @@
 # @openfn/language-msupply
 
-## 1.0.17 - 23 April 2026
+## 1.0.17 - 14 May 2026
 
 ### Patch Changes
 
