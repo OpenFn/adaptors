@@ -25,6 +25,8 @@ jobs:
       - name: Setup pnpm
         run: pnpm install --frozen-lockfile
 
+      - name: Validate configuration schemas
+        run: pnpm validate:schemas
       - name: Build
         run: pnpm run build
       - name: Git Status

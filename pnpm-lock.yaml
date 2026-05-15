@@ -37,6 +37,9 @@ importers:
       '@types/mocha':
         specifier: ^10.0.10
         version: 10.0.10
+      ajv:
+        specifier: ^8.18.0
+        version: 8.18.0
       chokidar-cli:
         specifier: ^3.0.0
         version: 3.0.0

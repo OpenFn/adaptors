@@ -18,6 +18,8 @@ jobs:
           node-version: '22.20.0'
       - uses: pnpm/action-setup@v4
       - run: pnpm install --frozen-lockfile
+      - name: Validate configuration schemas
+        run: pnpm validate:schemas
       - run: pnpm build
       - run: pnpm test:git
       - run: pnpm test

@@ -31,7 +31,9 @@ pnpm generate <adaptor-name>
   adhere to the size specifications mentioned in the requirements section.
 - Ensure the images have a transparent background. Navigate to
   configuration-schema.json, and change any configs that do not align with the
-  adaptor
+  adaptor. This file must be valid
+  [JSON Schema draft-07](https://json-schema.org/draft-07/json-schema-release-notes);
+  run `pnpm validate:schemas` from the repo root after editing it.
 - Go to `/src/Adaptor.js` and create the adaptor’s Operations - the functions
   used in job code. You may want to set up `POST, GET,` to fit the current
   adaptor’s requirements
