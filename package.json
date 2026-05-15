@@ -23,6 +23,7 @@
     "test:imports": "cd tools/import-tests && pnpm test",
     "test": "pnpm lint && pnpm --filter \"./packages/**\" test && pnpm test:imports",
     "test:git": "pnpm exec scripts/status-check.sh",
+    "validate:schemas": "node scripts/validate-configuration-schemas.mjs",
     "version": "pnpm changeset version && pnpm run changelog"
   },
   "author": "Open Function Group",
@@ -36,6 +37,7 @@
     "@openfn/parse-jsdoc": "workspace:^1.0.0",
     "@types/chai": "^5.2.2",
     "@types/mocha": "^10.0.10",
+    "ajv": "^8.18.0",
     "chokidar-cli": "^3.0.0",
     "eslint": "10.2.0",
     "globals": "^17.2.0",
