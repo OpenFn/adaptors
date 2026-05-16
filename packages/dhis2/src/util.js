@@ -7,7 +7,7 @@ import {
 
 export function shouldUseNewTracker(resourceType) {
   return /^(enrollments|relationships|events|trackedEntities)$/.test(
-    resourceType
+    resourceType,
   );
 }
 /**
@@ -62,7 +62,7 @@ export function dv(dataElement, value) {
  */
 export function findAttributeValue(trackedEntity, attributeDisplayName) {
   return trackedEntity?.attributes?.find(
-    a => a?.displayName.toLowerCase() == attributeDisplayName.toLowerCase()
+    a => a?.displayName.toLowerCase() == attributeDisplayName.toLowerCase(),
   )?.value;
 }
 
@@ -131,6 +131,14 @@ export function handleResponse(result, state) {
   return nextState;
 }
 
+export const handleGetResponse = (result,state, callback) => {
+  const { body } = result;
+
+  return callback({
+  ...composeNextState(state, body),
+  });
+};
+
 export function prettyJson(data) {
   return JSON.stringify(data, null, 2);
 }
@@ -143,7 +151,7 @@ export function prefixVersionToPath(
   configuration,
   options,
   resourceType,
-  path = null
+  path = null,
 ) {
   let { apiVersion } = configuration;
   const urlString = '/' + resourceType;
@@ -163,6 +171,66 @@ export function prefixVersionToPath(
   if (path) return `${urlPath}/${path}`;
   return urlPath;
 }
+
+export const getWithPagination = async (
+  state,
+  path,
+  options = {},
+  onPageDownloaded,
+) => {
+  const { limit, offset = 1, ...requestOptions } = options;
+  const maxResults = limit ?? Infinity;
+  const pageSize = requestOptions.query?.pageSize || limit || 10000;
+  let page = offset;
+  let results = [];
+  let dataKey;
+  let hasNextPage = false;
+  let currentState = state;
+
+  do {
+    const response = await request(state.configuration, {
+      method: 'GET',
+      path,
+      options: {
+        ...requestOptions,
+        query: {
+          ...requestOptions.query,
+          pageSize: Math.min(pageSize, maxResults - results.length),
+          page,
+        },
+      },
+    });
+
+    const body = response.body;
+
+    if (page === offset) {
+      dataKey = Object.keys(body).find(
+        key => key !== 'pager' && Array.isArray(body[key]),
+      );
+    }
+
+    if (dataKey) {
+      results.push(...(body[dataKey] || []));
+    } else {
+      // No array key found (e.g. single resource), return body as-is
+      return { results: body, dataKey: null, totalPages: 1, state: currentState };
+    }
+
+    if (onPageDownloaded) {
+      const pageBody = { [dataKey]: body[dataKey] };
+      currentState = await onPageDownloaded(
+        composeNextState(currentState, pageBody),
+      );
+    }
+
+    hasNextPage = !!body?.pager?.nextPage;
+    page += 1;
+  } while (hasNextPage && results.length < maxResults);
+
+  const totalPages = page - offset;
+  return { results, dataKey, totalPages, state: currentState };
+};
+
 export const configureAuth = (auth, headers = {}) => {
   if ('pat' in auth) {
     Object.assign(headers, {
@@ -172,7 +240,7 @@ export const configureAuth = (auth, headers = {}) => {
     Object.assign(headers, makeBasicAuthHeader(auth.username, auth.password));
   } else {
     throw new Error(
-      'Invalid authorization credentials. Include an pat, username or password in state.configuration'
+      'Invalid authorization credentials. Include an pat, username or password in state.configuration',
     );
   }
 

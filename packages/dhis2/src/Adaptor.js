@@ -1,4 +1,7 @@
-import { execute as commonExecute } from '@openfn/language-common';
+import {
+  execute as commonExecute,
+  composeNextState,
+} from '@openfn/language-common';
 import { expandReferences, throwError } from '@openfn/language-common/util';
 import {
   handleResponse,
@@ -7,6 +10,7 @@ import {
   ensureArray,
   prefixVersionToPath,
   request,
+  getWithPagination,
 } from './util.js';
 
 /**
@@ -49,13 +53,13 @@ export function execute(...operations) {
 
     if (+version < 36) {
       console.warn(
-        `WARNING: This adaptor is INCOMPATIBLE with DHIS2 tracker API versions before v36. Some functionality may break. See https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html`
+        `WARNING: This adaptor is INCOMPATIBLE with DHIS2 tracker API versions before v36. Some functionality may break. See https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html`,
       );
     }
 
     return commonExecute(
       configMigrationHelper,
-      ...operations
+      ...operations,
     )({ ...initialState, ...state });
   };
 }
@@ -73,7 +77,7 @@ function configMigrationHelper(state) {
   const { hostUrl, apiUrl } = state.configuration;
   if (!hostUrl) {
     console.warn(
-      'DEPRECATION WARNING: Please migrate instance address from `apiUrl` to `hostUrl`.'
+      'DEPRECATION WARNING: Please migrate instance address from `apiUrl` to `hostUrl`.',
     );
     state.configuration.hostUrl = apiUrl;
     return state;
@@ -195,7 +199,7 @@ export function create(path, data, params = {}) {
       state,
       path,
       data,
-      params
+      params,
     );
 
     const { configuration } = state;
@@ -209,7 +213,7 @@ export function create(path, data, params = {}) {
           query: resolvedParams,
         },
         resolvedPath,
-        resolvedData
+        resolvedData,
       );
     } else {
       response = await request(configuration, {
@@ -247,29 +251,44 @@ export function create(path, data, params = {}) {
  * get('programs', { orgUnit: 'TSyzvBiovKh', fields: '*' });
  * @example <caption>Get a single tracked entity given the provided ID. See [TrackedEntities docs](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/tracker.html#tracked-entities-get-apitrackertrackedentities)</caption>
  * get('tracker/trackedEntities/F8yKM85NbxW');
+ * @example <caption>Get only 2 programs for an organization unit</caption>
+ * get('programs', { orgUnit: 'TSyzvBiovKh', limit: 2 });
  * @function
  * @param {string} path - Path to the resource
- * @param {object} params - Object of query parameters to include in the request
+ * @param {object} params - Object of query parameters to include in the request including limit and offset for pagination
+ * @options {number} [params.limit] - Optional limit to the number of records returned. By default, this is 10,000.
+ * @options {number} [params.offset] - Optional offset for page numbers. By default, this is 1.
+ * @options {number} [params.pageSize] - Optional page size to be used in paginated requests. By default, this is 10,000. If `limit` is set and `pageSize` is not, then `pageSize` will default to the value of `limit`.
+ * @param {function} onPageDownloaded - Optional callback function that is called after each page is downloaded in a paginated request.
  * @state data - the resource returned by DHIS2
  * @returns {Operation}
  */
-export function get(path, params = {}) {
+export function get(path, params = {},onPageDownloaded = state => state) {
   return async state => {
     const [resolvedPath, resolvedParams] = expandReferences(
       state,
       path,
-      params
+      params,
     );
 
-    const response = await request(state.configuration, {
-      method: 'GET',
-      path: prefixVersionToPath(state.configuration, {}, resolvedPath),
-      options: { query: resolvedParams },
-    });
+    const { limit, offset, ...queryParams } = resolvedParams;
 
-    console.log(`Retrieved ${resolvedPath}`);
+    const fullPath = prefixVersionToPath(state.configuration, {}, resolvedPath);
 
-    return handleResponse(response, state);
+    const { results, dataKey, totalPages, state: callbackState } =
+      await getWithPagination(
+        state,
+        fullPath,
+        { limit, offset, query: queryParams },
+        onPageDownloaded,
+      );
+
+    console.log(
+      `Retrieved ${results.length} ${dataKey} from ${resolvedPath} across ${totalPages} pages`,
+    );
+
+    const body = dataKey ? { [dataKey]: results } : results;
+    return composeNextState(callbackState, body);
   };
 }
 
@@ -417,7 +436,7 @@ export function update(resourceType, path, data, options = {}) {
         configuration,
         resolvedOptions,
         resolvedResourceType,
-        resolvedData
+        resolvedData,
       );
     } else {
       response = await request(configuration, {
@@ -426,7 +445,7 @@ export function update(resourceType, path, data, options = {}) {
           configuration,
           resolvedOptions,
           resolvedResourceType,
-          resolvedPath
+          resolvedPath,
         ),
         options: resolvedOptions,
         data: resolvedData,
@@ -484,7 +503,7 @@ export function upsert(
   resourceType, // resourceType supplied to both the `get` and the `create/update`
   query, // query supplied to the `get`
   data, // data supplied to the `create/update`
-  options = {} // options supplied to both the `get` and the `create/update`
+  options = {}, // options supplied to both the `get` and the `create/update`
 ) {
   return async state => {
     const [resolvedResourceType, resolvedOptions, resolvedData, resolvedQuery] =
@@ -498,7 +517,7 @@ export function upsert(
         configuration,
         resolvedOptions,
         resolvedResourceType,
-        resolvedData
+        resolvedData,
       );
     } else {
       console.log(`Preparing upsert via 'get' then 'create' OR 'update'...`);
@@ -507,7 +526,7 @@ export function upsert(
         path: prefixVersionToPath(
           configuration,
           resolvedOptions,
-          resolvedResourceType
+          resolvedResourceType,
         ),
         options: {
           ...resolvedOptions,
@@ -531,7 +550,7 @@ export function upsert(
           path: prefixVersionToPath(
             configuration,
             resolvedOptions,
-            resolvedResourceType
+            resolvedResourceType,
           ),
           options: resolvedOptions,
           data: resolvedData,
@@ -548,7 +567,7 @@ export function upsert(
             configuration,
             resolvedOptions,
             resolvedResourceType,
-            path
+            path,
           ),
           options: resolvedOptions,
           data: resolvedData,
@@ -590,7 +609,7 @@ export function destroy(resourceType, path, data = null, options = {}) {
         configuration,
         resolvedOptions,
         resolvedResourceType,
-        resolvedData
+        resolvedData,
       );
     } else {
       response = await request(configuration, {
@@ -599,7 +618,7 @@ export function destroy(resourceType, path, data = null, options = {}) {
           configuration,
           resolvedOptions,
           resolvedResourceType,
-          resolvedPath
+          resolvedPath,
         ),
         options: resolvedOptions,
         data: resolvedData,
@@ -616,7 +635,7 @@ function callNewTracker(
   configuration,
   options,
   resourceType,
-  data = {}
+  data = {},
 ) {
   let importStrategy;
   switch (type) {
