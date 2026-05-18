@@ -35,7 +35,7 @@ import {
   map,
   as,
 } from '../src/Adaptor.js';
-import { startOfToday,format } from 'date-fns';
+import { startOfToday, format } from 'date-fns';
 
 const mockAgent = new MockAgent();
 setGlobalDispatcher(mockAgent);
@@ -165,7 +165,7 @@ describe('map', () => {
         return {
           id: state.baseId + index,
         };
-      }
+      },
     )(state);
     expect(results.data).to.eql([
       { id: 'book-0' },
@@ -185,7 +185,7 @@ describe('map', () => {
           id: state.baseId + index,
           label: data.title,
         };
-      }
+      },
     )(state);
     expect(results.data).to.eql([
       { id: 'book-0', label: 'Sayings of the Century' },
@@ -216,7 +216,25 @@ describe('combine', () => {
   ];
 
   it('accepts serveral operations, and reduces them with the state', () => {
-    let result = combine.apply(null, operations)(state);
+    let result = combine(...operations)(state);
+    expect(result).to.eql({ hello: 6 });
+  });
+
+  it('chains operations where the first returns a promise', async () => {
+    let state = {};
+    let result = await combine(
+      state => Promise.resolve({ hello: 1 }),
+      state => ({ hello: state.hello + 5 }),
+    )(state);
+    expect(result).to.eql({ hello: 6 });
+  });
+
+  it('chains operations where all return promises', async () => {
+    let state = {};
+    let result = await combine(
+      state => Promise.resolve({ hello: 1 }),
+      state => Promise.resolve({ hello: state.hello + 5 }),
+    )(state);
     expect(result).to.eql({ hello: 6 });
   });
 });
@@ -226,7 +244,7 @@ describe('join', () => {
     let result = join(
       '$.store.book[*]',
       '$.store.bicycle.color',
-      'color'
+      'color',
     )(testData);
 
     expect(result[0]).to.eql({
@@ -257,8 +275,8 @@ describe('merge', () => {
       '$.store.book[*]',
       fields(
         field('color', sourceValue('$.store.bicycle.color')),
-        field('price', sourceValue('$.store.bicycle.price'))
-      )
+        field('price', sourceValue('$.store.bicycle.price')),
+      ),
     )(testData);
 
     expect(result[0].color).to.eql('red');
@@ -300,7 +318,7 @@ describe('Path Helpers', () => {
       expect(
         lastReferenceValue('foo')({
           references: [{ foo: 'bar' }, { baz: 'foo' }],
-        })
+        }),
       ).to.eql('bar');
     });
   });
@@ -314,7 +332,7 @@ describe('index', function () {
 
     let results = each(
       '$.data.store.book[*]',
-      operation
+      operation,
     )({
       references: [],
       data: testData,
@@ -448,7 +466,7 @@ describe('parseCsv', function () {
 
     assert.equal(
       error.message,
-      'Invalid Record Length: columns length is 3, got 4 on line 2'
+      'Invalid Record Length: columns length is 3, got 4 on line 2',
     );
   });
 
@@ -462,7 +480,7 @@ describe('parseCsv', function () {
       (state, rows) => {
         const { items } = state;
         return { ...state, data: rows, items: [...items, ...rows] };
-      }
+      },
     )(state);
 
     // Notice how the user has decided to discard all but the final chunk
@@ -495,7 +513,7 @@ describe('parseCsv', function () {
             });
           }, 1);
         });
-      }
+      },
     )(state);
 
     assert.deepEqual(resultingState, {
@@ -515,7 +533,7 @@ describe('parseCsv', function () {
           ...state,
           data: rows.reduce((sum, row) => sum + Number(row.b), state.data),
         };
-      }
+      },
     )(state);
 
     assert.deepEqual(resultingState, {
@@ -575,7 +593,7 @@ describe('parseCsv', function () {
     const state = { data: { something: 'came before' }, references: [] };
 
     const resultingStateWithChunk = await parseCsv(csv, { chunkSize: 2 })(
-      state
+      state,
     );
 
     assert.deepEqual(resultingStateWithChunk, {
@@ -596,7 +614,7 @@ describe('parseCsv', function () {
     let callCount = 0;
 
     const stream = fs.createReadStream(
-      path.resolve('./test/fixtures/data.csv')
+      path.resolve('./test/fixtures/data.csv'),
     );
 
     await parseCsv(stream, { chunkSize: 1 }, (state, chunk) => {
@@ -747,7 +765,7 @@ describe('validate', () => {
 
     const result = await validate(
       () => schema,
-      () => data
+      () => data,
     )(state);
     expect(result.validationErrors).to.have.lengthOf(1);
   });
@@ -1018,23 +1036,22 @@ describe('cursor', () => {
     const state = {};
     let originalLog;
     let consoleOutput = [];
-    
+
     originalLog = console.log;
     console.log = (...args) => consoleOutput.push(args.join(' '));
 
     const testDate = new Date();
     cursor('now')(state);
-  
-    
+
     const logOutput = consoleOutput[0];
     const timeMatch = logOutput.match(/(\d{2}):(\d{2})/);
-    
+
     expect(timeMatch).to.not.be.null;
     const displayedMinutes = parseInt(timeMatch[2]);
     const actualMinutes = testDate.getMinutes();
-  
+
     expect(displayedMinutes).to.equal(actualMinutes);
-    
+
     console.log = originalLog;
   });
 
@@ -1205,7 +1222,7 @@ describe('log', () => {
     log(
       'test',
       state => state.x,
-      state => `test ${state.y.z}`
+      state => `test ${state.y.z}`,
     )(input);
     expect(consoleOutput[0]).to.eq('test');
     expect(consoleOutput[1]).to.eq('a');
@@ -1253,7 +1270,7 @@ describe('debug', () => {
     debug(
       'test',
       state => state.x,
-      state => `test ${state.y.z}`
+      state => `test ${state.y.z}`,
     )(input);
 
     expect(consoleOutput[0]).to.eq('test');
@@ -1326,7 +1343,7 @@ describe('as', () => {
       state => state.key,
       state => {
         return { ...state, data: testData, responses: { status: 200 } };
-      }
+      },
     )(state);
     expect(results.comments).to.eql(testData);
   });

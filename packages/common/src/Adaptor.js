@@ -352,11 +352,9 @@ export function combine(...operations) {
   return state => {
     return operations.reduce((state, operation) => {
       if (state.then) {
-        return state.then(state => {
-          return { ...state, ...operation(state) };
-        });
+        return state.then(operation);
       } else {
-        return { ...state, ...operation(state) };
+        return operation(state);
       }
     }, state);
   };
@@ -459,10 +457,10 @@ export function group(arrayOfObjects, keyPath, callback = s => s) {
     const [resolvedArray, resolvedKeyPath] = expandReferences(
       state,
       arrayOfObjects,
-      keyPath
+      keyPath,
     );
     const results = _.groupBy(resolvedArray, item =>
-      _.get(item, resolvedKeyPath)
+      _.get(item, resolvedKeyPath),
     );
     return callback({ ...state, data: _.omit(results, [undefined]) });
   };
@@ -576,7 +574,7 @@ export function splitKeys(obj, keys) {
 
       return [{ ...keep, [key]: value }, split];
     },
-    [{}, {}]
+    [{}, {}],
   );
 }
 
@@ -597,7 +595,7 @@ export function scrubEmojis(text, replacementChars) {
     console.warn(
       'Removing characters from a string may create injection vulnerabilities;',
       "It's better to replace than remove.",
-      'See https://www.unicode.org/reports/tr36/#Deletion_of_Noncharacters'
+      'See https://www.unicode.org/reports/tr36/#Deletion_of_Noncharacters',
     );
   }
 
@@ -678,13 +676,13 @@ export function parseCsv(csvData, parsingOptions = {}, callback) {
     const [resolvedCsvData, resolvedParsingOptions] = expandReferences(
       state,
       csvData,
-      parsingOptions
+      parsingOptions,
     );
 
     const filteredOptions = Object.fromEntries(
       Object.entries(resolvedParsingOptions).filter(
-        ([key]) => key in defaultOptions
-      )
+        ([key]) => key in defaultOptions,
+      ),
     );
 
     const options = { ...defaultOptions, ...filteredOptions };
@@ -861,7 +859,7 @@ export function cursor(value, options = {}) {
     const [resolvedValue, resolvedOptions] = expandReferences(
       state,
       value,
-      optionsWithoutFormat
+      optionsWithoutFormat,
     );
 
     const {
@@ -917,13 +915,13 @@ export function assert(expression, errorMessage) {
     const [resolvedValue, resolvedErrorMessage] = expandReferences(
       state,
       expression,
-      errorMessage
+      errorMessage,
     );
 
     if (!resolvedValue) {
       throw new Error(
         resolvedErrorMessage ||
-          `assertion statement failed with ${resolvedValue}`
+          `assertion statement failed with ${resolvedValue}`,
       );
     }
 
