@@ -168,6 +168,7 @@ export function execute(...operations) {
 }
 
 export {
+  combine,
   dataPath,
   dataValue,
   dateFns,

@@ -1,6 +1,7 @@
 
 // More functions can be added here as needed
 export {
+  combine,
   dataPath,
   dataValue,
   dateFns,

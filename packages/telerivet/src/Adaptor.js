@@ -55,6 +55,7 @@ export function send(sendData) {
 }
 
 export {
+  combine,
   fn,
   fnIf,
   alterState,

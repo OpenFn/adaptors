@@ -425,6 +425,7 @@ export {
   alterState,
   arrayToString,
   as,
+  combine,
   cursor,
   dataPath,
   dataValue,

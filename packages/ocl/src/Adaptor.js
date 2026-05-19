@@ -118,6 +118,7 @@ export function get(path, query, callback = false) {
 }
 
 export {
+  combine,
   fn,
   fnIf,
   alterState,

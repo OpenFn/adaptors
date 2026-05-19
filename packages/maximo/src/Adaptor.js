@@ -314,6 +314,7 @@ export function update75(params) {
 }
 
 export {
+  combine,
   field,
   fields,
   sourceValue,

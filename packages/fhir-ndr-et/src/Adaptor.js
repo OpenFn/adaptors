@@ -61,6 +61,7 @@ export const create = (resourceType, resource, params, callback = s => s) => {
 };
 
 export {
+  combine,
   dataPath,
   dataValue,
   cursor,

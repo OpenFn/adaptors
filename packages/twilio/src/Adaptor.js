@@ -64,6 +64,7 @@ export function sendSMS(params) {
 // export function bulkSMS(params) {}
 
 export {
+  combine,
   field,
   fields,
   sourceValue,

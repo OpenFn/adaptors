@@ -103,6 +103,7 @@ export function postMessage(params) {
 }
 
 export {
+  combine,
   field,
   fields,
   sourceValue,

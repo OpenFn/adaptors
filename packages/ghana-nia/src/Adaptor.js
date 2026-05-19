@@ -105,6 +105,7 @@ export function registerChild(data) {
 }
 
 export {
+  combine,
   fn,
   fnIf,
   each,

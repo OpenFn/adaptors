@@ -462,6 +462,7 @@ export { axios, md5 };
 
 // What functions do you want from the common adaptor?
 export {
+  combine,
   fn,
   fnIf,
   alterState,

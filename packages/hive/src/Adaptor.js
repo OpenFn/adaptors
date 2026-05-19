@@ -123,6 +123,7 @@ async function execSql(statement, options) {
 }
 
 export {
+  combine,
   dataPath,
   dataValue,
   dateFns,

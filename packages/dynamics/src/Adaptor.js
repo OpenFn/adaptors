@@ -265,6 +265,7 @@ export function deleteEntity(params) {
 }
 
 export {
+  combine,
   field,
   fields,
   sourceValue,

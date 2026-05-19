@@ -171,6 +171,7 @@ export function postElement(params) {
 }
 
 export {
+  combine,
   field,
   fields,
   sourceValue,

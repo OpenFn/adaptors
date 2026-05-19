@@ -107,6 +107,7 @@ export function certifyVaccination(data) {
 
 
 export {
+  combine,
   dataPath,
   dataValue,
   dateFns,

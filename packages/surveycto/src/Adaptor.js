@@ -399,6 +399,7 @@ export function jsonToCSVBuffer(rows) {
 }
 
 export {
+  combine,
   fn,
   fnIf,
   chunk,

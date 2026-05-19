@@ -337,6 +337,7 @@ export function createTask(body) {
 }
 
 export {
+  combine,
   fnIf,
   dataPath,
   dataValue,

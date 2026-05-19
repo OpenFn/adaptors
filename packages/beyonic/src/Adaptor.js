@@ -103,6 +103,7 @@ export function createCollectionRequest(data) {
 }
 
 export {
+  combine,
   fn,
   fnIf,
   field,

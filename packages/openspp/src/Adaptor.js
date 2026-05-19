@@ -1027,6 +1027,7 @@ export function searchArea(domain, options = {}, callback = s => s) {
 }
 
 export {
+  combine,
   dataPath,
   dataValue,
   dateFns,

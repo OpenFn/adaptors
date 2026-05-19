@@ -91,6 +91,7 @@ export function addRow(table, rowData) {
 }
 
 export {
+  combine,
   fn,
   fnIf,
   field,

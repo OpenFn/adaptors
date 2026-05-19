@@ -113,6 +113,7 @@ export function send(params) {
 }
 
 export {
+  combine,
   fn,
   fnIf,
   field,

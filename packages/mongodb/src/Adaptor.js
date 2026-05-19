@@ -232,6 +232,7 @@ export function updateDocument(params) {
 }
 
 export {
+  combine,
   field,
   fields,
   sourceValue,

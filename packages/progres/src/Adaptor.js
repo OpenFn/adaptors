@@ -72,6 +72,7 @@ export function postData(params, callback = s => s) {
 }
 
 export {
+  combine,
   fn,
   fnIf,
   alterState,
