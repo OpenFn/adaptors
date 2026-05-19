@@ -4,6 +4,10 @@ import { enableMockClient } from '@openfn/language-common/util';
 import {
   execute,
   createBirthNotification,
+  createEvent,
+  notifyEvent,
+  submitBirthNotification,
+  getLocations,
   queryEvents,
   createDocumentEntry,
 } from '../src/Adaptor.js';
@@ -12,6 +16,15 @@ import { birthRecordData } from './testData.js';
 const authUrl = enableMockClient('https://auth.fake.opencrvs.server.com');
 const baseUrl = 'https://gateway.fake.opencrvs.server.com';
 const testServer = enableMockClient(baseUrl);
+const registerServer = enableMockClient(
+  'https://register.fake.opencrvs.server.com'
+);
+const countryconfigServer = enableMockClient(
+  'https://countryconfig.fake.opencrvs.server.com'
+);
+
+const UUID_REGEX =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 const state = {
   configuration: {
@@ -351,5 +364,193 @@ describe('createDocumentEntry', () => {
     expect(entry1.fullUrl).to.not.equal(entry2.fullUrl);
     expect(entry1.fullUrl).to.match(/^urn:uuid:/);
     expect(entry2.fullUrl).to.match(/^urn:uuid:/);
+  });
+});
+
+describe('createEvent', () => {
+  it('POSTs to register/api/events/events with a UUID transactionId', async () => {
+    let receivedBody;
+
+    registerServer
+      .intercept({
+        path: '/api/events/events',
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer fake-token',
+          'Content-Type': 'application/json',
+        },
+      })
+      .reply(200, req => {
+        receivedBody = JSON.parse(req.body);
+        return { id: 'evt-1', trackingId: 'TRK1', type: 'birth' };
+      });
+
+    const finalState = await execute(
+      createEvent('birth', { createdAtLocation: 'loc-1' })
+    )(state);
+
+    expect(receivedBody.type).to.equal('birth');
+    expect(receivedBody.createdAtLocation).to.equal('loc-1');
+    expect(receivedBody.transactionId).to.match(UUID_REGEX);
+
+    expect(finalState.data).to.eql({
+      id: 'evt-1',
+      trackingId: 'TRK1',
+      type: 'birth',
+    });
+  });
+
+  it('uses a caller-supplied transactionId when provided', async () => {
+    let receivedBody;
+
+    registerServer
+      .intercept({ path: '/api/events/events', method: 'POST' })
+      .reply(200, req => {
+        receivedBody = JSON.parse(req.body);
+        return { id: 'evt-2' };
+      });
+
+    await execute(
+      createEvent('birth', {
+        createdAtLocation: 'loc-1',
+        transactionId: 'fixed-txn-123',
+      })
+    )(state);
+
+    expect(receivedBody.transactionId).to.equal('fixed-txn-123');
+  });
+});
+
+describe('notifyEvent', () => {
+  it('POSTs NOTIFY to register/api/events/events/{id}/notify', async () => {
+    let receivedBody;
+    let receivedPath;
+
+    registerServer
+      .intercept({
+        path: '/api/events/events/evt-1/notify',
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer fake-token',
+          'Content-Type': 'application/json',
+        },
+      })
+      .reply(200, req => {
+        receivedBody = JSON.parse(req.body);
+        receivedPath = req.path;
+        return { id: 'evt-1', status: 'NOTIFIED' };
+      });
+
+    const declaration = {
+      'child.name': { firstname: 'Test', surname: 'Baby' },
+      'child.dob': '2026-05-01',
+    };
+
+    const finalState = await execute(
+      notifyEvent('evt-1', declaration, { createdAtLocation: 'loc-1' })
+    )(state);
+
+    expect(receivedPath).to.equal('/api/events/events/evt-1/notify');
+    expect(receivedBody.type).to.equal('NOTIFY');
+    expect(receivedBody.createdAtLocation).to.equal('loc-1');
+    expect(receivedBody.declaration).to.eql(declaration);
+    expect(receivedBody.annotation).to.eql({});
+    expect(receivedBody.transactionId).to.match(UUID_REGEX);
+
+    expect(finalState.data).to.eql({ id: 'evt-1', status: 'NOTIFIED' });
+  });
+});
+
+describe('submitBirthNotification', () => {
+  it('chains createEvent then notifyEvent with the returned id', async () => {
+    let createBody;
+    let notifyBody;
+    let notifyPath;
+
+    registerServer
+      .intercept({ path: '/api/events/events', method: 'POST' })
+      .reply(200, req => {
+        createBody = JSON.parse(req.body);
+        return { id: 'evt-chained' };
+      });
+
+    registerServer
+      .intercept({
+        path: '/api/events/events/evt-chained/notify',
+        method: 'POST',
+      })
+      .reply(200, req => {
+        notifyBody = JSON.parse(req.body);
+        notifyPath = req.path;
+        return { id: 'evt-chained', status: 'NOTIFIED', trackingId: 'TRK99' };
+      });
+
+    const declaration = {
+      'child.name': { firstname: 'Test', surname: 'Baby' },
+      'child.dob': '2026-05-01',
+      'child.gender': 'female',
+    };
+
+    const finalState = await execute(
+      submitBirthNotification(declaration, { createdAtLocation: 'loc-9' })
+    )(state);
+
+    expect(createBody.type).to.equal('birth');
+    expect(createBody.createdAtLocation).to.equal('loc-9');
+
+    expect(notifyPath).to.equal('/api/events/events/evt-chained/notify');
+    expect(notifyBody.type).to.equal('NOTIFY');
+    expect(notifyBody.declaration).to.eql(declaration);
+    expect(notifyBody.createdAtLocation).to.equal('loc-9');
+    expect(notifyBody.transactionId).to.not.equal(createBody.transactionId);
+
+    expect(finalState.data).to.eql({
+      id: 'evt-chained',
+      status: 'NOTIFIED',
+      trackingId: 'TRK99',
+    });
+  });
+});
+
+describe('getLocations', () => {
+  it('GETs countryconfig/api/events/locations', async () => {
+    countryconfigServer
+      .intercept({
+        path: '/api/events/locations',
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer fake-token',
+        },
+      })
+      .reply(200, [
+        { id: 'loc-1', name: 'Ibombo' },
+        { id: 'loc-2', name: 'Itambo' },
+      ]);
+
+    const finalState = await execute(getLocations())(state);
+
+    expect(finalState.data).to.eql([
+      { id: 'loc-1', name: 'Ibombo' },
+      { id: 'loc-2', name: 'Itambo' },
+    ]);
+  });
+
+  it('passes through query parameters', async () => {
+    let receivedQuery;
+
+    countryconfigServer
+      .intercept({
+        path: '/api/events/locations',
+        method: 'GET',
+        query: { type: 'ADMIN_STRUCTURE' },
+      })
+      .reply(200, req => {
+        receivedQuery = req.query;
+        return [];
+      });
+
+    await execute(getLocations({ params: { type: 'ADMIN_STRUCTURE' } }))(state);
+
+    expect(receivedQuery).to.have.property('type', 'ADMIN_STRUCTURE');
   });
 });
