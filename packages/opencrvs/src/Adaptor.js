@@ -44,6 +44,9 @@ export function execute(...operations) {
  * Create a Birth Notification. Pass an array of FHIR resources wrapped in entry
  * objects like `{ fullUrl, resource }`. References must use the full URL
  * of the corresponding resources. See [OpenCRVS Event Notification Postman documentation](https://github.com/opencrvs/opencrvs-countryconfig/blob/master/postman/Event%20Notification.postman_collection.json)
+ * @deprecated for OpenCRVS v2 deployments — use {@link submitBirthNotification}
+ *   (or {@link createEvent} + {@link notifyEvent}) instead. Retained for v1
+ *   gateway-based deployments that still consume FHIR bundles.
  * @example <caption>Create a birth notification</caption>
  * createBirthNotification($.bundleData)
  * @example <caption>Cross-reference two bundle resources</caption>
@@ -183,6 +186,172 @@ export function queryEvents(variables, options = {}) {
       ...response,
       body,
     });
+  };
+}
+
+/**
+ * Create an OpenCRVS v2 event (e.g. a birth or death registration).
+ * Posts to the `register.<domain>` host. The returned event id is
+ * available on `state.data.id` for use with `notifyEvent`.
+ * @example <caption>Create a birth event at a known location</caption>
+ * createEvent('birth', { createdAtLocation: 'a1b2-...' });
+ * @function
+ * @public
+ * @param {string} type - Event type, e.g. `'birth'` or `'death'`.
+ * @param {object} options - Optional fields: `createdAtLocation` (string) and
+ *   `transactionId` (string, defaults to a random UUID).
+ * @returns {Operation}
+ * @state {OpenCRVSState}
+ */
+export function createEvent(type, options = {}) {
+  return async state => {
+    const [resolvedType, resolvedOptions] = expandReferences(
+      state,
+      type,
+      options
+    );
+
+    const response = await util.request(
+      state.configuration,
+      'POST',
+      '/api/events/events',
+      {
+        host: 'register',
+        body: {
+          type: resolvedType,
+          transactionId: resolvedOptions.transactionId ?? crypto.randomUUID(),
+          createdAtLocation: resolvedOptions.createdAtLocation,
+        },
+      }
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}
+
+/**
+ * Notify an existing OpenCRVS v2 event with declaration data.
+ * Posts to `register.<domain>/api/events/events/{eventId}/notify`.
+ * @example <caption>Notify a birth event</caption>
+ * notifyEvent($.id, {
+ *   'child.name': { firstname: 'Test', surname: 'Baby' },
+ *   'child.dob': '2026-05-01',
+ *   'child.gender': 'female',
+ * }, { createdAtLocation: $.locationId });
+ * @function
+ * @public
+ * @param {string} eventId - The event id returned by {@link createEvent}.
+ * @param {object} declaration - Flat dotted-key declaration (e.g. `'child.name'`, `'child.dob'`).
+ * @param {object} options - Optional fields: `createdAtLocation` (string),
+ *   `transactionId` (string, defaults to a random UUID) and `annotation` (object).
+ * @returns {Operation}
+ * @state {OpenCRVSState}
+ */
+export function notifyEvent(eventId, declaration, options = {}) {
+  return async state => {
+    const [resolvedId, resolvedDeclaration, resolvedOptions] = expandReferences(
+      state,
+      eventId,
+      declaration,
+      options
+    );
+
+    const response = await util.request(
+      state.configuration,
+      'POST',
+      `/api/events/events/${resolvedId}/notify`,
+      {
+        host: 'register',
+        body: {
+          type: 'NOTIFY',
+          transactionId: resolvedOptions.transactionId ?? crypto.randomUUID(),
+          createdAtLocation: resolvedOptions.createdAtLocation,
+          declaration: resolvedDeclaration,
+          annotation: resolvedOptions.annotation ?? {},
+        },
+      }
+    );
+
+    return util.prepareNextState(state, response);
+  };
+}
+
+/**
+ * Convenience helper: create a v2 birth event and notify it in one step.
+ * Mirrors the reference integration script's create-then-notify chain.
+ * The notify response is left on `state.data`.
+ * @example <caption>Submit a birth notification in one call</caption>
+ * submitBirthNotification({
+ *   'child.name': { firstname: 'Test', surname: 'Baby' },
+ *   'child.dob': '2026-05-01',
+ *   'child.gender': 'female',
+ *   'child.placeOfBirth': 'HEALTH_FACILITY',
+ *   'child.birthLocation': $.locationId,
+ *   'informant.relation': 'MOTHER',
+ * }, { createdAtLocation: $.locationId });
+ * @function
+ * @public
+ * @param {object} declaration - Flat dotted-key declaration passed through to {@link notifyEvent}.
+ * @param {object} options - Optional fields: `createdAtLocation` (string),
+ *   `transactionId` (string, applied to the create call only — notify always
+ *   generates its own UUID) and `annotation` (object, passed to notify).
+ * @returns {Operation}
+ * @state {OpenCRVSState}
+ */
+export function submitBirthNotification(declaration, options = {}) {
+  return async state => {
+    const [resolvedDeclaration, resolvedOptions] = expandReferences(
+      state,
+      declaration,
+      options
+    );
+
+    const afterCreate = await createEvent('birth', {
+      createdAtLocation: resolvedOptions.createdAtLocation,
+      transactionId: resolvedOptions.transactionId,
+    })(state);
+
+    const eventId = afterCreate.data?.id;
+    if (!eventId) {
+      throw new Error(
+        'submitBirthNotification: createEvent response did not include an id'
+      );
+    }
+
+    return notifyEvent(eventId, resolvedDeclaration, {
+      createdAtLocation: resolvedOptions.createdAtLocation,
+      annotation: resolvedOptions.annotation,
+    })(afterCreate);
+  };
+}
+
+/**
+ * Fetch the list of locations from the `countryconfig.<domain>` host.
+ * Useful for picking `createdAtLocation` or `child.birthLocation`.
+ * @example
+ * getLocations();
+ * @function
+ * @public
+ * @param {object} options - Optional fields: `params` (object of query parameters
+ *   to append to the request).
+ * @returns {Operation}
+ * @state {OpenCRVSState}
+ */
+export function getLocations(options = {}) {
+  return async state => {
+    const [resolvedOptions] = expandReferences(state, options);
+
+    const response = await util.request(
+      state.configuration,
+      'GET',
+      '/api/events/locations',
+      {
+        host: 'countryconfig',
+        params: resolvedOptions.params ?? {},
+      }
+    );
+
+    return util.prepareNextState(state, response);
   };
 }
 

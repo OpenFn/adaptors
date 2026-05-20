@@ -9,6 +9,10 @@
         "description": "Create a Birth Notification. Pass an array of FHIR resources wrapped in entry\nobjects like `{ fullUrl, resource }`. References must use the full URL\nof the corresponding resources. See [OpenCRVS Event Notification Postman documentation](https://github.com/opencrvs/opencrvs-countryconfig/blob/master/postman/Event%20Notification.postman_collection.json)",
         "tags": [
           {
+            "title": "deprecated",
+            "description": "for OpenCRVS v2 deployments — use {@link submitBirthNotification}\n  (or {@link createEvent} + {@link notifyEvent}) instead. Retained for v1\n  gateway-based deployments that still consume FHIR bundles."
+          },
+          {
             "title": "example",
             "description": "createBirthNotification($.bundleData)",
             "caption": "Create a birth notification"
@@ -97,6 +101,237 @@
             "type": {
               "type": "NameExpression",
               "name": "Object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{OpenCRVSState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "createEvent",
+      "params": [
+        "type",
+        "options"
+      ],
+      "docs": {
+        "description": "Create an OpenCRVS v2 event (e.g. a birth or death registration).\nPosts to the `register.<domain>` host. The returned event id is\navailable on `state.data.id` for use with `notifyEvent`.",
+        "tags": [
+          {
+            "title": "example",
+            "description": "createEvent('birth', { createdAtLocation: 'a1b2-...' });",
+            "caption": "Create a birth event at a known location"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Event type, e.g. `'birth'` or `'death'`.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "type"
+          },
+          {
+            "title": "param",
+            "description": "Optional fields: `createdAtLocation` (string) and\n  `transactionId` (string, defaults to a random UUID).",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{OpenCRVSState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "notifyEvent",
+      "params": [
+        "eventId",
+        "declaration",
+        "options"
+      ],
+      "docs": {
+        "description": "Notify an existing OpenCRVS v2 event with declaration data.\nPosts to `register.<domain>/api/events/events/{eventId}/notify`.",
+        "tags": [
+          {
+            "title": "example",
+            "description": "notifyEvent($.id, {\n  'child.name': { firstname: 'Test', surname: 'Baby' },\n  'child.dob': '2026-05-01',\n  'child.gender': 'female',\n}, { createdAtLocation: $.locationId });",
+            "caption": "Notify a birth event"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "The event id returned by {@link createEvent}.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "eventId"
+          },
+          {
+            "title": "param",
+            "description": "Flat dotted-key declaration (e.g. `'child.name'`, `'child.dob'`).",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "declaration"
+          },
+          {
+            "title": "param",
+            "description": "Optional fields: `createdAtLocation` (string),\n  `transactionId` (string, defaults to a random UUID) and `annotation` (object).",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{OpenCRVSState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "submitBirthNotification",
+      "params": [
+        "declaration",
+        "options"
+      ],
+      "docs": {
+        "description": "Convenience helper: create a v2 birth event and notify it in one step.\nMirrors the reference integration script's create-then-notify chain.\nThe notify response is left on `state.data`.",
+        "tags": [
+          {
+            "title": "example",
+            "description": "submitBirthNotification({\n  'child.name': { firstname: 'Test', surname: 'Baby' },\n  'child.dob': '2026-05-01',\n  'child.gender': 'female',\n  'child.placeOfBirth': 'HEALTH_FACILITY',\n  'child.birthLocation': $.locationId,\n  'informant.relation': 'MOTHER',\n}, { createdAtLocation: $.locationId });",
+            "caption": "Submit a birth notification in one call"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Flat dotted-key declaration passed through to {@link notifyEvent}.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "declaration"
+          },
+          {
+            "title": "param",
+            "description": "Optional fields: `createdAtLocation` (string),\n  `transactionId` (string, applied to the create call only — notify always\n  generates its own UUID) and `annotation` (object, passed to notify).",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{OpenCRVSState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getLocations",
+      "params": [
+        "options"
+      ],
+      "docs": {
+        "description": "Fetch the list of locations from the `countryconfig.<domain>` host.\nUseful for picking `createdAtLocation` or `child.birthLocation`.",
+        "tags": [
+          {
+            "title": "example",
+            "description": "getLocations();"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Optional fields: `params` (object of query parameters\n  to append to the request).",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
             },
             "name": "options"
           },
