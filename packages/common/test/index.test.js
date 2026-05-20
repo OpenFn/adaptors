@@ -215,7 +215,7 @@ describe('combine', () => {
     },
   ];
 
-  it('accepts serveral operations, and reduces them with the state', () => {
+  it('accepts several operations, and reduces them with the state', () => {
     let result = combine(...operations)(state);
     expect(result).to.eql({ hello: 6 });
   });
@@ -224,6 +224,16 @@ describe('combine', () => {
     let state = {};
     let result = await combine(
       state => Promise.resolve({ hello: 1 }),
+      state => ({ hello: state.hello + 5 }),
+    )(state);
+    expect(result).to.eql({ hello: 6 });
+  });
+
+  it('chains operations where the first returns an unresolved promise', async () => {
+    let state = {};
+
+    let result = await combine(
+      state => new Promise(r => setTimeout(() => r({ hello: 1 }), 1)),
       state => ({ hello: state.hello + 5 }),
     )(state);
     expect(result).to.eql({ hello: 6 });
