@@ -303,7 +303,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "request(\"POST\", \"/mpesa/c2b/v1/registerurl\", \n {\n   \"ShortCode\": 600426,\n   \"ResponseType\": \"Completed\",\n   \"ConfirmationURL\": \"https://mydomain.com/confirmation\",\n   \"ValidationURL\": \"https://mydomain.com/validation\"\n });",
+            "description": "request(\"POST\", \"/mpesa/c2b/v1/registerurl\",\n {\n   \"ShortCode\": 600426,\n   \"ResponseType\": \"Completed\",\n   \"ConfirmationURL\": \"https://mydomain.com/confirmation\",\n   \"ValidationURL\": \"https://mydomain.com/validation\"\n });",
             "caption": "Register a URL to receive payment notifications"
           },
           {
