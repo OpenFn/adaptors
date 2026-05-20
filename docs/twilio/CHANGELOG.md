@@ -1,5 +1,12 @@
 # @openfn/language-twilio
 
+## 1.0.14
+
+### Patch Changes
+
+- Updated dependencies [9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 1.0.13 - 17 April 2026
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @openfn/language-openmrs
 
+## 5.3.12
+
+### Patch Changes
+
+- Updated dependencies [9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 5.3.11 - 17 April 2026
 
 ### Patch Changes

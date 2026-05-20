@@ -1,5 +1,12 @@
 # @openfn/language-mysql
 
+## 4.0.6
+
+### Patch Changes
+
+- Updated dependencies [9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 4.0.5 - 07 April 2026
 
 ### Patch Changes

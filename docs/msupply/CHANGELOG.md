@@ -1,5 +1,12 @@
 # @openfn/language-msupply
 
+## 1.0.18
+
+### Patch Changes
+
+- Updated dependencies [9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 1.0.17 - 14 May 2026
 
 ### Patch Changes

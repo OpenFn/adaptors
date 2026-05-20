@@ -1,5 +1,12 @@
 # @openfn/language-openfn
 
+## 3.0.14
+
+### Patch Changes
+
+- Updated dependencies [9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 3.0.13 - 07 April 2026
 
 ### Patch Changes
