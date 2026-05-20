@@ -97,7 +97,6 @@ export {
   field,
   fields,
   fn,
-  fn,
   fnIf,
   lastReferenceValue,
   log,
