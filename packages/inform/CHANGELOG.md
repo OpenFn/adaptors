@@ -1,5 +1,12 @@
 # @openfn/language-inform
 
+## 1.2.6
+
+### Patch Changes
+
+- Updated dependencies [9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 1.2.5 - 07 April 2026
 
 ### Patch Changes

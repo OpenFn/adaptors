@@ -1,5 +1,12 @@
 # @openfn/language-lamisplus
 
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies [9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 0.1.3 - 07 April 2026
 
 ### Patch Changes

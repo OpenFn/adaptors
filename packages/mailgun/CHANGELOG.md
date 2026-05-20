@@ -1,5 +1,12 @@
 # @openfn/language-mailgun
 
+## 0.6.7
+
+### Patch Changes
+
+- Updated dependencies [9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 0.6.6 - 07 April 2026
 
 ### Patch Changes

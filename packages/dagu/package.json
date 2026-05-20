@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-dagu",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "OpenFn dagu adaptor",
   "type": "module",
   "exports": {
