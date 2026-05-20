@@ -110,6 +110,7 @@ export function request(method, path, options = {}) {
 }
 
 export {
+  combine,
   dataPath,
   dataValue,
   dateFns,

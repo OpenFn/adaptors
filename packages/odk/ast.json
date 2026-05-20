@@ -674,6 +674,49 @@
       "valid": true
     },
     {
+      "name": "combine",
+      "params": [
+        "operations"
+      ],
+      "docs": {
+        "description": "Combines two operations into one",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "combine(\n  create('foo'),\n  delete('bar')\n)"
+          },
+          {
+            "title": "param",
+            "description": "Operations to be performed.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operations"
+            },
+            "name": "operations"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "field",
       "params": [
         "key",

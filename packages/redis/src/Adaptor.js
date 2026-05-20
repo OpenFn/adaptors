@@ -342,6 +342,7 @@ export function scan(pattern, options = {}) {
 }
 
 export {
+  combine,
   dataPath,
   dataValue,
   dateFns,

@@ -198,6 +198,7 @@ export function pickFormData(formId) {
 }
 
 export {
+  combine,
   fn,
   fnIf,
   alterState,

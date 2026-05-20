@@ -136,6 +136,7 @@ export function getDeploymentInfo(formId) {
 export {
   alterState,
   as,
+  combine,
   cursor,
   dataPath,
   dataValue,

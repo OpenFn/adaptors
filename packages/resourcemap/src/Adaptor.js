@@ -92,6 +92,7 @@ export function submitSite(collection_id, submissionData) {
 }
 
 export {
+  combine,
   fn,
   fnIf,
   alterState,

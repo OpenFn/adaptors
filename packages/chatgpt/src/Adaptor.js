@@ -143,6 +143,7 @@ export function deepResearch(message, opts) {
 }
 
 export {
+  combine,
   dataPath,
   dataValue,
   dateFns,

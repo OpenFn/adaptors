@@ -148,6 +148,7 @@ export function createFhirResource(fhirStore, resource, callback) {
 export { request } from './Utils.js';
 
 export {
+  combine,
   dataPath,
   dataValue,
   dateFns,

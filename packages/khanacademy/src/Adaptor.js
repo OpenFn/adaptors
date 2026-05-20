@@ -206,6 +206,7 @@ export function fetch(params) {
 }
 
 export {
+  combine,
   fn,
   fnIf,
   field,

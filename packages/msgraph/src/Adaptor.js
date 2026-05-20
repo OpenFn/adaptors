@@ -374,6 +374,7 @@ export function uploadFile(resource, data, callback) {
 export { request, sheetToBuffer } from './Utils.js';
 
 export {
+  combine,
   cursor,
   dataPath,
   dataValue,

@@ -215,6 +215,7 @@ export function sendBroadcast(params, callback = s => s) {
 
 export {
   alterState,
+  combine,
   dataPath,
   dataValue,
   each,

@@ -78,6 +78,7 @@ export function sendSms(data) {
 }
 
 export {
+  combine,
   fn,
   fnIf,
   each,

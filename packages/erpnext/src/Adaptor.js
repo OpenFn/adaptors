@@ -363,6 +363,7 @@ export function getCount(doctype, filters = {}) {
 }
 
 export {
+  combine,
   dataPath,
   dataValue,
   dateFns,

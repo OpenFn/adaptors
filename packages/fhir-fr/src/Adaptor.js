@@ -5,6 +5,7 @@ import * as util from './Utils';
 // Can we auto-generate any thing here?
 
 export {
+  combine,
   dataPath,
   dataValue,
   dateFns,

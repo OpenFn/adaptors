@@ -183,6 +183,7 @@ export function submitRecord(jsonData) {
 }
 
 export {
+  combine,
   fn,
   fnIf,
   alterState,

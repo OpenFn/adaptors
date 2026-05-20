@@ -90,6 +90,7 @@ export function prompt(message, opts) {
 }
 
 export {
+  combine,
   dataPath,
   dataValue,
   dateFns,

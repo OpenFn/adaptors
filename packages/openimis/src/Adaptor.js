@@ -107,6 +107,7 @@ export function getFHIR(path, params, callback = s => s) {
 
 export {
   alterState,
+  combine,
   dataPath,
   dataValue,
   dateFns,

@@ -352,6 +352,7 @@ export function searchReadRecord(
 }
 
 export {
+  combine,
   dataPath,
   dataValue,
   dateFns,

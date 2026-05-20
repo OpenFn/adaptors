@@ -112,6 +112,7 @@ export function request(method, path, body, options = {}) {
 }
 
 export {
+  combine,
   dataPath,
   dataValue,
   dateFns,

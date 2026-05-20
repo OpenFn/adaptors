@@ -232,6 +232,7 @@ export function getBlobProperties(blobName, options = {}) {
 }
 
 export {
+  combine,
   dataPath,
   dataValue,
   dateFns,

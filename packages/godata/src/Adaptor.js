@@ -883,6 +883,7 @@ export { axios };
 
 // What functions do you want from the common adaptor?
 export {
+  combine,
   fn,
   fnIf,
   alterState,

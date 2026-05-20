@@ -380,6 +380,7 @@ export function request(path, params = {}, callback) {
 
 export {
   alterState,
+  combine,
   cursor,
   dataPath,
   dataValue,
