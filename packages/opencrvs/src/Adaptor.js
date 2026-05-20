@@ -233,11 +233,11 @@ export function createEvent(type, options = {}) {
  * Notify an existing OpenCRVS v2 event with declaration data.
  * Posts to `register.<domain>/api/events/events/{eventId}/notify`.
  * @example <caption>Notify a birth event</caption>
- * notifyEvent(state => state.data.id, {
+ * notifyEvent($.id, {
  *   'child.name': { firstname: 'Test', surname: 'Baby' },
  *   'child.dob': '2026-05-01',
  *   'child.gender': 'female',
- * }, { createdAtLocation: state => state.references[0][0].id });
+ * }, { createdAtLocation: $.locationId });
  * @function
  * @public
  * @param {string} eventId - The event id returned by {@link createEvent}.
@@ -286,9 +286,9 @@ export function notifyEvent(eventId, declaration, options = {}) {
  *   'child.dob': '2026-05-01',
  *   'child.gender': 'female',
  *   'child.placeOfBirth': 'HEALTH_FACILITY',
- *   'child.birthLocation': state => state.data[0].id,
+ *   'child.birthLocation': $.locationId,
  *   'informant.relation': 'MOTHER',
- * }, { createdAtLocation: state => state.data[0].id });
+ * }, { createdAtLocation: $.locationId });
  * @function
  * @public
  * @param {object} declaration - Flat dotted-key declaration passed through to {@link notifyEvent}.

@@ -190,7 +190,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "notifyEvent(state => state.data.id, {\n  'child.name': { firstname: 'Test', surname: 'Baby' },\n  'child.dob': '2026-05-01',\n  'child.gender': 'female',\n}, { createdAtLocation: state => state.references[0][0].id });",
+            "description": "notifyEvent($.id, {\n  'child.name': { firstname: 'Test', surname: 'Baby' },\n  'child.dob': '2026-05-01',\n  'child.gender': 'female',\n}, { createdAtLocation: $.locationId });",
             "caption": "Notify a birth event"
           },
           {
@@ -257,7 +257,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "submitBirthNotification({\n  'child.name': { firstname: 'Test', surname: 'Baby' },\n  'child.dob': '2026-05-01',\n  'child.gender': 'female',\n  'child.placeOfBirth': 'HEALTH_FACILITY',\n  'child.birthLocation': state => state.data[0].id,\n  'informant.relation': 'MOTHER',\n}, { createdAtLocation: state => state.data[0].id });",
+            "description": "submitBirthNotification({\n  'child.name': { firstname: 'Test', surname: 'Baby' },\n  'child.dob': '2026-05-01',\n  'child.gender': 'female',\n  'child.placeOfBirth': 'HEALTH_FACILITY',\n  'child.birthLocation': $.locationId,\n  'informant.relation': 'MOTHER',\n}, { createdAtLocation: $.locationId });",
             "caption": "Submit a birth notification in one call"
           },
           {
