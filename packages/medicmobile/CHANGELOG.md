@@ -1,5 +1,12 @@
 # @openfn/language-medicmobile
 
+## 0.5.30
+
+### Patch Changes
+
+- Updated dependencies [9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 0.5.29 - 07 April 2026
 
 ### Patch Changes

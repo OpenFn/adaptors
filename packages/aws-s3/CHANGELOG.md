@@ -1,5 +1,12 @@
 # @openfn/language-aws-s3
 
+## 1.0.3
+
+### Patch Changes
+
+- Updated dependencies [9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 1.0.2 - 07 April 2026
 
 ### Patch Changes

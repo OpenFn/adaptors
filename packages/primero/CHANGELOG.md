@@ -1,5 +1,12 @@
 # @openfn/language-primero
 
+## 4.0.13
+
+### Patch Changes
+
+- Updated dependencies [9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 4.0.12 - 14 April 2026
 
 ### Patch Changes
