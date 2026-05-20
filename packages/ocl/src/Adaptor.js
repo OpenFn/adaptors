@@ -127,8 +127,6 @@ export {
   each,
   field,
   fields,
-  fn,
-  fnIf,
   lastReferenceValue,
   log,
   merge,
