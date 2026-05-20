@@ -41,13 +41,12 @@ export function execute(...operations) {
 }
 
 /**
- * @deprecated for OpenCRVS v2 deployments — use {@link submitBirthNotification}
- *   (or {@link createEvent} + {@link notifyEvent}) instead. Retained for v1
- *   gateway-based deployments that still consume FHIR bundles.
- *
  * Create a Birth Notification. Pass an array of FHIR resources wrapped in entry
  * objects like `{ fullUrl, resource }`. References must use the full URL
  * of the corresponding resources. See [OpenCRVS Event Notification Postman documentation](https://github.com/opencrvs/opencrvs-countryconfig/blob/master/postman/Event%20Notification.postman_collection.json)
+ * @deprecated for OpenCRVS v2 deployments — use {@link submitBirthNotification}
+ *   (or {@link createEvent} + {@link notifyEvent}) instead. Retained for v1
+ *   gateway-based deployments that still consume FHIR bundles.
  * @example <caption>Create a birth notification</caption>
  * createBirthNotification($.bundleData)
  * @example <caption>Cross-reference two bundle resources</caption>

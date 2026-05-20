@@ -6,11 +6,11 @@
         "body"
       ],
       "docs": {
-        "description": "",
+        "description": "Create a Birth Notification. Pass an array of FHIR resources wrapped in entry\nobjects like `{ fullUrl, resource }`. References must use the full URL\nof the corresponding resources. See [OpenCRVS Event Notification Postman documentation](https://github.com/opencrvs/opencrvs-countryconfig/blob/master/postman/Event%20Notification.postman_collection.json)",
         "tags": [
           {
             "title": "deprecated",
-            "description": "for OpenCRVS v2 deployments — use {@link submitBirthNotification}\n  (or {@link createEvent} + {@link notifyEvent}) instead. Retained for v1\n  gateway-based deployments that still consume FHIR bundles.\n\nCreate a Birth Notification. Pass an array of FHIR resources wrapped in entry\nobjects like `{ fullUrl, resource }`. References must use the full URL\nof the corresponding resources. See [OpenCRVS Event Notification Postman documentation](https://github.com/opencrvs/opencrvs-countryconfig/blob/master/postman/Event%20Notification.postman_collection.json)"
+            "description": "for OpenCRVS v2 deployments — use {@link submitBirthNotification}\n  (or {@link createEvent} + {@link notifyEvent}) instead. Retained for v1\n  gateway-based deployments that still consume FHIR bundles."
           },
           {
             "title": "example",
