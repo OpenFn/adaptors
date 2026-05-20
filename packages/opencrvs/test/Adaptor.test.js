@@ -510,6 +510,29 @@ describe('submitBirthNotification', () => {
       trackingId: 'TRK99',
     });
   });
+
+  it('throws if createEvent response is missing an id', async () => {
+    registerServer
+      .intercept({ path: '/api/events/events', method: 'POST' })
+      .reply(200, {});
+
+    let error;
+    try {
+      await execute(
+        submitBirthNotification(
+          { 'child.name': { firstname: 'Test', surname: 'Baby' } },
+          { createdAtLocation: 'loc-1' }
+        )
+      )(state);
+    } catch (e) {
+      error = e;
+    }
+
+    expect(error).to.exist;
+    expect(error.message).to.match(
+      /createEvent response did not include an id/
+    );
+  });
 });
 
 describe('getLocations', () => {

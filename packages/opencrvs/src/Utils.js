@@ -57,11 +57,7 @@ export const prepareNextState = (state, response, callback = s => s) => {
   return callback(nextState);
 };
 
-const HOST_PREFIX = {
-  gateway: 'gateway',
-  register: 'register',
-  countryconfig: 'countryconfig',
-};
+const VALID_HOSTS = new Set(['gateway', 'register', 'countryconfig']);
 
 export async function request(configuration, method, path, opts) {
   const { domain, access_token } = configuration;
@@ -70,12 +66,11 @@ export async function request(configuration, method, path, opts) {
 
   assertRelativeUrl(path);
 
-  const prefix = HOST_PREFIX[host];
-  if (!prefix) {
+  if (!VALID_HOSTS.has(host)) {
     throw new Error(
-      `Unknown OpenCRVS host '${host}'. Expected one of: ${Object.keys(
-        HOST_PREFIX
-      ).join(', ')}`
+      `Unknown OpenCRVS host '${host}'. Expected one of: ${[
+        ...VALID_HOSTS,
+      ].join(', ')}`
     );
   }
 
@@ -87,7 +82,7 @@ export async function request(configuration, method, path, opts) {
     },
     query: params,
     parseAs,
-    baseUrl: `https://${prefix}.${domain}`,
+    baseUrl: `https://${host}.${domain}`,
   };
 
   return commonRequest(method, path, options).then(logResponse);
