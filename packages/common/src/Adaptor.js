@@ -352,9 +352,9 @@ export function combine(...operations) {
   return state => {
     return operations.reduce((state, operation) => {
       if (state.then) {
-        return state.then(operation);
+        return state.then(state => operation({ ...state }));
       } else {
-        return operation(state);
+        return operation({ ...state });
       }
     }, state);
   };
