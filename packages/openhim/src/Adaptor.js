@@ -53,7 +53,7 @@ export function createEncounter(encounterData) {
       {
         body,
         parseAs: 'text',
-      }
+      },
     );
 
     return util.prepareNextState(state, response);
@@ -105,7 +105,7 @@ export function getTransactions(options = {}) {
         query: {
           ...resolvedoptions,
         },
-      }
+      },
     );
 
     return util.prepareNextState(state, response);
@@ -132,7 +132,7 @@ export function getClients(clientId) {
       state.configuration,
       'GET',
       resolvedClientId ? `/clients/${resolvedClientId}` : '/clients',
-      {}
+      {},
     );
 
     return util.prepareNextState(state, response);
@@ -168,7 +168,7 @@ export function createClient(body) {
       {
         body: resolvedBody,
         parseAs: 'text',
-      }
+      },
     );
 
     return util.prepareNextState(state, response);
@@ -195,7 +195,7 @@ export function getChannels(channelId) {
       state.configuration,
       'GET',
       resolvedChannelId ? `/channels/${resolvedChannelId}` : '/channels',
-      {}
+      {},
     );
 
     return util.prepareNextState(state, response);
@@ -244,7 +244,7 @@ export function createChannel(body) {
       {
         body: resolvedBody,
         parseAs: 'text',
-      }
+      },
     );
 
     return util.prepareNextState(state, response);
@@ -298,7 +298,7 @@ export function getTasks(options) {
       taskId ? `/tasks/${taskId}` : '/tasks',
       {
         query: resolvedoptions,
-      }
+      },
     );
 
     return util.prepareNextState(state, response);
@@ -337,19 +337,20 @@ export function createTask(body) {
 }
 
 export {
+  as,
   combine,
-  fnIf,
+  cursor,
   dataPath,
   dataValue,
   dateFns,
-  cursor,
   each,
   field,
   fields,
   fn,
+  fnIf,
   lastReferenceValue,
+  log,
+  map,
   merge,
   sourceValue,
-  as,
-  map,
 } from '@openfn/language-common';

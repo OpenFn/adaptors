@@ -182,6 +182,7 @@ export {
   fnIf,
   group,
   lastReferenceValue,
+  log,
   merge,
   scrubEmojis,
   sourceValue,

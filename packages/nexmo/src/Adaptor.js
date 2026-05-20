@@ -49,7 +49,7 @@ export function sendSMS(from, toNumber, message) {
       state,
       from,
       toNumber,
-      message
+      message,
     );
 
     const nexmo = new Nexmo({
@@ -74,7 +74,7 @@ export function sendSMS(from, toNumber, message) {
             console.log(response);
             resolve(response);
           }
-        }
+        },
       );
     }).then(response => {
       const nextState = composeNextState(state, response);
@@ -84,16 +84,17 @@ export function sendSMS(from, toNumber, message) {
 }
 
 export {
-  combine,
-  field,
-  fields,
-  sourceValue,
-  fn,
-  fnIf,
   alterState,
-  each,
-  merge,
+  combine,
   dataPath,
   dataValue,
+  each,
+  field,
+  fields,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
+  merge,
+  sourceValue,
 } from '@openfn/language-common';

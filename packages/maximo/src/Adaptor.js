@@ -98,10 +98,10 @@ export function fetch(params) {
                   console.log('POST succeeded.');
                   resolve(getResponseBody);
                 }
-              }
+              },
             );
           }
-        }
+        },
       );
     })
       .then(response => {
@@ -168,7 +168,7 @@ export function create(params) {
             console.log('POST succeeded.');
             resolve(body);
           }
-        }
+        },
       );
     }).then(data => {
       const nextState = { ...state, response: { body: data } };
@@ -236,7 +236,7 @@ export function update(params) {
             console.log('Update succeeded.');
             resolve(body);
           }
-        }
+        },
       );
     }).then(data => {
       const nextState = { ...state, response: { body: data } };
@@ -304,7 +304,7 @@ export function update75(params) {
             console.log('Update succeeded.');
             resolve(body);
           }
-        }
+        },
       );
     }).then(data => {
       const nextState = { ...state, response: { body: data } };
@@ -314,16 +314,17 @@ export function update75(params) {
 }
 
 export {
-  combine,
-  field,
-  fields,
-  sourceValue,
-  fn,
-  fnIf,
   alterState,
-  each,
-  merge,
+  combine,
   dataPath,
   dataValue,
+  each,
+  field,
+  fields,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
+  merge,
+  sourceValue,
 } from '@openfn/language-common';

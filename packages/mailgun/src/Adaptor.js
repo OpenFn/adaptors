@@ -44,7 +44,7 @@ export function execute(...operations) {
     return commonExecute(
       setupClient,
       ...operations,
-      teardownClient
+      teardownClient,
     )({ ...initialState, ...state });
   };
 }
@@ -113,17 +113,18 @@ export function send(params) {
 }
 
 export {
-  combine,
-  fn,
-  fnIf,
-  field,
   alterState,
-  fields,
-  sourceValue,
-  merge,
-  each,
+  beta,
+  combine,
   dataPath,
   dataValue,
+  each,
+  field,
+  fields,
+  fn,
+  fnIf,
   lastReferenceValue,
-  beta,
+  log,
+  merge,
+  sourceValue,
 } from '@openfn/language-common';

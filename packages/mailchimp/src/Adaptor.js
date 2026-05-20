@@ -462,17 +462,18 @@ export { axios, md5 };
 
 // What functions do you want from the common adaptor?
 export {
-  combine,
-  fn,
-  fnIf,
   alterState,
+  chunk,
+  combine,
   dataPath,
   dataValue,
   each,
   field,
   fields,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
   merge,
-  chunk,
   sourceValue,
 } from '@openfn/language-common';

@@ -132,8 +132,9 @@ export {
   fields,
   fn,
   fnIf,
-  parseCsv,
   lastReferenceValue,
+  log,
   merge,
+  parseCsv,
   sourceValue,
 } from '@openfn/language-common';

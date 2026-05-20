@@ -8,5 +8,4 @@ export function version() {
   });
 }
 
-export { combine,
- fn } from '@openfn/language-common';
+export { combine, fn, log } from '@openfn/language-common';

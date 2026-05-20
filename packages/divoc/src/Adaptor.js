@@ -2,7 +2,6 @@ import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
 
-
 /**
  * State object
  * @typedef {Object} DivocHttpState
@@ -18,7 +17,7 @@ import * as util from './Utils.js';
  * @private
  * @example
  * execute(certifyVaccination({}))(state)
- * @param  {Operations} operations 
+ * @param  {Operations} operations
  * @returns {operation}
  */
 export function execute(...operations) {
@@ -28,10 +27,9 @@ export function execute(...operations) {
   };
 
   return state => {
-    return commonExecute(...operations)({...initialState,...state})
-  }
+    return commonExecute(...operations)({ ...initialState, ...state });
+  };
 }
-
 
 /**
  * Certify a vaccination
@@ -89,34 +87,36 @@ export function execute(...operations) {
 */
 export function certifyVaccination(data) {
   return async state => {
-    
     const [resolvedData] = expandReferences(state, data);
     const { baseUrl } = state.configuration;
 
     const options = {
       method: 'POST',
       data: resolvedData,
-    }
-    
+    };
 
-    const response = await util.request({...state.configuration}, '/v1/certify', options);
-  
+    const response = await util.request(
+      { ...state.configuration },
+      '/v1/certify',
+      options,
+    );
+
     return util.prepareNextState(state, response);
-  }
+  };
 }
-
 
 export {
   combine,
+  cursor,
   dataPath,
   dataValue,
   dateFns,
-  cursor,
   each,
   field,
   fields,
   fn,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
 } from '@openfn/language-common';

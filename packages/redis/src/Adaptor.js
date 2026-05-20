@@ -314,7 +314,7 @@ export function scan(pattern, options = {}) {
     const [resolvedPattern, resolvedOptions] = expandReferences(
       state,
       pattern,
-      options
+      options,
     );
     console.log(`Scanning for keys matching '${resolvedPattern}'`);
 
@@ -343,16 +343,17 @@ export function scan(pattern, options = {}) {
 
 export {
   combine,
+  cursor,
   dataPath,
   dataValue,
   dateFns,
-  cursor,
   each,
   field,
   fields,
   fn,
   fnIf,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
 } from '@openfn/language-common';

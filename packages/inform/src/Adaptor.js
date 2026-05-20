@@ -235,6 +235,7 @@ export function downloadAttachment(attachmentId, options = {}) {
 }
 
 export {
+  as,
   combine,
   cursor,
   dataPath,
@@ -247,9 +248,9 @@ export {
   fnIf,
   group,
   lastReferenceValue,
+  log,
   merge,
   scrubEmojis,
   sourceValue,
   util,
-  as,
 } from '@openfn/language-common';

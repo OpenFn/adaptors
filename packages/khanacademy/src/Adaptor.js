@@ -43,13 +43,13 @@ export function fetch(params) {
     const { email, password, consumerKey, secretKey } = state.configuration;
 
     const [resolvedParams] = expandReferences(state, params);
-    const {getEndpoint, queryParams, postUrl} = resolvedParams;
+    const { getEndpoint, queryParams, postUrl } = resolvedParams;
 
     const query = qs.stringify(queryParams);
 
     const getUrl = resolveUrl(
       'https://www.khanacademy.org/api/v1' + '/',
-      getEndpoint + '?' + query
+      getEndpoint + '?' + query,
     );
 
     console.log('Fetching data from URL: ' + getUrl);
@@ -79,7 +79,7 @@ export function fetch(params) {
               console.log('Token request successful.');
               resolve(qs.parse(body));
             }
-          }
+          },
         );
       })
 
@@ -114,7 +114,7 @@ export function fetch(params) {
                   console.log('Token auhorization successful.');
                   resolve(auth);
                 }
-              }
+              },
             );
           });
         })
@@ -144,7 +144,7 @@ export function fetch(params) {
                   console.log('Token exchange successful.');
                   resolve(qs.parse(body));
                 }
-              }
+              },
             );
           });
         })
@@ -175,7 +175,7 @@ export function fetch(params) {
                   console.log(body);
                   resolve(body);
                 }
-              }
+              },
             );
           });
         })
@@ -197,7 +197,7 @@ export function fetch(params) {
                   console.log('POST succeeded.');
                   resolve(body);
                 }
-              }
+              },
             );
           });
         })
@@ -206,15 +206,16 @@ export function fetch(params) {
 }
 
 export {
-  combine,
-  fn,
-  fnIf,
-  field,
-  sourceValue,
-  fields,
   alterState,
-  merge,
+  combine,
   dataPath,
   dataValue,
+  field,
+  fields,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
+  merge,
+  sourceValue,
 } from '@openfn/language-common';

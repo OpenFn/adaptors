@@ -26,7 +26,7 @@ export function execute(...operations) {
   return state => {
     return commonExecute(
       login,
-      ...operations
+      ...operations,
       /* logout */
     )({ ...initialState, ...state }).catch(e => {
       console.error(e);
@@ -324,7 +324,7 @@ export function upsertOutbreak(outbreak, callback) {
     const { apiUrl, access_token } = state.configuration;
 
     const [resolvedOutbreak] = expandReferences(state, outbreak);
-    const {externalId, data} =  resolvedOutbreak;
+    const { externalId, data } = resolvedOutbreak;
 
     const filter = JSON.stringify({ where: { id: externalId } });
 
@@ -668,7 +668,7 @@ export function upsertLocation(externalId, goDataLocation, callback) {
         if (response.data.length > 1) {
           console.log(
             response.data.length,
-            'locations found; aborting upsert.'
+            'locations found; aborting upsert.',
           );
           return response;
         } else if (response.data.length === 1) {
@@ -827,7 +827,7 @@ export function upsertReferenceData(externalId, goDataReferenceData, callback) {
         if (response.data.length > 1) {
           console.log(
             response.data.length,
-            'reference data found; aborting upsert.'
+            'reference data found; aborting upsert.',
           );
           return response;
         } else if (response.data.length === 1) {
@@ -883,16 +883,17 @@ export { axios };
 
 // What functions do you want from the common adaptor?
 export {
-  combine,
-  fn,
-  fnIf,
   alterState,
+  combine,
   dataPath,
   dataValue,
   each,
   field,
   fields,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
 } from '@openfn/language-common';

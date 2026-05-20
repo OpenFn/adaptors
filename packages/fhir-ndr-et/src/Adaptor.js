@@ -54,7 +54,7 @@ export const create = (resourceType, resource, params, callback = s => s) => {
       state.configuration,
       'POST',
       resolvedResourceType,
-      opts
+      opts,
     );
     return util.prepareNextState(state, response, callback);
   };
@@ -62,14 +62,15 @@ export const create = (resourceType, resource, params, callback = s => s) => {
 
 export {
   combine,
+  cursor,
   dataPath,
   dataValue,
-  cursor,
   each,
   field,
   fields,
   fn,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
 } from '@openfn/language-common';
