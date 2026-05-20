@@ -6,18 +6,15 @@
       "type": "string",
       "description": "OpenCRVS domain",
       "minLength": 1,
-      "examples": [
-        "openfn.opencrvs.dev"
-      ]
+      "examples": ["openfn.opencrvs.dev"]
     },
     "clientId": {
       "title": "Client Id",
       "type": "string",
+      "writeOnly": true,
       "minLength": 1,
       "description": "Your OpenCRVS client id",
-      "examples": [
-        "the-long-uuid-provided-by-opencrvs"
-      ]
+      "examples": ["the-long-uuid-provided-by-opencrvs"]
     },
     "clientSecret": {
       "title": "Client Secret",
@@ -25,9 +22,7 @@
       "description": "Client Secret",
       "writeOnly": true,
       "minLength": 1,
-      "examples": [
-        "the-long-secret-key-provided-by-opencrvs"
-      ]
+      "examples": ["the-long-secret-key-provided-by-opencrvs"]
     },
     "access_token": {
       "title": "Access Token",
@@ -35,16 +30,10 @@
       "description": "Your OpenCRVS access token",
       "writeOnly": true,
       "minLength": 1,
-      "examples": [
-        "the-long-access-token-from-your-auth"
-      ]
+      "examples": ["the-long-access-token-from-your-auth"]
     }
   },
   "type": "object",
   "additionalProperties": true,
-  "required": [
-    "domain",
-    "clientId",
-    "clientSecret"
-  ]
+  "required": ["domain", "clientId", "clientSecret"]
 }
