@@ -176,14 +176,22 @@ to help you build your own adaptor.
 3. [Implement your adaptor](https://github.com/OpenFn/adaptors/wiki/Adaptor-Writing-Best-Practice-&-Common-Patterns)
    in `packages/<adaptor-name>/src/Adaptor.js`
 
-4. Test your adaptor:
+4. Update `packages/<adaptor-name>/configuration-schema.json` and validate it
+   against
+   [JSON Schema draft-07](https://json-schema.org/draft-07/json-schema-release-notes):
+
+   ```bash
+   pnpm validate:schemas
+   ```
+
+5. Test your adaptor:
    [See unit test guideline](https://github.com/OpenFn/adaptors/wiki/Unit-Testing-Guide)
 
    ```bash
    pnpm test
    ```
 
-5. Create a test job in `tmp/job.js` and initial state in `tmp/state.json` then
+6. Create a test job in `tmp/job.js` and initial state in `tmp/state.json` then
    run:
 
    ```bash
@@ -193,6 +201,7 @@ to help you build your own adaptor.
 ### Best Practices
 
 - Update the adaptor's README
+- Keep `configuration-schema.json` valid against JSON Schema draft-07
 - Include comprehensive [JSDoc](https://jsdoc.app/) comments for all functions
 - [Write unit tests for your adaptor functions](https://github.com/OpenFn/adaptors/wiki/Unit-Testing-Guide)
 - [Follow the existing code style and patterns](https://github.com/OpenFn/adaptors/wiki/Adaptor-Writing-Best-Practice-&-Common-Patterns)
