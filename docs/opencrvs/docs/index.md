@@ -4,7 +4,15 @@
 <dt>
     <a href="#createdocumententry">createDocumentEntry(resource, [fullUrl])</a></dt>
 <dt>
+    <a href="#createevent">createEvent(type, options)</a></dt>
+<dt>
+    <a href="#getlocations">getLocations(options)</a></dt>
+<dt>
+    <a href="#notifyevent">notifyEvent(eventId, declaration, options)</a></dt>
+<dt>
     <a href="#queryevents">queryEvents(variables, options)</a></dt>
+<dt>
+    <a href="#submitbirthnotification">submitBirthNotification(declaration, options)</a></dt>
 </dl>
 
 This adaptor exports the following namespaced functions:
@@ -74,7 +82,11 @@ This adaptor exports the following from common:
 ## Functions
 ### createBirthNotification
 
-<p><code>createBirthNotification(body) ⇒ Operation</code></p>
+~~<p><code>createBirthNotification(body) ⇒ Operation</code></p>
+~~***for OpenCRVS v2 deployments — use [submitBirthNotification](#submitBirthNotification)
+  (or [createEvent](#createEvent) + [notifyEvent](#notifyEvent)) instead. Retained for v1
+  gateway-based deployments that still consume FHIR bundles.***
+
 
 Create a Birth Notification. Pass an array of FHIR resources wrapped in entry
 objects like `{ fullUrl, resource }`. References must use the full URL
@@ -161,6 +173,95 @@ createDocumentEntry(builders.patient({ name: [{ given: ['John'] }] }))
 
 * * *
 
+### createEvent
+
+<p><code>createEvent(type, options) ⇒ Operation</code></p>
+
+Create an OpenCRVS v2 event (e.g. a birth or death registration).
+Posts to the `register.<domain>` host. The returned event id is
+available on `state.data.id` for use with `notifyEvent`.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| type | <code>string</code> | Event type, e.g. `'birth'` or `'death'`. |
+| options | <code>object</code> | Optional fields: `createdAtLocation` (string) and   `transactionId` (string, defaults to a random UUID). |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** Create a birth event at a known location
+```js
+createEvent('birth', { createdAtLocation: 'a1b2-...' });
+```
+
+* * *
+
+### getLocations
+
+<p><code>getLocations(options) ⇒ Operation</code></p>
+
+Fetch the list of locations from the `countryconfig.<domain>` host.
+Useful for picking `createdAtLocation` or `child.birthLocation`.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>object</code> | Optional fields: `params` (object of query parameters   to append to the request). |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+
+**Example**
+```js
+getLocations();
+```
+
+* * *
+
+### notifyEvent
+
+<p><code>notifyEvent(eventId, declaration, options) ⇒ Operation</code></p>
+
+Notify an existing OpenCRVS v2 event with declaration data.
+Posts to `register.<domain>/api/events/events/{eventId}/notify`.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| eventId | <code>string</code> | The event id returned by [createEvent](#createEvent). |
+| declaration | <code>object</code> | Flat dotted-key declaration (e.g. `'child.name'`, `'child.dob'`). |
+| options | <code>object</code> | Optional fields: `createdAtLocation` (string),   `transactionId` (string, defaults to a random UUID) and `annotation` (object). |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** Notify a birth event
+```js
+notifyEvent($.id, {
+  'child.name': { firstname: 'Test', surname: 'Baby' },
+  'child.dob': '2026-05-01',
+  'child.gender': 'female',
+}, { createdAtLocation: $.locationId });
+```
+
+* * *
+
 ### queryEvents
 
 <p><code>queryEvents(variables, options) ⇒ Operation</code></p>
@@ -213,6 +314,42 @@ queryEvents(
   },
   { count: 10, skip: 0 }
 );
+```
+
+* * *
+
+### submitBirthNotification
+
+<p><code>submitBirthNotification(declaration, options) ⇒ Operation</code></p>
+
+Convenience helper: create a v2 birth event and notify it in one step.
+Mirrors the reference integration script's create-then-notify chain.
+The notify response is left on `state.data`.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| declaration | <code>object</code> | Flat dotted-key declaration passed through to [notifyEvent](#notifyEvent). |
+| options | <code>object</code> | Optional fields: `createdAtLocation` (string),   `transactionId` (string, applied to the create call only — notify always   generates its own UUID) and `annotation` (object, passed to notify). |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** Submit a birth notification in one call
+```js
+submitBirthNotification({
+  'child.name': { firstname: 'Test', surname: 'Baby' },
+  'child.dob': '2026-05-01',
+  'child.gender': 'female',
+  'child.placeOfBirth': 'HEALTH_FACILITY',
+  'child.birthLocation': $.locationId,
+  'informant.relation': 'MOTHER',
+}, { createdAtLocation: $.locationId });
 ```
 
 * * *
