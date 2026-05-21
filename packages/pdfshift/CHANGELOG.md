@@ -1,5 +1,11 @@
 # @openfn/language-pdfshift
 
+## 1.1.0
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
 ## 1.0.12
 
 ### Patch Changes

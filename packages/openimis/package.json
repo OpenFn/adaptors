@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-openimis",
   "label": "OpenIMIS",
-  "version": "3.0.11",
+  "version": "3.1.0",
   "description": "OpenFn adaptor for OpenIMIS",
   "type": "module",
   "exports": {

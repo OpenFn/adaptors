@@ -508,6 +508,49 @@
       "valid": true
     },
     {
+      "name": "combine",
+      "params": [
+        "operations"
+      ],
+      "docs": {
+        "description": "Combines two operations into one",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "combine(\n  create('foo'),\n  delete('bar')\n)"
+          },
+          {
+            "title": "param",
+            "description": "Operations to be performed.",
+            "type": {
+              "type": "NameExpression",
+              "name": "Operations"
+            },
+            "name": "operations"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "field",
       "params": [
         "key",
@@ -655,6 +698,55 @@
             "type": {
               "type": "NameExpression",
               "name": "DataSource"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "log",
+      "params": [
+        "args"
+      ],
+      "docs": {
+        "description": "Outputs a message, like calling `console.log`. Use this at the top level of your job code, but not inside callbacks.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "log('Patient List::', $.patients);",
+            "caption": "Log values from state"
+          },
+          {
+            "title": "example",
+            "description": "fn((state) => {\n  console.log(state.data);\n  return state;\n})",
+            "caption": "Use console.log inside a callback or fn block"
+          },
+          {
+            "title": "param",
+            "description": "A value or message to display in the logs",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "args"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
             }
           }
         ]

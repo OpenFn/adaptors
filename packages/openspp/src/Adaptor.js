@@ -1027,6 +1027,7 @@ export function searchArea(domain, options = {}, callback = s => s) {
 }
 
 export {
+  combine,
   dataPath,
   dataValue,
   dateFns,
@@ -1036,6 +1037,7 @@ export {
   fn,
   fnIf,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
 } from '@openfn/language-common';

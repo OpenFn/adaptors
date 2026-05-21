@@ -1,5 +1,12 @@
 # @openfn/language-kobotoolbox
 
+## 4.3.0
+
+### Minor Changes
+
+- 71115af: export `combine` function from common
+- bf26881: export `log` function from common
+
 ## 4.2.14
 
 ### Patch Changes

@@ -61,7 +61,7 @@ export function fetchSubmissions(formId, params, postUrl) {
             json: submissions[i],
           });
           console.log(
-            `Posted submission ${submissions[i].fields.meta.instanceID} ✓`
+            `Posted submission ${submissions[i].fields.meta.instanceID} ✓`,
           );
         }
         return state;
@@ -93,7 +93,7 @@ export function changesApi(params, callback) {
     if (error) return error;
     console.log(response);
     return new Error(
-      `Server responded with ${response.statusCode}:\n ${response.body}`
+      `Server responded with ${response.statusCode}:\n ${response.body}`,
     );
   }
 
@@ -142,7 +142,7 @@ export function changesApi(params, callback) {
               console.log('Request Success ✓');
               resolve(body);
             }
-          }
+          },
         )
         .auth(username, password);
     }).then(response => {
@@ -198,15 +198,17 @@ export function pickFormData(formId) {
 }
 
 export {
-  fn,
-  fnIf,
   alterState,
+  combine,
   dataPath,
   dataValue,
   each,
   field,
   fields,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
 } from '@openfn/language-common';

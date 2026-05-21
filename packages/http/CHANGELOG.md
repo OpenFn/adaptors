@@ -1,5 +1,11 @@
 # @openfn/language-http
 
+## 7.3.0
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
 ## 7.2.11
 
 ### Patch Changes

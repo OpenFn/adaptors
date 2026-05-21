@@ -1,5 +1,12 @@
 # @openfn/language-odoo
 
+## 2.2.0
+
+### Minor Changes
+
+- 71115af: export `combine` function from common
+- bf26881: export `log` function from common
+
 ## 2.1.12
 
 ### Patch Changes

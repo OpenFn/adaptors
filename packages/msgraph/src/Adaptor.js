@@ -72,7 +72,7 @@ export function create(resource, data, callback) {
     const [resolvedResource, resolvedData] = expandReferences(
       state,
       resource,
-      data
+      data,
     );
 
     const { accessToken, apiVersion } = state.configuration;
@@ -86,7 +86,7 @@ export function create(resource, data, callback) {
     };
 
     return request(url, options).then(response =>
-      handleResponse(response, state, callback)
+      handleResponse(response, state, callback),
     );
   };
 }
@@ -110,7 +110,7 @@ export function get(path, query, callback = false) {
     const url = setUrl(resolvedPath, apiVersion);
 
     return request(url, { query: resolvedQuery, accessToken }).then(response =>
-      handleResponse(response, state, callback)
+      handleResponse(response, state, callback),
     );
   };
 }
@@ -138,7 +138,7 @@ export function getDrive(specifier, name = 'default', callback = s => s) {
     const [resolvedSpecifier, resolvedName] = expandReferences(
       state,
       specifier,
-      name
+      name,
     );
 
     const { id, owner = 'drive' } = resolvedSpecifier;
@@ -182,7 +182,7 @@ export function getFolder(pathOrId, options, callback = s => s) {
     const [resolvedPathOrId, resolvedOptions] = expandReferences(
       state,
       pathOrId,
-      options
+      options,
     );
 
     const { driveName, metadata } = { ...defaultOptions, ...resolvedOptions };
@@ -195,7 +195,7 @@ export function getFolder(pathOrId, options, callback = s => s) {
 
     if (resolvedPathOrId.startsWith('/')) {
       resource = `drives/${driveId}/root:/${encodeURIComponent(
-        resolvedPathOrId
+        resolvedPathOrId,
       )}`;
     } else {
       resource = `drives/${driveId}/items/${resolvedPathOrId}`;
@@ -208,7 +208,7 @@ export function getFolder(pathOrId, options, callback = s => s) {
     const url = setUrl(resource, apiVersion);
 
     return request(url, { accessToken }).then(response =>
-      handleResponse(response, state, callback)
+      handleResponse(response, state, callback),
     );
   };
 }
@@ -237,7 +237,7 @@ export function getFile(pathOrId, options, callback = s => s) {
     const [resolvedPathOrId, resolvedOptions] = expandReferences(
       state,
       pathOrId,
-      options
+      options,
     );
 
     const { driveName, metadata } = {
@@ -253,7 +253,7 @@ export function getFile(pathOrId, options, callback = s => s) {
 
     if (resolvedPathOrId.startsWith('/')) {
       resource = `drives/${driveId}/root:/${encodeURIComponent(
-        resolvedPathOrId
+        resolvedPathOrId,
       )}`;
     } else {
       resource = `drives/${driveId}/items/${resolvedPathOrId}`;
@@ -323,7 +323,7 @@ export function uploadFile(resource, data, callback) {
     const [resolvedResource, resolvedData] = expandReferences(
       state,
       resource,
-      data
+      data,
     );
 
     const { contentType, driveId, siteId, folderId, onConflict, fileName } = {
@@ -374,6 +374,8 @@ export function uploadFile(resource, data, callback) {
 export { request, sheetToBuffer } from './Utils.js';
 
 export {
+  as,
+  combine,
   cursor,
   dataPath,
   dataValue,
@@ -384,8 +386,8 @@ export {
   fn,
   fnIf,
   lastReferenceValue,
+  log,
   merge,
-  sourceValue,
   parseCsv,
-  as
+  sourceValue,
 } from '@openfn/language-common';

@@ -1,5 +1,11 @@
 # @openfn/language-postgresql
 
+## 8.1.0
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
 ## 8.0.5
 
 ### Patch Changes

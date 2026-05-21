@@ -1,5 +1,11 @@
 # @openfn/language-bigquery
 
+## 4.1.0
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
 ## 4.0.15
 
 ### Patch Changes

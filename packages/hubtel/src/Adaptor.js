@@ -45,7 +45,7 @@ export function request(method, path, body, options = {}) {
       {
         body: resolvedData,
         ...resolvedoptions,
-      }
+      },
     );
 
     return util.prepareNextState(state, response);
@@ -76,15 +76,17 @@ export function request(method, path, body, options = {}) {
  */
 
 export {
+  combine,
+  cursor,
   dataPath,
   dataValue,
   dateFns,
-  cursor,
   each,
   field,
   fields,
   fn,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
 } from '@openfn/language-common';

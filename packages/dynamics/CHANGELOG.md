@@ -1,5 +1,12 @@
 # @openfn/language-dynamics
 
+## 0.6.0
+
+### Minor Changes
+
+- 71115af: export `combine` function from common
+- bf26881: export `log` function from common
+
 ## 0.5.32
 
 ### Patch Changes

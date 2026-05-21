@@ -1,5 +1,11 @@
 # @openfn/language-dagu
 
+## 1.3.0
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
 ## 1.2.2
 
 ### Patch Changes
