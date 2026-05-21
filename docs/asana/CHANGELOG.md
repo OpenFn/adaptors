@@ -1,5 +1,12 @@
 # @openfn/language-asana
 
+## 5.1.0
+
+### Minor Changes
+
+- 71115af: export `combine` function from common
+- bf26881: export `log` function from common
+
 ## 5.0.13
 
 ### Patch Changes

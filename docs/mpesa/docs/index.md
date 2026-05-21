@@ -20,6 +20,9 @@ This adaptor exports the following from common:
     <a href="/adaptors/packages/common-docs#as">as()</a>
 </dt>
 <dt>
+    <a href="/adaptors/packages/common-docs#combine">combine()</a>
+</dt>
+<dt>
     <a href="/adaptors/packages/common-docs#cursor">cursor()</a>
 </dt>
 <dt>
@@ -45,6 +48,9 @@ This adaptor exports the following from common:
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#log">log()</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#merge">merge()</a>
@@ -221,7 +227,7 @@ This operation writes the following keys to state:
 
 **Example:** Register a URL to receive payment notifications
 ```js
-request("POST", "/mpesa/c2b/v1/registerurl", 
+request("POST", "/mpesa/c2b/v1/registerurl",
  {
    "ShortCode": 600426,
    "ResponseType": "Completed",

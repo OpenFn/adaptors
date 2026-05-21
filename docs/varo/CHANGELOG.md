@@ -1,5 +1,11 @@
 # @openfn/language-varo
 
+## 2.2.0
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
 ## 2.1.11
 
 ### Patch Changes

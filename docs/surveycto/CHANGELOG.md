@@ -1,5 +1,12 @@
 # @openfn/language-surveycto
 
+## 3.1.0
+
+### Minor Changes
+
+- 71115af: export `combine` function from common
+- bf26881: export `log` function from common
+
 ## 3.0.10
 
 ### Patch Changes

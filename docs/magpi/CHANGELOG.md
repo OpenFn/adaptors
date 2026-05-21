@@ -1,5 +1,12 @@
 # @openfn/language-magpi
 
+## 1.3.0
+
+### Minor Changes
+
+- 71115af: export `combine` function from common
+- bf26881: export `log` function from common
+
 ## 1.2.12
 
 ### Patch Changes

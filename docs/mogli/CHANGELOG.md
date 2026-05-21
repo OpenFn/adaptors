@@ -1,5 +1,11 @@
 v0.1.6
 
+## 0.7.0
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
 ## 0.6.15
 
 ### Patch Changes

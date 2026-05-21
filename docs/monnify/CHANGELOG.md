@@ -1,5 +1,11 @@
 # @openfn/language-monnify
 
+## 1.1.0
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
 ## 1.0.6
 
 ### Patch Changes

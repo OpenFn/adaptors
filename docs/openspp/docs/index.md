@@ -45,6 +45,9 @@
 This adaptor exports the following from common:
 <dl>
 <dt>
+    <a href="/adaptors/packages/common-docs#combine">combine()</a>
+</dt>
+<dt>
     <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
 </dt>
 <dt>
@@ -70,6 +73,9 @@ This adaptor exports the following from common:
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#log">log()</a>
 </dt>
 <dt>
     <a href="/adaptors/packages/common-docs#merge">merge()</a>

@@ -1,5 +1,12 @@
 # @openfn/language-redis
 
+## 1.4.0
+
+### Minor Changes
+
+- 71115af: export `combine` function from common
+- bf26881: export `log` function from common
+
 ## 1.3.20
 
 ### Patch Changes

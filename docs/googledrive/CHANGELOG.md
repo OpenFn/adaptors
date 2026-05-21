@@ -1,5 +1,11 @@
 # @openfn/language-googledrive
 
+## 3.1.0
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
 ## 3.0.6
 
 ### Patch Changes
