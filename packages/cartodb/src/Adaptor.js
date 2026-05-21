@@ -92,14 +92,15 @@ export function addRow(table, rowData) {
 
 export {
   combine,
-  fn,
-  fnIf,
-  field,
-  fields,
-  sourceValue,
-  each,
-  merge,
   dataPath,
   dataValue,
+  each,
+  field,
+  fields,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
+  merge,
+  sourceValue,
 } from '@openfn/language-common';

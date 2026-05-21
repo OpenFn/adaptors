@@ -88,7 +88,7 @@ export function fetchSubmissions(formId, options = {}) {
     const [resolvedFormId, resolvedOptions] = expandReferences(
       state,
       formId,
-      options
+      options,
     );
 
     let { date = 0, format = 'json', status } = resolvedOptions;
@@ -150,13 +150,13 @@ export function list(resource, options = {}) {
     const [resolvedResource, resolvedOptions] = expandReferences(
       state,
       resource,
-      options
+      options,
     );
 
     const result = await requestWithPagination(
       state,
       resolvedResource,
-      resolvedOptions
+      resolvedOptions,
     );
     return result;
   };
@@ -243,7 +243,7 @@ export function upsertRecord(datasetId, data) {
     const [resolvedDatasetId, resolvedData] = expandReferences(
       state,
       datasetId,
-      data
+      data,
     );
 
     const resultId = resolvedData?.id;
@@ -260,7 +260,7 @@ export function upsertRecord(datasetId, data) {
         headers: {
           'content-type': 'application/json',
         },
-      }
+      },
     );
     return prepareNextState(state, response);
   };
@@ -327,7 +327,7 @@ export function uploadCsvRecords(datasetId, rows, metadata = {}) {
         new Blob([JSON.stringify(resolvedMetadata)], {
           type: 'application/json',
         }),
-        'metadata.json'
+        'metadata.json',
       );
     }
 
@@ -337,7 +337,7 @@ export function uploadCsvRecords(datasetId, rows, metadata = {}) {
       {
         method: 'POST',
         body: data,
-      }
+      },
     );
 
     return prepareNextState(state, response);
@@ -399,18 +399,19 @@ export function jsonToCSVBuffer(rows) {
 }
 
 export {
-  combine,
-  fn,
-  fnIf,
+  alterState,
   chunk,
-  merge,
+  combine,
+  dataPath,
+  dataValue,
+  dateFns,
   field,
   fields,
-  dateFns,
-  dataPath,
-  parseCsv,
-  dataValue,
-  alterState,
-  sourceValue,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
+  merge,
+  parseCsv,
+  sourceValue,
 } from '@openfn/language-common';

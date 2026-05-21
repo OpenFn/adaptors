@@ -35,7 +35,7 @@ export function get(path, options) {
   return async state => {
     const response = await util.request(state, 'GET', path, options);
     return util.prepareNextState(state, response);
-  }
+  };
 }
 
 /**
@@ -64,9 +64,12 @@ export function get(path, options) {
  */
 export function post(path, body, options) {
   return async state => {
-    const response = await util.request(state, 'POST', path, { ...options, body });
+    const response = await util.request(state, 'POST', path, {
+      ...options,
+      body,
+    });
     return util.prepareNextState(state, response);
-  }
+  };
 }
 
 /**
@@ -95,14 +98,18 @@ export function post(path, body, options) {
  */
 export function request(method, path, options = {}) {
   return async state => {
-    const [resolvedMethod, resolvedPath, resolvedoptions] = expandReferences(state, method, path, options);
+    const [resolvedMethod, resolvedPath, resolvedoptions] = expandReferences(
+      state,
+      method,
+      path,
+      options,
+    );
 
     const response = await util.request(
       state,
       resolvedMethod,
       resolvedPath,
       resolvedoptions,
-
     );
 
     return util.prepareNextState(state, response);
@@ -111,15 +118,16 @@ export function request(method, path, options = {}) {
 
 export {
   combine,
+  cursor,
   dataPath,
   dataValue,
   dateFns,
-  cursor,
   each,
   field,
   fields,
   fn,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
 } from '@openfn/language-common';

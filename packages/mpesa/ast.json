@@ -303,7 +303,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "request(\"POST\", \"/mpesa/c2b/v1/registerurl\", \n {\n   \"ShortCode\": 600426,\n   \"ResponseType\": \"Completed\",\n   \"ConfirmationURL\": \"https://mydomain.com/confirmation\",\n   \"ValidationURL\": \"https://mydomain.com/validation\"\n });",
+            "description": "request(\"POST\", \"/mpesa/c2b/v1/registerurl\",\n {\n   \"ShortCode\": 600426,\n   \"ResponseType\": \"Completed\",\n   \"ConfirmationURL\": \"https://mydomain.com/confirmation\",\n   \"ValidationURL\": \"https://mydomain.com/validation\"\n });",
             "caption": "Register a URL to receive payment notifications"
           },
           {
@@ -932,6 +932,55 @@
         ]
       },
       "valid": false
+    },
+    {
+      "name": "log",
+      "params": [
+        "args"
+      ],
+      "docs": {
+        "description": "Outputs a message, like calling `console.log`. Use this at the top level of your job code, but not inside callbacks.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "log('Patient List::', $.patients);",
+            "caption": "Log values from state"
+          },
+          {
+            "title": "example",
+            "description": "fn((state) => {\n  console.log(state.data);\n  return state;\n})",
+            "caption": "Use console.log inside a callback or fn block"
+          },
+          {
+            "title": "param",
+            "description": "A value or message to display in the logs",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "args"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     },
     {
       "name": "as",

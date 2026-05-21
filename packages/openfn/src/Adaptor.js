@@ -114,18 +114,19 @@ export function post(path, data, options) {
 
 export {
   alterState,
-  cursor,
-  dateFns,
   beta,
   combine,
+  cursor,
   dataPath,
   dataValue,
+  dateFns,
   each,
   field,
+  fields,
   fn,
   fnIf,
-  fields,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
 } from '@openfn/language-common';

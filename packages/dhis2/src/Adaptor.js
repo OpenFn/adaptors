@@ -663,6 +663,7 @@ export {
   fnIf,
   group,
   lastReferenceValue,
+  log,
   map,
   merge,
   sourceValue,

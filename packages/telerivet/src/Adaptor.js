@@ -40,7 +40,7 @@ export function send(sendData) {
 
     const url = 'https://api.telerivet.com/v1/projects/'.concat(
       projectId,
-      '/messages/send'
+      '/messages/send',
     );
 
     console.log(url);
@@ -55,15 +55,16 @@ export function send(sendData) {
 }
 
 export {
-  combine,
-  fn,
-  fnIf,
   alterState,
-  field,
-  fields,
-  sourceValue,
-  merge,
+  combine,
   dataPath,
   dataValue,
+  field,
+  fields,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
+  merge,
+  sourceValue,
 } from '@openfn/language-common';

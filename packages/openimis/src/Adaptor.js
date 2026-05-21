@@ -21,7 +21,7 @@ export function execute(...operations) {
     return commonExecute(
       login,
       ...operations,
-      cleanupState
+      cleanupState,
     )({
       ...initialState,
       ...state,
@@ -86,7 +86,7 @@ export function getFHIR(path, params, callback = s => s) {
     const [resolvedPath, resolvedParams] = expandReferences(
       state,
       path,
-      params
+      params,
     );
     const { baseUrl, auth } = state.configuration;
 
@@ -108,6 +108,7 @@ export function getFHIR(path, params, callback = s => s) {
 export {
   alterState,
   combine,
+  as,
   dataPath,
   dataValue,
   dateFns,
@@ -117,7 +118,7 @@ export {
   fn,
   fnIf,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
-  as,
 } from '@openfn/language-common';

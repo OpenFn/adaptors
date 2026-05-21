@@ -29,7 +29,7 @@ export function execute(...operations) {
     return commonExecute(
       connect,
       ...operations,
-      disconnect
+      disconnect,
     )({ ...initialState, ...state });
   };
 }
@@ -43,17 +43,19 @@ export function execute(...operations) {
  * @returns {State}
  */
 function connect(state) {
-  const { clusterHostname, username, password, protocol = "mongodb+srv", options = { "retryWrites": true, "w": "majority" } } = state.configuration;
-  
+  const {
+    clusterHostname,
+    username,
+    password,
+    protocol = 'mongodb+srv',
+    options = { retryWrites: true, w: 'majority' },
+  } = state.configuration;
+
   const uri = `${protocol}://${encodeURIComponent(
-    username
-  )}:${encodeURIComponent(
-    password
-  )}@${clusterHostname}/test${
-    Object.keys(options).length ? "?" : ""
-  }${
-    encodeURIComponent(new URLSearchParams(options).toString())
-  }`;
+    username,
+  )}:${encodeURIComponent(password)}@${clusterHostname}/test${
+    Object.keys(options).length ? '?' : ''
+  }${encodeURIComponent(new URLSearchParams(options).toString())}`;
 
   const client = new MongoClient(uri, { useNewUrlParser: true });
 
@@ -114,7 +116,7 @@ export function insertDocuments(params) {
             state.client.close();
           } else {
             console.log(
-              `Inserted ${documents.length} documents into the collection`
+              `Inserted ${documents.length} documents into the collection`,
             );
             console.log(JSON.stringify(result, null, 2));
             const nextState = composeNextState(state, result);
@@ -213,15 +215,15 @@ export function updateDocument(params) {
             } else {
               console.log(
                 `Updated a document matching ${JSON.stringify(
-                  filter
-                )} in the collection.`
+                  filter,
+                )} in the collection.`,
               );
               console.log(JSON.stringify(result, null, 2));
               const nextState = composeNextState(state, result);
               if (callback) resolve(callback(nextState));
               resolve(nextState);
             }
-          }
+          },
         );
       });
     } catch (error) {
@@ -232,16 +234,17 @@ export function updateDocument(params) {
 }
 
 export {
-  combine,
-  field,
-  fields,
-  sourceValue,
-  fn,
-  fnIf,
   alterState,
-  each,
-  merge,
+  combine,
   dataPath,
   dataValue,
+  each,
+  field,
+  fields,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
+  merge,
+  sourceValue,
 } from '@openfn/language-common';
