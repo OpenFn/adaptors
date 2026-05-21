@@ -1,5 +1,11 @@
 # @openfn/language-mssql
 
+## 7.1.0
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
 ## 7.0.7
 
 ### Patch Changes

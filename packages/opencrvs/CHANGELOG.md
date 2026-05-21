@@ -1,5 +1,11 @@
 # @openfn/language-opencrvs
 
+## 1.2.0
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
 ## 1.1.1
 
 ### Patch Changes

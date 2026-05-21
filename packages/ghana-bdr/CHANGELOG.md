@@ -1,5 +1,12 @@
 # @openfn/language-ghana-bdr
 
+## 0.2.0
+
+### Minor Changes
+
+- 71115af: export `combine` function from common
+- bf26881: export `log` function from common
+
 ## 0.1.22
 
 ### Patch Changes
