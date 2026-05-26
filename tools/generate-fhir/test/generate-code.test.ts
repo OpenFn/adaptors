@@ -177,6 +177,69 @@ run('builds typeDef with nested extension', t => {
   t.is(dt.addExtension.calls, 1);
 });
 
+run('builds primitive sibling extension from underscored slice input', t => {
+  const profile = {
+    birthDate: {
+      type: ['date'],
+      isArray: false,
+      typeDef: {
+        birthTime: {
+          extension: {
+            url: 'http://hl7.org/fhir/StructureDefinition/patient-birthTime',
+          },
+          type: 'dateTime',
+        },
+      },
+    },
+  };
+  const schema = generateBuilder('Patient', profile);
+  const builder = compileBuilder(schema);
+  const result = builder({
+    birthDate: '10/07/1990',
+    _birthTime: '10am',
+  });
+
+  t.is(result.birthDate, '10/07/1990');
+  t.is(result._birthTime, undefined);
+  t.is(
+    result._birthDate.extension[0].url,
+    'http://hl7.org/fhir/StructureDefinition/patient-birthTime'
+  );
+  t.is(result._birthDate.extension[0].value, '10am');
+  t.is(dt.addExtension.calls, 1);
+});
+
+run('builds primitive sibling extension from underscored parent shorthand', t => {
+  const profile = {
+    birthDate: {
+      type: ['date'],
+      isArray: false,
+      typeDef: {
+        text: {
+          extension: {
+            url: 'http://example.org/fhir/StructureDefinition/text',
+          },
+          type: 'string',
+        },
+      },
+    },
+  };
+  const schema = generateBuilder('Patient', profile);
+  const builder = compileBuilder(schema);
+  const result = builder({
+    birthDate: '10/07/1990',
+    _birthDate: '10 july',
+  });
+
+  t.is(result.birthDate, '10/07/1990');
+  t.is(
+    result._birthDate.extension[0].url,
+    'http://example.org/fhir/StructureDefinition/text'
+  );
+  t.is(result._birthDate.extension[0].value, '10 july');
+  t.is(dt.addExtension.calls, 1);
+});
+
 run('skips nil properties', t => {
   const profile = {
     x: { type: ['Reference'] },

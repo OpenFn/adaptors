@@ -600,10 +600,138 @@ const mapSimpleProp = (propName: string, mapping: Mapping, schema: Schema) => {
   return ifPropInInput(propName, [assignProp], elseStatement);
 };
 
+const mapPrimitiveTypeDef = (propName: string, schema: Schema) => {
+  // Primitive metadata lives in the sibling underscore property, eg _birthDate
+  const primitivePropName = `_${propName}`;
+  // Only retrieve extension-backed child props
+  const primitiveExtensions = Object.entries(schema.typeDef || {}).filter(
+    ([, spec]: [string, any]) => spec.extension,
+  );
+  const statements: StatementKind[] = [];
+
+  const inputPropRef = (name: string) => safelyRefProp(INPUT_NAME, name);
+  const resourcePropRef = (name: string) => safelyRefProp(RESOURCE_NAME, name);
+  const copyPrimitiveMetadata = (name: string) =>
+    b.expressionStatement(
+      b.assignmentExpression(
+        '=',
+        resourcePropRef(name),
+        b.callExpression(
+          b.memberExpression(b.identifier('Object'), b.identifier('assign')),
+          [b.objectExpression([]), inputPropRef(name)],
+        ),
+      ),
+    );
+  const createEmptyPrimitiveMetadata = (name: string) =>
+    b.expressionStatement(
+      b.assignmentExpression('=', resourcePropRef(name), b.objectExpression([])),
+    );
+  const addPrimitiveExtension = (
+    targetName: string,
+    sourceName: string,
+    url: string,
+  ) =>
+    b.expressionStatement(
+      b.callExpression(
+        b.memberExpression(b.identifier('dt'), b.identifier('addExtension')),
+        [resourcePropRef(targetName), b.stringLiteral(url), inputPropRef(sourceName)],
+      ),
+    );
+
+  if (primitiveExtensions.length === 1) {
+    const [[, spec]] = primitiveExtensions as [string, any][];
+    statements.push(
+      ifPropInInput(
+        primitivePropName,
+        [
+          b.ifStatement(
+            b.callExpression(
+              b.memberExpression(b.identifier('_'), b.identifier('isPlainObject')),
+              [inputPropRef(primitivePropName)],
+            ),
+            b.blockStatement([
+              // If the caller already passed primitive metadata, preserve it
+              copyPrimitiveMetadata(primitivePropName),
+            ]),
+            b.blockStatement([
+              // Otherwise treat the underscore value as shorthand for the single known extension
+              b.expressionStatement(
+                b.unaryExpression('delete', resourcePropRef(primitivePropName)),
+              ),
+              createEmptyPrimitiveMetadata(primitivePropName),
+              addPrimitiveExtension(
+                primitivePropName,
+                primitivePropName,
+                spec.extension.url,
+              ),
+            ]),
+          ),
+        ],
+      ),
+    );
+  } else {
+    statements.push(
+      ifPropInInput(
+        primitivePropName,
+        [
+          b.ifStatement(
+            b.callExpression(
+              b.memberExpression(b.identifier('_'), b.identifier('isPlainObject')),
+              [inputPropRef(primitivePropName)],
+            ),
+            b.blockStatement([
+              // Multiple extension choices: only pass through explicit primitive metadata objects
+              copyPrimitiveMetadata(primitivePropName),
+            ]),
+          ),
+        ],
+      ),
+    );
+  }
+
+  for (const [key, spec] of primitiveExtensions as [string, any][]) {
+    // Support shorthand child props like _birthTime and rewrite them into _birthDate.extension[]
+    const inputPropName = `_${key}`;
+    statements.push(
+      ifPropInInput(
+        inputPropName,
+        [
+          b.expressionStatement(
+            b.unaryExpression('delete', resourcePropRef(inputPropName)),
+          ),
+          b.ifStatement(
+            b.unaryExpression('!', resourcePropRef(primitivePropName)),
+            b.blockStatement([
+              // Create the primitive metadata container before appending extension shorthand
+              createEmptyPrimitiveMetadata(primitivePropName),
+            ]),
+          ),
+          addPrimitiveExtension(
+            primitivePropName,
+            inputPropName,
+            spec.extension.url,
+          ),
+        ],
+      ),
+    );
+  }
+
+  return b.blockStatement(statements);
+};
+
+const isPrimitiveTypeDefParent = (schema: Schema) =>
+  !schema.isArray &&
+  !!schema.typeDef &&
+  schema.type.every(type => type[0] === type[0]?.toLowerCase());
+
 // map a type def (ie, a nested object) property by property
 // TODO this is designed to handle singleton and array types
 // The array stuff adds a lot of complication and I need tests on both formats
 const mapTypeDef = (propName: string, mapping: Mapping, schema: Schema) => {
+  if (isPrimitiveTypeDefParent(schema)) {
+    return mapPrimitiveTypeDef(propName, schema);
+  }
+
   const statements: any[] = [];
 
   statements.push(

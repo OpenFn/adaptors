@@ -4,41 +4,41 @@
 // SEE THE README FILE FOR DETAILS
 
 import _ from "lodash";
-import { b as dt } from "@openfn/language-fhir-4";
-import type { builders as FHIR } from "@openfn/language-fhir-4";
+import * as dt from "../datatypes";
+import type * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type Appointment_SzAppointment_Props = {
-    appointmentType?: FHIR.CodeableConcept;
-    basedOn?: FHIR.Reference[];
-    cancelationReason?: FHIR.CodeableConcept;
+    appointmentType?: CodeableConcept;
+    basedOn?: Reference[];
+    cancelationReason?: CodeableConcept;
     comment?: string;
     contained?: any[];
     created?: string;
     description?: string;
     end?: string;
-    extension?: FHIR.Extension[];
+    extension?: Extension[];
     id?: string;
-    identifier?: FHIR.Identifier[];
+    identifier?: Identifier[];
     implicitRules?: string;
     language?: string;
-    meta?: FHIR.Meta;
+    meta?: Meta;
     minutesDuration?: number;
-    modifierExtension?: FHIR.Extension[];
-    participant?: FHIR.BackboneElement[];
+    modifierExtension?: Extension[];
+    participant?: BackboneElement[];
     patientInstruction?: string;
     priority?: number;
-    reasonCode?: FHIR.CodeableConcept[];
-    reasonReference?: FHIR.Reference[];
-    requestedPeriod?: FHIR.Period[];
-    serviceCategory?: FHIR.CodeableConcept[];
-    serviceType?: FHIR.CodeableConcept[];
-    slot?: FHIR.Reference[];
-    specialty?: FHIR.CodeableConcept[];
+    reasonCode?: CodeableConcept[];
+    reasonReference?: Reference[];
+    requestedPeriod?: Period[];
+    serviceCategory?: CodeableConcept[];
+    serviceType?: CodeableConcept[];
+    slot?: Reference[];
+    specialty?: CodeableConcept[];
     start?: string;
     status?: string;
-    supportingInformation?: FHIR.Reference[];
-    text?: FHIR.Narrative;
+    supportingInformation?: Reference[];
+    text?: Narrative;
     [key: string]: any;
 };
 

@@ -4,32 +4,32 @@
 // SEE THE README FILE FOR DETAILS
 
 import _ from "lodash";
-import { b as dt } from "@openfn/language-fhir-4";
-import type { builders as FHIR } from "@openfn/language-fhir-4";
+import * as dt from "../datatypes";
+import type * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type Specimen_SzLabSpecimen_Props = {
-    accessionIdentifier?: FHIR.Identifier;
-    collection?: FHIR.BackboneElement;
-    condition?: FHIR.CodeableConcept[];
+    accessionIdentifier?: Identifier;
+    collection?: BackboneElement;
+    condition?: CodeableConcept[];
     contained?: any[];
-    container?: FHIR.BackboneElement[];
-    extension?: FHIR.Extension[];
+    container?: BackboneElement[];
+    extension?: Extension[];
     id?: string;
-    identifier?: FHIR.Identifier[];
+    identifier?: Identifier[];
     implicitRules?: string;
     language?: string;
-    meta?: FHIR.Meta;
-    modifierExtension?: FHIR.Extension[];
-    note?: FHIR.Annotation[];
-    parent?: FHIR.Reference[];
-    processing?: FHIR.BackboneElement[];
+    meta?: Meta;
+    modifierExtension?: Extension[];
+    note?: Annotation[];
+    parent?: Reference[];
+    processing?: BackboneElement[];
     receivedTime?: string;
-    request?: FHIR.Reference[];
+    request?: Reference[];
     status?: string;
-    subject?: FHIR.Reference;
-    text?: FHIR.Narrative;
-    type?: FHIR.CodeableConcept;
+    subject?: Reference;
+    text?: Narrative;
+    type?: CodeableConcept;
     [key: string]: any;
 };
 

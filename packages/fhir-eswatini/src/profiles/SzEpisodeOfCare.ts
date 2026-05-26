@@ -4,30 +4,30 @@
 // SEE THE README FILE FOR DETAILS
 
 import _ from "lodash";
-import { b as dt } from "@openfn/language-fhir-4";
-import type { builders as FHIR } from "@openfn/language-fhir-4";
+import * as dt from "../datatypes";
+import type * as FHIR from "../fhir";
 type MaybeArray<T> = T | T[];
 
 export type EpisodeOfCare_SzEpisodeOfCare_Props = {
-    account?: FHIR.Reference[];
-    careManager?: FHIR.Reference;
+    account?: Reference[];
+    careManager?: Reference;
     contained?: any[];
-    diagnosis?: FHIR.BackboneElement[];
-    extension?: FHIR.Extension[];
+    diagnosis?: BackboneElement[];
+    extension?: Extension[];
     id?: string;
-    identifier?: FHIR.Identifier[];
+    identifier?: Identifier[];
     implicitRules?: string;
     language?: string;
-    managingOrganization?: FHIR.Reference;
-    meta?: FHIR.Meta;
-    modifierExtension?: FHIR.Extension[];
-    patient?: FHIR.Reference;
-    period?: FHIR.Period;
-    referralRequest?: FHIR.Reference[];
+    managingOrganization?: Reference;
+    meta?: Meta;
+    modifierExtension?: Extension[];
+    patient?: Reference;
+    period?: Period;
+    referralRequest?: Reference[];
     status?: string;
-    statusHistory?: FHIR.BackboneElement[];
-    team?: FHIR.Reference[];
-    text?: FHIR.Narrative;
+    statusHistory?: BackboneElement[];
+    team?: Reference[];
+    text?: Narrative;
     type?: "tbds" | "tbdr" | "anc" | "fp" | "art" | "prep" | "TB DS" | "TB DR" | "ANC" | "Family Planning" | "ART" | "PrEP";
     [key: string]: any;
 };

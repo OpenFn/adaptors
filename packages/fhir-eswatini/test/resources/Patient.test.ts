@@ -439,4 +439,21 @@ describe('SzPatient', () => {
       valueDateTime: '2025-06-01T10:00:00Z',
     });
   });
+  it('should map primitive values', ()=>{
+  const state = {};
+
+  const resource = b.patient('SzPatient',{
+    birthDate:'10/07/1990',
+    _birthDate:'2000-01-01T14:35:45-05:00'
+  });
+
+  assert.deepEqual(resource._birthDate, {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/patient-birthTime",
+          "valueDateTime": "2000-01-01T14:35:45-05:00"
+        }
+      ]
+    })
+});
 });
