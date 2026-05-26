@@ -601,7 +601,7 @@ const mapSimpleProp = (propName: string, mapping: Mapping, schema: Schema) => {
 };
 
 const mapPrimitiveTypeDef = (propName: string, schema: Schema) => {
-  // Primitive metadata lives in the sibling underscore property, eg _birthDate
+  // Primitive metadata elements lives in the sibling underscore property, eg _birthDate
   const primitivePropName = `_${propName}`;
   // Only retrieve extension-backed child props
   const primitiveExtensions = Object.entries(schema.typeDef || {}).filter(
