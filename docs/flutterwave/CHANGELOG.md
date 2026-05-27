@@ -1,5 +1,12 @@
 # @openfn/language-flutterwave
 
+## 1.0.6
+
+### Patch Changes
+
+- Updated dependencies [5276a86]
+  - @openfn/language-common@3.3.3
+
 ## 1.0.5
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @openfn/language-postgresql
 
+## 8.1.1
+
+### Patch Changes
+
+- Updated dependencies [5276a86]
+  - @openfn/language-common@3.3.3
+
 ## 8.1.0
 
 ### Minor Changes

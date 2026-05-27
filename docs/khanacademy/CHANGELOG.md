@@ -1,5 +1,14 @@
 # @openfn/language-khanacademy
 
+## 0.6.1
+
+### Patch Changes
+
+- 5276a86: Update ajv dependency
+- b2ceeb7: Update `qs` library
+- Updated dependencies [5276a86]
+  - @openfn/language-common@3.3.3
+
 ## 0.6.0
 
 ### Minor Changes

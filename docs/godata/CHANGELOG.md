@@ -1,5 +1,14 @@
 # @openfn/language-godata
 
+## 3.6.1
+
+### Patch Changes
+
+- 5276a86: Update ajv dependency
+- 632d536: Update axios dependency version
+- Updated dependencies [5276a86]
+  - @openfn/language-common@3.3.3
+
 ## 3.6.0
 
 ### Minor Changes
