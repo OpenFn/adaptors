@@ -4,36 +4,36 @@
 // SEE THE README FILE FOR DETAILS
 
 import _ from "lodash";
-import * as dt from "../datatypes";
-import type * as FHIR from "../fhir";
+import { b as dt } from "@openfn/language-fhir-4";
+import type { builders as FHIR } from "@openfn/language-fhir-4";
 type MaybeArray<T> = T | T[];
 
 export type Condition_SzCondition_Props = {
-    abatement?: string | Age | Period | Range;
-    asserter?: Reference;
-    bodySite?: CodeableConcept[];
-    category?: CodeableConcept[];
-    clinicalStatus?: CodeableConcept;
-    code?: CodeableConcept;
+    abatement?: string | FHIR.Age | FHIR.Period | FHIR.Range;
+    asserter?: FHIR.Reference;
+    bodySite?: FHIR.CodeableConcept[];
+    category?: FHIR.CodeableConcept[];
+    clinicalStatus?: FHIR.CodeableConcept;
+    code?: FHIR.CodeableConcept;
     contained?: any[];
-    encounter?: Reference;
-    evidence?: BackboneElement[];
-    extension?: Extension[];
+    encounter?: FHIR.Reference;
+    evidence?: FHIR.BackboneElement[];
+    extension?: FHIR.Extension[];
     id?: string;
-    identifier?: Identifier[];
+    identifier?: FHIR.Identifier[];
     implicitRules?: string;
     language?: string;
-    meta?: Meta;
-    modifierExtension?: Extension[];
-    note?: Annotation[];
+    meta?: FHIR.Meta;
+    modifierExtension?: FHIR.Extension[];
+    note?: FHIR.Annotation[];
     onset?: string;
     recordedDate?: string;
-    recorder?: Reference;
-    severity?: CodeableConcept;
-    stage?: BackboneElement[];
-    subject?: Reference;
-    text?: Narrative;
-    verificationStatus?: CodeableConcept;
+    recorder?: FHIR.Reference;
+    severity?: FHIR.CodeableConcept;
+    stage?: FHIR.BackboneElement[];
+    subject?: FHIR.Reference;
+    text?: FHIR.Narrative;
+    verificationStatus?: FHIR.CodeableConcept;
     [key: string]: any;
 };
 

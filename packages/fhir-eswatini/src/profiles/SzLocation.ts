@@ -4,36 +4,36 @@
 // SEE THE README FILE FOR DETAILS
 
 import _ from "lodash";
-import * as dt from "../datatypes";
-import type * as FHIR from "../fhir";
+import { b as dt } from "@openfn/language-fhir-4";
+import type { builders as FHIR } from "@openfn/language-fhir-4";
 type MaybeArray<T> = T | T[];
 
 export type Location_SzLocation_Props = {
-    address?: Address;
+    address?: FHIR.Address;
     alias?: string[];
     availabilityExceptions?: string;
     contained?: any[];
     description?: string;
-    endpoint?: Reference[];
-    extension?: Extension[];
-    hoursOfOperation?: BackboneElement[];
+    endpoint?: FHIR.Reference[];
+    extension?: FHIR.Extension[];
+    hoursOfOperation?: FHIR.BackboneElement[];
     id?: string;
-    identifier?: Identifier[];
+    identifier?: FHIR.Identifier[];
     implicitRules?: string;
     language?: string;
-    managingOrganization?: Reference;
-    meta?: Meta;
+    managingOrganization?: FHIR.Reference;
+    meta?: FHIR.Meta;
     mode?: string;
-    modifierExtension?: Extension[];
+    modifierExtension?: FHIR.Extension[];
     name?: string;
-    operationalStatus?: Coding;
-    partOf?: Reference;
-    physicalType?: CodeableConcept;
-    position?: BackboneElement;
+    operationalStatus?: FHIR.Coding;
+    partOf?: FHIR.Reference;
+    physicalType?: FHIR.CodeableConcept;
+    position?: FHIR.BackboneElement;
     status?: string;
-    telecom?: ContactPoint[];
-    text?: Narrative;
-    type?: CodeableConcept[];
+    telecom?: FHIR.ContactPoint[];
+    text?: FHIR.Narrative;
+    type?: FHIR.CodeableConcept[];
     [key: string]: any;
 };
 

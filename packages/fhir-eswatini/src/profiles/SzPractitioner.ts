@@ -4,29 +4,29 @@
 // SEE THE README FILE FOR DETAILS
 
 import _ from "lodash";
-import * as dt from "../datatypes";
-import type * as FHIR from "../fhir";
+import { b as dt } from "@openfn/language-fhir-4";
+import type { builders as FHIR } from "@openfn/language-fhir-4";
 type MaybeArray<T> = T | T[];
 
 export type Practitioner_SzPractitioner_Props = {
     active?: boolean;
-    address?: Address[];
+    address?: FHIR.Address[];
     birthDate?: string;
-    communication?: CodeableConcept[];
+    communication?: FHIR.CodeableConcept[];
     contained?: any[];
-    extension?: Extension[];
+    extension?: FHIR.Extension[];
     gender?: string;
     id?: string;
-    identifier?: Identifier[];
+    identifier?: FHIR.Identifier[];
     implicitRules?: string;
     language?: string;
-    meta?: Meta;
-    modifierExtension?: Extension[];
-    name?: HumanName[];
-    photo?: Attachment[];
-    qualification?: BackboneElement[];
-    telecom?: ContactPoint[];
-    text?: Narrative;
+    meta?: FHIR.Meta;
+    modifierExtension?: FHIR.Extension[];
+    name?: FHIR.HumanName[];
+    photo?: FHIR.Attachment[];
+    qualification?: FHIR.BackboneElement[];
+    telecom?: FHIR.ContactPoint[];
+    text?: FHIR.Narrative;
     [key: string]: any;
 };
 
