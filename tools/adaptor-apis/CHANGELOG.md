@@ -1,5 +1,12 @@
 # @openfn/adaptor-apis
 
+## 0.3.1
+
+### Patch Changes
+
+- 5276a86: Update ajv dependency
+- df5a754: security updates
+
 ## 0.3.0
 
 ### Minor Changes

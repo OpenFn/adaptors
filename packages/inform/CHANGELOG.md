@@ -1,5 +1,12 @@
 # @openfn/language-inform
 
+## 1.3.1
+
+### Patch Changes
+
+- Updated dependencies [5276a86]
+  - @openfn/language-common@3.3.3
+
 ## 1.3.0
 
 ### Minor Changes

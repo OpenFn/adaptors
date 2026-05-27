@@ -1,5 +1,12 @@
 # @openfn/language-formsg
 
+## 1.0.10
+
+### Patch Changes
+
+- Updated dependencies [5276a86]
+  - @openfn/language-common@3.3.3
+
 ## 1.0.9
 
 ### Patch Changes

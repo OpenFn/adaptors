@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-memento",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "OpenFn adaptor for Memento Database",
   "type": "module",
   "exports": {

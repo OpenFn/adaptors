@@ -1,5 +1,11 @@
 ## 3.0.1 - 11 July 2025
 
+## 3.3.3
+
+### Patch Changes
+
+- 5276a86: Update ajv dependency
+
 ## 3.3.2
 
 ### Patch Changes
