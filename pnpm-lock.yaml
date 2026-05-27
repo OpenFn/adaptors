@@ -916,8 +916,8 @@ importers:
   packages/gemini:
     dependencies:
       '@google/genai':
-        specifier: ^1.37.0
-        version: 1.39.0
+        specifier: ^1.52.0
+        version: 1.52.0
       '@openfn/language-common':
         specifier: workspace:*
         version: link:../common
@@ -4743,8 +4743,8 @@ packages:
     resolution: {integrity: sha512-j8yRSSqswWi1QqUGKVEKOG03Q7qOoZP6/h2zN2YO+F5h2+DHU0bSrHCK9Y7lo2DI9fBd8qGAw795sf+3Jva4yA==}
     engines: {node: '>=10'}
 
-  '@google/genai@1.39.0':
-    resolution: {integrity: sha512-Vz7AQsOdBeiIcxmXIQNy/hzDvyAOE1lSpWA10itUQza7h3aQFF6QSGaQ7o1GYsjMD3XslK4Ee/Ol0eLhRXb7gA==}
+  '@google/genai@1.52.0':
+    resolution: {integrity: sha512-gwSvbpiN/17O9TbsqSsE/OzZcpv5Fo4RQjdngGgogtuB9RsyJ8ZHhX5KjHj1bp5N9snN2eK8LDGXSaWW2hof8Q==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       '@modelcontextprotocol/sdk': ^1.29.0
@@ -14129,9 +14129,10 @@ snapshots:
 
   '@google-cloud/promisify@2.0.4': {}
 
-  '@google/genai@1.39.0':
+  '@google/genai@1.52.0':
     dependencies:
       google-auth-library: 10.5.0
+      p-retry: 4.6.2
       protobufjs: 7.5.4
       ws: 8.19.0
     transitivePeerDependencies:
@@ -19122,7 +19123,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 18.17.5
+      '@types/node': 20.19.33
       merge-stream: 2.0.0
       supports-color: 8.1.1
 

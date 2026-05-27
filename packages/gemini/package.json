@@ -27,7 +27,7 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@google/genai": "^1.37.0",
+    "@google/genai": "^1.52.0",
     "@openfn/language-common": "workspace:*"
   },
   "devDependencies": {
