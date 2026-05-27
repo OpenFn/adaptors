@@ -1,5 +1,13 @@
 # @openfn/language-fhir-eswatini
 
+## 0.7.8
+
+### Patch Changes
+
+- Updated dependencies [5276a86]
+  - @openfn/language-common@3.3.3
+  - @openfn/language-fhir-4@0.5.4
+
 ## 0.7.7
 
 ### Patch Changes

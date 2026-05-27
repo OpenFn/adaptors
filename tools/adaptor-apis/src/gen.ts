@@ -5,10 +5,10 @@ import path from 'node:path';
 import { eachLimit } from 'async-es';
 // @ts-ignore
 import FileSet from 'file-set';
-import { parse } from './parse';
-import extractExports from './util/extract-exports';
-import getNameAndVersion from './util/get-name-and-version';
-import loadPkg from './util/load-pkg';
+import { parse } from './parse.js';
+import extractExports from './util/extract-exports.js';
+import getNameAndVersion from './util/get-name-and-version.js';
+import loadPkg from './util/load-pkg.js';
 
 const loadActualPackageJson = async (specifier: string) => {
   // call unpkg for a production package json

@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-surveycto",
   "label": "SurveyCTO",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "OpenFn adaptor for SurveyCTO",
   "main": "dist/index.cjs",
   "scripts": {

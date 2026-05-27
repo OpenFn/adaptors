@@ -1,5 +1,15 @@
 # @openfn/language-dhis2
 
+## 8.1.1
+
+### Patch Changes
+
+- 5276a86: Update ajv dependency
+- 632d536: Update axios dependency version
+- b2ceeb7: Update `qs` library
+- Updated dependencies [5276a86]
+  - @openfn/language-common@3.3.3
+
 ## 8.1.0
 
 ### Minor Changes

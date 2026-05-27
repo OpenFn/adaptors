@@ -1,5 +1,13 @@
 # @openfn/language-ghana-nia
 
+## 0.2.1
+
+### Patch Changes
+
+- 5276a86: Update ajv dependency
+- Updated dependencies [5276a86]
+  - @openfn/language-common@3.3.3
+
 ## 0.2.0
 
 ### Minor Changes

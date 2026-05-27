@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-common",
   "label": "Common",
-  "version": "3.3.2",
+  "version": "3.3.3",
   "description": "Common Expressions for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -43,7 +43,7 @@
   "type": "module",
   "types": "types/index.d.ts",
   "dependencies": {
-    "ajv": "^8.18.0",
+    "ajv": "^8.20.0",
     "csv-parse": "^5.4.0",
     "csvtojson": "^2.0.13",
     "date-fns": "^2.25.0",
