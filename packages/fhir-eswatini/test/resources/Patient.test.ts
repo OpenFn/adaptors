@@ -439,7 +439,7 @@ describe('SzPatient', () => {
       valueDateTime: '2025-06-01T10:00:00Z',
     });
   });
-  it('should map primitive values', ()=>{
+  it('should map primitive extensions', ()=>{
   const state = {};
 
   const resource = b.patient('SzPatient',{
@@ -454,6 +454,8 @@ describe('SzPatient', () => {
           "valueDateTime": "2000-01-01T14:35:45-05:00"
         }
       ]
-    })
+    });
+
+    assert.deepEqual(resource.birthDate, '10/07/1990');
 });
 });

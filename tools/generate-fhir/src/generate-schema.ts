@@ -343,7 +343,6 @@ async function parseProp(
   data,
 ) {
   let [parent, prop] = path.split('.');
-  const rawProp = prop;
   // TODO skip if multiple dots
 
   if (/\[x\]/.test(prop)) {
@@ -368,7 +367,7 @@ async function parseProp(
     const def: PropDef = {};
 
     // Keep primitive props
-    const isExtensionChild = rawProp === 'extension';
+    const isExtensionChild = prop === 'extension';
     const hasSlice = !!data.sliceName;
     const parentTypes = schema.props[parent].type || [];
     const isPrimitiveParent =
