@@ -512,7 +512,7 @@ importers:
         version: link:../common
       axios:
         specifier: ^1.15.2
-        version: 1.16.0
+        version: 1.16.1
       lodash:
         specifier: ^4.18.1
         version: 4.18.1
@@ -1036,7 +1036,7 @@ importers:
         version: link:../common
       axios:
         specifier: ^1.15.2
-        version: 1.16.0
+        version: 1.16.1
     devDependencies:
       assertion-error:
         specifier: ^1.0.1
@@ -1444,7 +1444,7 @@ importers:
         version: link:../common
       axios:
         specifier: ^1.15.2
-        version: 1.16.0
+        version: 1.16.1
       md5:
         specifier: ^2.3.0
         version: 2.3.0
@@ -6477,8 +6477,8 @@ packages:
   axios@0.27.2:
     resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
 
-  axios@1.16.0:
-    resolution: {integrity: sha512-6hp5CwvTPlN2A31g5dxnwAX0orzM7pmCRDLnZSX772mv8WDqICwFjowHuPs04Mc8deIld1+ejhtaMn5vp6b+1w==}
+  axios@1.16.1:
+    resolution: {integrity: sha512-caYkukvroVPO8KrzuJEb50Hm07KwfBZPEC3VeFHTsqWHvKTsy54hjJz9BS/cdaypROE2rH6xvm9mHX4fgWkr3A==}
 
   babel-cli@6.26.0:
     resolution: {integrity: sha512-wau+BDtQfuSBGQ9PzzFL3REvR9Sxnd4LKwtcHAiPjhugA7K/80vpHXafj+O5bAqJOuSefjOx5ZJnNSR2J1Qw6Q==}
@@ -10809,12 +10809,14 @@ packages:
     engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
     deprecated: |-
       You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+
       (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   q@2.0.3:
     resolution: {integrity: sha512-gv6vLGcmAOg96/fgo3d9tvA4dJNZL3fMyBqVRrGxQ+Q/o4k9QzbJ3NQF9cOO/71wRodoXhaPgphvMFU68qVAJQ==}
     deprecated: |-
       You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+
       (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   qs@2.3.3:
@@ -14899,11 +14901,12 @@ snapshots:
 
   '@opengovsg/formsg-sdk@0.15.0':
     dependencies:
-      axios: 1.16.0
+      axios: 1.16.1
       tweetnacl: 1.0.3
       tweetnacl-util: 0.15.1
     transitivePeerDependencies:
       - debug
+      - supports-color
 
   '@opentelemetry/api@1.9.0': {}
 
@@ -16337,13 +16340,15 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  axios@1.16.0:
+  axios@1.16.1:
     dependencies:
       follow-redirects: 1.16.0
       form-data: 4.0.5
+      https-proxy-agent: 5.0.1
       proxy-from-env: 2.1.0
     transitivePeerDependencies:
       - debug
+      - supports-color
 
   babel-cli@6.26.0:
     dependencies:
@@ -18844,9 +18849,10 @@ snapshots:
 
   frappe-js-sdk@1.11.0:
     dependencies:
-      axios: 1.16.0
+      axios: 1.16.1
     transitivePeerDependencies:
       - debug
+      - supports-color
 
   fresh@0.5.2: {}
 
@@ -20287,11 +20293,12 @@ snapshots:
 
   mailgun.js@9.2.0:
     dependencies:
-      axios: 1.16.0
+      axios: 1.16.1
       base-64: 1.0.0
       url-join: 4.0.1
     transitivePeerDependencies:
       - debug
+      - supports-color
 
   make-dir@2.1.0:
     dependencies:
