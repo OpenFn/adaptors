@@ -47,6 +47,7 @@ import * as util from './util.js';
  * @param {string} strategy - The effect the import should have. Can either be CREATE, UPDATE, CREATE_AND_UPDATE and DELETE.
  * @param {object} payload - The data to be imported.
  * @param {TrackerOptions} [options] - An optional object containing parseAs, and apiVersion, and queries for the request
+ * @param {boolean} [options.async=false] - Whether to perform the import asynchronously. Defaults to false.
  * @state {DHIS2State}
  * @returns {Operation}
  */
@@ -57,7 +58,7 @@ function _import(strategy, payload, options = {}) {
     const [resolvedStrategy, resolvedPayload, resolvedOptions] =
       expandReferences(state, strategy, payload, options);
 
-    const { apiVersion, parseAs, ...query } = resolvedOptions;
+    const { apiVersion, parseAs, async: asyncOption, ...query } = resolvedOptions;
 
     const response = await util.request(state.configuration, {
       method: 'POST',
@@ -74,7 +75,7 @@ function _import(strategy, payload, options = {}) {
         parseAs,
         query: {
           ...query,
-          async: false,
+          async: asyncOption || false,
         },
       },
       data: resolvedPayload,
@@ -99,6 +100,7 @@ export { _import as import };
  * @function
  * @param {string} path - Path to the resource, relative to the /tracker endpoint
  * @param {object} query - An object of query parameters to be encoded into the URL
+ * @param {boolean} [query.async=false] - Whether to perform the export asynchronously. Defaults to false.
  * @param {TrackerOptions} [options] - An optional object containing parseAs, and apiVersion for the request
  * @state {DHIS2State}
  * @returns {Operation}
@@ -125,7 +127,7 @@ function _export(path, query, options = {}) {
         ...resolvedOptions,
         query: {
           ...resolvedQuery,
-          async: false,
+          async: resolvedQuery.async || false,
         },
       },
     });

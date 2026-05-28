@@ -19,7 +19,7 @@ const getPath = path => {
   return `/stable-2-40-7/api/42/${path}`;
 };
 
-describe('tracker', () => {
+describe.only('tracker', () => {
   const state = {
     configuration,
     data: {
@@ -95,4 +95,60 @@ describe('tracker', () => {
       message: 'the response',
     });
   });
+
+  it('should export events asynchronously', async () => {
+      const query = {
+      orgUnit: 'TSyzvBiovKh',
+        async: true,
+    };
+    testServer
+      .intercept({
+        path: getPath('tracker/enrollments'),
+        method: 'GET',
+        query,
+      })
+      .reply(200, {
+        httpStatus: 'OK',
+        message: 'the response',
+      });
+
+    const finalState = await execute(
+      tracker.export('enrollments', {
+        orgUnit: 'TSyzvBiovKh',
+        async: true
+      })
+    )(state);  
+    expect(finalState.response.query.async).to.eql(true);
+  });
+  it('should default to async false when not specified', async () => {
+        testServer
+      .intercept({
+        path: getPath('tracker'),
+        method: 'POST',
+        query: { async: false },
+      })
+      .reply(200, {
+        httpStatus: 'OK',
+        message: 'the response',
+      });
+
+    const finalState = await execute(
+      tracker.import('CREATE', {
+        trackedEntities: [
+          {
+            orgUnit: 'TSyzvBiovKh',
+            trackedEntityType: 'nEenWmSyUEp',
+            attributes: [
+              {
+                attribute: 'w75KJ2mc4zz',
+                value: 'Gigiwe',
+              },
+            ],
+          },
+        ],
+      })
+    )(state);
+
+    expect(finalState.response.query.async).to.eql(false);
+  })
 });
