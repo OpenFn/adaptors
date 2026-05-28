@@ -97,15 +97,17 @@ export { _import as import };
  * tracker.export('enrollments', {orgUnit: 'TSyzvBiovKh'});
  * @example <caption>Export all events</caption>
  * tracker.export('events')
+ * @example <caption>Export all events with pagination</caption>
+ * tracker.export('events', { page: 1, pageSize: 100 });
  * @function
  * @param {string} path - Path to the resource, relative to the /tracker endpoint
- * @param {object} query - An object of query parameters to be encoded into the URL
+ * @param {object} query - An object of query parameters to be encoded into the URL. Can include pagination parameters, filters, etc.
  * @param {boolean} [query.async=false] - Whether to perform the export asynchronously. Defaults to false.
  * @param {TrackerOptions} [options] - An optional object containing parseAs, and apiVersion for the request
  * @state {DHIS2State}
  * @returns {Operation}
  */
-function _export(path, query, options = {}) {
+function _export(path, query = {}, options = {}) {
   return async state => {
     console.log('Preparing tracker export operation...');
 

@@ -19,7 +19,7 @@ const getPath = path => {
   return `/stable-2-40-7/api/42/${path}`;
 };
 
-describe.only('tracker', () => {
+describe('tracker', () => {
   const state = {
     configuration,
     data: {
@@ -57,7 +57,7 @@ describe.only('tracker', () => {
             ],
           },
         ],
-      })
+      }),
     )(state);
 
     expect(finalState.data).to.eql({
@@ -87,7 +87,7 @@ describe.only('tracker', () => {
     const finalState = await execute(
       tracker.export('enrollments', {
         orgUnit: 'TSyzvBiovKh',
-      })
+      }),
     )(state);
 
     expect(finalState.data).to.eql({
@@ -97,9 +97,9 @@ describe.only('tracker', () => {
   });
 
   it('should export events asynchronously', async () => {
-      const query = {
+    const query = {
       orgUnit: 'TSyzvBiovKh',
-        async: true,
+      async: true,
     };
     testServer
       .intercept({
@@ -115,13 +115,13 @@ describe.only('tracker', () => {
     const finalState = await execute(
       tracker.export('enrollments', {
         orgUnit: 'TSyzvBiovKh',
-        async: true
-      })
-    )(state);  
+        async: true,
+      }),
+    )(state);
     expect(finalState.response.query.async).to.eql(true);
   });
   it('should default to async false when not specified', async () => {
-        testServer
+    testServer
       .intercept({
         path: getPath('tracker'),
         method: 'POST',
@@ -146,9 +146,44 @@ describe.only('tracker', () => {
             ],
           },
         ],
-      })
+      }),
     )(state);
 
     expect(finalState.response.query.async).to.eql(false);
-  })
+  });
+
+  it('should export all events when paging is true', async () => {
+    const events = Array.from({ length: 300 }, () => ({ event: 1 }));
+
+    testServer
+      .intercept({
+        path: getPath('tracker/events'),
+        method: 'GET',
+        query: { async: false, paging: true },
+      })
+      .reply(200, { events });
+
+    const finalState = await execute(
+      tracker.export('events', { paging: true }),
+    )(state);
+
+    expect(finalState.data.events).to.have.lengthOf(300);
+    expect(finalState.data.events[0]).to.eql({ event: 1 });
+  });
+  it('should export only 50 events when paging is not sent', async () => {
+    const events = Array.from({ length: 300 }, () => ({ event: 1 }));
+
+    testServer
+      .intercept({
+        path: getPath('tracker/events'),
+        method: 'GET',
+        query: { async: false },
+      })
+      .reply(200, { events: events.slice(0, 50) });
+
+    const finalState = await execute(tracker.export('events'))(state);
+
+    expect(finalState.data.events).to.have.lengthOf(50);
+    expect(finalState.data.events[0]).to.eql({ event: 1 });
+  });
 });
