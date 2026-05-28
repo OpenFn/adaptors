@@ -439,7 +439,7 @@ describe('SzPatient', () => {
       valueDateTime: '2025-06-01T10:00:00Z',
     });
   });
-  it.skip('should map primitive extensions', ()=>{
+  it('should map primitive extensions', ()=>{
   const state = {};
 
   const resource = b.patient('SzPatient',{
