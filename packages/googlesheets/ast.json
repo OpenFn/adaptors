@@ -8,7 +8,7 @@
         "options"
       ],
       "docs": {
-        "description": "Add an array of rows to the spreadsheet.\nhttps://developers.google.com/sheets/api/samples/writing#append_values",
+        "description": "Append one or more rows to a spreadsheet range.\nhttps://developers.google.com/sheets/api/samples/writing#append_values",
         "tags": [
           {
             "title": "public",
@@ -113,7 +113,7 @@
           {
             "title": "example",
             "description": "batchUpdateValues(\n  '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  [\n    { range: 'Sheet1!A1', values: [['value1']] },\n    { range: 'Sheet1!B5', values: [['value2']] },\n    { range: 'Sheet1!D10:E11', values: [['a', 'b'], ['c', 'd']] },\n  ],\n  { valueInputOption: 'RAW' }\n)",
-            "caption": "Update multiple non-contiguous ranges"
+            "caption": "Update multiple separate ranges"
           },
           {
             "title": "function",
