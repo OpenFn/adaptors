@@ -74,7 +74,7 @@ export function execute(...operations) {
 }
 
 /**
- * Add an array of rows to the spreadsheet.
+ * Append one or more rows to a spreadsheet range.
  * https://developers.google.com/sheets/api/samples/writing#append_values
  * @public
  * @example
@@ -145,7 +145,7 @@ export function appendValues(spreadsheetId, data, options = {}) {
  *   { valueInputOption: 'RAW' }
  * )
  * @example
- * <caption>Update multiple non-contiguous ranges</caption>
+ * <caption>Update multiple separate ranges</caption>
  * batchUpdateValues(
  *   '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',
  *   [
