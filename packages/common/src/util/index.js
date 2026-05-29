@@ -1,4 +1,5 @@
 export * from './http.js';
+export * as image from './image.js';
 export * from './references.js';
 
 export { default as parseDate } from './parse-date.js';
