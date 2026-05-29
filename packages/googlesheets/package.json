@@ -40,8 +40,10 @@
     "assertion-error": "1.1.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
+    "mocha": "^10.7.3",
     "nock": "13.2.9",
-    "rimraf": "3.0.2"
+    "rimraf": "3.0.2",
+    "sinon": "^19.0.4"
   },
   "type": "module",
   "types": "types/index.d.ts",
