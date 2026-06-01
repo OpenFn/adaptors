@@ -185,11 +185,26 @@ async function parseArchiveAttachment(attachment) {
   };
 }
 
-export function createConnection(state) {
-  const { access_token } = state.configuration;
+export async function createConnection(state) {
+  const { access_token, private_key, client_email, subject } =
+    state.configuration;
 
-  const auth = new google.auth.OAuth2();
-  auth.credentials = { access_token };
+  let auth;
+  if (private_key && client_email) {
+    auth = new google.auth.JWT({
+      email: client_email,
+      key: private_key,
+      scopes: [
+        'https://mail.google.com/',
+        'https://www.googleapis.com/auth/gmail.readonly',
+      ],
+      subject,
+    });
+    await auth.authorize();
+  } else {
+    auth = new google.auth.OAuth2();
+    auth.credentials = { access_token };
+  }
 
   gmail = google.gmail({ version: 'v1', auth });
 
