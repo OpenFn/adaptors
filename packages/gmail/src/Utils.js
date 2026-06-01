@@ -184,18 +184,26 @@ async function parseArchiveAttachment(attachment) {
 }
 
 export async function createConnection(state) {
-  const { access_token, private_key, client_email, subject } =
-    state.configuration;
+  const {
+    access_token,
+    private_key,
+    client_email,
+    subject,
+    scopes = [],
+  } = state.configuration;
 
+  const mandatoryScopes = [
+    'https://mail.google.com/',
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+    'openid',
+  ];
   let auth;
   if (private_key && client_email) {
     auth = new google.auth.JWT({
       email: client_email,
       key: private_key,
-      scopes: [
-        'https://mail.google.com/',
-        'https://www.googleapis.com/auth/gmail.readonly',
-      ],
+      scopes: [...mandatoryScopes, ...scopes],
       subject,
     });
     await auth.authorize();

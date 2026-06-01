@@ -12,14 +12,25 @@ import { google } from 'googleapis';
 let client = undefined;
 
 async function createConnection(state) {
-  const { accessToken, private_key, client_email } = state.configuration;
+  const {
+    accessToken,
+    private_key,
+    client_email,
+    scopes = [],
+  } = state.configuration;
+  const mandatoryScopes = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+    'openid',
+  ];
 
   let auth;
   if (private_key && client_email) {
     auth = new google.auth.JWT({
       email: client_email,
       key: private_key,
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+      scopes: [...mandatoryScopes, ...scopes],
     });
     await auth.authorize();
   } else {

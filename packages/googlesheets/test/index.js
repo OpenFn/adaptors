@@ -176,7 +176,8 @@ describe('Google Sheets Adaptor', () => {
     };
 
     it('uses JWT auth when private_key and client_email are provided', async () => {
-      const jwtStub = sandbox.stub(google.auth, 'JWT').returns({});
+      const mockJwt = { authorize: sandbox.stub().resolves() };
+      const jwtStub = sandbox.stub(google.auth, 'JWT').returns(mockJwt);
 
       await execute(
         appendValues({
@@ -191,11 +192,15 @@ describe('Google Sheets Adaptor', () => {
       expect(jwtArgs.email).to.equal('service@project-id.iam.gserviceaccount.com');
       expect(jwtArgs.scopes).to.deep.equal([
         'https://www.googleapis.com/auth/spreadsheets',
+        'https://www.googleapis.com/auth/userinfo.email',
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'openid',
       ]);
     });
 
     it('does not call OAuth2 when service account credentials are used', async () => {
-      const jwtStub = sandbox.stub(google.auth, 'JWT').returns({});
+      const mockJwt = { authorize: sandbox.stub().resolves() };
+      const jwtStub = sandbox.stub(google.auth, 'JWT').returns(mockJwt);
       const oauth2Spy = sandbox.spy(google.auth, 'OAuth2');
 
       await execute(
