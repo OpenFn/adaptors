@@ -169,9 +169,15 @@ describe('Google Drive Adaptor', () => {
 
       expect(jwtStub.calledOnce).to.be.true;
       const jwtArgs = jwtStub.getCall(0).args[0];
-      expect(jwtArgs.email).to.equal('service@project-id.iam.gserviceaccount.com');
+      expect(jwtArgs.email).to.equal(
+        'service@project-id.iam.gserviceaccount.com',
+      );
       expect(jwtArgs.scopes).to.deep.equal([
-        'https://www.googleapis.com/auth/drive',
+        'https://www.googleapis.com/auth/drive.file',
+        'https://www.googleapis.com/auth/drive.readonly',
+        'https://www.googleapis.com/auth/userinfo.email',
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'openid',
       ]);
       expect(mockFiles.create.calledOnce).to.be.true;
     });
