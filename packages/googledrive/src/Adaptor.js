@@ -25,7 +25,7 @@ let client;
  * @param {Object} state - object containing the access token.
  * @returns {Object} state with Google Drive client initialized.
  */
-function createConnection(state) {
+async function createConnection(state) {
   const { accessToken, private_key, client_email } = state.configuration;
 
   let auth;
@@ -35,6 +35,7 @@ function createConnection(state) {
       key: private_key,
       scopes: ['https://www.googleapis.com/auth/drive'],
     });
+    await auth.authorize();
   } else {
     auth = new google.auth.OAuth2();
     auth.credentials = { access_token: accessToken };

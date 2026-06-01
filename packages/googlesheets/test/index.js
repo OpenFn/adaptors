@@ -171,7 +171,8 @@ describe('service account auth', () => {
   });
 
   it('uses JWT auth when private_key and client_email are provided', async () => {
-    const jwtStub = sandbox.stub(google.auth, 'JWT').returns({});
+    const mockJwt = { authorize: sandbox.stub().resolves() };
+    const jwtStub = sandbox.stub(google.auth, 'JWT').returns(mockJwt);
 
     await execute(
       appendValues('123-456-789', 'Sheet1!A1:B1', [['a', 'b']])
@@ -186,7 +187,8 @@ describe('service account auth', () => {
   });
 
   it('does not use OAuth2 when service account credentials are used', async () => {
-    const jwtStub = sandbox.stub(google.auth, 'JWT').returns({});
+    const mockJwt = { authorize: sandbox.stub().resolves() };
+    const jwtStub = sandbox.stub(google.auth, 'JWT').returns(mockJwt);
     const oauth2Spy = sandbox.spy(google.auth, 'OAuth2');
 
     await execute(
