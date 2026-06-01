@@ -161,7 +161,8 @@ describe('Google Drive Adaptor', () => {
     };
 
     it('uses JWT auth when private_key and client_email are provided', async () => {
-      const jwtStub = sandbox.stub(google.auth, 'JWT').returns({});
+      const mockJwt = { authorize: sandbox.stub().resolves() };
+      const jwtStub = sandbox.stub(google.auth, 'JWT').returns(mockJwt);
 
       const content = Buffer.from('file content').toString('base64');
       await execute(create(content, 'test.txt'))(serviceAccountState);
@@ -176,7 +177,8 @@ describe('Google Drive Adaptor', () => {
     });
 
     it('does not call OAuth2 when service account credentials are used', async () => {
-      const jwtStub = sandbox.stub(google.auth, 'JWT').returns({});
+      const mockJwt = { authorize: sandbox.stub().resolves() };
+      const jwtStub = sandbox.stub(google.auth, 'JWT').returns(mockJwt);
       const oauth2Spy = sandbox.spy(google.auth, 'OAuth2');
 
       const result = await execute(list('folder123'))(serviceAccountState);
