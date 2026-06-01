@@ -26,14 +26,26 @@ let client;
  * @returns {Object} state with Google Drive client initialized.
  */
 async function createConnection(state) {
-  const { accessToken, private_key, client_email } = state.configuration;
+  const {
+    accessToken,
+    private_key,
+    client_email,
+    scopes = [],
+  } = state.configuration;
 
+  const mandatoryScopes = [
+    'https://www.googleapis.com/auth/drive.file',
+    'https://www.googleapis.com/auth/drive.readonly',
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+    'openid',
+  ];
   let auth;
   if (private_key && client_email) {
     auth = new google.auth.JWT({
       email: client_email,
       key: private_key,
-      scopes: ['https://www.googleapis.com/auth/drive'],
+      scopes: [...mandatoryScopes, ...scopes],
     });
     await auth.authorize();
   } else {

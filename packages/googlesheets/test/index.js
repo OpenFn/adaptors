@@ -183,6 +183,9 @@ describe('service account auth', () => {
     expect(jwtArgs.email).to.equal('service@project-id.iam.gserviceaccount.com');
     expect(jwtArgs.scopes).to.deep.equal([
       'https://www.googleapis.com/auth/spreadsheets',
+      'https://www.googleapis.com/auth/userinfo.email',
+      'https://www.googleapis.com/auth/userinfo.profile',
+      'openid',
     ]);
   });
 

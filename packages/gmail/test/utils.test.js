@@ -279,17 +279,22 @@ describe('createConnection', () => {
 
     await createConnection({
       configuration: {
-        private_key: '-----BEGIN RSA PRIVATE KEY-----\nMOCK\n-----END RSA PRIVATE KEY-----',
+        private_key:
+          '-----BEGIN RSA PRIVATE KEY-----\nMOCK\n-----END RSA PRIVATE KEY-----',
         client_email: 'service@project-id.iam.gserviceaccount.com',
       },
     });
 
     expect(jwtStub.calledOnce).to.be.true;
     const jwtArgs = jwtStub.getCall(0).args[0];
-    expect(jwtArgs.email).to.equal('service@project-id.iam.gserviceaccount.com');
+    expect(jwtArgs.email).to.equal(
+      'service@project-id.iam.gserviceaccount.com',
+    );
     expect(jwtArgs.scopes).to.deep.equal([
       'https://mail.google.com/',
-      'https://www.googleapis.com/auth/gmail.readonly',
+      'https://www.googleapis.com/auth/userinfo.email',
+      'https://www.googleapis.com/auth/userinfo.profile',
+      'openid',
     ]);
   });
 
@@ -299,7 +304,8 @@ describe('createConnection', () => {
 
     await createConnection({
       configuration: {
-        private_key: '-----BEGIN RSA PRIVATE KEY-----\nMOCK\n-----END RSA PRIVATE KEY-----',
+        private_key:
+          '-----BEGIN RSA PRIVATE KEY-----\nMOCK\n-----END RSA PRIVATE KEY-----',
         client_email: 'service@project-id.iam.gserviceaccount.com',
       },
     });
@@ -313,7 +319,8 @@ describe('createConnection', () => {
 
     await createConnection({
       configuration: {
-        private_key: '-----BEGIN RSA PRIVATE KEY-----\nMOCK\n-----END RSA PRIVATE KEY-----',
+        private_key:
+          '-----BEGIN RSA PRIVATE KEY-----\nMOCK\n-----END RSA PRIVATE KEY-----',
         client_email: 'service@project-id.iam.gserviceaccount.com',
         subject: 'user@yourdomain.com',
       },
@@ -330,7 +337,8 @@ describe('createConnection', () => {
 
     await createConnection({
       configuration: {
-        private_key: '-----BEGIN RSA PRIVATE KEY-----\nMOCK\n-----END RSA PRIVATE KEY-----',
+        private_key:
+          '-----BEGIN RSA PRIVATE KEY-----\nMOCK\n-----END RSA PRIVATE KEY-----',
         client_email: 'service@project-id.iam.gserviceaccount.com',
       },
     });
