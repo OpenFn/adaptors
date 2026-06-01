@@ -135,6 +135,37 @@ export default function(props: Partial<Patient_SzPatient_Props>) {
         }
     }
 
+    {
+        if (!_.isNil(props._birthDate)) {
+            if (_.isPlainObject(props._birthDate)) {
+                resource._birthDate = Object.assign({}, props._birthDate);
+            } else {
+                delete resource._birthDate;
+                resource._birthDate = {};
+
+                dt.addExtension(
+                    resource._birthDate,
+                    "http://hl7.org/fhir/StructureDefinition/patient-birthTime",
+                    props._birthDate
+                );
+            }
+        }
+
+        if (!_.isNil(props._birthTime)) {
+            delete resource._birthTime;
+
+            if (!resource._birthDate) {
+                resource._birthDate = {};
+            }
+
+            dt.addExtension(
+                resource._birthDate,
+                "http://hl7.org/fhir/StructureDefinition/patient-birthTime",
+                props._birthTime
+            );
+        }
+    }
+
     if (!_.isNil(props.deceased)) {
         delete resource.deceased;
         dt.composite(resource, "deceased", props.deceased);
