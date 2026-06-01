@@ -11,7 +11,7 @@ import { google } from 'googleapis';
 
 let client = undefined;
 
-function createConnection(state) {
+async function createConnection(state) {
   const { accessToken, private_key, client_email } = state.configuration;
 
   let auth;
@@ -21,6 +21,7 @@ function createConnection(state) {
       key: private_key,
       scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
+    await auth.authorize();
   } else {
     auth = new google.auth.OAuth2();
     auth.credentials = { access_token: accessToken };
@@ -70,10 +71,11 @@ export function execute(...operations) {
   return state => {
     const isServiceAccount =
       state.configuration?.private_key && state.configuration?.client_email;
+
     return commonExecute(
       createConnection,
       ...operations,
-      removeConnection
+      removeConnection,
     )({
       ...initialState,
       ...state,
@@ -138,10 +140,10 @@ export function appendValues(params, callback = s => s) {
               callback({
                 ...composeNextState(state, response.data),
                 response,
-              })
+              }),
             );
           }
-        }
+        },
       );
     });
   };
@@ -223,7 +225,7 @@ export function getValues(spreadsheetId, range, callback = s => s) {
     const [resolvedSheetId, resolvedRange] = expandReferences(
       state,
       spreadsheetId,
-      range
+      range,
     );
 
     try {
