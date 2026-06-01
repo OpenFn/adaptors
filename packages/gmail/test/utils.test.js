@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import sinon from 'sinon';
 import { google } from 'googleapis';
 import {
   buildAndSendMessage,
@@ -12,7 +13,7 @@ describe('buildAndSendMessage', () => {
   let mockGmail;
   let sendStub;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     originalGmail = google.gmail;
 
     const mockResponse = {
@@ -35,7 +36,7 @@ describe('buildAndSendMessage', () => {
 
     google.gmail = () => mockGmail;
 
-    createConnection({
+    await createConnection({
       configuration: {
         access_token: 'mock-access-token',
       },
@@ -245,5 +246,92 @@ describe('buildAndSendMessage', () => {
       expect(result).to.have.property('threadId');
       expect(result).to.have.property('labelIds');
     });
+  });
+});
+
+describe('createConnection', () => {
+  let sandbox;
+  let originalGmail;
+
+  beforeEach(() => {
+    sandbox = sinon.createSandbox();
+    originalGmail = google.gmail;
+    google.gmail = () => ({});
+  });
+
+  afterEach(() => {
+    google.gmail = originalGmail;
+    sandbox.restore();
+    removeConnection();
+  });
+
+  it('uses OAuth2 when access_token is provided', async () => {
+    const oauth2Spy = sandbox.spy(google.auth, 'OAuth2');
+
+    await createConnection({ configuration: { access_token: 'mock-token' } });
+
+    expect(oauth2Spy.calledOnce).to.be.true;
+  });
+
+  it('uses JWT auth when private_key and client_email are provided', async () => {
+    const mockJwt = { authorize: sandbox.stub().resolves() };
+    const jwtStub = sandbox.stub(google.auth, 'JWT').returns(mockJwt);
+
+    await createConnection({
+      configuration: {
+        private_key: '-----BEGIN RSA PRIVATE KEY-----\nMOCK\n-----END RSA PRIVATE KEY-----',
+        client_email: 'service@project-id.iam.gserviceaccount.com',
+      },
+    });
+
+    expect(jwtStub.calledOnce).to.be.true;
+    const jwtArgs = jwtStub.getCall(0).args[0];
+    expect(jwtArgs.email).to.equal('service@project-id.iam.gserviceaccount.com');
+    expect(jwtArgs.scopes).to.deep.equal(['https://mail.google.com/']);
+  });
+
+  it('calls authorize() to fetch an initial access token for JWT auth', async () => {
+    const mockJwt = { authorize: sandbox.stub().resolves() };
+    sandbox.stub(google.auth, 'JWT').returns(mockJwt);
+
+    await createConnection({
+      configuration: {
+        private_key: '-----BEGIN RSA PRIVATE KEY-----\nMOCK\n-----END RSA PRIVATE KEY-----',
+        client_email: 'service@project-id.iam.gserviceaccount.com',
+      },
+    });
+
+    expect(mockJwt.authorize.calledOnce).to.be.true;
+  });
+
+  it('passes subject to JWT when provided for domain-wide delegation', async () => {
+    const mockJwt = { authorize: sandbox.stub().resolves() };
+    const jwtStub = sandbox.stub(google.auth, 'JWT').returns(mockJwt);
+
+    await createConnection({
+      configuration: {
+        private_key: '-----BEGIN RSA PRIVATE KEY-----\nMOCK\n-----END RSA PRIVATE KEY-----',
+        client_email: 'service@project-id.iam.gserviceaccount.com',
+        subject: 'user@yourdomain.com',
+      },
+    });
+
+    const jwtArgs = jwtStub.getCall(0).args[0];
+    expect(jwtArgs.subject).to.equal('user@yourdomain.com');
+  });
+
+  it('does not call OAuth2 when service account credentials are used', async () => {
+    const mockJwt = { authorize: sandbox.stub().resolves() };
+    sandbox.stub(google.auth, 'JWT').returns(mockJwt);
+    const oauth2Spy = sandbox.spy(google.auth, 'OAuth2');
+
+    await createConnection({
+      configuration: {
+        private_key: '-----BEGIN RSA PRIVATE KEY-----\nMOCK\n-----END RSA PRIVATE KEY-----',
+        client_email: 'service@project-id.iam.gserviceaccount.com',
+      },
+    });
+
+    expect(oauth2Spy.called).to.be.false;
   });
 });

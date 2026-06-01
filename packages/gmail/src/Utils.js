@@ -40,7 +40,7 @@ export async function getMessageResult(userId, messageId) {
 
 export function getContentIndicators(
   defaultContentRequests = [],
-  contentRequests = []
+  contentRequests = [],
 ) {
   const contentIndicators = contentRequests.map(getContentIndicator);
   const contentNames = new Set(contentIndicators.map(({ name }) => name));
@@ -68,7 +68,7 @@ function getContentIndicator(contentRequest) {
 
   if (!contentIndicator.type) {
     console.error(
-      `Unable to determine desired content type: ${contentRequest}`
+      `Unable to determine desired content type: ${contentRequest}`,
     );
     throw new Error('No desired content type provided.');
   }
@@ -127,7 +127,7 @@ export async function buildAndSendMessage(message) {
         'Content-Transfer-Encoding: base64',
         `Content-Disposition: attachment; filename="${file}"`,
         '',
-        attachment.content
+        attachment.content,
       );
     }
 
@@ -183,11 +183,26 @@ async function parseArchiveAttachment(attachment) {
   };
 }
 
-export function createConnection(state) {
-  const { access_token } = state.configuration;
+export async function createConnection(state) {
+  const { access_token, private_key, client_email, subject } =
+    state.configuration;
 
-  const auth = new google.auth.OAuth2();
-  auth.credentials = { access_token };
+  let auth;
+  if (private_key && client_email) {
+    auth = new google.auth.JWT({
+      email: client_email,
+      key: private_key,
+      scopes: [
+        'https://mail.google.com/',
+        'https://www.googleapis.com/auth/gmail.readonly',
+      ],
+      subject,
+    });
+    await auth.authorize();
+  } else {
+    auth = new google.auth.OAuth2();
+    auth.credentials = { access_token };
+  }
 
   gmail = google.gmail({ version: 'v1', auth });
 
@@ -202,19 +217,19 @@ export function removeConnection(state) {
 async function getFileFromArchiveFromAttachment(message, desiredContent) {
   const attachmentResult = await getAttachmentResult(
     message,
-    desiredContent.archive
+    desiredContent.archive,
   );
 
   return await extractFileFromArchiveAttachment(
     attachmentResult,
-    desiredContent
+    desiredContent,
   );
 }
 
 async function getFileFromAttachment(message, desiredContent) {
   const attachmentResult = await getAttachmentResult(
     message,
-    desiredContent.file
+    desiredContent.file,
   );
 
   return await extractFileFromAttachment(attachmentResult, desiredContent);
@@ -250,7 +265,7 @@ async function extractFileFromArchiveAttachment(attachment, desiredContent) {
 
   if (!attachment.data) {
     console.error(
-      `Data not found in the archive attachment for: ${attachment.expression}`
+      `Data not found in the archive attachment for: ${attachment.expression}`,
     );
     return null;
   }
@@ -259,7 +274,7 @@ async function extractFileFromArchiveAttachment(attachment, desiredContent) {
   const zip = await JSZip.loadAsync(compressedBuffer);
 
   const filename = Object.keys(zip.files).find(name =>
-    isExpressionMatch(name, desiredContent.file)
+    isExpressionMatch(name, desiredContent.file),
   );
 
   if (!filename) {
@@ -286,7 +301,7 @@ async function extractFileFromAttachment(attachment, desiredContent) {
 
   if (!attachment.data) {
     console.error(
-      `Data not found in the file attachment for: ${attachment.expression}`
+      `Data not found in the file attachment for: ${attachment.expression}`,
     );
     return null;
   }
@@ -303,11 +318,11 @@ async function extractFileFromAttachment(attachment, desiredContent) {
 
 function getBodyFromMessage(message, desiredContent) {
   const bodyPart = message.parts?.find(
-    part => part.mimeType === 'multipart/alternative'
+    part => part.mimeType === 'multipart/alternative',
   );
 
   const textBodyPart = bodyPart?.parts.find(
-    part => part.mimeType === 'text/plain'
+    part => part.mimeType === 'text/plain',
   );
 
   const textBody = textBodyPart?.body?.data;
@@ -324,7 +339,7 @@ function getBodyFromMessage(message, desiredContent) {
 
 function getValueFromMessageHeader(message, desiredContent) {
   const header = message.headers?.find(
-    h => h.name.toLowerCase() === desiredContent.type
+    h => h.name.toLowerCase() === desiredContent.type,
   );
 
   if (!header) {
