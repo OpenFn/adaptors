@@ -58,7 +58,12 @@ function _import(strategy, payload, options = {}) {
     const [resolvedStrategy, resolvedPayload, resolvedOptions] =
       expandReferences(state, strategy, payload, options);
 
-    const { apiVersion, parseAs, async: asyncOption, ...query } = resolvedOptions;
+    const {
+      apiVersion,
+      parseAs,
+      async: asyncOption,
+      ...query
+    } = resolvedOptions;
 
     const response = await util.request(state.configuration, {
       method: 'POST',
@@ -68,7 +73,7 @@ function _import(strategy, payload, options = {}) {
           ...resolvedOptions,
           resolvedStrategy,
         },
-        'tracker'
+        'tracker',
       ),
       options: {
         apiVersion,
@@ -96,9 +101,28 @@ export { _import as import };
  * @example <caption>Export all enrollment resources</caption>
  * tracker.export('enrollments', {orgUnit: 'TSyzvBiovKh'});
  * @example <caption>Export all events</caption>
- * tracker.export('events')
+ * tracker.export('events', { paging: false})
  * @example <caption>Export all events with pagination</caption>
- * tracker.export('events', { page: 1, pageSize: 100 });
+ * tracker.export('events', { totalPages: true, pageSize: 1e4 });
+ * fn(state => {
+ *   state.results = state.data.events;
+ *   const { page, pageSize, pageCount, total } = state.data.pager;
+ *   const remainingPages = pageCount - page;
+ *
+ *   state.pages = Array.from({ length: remainingPages }, (_, i) => page + i + 1);
+ *   state.pageSize = pageSize;
+ *   return state;
+ * });
+ *
+ * each(
+ *   $.pages,
+ *   tracker
+ *     .export('events', { pageSize: $.pageSize, page: $.data })
+ *     .then(state => {
+ *       state.results = state.results.concat(state.data.events);
+ *       return state;
+ *     }),
+ * );
  * @function
  * @param {string} path - Path to the resource, relative to the /tracker endpoint
  * @param {object} query - An object of query parameters to be encoded into the URL. Can include pagination parameters, filters, etc.
@@ -115,7 +139,7 @@ function _export(path, query = {}, options = {}) {
       state,
       path,
       query,
-      options
+      options,
     );
 
     const response = await util.request(state.configuration, {
@@ -123,7 +147,7 @@ function _export(path, query = {}, options = {}) {
       path: util.prefixVersionToPath(
         state.configuration,
         resolvedOptions,
-        `tracker/${resolvedPath}`
+        `tracker/${resolvedPath}`,
       ),
       options: {
         ...resolvedOptions,
