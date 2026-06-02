@@ -55,7 +55,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   const context = {
     options,
   } as GenContext;
-  const { base, respec, spec } = options;
+  const { respec, spec } = options;
 
   const dir = path.dirname(import.meta.url.replace('file://', ''));
   const monoRepoRoot = path.resolve(dir, `../../../`);
@@ -140,7 +140,8 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
   }
 
   // Load options which may have been saved to the package
-  const { simpleBuilders } = options;
+  // Note: base must be read AFTER pkg.fhir.options is merged in above
+  const { simpleBuilders, base } = options;
 
   // Now generate from the spec
   const specPath = path.resolve(adaptorPath, 'spec', 'spec.json');
@@ -258,7 +259,7 @@ const generateAdaptor = async (adaptorName: string, options: Options = {}) => {
     ...meta,
     adaptorGeneratedDate: new Date().toISOString(),
     generatorVersion: toolPkg.version,
-    options: ['simpleBuilders']
+    options: ['simpleBuilders', 'base']
       .filter(o => o in options)
       .reduce((acc: any, o: string) => {
         acc[o] = options[o];

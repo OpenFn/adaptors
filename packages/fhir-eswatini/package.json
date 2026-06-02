@@ -15,9 +15,11 @@
   "type": "module",
   "fhir": {
     "specUrl": "http://172.209.216.154/definitions.json.zip",
-    "adaptorGeneratedDate": "2026-03-30T13:45:30.759Z",
-    "generatorVersion": "0.7.7",
-    "options": {}
+    "adaptorGeneratedDate": "2026-06-02T15:23:39.432Z",
+    "generatorVersion": "0.7.9",
+    "options": {
+      "base": "fhir-4"
+    }
   },
   "dependencies": {
     "@openfn/language-common": "workspace:*",
