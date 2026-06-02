@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-fhir-eswatini",
-  "version": "0.7.6",
+  "version": "0.7.8",
   "description": "OpenFn fhir-eswatini adaptor",
   "scripts": {
     "build": "pnpm clean && build-adaptor fhir-eswatini src ast docs",
@@ -15,9 +15,11 @@
   "type": "module",
   "fhir": {
     "specUrl": "http://172.209.216.154/definitions.json.zip",
-    "adaptorGeneratedDate": "2026-06-01T13:30:07.161Z",
-    "generatorVersion": "0.7.8",
-    "options": {}
+    "adaptorGeneratedDate": "2026-06-02T15:23:39.432Z",
+    "generatorVersion": "0.7.9",
+    "options": {
+      "base": "fhir-4"
+    }
   },
   "dependencies": {
     "@openfn/language-common": "workspace:*",

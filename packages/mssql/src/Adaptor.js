@@ -856,7 +856,9 @@ export function modifyTable(tableName, columns, options) {
 
 export {
   alterState,
+  as,
   combine,
+  cursor,
   dataPath,
   dataValue,
   dateFns,
@@ -866,8 +868,7 @@ export {
   fn,
   fnIf,
   lastReferenceValue,
-  cursor,
+  log,
   merge,
   sourceValue,
-  as,
 } from '@openfn/language-common';

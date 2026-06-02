@@ -215,6 +215,7 @@ export function sendBroadcast(params, callback = s => s) {
 
 export {
   alterState,
+  combine,
   dataPath,
   dataValue,
   each,
@@ -223,6 +224,7 @@ export {
   fn,
   fnIf,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
 } from '@openfn/language-common';

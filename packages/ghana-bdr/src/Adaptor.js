@@ -88,16 +88,18 @@ export function sendBirthNotification(data) {
 }
 
 export {
-  fn,
-  fnIf,
-  each,
-  merge,
-  field,
-  fields,
+  combine,
   cursor,
-  dateFns,
   dataPath,
   dataValue,
-  sourceValue,
+  dateFns,
+  each,
+  field,
+  fields,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
+  merge,
+  sourceValue,
 } from '@openfn/language-common';

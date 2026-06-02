@@ -232,6 +232,7 @@ export function getBlobProperties(blobName, options = {}) {
 }
 
 export {
+  combine,
   dataPath,
   dataValue,
   dateFns,
@@ -241,6 +242,7 @@ export {
   fn,
   fnIf,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
 } from '@openfn/language-common';

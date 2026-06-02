@@ -109,7 +109,7 @@ export function request(method, path, body, options = {}, callback = s => s) {
       {
         body: resolvedBody,
         ...resolvedoptions,
-      }
+      },
     );
 
     return util.prepareNextState(state, response, callback);
@@ -117,17 +117,19 @@ export function request(method, path, body, options = {}, callback = s => s) {
 }
 
 export {
+  as,
+  combine,
+  cursor,
   dataPath,
   dataValue,
   dateFns,
-  cursor,
   each,
   field,
   fields,
   fn,
   fnIf,
+  lastReferenceValue,
+  log,
   merge,
   sourceValue,
-  lastReferenceValue,
-  as
 } from '@openfn/language-common';

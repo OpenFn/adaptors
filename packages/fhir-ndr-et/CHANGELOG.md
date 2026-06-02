@@ -1,5 +1,34 @@
 # @openfn/language-fhir-ndr-et
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [5276a86]
+  - @openfn/language-common@3.3.3
+  - @openfn/language-fhir@5.1.1
+
+## 0.2.0
+
+### Minor Changes
+
+- 71115af: export `combine` function from common
+- bf26881: export `log` function from common
+
+### Patch Changes
+
+- Updated dependencies [71115af]
+- Updated dependencies [bf26881]
+  - @openfn/language-fhir@5.1.0
+
+## 0.1.29
+
+### Patch Changes
+
+- Updated dependencies [9d1e1ae]
+  - @openfn/language-common@3.3.2
+  - @openfn/language-fhir@5.0.18
+
 ## 0.1.28 - 07 April 2026
 
 ### Patch Changes

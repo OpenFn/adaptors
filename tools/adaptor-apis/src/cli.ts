@@ -2,12 +2,12 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import process from 'node:process';
-import { installAndGen } from './gen';
+import { installAndGen } from './gen.js';
 
 export const cmd = yargs(hideBin(process.argv))
   .command(
     '$0 adaptor [--dir]',
-    'Generate docs metadata for a single adaptor. Optionally include a version'
+    'Generate docs metadata for a single adaptor. Optionally include a version',
   )
   .example('$0 common', 'Build for latest common')
   .example('$0 http@6.0.0', 'Build for http v6.0.0')

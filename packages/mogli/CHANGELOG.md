@@ -1,5 +1,25 @@
 v0.1.6
 
+## 0.7.1
+
+### Patch Changes
+
+- Updated dependencies [5276a86]
+  - @openfn/language-common@3.3.3
+
+## 0.7.0
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
+## 0.6.15
+
+### Patch Changes
+
+- Updated dependencies [9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 0.6.14 - 07 April 2026
 
 ### Patch Changes

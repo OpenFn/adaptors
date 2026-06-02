@@ -1,5 +1,26 @@
 # @openfn/language-mpesa
 
+## 1.2.1
+
+### Patch Changes
+
+- Updated dependencies [5276a86]
+  - @openfn/language-common@3.3.3
+
+## 1.2.0
+
+### Minor Changes
+
+- 71115af: export `combine` function from common
+- bf26881: export `log` function from common
+
+## 1.1.14
+
+### Patch Changes
+
+- Updated dependencies [9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 1.1.13 - 07 April 2026
 
 ### Patch Changes
@@ -122,7 +143,7 @@
 
 - 99e4b48: - Better handling of HTML content in http requests
   - When logging HTTP requests, include query parameters
-- d1f7851: Fixed the title for the consumer\_secret on the configuration schema
+- d1f7851: Fixed the title for the consumer_secret on the configuration schema
 - Updated dependencies \[99e4b48]
 - Updated dependencies \[13bf08f]
   - @openfn/language-common@2.4.0

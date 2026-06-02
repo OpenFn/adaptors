@@ -1,5 +1,25 @@
 # @openfn/language-googlesheets
 
+## 4.1.1
+
+### Patch Changes
+
+- Updated dependencies [5276a86]
+  - @openfn/language-common@3.3.3
+
+## 4.1.0
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
+## 4.0.13
+
+### Patch Changes
+
+- Updated dependencies [9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 4.0.12 - 17 April 2026
 
 ### Patch Changes
@@ -312,7 +332,7 @@
 ### Patch Changes
 
 - aad9549: Ensure that standard OAuth2 credentials with snake-cased
-  "access\_token" keys can be used for OAuth2-reliant adaptors
+  "access_token" keys can be used for OAuth2-reliant adaptors
 - Updated dependencies \[aad9549]
   - @openfn/language-common@1.10.0
 

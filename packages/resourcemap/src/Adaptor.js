@@ -33,7 +33,7 @@ export function submitSite(collection_id, submissionData) {
     if ([200, 201, 202].indexOf(response.statusCode) > -1) return false;
     if (error) return error;
     return new Error(
-      `Server responded with ${response.statusCode} \n ${response.body}`
+      `Server responded with ${response.statusCode} \n ${response.body}`,
     );
   }
 
@@ -45,7 +45,7 @@ export function submitSite(collection_id, submissionData) {
         ':' +
         '\n' +
         JSON.stringify(body, null, 4) +
-        '\n'
+        '\n',
     );
 
     const { username, password, baseUrl } = state.configuration;
@@ -78,7 +78,7 @@ export function submitSite(collection_id, submissionData) {
             console.log('Site submission succeeded.');
             resolve(body);
           }
-        }
+        },
       );
     });
 
@@ -92,15 +92,17 @@ export function submitSite(collection_id, submissionData) {
 }
 
 export {
-  fn,
-  fnIf,
   alterState,
-  field,
-  fields,
-  sourceValue,
-  merge,
-  each,
+  combine,
   dataPath,
   dataValue,
+  each,
+  field,
+  fields,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
+  merge,
+  sourceValue,
 } from '@openfn/language-common';

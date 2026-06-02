@@ -499,6 +499,7 @@ export {
   join,
   jsonValue,
   lastReferenceValue,
+  log,
   map,
   merge,
   referencePath,

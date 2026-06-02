@@ -1,5 +1,25 @@
 # @openfn/language-varo
 
+## 2.2.1
+
+### Patch Changes
+
+- Updated dependencies [5276a86]
+  - @openfn/language-common@3.3.3
+
+## 2.2.0
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
+## 2.1.11
+
+### Patch Changes
+
+- Updated dependencies [9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 2.1.10 - 07 April 2026
 
 ### Patch Changes

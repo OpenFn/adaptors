@@ -1,5 +1,25 @@
 # @openfn/language-lamisplus
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [5276a86]
+  - @openfn/language-common@3.3.3
+
+## 0.2.0
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies [9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 0.1.3 - 07 April 2026
 
 ### Patch Changes

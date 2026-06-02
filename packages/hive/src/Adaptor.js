@@ -123,6 +123,7 @@ async function execSql(statement, options) {
 }
 
 export {
+  combine,
   dataPath,
   dataValue,
   dateFns,
@@ -131,8 +132,9 @@ export {
   fields,
   fn,
   fnIf,
-  parseCsv,
   lastReferenceValue,
+  log,
   merge,
+  parseCsv,
   sourceValue,
 } from '@openfn/language-common';

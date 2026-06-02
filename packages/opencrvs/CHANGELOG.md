@@ -1,5 +1,40 @@
 # @openfn/language-opencrvs
 
+## 1.2.1
+
+### Patch Changes
+
+- Updated dependencies [5276a86]
+  - @openfn/language-common@3.3.3
+  - @openfn/language-fhir-4@0.5.4
+
+## 1.2.0
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
+## 1.1.1
+
+### Patch Changes
+
+- Updated dependencies [9d1e1ae]
+  - @openfn/language-common@3.3.2
+  - @openfn/language-fhir-4@0.5.3
+
+## 1.1.0 - 20 May 2026
+
+### Minor Changes
+
+- 2332c48: Add v2 event-notification API support: `createEvent`, `notifyEvent`,
+  `submitBirthNotification` (chained create+notify), and `getLocations`. The
+  opencrvs adaptor's internal `request` helper now accepts a `host` option
+  (`'gateway' | 'register' | 'countryconfig'`, default `'gateway'`) to target
+  the appropriate OpenCRVS subdomain. Existing operations
+  (`createBirthNotification`, `queryEvents`) are unchanged and continue to
+  target the v1 gateway; `createBirthNotification` is marked `@deprecated` for
+  v2 deployments.
+
 ## 1.0.27 - 17 April 2026
 
 ### Patch Changes

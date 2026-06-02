@@ -1,5 +1,25 @@
 # @openfn/language-salesforce
 
+## 9.1.1
+
+### Patch Changes
+
+- Updated dependencies [5276a86]
+  - @openfn/language-common@3.3.3
+
+## 9.1.0
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
+## 9.0.9
+
+### Patch Changes
+
+- Updated dependencies [9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 9.0.8 - 07 April 2026
 
 ### Patch Changes

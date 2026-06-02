@@ -1,5 +1,26 @@
 # @openfn/language-telerivet
 
+## 0.4.1
+
+### Patch Changes
+
+- Updated dependencies [5276a86]
+  - @openfn/language-common@3.3.3
+
+## 0.4.0
+
+### Minor Changes
+
+- 71115af: export `combine` function from common
+- bf26881: export `log` function from common
+
+## 0.3.28
+
+### Patch Changes
+
+- Updated dependencies [9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 0.3.27 - 07 April 2026
 
 ### Patch Changes

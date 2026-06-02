@@ -35,7 +35,7 @@ export function execute(...operations) {
     return commonExecute(
       challenge,
       login,
-      ...flatten(operations)
+      ...flatten(operations),
     )({ ...initialState, ...state });
   };
 }
@@ -57,7 +57,7 @@ function challenge(state) {
           const parsedBody = JSON.parse(body);
           resolve(parsedBody.result.token);
         }
-      }
+      },
     );
   }).then(value => {
     return { ...state, token: value };
@@ -91,7 +91,7 @@ export function login(state) {
           const parsedBody = JSON.parse(body);
           resolve(parsedBody);
         }
-      }
+      },
     );
   }).then(result => {
     return { ...state, session: result };
@@ -117,7 +117,7 @@ export function listTypes() {
             console.log(body);
             resolve(body);
           }
-        }
+        },
       );
     }).then(data => {
       const nextState = { ...state, response: { body: data } };
@@ -132,7 +132,7 @@ export function postElement(params) {
     const { sessionName } = state.session.result;
 
     const [resolvedParams] = expandReferences(state, params);
-    const {elementType, element, operation} = resolvedParams;
+    const { elementType, element, operation } = resolvedParams;
 
     const url = `${hostUrl}/webservice.php`;
     // const url = 'https://requestb.in/1irtrgz1';
@@ -161,7 +161,7 @@ export function postElement(params) {
             console.log(body);
             resolve(body);
           }
-        }
+        },
       );
     }).then(data => {
       const nextState = { ...state, response: { body: data } };
@@ -171,15 +171,17 @@ export function postElement(params) {
 }
 
 export {
-  field,
-  fields,
-  sourceValue,
   alterState,
-  fn,
-  fnIf,
-  each,
-  merge,
+  combine,
   dataPath,
   dataValue,
+  each,
+  field,
+  fields,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
+  merge,
+  sourceValue,
 } from '@openfn/language-common';
