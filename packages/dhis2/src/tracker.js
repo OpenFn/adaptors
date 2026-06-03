@@ -58,12 +58,7 @@ function _import(strategy, payload, options = {}) {
     const [resolvedStrategy, resolvedPayload, resolvedOptions] =
       expandReferences(state, strategy, payload, options);
 
-    const {
-      apiVersion,
-      parseAs,
-      async: asyncOption,
-      ...query
-    } = resolvedOptions;
+    const { apiVersion, parseAs, async = false, ...query } = resolvedOptions;
 
     const response = await util.request(state.configuration, {
       method: 'POST',
@@ -80,7 +75,7 @@ function _import(strategy, payload, options = {}) {
         parseAs,
         query: {
           ...query,
-          async: asyncOption || false,
+          async,
         },
       },
       data: resolvedPayload,
