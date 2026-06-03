@@ -121,7 +121,11 @@ export { _import as import };
  * @function
  * @param {string} path - Path to the resource, relative to the /tracker endpoint
  * @param {object} query - An object of query parameters to be encoded into the URL. Can include pagination parameters, filters, etc.
- * @param {boolean} [query.async=false] - Whether to perform the export asynchronously. Defaults to false.
+ * @param {number} [query.page=1] - Page number to return
+ * @param {number} [query.pageSize=50] - Number of results per page
+ * @param {boolean} [query.totalPages=false] - Whether to return total number of elements and pages
+ * @param {boolean} [query.paging=true] - Set to false to return all rows without paging
+ * @param {string} [query.order] - Comma-separated field:sortDirection pairs, e.g. `createdAt:desc`
  * @param {TrackerOptions} [options] - An optional object containing parseAs, and apiVersion for the request
  * @state {DHIS2State}
  * @returns {Operation}
@@ -148,7 +152,6 @@ function _export(path, query = {}, options = {}) {
         ...resolvedOptions,
         query: {
           ...resolvedQuery,
-          async: resolvedQuery.async || false,
         },
       },
     });
