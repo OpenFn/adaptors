@@ -105,7 +105,7 @@ export { _import as import };
  * @example <caption>Export all events with pagination</caption>
  * tracker.export('events', { totalPages: true, pageSize: 1e4 });
  * fn(state => {
- *   state.results = state.data.events;
+ *   state.results = state.data.instances;
  *   const { page, pageSize, pageCount, total } = state.data.pager;
  *   const remainingPages = pageCount - page;
  *
@@ -119,7 +119,7 @@ export { _import as import };
  *   tracker
  *     .export('events', { pageSize: $.pageSize, page: $.data })
  *     .then(state => {
- *       state.results = state.results.concat(state.data.events);
+ *       state.results = state.results.concat(state.data.instances);
  *       return state;
  *     }),
  * );
