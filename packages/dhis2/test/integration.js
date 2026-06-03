@@ -481,7 +481,7 @@ describe('Integration tests', () => {
       );
     });
   });
-  describe.skip('tracker', () => {
+  describe('tracker', () => {
     it('should export 50 events by default', async () => {
       // v2.41+ for older version `skipPaging: true`
       const state = {
@@ -546,6 +546,6 @@ describe('Integration tests', () => {
       )(state);
 
       expect(results).to.be.greaterThan(3e4);
-    }).timeout(3e4);
+    }).timeout(5e4);
   });
 });
