@@ -1,6 +1,11 @@
 import { expandReferences } from '@openfn/language-common/util';
 import { composeNextState } from '@openfn/language-common';
-import { processImage } from './Utils.js';
+import { processImage, processImageJsquash } from './Utils.js';
+
+function decodeBase64Image(base64ImgStr) {
+  const raw = base64ImgStr.includes(',') ? base64ImgStr.split(',')[1] : base64ImgStr;
+  return Buffer.from(raw, 'base64');
+}
 
 /**
  * State object
@@ -39,12 +44,44 @@ export function process(base64ImgStr, options = {}) {
       options,
     );
 
-    // Strip data URL prefix if present (e.g. "data:image/jpeg;base64,...")
-    const raw = resolvedBase64ImgStr.includes(',')
-      ? resolvedBase64ImgStr.split(',')[1]
-      : resolvedBase64ImgStr;
-    const imageBuffer = Buffer.from(raw, 'base64');
+    const imageBuffer = decodeBase64Image(resolvedBase64ImgStr);
     const result = await processImage(imageBuffer, resolvedOptions);
+    return composeNextState(state, result);
+  };
+}
+
+/**
+ * @jsquash/jpeg variant of `process`. Uses MozJPEG (WebAssembly) for
+ * decode/encode and produces smaller files than jimp at the same quality.
+ * Input must be a JPEG — PNG and other formats are not supported.
+ * Writes `{ buffer, size, quality }` to `state.data`.
+ * @example
+ * processJsquash(state.data.base64, {
+ *   width: 1200,
+ *   height: 1600,
+ *   maxBytes: 700 * 1024,
+ *   comment: 'patient-id=123',
+ * });
+ * @function
+ * @param {string} base64ImgStr - Base64 encoded JPEG string or data URL
+ * @param {object} [options={}]
+ * @param {number} [options.width=1200] - Output width in pixels
+ * @param {number} [options.height=1600] - Output height in pixels
+ * @param {number} [options.maxBytes=716800] - Maximum output file size in bytes
+ * @param {number} [options.minQuality=20] - JPEG quality floor (1–100)
+ * @param {string} [options.comment] - String to embed in the EXIF UserComment field
+ * @state {ImageState}
+ * @returns {Operation}
+ */
+export function processJsquash(base64ImgStr, options = {}) {
+  return async state => {
+    const [resolvedBase64ImgStr, resolvedOptions] = expandReferences(
+      state,
+      base64ImgStr,
+      options,
+    );
+    const imageBuffer = decodeBase64Image(resolvedBase64ImgStr);
+    const result = await processImageJsquash(imageBuffer, resolvedOptions);
     return composeNextState(state, result);
   };
 }
