@@ -39,7 +39,10 @@ describe('process', () => {
   describe('output dimensions', () => {
     it('keeps exact 1200×1600 when source is already at target dimensions', async () => {
       // portrait-exact.jpg: 1200×1600 — no resize should occur
-      const finalState = await process(toBase64('portrait-exact.jpg'), DEFAULT_OPTS)(state);
+      const finalState = await process(
+        toBase64('portrait-exact.jpg'),
+        DEFAULT_OPTS,
+      )(state);
 
       const out = await Jimp.read(finalState.data.buffer);
       expect(out.width).to.equal(1200);
@@ -48,7 +51,10 @@ describe('process', () => {
 
     it('stretches a near-square image to the requested portrait dimensions', async () => {
       // square.jpg: 3024×3014 — aspect ratio changes from ~1:1 to 3:4
-      const finalState = await process(toBase64('square.jpg'), DEFAULT_OPTS)(state);
+      const finalState = await process(
+        toBase64('square.jpg'),
+        DEFAULT_OPTS,
+      )(state);
 
       const out = await Jimp.read(finalState.data.buffer);
       expect(out.width).to.equal(1200);
@@ -57,7 +63,10 @@ describe('process', () => {
 
     it('upscales a small non-3:4 portrait to the requested dimensions', async () => {
       // tiny.jpg: 960×1548 — non-standard ratio, below minimum on both axes
-      const finalState = await process(toBase64('tiny.jpg'), DEFAULT_OPTS)(state);
+      const finalState = await process(
+        toBase64('tiny.jpg'),
+        DEFAULT_OPTS,
+      )(state);
 
       const out = await Jimp.read(finalState.data.buffer);
       expect(out.width).to.equal(1200);
@@ -65,7 +74,10 @@ describe('process', () => {
     });
     it('resizes a large landscape image to the requested portrait dimensions', async () => {
       // 1.jpg: 4000×2667 landscape — needs heavy downscale + orientation change
-      const finalState = await process(toBase64('landscape-large.jpg'), DEFAULT_OPTS)(state);
+      const finalState = await process(
+        toBase64('landscape-large.jpg'),
+        DEFAULT_OPTS,
+      )(state);
 
       const out = await Jimp.read(finalState.data.buffer);
       expect(out.width).to.equal(1200);
@@ -75,7 +87,10 @@ describe('process', () => {
 
     it('resizes a portrait image with exact 3:4 ratio cleanly', async () => {
       // 7.jpg: 960×1280 — already 3:4, just needs upscaling
-      const finalState = await process(toBase64('portrait-3-4.jpg'), DEFAULT_OPTS)(state);
+      const finalState = await process(
+        toBase64('portrait-3-4.jpg'),
+        DEFAULT_OPTS,
+      )(state);
 
       const out = await Jimp.read(finalState.data.buffer);
       expect(out.width).to.equal(1200);
@@ -86,14 +101,20 @@ describe('process', () => {
   describe('compression', () => {
     it('compresses a large portrait image under maxBytes', async () => {
       // 4.jpg: 1643×2408  2.9MB — needs significant compression to hit 700KB
-      const finalState = await process(toBase64('portrait-large.jpg'), DEFAULT_OPTS)(state);
+      const finalState = await process(
+        toBase64('portrait-large.jpg'),
+        DEFAULT_OPTS,
+      )(state);
 
       expect(finalState.data.size).to.be.at.most(DEFAULT_OPTS.maxBytes);
     });
 
     it('does not reduce quality when source already fits under maxBytes at default quality', async () => {
       // portrait-exact.jpg: 411KB source — after resize to 1200×1600 should still be under 700KB
-      const finalState = await process(toBase64('portrait-exact.jpg'), DEFAULT_OPTS)(state);
+      const finalState = await process(
+        toBase64('portrait-exact.jpg'),
+        DEFAULT_OPTS,
+      )(state);
 
       expect(finalState.data.quality).to.equal(80);
       expect(finalState.data.size).to.be.at.most(DEFAULT_OPTS.maxBytes);
@@ -127,7 +148,9 @@ describe('process', () => {
   describe('GPS stripping', () => {
     it('removes GPS tags from a landscape image that carries GPS EXIF', async () => {
       // Confirm the source actually has GPS data before asserting it's stripped
-      const srcExif = piexif.load(toBuf('landscape-with-gps.JPG').toString('binary'));
+      const srcExif = piexif.load(
+        toBuf('landscape-with-gps.JPG').toString('binary'),
+      );
       expect(Object.keys(srcExif.GPS ?? {})).to.not.be.empty;
 
       const finalState = await process(
@@ -148,7 +171,10 @@ describe('process', () => {
       const srcExif = piexif.load(toBuf('with-gps.JPG').toString('binary'));
       expect(Object.keys(srcExif.GPS ?? {})).to.not.be.empty;
 
-      const finalState = await process(toBase64('with-gps.JPG'), DEFAULT_OPTS)(state);
+      const finalState = await process(
+        toBase64('with-gps.JPG'),
+        DEFAULT_OPTS,
+      )(state);
 
       let outExif;
       try {
@@ -163,7 +189,10 @@ describe('process', () => {
   describe('output validity', () => {
     it('always produces a valid JPEG buffer', async () => {
       // 6.jpg: 1080×1920 portrait — verify output is readable JPEG
-      const finalState = await process(toBase64('portrait-medium.jpg'), DEFAULT_OPTS)(state);
+      const finalState = await process(
+        toBase64('portrait-medium.jpg'),
+        DEFAULT_OPTS,
+      )(state);
 
       const buf = finalState.data.buffer;
       // JPEG magic bytes: FF D8
@@ -171,22 +200,32 @@ describe('process', () => {
       expect(buf[1]).to.equal(0xd8);
       // Jimp can re-read it without throwing
       let readOk = true;
-      try { await Jimp.read(buf); } catch { readOk = false; }
+      try {
+        await Jimp.read(buf);
+      } catch {
+        readOk = false;
+      }
       expect(readOk).to.be.true;
     });
 
     it('converts a grayscale source to a valid RGB JPEG', async () => {
       // grayscale.jpg: 4000×6000 grayscale — jimp outputs RGB JPEG regardless of source colour space
-      const finalState = await process(toBase64('grayscale.jpg'), DEFAULT_OPTS)(state);
+      const finalState = await process(
+        toBase64('grayscale.jpg'),
+        DEFAULT_OPTS,
+      )(state);
 
       const buf = finalState.data.buffer;
       expect(buf[0]).to.equal(0xff);
       expect(buf[1]).to.equal(0xd8);
       let readOk = true;
-      try { await Jimp.read(buf); } catch { readOk = false; }
+      try {
+        await Jimp.read(buf);
+      } catch {
+        readOk = false;
+      }
       expect(readOk).to.be.true;
     });
-
   });
 
   describe('EXIF UserComment', () => {
@@ -203,7 +242,10 @@ describe('process', () => {
     });
 
     it('produces a valid JPEG when no comment is provided', async () => {
-      const finalState = await process(toBase64('portrait-3-4.jpg'), DEFAULT_OPTS)(state);
+      const finalState = await process(
+        toBase64('portrait-3-4.jpg'),
+        DEFAULT_OPTS,
+      )(state);
 
       const buf = finalState.data.buffer;
       expect(buf[0]).to.equal(0xff);
@@ -213,7 +255,10 @@ describe('process', () => {
 
   describe('input format', () => {
     it('accepts a raw base64 string', async () => {
-      const finalState = await process(toBase64('portrait-small.jpg'), DEFAULT_OPTS)(state);
+      const finalState = await process(
+        toBase64('portrait-small.jpg'),
+        DEFAULT_OPTS,
+      )(state);
       expect(finalState.data.buffer).to.be.instanceOf(Buffer);
     });
 
@@ -230,7 +275,10 @@ describe('process', () => {
 
   describe('state composition', () => {
     it('writes buffer, size, and quality to state.data', async () => {
-      const finalState = await process(toBase64('portrait-3-4.jpg'), DEFAULT_OPTS)(state);
+      const finalState = await process(
+        toBase64('portrait-3-4.jpg'),
+        DEFAULT_OPTS,
+      )(state);
 
       expect(finalState.data).to.have.keys(['buffer', 'size', 'quality']);
       expect(finalState.data.buffer).to.be.instanceOf(Buffer);
@@ -239,12 +287,133 @@ describe('process', () => {
     });
 
     it('moves the previous state.data into references on each call', async () => {
-      const seed = { configuration: {}, data: { existingField: 'hello' }, references: [] };
-      const finalState = await process(toBase64('portrait-small.jpg'), DEFAULT_OPTS)(seed);
+      const seed = {
+        configuration: {},
+        data: { existingField: 'hello' },
+        references: [],
+      };
+      const finalState = await process(
+        toBase64('portrait-small.jpg'),
+        DEFAULT_OPTS,
+      )(seed);
 
       // The seed's data should now be the first (and only) reference
       expect(finalState.references).to.have.length(1);
       expect(finalState.references[0]).to.deep.equal(seed.data);
+    });
+  });
+
+  describe('non-JPEG input formats', () => {
+    it('converts sample-1.png to a valid 1200×1600 JPEG', async () => {
+      const finalState = await process(
+        toBase64('sample-1.png'),
+        DEFAULT_OPTS,
+      )(state);
+
+      const buf = finalState.data.buffer;
+      expect(buf[0]).to.equal(0xff);
+      expect(buf[1]).to.equal(0xd8);
+      const out = await Jimp.read(buf);
+      expect(out.width).to.equal(1200);
+      expect(out.height).to.equal(1600);
+    });
+
+    it('converts sample-2.png to a valid 1200×1600 JPEG', async () => {
+      const finalState = await process(
+        toBase64('sample-2.png'),
+        DEFAULT_OPTS,
+      )(state);
+
+      const buf = finalState.data.buffer;
+      expect(buf[0]).to.equal(0xff);
+      expect(buf[1]).to.equal(0xd8);
+      const out = await Jimp.read(buf);
+      expect(out.width).to.equal(1200);
+      expect(out.height).to.equal(1600);
+    });
+
+    it('accepts a PNG data URL (data:image/png;base64,...) and strips the prefix', async () => {
+      const dataUrl = `data:image/png;base64,${toBase64('sample-1.png')}`;
+      const finalState = await process(dataUrl, DEFAULT_OPTS)(state);
+
+      expect(finalState.data.buffer).to.be.instanceOf(Buffer);
+      const out = await Jimp.read(finalState.data.buffer);
+      expect(out.width).to.equal(1200);
+      expect(out.height).to.equal(1600);
+    });
+
+    it('converts blue-and-bingo.gif to a valid JPEG', async () => {
+      const finalState = await process(
+        toBase64('blue-and-bingo.gif'),
+        DEFAULT_OPTS,
+      )(state);
+
+      const buf = finalState.data.buffer;
+      expect(buf[0]).to.equal(0xff);
+      expect(buf[1]).to.equal(0xd8);
+      expect(finalState.data.size).to.be.at.most(DEFAULT_OPTS.maxBytes);
+    });
+
+    it('converts bugs-bunny-hold-up-doc.gif (animated) to a valid JPEG using the first frame', async () => {
+      const finalState = await process(
+        toBase64('bugs-bunny-hold-up-doc.gif'),
+        DEFAULT_OPTS,
+      )(state);
+
+      const buf = finalState.data.buffer;
+      expect(buf[0]).to.equal(0xff);
+      expect(buf[1]).to.equal(0xd8);
+      let readOk = true;
+      try {
+        await Jimp.read(buf);
+      } catch {
+        readOk = false;
+      }
+      expect(readOk).to.be.true;
+    });
+
+    it('converts a 16-bit BMP to a valid JPEG', async () => {
+      const finalState = await process(
+        toBase64('blue-bmp-16-bit.bmp'),
+        DEFAULT_OPTS,
+      )(state);
+
+      const buf = finalState.data.buffer;
+      expect(buf[0]).to.equal(0xff);
+      expect(buf[1]).to.equal(0xd8);
+      let readOk = true;
+      try {
+        await Jimp.read(buf);
+      } catch {
+        readOk = false;
+      }
+      expect(readOk).to.be.true;
+    });
+
+    it('rejects an AVIF input (no Jimp AVIF plugin installed)', async () => {
+      let threw = false;
+      try {
+        await process(
+          toBase64('animated-avif-12-frames-hq-lossy.avif'),
+          DEFAULT_OPTS,
+        )(state);
+      } catch {
+        threw = true;
+      }
+      expect(threw).to.be.true;
+    });
+
+    it('rejects an SVG input (no Jimp SVG plugin installed)', async () => {
+      let threw = false;
+      try {
+        await process(
+          toBase64('svg-sample-transparent-large.svg'),
+          DEFAULT_OPTS,
+        )(state);
+      } catch {
+        threw = true;
+      }
+      expect(threw).to.be.true;
     });
   });
 });
@@ -341,7 +510,11 @@ describe('processJsquash', () => {
       expect(buf[0]).to.equal(0xff);
       expect(buf[1]).to.equal(0xd8);
       let readOk = true;
-      try { await Jimp.read(buf); } catch { readOk = false; }
+      try {
+        await Jimp.read(buf);
+      } catch {
+        readOk = false;
+      }
       expect(readOk).to.be.true;
     });
 
@@ -349,7 +522,10 @@ describe('processJsquash', () => {
       const srcExif = piexif.load(toBuf('with-gps.JPG').toString('binary'));
       expect(Object.keys(srcExif.GPS ?? {})).to.not.be.empty;
 
-      const finalState = await processJsquash(toBase64('with-gps.JPG'), DEFAULT_OPTS)(state);
+      const finalState = await processJsquash(
+        toBase64('with-gps.JPG'),
+        DEFAULT_OPTS,
+      )(state);
 
       let outExif;
       try {
@@ -386,6 +562,70 @@ describe('processJsquash', () => {
       expect(finalState.data.buffer).to.be.instanceOf(Buffer);
       expect(finalState.data.size).to.be.a('number').and.greaterThan(0);
       expect(finalState.data.quality).to.be.within(20, 80);
+    });
+  });
+
+  describe('unsupported input formats', () => {
+    it('rejects a PNG input (MozJPEG decoder is JPEG-only)', async () => {
+      let threw = false;
+      try {
+        await processJsquash(toBase64('sample-1.png'), DEFAULT_OPTS)(state);
+      } catch {
+        threw = true;
+      }
+      expect(threw).to.be.true;
+    });
+
+    it('rejects a GIF input', async () => {
+      let threw = false;
+      try {
+        await processJsquash(
+          toBase64('blue-and-bingo.gif'),
+          DEFAULT_OPTS,
+        )(state);
+      } catch {
+        threw = true;
+      }
+      expect(threw).to.be.true;
+    });
+
+    it('rejects a BMP input', async () => {
+      let threw = false;
+      try {
+        await processJsquash(
+          toBase64('blue-bmp-16-bit.bmp'),
+          DEFAULT_OPTS,
+        )(state);
+      } catch {
+        threw = true;
+      }
+      expect(threw).to.be.true;
+    });
+
+    it('rejects an AVIF input', async () => {
+      let threw = false;
+      try {
+        await processJsquash(
+          toBase64('animated-avif-12-frames-hq-lossy.avif'),
+          DEFAULT_OPTS,
+        )(state);
+      } catch {
+        threw = true;
+      }
+      expect(threw).to.be.true;
+    });
+
+    it('rejects an SVG input', async () => {
+      let threw = false;
+      try {
+        await processJsquash(
+          toBase64('svg-sample-transparent-large.svg'),
+          DEFAULT_OPTS,
+        )(state);
+      } catch {
+        threw = true;
+      }
+      expect(threw).to.be.true;
     });
   });
 });
