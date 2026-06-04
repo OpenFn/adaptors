@@ -1274,6 +1274,12 @@ importers:
 
   packages/image-fn:
     dependencies:
+      '@jsquash/jpeg':
+        specifier: ^1.6.0
+        version: 1.6.0
+      '@jsquash/resize':
+        specifier: ^2.1.1
+        version: 2.1.1
       '@openfn/language-common':
         specifier: workspace:*
         version: link:../common
@@ -1284,12 +1290,6 @@ importers:
         specifier: ^1.0.6
         version: 1.0.6
     devDependencies:
-      '@jsquash/jpeg':
-        specifier: ^1.6.0
-        version: 1.6.0
-      '@jsquash/resize':
-        specifier: ^2.1.1
-        version: 2.1.1
       assertion-error:
         specifier: 2.0.0
         version: 2.0.0
