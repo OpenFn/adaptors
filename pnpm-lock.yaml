@@ -1272,7 +1272,7 @@ importers:
         specifier: ^7.24.7
         version: 7.24.7
 
-  packages/image-fn:
+  packages/image-utils:
     dependencies:
       '@openfn/language-common':
         specifier: workspace:*
