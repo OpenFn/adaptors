@@ -12,10 +12,8 @@ function resolveInput(raw) {
   return Buffer.isBuffer(raw) ? raw : decodeBase64Image(raw);
 }
 
-// util.encode from language-common is text/JSON-oriented (utf-8 encoding).
-// For binary image buffers we encode directly with buffer.toString('base64').
-function applyBase64Option(result, encode) {
-  if (!encode) return result;
+function applyParseAs(result, parseAs) {
+  if (parseAs !== 'base64') return result;
   const { buffer, ...rest } = result;
   return { ...rest, base64: buffer.toString('base64') };
 }
@@ -38,15 +36,25 @@ function applyBase64Option(result, encode) {
  * @param {object} [options={}]
  * @param {number} [options.width=1200] - Output width in pixels
  * @param {number} [options.height=1600] - Output height in pixels
- * @param {boolean} [options.base64=false] - When true, returns `{ base64, width, height }` instead of `{ buffer, width, height }`
+ * @param {'buffer'|'base64'} [options.parseAs='buffer'] - Return format: `'buffer'` (default) or `'base64'`
  * @state {ImageState}
  * @returns {Operation}
  */
 export function resize(base64ImgOrBuffer, options = {}) {
   return async state => {
-    const [resolvedImg, resolvedOptions] = expandReferences(state, base64ImgOrBuffer, options);
-    const result = await resizeImage(resolveInput(resolvedImg), resolvedOptions);
-    return composeNextState(state, applyBase64Option(result, resolvedOptions.base64));
+    const [resolvedImg, resolvedOptions] = expandReferences(
+      state,
+      base64ImgOrBuffer,
+      options,
+    );
+    const result = await resizeImage(
+      resolveInput(resolvedImg),
+      resolvedOptions,
+    );
+    return composeNextState(
+      state,
+      applyParseAs(result, resolvedOptions.parseAs),
+    );
   };
 }
 
@@ -62,15 +70,25 @@ export function resize(base64ImgOrBuffer, options = {}) {
  * @param {number} [options.maxBytes=716800] - Maximum output file size in bytes
  * @param {number} [options.minQuality=20] - JPEG quality floor (1–100); compression stops here even if maxBytes is not met
  * @param {string} [options.comment] - String to embed in the EXIF UserComment field
- * @param {boolean} [options.base64=false] - When true, returns `{ base64, size, quality }` instead of `{ buffer, size, quality }`
+ * @param {'buffer'|'base64'} [options.parseAs='buffer'] - Return format: `'buffer'` (default) or `'base64'`
  * @state {ImageState}
  * @returns {Operation}
  */
 export function compress(base64ImgOrBuffer, options = {}) {
   return async state => {
-    const [resolvedImg, resolvedOptions] = expandReferences(state, base64ImgOrBuffer, options);
-    const result = await compressImage(resolveInput(resolvedImg), resolvedOptions);
-    return composeNextState(state, applyBase64Option(result, resolvedOptions.base64));
+    const [resolvedImg, resolvedOptions] = expandReferences(
+      state,
+      base64ImgOrBuffer,
+      options,
+    );
+    const result = await compressImage(
+      resolveInput(resolvedImg),
+      resolvedOptions,
+    );
+    return composeNextState(
+      state,
+      applyParseAs(result, resolvedOptions.parseAs),
+    );
   };
 }
 
@@ -82,15 +100,22 @@ export function compress(base64ImgOrBuffer, options = {}) {
  * @function
  * @param {string|Buffer|Function} base64ImgOrBuffer - Base64 string, data URL, Buffer, or resolver fn
  * @param {object} [options={}]
- * @param {boolean} [options.base64=false] - When true, returns `{ base64 }` instead of `{ buffer }`
+ * @param {'buffer'|'base64'} [options.parseAs='buffer'] - Return format: `'buffer'` (default) or `'base64'`
  * @state {ImageState}
  * @returns {Operation}
  */
 export function strip(base64ImgOrBuffer, options = {}) {
   return async state => {
-    const [resolvedImg, resolvedOptions] = expandReferences(state, base64ImgOrBuffer, options);
+    const [resolvedImg, resolvedOptions] = expandReferences(
+      state,
+      base64ImgOrBuffer,
+      options,
+    );
     const result = await stripImage(resolveInput(resolvedImg));
-    return composeNextState(state, applyBase64Option(result, resolvedOptions.base64));
+    return composeNextState(
+      state,
+      applyParseAs(result, resolvedOptions.parseAs),
+    );
   };
 }
 

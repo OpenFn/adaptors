@@ -150,10 +150,10 @@ describe('resize', () => {
   });
 
   describe('base64 option', () => {
-    it('returns { base64, width, height } when base64: true', async () => {
+    it("returns { base64, width, height } when parseAs: 'base64'", async () => {
       const finalState = await resize(
         toBase64Str('portrait-small.jpg'),
-        { ...DEFAULT_RESIZE_OPTS, base64: true },
+        { ...DEFAULT_RESIZE_OPTS, parseAs: 'base64' },
       )(state);
 
       expect(finalState.data).to.have.keys(['base64', 'width', 'height']);
@@ -287,11 +287,11 @@ describe('compress', () => {
   });
 
   describe('base64 option', () => {
-    it('returns { base64, size, quality } when base64: true', async () => {
+    it("returns { base64, size, quality } when parseAs: 'base64'", async () => {
       const inputBuffer = await getResizedBuffer('portrait-small.jpg');
       const finalState = await compress(
         inputBuffer,
-        { ...DEFAULT_COMPRESS_OPTS, base64: true },
+        { ...DEFAULT_COMPRESS_OPTS, parseAs: 'base64' },
       )(state);
 
       expect(finalState.data).to.have.keys(['base64', 'size', 'quality']);
@@ -356,8 +356,8 @@ describe('strip', () => {
     expect(finalState.data.buffer).to.be.instanceOf(Buffer);
   });
 
-  it('returns { base64 } when base64: true', async () => {
-    const finalState = await strip(toBase64Str('portrait-small.jpg'), { base64: true })(state);
+  it("returns { base64 } when parseAs: 'base64'", async () => {
+    const finalState = await strip(toBase64Str('portrait-small.jpg'), { parseAs: 'base64' })(state);
 
     expect(finalState.data).to.have.keys(['base64']);
     expect(finalState.data.base64).to.be.a('string');
@@ -440,7 +440,7 @@ describe('buffer passing between steps', () => {
   it('base64 output from resize() can be fed directly into compress()', async () => {
     const resizeState = await resize(
       toBase64Str('portrait-large.jpg'),
-      { ...DEFAULT_RESIZE_OPTS, base64: true },
+      { ...DEFAULT_RESIZE_OPTS, parseAs: 'base64' },
     )(state);
     expect(resizeState.data.base64).to.be.a('string');
 
