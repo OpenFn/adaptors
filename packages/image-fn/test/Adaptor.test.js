@@ -5,7 +5,8 @@ import { expect } from 'chai';
 import { Jimp } from 'jimp';
 import piexif from 'piexifjs';
 
-import { process, processJsquash } from '../src/Adaptor.js';
+import { process, resize, compress } from '../src/Adaptor.js';
+import { resizeImage } from '../src/Utils.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -34,6 +35,13 @@ function toBuf(filename) {
 }
 
 const DEFAULT_OPTS = { width: 1200, height: 1600, maxBytes: 700 * 1024 };
+const DEFAULT_RESIZE_OPTS = { width: 1200, height: 1600 };
+const DEFAULT_COMPRESS_OPTS = { maxBytes: 700 * 1024 };
+
+async function getResizedBuffer(filename, opts = DEFAULT_RESIZE_OPTS) {
+  const { buffer } = await resizeImage(toBuf(filename), opts);
+  return buffer;
+}
 
 describe('process', () => {
   describe('output dimensions', () => {
@@ -418,14 +426,14 @@ describe('process', () => {
   });
 });
 
-// ─── processJsquash ──────────────────────────────────────────────────────────
+// ─── resize ──────────────────────────────────────────────────────────────────
 
-describe('processJsquash', () => {
+describe('resize', () => {
   describe('output dimensions', () => {
-    it('resizes a large portrait to the requested dimensions', async () => {
-      const finalState = await processJsquash(
+    it('downscales a large portrait to target dimensions', async () => {
+      const finalState = await resize(
         toBase64('portrait-large.jpg'),
-        DEFAULT_OPTS,
+        DEFAULT_RESIZE_OPTS,
       )(state);
 
       const out = await Jimp.read(finalState.data.buffer);
@@ -433,21 +441,32 @@ describe('processJsquash', () => {
       expect(out.height).to.equal(1600);
     });
 
-    it('upscales a small portrait to the requested dimensions', async () => {
-      const finalState = await processJsquash(
-        toBase64('portrait-small.jpg'),
-        DEFAULT_OPTS,
-      )(state);
-
-      const out = await Jimp.read(finalState.data.buffer);
-      expect(out.width).to.equal(1200);
-      expect(out.height).to.equal(1600);
-    });
-
-    it('resizes a landscape image to portrait dimensions', async () => {
-      const finalState = await processJsquash(
+    it('downscales a landscape image to target portrait dimensions', async () => {
+      const finalState = await resize(
         toBase64('landscape-large.jpg'),
-        DEFAULT_OPTS,
+        DEFAULT_RESIZE_OPTS,
+      )(state);
+
+      const out = await Jimp.read(finalState.data.buffer);
+      expect(out.width).to.equal(1200);
+      expect(out.height).to.equal(1600);
+    });
+
+    it('upscales a small portrait to target dimensions', async () => {
+      const finalState = await resize(
+        toBase64('portrait-small.jpg'),
+        DEFAULT_RESIZE_OPTS,
+      )(state);
+
+      const out = await Jimp.read(finalState.data.buffer);
+      expect(out.width).to.equal(1200);
+      expect(out.height).to.equal(1600);
+    });
+
+    it('stretches a square image to the requested portrait dimensions', async () => {
+      const finalState = await resize(
+        toBase64('square.jpg'),
+        DEFAULT_RESIZE_OPTS,
       )(state);
 
       const out = await Jimp.read(finalState.data.buffer);
@@ -456,55 +475,190 @@ describe('processJsquash', () => {
     });
   });
 
-  describe('compression', () => {
-    it('compresses a large portrait under maxBytes', async () => {
-      const finalState = await processJsquash(
-        toBase64('portrait-large.jpg'),
-        DEFAULT_OPTS,
+  describe('output format', () => {
+    it('converts PNG to a valid JPEG buffer', async () => {
+      const finalState = await resize(
+        toBase64('sample-1.png'),
+        DEFAULT_RESIZE_OPTS,
       )(state);
 
-      expect(finalState.data.size).to.be.at.most(DEFAULT_OPTS.maxBytes);
+      const buf = finalState.data.buffer;
+      expect(buf[0]).to.equal(0xff);
+      expect(buf[1]).to.equal(0xd8);
     });
 
-    it('does not reduce quality when the image already fits', async () => {
-      // MozJPEG is more efficient — portrait-small.jpg should still be well under 700KB after upscale
-      const finalState = await processJsquash(
+    it('converts GIF to a valid JPEG buffer', async () => {
+      const finalState = await resize(
+        toBase64('blue-and-bingo.gif'),
+        DEFAULT_RESIZE_OPTS,
+      )(state);
+
+      const buf = finalState.data.buffer;
+      expect(buf[0]).to.equal(0xff);
+      expect(buf[1]).to.equal(0xd8);
+    });
+
+    it('converts BMP to a valid JPEG buffer', async () => {
+      const finalState = await resize(
+        toBase64('blue-bmp-16-bit.bmp'),
+        DEFAULT_RESIZE_OPTS,
+      )(state);
+
+      const buf = finalState.data.buffer;
+      expect(buf[0]).to.equal(0xff);
+      expect(buf[1]).to.equal(0xd8);
+    });
+
+    it('rejects an AVIF input', async () => {
+      let threw = false;
+      try {
+        await resize(
+          toBase64('animated-avif-12-frames-hq-lossy.avif'),
+          DEFAULT_RESIZE_OPTS,
+        )(state);
+      } catch {
+        threw = true;
+      }
+      expect(threw).to.be.true;
+    });
+
+    it('rejects an SVG input', async () => {
+      let threw = false;
+      try {
+        await resize(
+          toBase64('svg-sample-transparent-large.svg'),
+          DEFAULT_RESIZE_OPTS,
+        )(state);
+      } catch {
+        threw = true;
+      }
+      expect(threw).to.be.true;
+    });
+  });
+
+  describe('input handling', () => {
+    it('accepts a data URL and strips the prefix', async () => {
+      const dataUrl = `data:image/jpeg;base64,${toBase64('portrait-small.jpg')}`;
+      const finalState = await resize(dataUrl, DEFAULT_RESIZE_OPTS)(state);
+
+      const out = await Jimp.read(finalState.data.buffer);
+      expect(out.width).to.equal(1200);
+      expect(out.height).to.equal(1600);
+    });
+
+  });
+
+  describe('state composition', () => {
+    it('writes buffer, width, and height to state.data', async () => {
+      const finalState = await resize(
+        toBase64('portrait-3-4.jpg'),
+        DEFAULT_RESIZE_OPTS,
+      )(state);
+
+      expect(finalState.data).to.have.keys(['buffer', 'width', 'height']);
+      expect(finalState.data.buffer).to.be.instanceOf(Buffer);
+      expect(finalState.data.width).to.equal(1200);
+      expect(finalState.data.height).to.equal(1600);
+    });
+
+    it('moves the previous state.data into references', async () => {
+      const seed = {
+        configuration: {},
+        data: { existingField: 'hello' },
+        references: [],
+      };
+      const finalState = await resize(
         toBase64('portrait-small.jpg'),
-        DEFAULT_OPTS,
+        DEFAULT_RESIZE_OPTS,
+      )(seed);
+
+      expect(finalState.references).to.have.length(1);
+      expect(finalState.references[0]).to.deep.equal(seed.data);
+    });
+  });
+});
+
+// ─── compress ────────────────────────────────────────────────────────────────
+
+describe('compress', () => {
+  describe('compression behaviour', () => {
+    it('compresses a large portrait image under maxBytes', async () => {
+      const inputBuffer = await getResizedBuffer('portrait-large.jpg');
+      const finalState = await compress(
+        inputBuffer,
+        DEFAULT_COMPRESS_OPTS,
+      )(state);
+
+      expect(finalState.data.size).to.be.at.most(DEFAULT_COMPRESS_OPTS.maxBytes);
+    });
+
+    it('does not reduce quality when image already fits under maxBytes', async () => {
+      const inputBuffer = await getResizedBuffer('portrait-exact.jpg');
+      const finalState = await compress(
+        inputBuffer,
+        DEFAULT_COMPRESS_OPTS,
       )(state);
 
       expect(finalState.data.quality).to.equal(80);
+      expect(finalState.data.size).to.be.at.most(DEFAULT_COMPRESS_OPTS.maxBytes);
     });
 
-    it('steps quality down until minQuality when maxBytes is unreachable', async () => {
+    it('steps quality down for high-entropy content to meet the size target', async () => {
+      const maxBytes = 150 * 1024;
+      const inputBuffer = await getResizedBuffer('heavy-noise.jpg');
+      const finalState = await compress(inputBuffer, { maxBytes })(state);
+
+      expect(finalState.data.size).to.be.at.most(maxBytes);
+      expect(finalState.data.quality).to.be.below(80);
+    });
+
+    it('stops at minQuality when the size target cannot be reached', async () => {
       const minQuality = 60;
-      const finalState = await processJsquash(toBase64('portrait-3-4.jpg'), {
-        ...DEFAULT_OPTS,
+      const inputBuffer = await getResizedBuffer('portrait-3-4.jpg');
+      const finalState = await compress(inputBuffer, {
         maxBytes: 1 * 1024,
         minQuality,
       })(state);
 
       expect(finalState.data.quality).to.equal(minQuality);
     });
+  });
 
-    it('reduces quality on high-entropy content to meet the size target', async () => {
-      const maxBytes = 100 * 1024;
-      const finalState = await processJsquash(toBase64('heavy-noise.jpg'), {
-        ...DEFAULT_OPTS,
-        maxBytes,
+  describe('EXIF handling', () => {
+    it('embeds a comment string in the EXIF UserComment field', async () => {
+      const comment = 'patient-id=42';
+      const inputBuffer = await getResizedBuffer('portrait-3-4.jpg');
+      const finalState = await compress(inputBuffer, {
+        ...DEFAULT_COMPRESS_OPTS,
+        comment,
       })(state);
 
-      expect(finalState.data.size).to.be.at.most(maxBytes);
-      expect(finalState.data.quality).to.be.below(80);
+      const exifObj = piexif.load(finalState.data.buffer.toString('binary'));
+      const userComment = exifObj?.Exif?.[piexif.ExifIFD.UserComment] ?? '';
+      expect(userComment).to.include(comment);
+    });
+
+    it('strips GPS tags from a portrait image that carries GPS EXIF', async () => {
+      const srcExif = piexif.load(toBuf('with-gps.JPG').toString('binary'));
+      expect(Object.keys(srcExif.GPS ?? {})).to.not.be.empty;
+
+      const inputBuffer = await getResizedBuffer('with-gps.JPG');
+      const finalState = await compress(inputBuffer, DEFAULT_COMPRESS_OPTS)(state);
+
+      let outExif;
+      try {
+        outExif = piexif.load(finalState.data.buffer.toString('binary'));
+      } catch {
+        outExif = {};
+      }
+      expect(outExif.GPS ?? {}).to.be.empty;
     });
   });
 
   describe('output validity', () => {
     it('produces a valid JPEG buffer', async () => {
-      const finalState = await processJsquash(
-        toBase64('portrait-medium.jpg'),
-        DEFAULT_OPTS,
-      )(state);
+      const inputBuffer = await getResizedBuffer('portrait-medium.jpg');
+      const finalState = await compress(inputBuffer, DEFAULT_COMPRESS_OPTS)(state);
 
       const buf = finalState.data.buffer;
       expect(buf[0]).to.equal(0xff);
@@ -517,115 +671,50 @@ describe('processJsquash', () => {
       }
       expect(readOk).to.be.true;
     });
-
-    it('strips EXIF from the source (MozJPEG re-encodes from raw pixels)', async () => {
-      const srcExif = piexif.load(toBuf('with-gps.JPG').toString('binary'));
-      expect(Object.keys(srcExif.GPS ?? {})).to.not.be.empty;
-
-      const finalState = await processJsquash(
-        toBase64('with-gps.JPG'),
-        DEFAULT_OPTS,
-      )(state);
-
-      let outExif;
-      try {
-        outExif = piexif.load(finalState.data.buffer.toString('binary'));
-      } catch {
-        outExif = {};
-      }
-      expect(outExif.GPS ?? {}).to.be.empty;
-    });
   });
 
-  describe('EXIF UserComment', () => {
-    it('embeds a comment string in the EXIF UserComment field', async () => {
-      const comment = 'patient-id=99';
-      const finalState = await processJsquash(toBase64('portrait-3-4.jpg'), {
-        ...DEFAULT_OPTS,
-        comment,
-      })(state);
+  describe('input handling', () => {
+    it('accepts a Buffer (e.g. output of resizeImage)', async () => {
+      const inputBuffer = await getResizedBuffer('portrait-large.jpg');
+      const finalState = await compress(inputBuffer, DEFAULT_COMPRESS_OPTS)(state);
 
-      const exifObj = piexif.load(finalState.data.buffer.toString('binary'));
-      const userComment = exifObj?.Exif?.[piexif.ExifIFD.UserComment] ?? '';
-      expect(userComment).to.include(comment);
+      expect(finalState.data.size).to.be.at.most(DEFAULT_COMPRESS_OPTS.maxBytes);
+      expect(finalState.data.buffer).to.be.instanceOf(Buffer);
+    });
+
+    it('accepts a base64 string', async () => {
+      const finalState = await compress(
+        toBase64('portrait-exact.jpg'),
+        DEFAULT_COMPRESS_OPTS,
+      )(state);
+
+      expect(finalState.data.buffer).to.be.instanceOf(Buffer);
+      expect(finalState.data.size).to.be.a('number').and.greaterThan(0);
     });
   });
 
   describe('state composition', () => {
     it('writes buffer, size, and quality to state.data', async () => {
-      const finalState = await processJsquash(
-        toBase64('portrait-3-4.jpg'),
-        DEFAULT_OPTS,
-      )(state);
+      const inputBuffer = await getResizedBuffer('portrait-3-4.jpg');
+      const finalState = await compress(inputBuffer, DEFAULT_COMPRESS_OPTS)(state);
 
       expect(finalState.data).to.have.keys(['buffer', 'size', 'quality']);
       expect(finalState.data.buffer).to.be.instanceOf(Buffer);
       expect(finalState.data.size).to.be.a('number').and.greaterThan(0);
       expect(finalState.data.quality).to.be.within(20, 80);
     });
-  });
 
-  describe('unsupported input formats', () => {
-    it('rejects a PNG input (MozJPEG decoder is JPEG-only)', async () => {
-      let threw = false;
-      try {
-        await processJsquash(toBase64('sample-1.png'), DEFAULT_OPTS)(state);
-      } catch {
-        threw = true;
-      }
-      expect(threw).to.be.true;
-    });
+    it('moves the previous state.data into references', async () => {
+      const seed = {
+        configuration: {},
+        data: { existingField: 'hello' },
+        references: [],
+      };
+      const inputBuffer = await getResizedBuffer('portrait-small.jpg');
+      const finalState = await compress(inputBuffer, DEFAULT_COMPRESS_OPTS)(seed);
 
-    it('rejects a GIF input', async () => {
-      let threw = false;
-      try {
-        await processJsquash(
-          toBase64('blue-and-bingo.gif'),
-          DEFAULT_OPTS,
-        )(state);
-      } catch {
-        threw = true;
-      }
-      expect(threw).to.be.true;
-    });
-
-    it('rejects a BMP input', async () => {
-      let threw = false;
-      try {
-        await processJsquash(
-          toBase64('blue-bmp-16-bit.bmp'),
-          DEFAULT_OPTS,
-        )(state);
-      } catch {
-        threw = true;
-      }
-      expect(threw).to.be.true;
-    });
-
-    it('rejects an AVIF input', async () => {
-      let threw = false;
-      try {
-        await processJsquash(
-          toBase64('animated-avif-12-frames-hq-lossy.avif'),
-          DEFAULT_OPTS,
-        )(state);
-      } catch {
-        threw = true;
-      }
-      expect(threw).to.be.true;
-    });
-
-    it('rejects an SVG input', async () => {
-      let threw = false;
-      try {
-        await processJsquash(
-          toBase64('svg-sample-transparent-large.svg'),
-          DEFAULT_OPTS,
-        )(state);
-      } catch {
-        threw = true;
-      }
-      expect(threw).to.be.true;
+      expect(finalState.references).to.have.length(1);
+      expect(finalState.references[0]).to.deep.equal(seed.data);
     });
   });
 });

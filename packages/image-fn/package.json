@@ -18,7 +18,7 @@
     "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist",
     "lint": "eslint src",
-    "benchmark": "node --experimental-specifier-resolution=node --no-warnings benchmark.js"
+    "benchmark": "echo 'benchmark removed — jsquash dependency dropped'"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",
@@ -29,8 +29,6 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@jsquash/jpeg": "^1.6.0",
-    "@jsquash/resize": "^2.1.1",
     "@openfn/language-common": "workspace:*",
     "jimp": "^1.6.0",
     "piexifjs": "^1.0.6"
