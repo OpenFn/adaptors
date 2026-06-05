@@ -68,7 +68,7 @@ const generateBuilder = (resourceType: any, props: any) => {
   return profiles[resourceType];
 };
 
-test.serial('sets resourceType', t => {
+run('sets resourceType', t => {
   const profile = {};
   const schema = generateBuilder('Patient', profile);
   const builder = compileBuilder(schema);
@@ -76,7 +76,7 @@ test.serial('sets resourceType', t => {
   t.is(result.resourceType, 'Patient');
 });
 
-test.serial('spreads unknown props through', t => {
+run('spreads unknown props through', t => {
   const profile = {};
   const schema = generateBuilder('Patient', profile);
   const builder = compileBuilder(schema);
@@ -85,7 +85,7 @@ test.serial('spreads unknown props through', t => {
   t.is(result.customField, 42);
 });
 
-test.serial('isArray wraps a single value into an array', t => {
+run('isArray wraps a single value into an array', t => {
   const profile = {
     x: { type: ['Reference'], isArray: true },
   };
@@ -96,7 +96,7 @@ test.serial('isArray wraps a single value into an array', t => {
   t.is(dt.reference.calls, 1);
 });
 
-test.serial('isArray keeps an existing array as-is', t => {
+run('isArray keeps an existing array as-is', t => {
   const profile = {
     x: { type: ['Reference'], isArray: true },
   };
@@ -108,7 +108,7 @@ test.serial('isArray keeps an existing array as-is', t => {
   t.is(dt.reference.calls, 1);
 });
 
-test.serial('calls dt.identifier for Identifier type', t => {
+run('calls dt.identifier for Identifier type', t => {
   const profile = {
     identifier: { type: ['Identifier'] },
   };
@@ -130,7 +130,7 @@ test.serial('builds single reference', t => {
   t.is(dt.reference.calls, 1);
 });
 
-test.serial('builds CodeableConcept', t => {
+run('builds CodeableConcept', t => {
   const profile = {
     x: {
       type: ['CodeableConcept'],
@@ -144,7 +144,7 @@ test.serial('builds CodeableConcept', t => {
   t.is(dt.concept.calls, 1);
 });
 
-test.serial('builds composite value[x]', t => {
+run('builds composite value[x]', t => {
   const profile = {
     deceased: { type: ['boolean'], isComposite: true },
   };
@@ -156,7 +156,7 @@ test.serial('builds composite value[x]', t => {
   t.is(dt.composite.calls, 1);
 });
 
-test.serial('builds typeDef with nested extension', t => {
+run('builds typeDef with nested extension', t => {
   const profile = {
     contact: {
       type: ['BackboneElement'],
@@ -177,7 +177,7 @@ test.serial('builds typeDef with nested extension', t => {
   t.is(dt.addExtension.calls, 1);
 });
 
-test.serial('builds primitive sibling extension from underscored slice input', t => {
+run('builds primitive sibling extension from underscored slice input', t => {
   const profile = {
     birthDate: {
       type: ['date'],
@@ -214,7 +214,7 @@ test.serial('builds primitive sibling extension from underscored slice input', t
   t.is(dt.addExtension.calls, 1);
 });
 
-test.serial('builds primitive sibling extension from underscored parent shorthand', t => {
+run('builds primitive sibling extension from underscored parent shorthand', t => {
   const profile = {
     birthDate: {
       type: ['date'],
@@ -250,7 +250,7 @@ test.serial('builds primitive sibling extension from underscored parent shorthan
   t.is(dt.addExtension.calls, 1);
 });
 
-test.serial('skips nil properties', t => {
+run('skips nil properties', t => {
   const profile = {
     x: { type: ['Reference'] },
   };
