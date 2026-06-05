@@ -4,6 +4,7 @@ import {
   resizeImage,
   compressImage,
   stripImage,
+  annotateImage,
   getImageMetadata,
   decodeBase64Image,
 } from './Utils.js';
@@ -69,7 +70,6 @@ export function resize(base64ImgOrBuffer, options = {}) {
  * @param {object} [options={}]
  * @param {number} [options.maxBytes=716800] - Maximum output file size in bytes
  * @param {number} [options.minQuality=20] - JPEG quality floor (1–100); compression stops here even if maxBytes is not met
- * @param {string} [options.comment] - String to embed in the EXIF UserComment field
  * @param {'buffer'|'base64'} [options.parseAs='buffer'] - Return format: `'buffer'` (default) or `'base64'`
  * @state {ImageState}
  * @returns {Operation}
@@ -116,6 +116,27 @@ export function strip(base64ImgOrBuffer, options = {}) {
       state,
       applyParseAs(result, resolvedOptions.parseAs),
     );
+  };
+}
+
+/**
+ * Embed a string in the EXIF UserComment field of a JPEG image.
+ * Writes `{ buffer }` to `state.data`.
+ * @example
+ * annotate(state.data.buffer, { comment: 'patient-id=42' })
+ * @function
+ * @param {string|Buffer|Function} base64ImgOrBuffer - Base64 string, data URL, Buffer, or resolver fn
+ * @param {object} options
+ * @param {string} options.comment - String to embed in the EXIF UserComment field
+ * @param {'buffer'|'base64'} [options.parseAs='buffer'] - Return format: `'buffer'` (default) or `'base64'`
+ * @state {ImageState}
+ * @returns {Operation}
+ */
+export function annotate(base64ImgOrBuffer, options = {}) {
+  return async state => {
+    const [resolvedImg, resolvedOptions] = expandReferences(state, base64ImgOrBuffer, options);
+    const result = annotateImage(resolveInput(resolvedImg), resolvedOptions.comment);
+    return composeNextState(state, applyParseAs(result, resolvedOptions.parseAs));
   };
 }
 

@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import { Jimp } from 'jimp';
 import piexif from 'piexifjs';
 
-import { resize, compress, strip, metadata } from '../src/Adaptor.js';
+import { resize, compress, strip, annotate, metadata } from '../src/Adaptor.js';
 import { resizeImage } from '../src/Utils.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -201,16 +201,6 @@ describe('compress', () => {
   });
 
   describe('EXIF handling', () => {
-    it('embeds a comment string in the EXIF UserComment field', async () => {
-      const comment = 'patient-id=42';
-      const inputBuffer = await getResizedBuffer('portrait-3-4.jpg');
-      const finalState = await compress(inputBuffer, { ...DEFAULT_COMPRESS_OPTS, comment })(state);
-
-      const exifObj = piexif.load(finalState.data.buffer.toString('binary'));
-      const userComment = exifObj?.Exif?.[piexif.ExifIFD.UserComment] ?? '';
-      expect(userComment).to.include(comment);
-    });
-
     it('strips GPS tags from an image that carries GPS EXIF', async () => {
       const srcExif = piexif.load(toBuf('with-gps.JPG').toString('binary'));
       expect(Object.keys(srcExif.GPS ?? {})).to.not.be.empty;
@@ -361,6 +351,56 @@ describe('strip', () => {
 
     expect(finalState.data).to.have.keys(['base64']);
     expect(finalState.data.base64).to.be.a('string');
+  });
+});
+
+// ─── annotate ────────────────────────────────────────────────────────────────
+
+describe('annotate', () => {
+  it('embeds a comment string in the EXIF UserComment field', async () => {
+    const comment = 'patient-id=42';
+    const inputBuffer = await getResizedBuffer('portrait-3-4.jpg');
+    const finalState = await annotate(inputBuffer, { comment })(state);
+
+    const exifObj = piexif.load(finalState.data.buffer.toString('binary'));
+    const userComment = exifObj?.Exif?.[piexif.ExifIFD.UserComment] ?? '';
+    expect(userComment).to.include(comment);
+  });
+
+  it('produces a valid JPEG buffer', async () => {
+    const inputBuffer = await getResizedBuffer('portrait-small.jpg');
+    const finalState = await annotate(inputBuffer, { comment: 'test' })(state);
+
+    const buf = finalState.data.buffer;
+    expect(buf[0]).to.equal(0xff);
+    expect(buf[1]).to.equal(0xd8);
+  });
+
+  it('accepts a base64 string input', async () => {
+    const finalState = await annotate(
+      toBase64Str('portrait-3-4.jpg'),
+      { comment: 'patient-id=99' },
+    )(state);
+
+    const exifObj = piexif.load(finalState.data.buffer.toString('binary'));
+    const userComment = exifObj?.Exif?.[piexif.ExifIFD.UserComment] ?? '';
+    expect(userComment).to.include('patient-id=99');
+  });
+
+  it("returns { base64 } when parseAs: 'base64'", async () => {
+    const inputBuffer = await getResizedBuffer('portrait-small.jpg');
+    const finalState = await annotate(inputBuffer, { comment: 'test', parseAs: 'base64' })(state);
+
+    expect(finalState.data).to.have.keys(['base64']);
+    expect(finalState.data.base64).to.be.a('string');
+  });
+
+  it('writes { buffer } to state.data', async () => {
+    const inputBuffer = await getResizedBuffer('portrait-small.jpg');
+    const finalState = await annotate(inputBuffer, { comment: 'test' })(state);
+
+    expect(finalState.data).to.have.keys(['buffer']);
+    expect(finalState.data.buffer).to.be.instanceOf(Buffer);
   });
 });
 

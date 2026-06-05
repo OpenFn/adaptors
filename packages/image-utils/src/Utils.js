@@ -44,8 +44,12 @@ export async function resizeImage(inputBuffer, options = {}) {
   return { buffer, width, height };
 }
 
+export function annotateImage(inputBuffer, comment) {
+  return { buffer: injectExifComment(inputBuffer, comment) };
+}
+
 export async function compressImage(inputBuffer, options = {}) {
-  const { maxBytes = 700 * 1024, minQuality = 20, comment } = options;
+  const { maxBytes = 700 * 1024, minQuality = 20 } = options;
   const kb = n => `${(n / 1024).toFixed(1)}KB`;
 
   const image = await Jimp.read(inputBuffer);
@@ -54,7 +58,6 @@ export async function compressImage(inputBuffer, options = {}) {
 
   while (true) {
     outBuffer = await image.getBuffer('image/jpeg', { quality });
-    if (comment) outBuffer = injectExifComment(outBuffer, comment);
     console.log(`→ quality=${quality} → ${kb(outBuffer.length)}`);
     if (outBuffer.length <= maxBytes || quality <= minQuality) break;
     quality -= 5;
