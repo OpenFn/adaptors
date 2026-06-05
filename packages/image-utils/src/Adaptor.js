@@ -12,6 +12,14 @@ function resolveInput(raw) {
   return Buffer.isBuffer(raw) ? raw : decodeBase64Image(raw);
 }
 
+// util.encode from language-common is text/JSON-oriented (utf-8 encoding).
+// For binary image buffers we encode directly with buffer.toString('base64').
+function applyBase64Option(result, encode) {
+  if (!encode) return result;
+  const { buffer, ...rest } = result;
+  return { ...rest, base64: buffer.toString('base64') };
+}
+
 /**
  * State object
  * @typedef {Object} ImageState
@@ -30,6 +38,7 @@ function resolveInput(raw) {
  * @param {object} [options={}]
  * @param {number} [options.width=1200] - Output width in pixels
  * @param {number} [options.height=1600] - Output height in pixels
+ * @param {boolean} [options.base64=false] - When true, returns `{ base64, width, height }` instead of `{ buffer, width, height }`
  * @state {ImageState}
  * @returns {Operation}
  */
@@ -37,7 +46,7 @@ export function resize(base64ImgOrBuffer, options = {}) {
   return async state => {
     const [resolvedImg, resolvedOptions] = expandReferences(state, base64ImgOrBuffer, options);
     const result = await resizeImage(resolveInput(resolvedImg), resolvedOptions);
-    return composeNextState(state, result);
+    return composeNextState(state, applyBase64Option(result, resolvedOptions.base64));
   };
 }
 
@@ -53,6 +62,7 @@ export function resize(base64ImgOrBuffer, options = {}) {
  * @param {number} [options.maxBytes=716800] - Maximum output file size in bytes
  * @param {number} [options.minQuality=20] - JPEG quality floor (1–100); compression stops here even if maxBytes is not met
  * @param {string} [options.comment] - String to embed in the EXIF UserComment field
+ * @param {boolean} [options.base64=false] - When true, returns `{ base64, size, quality }` instead of `{ buffer, size, quality }`
  * @state {ImageState}
  * @returns {Operation}
  */
@@ -60,7 +70,7 @@ export function compress(base64ImgOrBuffer, options = {}) {
   return async state => {
     const [resolvedImg, resolvedOptions] = expandReferences(state, base64ImgOrBuffer, options);
     const result = await compressImage(resolveInput(resolvedImg), resolvedOptions);
-    return composeNextState(state, result);
+    return composeNextState(state, applyBase64Option(result, resolvedOptions.base64));
   };
 }
 
@@ -71,14 +81,16 @@ export function compress(base64ImgOrBuffer, options = {}) {
  * strip(state.data.photoBase64)
  * @function
  * @param {string|Buffer|Function} base64ImgOrBuffer - Base64 string, data URL, Buffer, or resolver fn
+ * @param {object} [options={}]
+ * @param {boolean} [options.base64=false] - When true, returns `{ base64 }` instead of `{ buffer }`
  * @state {ImageState}
  * @returns {Operation}
  */
-export function strip(base64ImgOrBuffer) {
+export function strip(base64ImgOrBuffer, options = {}) {
   return async state => {
-    const [resolvedImg] = expandReferences(state, base64ImgOrBuffer);
+    const [resolvedImg, resolvedOptions] = expandReferences(state, base64ImgOrBuffer, options);
     const result = await stripImage(resolveInput(resolvedImg));
-    return composeNextState(state, result);
+    return composeNextState(state, applyBase64Option(result, resolvedOptions.base64));
   };
 }
 
@@ -102,42 +114,6 @@ export function metadata(base64ImgOrBuffer) {
     const [resolvedImg] = expandReferences(state, base64ImgOrBuffer);
     const result = await getImageMetadata(resolveInput(resolvedImg));
     return composeNextState(state, result);
-  };
-}
-
-/**
- * Convert a Buffer to a base64 string.
- * Writes the base64 string to `state.data`.
- * @example
- * toBase64(state.data.buffer)
- * @function
- * @param {Buffer|Function} bufferOrRef - Buffer or resolver fn
- * @state {ImageState}
- * @returns {Operation}
- */
-export function toBase64(bufferOrRef) {
-  return async state => {
-    const [resolved] = expandReferences(state, bufferOrRef);
-    const base64 = Buffer.isBuffer(resolved) ? resolved.toString('base64') : resolved;
-    return composeNextState(state, base64);
-  };
-}
-
-/**
- * Convert a base64 string or data URL to a Buffer.
- * Writes the Buffer to `state.data`.
- * @example
- * toBuffer(state.data.photoBase64)
- * @function
- * @param {string|Function} base64OrRef - Base64 string, data URL, or resolver fn
- * @state {ImageState}
- * @returns {Operation}
- */
-export function toBuffer(base64OrRef) {
-  return async state => {
-    const [resolved] = expandReferences(state, base64OrRef);
-    const buffer = Buffer.isBuffer(resolved) ? resolved : decodeBase64Image(resolved);
-    return composeNextState(state, buffer);
   };
 }
 

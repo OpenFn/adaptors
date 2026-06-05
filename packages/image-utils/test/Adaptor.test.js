@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import { Jimp } from 'jimp';
 import piexif from 'piexifjs';
 
-import { resize, compress, strip, metadata, toBase64, toBuffer } from '../src/Adaptor.js';
+import { resize, compress, strip, metadata } from '../src/Adaptor.js';
 import { resizeImage } from '../src/Utils.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -148,6 +148,19 @@ describe('resize', () => {
       expect(finalState.references[0]).to.deep.equal(seed.data);
     });
   });
+
+  describe('base64 option', () => {
+    it('returns { base64, width, height } when base64: true', async () => {
+      const finalState = await resize(
+        toBase64Str('portrait-small.jpg'),
+        { ...DEFAULT_RESIZE_OPTS, base64: true },
+      )(state);
+
+      expect(finalState.data).to.have.keys(['base64', 'width', 'height']);
+      expect(finalState.data.base64).to.be.a('string');
+      expect(finalState.data.base64.length).to.be.greaterThan(0);
+    });
+  });
 });
 
 // ─── compress ────────────────────────────────────────────────────────────────
@@ -272,6 +285,19 @@ describe('compress', () => {
       expect(finalState.references[0]).to.deep.equal(seed.data);
     });
   });
+
+  describe('base64 option', () => {
+    it('returns { base64, size, quality } when base64: true', async () => {
+      const inputBuffer = await getResizedBuffer('portrait-small.jpg');
+      const finalState = await compress(
+        inputBuffer,
+        { ...DEFAULT_COMPRESS_OPTS, base64: true },
+      )(state);
+
+      expect(finalState.data).to.have.keys(['base64', 'size', 'quality']);
+      expect(finalState.data.base64).to.be.a('string');
+    });
+  });
 });
 
 // ─── strip ───────────────────────────────────────────────────────────────────
@@ -329,6 +355,13 @@ describe('strip', () => {
     expect(finalState.data).to.have.keys(['buffer']);
     expect(finalState.data.buffer).to.be.instanceOf(Buffer);
   });
+
+  it('returns { base64 } when base64: true', async () => {
+    const finalState = await strip(toBase64Str('portrait-small.jpg'), { base64: true })(state);
+
+    expect(finalState.data).to.have.keys(['base64']);
+    expect(finalState.data.base64).to.be.a('string');
+  });
 });
 
 // ─── metadata ────────────────────────────────────────────────────────────────
@@ -384,73 +417,34 @@ describe('metadata', () => {
   });
 });
 
-// ─── toBase64 / toBuffer ─────────────────────────────────────────────────────
+// ─── buffer passing between steps ────────────────────────────────────────────
 
-describe('toBase64', () => {
-  it('converts a Buffer to a base64 string', async () => {
-    const buf = toBuf('portrait-small.jpg');
-    const finalState = await toBase64(buf)(state);
-
-    expect(finalState.data).to.be.a('string');
-    expect(finalState.data).to.equal(buf.toString('base64'));
-  });
-
-  it('writes the base64 string to state.data', async () => {
-    const buf = toBuf('portrait-small.jpg');
-    const finalState = await toBase64(buf)(state);
-
-    expect(finalState.data).to.be.a('string');
-    expect(finalState.data.length).to.be.greaterThan(0);
-  });
-
-  it('is a no-op when given a string (already base64)', async () => {
-    const b64 = toBase64Str('portrait-small.jpg');
-    const finalState = await toBase64(b64)(state);
-
-    expect(finalState.data).to.equal(b64);
-  });
-});
-
-describe('toBuffer', () => {
-  it('converts a base64 string to a Buffer', async () => {
-    const b64 = toBase64Str('portrait-small.jpg');
-    const finalState = await toBuffer(b64)(state);
-
-    expect(finalState.data).to.be.instanceOf(Buffer);
-    expect(finalState.data).to.deep.equal(toBuf('portrait-small.jpg'));
-  });
-
-  it('converts a data URL to a Buffer', async () => {
-    const dataUrl = `data:image/jpeg;base64,${toBase64Str('portrait-small.jpg')}`;
-    const finalState = await toBuffer(dataUrl)(state);
-
-    expect(finalState.data).to.be.instanceOf(Buffer);
-    expect(finalState.data).to.deep.equal(toBuf('portrait-small.jpg'));
-  });
-
-  it('is a no-op when given a Buffer', async () => {
-    const buf = toBuf('portrait-small.jpg');
-    const finalState = await toBuffer(buf)(state);
-
-    expect(finalState.data).to.deep.equal(buf);
-  });
-
-  it('round-trips a buffer through base64 without data loss', async () => {
-    const resizeState = await resize(toBase64Str('portrait-small.jpg'), DEFAULT_RESIZE_OPTS)(state);
-    const originalBuffer = resizeState.data.buffer;
-
-    const b64State = await toBase64(originalBuffer)(resizeState);
-    expect(b64State.data).to.be.a('string');
-
-    const bufState = await toBuffer(b64State.data)(b64State);
-    expect(bufState.data).to.deep.equal(originalBuffer);
-  });
-
-  it('passes a buffer from resize() to compress() as an explicit argument', async () => {
+describe('buffer passing between steps', () => {
+  it('passes buffer from resize() to compress() explicitly', async () => {
     const resizeState = await resize(toBase64Str('portrait-large.jpg'), DEFAULT_RESIZE_OPTS)(state);
     const compressState = await compress(resizeState.data.buffer, DEFAULT_COMPRESS_OPTS)(resizeState);
 
     expect(compressState.data.size).to.be.at.most(DEFAULT_COMPRESS_OPTS.maxBytes);
     expect(compressState.data.buffer).to.be.instanceOf(Buffer);
+  });
+
+  it('passes buffer from resize() to strip() explicitly', async () => {
+    const resizeState = await resize(toBase64Str('with-gps.JPG'), DEFAULT_RESIZE_OPTS)(state);
+    const stripState = await strip(resizeState.data.buffer)(resizeState);
+
+    expect(stripState.data.buffer).to.be.instanceOf(Buffer);
+    expect(stripState.data.buffer[0]).to.equal(0xff);
+    expect(stripState.data.buffer[1]).to.equal(0xd8);
+  });
+
+  it('base64 output from resize() can be fed directly into compress()', async () => {
+    const resizeState = await resize(
+      toBase64Str('portrait-large.jpg'),
+      { ...DEFAULT_RESIZE_OPTS, base64: true },
+    )(state);
+    expect(resizeState.data.base64).to.be.a('string');
+
+    const compressState = await compress(resizeState.data.base64, DEFAULT_COMPRESS_OPTS)(resizeState);
+    expect(compressState.data.size).to.be.at.most(DEFAULT_COMPRESS_OPTS.maxBytes);
   });
 });
