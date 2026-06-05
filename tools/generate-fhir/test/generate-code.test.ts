@@ -182,6 +182,11 @@ test.serial('builds primitive sibling extension from underscored slice input', t
     birthDate: {
       type: ['date'],
       isArray: false,
+    },
+    _birthDate: {
+      type: [],
+      isArray: false,
+      isPrimitiveExtension: true,
       typeDef: {
         birthTime: {
           extension: {
@@ -214,6 +219,11 @@ test.serial('builds primitive sibling extension from underscored parent shorthan
     birthDate: {
       type: ['date'],
       isArray: false,
+    },
+    _birthDate: {
+      type: [],
+      isArray: false,
+      isPrimitiveExtension: true,
       typeDef: {
         text: {
           extension: {

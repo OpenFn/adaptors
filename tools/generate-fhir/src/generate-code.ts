@@ -601,8 +601,8 @@ const mapSimpleProp = (propName: string, mapping: Mapping, schema: Schema) => {
 };
 
 const mapPrimitiveTypeDef = (propName: string, schema: Schema) => {
-  // Primitive metadata elements lives in the sibling underscore property, eg _birthDate
-  const primitivePropName = `_${propName}`;
+  // propName is the underscore prop, eg _birthDate
+  const primitivePropName = propName;
   // Only retrieve extension-backed child props
   const primitiveExtensions = Object.entries(schema.typeDef || {}).filter(
     ([, spec]: [string, any]) => spec.extension,
@@ -720,9 +720,7 @@ const mapPrimitiveTypeDef = (propName: string, schema: Schema) => {
 };
 
 const isPrimitiveTypeDefParent = (schema: Schema) =>
-  !schema.isArray &&
-  !!schema.typeDef &&
-  schema.type.every(type => type[0] === type[0]?.toLowerCase());
+  !!(schema as any).isPrimitiveExtension && !!(schema as any).typeDef;
 
 // map a type def (ie, a nested object) property by property
 // TODO this is designed to handle singleton and array types

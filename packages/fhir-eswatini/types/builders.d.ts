@@ -461,6 +461,7 @@ declare type Organization_SzOrganization_Props = {
 };
 
 declare type Patient_SzPatient_Props = {
+    _birthDate?: any;
     active?: boolean;
     address?: builders.Address[];
     birthDate?: string;
@@ -1059,6 +1060,7 @@ declare function organization(props: Organization_SzOrganization_Props): any;
   * @public
   * @function
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
+  * @param {} [props._birthDate] - undefined
   * @param {boolean} [props.active] - Whether this patient's record is in active use
   * @param {Address} [props.address] - An address for the individual
   * @param {date} [props.birthDate] - Date of birth: YYYY-MM-DD

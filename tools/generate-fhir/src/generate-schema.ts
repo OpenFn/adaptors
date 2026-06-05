@@ -446,8 +446,19 @@ async function parseProp(
     // }
 
     if (Object.keys(def).length) {
-      schema.props[parent].typeDef ??= {};
-      schema.props[parent].typeDef[prop] = def;
+      if (isPrimitiveParent && isExtensionChild) {
+        // primitive extension slices go on a top-level _parent prop, eg _birthDate
+        const underscoreProp = `_${parent}`;
+        schema.props[underscoreProp] ??= {
+          type: [],
+          isPrimitiveExtension: true,
+          typeDef: {},
+        };
+        schema.props[underscoreProp].typeDef[prop] = def;
+      } else {
+        schema.props[parent].typeDef ??= {};
+        schema.props[parent].typeDef[prop] = def;
+      }
     }
   }
 }

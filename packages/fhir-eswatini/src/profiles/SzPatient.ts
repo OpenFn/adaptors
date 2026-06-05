@@ -9,6 +9,7 @@ import type { builders as FHIR } from "@openfn/language-fhir-4";
 type MaybeArray<T> = T | T[];
 
 export type Patient_SzPatient_Props = {
+    _birthDate?: any;
     active?: boolean;
     address?: FHIR.Address[];
     birthDate?: string;
