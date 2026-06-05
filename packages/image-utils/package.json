@@ -1,7 +1,7 @@
 {
-  "name": "@openfn/language-image-fn",
+  "name": "@openfn/language-image-utils",
   "version": "1.0.0",
-  "description": "OpenFn image-fn adaptor",
+  "description": "OpenFn image-utils adaptor",
   "type": "module",
   "exports": {
     ".": {
@@ -12,7 +12,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "pnpm clean && build-adaptor image-fn",
+    "build": "pnpm clean && build-adaptor image-utils",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings --timeout 30000",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings --timeout 30000",
     "clean": "rimraf dist types docs",

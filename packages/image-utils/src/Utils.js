@@ -70,3 +70,25 @@ export async function compressImage(inputBuffer, options = {}) {
 
   return { buffer: outBuffer, size: outBuffer.length, quality };
 }
+
+export async function stripImage(inputBuffer) {
+  const image = await Jimp.read(inputBuffer);
+  const buffer = await image.getBuffer('image/jpeg', { quality: 100 });
+  return { buffer };
+}
+
+export async function getImageMetadata(inputBuffer) {
+  const image = await Jimp.read(inputBuffer);
+  const orientation =
+    image.width > image.height
+      ? 'landscape'
+      : image.width < image.height
+        ? 'portrait'
+        : 'square';
+  return {
+    width: image.width,
+    height: image.height,
+    orientation,
+    size: inputBuffer.length,
+  };
+}
