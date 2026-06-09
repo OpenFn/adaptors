@@ -25,7 +25,7 @@ export async function updateChangelog(adaptorName, adaptorVersionList = null) {
     if (item.type === 'heading' && item.depth === 2) {
       const astVersion = item.children[0].value;
 
-      if (i === 1 && versionOnlyRegex.test(astVersion.trim())&& !adaptorVersionList) {
+      if (i === 1 && versionOnlyRegex.test(astVersion.trim()) && !adaptorVersionList) {
         const convertedDate = format(new Date(), 'dd MMMM yyyy');
         item.children[0].value = `${astVersion} - ${convertedDate}`;
         console.log(`✔ New release date added for ${adaptorName}`);
