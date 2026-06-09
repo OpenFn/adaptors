@@ -1,17 +1,17 @@
 # @openfn/language-fhir-4
 
-## 0.5.4
+## 0.5.4 - 27 May 2026
 
 ### Patch Changes
 
-- Updated dependencies [5276a86]
+- Updated dependencies \[5276a86]
   - @openfn/language-common@3.3.3
 
-## 0.5.3
+## 0.5.3 - 20 May 2026
 
 ### Patch Changes
 
-- Updated dependencies [9d1e1ae]
+- Updated dependencies \[9d1e1ae]
   - @openfn/language-common@3.3.2
 
 ## 0.5.2 - 17 April 2026
@@ -50,13 +50,13 @@
 - 028c62c: Significantly better error reporting from validation results
 - d179474: Fix an issue where array types are not properly mapped
 
-## 0.4.1
+## 0.4.1 - 25 March 2026
 
 ### Patch Changes
 
 - c5e2b2b: Fix an issue in validation issue reporting
 
-## 0.4.0
+## 0.4.0 - 23 March 2026
 
 ### Minor Changes
 
@@ -69,7 +69,7 @@
 - 317e3c7: Alphabetically sort generated props Correctly format generated types
   with a space and a surrounding code block: '\`\`'
 
-## 0.3.1
+## 0.3.1 - 06 March 2026
 
 ### Patch Changes
 
@@ -115,7 +115,7 @@
 - d935dda: Update d.ts definition structure
 - a78d53e: Rebuild on latest generator (should be no behaviour differences)"
 
-## 0.2.6
+## 0.2.6 - 30 January 2026
 
 ### Patch Changes
 
@@ -143,27 +143,27 @@
 
 - 4e531fe: Fix mappings for `CodeableConcept`
 
-## 0.2.2
+## 0.2.2 - 29 October 2025
 
 ### Patch Changes
 
 - Updated dependencies
   - @openfn/language-common@3.1.2
 
-## 0.2.1
+## 0.2.1 - 23 October 2025
 
 ### Patch Changes
 
 - fccecdc: Sort generated `fhir` types alphabetically
 
-## 0.2.0
+## 0.2.0 - 21 October 2025
 
 ### Minor Changes
 
 - 2040fa4: Updated `datetimeregex` to correctly distinguish betwen datetime and
   strings
 
-## 0.1.12
+## 0.1.12 - 16 October 2025
 
 ### Patch Changes
 

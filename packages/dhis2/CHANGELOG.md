@@ -1,27 +1,27 @@
 # @openfn/language-dhis2
 
-## 8.1.1
+## 8.1.1 - 27 May 2026
 
 ### Patch Changes
 
 - 5276a86: Update ajv dependency
 - 632d536: Update axios dependency version
 - b2ceeb7: Update `qs` library
-- Updated dependencies [5276a86]
+- Updated dependencies \[5276a86]
   - @openfn/language-common@3.3.3
 
-## 8.1.0
+## 8.1.0 - 21 May 2026
 
 ### Minor Changes
 
 - 71115af: export `combine` function from common
 - bf26881: export `log` function from common
 
-## 8.0.13
+## 8.0.13 - 20 May 2026
 
 ### Patch Changes
 
-- Updated dependencies [9d1e1ae]
+- Updated dependencies \[9d1e1ae]
   - @openfn/language-common@3.3.2
 
 ## 8.0.12 - 07 April 2026
