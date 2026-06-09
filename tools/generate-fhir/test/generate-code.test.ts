@@ -96,9 +96,6 @@ test('isArray wraps a single value into an array', t => {
   t.is(dt.reference.calls, 1);
 });
 
-// why does this only pass in serial mode?
-// The schemas are identical
-// oh it's the dt.reference calls thing
 test('isArray keeps an existing array as-is', t => {
   const profile = {
     x: { type: ['Reference'], isArray: true },
