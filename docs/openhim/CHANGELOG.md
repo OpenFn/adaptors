@@ -1,24 +1,24 @@
 # @openfn/language-openhim
 
-## 2.1.1
+## 2.1.1 - 27 May 2026
 
 ### Patch Changes
 
-- Updated dependencies [5276a86]
+- Updated dependencies \[5276a86]
   - @openfn/language-common@3.3.3
 
-## 2.1.0
+## 2.1.0 - 21 May 2026
 
 ### Minor Changes
 
 - 71115af: export `combine` function from common
 - bf26881: export `log` function from common
 
-## 2.0.12
+## 2.0.12 - 20 May 2026
 
 ### Patch Changes
 
-- Updated dependencies [9d1e1ae]
+- Updated dependencies \[9d1e1ae]
   - @openfn/language-common@3.3.2
 
 ## 2.0.11 - 07 April 2026

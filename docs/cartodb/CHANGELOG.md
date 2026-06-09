@@ -1,24 +1,24 @@
 # @openfn/language-cartodb
 
-## 0.5.1
+## 0.5.1 - 27 May 2026
 
 ### Patch Changes
 
-- Updated dependencies [5276a86]
+- Updated dependencies \[5276a86]
   - @openfn/language-common@3.3.3
 
-## 0.5.0
+## 0.5.0 - 21 May 2026
 
 ### Minor Changes
 
 - 71115af: export `combine` function from common
 - bf26881: export `log` function from common
 
-## 0.4.31
+## 0.4.31 - 20 May 2026
 
 ### Patch Changes
 
-- Updated dependencies [9d1e1ae]
+- Updated dependencies \[9d1e1ae]
   - @openfn/language-common@3.3.2
 
 ## 0.4.30 - 07 April 2026
