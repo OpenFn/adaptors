@@ -1,10 +1,10 @@
 # @openfn/language-monnify
 
-## 1.1.1
+## 1.1.1 - 09 June 2026
 
 ### Patch Changes
 
-- Updated dependencies [5276a86]
+- Updated dependencies \[5276a86]
   - @openfn/language-common@3.3.3
 
 ## 1.1.0
@@ -17,7 +17,7 @@
 
 ### Patch Changes
 
-- Updated dependencies [9d1e1ae]
+- Updated dependencies \[9d1e1ae]
   - @openfn/language-common@3.3.2
 
 ## 1.0.5 - 07 April 2026
