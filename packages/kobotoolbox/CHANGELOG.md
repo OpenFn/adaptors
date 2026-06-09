@@ -1,24 +1,24 @@
 # @openfn/language-kobotoolbox
 
-## 4.3.1
+## 4.3.1 - 27 May 2026
 
 ### Patch Changes
 
-- Updated dependencies [5276a86]
+- Updated dependencies \[5276a86]
   - @openfn/language-common@3.3.3
 
-## 4.3.0
+## 4.3.0 - 21 May 2026
 
 ### Minor Changes
 
 - 71115af: export `combine` function from common
 - bf26881: export `log` function from common
 
-## 4.2.14
+## 4.2.14 - 20 May 2026
 
 ### Patch Changes
 
-- Updated dependencies [9d1e1ae]
+- Updated dependencies \[9d1e1ae]
   - @openfn/language-common@3.3.2
 
 ## 4.2.13 - 07 April 2026
