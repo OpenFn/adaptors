@@ -60,8 +60,6 @@
   "type": "object",
   "additionalProperties": true,
   "required": [
-    "hostUrl",
-    "password",
-    "username"
+    "hostUrl"
   ]
 }
