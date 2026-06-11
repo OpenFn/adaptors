@@ -4,7 +4,7 @@ import {
   resizeImage,
   compressImage,
   stripImage,
-  annotateImage,
+  embedImageMetadata,
   getImageMetadata,
   decodeBase64Image,
 } from './Utils.js';
@@ -35,8 +35,8 @@ function applyParseAs(result, parseAs) {
  * @function
  * @param {string|Buffer|Function} base64ImgOrBuffer - Base64 string, data URL, Buffer, or resolver fn
  * @param {object} [options={}]
- * @param {number} [options.width=1200] - Output width in pixels
- * @param {number} [options.height=1600] - Output height in pixels
+ * @param {number} [options.width] - Output width in pixels
+ * @param {number} [options.height] - Output height in pixels
  * @param {'buffer'|'base64'} [options.parseAs='buffer'] - Return format: `'buffer'` (default) or `'base64'`
  * @state {ImageState}
  * @returns {Operation}
@@ -60,7 +60,7 @@ export function resize(base64ImgOrBuffer, options = {}) {
 }
 
 /**
- * Compress an image to fit within `maxBytes` using a quality loop.
+ * Compress an image by reducing image quality until it reaches the criteria.
  * Optionally embeds an EXIF UserComment.
  * Writes `{ buffer, size, quality }` to `state.data`.
  * @example
@@ -96,7 +96,7 @@ export function compress(base64ImgOrBuffer, options = {}) {
  * Strip all EXIF metadata from an image. Output is always a JPEG buffer.
  * Writes `{ buffer }` to `state.data`.
  * @example
- * strip(state.data.photoBase64)
+ * stripMetadata(state.data.photoBase64)
  * @function
  * @param {string|Buffer|Function} base64ImgOrBuffer - Base64 string, data URL, Buffer, or resolver fn
  * @param {object} [options={}]
@@ -104,7 +104,7 @@ export function compress(base64ImgOrBuffer, options = {}) {
  * @state {ImageState}
  * @returns {Operation}
  */
-export function strip(base64ImgOrBuffer, options = {}) {
+export function stripMetadata(base64ImgOrBuffer, options = {}) {
   return async state => {
     const [resolvedImg, resolvedOptions] = expandReferences(
       state,
@@ -120,29 +120,37 @@ export function strip(base64ImgOrBuffer, options = {}) {
 }
 
 /**
- * Embed a string in the EXIF UserComment field of a JPEG image.
+ * Embed EXIF metadata into a JPEG image.
  * Writes `{ buffer }` to `state.data`.
  * @example
- * annotate(state.data.buffer, { comment: 'patient-id=42' })
+ * embedMetadata(state.data.buffer, { UserComment: 'patient-id=42' })
+ * embedMetadata(state.data.buffer, { UserComment: 'patient-id=42', Make: 'OpenFn' }, { parseAs: 'base64' })
  * @function
  * @param {string|Buffer|Function} base64ImgOrBuffer - Base64 string, data URL, Buffer, or resolver fn
- * @param {object} options
- * @param {string} options.comment - String to embed in the EXIF UserComment field
+ * @param {object} exifObj - EXIF key-value pairs; keys must be valid EXIF tag names (e.g. UserComment, Make, Model)
+ * @param {object} [options={}]
  * @param {'buffer'|'base64'} [options.parseAs='buffer'] - Return format: `'buffer'` (default) or `'base64'`
  * @state {ImageState}
  * @returns {Operation}
  */
-export function annotate(base64ImgOrBuffer, options = {}) {
+export function embedMetadata(base64ImgOrBuffer, exifObj, options = {}) {
   return async state => {
-    const [resolvedImg, resolvedOptions] = expandReferences(state, base64ImgOrBuffer, options);
-    const result = annotateImage(resolveInput(resolvedImg), resolvedOptions.comment);
-    return composeNextState(state, applyParseAs(result, resolvedOptions.parseAs));
+    const [resolvedImg, resolvedExif, resolvedOptions] = expandReferences(
+      state,
+      base64ImgOrBuffer,
+      exifObj,
+      options,
+    );
+    const result = embedImageMetadata(resolveInput(resolvedImg), resolvedExif);
+    return composeNextState(
+      state,
+      applyParseAs(result, resolvedOptions.parseAs),
+    );
   };
 }
 
 /**
- * Read image metadata without modifying the image. Useful for validation
- * with `if` statements in job code before deciding whether to resize or compress.
+ * Read image metadata without modifying the image.
  * Writes `{ width, height, orientation, size }` to `state.data`.
  * @example
  * metadata(state.data.photoBase64)

@@ -8,20 +8,37 @@ export function decodeBase64Image(base64ImgStr) {
   return Buffer.from(raw, 'base64');
 }
 
-function buildExifBytes(comment) {
-  return piexif.dump({
-    Exif: { [piexif.ExifIFD.UserComment]: `ASCII\0\0\0${comment}` },
-  });
+const TAG_MAP = {};
+for (const [ifd, tags] of Object.entries({
+  '0th': piexif.ImageIFD,
+  Exif: piexif.ExifIFD,
+  GPS: piexif.GPSIFD,
+})) {
+  for (const [name, tagId] of Object.entries(tags)) {
+    TAG_MAP[name] = { ifd, tag: tagId };
+  }
 }
 
-export function injectExifComment(jpegBuffer, comment) {
-  const exifBytes = buildExifBytes(comment);
+function buildExifBytes(kvPairs) {
+  const ifdData = {};
+  for (const [key, value] of Object.entries(kvPairs)) {
+    const entry = TAG_MAP[key];
+    if (!entry) throw new Error(`Unknown EXIF tag: "${key}"`);
+    ifdData[entry.ifd] ??= {};
+    ifdData[entry.ifd][entry.tag] =
+      key === 'UserComment' ? `ASCII\0\0\0${value}` : value;
+  }
+  return piexif.dump(ifdData);
+}
+
+export function injectExif(jpegBuffer, kvPairs) {
+  const exifBytes = buildExifBytes(kvPairs);
   const withExif = piexif.insert(exifBytes, jpegBuffer.toString('binary'));
   return Buffer.from(withExif, 'binary');
 }
 
 export async function resizeImage(inputBuffer, options = {}) {
-  const { width = 1200, height = 1600 } = options;
+  const { width, height } = options;
   const kb = n => `${(n / 1024).toFixed(1)}KB`;
 
   console.log(`→ input ${kb(inputBuffer.length)}, target ${width}×${height}px`);
@@ -44,8 +61,8 @@ export async function resizeImage(inputBuffer, options = {}) {
   return { buffer, width, height };
 }
 
-export function annotateImage(inputBuffer, comment) {
-  return { buffer: injectExifComment(inputBuffer, comment) };
+export function embedImageMetadata(inputBuffer, kvPairs) {
+  return { buffer: injectExif(inputBuffer, kvPairs) };
 }
 
 export async function compressImage(inputBuffer, options = {}) {
