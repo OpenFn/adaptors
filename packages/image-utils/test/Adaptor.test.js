@@ -48,10 +48,12 @@ async function getResizedBuffer(filename) {
 describe('resize', () => {
   describe('output dimensions', () => {
     it('resizes to the requested dimensions', async () => {
-      const finalState = await resize(
-        toBase64Str('img-3203x4271.jpg'),
-        { width: 1200, height: 1600 },
-      )(state);
+      const src = toBuf('img-3203x4271.jpg');
+      const srcImg = await Jimp.read(src);
+      expect(srcImg.width).to.equal(3203);
+      expect(srcImg.height).to.equal(4271);
+
+      const finalState = await resize(src, { width: 1200, height: 1600 })(state);
 
       const out = await Jimp.read(finalState.data.buffer);
       expect(out.width).to.equal(1200);
@@ -59,10 +61,12 @@ describe('resize', () => {
     });
 
     it('does not throw when the aspect ratio changes', async () => {
-      const finalState = await resize(
-        toBase64Str('img-4032x3024-gps.jpg'),
-        { width: 1200, height: 1600 },
-      )(state);
+      const src = toBuf('img-4032x3024-gps.jpg');
+      const srcImg = await Jimp.read(src);
+      expect(srcImg.width).to.equal(4032); // landscape source
+      expect(srcImg.height).to.equal(3024);
+
+      const finalState = await resize(src, { width: 1200, height: 1600 })(state); // portrait target
 
       const out = await Jimp.read(finalState.data.buffer);
       expect(out.width).to.equal(1200);
