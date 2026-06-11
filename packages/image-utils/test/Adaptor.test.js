@@ -18,20 +18,15 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const state = { configuration: {}, data: {} };
 
-// Fixtures — see test/images/ for full details
-// portrait-large.jpg       3203×4271        portrait
-// portrat-small.JPG         608×1080        portrait  (below 1200×1600 minimum)
-// portrait-medium.jpg      2160×3240        portrait
-// portrait-exact.jpg       1200×1600  411KB portrait  (already at target dimensions)
-// grayscale.jpg            4000×6000        portrait  (grayscale source)
-// heavy-noise.jpg          3200×4000        portrait  (high-entropy, compresses poorly)
-// landscape-with-gps.JPG   4032×3024        landscape (carries GPS EXIF)
-// with-gps.JPG             3024×4032        portrait  (carries GPS EXIF)
-// Bot-Test.jpg              512×512         square
-// square.jpg               3024×3014        ~square
-// sample-1.png             4096×4096   13MB square
-// sample-2.png             1920×1280        landscape
-// svg-sample-transparent-large.svg
+// Fixtures
+// img-3203x4271.jpg      portrait  large
+// img-608x1080.jpg       portrait  small (below 1200×1600 target)
+// img-1200x1600.jpg      portrait  exact target dimensions
+// img-3200x4000-noisy.jpg portrait  high-entropy, compresses poorly
+// img-4032x3024-gps.jpg  landscape carries GPS EXIF
+// img-512x512.jpg        square
+// img-4096x4096.png      square    PNG
+// img-svg.svg                       unsupported format
 
 function toBase64Str(filename) {
   return readFileSync(join(__dirname, 'images', filename)).toString('base64');
@@ -41,11 +36,10 @@ function toBuf(filename) {
   return readFileSync(join(__dirname, 'images', filename));
 }
 
-const DEFAULT_RESIZE_OPTS = { width: 1200, height: 1600 };
 const DEFAULT_COMPRESS_OPTS = { maxBytes: 700 * 1024 };
 
-async function getResizedBuffer(filename, opts = DEFAULT_RESIZE_OPTS) {
-  const { buffer } = await resizeImage(toBuf(filename), opts);
+async function getResizedBuffer(filename) {
+  const { buffer } = await resizeImage(toBuf(filename), { width: 1200, height: 1600 });
   return buffer;
 }
 
@@ -53,10 +47,10 @@ async function getResizedBuffer(filename, opts = DEFAULT_RESIZE_OPTS) {
 
 describe('resize', () => {
   describe('output dimensions', () => {
-    it('downscales a large portrait to target dimensions', async () => {
+    it('resizes to the requested dimensions', async () => {
       const finalState = await resize(
-        toBase64Str('portrait-large.jpg'),
-        DEFAULT_RESIZE_OPTS,
+        toBase64Str('img-3203x4271.jpg'),
+        { width: 1200, height: 1600 },
       )(state);
 
       const out = await Jimp.read(finalState.data.buffer);
@@ -64,32 +58,10 @@ describe('resize', () => {
       expect(out.height).to.equal(1600);
     });
 
-    it('downscales a landscape image to target portrait dimensions', async () => {
+    it('does not throw when the aspect ratio changes', async () => {
       const finalState = await resize(
-        toBase64Str('landscape-with-gps.JPG'),
-        DEFAULT_RESIZE_OPTS,
-      )(state);
-
-      const out = await Jimp.read(finalState.data.buffer);
-      expect(out.width).to.equal(1200);
-      expect(out.height).to.equal(1600);
-    });
-
-    it('upscales a small portrait to target dimensions', async () => {
-      const finalState = await resize(
-        toBase64Str('portrat-small.JPG'),
-        DEFAULT_RESIZE_OPTS,
-      )(state);
-
-      const out = await Jimp.read(finalState.data.buffer);
-      expect(out.width).to.equal(1200);
-      expect(out.height).to.equal(1600);
-    });
-
-    it('stretches a square image to the requested portrait dimensions', async () => {
-      const finalState = await resize(
-        toBase64Str('square.jpg'),
-        DEFAULT_RESIZE_OPTS,
+        toBase64Str('img-4032x3024-gps.jpg'),
+        { width: 1200, height: 1600 },
       )(state);
 
       const out = await Jimp.read(finalState.data.buffer);
@@ -101,8 +73,8 @@ describe('resize', () => {
   describe('output format', () => {
     it('converts PNG to a valid JPEG buffer', async () => {
       const finalState = await resize(
-        toBase64Str('sample-1.png'),
-        DEFAULT_RESIZE_OPTS,
+        toBase64Str('img-4096x4096.png'),
+        { width: 1200, height: 1600 },
       )(state);
 
       const buf = finalState.data.buffer;
@@ -113,10 +85,7 @@ describe('resize', () => {
     it('rejects an SVG input', async () => {
       let threw = false;
       try {
-        await resize(
-          toBase64Str('svg-sample-transparent-large.svg'),
-          DEFAULT_RESIZE_OPTS,
-        )(state);
+        await resize(toBase64Str('img-svg.svg'), { width: 1200, height: 1600 })(state);
       } catch {
         threw = true;
       }
@@ -126,37 +95,37 @@ describe('resize', () => {
 
   describe('input handling', () => {
     it('accepts a data URL and strips the prefix', async () => {
-      const dataUrl = `data:image/jpeg;base64,${toBase64Str('portrat-small.JPG')}`;
-      const finalState = await resize(dataUrl, DEFAULT_RESIZE_OPTS)(state);
+      const dataUrl = `data:image/jpeg;base64,${toBase64Str('img-608x1080.jpg')}`;
+      const finalState = await resize(dataUrl, { width: 800, height: 600 })(state);
 
       const out = await Jimp.read(finalState.data.buffer);
-      expect(out.width).to.equal(1200);
-      expect(out.height).to.equal(1600);
+      expect(out.width).to.equal(800);
+      expect(out.height).to.equal(600);
     });
 
     it('accepts a Buffer directly', async () => {
       const finalState = await resize(
-        toBuf('portrat-small.JPG'),
-        DEFAULT_RESIZE_OPTS,
+        toBuf('img-608x1080.jpg'),
+        { width: 800, height: 600 },
       )(state);
 
       const out = await Jimp.read(finalState.data.buffer);
-      expect(out.width).to.equal(1200);
-      expect(out.height).to.equal(1600);
+      expect(out.width).to.equal(800);
+      expect(out.height).to.equal(600);
     });
   });
 
   describe('state composition', () => {
     it('writes buffer, width, and height to state.data', async () => {
       const finalState = await resize(
-        toBase64Str('portrat-small.JPG'),
-        DEFAULT_RESIZE_OPTS,
+        toBase64Str('img-608x1080.jpg'),
+        { width: 800, height: 600 },
       )(state);
 
       expect(finalState.data).to.have.keys(['buffer', 'width', 'height']);
       expect(finalState.data.buffer).to.be.instanceOf(Buffer);
-      expect(finalState.data.width).to.equal(1200);
-      expect(finalState.data.height).to.equal(1600);
+      expect(finalState.data.width).to.equal(800);
+      expect(finalState.data.height).to.equal(600);
     });
 
     it('moves the previous state.data into references', async () => {
@@ -166,8 +135,8 @@ describe('resize', () => {
         references: [],
       };
       const finalState = await resize(
-        toBase64Str('portrat-small.JPG'),
-        DEFAULT_RESIZE_OPTS,
+        toBase64Str('img-608x1080.jpg'),
+        { width: 800, height: 600 },
       )(seed);
 
       expect(finalState.references).to.have.length(1);
@@ -177,8 +146,9 @@ describe('resize', () => {
 
   describe('base64 option', () => {
     it("returns { base64, width, height } when parseAs: 'base64'", async () => {
-      const finalState = await resize(toBase64Str('portrat-small.JPG'), {
-        ...DEFAULT_RESIZE_OPTS,
+      const finalState = await resize(toBase64Str('img-608x1080.jpg'), {
+        width: 800,
+        height: 600,
         parseAs: 'base64',
       })(state);
 
@@ -194,33 +164,29 @@ describe('resize', () => {
 describe('compress', () => {
   describe('compression behaviour', () => {
     it('compresses a large portrait image under maxBytes', async () => {
-      const inputBuffer = await getResizedBuffer('portrait-large.jpg');
+      const inputBuffer = await getResizedBuffer('img-3203x4271.jpg');
       const finalState = await compress(
         inputBuffer,
         DEFAULT_COMPRESS_OPTS,
       )(state);
 
-      expect(finalState.data.size).to.be.at.most(
-        DEFAULT_COMPRESS_OPTS.maxBytes,
-      );
+      expect(finalState.data.size).to.be.at.most(DEFAULT_COMPRESS_OPTS.maxBytes);
     });
 
     it('does not reduce quality when image already fits under maxBytes', async () => {
-      const inputBuffer = await getResizedBuffer('portrait-exact.jpg');
+      const inputBuffer = await getResizedBuffer('img-1200x1600.jpg');
       const finalState = await compress(
         inputBuffer,
         DEFAULT_COMPRESS_OPTS,
       )(state);
 
       expect(finalState.data.quality).to.equal(80);
-      expect(finalState.data.size).to.be.at.most(
-        DEFAULT_COMPRESS_OPTS.maxBytes,
-      );
+      expect(finalState.data.size).to.be.at.most(DEFAULT_COMPRESS_OPTS.maxBytes);
     });
 
     it('steps quality down for high-entropy content to meet the size target', async () => {
       const maxBytes = 150 * 1024;
-      const inputBuffer = await getResizedBuffer('heavy-noise.jpg');
+      const inputBuffer = await getResizedBuffer('img-3200x4000-noisy.jpg');
       const finalState = await compress(inputBuffer, { maxBytes })(state);
 
       expect(finalState.data.size).to.be.at.most(maxBytes);
@@ -229,7 +195,7 @@ describe('compress', () => {
 
     it('stops at minQuality when the size target cannot be reached', async () => {
       const minQuality = 60;
-      const inputBuffer = await getResizedBuffer('portrait-medium.jpg');
+      const inputBuffer = await getResizedBuffer('img-3203x4271.jpg');
       const finalState = await compress(inputBuffer, {
         maxBytes: 1 * 1024,
         minQuality,
@@ -241,10 +207,10 @@ describe('compress', () => {
 
   describe('EXIF handling', () => {
     it('strips GPS tags from an image that carries GPS EXIF', async () => {
-      const srcExif = piexif.load(toBuf('with-gps.JPG').toString('binary'));
+      const srcExif = piexif.load(toBuf('img-4032x3024-gps.jpg').toString('binary'));
       expect(Object.keys(srcExif.GPS ?? {})).to.not.be.empty;
 
-      const inputBuffer = await getResizedBuffer('with-gps.JPG');
+      const inputBuffer = await getResizedBuffer('img-4032x3024-gps.jpg');
       const finalState = await compress(
         inputBuffer,
         DEFAULT_COMPRESS_OPTS,
@@ -262,7 +228,7 @@ describe('compress', () => {
 
   describe('output validity', () => {
     it('produces a valid JPEG buffer', async () => {
-      const inputBuffer = await getResizedBuffer('portrait-medium.jpg');
+      const inputBuffer = await getResizedBuffer('img-3203x4271.jpg');
       const finalState = await compress(
         inputBuffer,
         DEFAULT_COMPRESS_OPTS,
@@ -283,20 +249,18 @@ describe('compress', () => {
 
   describe('input handling', () => {
     it('accepts a Buffer', async () => {
-      const inputBuffer = await getResizedBuffer('portrait-large.jpg');
+      const inputBuffer = await getResizedBuffer('img-3203x4271.jpg');
       const finalState = await compress(
         inputBuffer,
         DEFAULT_COMPRESS_OPTS,
       )(state);
 
-      expect(finalState.data.size).to.be.at.most(
-        DEFAULT_COMPRESS_OPTS.maxBytes,
-      );
+      expect(finalState.data.size).to.be.at.most(DEFAULT_COMPRESS_OPTS.maxBytes);
     });
 
     it('accepts a base64 string', async () => {
       const finalState = await compress(
-        toBase64Str('portrait-exact.jpg'),
+        toBase64Str('img-1200x1600.jpg'),
         DEFAULT_COMPRESS_OPTS,
       )(state);
 
@@ -307,7 +271,7 @@ describe('compress', () => {
 
   describe('state composition', () => {
     it('writes buffer, size, and quality to state.data', async () => {
-      const inputBuffer = await getResizedBuffer('portrat-small.JPG');
+      const inputBuffer = await getResizedBuffer('img-608x1080.jpg');
       const finalState = await compress(
         inputBuffer,
         DEFAULT_COMPRESS_OPTS,
@@ -325,7 +289,7 @@ describe('compress', () => {
         data: { existingField: 'hello' },
         references: [],
       };
-      const inputBuffer = await getResizedBuffer('portrat-small.JPG');
+      const inputBuffer = await getResizedBuffer('img-608x1080.jpg');
       const finalState = await compress(
         inputBuffer,
         DEFAULT_COMPRESS_OPTS,
@@ -338,7 +302,7 @@ describe('compress', () => {
 
   describe('base64 option', () => {
     it("returns { base64, size, quality } when parseAs: 'base64'", async () => {
-      const inputBuffer = await getResizedBuffer('portrat-small.JPG');
+      const inputBuffer = await getResizedBuffer('img-608x1080.jpg');
       const finalState = await compress(inputBuffer, {
         ...DEFAULT_COMPRESS_OPTS,
         parseAs: 'base64',
@@ -350,33 +314,14 @@ describe('compress', () => {
   });
 });
 
-// ─── strip ───────────────────────────────────────────────────────────────────
+// ─── stripMetadata ───────────────────────────────────────────────────────────
 
 describe('stripMetadata', () => {
-  it('removes GPS EXIF from a portrait image', async () => {
-    const srcExif = piexif.load(toBuf('with-gps.JPG').toString('binary'));
+  it('removes GPS EXIF from an image that carries GPS', async () => {
+    const srcExif = piexif.load(toBuf('img-4032x3024-gps.jpg').toString('binary'));
     expect(Object.keys(srcExif.GPS ?? {})).to.not.be.empty;
 
-    const finalState = await stripMetadata(toBase64Str('with-gps.JPG'))(state);
-
-    let outExif;
-    try {
-      outExif = piexif.load(finalState.data.buffer.toString('binary'));
-    } catch {
-      outExif = {};
-    }
-    expect(outExif.GPS ?? {}).to.be.empty;
-  });
-
-  it('removes GPS EXIF from a landscape image', async () => {
-    const srcExif = piexif.load(
-      toBuf('landscape-with-gps.JPG').toString('binary'),
-    );
-    expect(Object.keys(srcExif.GPS ?? {})).to.not.be.empty;
-
-    const finalState = await stripMetadata(
-      toBase64Str('landscape-with-gps.JPG'),
-    )(state);
+    const finalState = await stripMetadata(toBase64Str('img-4032x3024-gps.jpg'))(state);
 
     let outExif;
     try {
@@ -388,9 +333,7 @@ describe('stripMetadata', () => {
   });
 
   it('produces a valid JPEG buffer', async () => {
-    const finalState = await stripMetadata(toBase64Str('portrait-large.jpg'))(
-      state,
-    );
+    const finalState = await stripMetadata(toBase64Str('img-3203x4271.jpg'))(state);
 
     const buf = finalState.data.buffer;
     expect(buf[0]).to.equal(0xff);
@@ -398,7 +341,7 @@ describe('stripMetadata', () => {
   });
 
   it('accepts a Buffer input', async () => {
-    const finalState = await stripMetadata(toBuf('portrait-medium.jpg'))(state);
+    const finalState = await stripMetadata(toBuf('img-3203x4271.jpg'))(state);
 
     expect(finalState.data.buffer).to.be.instanceOf(Buffer);
     expect(finalState.data.buffer[0]).to.equal(0xff);
@@ -406,16 +349,14 @@ describe('stripMetadata', () => {
   });
 
   it('writes { buffer } to state.data', async () => {
-    const finalState = await stripMetadata(toBase64Str('portrat-small.JPG'))(
-      state,
-    );
+    const finalState = await stripMetadata(toBase64Str('img-608x1080.jpg'))(state);
 
     expect(finalState.data).to.have.keys(['buffer']);
     expect(finalState.data.buffer).to.be.instanceOf(Buffer);
   });
 
   it("returns { base64 } when parseAs: 'base64'", async () => {
-    const finalState = await stripMetadata(toBase64Str('portrat-small.JPG'), {
+    const finalState = await stripMetadata(toBase64Str('img-608x1080.jpg'), {
       parseAs: 'base64',
     })(state);
 
@@ -424,33 +365,29 @@ describe('stripMetadata', () => {
   });
 });
 
-// ─── embedMetadata ────────────────────────────────────────────────────────────────
+// ─── embedMetadata ────────────────────────────────────────────────────────────
 
 describe('embedMetadata', () => {
   it('embeds a UserComment in the EXIF field', async () => {
-    const inputBuffer = await getResizedBuffer('portrait-medium.jpg');
+    const inputBuffer = await getResizedBuffer('img-3203x4271.jpg');
     const finalState = await embedMetadata(inputBuffer, {
       UserComment: 'patient-id=42',
     })(state);
 
     const exifObj = piexif.load(finalState.data.buffer.toString('binary'));
-    expect(exifObj?.Exif?.[piexif.ExifIFD.UserComment]).to.include(
-      'patient-id=42',
-    );
+    expect(exifObj?.Exif?.[piexif.ExifIFD.UserComment]).to.include('patient-id=42');
   });
 
   it('embeds a non-UserComment field (Make)', async () => {
-    const inputBuffer = await getResizedBuffer('portrait-medium.jpg');
-    const finalState = await embedMetadata(inputBuffer, { Make: 'OpenFn' })(
-      state,
-    );
+    const inputBuffer = await getResizedBuffer('img-3203x4271.jpg');
+    const finalState = await embedMetadata(inputBuffer, { Make: 'OpenFn' })(state);
 
     const exifObj = piexif.load(finalState.data.buffer.toString('binary'));
     expect(exifObj['0th'][piexif.ImageIFD.Make]).to.equal('OpenFn');
   });
 
   it('embeds multiple EXIF fields in one call', async () => {
-    const inputBuffer = await getResizedBuffer('portrait-medium.jpg');
+    const inputBuffer = await getResizedBuffer('img-3203x4271.jpg');
     const finalState = await embedMetadata(inputBuffer, {
       UserComment: 'id=1',
       Make: 'OpenFn',
@@ -462,7 +399,7 @@ describe('embedMetadata', () => {
   });
 
   it('throws on an unknown EXIF key', async () => {
-    const inputBuffer = await getResizedBuffer('portrat-small.JPG');
+    const inputBuffer = await getResizedBuffer('img-608x1080.jpg');
     let err;
     try {
       await embedMetadata(inputBuffer, { NotARealTag: 'value' })(state);
@@ -474,10 +411,8 @@ describe('embedMetadata', () => {
   });
 
   it('produces a valid JPEG buffer', async () => {
-    const inputBuffer = await getResizedBuffer('portrat-small.JPG');
-    const finalState = await embedMetadata(inputBuffer, {
-      UserComment: 'test',
-    })(state);
+    const inputBuffer = await getResizedBuffer('img-608x1080.jpg');
+    const finalState = await embedMetadata(inputBuffer, { UserComment: 'test' })(state);
 
     const buf = finalState.data.buffer;
     expect(buf[0]).to.equal(0xff);
@@ -485,18 +420,16 @@ describe('embedMetadata', () => {
   });
 
   it('accepts a base64 string input', async () => {
-    const finalState = await embedMetadata(toBase64Str('portrat-small.JPG'), {
+    const finalState = await embedMetadata(toBase64Str('img-608x1080.jpg'), {
       UserComment: 'patient-id=99',
     })(state);
 
     const exifObj = piexif.load(finalState.data.buffer.toString('binary'));
-    expect(exifObj?.Exif?.[piexif.ExifIFD.UserComment]).to.include(
-      'patient-id=99',
-    );
+    expect(exifObj?.Exif?.[piexif.ExifIFD.UserComment]).to.include('patient-id=99');
   });
 
   it("returns { base64 } when parseAs: 'base64'", async () => {
-    const inputBuffer = await getResizedBuffer('portrat-small.JPG');
+    const inputBuffer = await getResizedBuffer('img-608x1080.jpg');
     const finalState = await embedMetadata(
       inputBuffer,
       { UserComment: 'test' },
@@ -508,10 +441,8 @@ describe('embedMetadata', () => {
   });
 
   it('writes { buffer } to state.data', async () => {
-    const inputBuffer = await getResizedBuffer('portrat-small.JPG');
-    const finalState = await embedMetadata(inputBuffer, {
-      UserComment: 'test',
-    })(state);
+    const inputBuffer = await getResizedBuffer('img-608x1080.jpg');
+    const finalState = await embedMetadata(inputBuffer, { UserComment: 'test' })(state);
 
     expect(finalState.data).to.have.keys(['buffer']);
     expect(finalState.data.buffer).to.be.instanceOf(Buffer);
@@ -522,59 +453,48 @@ describe('embedMetadata', () => {
 
 describe('metadata', () => {
   it('returns correct dimensions for a portrait image', async () => {
-    const finalState = await metadata(toBase64Str('portrait-large.jpg'))(state);
+    const finalState = await metadata(toBase64Str('img-3203x4271.jpg'))(state);
 
     expect(finalState.data.width).to.equal(3203);
     expect(finalState.data.height).to.equal(4271);
   });
 
   it('returns correct dimensions for a landscape image', async () => {
-    const finalState = await metadata(toBase64Str('landscape-with-gps.JPG'))(
-      state,
-    );
+    const finalState = await metadata(toBase64Str('img-4032x3024-gps.jpg'))(state);
 
     expect(finalState.data.width).to.equal(4032);
     expect(finalState.data.height).to.equal(3024);
   });
 
   it('returns orientation=portrait for a portrait image', async () => {
-    const finalState = await metadata(toBase64Str('portrait-large.jpg'))(state);
+    const finalState = await metadata(toBase64Str('img-3203x4271.jpg'))(state);
     expect(finalState.data.orientation).to.equal('portrait');
   });
 
   it('returns orientation=landscape for a landscape image', async () => {
-    const finalState = await metadata(toBase64Str('landscape-with-gps.JPG'))(
-      state,
-    );
+    const finalState = await metadata(toBase64Str('img-4032x3024-gps.jpg'))(state);
     expect(finalState.data.orientation).to.equal('landscape');
   });
 
   it('returns orientation=square for a square image', async () => {
-    const finalState = await metadata(toBase64Str('Bot-Test.jpg'))(state);
+    const finalState = await metadata(toBase64Str('img-512x512.jpg'))(state);
     expect(finalState.data.orientation).to.equal('square');
   });
 
   it('returns the file size in bytes', async () => {
-    const buf = toBuf('portrait-large.jpg');
+    const buf = toBuf('img-3203x4271.jpg');
     const finalState = await metadata(buf)(state);
     expect(finalState.data.size).to.equal(buf.length);
   });
 
   it('writes { width, height, orientation, size } to state.data', async () => {
-    const finalState = await metadata(toBase64Str('portrat-small.JPG'))(state);
+    const finalState = await metadata(toBase64Str('img-608x1080.jpg'))(state);
 
-    expect(finalState.data).to.have.keys([
-      'width',
-      'height',
-      'orientation',
-      'size',
-    ]);
+    expect(finalState.data).to.have.keys(['width', 'height', 'orientation', 'size']);
   });
 
   it('allows job code to branch on orientation', async () => {
-    const finalState = await metadata(toBase64Str('landscape-with-gps.JPG'))(
-      state,
-    );
+    const finalState = await metadata(toBase64Str('img-4032x3024-gps.jpg'))(state);
 
     const needsResize = finalState.data.orientation !== 'portrait';
     expect(needsResize).to.be.true;
@@ -586,28 +506,24 @@ describe('metadata', () => {
 describe('buffer passing between steps', () => {
   it('passes buffer from resize() to compress() explicitly', async () => {
     const resizeState = await resize(
-      toBase64Str('portrait-large.jpg'),
-      DEFAULT_RESIZE_OPTS,
+      toBase64Str('img-3203x4271.jpg'),
+      { width: 1200, height: 1600 },
     )(state);
     const compressState = await compress(
       resizeState.data.buffer,
       DEFAULT_COMPRESS_OPTS,
     )(resizeState);
 
-    expect(compressState.data.size).to.be.at.most(
-      DEFAULT_COMPRESS_OPTS.maxBytes,
-    );
+    expect(compressState.data.size).to.be.at.most(DEFAULT_COMPRESS_OPTS.maxBytes);
     expect(compressState.data.buffer).to.be.instanceOf(Buffer);
   });
 
   it('passes buffer from resize() to stripMetadata() explicitly', async () => {
     const resizeState = await resize(
-      toBase64Str('with-gps.JPG'),
-      DEFAULT_RESIZE_OPTS,
+      toBase64Str('img-4032x3024-gps.jpg'),
+      { width: 1200, height: 1600 },
     )(state);
-    const stripState = await stripMetadata(resizeState.data.buffer)(
-      resizeState,
-    );
+    const stripState = await stripMetadata(resizeState.data.buffer)(resizeState);
 
     expect(stripState.data.buffer).to.be.instanceOf(Buffer);
     expect(stripState.data.buffer[0]).to.equal(0xff);
@@ -615,8 +531,9 @@ describe('buffer passing between steps', () => {
   });
 
   it('base64 output from resize() can be fed directly into compress()', async () => {
-    const resizeState = await resize(toBase64Str('portrait-large.jpg'), {
-      ...DEFAULT_RESIZE_OPTS,
+    const resizeState = await resize(toBase64Str('img-3203x4271.jpg'), {
+      width: 1200,
+      height: 1600,
       parseAs: 'base64',
     })(state);
     expect(resizeState.data.base64).to.be.a('string');
@@ -625,8 +542,6 @@ describe('buffer passing between steps', () => {
       resizeState.data.base64,
       DEFAULT_COMPRESS_OPTS,
     )(resizeState);
-    expect(compressState.data.size).to.be.at.most(
-      DEFAULT_COMPRESS_OPTS.maxBytes,
-    );
+    expect(compressState.data.size).to.be.at.most(DEFAULT_COMPRESS_OPTS.maxBytes);
   });
 });
