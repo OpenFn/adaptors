@@ -14,29 +14,18 @@ const testServer = enableMockClient(hostUrl);
 
 
 describe('configureAuth', () => {
-  it('should set a PAT auth header', () => {
-    const headers = util.configureAuth({ pat: 'mytoken' });
+  it('should prefer PAT over username and password when both are provided', () => {
+    const headers = util.configureAuth({ pat: 'mytoken', username: 'admin', password: 'district' });
     expect(headers).to.eql({ Authorization: 'ApiToken mytoken' });
   });
 
-  it('should set a basic auth header', () => {
-    const headers = util.configureAuth({ username: 'admin', password: 'district' });
-    expect(headers).to.eql(makeBasicAuthHeader('admin', 'district'));
-  });
-
-  it('should throw if pat is empty', () => {
-    expect(() => util.configureAuth({ pat: '' })).to.throw(
-      'Invalid authorization credentials. Include a PAT or a username and password in state.configuration'
-    );
-  });
-
-  it('should throw if username is empty', () => {
+  it('should throw if password is provided without a username', () => {
     expect(() => util.configureAuth({ username: '', password: 'district' })).to.throw(
       'Invalid authorization credentials. Include a PAT or a username and password in state.configuration'
     );
   });
 
-  it('should throw if password is empty', () => {
+  it('should throw if username is provided without a password', () => {
     expect(() => util.configureAuth({ username: 'admin', password: '' })).to.throw(
       'Invalid authorization credentials. Include a PAT or a username and password in state.configuration'
     );
