@@ -62,7 +62,6 @@ export function resize(base64ImgOrBuffer, options = {}) {
 
 /**
  * Compress an image by reducing image quality until it reaches the criteria.
- * Optionally embeds an EXIF UserComment.
  * Writes `{ buffer, size, quality }` to `state.data`.
  * @example
  * compress(state.data.buffer, { maxBytes: 700 * 1024, comment: 'patient-id=123' })
