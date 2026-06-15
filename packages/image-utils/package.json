@@ -15,6 +15,7 @@
     "build": "pnpm clean && build-adaptor image-utils",
     "test": "mocha --experimental-specifier-resolution=node --no-warnings --timeout 30000",
     "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings --timeout 30000",
+    "test:integration": "mocha --experimental-specifier-resolution=node --no-warnings test/integration.js",
     "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist",
     "lint": "eslint src",

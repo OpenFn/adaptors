@@ -7,6 +7,7 @@ import {
   embedImageMetadata,
   getImageMetadata,
   decodeBase64Image,
+  getExifData,
 } from './Utils.js';
 
 function resolveInput(raw) {
@@ -151,7 +152,9 @@ export function embedMetadata(base64ImgOrBuffer, exifObj, options = {}) {
 
 /**
  * Read image metadata without modifying the image.
- * Writes `{ width, height, orientation, size }` to `state.data`.
+ * Writes `{ width, height, orientation, size, exif }` to `state.data`.
+ * `exif` is a flat object of human-readable EXIF tag names (e.g. `{ Make, Model, GPSLatitude, UserComment }`).
+ * `UserComment` has the `ASCII\0\0\0` encoding prefix stripped. Images with no EXIF return `exif: {}`.
  * @example
  * metadata(state.data.photoBase64)
  * fn(state => {
@@ -170,7 +173,7 @@ export function metadata(base64ImgOrBuffer) {
     return composeNextState(state, result);
   };
 }
-
+export { getExifData };
 export {
   as,
   combine,
