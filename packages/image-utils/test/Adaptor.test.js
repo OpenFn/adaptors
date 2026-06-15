@@ -100,6 +100,10 @@ describe('resize', () => {
 
   describe('input handling', () => {
     it('accepts a data URL and strips the prefix', async () => {
+      const srcImg = await Jimp.read(toBuf('img-608x1080.jpg'));
+      expect(srcImg.width).to.equal(608);
+      expect(srcImg.height).to.equal(1080);
+
       const dataUrl = `data:image/jpeg;base64,${toBase64Str('img-608x1080.jpg')}`;
       const finalState = await resize(dataUrl, { width: 800, height: 600 })(
         state,
@@ -111,7 +115,12 @@ describe('resize', () => {
     });
 
     it('accepts a Buffer directly', async () => {
-      const finalState = await resize(toBuf('img-608x1080.jpg'), {
+      const src = toBuf('img-608x1080.jpg');
+      const srcImg = await Jimp.read(src);
+      expect(srcImg.width).to.equal(608);
+      expect(srcImg.height).to.equal(1080);
+
+      const finalState = await resize(src, {
         width: 800,
         height: 600,
       })(state);
