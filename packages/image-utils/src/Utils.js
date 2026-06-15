@@ -9,15 +9,22 @@ export function decodeBase64Image(base64ImgStr) {
 }
 
 const TAG_MAP = {};
+const REVERSE_TAG_MAP = {};
 for (const [ifd, tags] of Object.entries({
   '0th': piexif.ImageIFD,
   Exif: piexif.ExifIFD,
   GPS: piexif.GPSIFD,
+  Interop: piexif.InteropIFD,
 })) {
+  REVERSE_TAG_MAP[ifd] = {};
   for (const [name, tagId] of Object.entries(tags)) {
     TAG_MAP[name] = { ifd, tag: tagId };
+    REVERSE_TAG_MAP[ifd][tagId] = name;
   }
 }
+
+// These tags are internal EXIF sub-IFD pointers, not meaningful values.
+const POINTER_TAGS = new Set(['ExifTag', 'GPSTag', 'InteroperabilityTag']);
 
 function buildExifBytes(kvPairs) {
   const ifdData = {};
@@ -110,5 +117,23 @@ export async function getImageMetadata(inputBuffer) {
     height: image.height,
     orientation,
     size: inputBuffer.length,
+    exif: getExifData(inputBuffer),
   };
+}
+export function getExifData(inputBuffer, options = {}) {
+  const { mergeOutput = true } = options;
+  const exifObj = piexif.load(inputBuffer.toString('binary'));
+  const exifData = {};
+  for (const ifd in exifObj) {
+    if (ifd === 'thumbnail' || !exifObj[ifd]) continue;
+    if (!mergeOutput) exifData[ifd] = {};
+    for (const tag in exifObj[ifd]) {
+      const tagInfo = piexif.TAGS[ifd]?.[tag];
+      if (!tagInfo || tagInfo.type === 'UNDEFINED') continue;
+      if (POINTER_TAGS.has(tagInfo.name)) continue;
+      const target = mergeOutput ? exifData : exifData[ifd];
+      target[tagInfo.name] = exifObj[ifd][tag];
+    }
+  }
+  return exifData;
 }
