@@ -341,9 +341,7 @@ making them well-suited for automated workflows.
 
 To create a service account and JSON key file, follow the
 [Google Cloud service account documentation](https://cloud.google.com/iam/docs/service-accounts-create).
-Your OpenFn credential requires the `client_email`, `private_key`, and `subject`
-fields. The `subject` must be the email address of the Workspace user whose
-mailbox the adaptor will access -- it cannot be the service account email itself.
+Your OpenFn credential requires the `client_email` and `private_key` fields from the downloaded JSON key file. You can also optionally provide a `subject` field for impersonation -- see [Google's domain-wide delegation guide](https://developers.google.com/identity/protocols/oauth2/service-account#delegatingauthority) for details.
 
 For enabling domain-wide delegation and authorising the required Gmail API
 scopes, see the
