@@ -12,6 +12,49 @@ official
 [configuration-schema](https://docs.openfn.org/adaptors/packages/googlesheets-configuration-schema/)
 definition.
 
+This adaptor supports two authentication methods: **OAuth2** and **Service Account**.
+
+#### OAuth2
+
+Provide an `access_token` obtained via the Google OAuth2 flow. See the
+[Google OAuth2 documentation](https://developers.google.com/identity/protocols/oauth2)
+for details.
+
+```json
+{
+  "configuration": {
+    "access_token": "ya29.A0..."
+  }
+}
+```
+
+#### Service Account
+
+Service accounts are ideal for server-to-server integrations that run without
+user interaction. Use a service account when you need reliable, long-running
+access without managing OAuth2 token refresh.
+
+To create a service account and obtain a JSON key file, follow the
+[Google Cloud service account documentation](https://cloud.google.com/iam/docs/service-accounts-create).
+Your OpenFn credential requires the `client_email` and `private_key` fields
+from the downloaded JSON key file.
+
+**Share the spreadsheet with the service account**
+
+A service account does not have access to any spreadsheet by default. You must
+share each spreadsheet the adaptor needs to access, just like you would share
+with any other Google user.
+
+1. Open the spreadsheet in Google Sheets.
+2. Click **Share** (top-right corner).
+3. Enter the service account's `client_email` address.
+4. Grant at least **Editor** access (or **Viewer** if read-only is sufficient).
+5. Click **Send**.
+
+> **Note:** The service account email looks like
+> `name@project-id.iam.gserviceaccount.com`. If you see a "This person may not
+> be a Google user" warning, you can safely ignore it and proceed.
+
 ### appendValues()
 
 Add rows to an existing sheet:
