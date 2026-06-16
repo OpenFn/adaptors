@@ -64,7 +64,7 @@ export function resize(base64ImgOrBuffer, options = {}) {
  * Compress an image by reducing image quality until it reaches the criteria.
  * Writes `{ buffer, size, quality }` to `state.data`.
  * @example
- * compress(state.data.buffer, { maxBytes: 700 * 1024, comment: 'patient-id=123' })
+ * compress(state.data.buffer, { maxBytes: 700 * 1024, minQuality: 20 })
  * @function
  * @param {string|Buffer|Function} base64ImgOrBuffer - Base64 string, data URL, Buffer, or resolver fn
  * @param {object} [options={}]
