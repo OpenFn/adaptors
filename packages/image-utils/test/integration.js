@@ -3,12 +3,13 @@ import { execute, assert } from '@openfn/language-common';
 import { toBuf, toBase64Str, saveBase64Image } from './helpers.js';
 import { decodeBase64Image } from '../src/Utils.js';
 import {
-  each,
-  combine,
   fn,
-  dateFns,
-  getExifData,
+  each,
   resize,
+  combine,
+  dateFns,
+  compress,
+  getExifData,
   embedMetadata,
 } from '../src/Adaptor.js';
 
@@ -117,6 +118,10 @@ describe('image-utils', () => {
           }),
           assert(state => state.data.width === 1200, 'width should be 1200'),
           assert(state => state.data.height === 1600, 'height should be 1600'),
+          compress(state => state.data.buffer, {
+            maxBytes: 700 * 1024,
+            minQuality: 20,
+          }),
           embedMetadata(
             state => state.data.buffer,
             state => state.userComment,
@@ -141,7 +146,7 @@ describe('image-utils', () => {
     expect(results.processedImgs.length).to.equal(2);
     expect(results.processedImgs[0].name).to.equal('6221_2836550_C_1211.JPG');
     expect(results.processedImgs[1].name).to.equal('6221_2836550_F_2606.JPG');
-  });
+  }).timeout(1e4);
   it('UserComment is updated', async () => {
     const childPhoto = getExifData(toBuf('6221_2836550_C_1211.JPG'));
     const familyPhoto = getExifData(toBuf('6221_2836550_F_2606.JPG'));
