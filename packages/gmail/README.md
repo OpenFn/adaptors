@@ -256,6 +256,14 @@ This adaptor supports two authentication methods: **OAuth2** and **Service Accou
 
 ## OAuth2
 
+**On app.openfn.org:** Click **Sign in with Gmail** in the credential setup form. Authentication is handled for you and no manual token management is needed.
+
+**Using the OpenFn CLI locally:** Use the [gcloud CLI](https://cloud.google.com/sdk/docs/install) to print a temporary access token:
+
+```bash
+gcloud auth print-access-token
+```
+
 The Gmail adaptor implicitly uses the Gmail account of the Google account that is used to authenticate the application.
 
 Allowing the Gmail adaptor to access a Gmail account is a multi-step process.

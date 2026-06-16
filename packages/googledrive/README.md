@@ -19,9 +19,13 @@ This adaptor supports two authentication methods: **OAuth2** and **Service Accou
 
 #### OAuth2
 
-Provide an `access_token` obtained via the Google OAuth2 flow. See the
-[Google OAuth2 documentation](https://developers.google.com/identity/protocols/oauth2)
-for details.
+**On app.openfn.org:** Click **Sign in with Google Drive** in the credential setup form. Authentication is handled for you and no manual token management is needed.
+
+**Using the OpenFn CLI locally:** Use the [gcloud CLI](https://cloud.google.com/sdk/docs/install) to print a temporary access token and provide it in your configuration:
+
+```bash
+gcloud auth print-access-token
+```
 
 ```json
 {
