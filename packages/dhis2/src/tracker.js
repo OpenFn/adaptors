@@ -47,7 +47,7 @@ import * as util from './util.js';
  * @param {string} strategy - The effect the import should have. Can either be CREATE, UPDATE, CREATE_AND_UPDATE and DELETE.
  * @param {object} payload - The data to be imported.
  * @param {TrackerOptions} [options] - An optional object containing parseAs, and apiVersion, and queries for the request
- * @param {boolean} [options.async=false] - Whether to perform the import asynchronously. Defaults to false.
+ * @param {boolean} [options.async=false] - Whether to perform the import asynchronously. Defaults to false. See [Sync and async imports](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html#sync-and-async)
  * @state {DHIS2State}
  * @returns {Operation}
  */
@@ -97,34 +97,9 @@ export { _import as import };
  * tracker.export('enrollments', {orgUnit: 'TSyzvBiovKh'});
  * @example <caption>Export all events</caption>
  * tracker.export('events', { paging: false})
- * @example <caption>Export all events with pagination</caption>
- * tracker.export('events', { totalPages: true, pageSize: 1e4 });
- * fn(state => {
- *   state.results = state.data.instances;
- *   const { page, pageSize, pageCount, total } = state.data.pager;
- *   const remainingPages = pageCount - page;
- *
- *   state.pages = Array.from({ length: remainingPages }, (_, i) => page + i + 1);
- *   state.pageSize = pageSize;
- *   return state;
- * });
- *
- * each(
- *   $.pages,
- *   tracker
- *     .export('events', { pageSize: $.pageSize, page: $.data })
- *     .then(state => {
- *       state.results = state.results.concat(state.data.instances);
- *       return state;
- *     }),
- * );
  * @function
  * @param {string} path - Path to the resource, relative to the /tracker endpoint
- * @param {object} query - An object of query parameters to be encoded into the URL. Can include pagination parameters, filters, etc.
- * @param {number} [query.page=1] - Page number to return
- * @param {number} [query.pageSize=50] - Number of results per page
- * @param {boolean} [query.totalPages=false] - Whether to return total number of elements and pages
- * @param {boolean} [query.paging=true] - Set to false to return all rows without paging
+ * @param {object} query - An object of query parameters to be encoded into the URL. Can include [pagination parameters](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html#request-parameters-for-pagination), filters, etc.
  * @param {string} [query.order] - Comma-separated field:sortDirection pairs, e.g. `createdAt:desc`
  * @param {TrackerOptions} [options] - An optional object containing parseAs, and apiVersion for the request
  * @state {DHIS2State}

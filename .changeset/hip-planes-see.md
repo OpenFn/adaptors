@@ -1,6 +1,7 @@
 ---
-'@openfn/language-dhis2': patch
+'@openfn/language-dhis2': minor
 ---
 
-Default `async:false` in `tracker.import` and add paging examples to
+Add async option to `tracker.import` and 
+Add paging examples to
 `tracker.export()`
