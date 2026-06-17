@@ -4,7 +4,8 @@
       "name": "appendValues",
       "params": [
         "spreadsheetId",
-        "data",
+        "range",
+        "values",
         "options"
       ],
       "docs": {
@@ -17,7 +18,7 @@
           },
           {
             "title": "example",
-            "description": "appendValues(\n  '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  { range: 'Sheet1!A1:E1', values: [['From expression', '$15', '2', '3/15/2016'], ['Really now!', '$100', '1', '3/20/2016']] }\n)"
+            "description": "appendValues(\n  '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  'Sheet1!A1:E1',\n  [['From expression', '$15', '2', '3/15/2016'], ['Really now!', '$100', '1', '3/20/2016']]\n)"
           },
           {
             "title": "function",
@@ -35,29 +36,21 @@
           },
           {
             "title": "param",
-            "description": "A single range/values object to append.",
+            "description": "The sheet range.",
             "type": {
-              "type": "RecordType",
-              "fields": [
-                {
-                  "type": "FieldType",
-                  "key": "range",
-                  "value": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                },
-                {
-                  "type": "FieldType",
-                  "key": "values",
-                  "value": {
-                    "type": "NameExpression",
-                    "name": "array"
-                  }
-                }
-              ]
+              "type": "NameExpression",
+              "name": "string"
             },
-            "name": "data"
+            "name": "range"
+          },
+          {
+            "title": "param",
+            "description": "The values to append.",
+            "type": {
+              "type": "NameExpression",
+              "name": "array"
+            },
+            "name": "values"
           },
           {
             "title": "param",
@@ -105,11 +98,6 @@
       "docs": {
         "description": "Batch update values in a Spreadsheet.",
         "tags": [
-          {
-            "title": "example",
-            "description": "batchUpdateValues(\n  '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  [{ range: 'Sheet1!A1:E1', values: [['From expression', '$15'], ['Really now!', '$100']] }],\n  { valueInputOption: 'RAW' }\n)",
-            "caption": "Update a single range"
-          },
           {
             "title": "example",
             "description": "batchUpdateValues(\n  '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',\n  [\n    { range: 'Sheet1!A1', values: [['value1']] },\n    { range: 'Sheet1!B5', values: [['value2']] },\n    { range: 'Sheet1!D10:E11', values: [['a', 'b'], ['c', 'd']] },\n  ],\n  { valueInputOption: 'RAW' }\n)",

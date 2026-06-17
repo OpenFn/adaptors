@@ -64,7 +64,7 @@ export function execute(...operations) {
     return commonExecute(
       createConnection,
       ...operations,
-      removeConnection
+      removeConnection,
     )({
       ...initialState,
       ...state,
@@ -80,27 +80,28 @@ export function execute(...operations) {
  * @example
  * appendValues(
  *   '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',
- *   { range: 'Sheet1!A1:E1', values: [['From expression', '$15', '2', '3/15/2016'], ['Really now!', '$100', '1', '3/20/2016']] }
+ *   'Sheet1!A1:E1',
+ *   [['From expression', '$15', '2', '3/15/2016'], ['Really now!', '$100', '1', '3/20/2016']]
  * )
  * @function
  * @param {string} spreadsheetId - The spreadsheet ID.
- * @param {{range: string, values: array}} data - A single range/values object to append.
+ * @param {string} range - The sheet range.
+ * @param {array} values - The values to append.
  * @param {Object} [options] - Optional settings.
  * @param {string} [options.valueInputOption] - Defaults to 'USER_ENTERED'.
  * @returns {Operation}
  */
-export function appendValues(spreadsheetId, data, options = {}) {
+export function appendValues(spreadsheetId, range, values, options = {}) {
   return state => {
-    const [resolvedSpreadsheetId, resolvedData, resolvedOptions] = expandReferences(
-      state,
-      spreadsheetId,
-      data,
-      options
-    );
-    const { range, values } = resolvedData;
+    const [
+      resolvedSpreadsheetId,
+      resolvedRange,
+      resolvedValues,
+      resolvedOptions,
+    ] = expandReferences(state, spreadsheetId, range, values, options);
     const { valueInputOption = 'USER_ENTERED' } = resolvedOptions;
 
-    if (!values || values.length === 0) {
+    if (!resolvedValues || resolvedValues.length === 0) {
       console.log('Warning: empty values array');
       return state;
     }
@@ -109,12 +110,12 @@ export function appendValues(spreadsheetId, data, options = {}) {
       client.spreadsheets.values.append(
         {
           spreadsheetId: resolvedSpreadsheetId,
-          range,
+          range: resolvedRange,
           valueInputOption,
           resource: {
-            range,
+            range: resolvedRange,
             majorDimension: 'ROWS',
-            values,
+            values: resolvedValues,
           },
         },
         function (err, response) {
@@ -129,7 +130,7 @@ export function appendValues(spreadsheetId, data, options = {}) {
               response,
             });
           }
-        }
+        },
       );
     });
   };
@@ -137,13 +138,6 @@ export function appendValues(spreadsheetId, data, options = {}) {
 
 /**
  * Batch update values in a Spreadsheet.
- * @example
- * <caption>Update a single range</caption>
- * batchUpdateValues(
- *   '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',
- *   [{ range: 'Sheet1!A1:E1', values: [['From expression', '$15'], ['Really now!', '$100']] }],
- *   { valueInputOption: 'RAW' }
- * )
  * @example
  * <caption>Update multiple separate ranges</caption>
  * batchUpdateValues(
@@ -165,12 +159,8 @@ export function appendValues(spreadsheetId, data, options = {}) {
  */
 export function batchUpdateValues(spreadsheetId, data, options = {}) {
   return async state => {
-    const [resolvedSpreadsheetId, resolvedData, resolvedOptions] = expandReferences(
-      state,
-      spreadsheetId,
-      data,
-      options
-    );
+    const [resolvedSpreadsheetId, resolvedData, resolvedOptions] =
+      expandReferences(state, spreadsheetId, data, options);
     const { valueInputOption = 'USER_ENTERED' } = resolvedOptions;
 
     if (!resolvedData || resolvedData.length === 0) {
@@ -206,12 +196,12 @@ export function batchUpdateValues(spreadsheetId, data, options = {}) {
  * @param {string} range The sheet range.
  * @returns {Operation} spreadsheet information
  */
-export function getValues(spreadsheetId, range ) {
+export function getValues(spreadsheetId, range) {
   return async state => {
     const [resolvedSheetId, resolvedRange] = expandReferences(
       state,
       spreadsheetId,
-      range
+      range,
     );
 
     try {
