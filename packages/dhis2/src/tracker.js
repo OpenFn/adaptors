@@ -97,10 +97,11 @@ export { _import as import };
  * tracker.export('enrollments', {orgUnit: 'TSyzvBiovKh'});
  * @example <caption>Export all events</caption>
  * tracker.export('events', { paging: false})
+ * @example <caption>Export the first page of events with pagination metadata</caption>
+ * tracker.export('events', { totalPages: true, pageSize: 1000, page: 1 })
  * @function
  * @param {string} path - Path to the resource, relative to the /tracker endpoint
  * @param {object} query - An object of query parameters to be encoded into the URL. Can include [pagination parameters](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html#request-parameters-for-pagination), filters, etc.
- * @param {string} [query.order] - Comma-separated field:sortDirection pairs, e.g. `createdAt:desc`
  * @param {TrackerOptions} [options] - An optional object containing parseAs, and apiVersion for the request
  * @state {DHIS2State}
  * @returns {Operation}

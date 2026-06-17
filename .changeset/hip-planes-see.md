@@ -2,6 +2,6 @@
 '@openfn/language-dhis2': minor
 ---
 
-Add async option to `tracker.import` and 
-Add paging examples to
-`tracker.export()`
+Add async option to `tracker.import`.
+Improve `tracker.export` docs by adding a pagination example and
+linking pagination query parameters.
