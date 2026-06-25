@@ -103,14 +103,6 @@ const connect = async state => {
       new Connection({ loginUrl, version }),
     );
 
-    // Workaround for https://github.com/jsforce/jsforce/issues/1806
-    const transport = connection._transport;
-    const originalHttpRequest = transport.httpRequest.bind(transport);
-    transport.httpRequest = (req, options) => {
-      req.headers = { ...req.headers, connection: 'close' };
-      return originalHttpRequest(req, options);
-    };
-
     console.info(`Attempting Salesforce connection for user: ${username}`);
 
     // Simple, direct login without extra Promise wrapping
