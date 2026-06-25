@@ -1,5 +1,12 @@
 # @openfn/language-salesforce
 
+## 9.1.2
+
+### Patch Changes
+
+- 94552ab: Fix an issue where salesforce connections can hang indefinitely
+- 1cf2028: Better logging of auth errors
+
 ## 9.1.1 - 27 May 2026
 
 ### Patch Changes
