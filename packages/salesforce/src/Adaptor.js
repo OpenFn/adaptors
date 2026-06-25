@@ -58,6 +58,17 @@ import * as util from './util';
 
 let connection = null;
 
+// Workaround for https://github.com/jsforce/jsforce/issues/1806
+const workaroundBrokenTransport = connection => {
+  const transport = connection._transport;
+  const originalHttpRequest = transport.httpRequest.bind(transport);
+  transport.httpRequest = (req, options) => {
+    req.headers = { ...req.headers, connection: 'close' };
+    return originalHttpRequest(req, options);
+  };
+  return connection;
+};
+
 /**
  * Creates a connection to Salesforce using Basic Auth or OAuth.
  * @function connect
@@ -76,10 +87,14 @@ const connect = async state => {
   if (configuration.access_token) {
     const { instance_url: instanceUrl, access_token: accessToken } =
       configuration;
-    connection = new Connection({ instanceUrl, accessToken, version });
+    connection = workaroundBrokenTransport(
+      new Connection({ instanceUrl, accessToken, version }),
+    );
   } else {
     const { loginUrl, username, password, securityToken } = configuration;
-    connection = new Connection({ loginUrl, version });
+    connection = workaroundBrokenTransport(
+      new Connection({ loginUrl, version }),
+    );
 
     // Workaround for https://github.com/jsforce/jsforce/issues/1806
     const transport = connection._transport;
@@ -108,7 +123,7 @@ const connect = async state => {
   }
 
   console.info(
-    `Successfully connected to Salesforce with ${connection._sessionType} session type`
+    `Successfully connected to Salesforce with ${connection._sessionType} session type`,
   );
   console.info(`API Version: ${connection.version}`);
 
@@ -137,7 +152,7 @@ export function execute(...operations) {
     return commonExecute(
       connect,
       util.loadAnyAscii,
-      ...operations
+      ...operations,
     )({
       ...initialState,
       ...state,
@@ -176,7 +191,7 @@ export function create(sObjectName, records) {
     const [resolvedSObjectName, resolvedRecords] = expandReferences(
       state,
       sObjectName,
-      records
+      records,
     );
     util.assertNoNesting(resolvedRecords);
     console.info(`Creating ${resolvedSObjectName}`, resolvedRecords);
@@ -344,7 +359,7 @@ export function query(query, options) {
 
     if (resolvedQuery.includes('LIMIT') || resolvedQuery.includes('limit')) {
       console.warn(
-        'Warning: Query contains a LIMIT clause. We recommend using the `limit` option instead.'
+        'Warning: Query contains a LIMIT clause. We recommend using the `limit` option instead.',
       );
     }
 
@@ -359,7 +374,7 @@ export function query(query, options) {
     if (!response.done && fetchedRecords === maxRecords) {
       console.warn(
         `Warning: The default maximum number of items has been reached (${maxRecords}), but more items are available on the server. 
-         To download all available items, adjust limit to ${response.totalSize} or set limit to false`
+         To download all available items, adjust limit to ${response.totalSize} or set limit to false`,
       );
     }
     console.log('Fetched: ' + fetchedRecords);
@@ -406,7 +421,7 @@ export function upsert(sObjectName, externalId, records) {
       `Upserting ${resolvedSObjectName} with externalId`,
       resolvedExternalId,
       ':',
-      resolvedRecords
+      resolvedRecords,
     );
 
     return connection
@@ -450,7 +465,7 @@ export function update(sObjectName, records) {
     const [resolvedSObjectName, resolvedRecords] = expandReferences(
       state,
       sObjectName,
-      records
+      records,
     );
     util.assertNoNesting(resolvedRecords);
     console.info(`Updating ${resolvedSObjectName}`, resolvedRecords);
@@ -486,11 +501,11 @@ export function retrieve(sObjectName, id) {
     const [resolvedSObjectName, resolvedId] = expandReferences(
       state,
       sObjectName,
-      id
+      id,
     );
 
     console.log(
-      `Retrieving data for sObject '${resolvedSObjectName}' with Id '${resolvedId}'`
+      `Retrieving data for sObject '${resolvedSObjectName}' with Id '${resolvedId}'`,
     );
     return connection
       .sobject(resolvedSObjectName)
