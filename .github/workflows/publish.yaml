@@ -1,6 +1,6 @@
 name: Publish
 
-on: push
+# on: push
 
 jobs:
   publish:
@@ -26,8 +26,8 @@ jobs:
       - run:
           pnpm publish -r --report-summary --publish-branch main --access=public
       - run:
-          pnpm publish -r --report-summary --publish-branch patch-salesforce-6-0
-          --access=public --tag legacy --no-git-checks
+          pnpm publish -r --report-summary --publish-branch
+          patch-salesforce-6-0-5 --access=public --tag legacy --no-git-checks
 
       - name: Setup GH user
         run: git config user.name ${{ secrets.GH_USER }}

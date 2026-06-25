@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 6.0.5
+
+### Patch Changes
+
+- Fix hanging connections for oauth clients
+
 ## 6.0.4
 
 ### Patch Changes
