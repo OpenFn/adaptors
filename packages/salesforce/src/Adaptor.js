@@ -76,10 +76,10 @@ const connect = async state => {
     await connection
       .login(username, securityToken ? password + securityToken : password)
       .catch(error => {
+        console.error(error.message);
         throwError('FAILED_AUTH', {
           fix: 'Check your username, password, and security token',
           message: `Failed to connect to salesforce as ${username}`,
-          error,
         });
       });
   }
