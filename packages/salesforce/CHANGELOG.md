@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 9.1.3
+
+### Patch Changes
+
+- Fix connection hanging on oauth clients
+
 ## 9.1.2
 
 ### Patch Changes
@@ -90,7 +96,6 @@
 ### Major Changes
 
 - 187b088: - Add `failOnError` option in bulk2 functions
-
   - Default `failOnError` to `true` in bulk1 functions
   - Fix `v8.0.0` migration guide typos
   - Remove `BulkOptions` and `BulkQueryOptions` typedefs
@@ -111,7 +116,7 @@
     {
       extIdField: 'External_Id__c',
       pollInterval: 3000,
-    }
+    },
   );
   ```
 
@@ -125,7 +130,7 @@
       extIdField: 'External_Id__c',
       pollInterval: 3000,
       failOnError: false,
-    }
+    },
   );
   ```
 
@@ -149,7 +154,6 @@
 ### Major Changes
 
 - fb30b2a: - Add `bulk1` functions for bulk insert, update, upsert, and destroy
-
   - Removed `bulk()` function in favor of explicit `bulk1` and `bulk2` APIs
   - Removed `bulkQuery()` function in favor of `bulk1.query()` and
     `bulk2.query()`
@@ -218,7 +222,6 @@ bulk2.query('select Id, Name from Account');
 ### Minor Changes
 
 - dc89780: ## Added Salesforce Bulk API 2.0 Operations
-
   - Added `bulk2.query()` - Execute SOQL queries using Bulk API 2.0
   - Added `bulk2.insert()` - Bulk insert records
   - Added `bulk2.update()` - Bulk update records
@@ -272,7 +275,6 @@ bulk2.query('select Id, Name from Account');
 ### Major Changes
 
 - 8dd65a1: - Modernize `query()` implementation using jsforce v3
-
   - Remove `autoFetch` option from `query()` function
   - Add `limit` option to `query()` function
   - Change query result structure:
@@ -570,15 +572,12 @@ with version number 5.0.2.
 
 - 5fb82f07: Export `group` operation from common
 - b5e0c266: ### Added
-
   - `insert()` function as an alias for `create()`.
 
   ### Improved
-
   - JSDocs for `query`, `bulk`, `describe`, `create`, and `upsert`.
 
   ### Deprecated
-
   - `upsertIf()` and `createIf()` functions are now deprecated. Use
     `fnIf(condition, upsert())` instead.
 
