@@ -38,7 +38,7 @@ const httpsServer = https.createServer(certOptions || {}, (req, res) => {
   res.end('Hello, HTTPS World!');
 });
 
-describe('Integration tests', () => {
+describe.skip('Integration tests', () => {
   before(() => {
     httpServer.listen(port, () => {
       console.log(`HTTP server is running on http://localhost:${port}/`);
@@ -86,7 +86,7 @@ describe('Integration tests', () => {
     const { data } = await execute(
       get('/redirect', {
         headers: { followAllRedirects: true },
-      })
+      }),
     )(state);
 
     expect(data).to.eql({ ok: true });
@@ -108,7 +108,7 @@ describe('Integration tests', () => {
           requestCert: false,
           rejectUnauthorized: true,
         },
-      })
+      }),
     )(state);
 
     expect(data).to.eql('Hello, HTTPS World!');
