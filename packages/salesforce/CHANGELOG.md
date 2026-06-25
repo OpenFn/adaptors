@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 8.0.2
+
+### Patch Changes
+
+- Fix an issue where salesforce connections can hang indefinitely
+
 ## 8.0.1 - 18 September 2025
 
 ### Patch Changes
