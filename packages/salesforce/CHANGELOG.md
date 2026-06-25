@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 6.0.4
+
+### Patch Changes
+
+- 873463a: Fix an issue where salesforce connections can hang indefinitely
+
 ## 6.0.3
 
 ### Patch Changes
