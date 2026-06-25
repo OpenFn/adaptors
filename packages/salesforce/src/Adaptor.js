@@ -88,6 +88,14 @@ const connect = async state => {
     const { loginUrl, username, password, securityToken } = configuration;
     connection = new Connection({ loginUrl, version });
 
+    // Workaround for https://github.com/jsforce/jsforce/issues/1806
+    const transport = connection._transport;
+    const originalHttpRequest = transport.httpRequest.bind(transport);
+    transport.httpRequest = (req, options) => {
+      req.headers = { ...req.headers, connection: 'close' };
+      return originalHttpRequest(req, options);
+    };
+
     console.info(`Attempting Salesforce connection for user: ${username}`);
 
     // Simple, direct login without extra Promise wrapping
@@ -107,7 +115,7 @@ const connect = async state => {
   }
 
   console.info(
-    `Successfully connected to Salesforce with ${connection._sessionType} session type`
+    `Successfully connected to Salesforce with ${connection._sessionType} session type`,
   );
   console.info(`API Version: ${connection.version}`);
 
@@ -136,7 +144,7 @@ export function execute(...operations) {
     return commonExecute(
       connect,
       util.loadAnyAscii,
-      ...operations
+      ...operations,
     )({
       ...initialState,
       ...state,
@@ -218,7 +226,7 @@ export function bulk(sObjectName, operation, records, options = {}) {
     const flatRecords = util.removeNestings(resolvedRecords);
     if (allowNoOp && flatRecords.length === 0) {
       console.info(
-        `No items in ${resolvedSObjectName} array. Skipping bulk ${resolvedOperation} operation.`
+        `No items in ${resolvedSObjectName} array. Skipping bulk ${resolvedOperation} operation.`,
       );
       return state;
     }
@@ -233,13 +241,13 @@ export function bulk(sObjectName, operation, records, options = {}) {
         chunkedBatch =>
           new Promise((resolve, reject) => {
             console.info(
-              `Creating bulk ${resolvedOperation} job for ${resolvedSObjectName} with ${chunkedBatch.length} records`
+              `Creating bulk ${resolvedOperation} job for ${resolvedSObjectName} with ${chunkedBatch.length} records`,
             );
 
             const job = connection.bulk.createJob(
               resolvedSObjectName,
               resolvedOperation,
-              resolvedOptions
+              resolvedOptions,
             );
 
             job.on('error', err => reject(err));
@@ -283,8 +291,8 @@ export function bulk(sObjectName, operation, records, options = {}) {
                   resolve(res);
                 }
               });
-          })
-      )
+          }),
+      ),
     ).then(results => {
       const allResults = util.formatResults(results.flat());
       console.log('Merging results arrays.');
@@ -317,7 +325,7 @@ export function bulkQuery(query, options = {}) {
     const [resolvedQuery, resolvedOptions] = expandReferences(
       state,
       query,
-      options
+      options,
     );
 
     if (parseFloat(connection.version) < 47.0)
@@ -343,7 +351,7 @@ export function bulkQuery(query, options = {}) {
       connection,
       queryJob,
       pollInterval,
-      pollTimeout
+      pollTimeout,
     );
 
     return composeNextState(state, result);
@@ -381,7 +389,7 @@ export function create(sObjectName, records) {
     const [resolvedSObjectName, resolvedRecords] = expandReferences(
       state,
       sObjectName,
-      records
+      records,
     );
     util.assertNoNesting(resolvedRecords);
     console.info(`Creating ${resolvedSObjectName}`, resolvedRecords);
@@ -540,7 +548,7 @@ export function query(query, options = {}) {
     const [resolvedQuery, resolvedOptions] = expandReferences(
       state,
       query,
-      options
+      options,
     );
     console.log(`Executing query: ${resolvedQuery}`);
     const autoFetch = resolvedOptions.autoFetch || resolvedOptions.autofetch;
@@ -596,7 +604,7 @@ export function query(query, options = {}) {
     }
 
     console.log(
-      'Results retrieved and pushed to position [0] of the references array.'
+      'Results retrieved and pushed to position [0] of the references array.',
     );
 
     return composeNextState(state, result);
@@ -640,7 +648,7 @@ export function upsert(sObjectName, externalId, records) {
       `Upserting ${resolvedSObjectName} with externalId`,
       resolvedExternalId,
       ':',
-      resolvedRecords
+      resolvedRecords,
     );
 
     return connection
@@ -684,7 +692,7 @@ export function update(sObjectName, records) {
     const [resolvedSObjectName, resolvedRecords] = expandReferences(
       state,
       sObjectName,
-      records
+      records,
     );
     util.assertNoNesting(resolvedRecords);
     console.info(`Updating ${resolvedSObjectName}`, resolvedRecords);
@@ -720,11 +728,11 @@ export function retrieve(sObjectName, id) {
     const [resolvedSObjectName, resolvedId] = expandReferences(
       state,
       sObjectName,
-      id
+      id,
     );
 
     console.log(
-      `Retrieving data for sObject '${resolvedSObjectName}' with Id '${resolvedId}'`
+      `Retrieving data for sObject '${resolvedSObjectName}' with Id '${resolvedId}'`,
     );
     return connection
       .sobject(resolvedSObjectName)
