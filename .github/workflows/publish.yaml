@@ -28,6 +28,9 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run:
           pnpm publish -r --report-summary --publish-branch main --access=public
+      - run:
+          pnpm publish -r --report-summary --publish-branch patch-salesforce-6-0
+          --access=public --tag legacy --no-git-checks
 
       - name: Setup GH user
         run: git config user.name ${{ secrets.GH_USER }}
