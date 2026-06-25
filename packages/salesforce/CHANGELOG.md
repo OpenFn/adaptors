@@ -1,5 +1,11 @@
 # @openfn/language-salesforce
 
+## 7.2.3
+
+### Patch Changes
+
+- Fix hanging connections for oauth clients
+
 ## 7.2.2
 
 ### Patch Changes

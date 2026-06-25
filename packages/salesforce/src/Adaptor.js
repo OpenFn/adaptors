@@ -59,6 +59,16 @@ import * as util from './util';
 
 let connection = null;
 
+// Workaround for https://github.com/jsforce/jsforce/issues/1806
+const workaroundBrokenTransport = connection => {
+  const transport = connection._transport;
+  const originalHttpRequest = transport.httpRequest.bind(transport);
+  transport.httpRequest = (req, options) => {
+    req.headers = { ...req.headers, connection: 'close' };
+    return originalHttpRequest(req, options);
+  };
+};
+
 /**
  * Creates a connection to Salesforce using Basic Auth or OAuth.
  * @function connect
@@ -77,10 +87,14 @@ const connect = async state => {
   if (configuration.access_token) {
     const { instance_url: instanceUrl, access_token: accessToken } =
       configuration;
-    connection = new Connection({ instanceUrl, accessToken, version });
+    connection = workaroundBrokenTransport(
+      new Connection({ instanceUrl, accessToken, version }),
+    );
   } else {
     const { loginUrl, username, password, securityToken } = configuration;
-    connection = new Connection({ loginUrl, version });
+    connection = workaroundBrokenTransport(
+      new Connection({ loginUrl, version }),
+    );
 
     // Workaround for https://github.com/jsforce/jsforce/issues/1806
     const transport = connection._transport;
