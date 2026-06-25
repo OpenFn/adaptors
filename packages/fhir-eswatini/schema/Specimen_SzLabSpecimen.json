@@ -1,0 +1,283 @@
+{
+  "id": "SzLabSpecimen",
+  "type": "Specimen",
+  "url": "https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzLabSpecimen",
+  "props": {
+    "id": {
+      "type": [
+        "string"
+      ],
+      "isArray": false,
+      "desc": "Logical id of this artifact",
+      "isComposite": false
+    },
+    "meta": {
+      "type": [
+        "Meta"
+      ],
+      "isArray": false,
+      "desc": "Metadata about the resource",
+      "isComposite": false
+    },
+    "implicitRules": {
+      "type": [
+        "string"
+      ],
+      "isArray": false,
+      "desc": "A set of rules under which this content was created",
+      "isComposite": false
+    },
+    "language": {
+      "type": [
+        "string"
+      ],
+      "isArray": false,
+      "desc": "Language of the resource content",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/languages|4.0.1"
+    },
+    "text": {
+      "type": [
+        "Narrative"
+      ],
+      "isArray": false,
+      "desc": "Text summary of the resource, for human interpretation",
+      "isComposite": false
+    },
+    "contained": {
+      "type": [
+        "Resource"
+      ],
+      "isArray": true,
+      "desc": "Contained, inline Resources",
+      "isComposite": false
+    },
+    "extension": {
+      "type": [
+        "Extension"
+      ],
+      "isArray": true,
+      "desc": "Additional content defined by implementations",
+      "isComposite": false
+    },
+    "modifierExtension": {
+      "type": [
+        "Extension"
+      ],
+      "isArray": true,
+      "desc": "Extensions that cannot be ignored",
+      "isComposite": false
+    },
+    "identifier": {
+      "type": [
+        "Identifier"
+      ],
+      "isArray": true,
+      "desc": "External Identifier",
+      "isComposite": false
+    },
+    "accessionIdentifier": {
+      "type": [
+        "Identifier"
+      ],
+      "isArray": false,
+      "desc": "Identifier assigned by the lab",
+      "isComposite": false
+    },
+    "status": {
+      "type": [
+        "string"
+      ],
+      "isArray": false,
+      "desc": "available | unavailable | unsatisfactory | entered-in-error",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/specimen-status|4.0.1"
+    },
+    "type": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": false,
+      "desc": "Type of specimen being collected",
+      "isComposite": false,
+      "valueSet": "http://terminology.hl7.org/CodeSystem/v2-0487|3.0.0"
+    },
+    "subject": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": false,
+      "desc": "Patient associated with the specimen being collected",
+      "isComposite": false
+    },
+    "receivedTime": {
+      "type": [
+        "dateTime"
+      ],
+      "isArray": false,
+      "desc": "The time when specimen was received for processing",
+      "isComposite": false
+    },
+    "parent": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": true,
+      "desc": "Specimen from which this specimen originated",
+      "isComposite": false
+    },
+    "request": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": true,
+      "desc": "Why the specimen was collected",
+      "isComposite": false
+    },
+    "collection": {
+      "type": [
+        "BackboneElement"
+      ],
+      "isArray": false,
+      "desc": "Specimen collection information",
+      "isComposite": false,
+      "typeDef": {
+        "id": {
+          "type": "string",
+          "desc": "Unique id for inter-element referencing"
+        },
+        "modifierExtension": {
+          "type": "Extension",
+          "desc": "Extensions that cannot be ignored even if unrecognized"
+        },
+        "collector": {
+          "type": "Reference",
+          "desc": "Specimen collector"
+        },
+        "collected": {
+          "type": "dateTime",
+          "desc": "Specimen collection date"
+        },
+        "duration": {
+          "type": "Duration",
+          "desc": "How long it took to collect specimen"
+        },
+        "quantity": {
+          "type": "Quantity",
+          "desc": "The quantity of specimen collected"
+        },
+        "method": {
+          "type": "CodeableConcept",
+          "desc": "Technique used to perform collection",
+          "valueSet": "http://hl7.org/fhir/ValueSet/specimen-collection-method|4.0.1"
+        },
+        "bodySite": {
+          "type": "CodeableConcept",
+          "desc": "Anatomical collection site",
+          "valueSet": "http://hl7.org/fhir/ValueSet/body-site|4.0.1"
+        },
+        "fastingStatus": {
+          "type": "CodeableConcept",
+          "desc": "Whether or how long patient abstained from food and/or drink",
+          "valueSet": "http://terminology.hl7.org/ValueSet/v2-0916|3.0.0"
+        }
+      }
+    },
+    "processing": {
+      "type": [
+        "BackboneElement"
+      ],
+      "isArray": true,
+      "desc": "Processing and processing step details",
+      "isComposite": false,
+      "typeDef": {
+        "id": {
+          "type": "string",
+          "desc": "Unique id for inter-element referencing"
+        },
+        "modifierExtension": {
+          "type": "Extension",
+          "desc": "Extensions that cannot be ignored even if unrecognized"
+        },
+        "description": {
+          "type": "string",
+          "desc": "Textual description of procedure"
+        },
+        "procedure": {
+          "type": "CodeableConcept",
+          "desc": "Indicates the treatment step  applied to the specimen",
+          "valueSet": "http://hl7.org/fhir/ValueSet/specimen-processing-procedure|4.0.1"
+        },
+        "additive": {
+          "type": "Reference",
+          "desc": "Material used in the processing step"
+        },
+        "time": {
+          "type": "dateTime",
+          "desc": "Date and time of specimen processing"
+        }
+      }
+    },
+    "container": {
+      "type": [
+        "BackboneElement"
+      ],
+      "isArray": true,
+      "desc": "Direct container of specimen (tube/slide, etc.)",
+      "isComposite": false,
+      "typeDef": {
+        "id": {
+          "type": "string",
+          "desc": "Unique id for inter-element referencing"
+        },
+        "modifierExtension": {
+          "type": "Extension",
+          "desc": "Extensions that cannot be ignored even if unrecognized"
+        },
+        "identifier": {
+          "type": "Identifier",
+          "desc": "Id for the container"
+        },
+        "description": {
+          "type": "string",
+          "desc": "Textual description of the container"
+        },
+        "type": {
+          "type": "CodeableConcept",
+          "desc": "Kind of container directly associated with specimen",
+          "valueSet": "http://hl7.org/fhir/ValueSet/specimen-container-type|4.0.1"
+        },
+        "capacity": {
+          "type": "Quantity",
+          "desc": "Container volume or size"
+        },
+        "specimenQuantity": {
+          "type": "Quantity",
+          "desc": "Quantity of specimen within container"
+        },
+        "additive": {
+          "type": "CodeableConcept",
+          "desc": "Additive associated with container",
+          "valueSet": "http://terminology.hl7.org/ValueSet/v2-0371|3.0.0"
+        }
+      }
+    },
+    "condition": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": true,
+      "desc": "State of the specimen",
+      "isComposite": false,
+      "valueSet": "http://terminology.hl7.org/ValueSet/v2-0493|3.0.0"
+    },
+    "note": {
+      "type": [
+        "Annotation"
+      ],
+      "isArray": true,
+      "desc": "Comments",
+      "isComposite": false
+    }
+  }
+}

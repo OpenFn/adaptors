@@ -1,0 +1,367 @@
+{
+  "id": "SzLabResult",
+  "type": "Observation",
+  "url": "https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzLabResult",
+  "props": {
+    "id": {
+      "type": [
+        "string"
+      ],
+      "isArray": false,
+      "desc": "Logical id of this artifact",
+      "isComposite": false
+    },
+    "meta": {
+      "type": [
+        "Meta"
+      ],
+      "isArray": false,
+      "desc": "Metadata about the resource",
+      "isComposite": false
+    },
+    "implicitRules": {
+      "type": [
+        "string"
+      ],
+      "isArray": false,
+      "desc": "A set of rules under which this content was created",
+      "isComposite": false
+    },
+    "language": {
+      "type": [
+        "string"
+      ],
+      "isArray": false,
+      "desc": "Language of the resource content",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/languages|4.0.1"
+    },
+    "text": {
+      "type": [
+        "Narrative"
+      ],
+      "isArray": false,
+      "desc": "Text summary of the resource, for human interpretation",
+      "isComposite": false
+    },
+    "contained": {
+      "type": [
+        "Resource"
+      ],
+      "isArray": true,
+      "desc": "Contained, inline Resources",
+      "isComposite": false
+    },
+    "extension": {
+      "type": [
+        "Extension"
+      ],
+      "isArray": true,
+      "desc": "Extension",
+      "isComposite": false
+    },
+    "authorizer": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": true,
+      "desc": "Lab results authorizer",
+      "isComposite": false,
+      "extension": "https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzAuthorizerExtension"
+    },
+    "testingLaboratory": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": true,
+      "desc": "Testing laboratory",
+      "isComposite": false,
+      "extension": "https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzTestingLabExtension"
+    },
+    "modifierExtension": {
+      "type": [
+        "Extension"
+      ],
+      "isArray": true,
+      "desc": "Extensions that cannot be ignored",
+      "isComposite": false
+    },
+    "identifier": {
+      "type": [
+        "Identifier"
+      ],
+      "isArray": true,
+      "desc": "Business Identifier for observation",
+      "isComposite": false
+    },
+    "basedOn": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": true,
+      "desc": "Fulfills plan, proposal or order",
+      "isComposite": false
+    },
+    "partOf": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": true,
+      "desc": "Part of referenced event",
+      "isComposite": false
+    },
+    "status": {
+      "type": [
+        "string"
+      ],
+      "isArray": false,
+      "desc": "registered | preliminary | final | amended +",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/observation-status|4.0.1"
+    },
+    "category": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": true,
+      "desc": "Classification of  type of observation",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/observation-category|4.0.1"
+    },
+    "code": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": false,
+      "desc": "Local test parameter code",
+      "isComposite": false,
+      "valueSet": "https://hapifhir.eswatinihie.com/fhir/ValueSet/SzTestParameterCodeVS"
+    },
+    "subject": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": false,
+      "desc": "Patient profile",
+      "isComposite": false
+    },
+    "focus": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": true,
+      "desc": "What the observation is about, when it is not about the subject of record",
+      "isComposite": false
+    },
+    "encounter": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": false,
+      "desc": "Encounter",
+      "isComposite": false
+    },
+    "effective": {
+      "type": [
+        "dateTime",
+        "Period",
+        "Timing",
+        "instant"
+      ],
+      "isArray": false,
+      "desc": "Clinically relevant time/time-period for observation",
+      "isComposite": true
+    },
+    "issued": {
+      "type": [
+        "instant"
+      ],
+      "isArray": false,
+      "desc": "Date/Time this version was made available",
+      "isComposite": false
+    },
+    "performer": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": true,
+      "desc": "Who is responsible for the observation",
+      "isComposite": false
+    },
+    "value": {
+      "type": [
+        "Quantity",
+        "CodeableConcept",
+        "string",
+        "boolean",
+        "integer",
+        "Range",
+        "Ratio",
+        "SampledData",
+        "time",
+        "dateTime",
+        "Period"
+      ],
+      "isArray": false,
+      "desc": "Actual result",
+      "isComposite": true
+    },
+    "dataAbsentReason": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": false,
+      "desc": "Why the result is missing",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/data-absent-reason|4.0.1"
+    },
+    "interpretation": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": true,
+      "desc": "High, low, normal, etc.",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/observation-interpretation|4.0.1"
+    },
+    "note": {
+      "type": [
+        "Annotation"
+      ],
+      "isArray": true,
+      "desc": "Comments about the observation",
+      "isComposite": false
+    },
+    "bodySite": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": false,
+      "desc": "Observed body part",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/body-site|4.0.1"
+    },
+    "method": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": false,
+      "desc": "How it was done",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/observation-methods|4.0.1"
+    },
+    "specimen": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": false,
+      "desc": "Specimen used for this observation",
+      "isComposite": false
+    },
+    "device": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": false,
+      "desc": "(Measurement) Device",
+      "isComposite": false
+    },
+    "referenceRange": {
+      "type": [
+        "BackboneElement"
+      ],
+      "isArray": true,
+      "desc": "Provides guide for interpretation",
+      "isComposite": false,
+      "typeDef": {
+        "id": {
+          "type": "string",
+          "desc": "Unique id for inter-element referencing"
+        },
+        "modifierExtension": {
+          "type": "Extension",
+          "desc": "Extensions that cannot be ignored even if unrecognized"
+        },
+        "low": {
+          "type": "Quantity",
+          "desc": "Low Range, if relevant"
+        },
+        "high": {
+          "type": "Quantity",
+          "desc": "High Range, if relevant"
+        },
+        "type": {
+          "type": "CodeableConcept",
+          "desc": "Reference range qualifier",
+          "valueSet": "http://hl7.org/fhir/ValueSet/referencerange-meaning|4.0.1"
+        },
+        "appliesTo": {
+          "type": "CodeableConcept",
+          "desc": "Reference range population",
+          "valueSet": "http://hl7.org/fhir/ValueSet/referencerange-appliesto|4.0.1"
+        },
+        "age": {
+          "type": "Range",
+          "desc": "Applicable age range, if relevant"
+        },
+        "text": {
+          "type": "string",
+          "desc": "Text based reference range in an observation"
+        }
+      }
+    },
+    "hasMember": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": true,
+      "desc": "Related resource that belongs to the Observation group",
+      "isComposite": false
+    },
+    "derivedFrom": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": true,
+      "desc": "Related measurements the observation is made from",
+      "isComposite": false
+    },
+    "component": {
+      "type": [
+        "BackboneElement"
+      ],
+      "isArray": true,
+      "desc": "Component results",
+      "isComposite": false,
+      "typeDef": {
+        "id": {
+          "type": "string",
+          "desc": "Unique id for inter-element referencing"
+        },
+        "modifierExtension": {
+          "type": "Extension",
+          "desc": "Extensions that cannot be ignored even if unrecognized"
+        },
+        "code": {
+          "type": "CodeableConcept",
+          "desc": "Type of component observation (code / type)",
+          "valueSet": "http://hl7.org/fhir/ValueSet/observation-codes|4.0.1"
+        },
+        "value": {
+          "type": "Quantity",
+          "desc": "Actual component result"
+        },
+        "dataAbsentReason": {
+          "type": "CodeableConcept",
+          "desc": "Why the component result is missing",
+          "valueSet": "http://hl7.org/fhir/ValueSet/data-absent-reason|4.0.1"
+        },
+        "interpretation": {
+          "type": "CodeableConcept",
+          "desc": "High, low, normal, etc.",
+          "valueSet": "http://hl7.org/fhir/ValueSet/observation-interpretation|4.0.1"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,261 @@
+{
+  "id": "SzCondition",
+  "type": "Condition",
+  "url": "https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzCondition",
+  "props": {
+    "id": {
+      "type": [
+        "string"
+      ],
+      "isArray": false,
+      "desc": "Logical id of this artifact",
+      "isComposite": false
+    },
+    "meta": {
+      "type": [
+        "Meta"
+      ],
+      "isArray": false,
+      "desc": "Metadata about the resource",
+      "isComposite": false
+    },
+    "implicitRules": {
+      "type": [
+        "string"
+      ],
+      "isArray": false,
+      "desc": "A set of rules under which this content was created",
+      "isComposite": false
+    },
+    "language": {
+      "type": [
+        "string"
+      ],
+      "isArray": false,
+      "desc": "Language of the resource content",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/languages|4.0.1"
+    },
+    "text": {
+      "type": [
+        "Narrative"
+      ],
+      "isArray": false,
+      "desc": "Text summary of the resource, for human interpretation",
+      "isComposite": false
+    },
+    "contained": {
+      "type": [
+        "Resource"
+      ],
+      "isArray": true,
+      "desc": "Contained, inline Resources",
+      "isComposite": false
+    },
+    "extension": {
+      "type": [
+        "Extension"
+      ],
+      "isArray": true,
+      "desc": "Additional content defined by implementations",
+      "isComposite": false
+    },
+    "modifierExtension": {
+      "type": [
+        "Extension"
+      ],
+      "isArray": true,
+      "desc": "Extensions that cannot be ignored",
+      "isComposite": false
+    },
+    "identifier": {
+      "type": [
+        "Identifier"
+      ],
+      "isArray": true,
+      "desc": "External Ids for this condition",
+      "isComposite": false
+    },
+    "clinicalStatus": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": false,
+      "desc": "active | recurrence | relapse | inactive | remission | resolved",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/condition-clinical|4.0.1"
+    },
+    "verificationStatus": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": false,
+      "desc": "unconfirmed | provisional | differential | confirmed | refuted | entered-in-error",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/condition-ver-status|4.0.1"
+    },
+    "category": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": true,
+      "desc": "problem-list-item | encounter-diagnosis",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/condition-category|4.0.1"
+    },
+    "severity": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": false,
+      "desc": "Subjective severity of condition",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/condition-severity|4.0.1"
+    },
+    "code": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": false,
+      "desc": "Condition Identification",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/condition-code|4.0.1"
+    },
+    "bodySite": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": true,
+      "desc": "Anatomical location, if relevant",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/body-site|4.0.1"
+    },
+    "subject": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": false,
+      "desc": "Who has the condition?",
+      "isComposite": false
+    },
+    "encounter": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": false,
+      "desc": "Encounter created as part of",
+      "isComposite": false
+    },
+    "onset": {
+      "type": [
+        "dateTime"
+      ],
+      "isArray": false,
+      "desc": "Diagnosis date",
+      "isComposite": true
+    },
+    "abatement": {
+      "type": [
+        "dateTime",
+        "Age",
+        "Period",
+        "Range",
+        "string"
+      ],
+      "isArray": false,
+      "desc": "When in resolution/remission",
+      "isComposite": true
+    },
+    "recordedDate": {
+      "type": [
+        "dateTime"
+      ],
+      "isArray": false,
+      "desc": "Date record was first recorded",
+      "isComposite": false
+    },
+    "recorder": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": false,
+      "desc": "Who recorded the condition",
+      "isComposite": false
+    },
+    "asserter": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": false,
+      "desc": "Person who asserts this condition",
+      "isComposite": false
+    },
+    "stage": {
+      "type": [
+        "BackboneElement"
+      ],
+      "isArray": true,
+      "desc": "Stage/grade, usually assessed formally",
+      "isComposite": false,
+      "typeDef": {
+        "id": {
+          "type": "string",
+          "desc": "Unique id for inter-element referencing"
+        },
+        "modifierExtension": {
+          "type": "Extension",
+          "desc": "Extensions that cannot be ignored even if unrecognized"
+        },
+        "summary": {
+          "type": "CodeableConcept",
+          "desc": "Simple summary (disease specific)",
+          "valueSet": "http://hl7.org/fhir/ValueSet/condition-stage|4.0.1"
+        },
+        "assessment": {
+          "type": "Reference",
+          "desc": "Formal record of assessment"
+        },
+        "type": {
+          "type": "CodeableConcept",
+          "desc": "Kind of staging",
+          "valueSet": "http://hl7.org/fhir/ValueSet/condition-stage-type|4.0.1"
+        }
+      }
+    },
+    "evidence": {
+      "type": [
+        "BackboneElement"
+      ],
+      "isArray": true,
+      "desc": "Supporting evidence",
+      "isComposite": false,
+      "typeDef": {
+        "id": {
+          "type": "string",
+          "desc": "Unique id for inter-element referencing"
+        },
+        "modifierExtension": {
+          "type": "Extension",
+          "desc": "Extensions that cannot be ignored even if unrecognized"
+        },
+        "code": {
+          "type": "CodeableConcept",
+          "desc": "Manifestation/symptom",
+          "valueSet": "http://hl7.org/fhir/ValueSet/manifestation-or-symptom|4.0.1"
+        },
+        "detail": {
+          "type": "Reference",
+          "desc": "Supporting information found elsewhere"
+        }
+      }
+    },
+    "note": {
+      "type": [
+        "Annotation"
+      ],
+      "isArray": true,
+      "desc": "Additional information about the Condition",
+      "isComposite": false
+    }
+  }
+}

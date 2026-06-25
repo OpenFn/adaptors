@@ -1,0 +1,212 @@
+{
+  "id": "SzEpisodeOfCare",
+  "type": "EpisodeOfCare",
+  "url": "https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzEpisodeOfCare",
+  "props": {
+    "id": {
+      "type": [
+        "string"
+      ],
+      "isArray": false,
+      "desc": "Logical id of this artifact",
+      "isComposite": false
+    },
+    "meta": {
+      "type": [
+        "Meta"
+      ],
+      "isArray": false,
+      "desc": "Metadata about the resource",
+      "isComposite": false
+    },
+    "implicitRules": {
+      "type": [
+        "string"
+      ],
+      "isArray": false,
+      "desc": "A set of rules under which this content was created",
+      "isComposite": false
+    },
+    "language": {
+      "type": [
+        "string"
+      ],
+      "isArray": false,
+      "desc": "Language of the resource content",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/languages|4.0.1"
+    },
+    "text": {
+      "type": [
+        "Narrative"
+      ],
+      "isArray": false,
+      "desc": "Text summary of the resource, for human interpretation",
+      "isComposite": false
+    },
+    "contained": {
+      "type": [
+        "Resource"
+      ],
+      "isArray": true,
+      "desc": "Contained, inline Resources",
+      "isComposite": false
+    },
+    "extension": {
+      "type": [
+        "Extension"
+      ],
+      "isArray": true,
+      "desc": "Additional content defined by implementations",
+      "isComposite": false
+    },
+    "modifierExtension": {
+      "type": [
+        "Extension"
+      ],
+      "isArray": true,
+      "desc": "Extensions that cannot be ignored",
+      "isComposite": false
+    },
+    "identifier": {
+      "type": [
+        "Identifier"
+      ],
+      "isArray": true,
+      "desc": "Business Identifier(s) relevant for this EpisodeOfCare",
+      "isComposite": false
+    },
+    "status": {
+      "type": [
+        "string"
+      ],
+      "isArray": false,
+      "desc": "planned | waitlist | active | onhold | finished | cancelled | entered-in-error",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/episode-of-care-status|4.0.1"
+    },
+    "statusHistory": {
+      "type": [
+        "BackboneElement"
+      ],
+      "isArray": true,
+      "desc": "Past list of status codes (the current status may be included to cover the start date of the status)",
+      "isComposite": false,
+      "typeDef": {
+        "id": {
+          "type": "string",
+          "desc": "Unique id for inter-element referencing"
+        },
+        "modifierExtension": {
+          "type": "Extension",
+          "desc": "Extensions that cannot be ignored even if unrecognized"
+        },
+        "status": {
+          "type": "string",
+          "desc": "planned | waitlist | active | onhold | finished | cancelled | entered-in-error",
+          "valueSet": "http://hl7.org/fhir/ValueSet/episode-of-care-status|4.0.1"
+        },
+        "period": {
+          "type": "Period",
+          "desc": "Duration the EpisodeOfCare was in the specified status"
+        }
+      }
+    },
+    "type": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": true,
+      "desc": "Episode of care classification",
+      "isComposite": false,
+      "valueSet": "https://hapifhir.eswatinihie.com/fhir/ValueSet/SzEpisodeOfCareTypeVS"
+    },
+    "diagnosis": {
+      "type": [
+        "BackboneElement"
+      ],
+      "isArray": true,
+      "desc": "The list of diagnosis relevant to this episode of care",
+      "isComposite": false,
+      "typeDef": {
+        "id": {
+          "type": "string",
+          "desc": "Unique id for inter-element referencing"
+        },
+        "modifierExtension": {
+          "type": "Extension",
+          "desc": "Extensions that cannot be ignored even if unrecognized"
+        },
+        "condition": {
+          "type": "Reference",
+          "desc": "Conditions/problems/diagnoses this episode of care is for"
+        },
+        "role": {
+          "type": "CodeableConcept",
+          "desc": "Role that this diagnosis has within the episode of care (e.g. admission, billing, discharge …)",
+          "valueSet": "http://hl7.org/fhir/ValueSet/diagnosis-role|4.0.1"
+        },
+        "rank": {
+          "type": "number",
+          "desc": "Ranking of the diagnosis (for each role type)"
+        }
+      }
+    },
+    "patient": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": false,
+      "desc": "The patient who is the focus of this episode of care",
+      "isComposite": false
+    },
+    "managingOrganization": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": false,
+      "desc": "Organization that assumes care",
+      "isComposite": false
+    },
+    "period": {
+      "type": [
+        "Period"
+      ],
+      "isArray": false,
+      "desc": "Start and end datest of the Episode of care",
+      "isComposite": false
+    },
+    "referralRequest": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": true,
+      "desc": "Originating Referral Request(s)",
+      "isComposite": false
+    },
+    "careManager": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": false,
+      "desc": "Care manager/care coordinator for the patient",
+      "isComposite": false
+    },
+    "team": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": true,
+      "desc": "Other practitioners facilitating this episode of care",
+      "isComposite": false
+    },
+    "account": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": true,
+      "desc": "The set of accounts that may be used for billing for this EpisodeOfCare",
+      "isComposite": false
+    }
+  }
+}

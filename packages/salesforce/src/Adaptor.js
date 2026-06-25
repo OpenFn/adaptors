@@ -73,6 +73,7 @@ const workaroundBrokenTransport = connection => {
     req.headers = { ...req.headers, connection: 'close' };
     return originalHttpRequest(req, options);
   };
+  return connection;
 };
 
 /**

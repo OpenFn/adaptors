@@ -1,0 +1,352 @@
+{
+  "id": "SzProcedure",
+  "type": "Procedure",
+  "url": "https://hapifhir.eswatinihie.com/fhir/StructureDefinition/SzProcedure",
+  "props": {
+    "id": {
+      "type": [
+        "string"
+      ],
+      "isArray": false,
+      "desc": "Logical id of this artifact",
+      "isComposite": false
+    },
+    "meta": {
+      "type": [
+        "Meta"
+      ],
+      "isArray": false,
+      "desc": "Metadata about the resource",
+      "isComposite": false
+    },
+    "implicitRules": {
+      "type": [
+        "string"
+      ],
+      "isArray": false,
+      "desc": "A set of rules under which this content was created",
+      "isComposite": false
+    },
+    "language": {
+      "type": [
+        "string"
+      ],
+      "isArray": false,
+      "desc": "Language of the resource content",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/languages|4.0.1"
+    },
+    "text": {
+      "type": [
+        "Narrative"
+      ],
+      "isArray": false,
+      "desc": "Text summary of the resource, for human interpretation",
+      "isComposite": false
+    },
+    "contained": {
+      "type": [
+        "Resource"
+      ],
+      "isArray": true,
+      "desc": "Contained, inline Resources",
+      "isComposite": false
+    },
+    "extension": {
+      "type": [
+        "Extension"
+      ],
+      "isArray": true,
+      "desc": "Additional content defined by implementations",
+      "isComposite": false
+    },
+    "modifierExtension": {
+      "type": [
+        "Extension"
+      ],
+      "isArray": true,
+      "desc": "Extensions that cannot be ignored",
+      "isComposite": false
+    },
+    "identifier": {
+      "type": [
+        "Identifier"
+      ],
+      "isArray": true,
+      "desc": "External Identifiers for this procedure",
+      "isComposite": false
+    },
+    "instantiatesCanonical": {
+      "type": [
+        "canonical"
+      ],
+      "isArray": true,
+      "desc": "Instantiates FHIR protocol or definition",
+      "isComposite": false
+    },
+    "instantiatesUri": {
+      "type": [
+        "string"
+      ],
+      "isArray": true,
+      "desc": "Instantiates external protocol or definition",
+      "isComposite": false
+    },
+    "basedOn": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": true,
+      "desc": "A request for this procedure",
+      "isComposite": false
+    },
+    "partOf": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": true,
+      "desc": "Part of referenced event",
+      "isComposite": false
+    },
+    "status": {
+      "type": [
+        "string"
+      ],
+      "isArray": false,
+      "desc": "preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/event-status|4.0.1"
+    },
+    "statusReason": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": false,
+      "desc": "Reason for current status",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/procedure-not-performed-reason|4.0.1"
+    },
+    "category": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": false,
+      "desc": "Classification of the procedure",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/procedure-category|4.0.1"
+    },
+    "code": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": false,
+      "desc": "Procedure Code",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/procedure-code|4.0.1"
+    },
+    "subject": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": false,
+      "desc": "Who the procedure was performed on",
+      "isComposite": false
+    },
+    "encounter": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": false,
+      "desc": "Encounter created as part of",
+      "isComposite": false
+    },
+    "performed": {
+      "type": [
+        "dateTime",
+        "Period",
+        "string",
+        "Age",
+        "Range"
+      ],
+      "isArray": false,
+      "desc": "When the procedure was performed",
+      "isComposite": true
+    },
+    "recorder": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": false,
+      "desc": "Who recorded the procedure",
+      "isComposite": false
+    },
+    "asserter": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": false,
+      "desc": "Person who asserts this procedure",
+      "isComposite": false
+    },
+    "performer": {
+      "type": [
+        "BackboneElement"
+      ],
+      "isArray": true,
+      "desc": "The people who performed the procedure",
+      "isComposite": false,
+      "typeDef": {
+        "id": {
+          "type": "string",
+          "desc": "Unique id for inter-element referencing"
+        },
+        "modifierExtension": {
+          "type": "Extension",
+          "desc": "Extensions that cannot be ignored even if unrecognized"
+        },
+        "function": {
+          "type": "CodeableConcept",
+          "desc": "Type of performance",
+          "valueSet": "http://hl7.org/fhir/ValueSet/performer-role|4.0.1"
+        },
+        "actor": {
+          "type": "Reference",
+          "desc": "The reference to the practitioner"
+        },
+        "onBehalfOf": {
+          "type": "Reference",
+          "desc": "Organization the device or practitioner was acting for"
+        }
+      }
+    },
+    "location": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": false,
+      "desc": "Where the procedure happened",
+      "isComposite": false
+    },
+    "reasonCode": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": true,
+      "desc": "Coded reason procedure performed",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/procedure-reason|4.0.1"
+    },
+    "reasonReference": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": true,
+      "desc": "The justification that the procedure was performed",
+      "isComposite": false
+    },
+    "bodySite": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": true,
+      "desc": "Target body sites",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/body-site|4.0.1"
+    },
+    "outcome": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": false,
+      "desc": "The result of procedure",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/procedure-outcome|4.0.1"
+    },
+    "report": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": true,
+      "desc": "Any report resulting from the procedure",
+      "isComposite": false
+    },
+    "complication": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": true,
+      "desc": "Complication following the procedure",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/condition-code|4.0.1"
+    },
+    "complicationDetail": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": true,
+      "desc": "A condition that is a result of the procedure",
+      "isComposite": false
+    },
+    "followUp": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": true,
+      "desc": "Instructions for follow up",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/procedure-followup|4.0.1"
+    },
+    "note": {
+      "type": [
+        "Annotation"
+      ],
+      "isArray": true,
+      "desc": "Additional information about the procedure",
+      "isComposite": false
+    },
+    "focalDevice": {
+      "type": [
+        "BackboneElement"
+      ],
+      "isArray": true,
+      "desc": "Manipulated, implanted, or removed device",
+      "isComposite": false,
+      "typeDef": {
+        "id": {
+          "type": "string",
+          "desc": "Unique id for inter-element referencing"
+        },
+        "modifierExtension": {
+          "type": "Extension",
+          "desc": "Extensions that cannot be ignored even if unrecognized"
+        },
+        "action": {
+          "type": "CodeableConcept",
+          "desc": "Kind of change to device",
+          "valueSet": "http://hl7.org/fhir/ValueSet/device-action|4.0.1"
+        },
+        "manipulated": {
+          "type": "Reference",
+          "desc": "Device that was changed"
+        }
+      }
+    },
+    "usedReference": {
+      "type": [
+        "Reference"
+      ],
+      "isArray": true,
+      "desc": "Items used during procedure",
+      "isComposite": false
+    },
+    "usedCode": {
+      "type": [
+        "CodeableConcept"
+      ],
+      "isArray": true,
+      "desc": "Coded items used during the procedure",
+      "isComposite": false,
+      "valueSet": "http://hl7.org/fhir/ValueSet/device-kind|4.0.1"
+    }
+  }
+}

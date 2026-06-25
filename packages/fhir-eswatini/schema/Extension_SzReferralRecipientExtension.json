@@ -1,0 +1,199 @@
+[
+  {
+    "id": "SzAuthorizerExtension",
+    "type": "Extension",
+    "url": "http://172.209.216.154:3447/fhir/StructureDefinition/SzAuthorizerExtension",
+    "props": {
+      "id": {
+        "type": [
+          "string"
+        ],
+        "isArray": false,
+        "desc": "Unique id for inter-element referencing",
+        "isComposite": false
+      },
+      "extension": {
+        "type": [
+          "Extension"
+        ],
+        "isArray": true,
+        "desc": "Extension",
+        "isComposite": false
+      },
+      "url": {
+        "type": [
+          "string"
+        ],
+        "isArray": false,
+        "desc": "identifies the meaning of the extension",
+        "isComposite": false
+      },
+      "value": {
+        "type": [
+          "Reference"
+        ],
+        "isArray": false,
+        "desc": "Value of extension",
+        "isComposite": true
+      }
+    }
+  },
+  {
+    "id": "SzChiefdomExtension",
+    "type": "Extension",
+    "url": "http://172.209.216.154:3447/fhir/StructureDefinition/SzChiefdomExtension",
+    "props": {
+      "id": {
+        "type": [
+          "string"
+        ],
+        "isArray": false,
+        "desc": "Unique id for inter-element referencing",
+        "isComposite": false
+      },
+      "extension": {
+        "type": [
+          "Extension"
+        ],
+        "isArray": true,
+        "desc": "Extension",
+        "isComposite": false
+      },
+      "url": {
+        "type": [
+          "string"
+        ],
+        "isArray": false,
+        "desc": "identifies the meaning of the extension",
+        "isComposite": false
+      },
+      "value": {
+        "type": [
+          "CodeableConcept"
+        ],
+        "isArray": false,
+        "desc": "Value of extension",
+        "isComposite": true,
+        "valueSet": "http://172.209.216.154:3447/fhir/ValueSet/SzChiefdomVS"
+      }
+    }
+  },
+  {
+    "id": "SzInkhundlaExtension",
+    "type": "Extension",
+    "url": "http://172.209.216.154:3447/fhir/StructureDefinition/SzInkhundlaExtension",
+    "props": {
+      "id": {
+        "type": [
+          "string"
+        ],
+        "isArray": false,
+        "desc": "Unique id for inter-element referencing",
+        "isComposite": false
+      },
+      "extension": {
+        "type": [
+          "Extension"
+        ],
+        "isArray": true,
+        "desc": "Extension",
+        "isComposite": false
+      },
+      "url": {
+        "type": [
+          "string"
+        ],
+        "isArray": false,
+        "desc": "identifies the meaning of the extension",
+        "isComposite": false
+      },
+      "value": {
+        "type": [
+          "CodeableConcept"
+        ],
+        "isArray": false,
+        "desc": "Value of extension",
+        "isComposite": true,
+        "valueSet": "http://172.209.216.154:3447/fhir/ValueSet/SzTinkhundlaVS"
+      }
+    }
+  },
+  {
+    "id": "SzLocationCodeExtension",
+    "type": "Extension",
+    "url": "http://172.209.216.154:3447/fhir/StructureDefinition/SzLocationCodeExtension",
+    "props": {
+      "id": {
+        "type": [
+          "string"
+        ],
+        "isArray": false,
+        "desc": "Unique id for inter-element referencing",
+        "isComposite": false
+      },
+      "extension": {
+        "type": [
+          "Extension"
+        ],
+        "isArray": true,
+        "desc": "Extension",
+        "isComposite": false
+      },
+      "url": {
+        "type": [
+          "string"
+        ],
+        "isArray": false,
+        "desc": "identifies the meaning of the extension",
+        "isComposite": false
+      },
+      "value": {
+        "type": [
+          "string"
+        ],
+        "isArray": false,
+        "desc": "Value of extension",
+        "isComposite": true
+      }
+    }
+  },
+  {
+    "id": "SzReferralRecipientExtension",
+    "type": "Extension",
+    "url": "http://172.209.216.154:3447/fhir/StructureDefinition/SzReferralRecipientExtension",
+    "props": {
+      "id": {
+        "type": [
+          "string"
+        ],
+        "isArray": false,
+        "desc": "Unique id for inter-element referencing",
+        "isComposite": false
+      },
+      "extension": {
+        "type": [
+          "Extension"
+        ],
+        "isArray": true,
+        "desc": "Extension",
+        "isComposite": false
+      },
+      "url": {
+        "type": [
+          "string"
+        ],
+        "isArray": false,
+        "desc": "identifies the meaning of the extension",
+        "isComposite": false
+      },
+      "value": {
+        "type": [
+          "Reference"
+        ],
+        "isArray": false,
+        "desc": "Value of extension",
+        "isComposite": true
+      }
+    }
+  }
+]

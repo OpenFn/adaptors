@@ -1,0 +1,65 @@
+{
+  "name": "@openfn/language-common",
+  "label": "Common",
+  "version": "3.2.0",
+  "description": "Common Expressions for OpenFn",
+  "homepage": "https://docs.openfn.org",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openfn/adaptors.git"
+  },
+  "scripts": {
+    "build": "pnpm clean && build-adaptor common",
+    "test": "mocha --experimental-specifier-resolution=node --no-warnings --recursive",
+    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings --recursive",
+    "clean": "rimraf dist types docs",
+    "pack": "pnpm pack --pack-destination ../../dist",
+    "lint": "eslint src"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./types/index.d.ts",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json",
+    "./metadata": {
+      "import": "./dist/metadata.js",
+      "require": "./dist/metadata.cjs"
+    },
+    "./util": {
+      "import": "./dist/util.js",
+      "require": "./dist/util.cjs"
+    }
+  },
+  "author": "Open Function Group",
+  "license": "LGPL-3.0-or-later",
+  "files": [
+    "dist/",
+    "types/",
+    "ast.json",
+    "configuration-schema.json"
+  ],
+  "type": "module",
+  "types": "types/index.d.ts",
+  "dependencies": {
+    "ajv": "^8.12.0",
+    "csv-parse": "^5.4.0",
+    "csvtojson": "^2.0.10",
+    "date-fns": "^2.25.0",
+    "http-status-codes": "^2.3.0",
+    "jsonpath-plus": "^10.3.0",
+    "lodash": "^4.17.21",
+    "undici": "^7.15.0"
+  },
+  "devDependencies": {
+    "chai": "4.3.6",
+    "deep-eql": "4.1.1",
+    "koa": "^3.0.3",
+    "koa-compress": "^5.1.1",
+    "nock": "13.2.9",
+    "rimraf": "^3.0.2",
+    "zlib": "^1.0.5"
+  },
+  "main": "dist/index.cjs"
+}
