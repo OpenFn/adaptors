@@ -164,15 +164,15 @@ export function prefixVersionToPath(
   return urlPath;
 }
 export const configureAuth = (auth, headers = {}) => {
-  if ('pat' in auth) {
+  if (auth.pat) {
     Object.assign(headers, {
       Authorization: `ApiToken ${auth.pat}`,
     });
-  } else if ('password' in auth) {
+  } else if (auth.username && auth.password) {
     Object.assign(headers, makeBasicAuthHeader(auth.username, auth.password));
   } else {
     throw new Error(
-      'Invalid authorization credentials. Include an pat, username or password in state.configuration'
+      'Invalid authorization credentials. Include a PAT or a username and password in state.configuration'
     );
   }
 
