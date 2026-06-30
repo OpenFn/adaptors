@@ -462,6 +462,7 @@ declare type Organization_SzOrganization_Props = {
 
 declare type Patient_SzPatient_Props = {
     _birthDate?: any;
+    _birthTime?: any;
     active?: boolean;
     address?: builders.Address[];
     birthDate?: string;
