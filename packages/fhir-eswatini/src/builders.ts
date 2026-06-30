@@ -573,6 +573,7 @@ export function organization(type: any, props?: any) {
   * @public
   * @function
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
+  * @param {} [props._birthDate] - undefined
   * @param {boolean} [props.active] - Whether this patient's record is in active use
   * @param {Address} [props.address] - An address for the individual
   * @param {date} [props.birthDate] - Date of birth: YYYY-MM-DD

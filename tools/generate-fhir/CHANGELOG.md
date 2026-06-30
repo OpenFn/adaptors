@@ -2,6 +2,12 @@
 
 ## 0.7.8
 
+### Minor Changes
+
+Add support for primitive extension properties (ie. `_birthTime`)
+
+## 0.7.8
+
 ### Patch Changes
 
 - Generate typedefs for core data types

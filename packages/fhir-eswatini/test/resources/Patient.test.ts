@@ -439,4 +439,58 @@ describe('SzPatient', () => {
       valueDateTime: '2025-06-01T10:00:00Z',
     });
   });
+
+  it('should map _birthDate primitive extension shorthand', () => {
+    const resource = b.patient('SzPatient', {
+      birthDate: '10/07/1990',
+      _birthDate: '2000-01-01T14:35:45-05:00',
+    });
+
+    assert.deepEqual(resource.birthDate, '10/07/1990');
+    assert.deepEqual(resource._birthDate, {
+      extension: [
+        {
+          url: 'http://hl7.org/fhir/StructureDefinition/patient-birthTime',
+          valueDateTime: '2000-01-01T14:35:45-05:00',
+        },
+      ],
+    });
+  });
+
+  it('should map _birthTime shorthand into _birthDate extension', () => {
+    const resource = b.patient('SzPatient', {
+      birthDate: '10/07/1990',
+      _birthTime: '2000-01-01T14:35:45-05:00',
+    });
+
+    assert.deepEqual(resource.birthDate, '10/07/1990');
+    assert.deepEqual(resource._birthDate, {
+      extension: [
+        {
+          url: 'http://hl7.org/fhir/StructureDefinition/patient-birthTime',
+          valueDateTime: '2000-01-01T14:35:45-05:00',
+        },
+      ],
+    });
+    assert.equal(resource._birthTime, undefined);
+  });
+
+  it('should pass through a full _birthDate extension object as-is', () => {
+    const fullExtension = {
+      extension: [
+        {
+          url: 'http://hl7.org/fhir/StructureDefinition/patient-birthTime',
+          valueDateTime: '2000-01-01T14:35:45-05:00',
+        },
+      ],
+    };
+
+    const resource = b.patient('SzPatient', {
+      birthDate: '10/07/1990',
+      _birthDate: fullExtension,
+    });
+
+    assert.deepEqual(resource.birthDate, '10/07/1990');
+    assert.deepEqual(resource._birthDate, fullExtension);
+  });
 });
