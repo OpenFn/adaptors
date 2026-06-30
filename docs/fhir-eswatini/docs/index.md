@@ -570,6 +570,7 @@ Create a Patient resource.
 | Param | Type | Description |
 | --- | --- | --- |
 | props | <code>object</code> | Properties to apply to the resource (includes common and custom properties). |
+| [props._birthDate] |  | undefined |
 | [props.active] | <code>boolean</code> | Whether this patient's record is in active use |
 | [props.address] | <code>Address</code> | An address for the individual |
 | [props.birthDate] | <code>date</code> | Date of birth: YYYY-MM-DD |

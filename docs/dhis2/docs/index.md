@@ -660,7 +660,7 @@ Export data from DHIS2.
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to the resource, relative to the /tracker endpoint |
-| query | <code>object</code> | An object of query parameters to be encoded into the URL |
+| query | <code>object</code> | An object of query parameters to be encoded into the URL. Can include [pagination parameters](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html#request-parameters-for-pagination), filters, etc. |
 | [options] | [<code>TrackerOptions</code>](#trackeroptions) | An optional object containing parseAs, and apiVersion for the request |
 
 This operation writes the following keys to state:
@@ -680,7 +680,11 @@ tracker.export('enrollments', {orgUnit: 'TSyzvBiovKh'});
 ```
 **Example:** Export all events
 ```js
-tracker.export('events')
+tracker.export('events', { paging: false})
+```
+**Example:** Export the first page of events with pagination metadata
+```js
+tracker.export('events', { totalPages: true, pageSize: 1000, page: 1 })
 ```
 
 * * *
@@ -693,11 +697,12 @@ tracker.export('events')
 Import data into DHIS2 using the tracker endpoint.
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| strategy | <code>string</code> | The effect the import should have. Can either be CREATE, UPDATE, CREATE_AND_UPDATE and DELETE. |
-| payload | <code>object</code> | The data to be imported. |
-| [options] | [<code>TrackerOptions</code>](#trackeroptions) | An optional object containing parseAs, and apiVersion, and queries for the request |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| strategy | <code>string</code> |  | The effect the import should have. Can either be CREATE, UPDATE, CREATE_AND_UPDATE and DELETE. |
+| payload | <code>object</code> |  | The data to be imported. |
+| [options] | [<code>TrackerOptions</code>](#trackeroptions) |  | An optional object containing parseAs, and apiVersion, and queries for the request |
+| [options.async] | <code>boolean</code> | <code>false</code> | Whether to perform the import asynchronously. Defaults to false. See [Sync and async imports](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html#sync-and-async) |
 
 This operation writes the following keys to state:
 

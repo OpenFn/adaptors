@@ -1,5 +1,14 @@
 # @openfn/language-claude
 
+## 1.1.2
+
+### Patch Changes
+
+- c5f8728: Update undici dependency
+- faaea95: Update anthropic sdk
+- Updated dependencies [c5f8728]
+  - @openfn/language-common@3.3.4
+
 ## 1.1.1 - 27 May 2026
 
 ### Patch Changes
