@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-stripe",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "OpenFn adaptor for Stripe payment operations",
   "type": "module",
   "exports": {

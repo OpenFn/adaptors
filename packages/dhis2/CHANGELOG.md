@@ -1,5 +1,18 @@
 # @openfn/language-dhis2
 
+## 8.2.0
+
+### Minor Changes
+
+- 92e0b72: Add async option to `tracker.import`. Improve `tracker.export` docs
+  by adding a pagination example and linking pagination query parameters.
+
+### Patch Changes
+
+- 99b50c3: Fix: DHIS2 schema will not require username/password when using a PAT
+- Updated dependencies [c5f8728]
+  - @openfn/language-common@3.3.4
+
 ## 8.1.1 - 27 May 2026
 
 ### Patch Changes
