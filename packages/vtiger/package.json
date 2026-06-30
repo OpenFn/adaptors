@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-vtiger",
   "label": "Vtiger",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "OpenFn adaptor for Vtiger",
   "main": "dist/index.cjs",
   "scripts": {

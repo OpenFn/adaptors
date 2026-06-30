@@ -1,5 +1,17 @@
 # @openfn/language-fhir-eswatini
 
+## 0.8.0
+
+### Minor Changes
+
+- 605a816: Add support for Patient.\_birthDate and Patient.\_birthTime
+
+### Patch Changes
+
+- Updated dependencies [c5f8728]
+  - @openfn/language-common@3.3.4
+  - @openfn/language-fhir-4@0.5.5
+
 ## 0.7.8 - 27 May 2026
 
 ### Patch Changes

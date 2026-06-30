@@ -1,5 +1,13 @@
 # @openfn/language-mpesa
 
+## 1.2.2
+
+### Patch Changes
+
+- c5f8728: Update undici dependency
+- Updated dependencies [c5f8728]
+  - @openfn/language-common@3.3.4
+
 ## 1.2.1 - 27 May 2026
 
 ### Patch Changes
@@ -143,7 +151,7 @@
 
 - 99e4b48: - Better handling of HTML content in http requests
   - When logging HTTP requests, include query parameters
-- d1f7851: Fixed the title for the consumer\_secret on the configuration schema
+- d1f7851: Fixed the title for the consumer_secret on the configuration schema
 - Updated dependencies \[99e4b48]
 - Updated dependencies \[13bf08f]
   - @openfn/language-common@2.4.0

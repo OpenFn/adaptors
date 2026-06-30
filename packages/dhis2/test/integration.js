@@ -1,6 +1,16 @@
 import { expect } from 'chai';
 import crypto from 'node:crypto';
-import { execute, create, update, upsert, get } from '../dist/index.js';
+import {
+  execute,
+  tracker,
+  combine,
+  create,
+  update,
+  upsert,
+  each,
+  get,
+  fn,
+} from '../src/index.js';
 
 const getRandomProgramPayload = () => {
   const name = crypto.randomBytes(16).toString('hex');
@@ -470,5 +480,72 @@ describe('Integration tests', () => {
         '409: Upsert failed: Multiple records found for a non-unique attribute.',
       );
     });
+  });
+  describe('tracker', () => {
+    it('should export 50 events by default', async () => {
+      // v2.41+ for older version `skipPaging: true`
+      const state = {
+        configuration,
+      };
+      const finalState = await execute(tracker.export('events'))(state);
+
+      expect(finalState.data.instances.length).to.eql(50);
+    }).timeout(2e4);
+
+    it('should export 1000 events with pageSize 1000', async () => {
+      const state = {
+        configuration,
+      };
+      const { data } = await execute(
+        tracker.export('events', { totalPages: true, pageSize: 1e3 }),
+      )(state);
+
+      expect(Object.keys(data).sort()).to.eql([
+        'instances',
+        'page',
+        'pageCount',
+        'pageSize',
+        'total',
+      ]);
+      expect(data.instances.length).to.eql(1000);
+    }).timeout(2e4);
+
+    it('should export all events with pagination', async () => {
+      const state = {
+        configuration,
+      };
+      const { data, results } = await execute(
+        tracker.export('events', { totalPages: true, pageSize: 1e4 }),
+        fn(state => {
+          console.log(Object.keys(state.data));
+          state.results = state.data.instances;
+          const { page, pageSize, pageCount, total } = state.data;
+          const remainingPages = pageCount - page;
+
+          state.pages = Array.from(
+            { length: remainingPages },
+            (_, i) => page + i + 1,
+          );
+          state.pageSize = pageSize;
+          return state;
+        }),
+
+        each(
+          state => state.pages,
+          combine(
+            tracker.export('events', state => ({
+              pageSize: state.pageSize,
+              page: state.data,
+            })),
+            fn(state => {
+              state.results = state.results.concat(state.data.instances);
+              return state;
+            }),
+          ),
+        ),
+      )(state);
+
+      expect(results).to.be.greaterThan(3e4);
+    }).timeout(5e4);
   });
 });

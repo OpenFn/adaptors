@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-wigal-sms",
   "label": "Wigal SMS",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "OpenFn wigal-sms adaptor for SMS gateway operations",
   "type": "module",
   "exports": {
@@ -30,7 +30,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "undici": "^7.24.7"
+    "undici": "^7.28.0"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",

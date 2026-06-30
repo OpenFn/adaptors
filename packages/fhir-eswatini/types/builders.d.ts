@@ -461,6 +461,8 @@ declare type Organization_SzOrganization_Props = {
 };
 
 declare type Patient_SzPatient_Props = {
+    _birthDate?: any;
+    _birthTime?: any;
     active?: boolean;
     address?: builders.Address[];
     birthDate?: string;
@@ -676,6 +678,7 @@ declare const cc: (codings: (builders.Coding | [string, string, Omit<builders.Co
 declare const coding: typeof builders.coding;
 declare const composite: (object: any, key: any, value: any) => void;
 declare const concept: (codings: (builders.Coding | [string, string, Omit<builders.Coding, "system" | "code">?]) | (builders.Coding | [string, string, Omit<builders.Coding, "system" | "code">?])[], extra?: Omit<builders.CodeableConcept, "coding">) => builders.CodeableConcept;
+declare const ensureConceptText: (concept: any) => void;
 declare const ext: (url: string, value: any, props?: Omit<builders.Extension, "url">) => {
     extension: ({
         url: string;
@@ -1058,6 +1061,7 @@ declare function organization(props: Organization_SzOrganization_Props): any;
   * @public
   * @function
   * @param {object} props - Properties to apply to the resource (includes common and custom properties).
+  * @param {} [props._birthDate] - undefined
   * @param {boolean} [props.active] - Whether this patient's record is in active use
   * @param {Address} [props.address] - An address for the individual
   * @param {date} [props.birthDate] - Date of birth: YYYY-MM-DD
@@ -1239,5 +1243,5 @@ declare function serviceRequest(type: "SzReferral", props: ServiceRequest_SzRefe
 declare function specimen(type: "SzLabSpecimen", props: Specimen_SzLabSpecimen_Props): any;
 declare function specimen(props: Specimen_SzLabSpecimen_Props): any;
 
-export { addExtension, appointment, c, cc, coding, composite, concept, condition, encounter, episodeOfCare, ext, extendSystemMap, extendValues, extension, findExtension, id, identifier, location, lookupValue, mapSystems, mapValues, medication, medicationDispense, medicationRequest, observation, organization, patient, practitioner, procedure, ref, reference, serviceRequest, setSystemMap, setValues, specimen, value };
+export { addExtension, appointment, c, cc, coding, composite, concept, condition, encounter, ensureConceptText, episodeOfCare, ext, extendSystemMap, extendValues, extension, findExtension, id, identifier, location, lookupValue, mapSystems, mapValues, medication, medicationDispense, medicationRequest, observation, organization, patient, practitioner, procedure, ref, reference, serviceRequest, setSystemMap, setValues, specimen, value };
 

@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-divoc",
   "label": "Divoc",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "OpenFn adaptor for DIVOC",
   "type": "module",
   "exports": {
@@ -37,7 +37,7 @@
     "deep-eql": "4.1.1",
     "mocha": "^10.7.3",
     "rimraf": "3.0.2",
-    "undici": "^7.24.7"
+    "undici": "^7.28.0"
   },
   "repository": {
     "type": "git",

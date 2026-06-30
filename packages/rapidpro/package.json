@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-rapidpro",
   "label": "RapidPro",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "OpenFn adaptor for RapidPro",
   "main": "dist/index.cjs",
   "scripts": {
@@ -22,7 +22,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "undici": "^7.24.7"
+    "undici": "^7.28.0"
   },
   "devDependencies": {
     "chai": "^3.4.0",

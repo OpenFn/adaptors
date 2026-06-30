@@ -1,5 +1,12 @@
 # @openfn/language-et-mfr
 
+## 1.0.10
+
+### Patch Changes
+
+- Updated dependencies [c5f8728]
+  - @openfn/language-common@3.3.4
+
 ## 1.0.9 - 27 May 2026
 
 ### Patch Changes

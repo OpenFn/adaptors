@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-ghana-nia",
   "label": "Ghana NIA",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "OpenFn ghana-nia adaptor",
   "type": "module",
   "exports": {
@@ -31,7 +31,7 @@
   "dependencies": {
     "@openfn/language-common": "workspace:*",
     "ajv": "^8.20.0",
-    "undici": "^7.24.7"
+    "undici": "^7.28.0"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",
@@ -39,7 +39,7 @@
     "deep-eql": "4.1.1",
     "mocha": "^10.7.3",
     "rimraf": "3.0.2",
-    "undici": "^5.29.0"
+    "undici": "^7.28.0"
   },
   "repository": {
     "type": "git",

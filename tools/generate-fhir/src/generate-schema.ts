@@ -343,6 +343,7 @@ async function parseProp(
   data,
 ) {
   let [parent, prop] = path.split('.');
+  const isExtensionPath = prop === 'extension';
   // TODO skip if multiple dots
 
   if (/\[x\]/.test(prop)) {
@@ -366,7 +367,16 @@ async function parseProp(
   if (schema.props[parent]) {
     const def: PropDef = {};
 
-    if (!data.type || schema.props[parent].type.includes('date')) {
+    // Keep primitive props
+    const isExtensionChild = isExtensionPath;
+    const hasSlice = !!data.sliceName;
+    const parentTypes = schema.props[parent].type || [];
+    const isPrimitiveParent =
+      !schema.props[parent].typeDef &&
+      parentTypes.length > 0 &&
+      parentTypes.every(type => type[0] === type[0]?.toLowerCase());
+
+    if (!data.type || (isPrimitiveParent && !(isExtensionChild && hasSlice))) {
       return;
     }
 
@@ -384,7 +394,8 @@ async function parseProp(
       type.profile.length &&
       type.profile[0].match(/\/StructureDefinition/)
     ) {
-      const typeId = type.profile[0].split('/').at(-1);
+      const extensionUrl = type.profile[0].split('|')[0];
+      const typeId = extensionUrl.split('/').at(-1);
       const spec = fullSpec[typeId];
 
       if (spec) {
@@ -396,7 +407,11 @@ async function parseProp(
           // look for extension.value[x] in the spec
         };
       } else {
-        console.log('WARNING: spec not found for ', typeId);
+        // Some extension profiles are not in the downloaded spec
+        // The profile URL is still enough for codegen
+        def.extension = {
+          url: extensionUrl,
+        };
       }
     } else {
       simpleType = typeDefs[type.code] || type.code;
@@ -431,8 +446,19 @@ async function parseProp(
     // }
 
     if (Object.keys(def).length) {
-      schema.props[parent].typeDef ??= {};
-      schema.props[parent].typeDef[prop] = def;
+      if (isPrimitiveParent && isExtensionChild) {
+        // primitive extension slices go on a top-level _parent prop, eg _birthDate
+        const underscoreProp = `_${parent}`;
+        schema.props[underscoreProp] ??= {
+          type: [],
+          isPrimitiveExtension: true,
+          typeDef: {},
+        };
+        schema.props[underscoreProp].typeDef[prop] = def;
+      } else {
+        schema.props[parent].typeDef ??= {};
+        schema.props[parent].typeDef[prop] = def;
+      }
     }
   }
 }
