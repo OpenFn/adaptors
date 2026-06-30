@@ -50,7 +50,7 @@
     "http-status-codes": "^2.3.0",
     "jsonpath-plus": "^10.3.0",
     "lodash": "^4.18.1",
-    "undici": "^7.24.7"
+    "undici": "^7.28.0"
   },
   "devDependencies": {
     "chai": "4.3.6",
