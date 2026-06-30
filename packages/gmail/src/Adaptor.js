@@ -216,6 +216,9 @@ export function execute(...operations) {
   };
 
   return state => {
+    const isServiceAccount =
+      state.configuration?.private_key && state.configuration?.client_email;
+
     return commonExecute(
       createConnection,
       ...operations,
@@ -223,7 +226,9 @@ export function execute(...operations) {
     )({
       ...initialState,
       ...state,
-      configuration: normalizeOauthConfig(state.configuration),
+      configuration: isServiceAccount
+        ? state.configuration
+        : normalizeOauthConfig(state.configuration),
     });
   };
 }

@@ -1025,6 +1025,9 @@ importers:
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
+      sinon:
+        specifier: ^19.0.4
+        version: 19.0.4
       undici:
         specifier: ^7.24.7
         version: 7.24.7
@@ -1128,12 +1131,18 @@ importers:
       deep-eql:
         specifier: 4.1.1
         version: 4.1.1
+      mocha:
+        specifier: ^10.7.3
+        version: 10.8.2
       nock:
         specifier: 13.2.9
         version: 13.2.9
       rimraf:
         specifier: 3.0.2
         version: 3.0.2
+      sinon:
+        specifier: ^19.0.4
+        version: 19.0.4
 
   packages/hive:
     dependencies:

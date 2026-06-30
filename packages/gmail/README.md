@@ -250,13 +250,25 @@ sendMessage({
 
 This will send an email with two plain attachments and one ZIP archive containing two files.
 
-# Acquiring an access token
+# Authentication
+
+This adaptor supports two authentication methods: **OAuth2** and **Service Account**.
+
+## OAuth2
+
+**On app.openfn.org:** Click **Sign in with Gmail** in the credential setup form. Authentication is handled for you and no manual token management is needed.
+
+**Using the OpenFn CLI locally:** Use the [gcloud CLI](https://cloud.google.com/sdk/docs/install) to print a temporary access token:
+
+```bash
+gcloud auth print-access-token
+```
 
 The Gmail adaptor implicitly uses the Gmail account of the Google account that is used to authenticate the application.
 
 Allowing the Gmail adaptor to access a Gmail account is a multi-step process.
 
-## Create an OAuth 2.0 client ID
+### Create an OAuth 2.0 client ID
 
 Follow the instructions are found here:
 https://support.google.com/googleapi/answer/6158849
@@ -272,7 +284,7 @@ https://support.google.com/googleapi/answer/6158849
   - Click "Create"
 - On the resulting popup screen, find and click "DOWNLOAD JSON" and save this file to a secure location.
 
-## Retrieve an access token
+### Retrieve an access token
 
 - Navigate to [OAuth 2.0 Playground](https://developers.google.com/oauthplayground/).
 - Find *Step 1 Select & authorize APIs*:
@@ -295,7 +307,7 @@ https://support.google.com/googleapi/answer/6158849
   - *Refresh token* and *Access token* will be populated briefly before the interface automatically advances to *Step 3 Configure request to API*. To view the *Access token*, return to *Step 2 Exchange authorization code for tokens*.
 - The *Access token* is valid for 1 hour. You may enable **Auto-refresh the token before it expires** or manually refresh it using the **Refresh access token** button.
 
-## Configure OpenFn CLI to find the access token
+### Configure OpenFn CLI to find the access token
 
 The Gmail adaptor looks for the access token in the configuration section under `access_token`.
 
@@ -317,3 +329,20 @@ Example configuration using a workflow:
   ]
 }
 ```
+
+## Service Account
+
+Service accounts allow the adaptor to access Gmail without user interaction,
+making them well-suited for automated workflows.
+
+> **Important:** Gmail service account access requires **Google Workspace**.
+> It does **not** work with personal Gmail accounts (`@gmail.com`). If your
+> organisation uses personal Google accounts, use the OAuth2 method instead.
+
+To create a service account and JSON key file, follow the
+[Google Cloud service account documentation](https://cloud.google.com/iam/docs/service-accounts-create).
+Your OpenFn credential requires the `client_email` and `private_key` fields from the downloaded JSON key file. You can also optionally provide a `subject` field for impersonation -- see [Google's domain-wide delegation guide](https://developers.google.com/identity/protocols/oauth2/service-account#delegatingauthority) for details.
+
+For enabling domain-wide delegation and authorising the required Gmail API
+scopes, see the
+[Google Workspace domain-wide delegation guide](https://support.google.com/a/answer/162106).

@@ -13,7 +13,7 @@ describe('sendMessage', () => {
   let mockGmail;
   let sendStub;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     originalGmail = google.gmail;
 
     const mockResponse = {
@@ -36,7 +36,7 @@ describe('sendMessage', () => {
 
     google.gmail = () => mockGmail;
 
-    createConnection({
+    await createConnection({
       configuration: {
         access_token: 'mock-access-token',
       },
