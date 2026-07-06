@@ -1,121 +1,233 @@
 import { MockAgent } from 'undici';
-import { validateRequestBody } from './util.js';
+import { validateRequestBody } from './Utils.js';
 
-// import Ajv from 'ajv';
-// // Generated from sample with https://www.jsongenerator.io/schema
-// // But!! I had to replace $schema with $id
-// // Note: use import() or ele src build breaks
-// const reqSchemaString = import('./schema/request.json');
-// const reqSchema = JSON.parse(reqSchemaString);
-// const validate = new Ajv().compile(reqSchema);
-
+// Sample request body for the new API format (flattened structure)
 const sampleRequestBody = {
-  registry_code: '011803',
-  child: {
-    first_name: 'Test',
-    middle_name: '',
-    Surname: 'Testerson',
-    birth_date: '2024/03/04',
-    birth_type_code: '1',
-    gender_code: '2',
-    place_of_delivery_code: '7',
-    attendant_at_birth_code: '1',
-    bith_attendant_full_name: 'Helen',
-    bith_attendant_phone: '0248403076',
-  },
-  mother: {
-    national_id_number: 'GHA-000000000-2',
-    first_name: 'fake',
-    middle_name: '',
-    maiden_name: 'fakerson',
-    phone: '0248403076',
-    occupation_code: '29',
-    age: 25,
-  },
-  father: {
-    national_id_number: '',
-    first_name: 'john',
-    middle_name: '',
-    Surname: 'doe',
-    phone: '0248403076',
-    occupation_code: '115',
-    age: 39,
-  },
+  status: 'COMPLETE',
+  region_id: 1,
+  district_id: 1,
+  type_of_birth: 'SINGLETON',
+  informant_type: 'MOTHER',
+  informant_national_id_type: 'GHANA CARD',
+  informant_national_id_number: '34454344',
+  informant_first_name: 'David',
+  informant_middle_name: '',
+  informant_last_name: 'Godson',
+  informant_region_id: 1,
+  informant_district_id: 1,
+  informant_residential_address: 'Dansoman',
+  informant_phone_number: '2335648498309',
+  child_first_name: 'Francis',
+  child_middle_name: '',
+  child_last_name: 'Benzoic',
+  child_gender: 'MALE',
+  child_dob: '2026-07-01',
+  child_place_of_birth: 'HOSPITAL',
+  child_birth_attendant: 'MID-WIFE',
+  child_birth_institution: 'Ludra Hospital',
+  child_town: 'Ashaiman',
+  child_house_no: 'H/F286',
+  child_street_name: 'Ashaiman Newtown',
+  mother_national_id_type: 'GHANA CARD',
+  mother_national_id_number: '32432423433',
+  mother_phone_number: '2335456823893',
+  mother_first_name: 'Adwoa',
+  mother_middle_name: '',
+  mother_last_name: 'Godson',
+  mother_age: 30,
+  mother_marital_status: 'MARRIED',
+  mother_previous_birth_no: 50,
+  mother_occupation: 'teacher',
+  mother_educational_level: 'DIPLOMA',
+  mother_region_id: 1,
+  mother_district_id: 1,
+  mother_town: 'Accra',
+  mother_religion: 'CHRISTIANITY',
+  mother_residence: 'Tamale',
+  mother_nationality: 'GHANA',
+  doubtful_maternity: 0,
+  father_national_id_type: 'GHANA CARD',
+  father_national_id_number: '32432423433',
+  father_phone_number: '233548791223',
+  father_first_name: 'David',
+  father_middle_name: '',
+  father_last_name: 'Godson',
+  father_age: 33,
+  father_marital_status: 'MARRIED',
+  father_children_no: 5,
+  father_occupation: 'Doctor',
+  father_educational_level: 'DIPLOMA',
+  father_region_id: 1,
+  father_district_id: 1,
+  father_town: 'Tema',
+  father_residence: 'Tema',
+  father_nationality: 'GHANA',
+  father_religion: 'CHRISTIANITY',
+  doubtful_paternity: 0,
+  child_file_birth_evidence_name: ['Physics.jpg'],
+  child_file_birth_evidence_data: ['data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAA8AAD/4QOJaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzEzOCA3OS4xNTk4MjQsIDIwMTYvMDkvMTQtMDE6MDk6MDEgICAgICAgICI=']
 };
 
-const birthNotificationResponse = {
-  birth_certificate_number: '000000-00-2024',
-  first_name: 'Test',
-  middle_name: '',
-  Surname: 'sample surname',
-  birth_date: '04 Mar 2024',
-  national_id_number: '',
-  place_of_delivery: 'MATERNITY HOME',
-  Health_facility: '',
-  birth_type: null,
-  gender: 'MALE',
-  house_number: '',
-  street_name: '',
-  district: '',
-  region: '',
-  town_or_village: '',
-  m_first_name: 'sample mom',
-  m_middle_name: '',
-  m_maiden_name: 'sample surname',
-  m_surname: '',
-  m_national_id_number: 'GHA-000000000-0',
-  m_nationality: '',
-  f_first_name: 'father fname',
-  f_middle_name: '',
-  f_Surname: 'father sur',
-  f_nationality: '',
-  f_national_id_number: '',
-  reference_id: 'abc123de-1995',
-  document_number: '1995/000000/XX0000000A1B2C3',
-  created_at: '05 Mar 2024',
-  last_updated_at: null,
-  issuccessful: true,
-  message: 'record reference_id : abc123de-1995 , created successfully',
-  messagecode: '200',
+// Sample response from the birth creation endpoint
+const birthCreationResponse = {
+  api_code: 200,
+  api_status: 'success',
+  api_message: 'Your action has been processed.',
+  api_data: {
+    document_number: 'BIRTH-121234-2026-0000002',
+    status: 'PENDING',
+    type_of_birth: 'SINGLETON',
+    informant_type: 'MOTHER',
+    informant_national_id_type: 'GHANA CARD',
+    informant_national_id_number: '34454344',
+    informant_first_name: 'DAVID',
+    informant_middle_name: null,
+    informant_last_name: 'GODSON',
+    informant_region_id: 1,
+    informant_district_id: 1,
+    informant_town: null,
+    informant_residential_address: 'DANSOMAN',
+    informant_phone_number: '2335648498309',
+    child_first_name: 'FRANCIS',
+    child_middle_name: null,
+    child_last_name: 'BENZOIC',
+    child_gender: 'MALE',
+    child_dob: '2025-06-26',
+    child_national_id_type: null,
+    child_national_id_number: null,
+    child_place_of_birth: 'HOSPITAL',
+    child_birth_attendant: 'MID-WIFE',
+    child_birth_institution: 'LUDRA HOSPITAL',
+    child_region_id: 1,
+    child_district_id: 1,
+    child_town: 'ASHAIMAN',
+    child_house_no: 'H/F286',
+    child_street_name: 'ASHAIMAN NEWTOWN',
+    mother_first_name: 'ADWOA',
+    mother_middle_name: null,
+    mother_last_name: 'GODSON',
+    mother_age: 30,
+    mother_marital_status: 'MARRIED',
+    mother_religion: 'CHRISTIANITY',
+    mother_occupation: 'TEACHER',
+    mother_nationality: 'GHANA',
+    mother_national_id_type: 'GHANA CARD',
+    mother_national_id_number: '32432423433',
+    mother_phone_number: '2335456823893',
+    mother_region_id: 1,
+    mother_district_id: 1,
+    mother_town: 'ACCRA',
+    mother_residence: 'TAMALE',
+    doubtful_maternity: false,
+    father_first_name: 'DAVID',
+    father_middle_name: null,
+    father_last_name: 'GODSON',
+    father_national_id_type: 'GHANA CARD',
+    father_national_id_number: '32432423433',
+    father_phone_number: '233548791223',
+    father_region_id: 1,
+    father_district_id: 1,
+    father_town: 'TEMA',
+    father_residence: 'TEMA',
+    father_age: 33,
+    father_marital_status: 'MARRIED',
+    father_religion: 'CHRISTIANITY',
+    father_occupation: 'DOCTOR',
+    father_nationality: "GHANA",
+    father_children_no: 5,
+    doubtful_paternity: false,
+    region_id: 1,
+    district_id: 1,
+    registry_id: 1,
+    evidence_content: [
+      'Physics.jpg'
+    ],
+    evidence_url: [
+      'https://bdrbeta.npontu.com/api/v1/EarlyBirthService/storage/third-party-integrations/early-birth-evidences/FRANCIS-BENZOIC-18/file/Physics.jpg'
+    ],
+    created_at: '2026-01-27 12:14:35',
+    updated_at: '2026-01-27 12:14:36',
+    completed_at: null
+  }
 };
+
+// Sample token response
+const tokenResponse = {
+  api_code: 200,
+  api_status: 'success',
+  api_message: 'Token issued successfully',
+  api_data: {
+    access_token: 'sample-access-token-12345',
+    refresh_token: 'sample-refresh-token-12345',
+    token_type: 'Bearer',
+    expires_in: 3600
+  }
+};
+
+// Mock response headers used across all endpoints
+const mockHeaders = { 'Content-Type': 'application/json' };
 
 // This creates a mock bdr server
 // It should present the same rest API as BDR-MOH-GHS
-export function createServer(url = 'http://tracker.chimgh.org') {
+export function createServer(url = 'https://bdrbeta.npontu.com') {
   const agent = new MockAgent();
   agent.disableNetConnect();
 
   const mockPool = agent.get(url);
 
-  const sendBirthNotification = req => {
-    const body = JSON.parse(req.body);
-    if (validateRequestBody(body, sampleRequestBody)) {
-      return {
-        statusCode: 200,
-        responseOptions: {
-          headers: { 'Content-Type': 'application/json' },
-        },
-        // Note the double stringification from BDR
-        data: JSON.stringify(JSON.stringify(birthNotificationResponse)),
-      };
-    } else {
-      // console.log('Validation errors:', validate.errors);
-      return {
-        statusCode: 417,
-        responseOptions: {
-          headers: { 'Content-Type': 'application/json' },
-        },
-        data: {
-          Message:
-            '{"issuccessful":false,"message":"Record failed to save with this error -->  Modify the clause to make sure that a column is updated only once. If this statement updates or inserts columns into a view, column aliasing can conceal the duplication in your code.","messagecode":"210"} (Note that this is just a sample error from a mock endpoint.)',
-        },
-      };
-    }
-  };
+  // Note: BDR data endpoints return double-encoded JSON (JSON string inside JSON string)
+  // The token/refresh endpoints return plain JSON
 
+  // Mock the token endpoint
   mockPool
-    .intercept({ method: 'post', path: /api\/notification/ })
-    .reply(sendBirthNotification)
+    .intercept({
+      method: 'POST',
+      path: /\/api\/v1\/UserManagementService\/integrations\/auth\/token/,
+    })
+    .reply(200, tokenResponse, { headers: mockHeaders })
+    .persist();
+
+  // Mock the token refresh endpoint
+  mockPool
+    .intercept({
+      method: 'POST',
+      path: /\/api\/v1\/UserManagementService\/integrations\/auth\/refresh/,
+    })
+    .reply(200, tokenResponse, { headers: mockHeaders })
+    .persist();
+
+  // Mock the birth creation endpoint (double-encoded JSON)
+  mockPool
+    .intercept({
+      method: 'POST',
+      path: /\/api\/v1\/UserManagementService\/integrations\/registrations\/birth(\/.*)?/,
+    })
+    .reply(200, birthCreationResponse, { headers: mockHeaders })
+    .persist();
+
+  // Mock the birth retrieval endpoint (GET, double-encoded JSON)
+  mockPool
+    .intercept({
+      method: 'GET',
+      path: /\/api\/v1\/UserManagementService\/integrations\/registrations\/birth\/.+/
+    })
+    .reply(200, birthCreationResponse, { headers: mockHeaders })
+    .persist();
+
+  // Mock the utility endpoint
+  const utilityResponse = {
+    ...tokenResponse,
+    api_data: [
+      { id: 1, country_id: 1, name: 'Ashanti', code: '05' },
+      { id: 2, country_id: 1, name: 'Bono', code: 'BO' }
+    ]
+  };
+  mockPool
+    .intercept({
+      method: 'POST',
+      path: /\/api\/v1\/UserManagementService\/integrations\/utility/
+    })
+    .reply(200, utilityResponse, { headers: mockHeaders })
     .persist();
 
   return {
@@ -127,10 +239,8 @@ export function createServer(url = 'http://tracker.chimgh.org') {
         path,
         origin: url,
         headers: {
-          // TODO this maybe needs to be base 64 encoded
-          // Authorization: `Basic dW5kZWZpbmVkOnVuZGVmaW5lZA==`,
+          ...rest.headers,
         },
-        ...rest,
       };
 
       if (data) {

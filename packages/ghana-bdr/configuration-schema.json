@@ -4,26 +4,21 @@
     "baseUrl": {
       "title": "Base URL",
       "type": "string",
-      "description": "The base URL (http://www.example.com)",
+      "description": "The base URL of the BDR API (e.g., https://bdrbeta.npontu.com)",
       "format": "uri",
       "minLength": 1,
-      "examples": ["https://example.com"]
+      "examples": ["https://bdrbeta.npontu.com"]
     },
-    "username": {
-      "title": "Username",
+    "token": {
+      "title": "API Token",
       "type": "string",
-      "description": "Username",
-      "examples": ["test@openfn.org"]
-    },
-    "password": {
-      "title": "Password",
-      "type": "string",
-      "description": "Password",
+      "description": "Long-lived API consumer token for authentication",
       "writeOnly": true,
-      "examples": ["@some(!)Str0ngp4ss0w0rd"]
+      "minLength": 1,
+      "examples": ["your-long-lived-api-token-here"]
     }
   },
   "type": "object",
-  "additionalProperties": true,
-  "required": ["password", "username", "baseUrl"]
+  "additionalProperties": false,
+  "required": ["baseUrl", "token"]
 }
