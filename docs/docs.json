@@ -68036,6 +68036,874 @@
     "source": "@openfn/language-common"
   }
 ],
+{"name":"image-utils","adaptor":"@openfn/language-image-utils","version":"1.0.0","docs":"\"\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#as\\\">as()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#http\\\">http</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#map\\\">map()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#util\\\">util</a>\\n</dt></dl>\\n\\n\\n\"","readme":"\"# language-image-fn <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\nimage-fn API.\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/image-fn-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/image-fn-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\nThe configuration schema uses\\n[JSON Schema draft-07](https://json-schema.org/draft-07/json-schema-release-notes).\\nRun `pnpm validate:schemas` from the adaptors repo root after editing it.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-image-fn\\n\\n## 1.0.0\\n\\nInitial release.\\n\"","functions":[],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{},"type":"object","additionalProperties":true,"required":[]}},
+[
+  {
+    "id": "ImageState",
+    "longname": "ImageState",
+    "name": "ImageState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the result of the image operation",
+        "name": "data"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "access": "private",
+    "meta": {
+      "lineno": 23,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/image-utils/src"
+    },
+    "order": 0,
+    "source": "@openfn/language-image-utils"
+  },
+  {
+    "id": "as",
+    "longname": "as",
+    "name": "as()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Run an operation and save the result to a custom key in state instead of overwriting state.data.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The state key to assign the result of the operation to.",
+        "name": "key"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "An operation that returns a new state object with a `data` property",
+        "name": "operation"
+      }
+    ],
+    "examples": [
+      "<caption>Fetch cce-data from collections and store them under state.cceData</caption>\nas('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 987,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/image-utils/node_modules/@openfn/language-common/src"
+    },
+    "order": 35,
+    "source": "@openfn/language-common",
+    "signature": [
+      "as(key, operation)"
+    ],
+    "common": true,
+    "newscope": true
+  },
+  {
+    "id": "combine",
+    "longname": "combine",
+    "name": "combine()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Combines two operations into one",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Operations"
+          ]
+        },
+        "description": "Operations to be performed.",
+        "name": "operations"
+      }
+    ],
+    "examples": [
+      "combine(\n  create('foo'),\n  delete('bar')\n)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 351,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/image-utils/node_modules/@openfn/language-common/src"
+    },
+    "order": 15,
+    "source": "@openfn/language-common",
+    "signature": [
+      "combine(operations)"
+    ],
+    "common": true
+  },
+  {
+    "id": "cursor",
+    "longname": "cursor",
+    "name": "cursor()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Sets a cursor property on state.\nSupports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\nwhich will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones\nare not yet supported.\nYou can provide a formatter to customise the final cursor value, which is useful for normalising\ndifferent inputs. The custom formatter runs after natural language date conversion.\nSee the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "description": "the cursor value. Usually an ISO date, natural language date, or page number",
+        "name": "value"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "options to control the cursor.",
+        "name": "options"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "set the cursor key. Will persist through the whole run.",
+        "name": "options.key"
+      },
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "description": "the value to use if value is falsy",
+        "name": "options.defaultValue"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "custom formatter for the final cursor value",
+        "name": "options.format"
+      }
+    ],
+    "examples": [
+      "<caption>Use a cursor from state if present, or else use the default value</caption>\ncursor($.cursor, { defaultValue: 'today' })",
+      "<caption>Use a pagination cursor</caption>\ncursor(22)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 856,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/image-utils/node_modules/@openfn/language-common/src"
+    },
+    "order": 31,
+    "source": "@openfn/language-common",
+    "signature": [
+      "cursor(value, options)"
+    ],
+    "common": true
+  },
+  {
+    "id": "dataPath",
+    "longname": "dataPath",
+    "name": "dataPath()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Ensures a path points at the data.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "JSONPath referencing a point in `data`.",
+        "name": "path"
+      }
+    ],
+    "examples": [
+      "dataPath('key')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 159,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/image-utils/node_modules/@openfn/language-common/src"
+    },
+    "order": 8,
+    "source": "@openfn/language-common",
+    "signature": [
+      "dataPath(path)"
+    ],
+    "common": true
+  },
+  {
+    "id": "dataValue",
+    "longname": "dataValue",
+    "name": "dataValue()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Picks out a single value from the source data object—usually `state.data`.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "JSONPath referencing a point in `data`.",
+        "name": "path"
+      }
+    ],
+    "examples": [
+      "dataValue('key')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 177,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/image-utils/node_modules/@openfn/language-common/src"
+    },
+    "order": 9,
+    "source": "@openfn/language-common",
+    "signature": [
+      "dataValue(path)"
+    ],
+    "common": true
+  },
+  {
+    "id": "dateFns",
+    "name": "dateFns",
+    "common": true,
+    "kind": "external",
+    "scope": "global",
+    "source": "@openfn/language-common"
+  },
+  {
+    "id": "each",
+    "longname": "each",
+    "name": "each()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Iterates over an array of items and invokes an operation upon each one, where the state\nobject is _scoped_ so that state.data is the item under iteration.\nThe rest of the state object is untouched and can be referenced as usual.\nYou can pass an array directly, or use lazy state or a JSONPath string to\nreference a slice of state.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "DataSource"
+          ]
+        },
+        "description": "JSONPath referencing a point in `state`.",
+        "name": "dataSource"
+      },
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        },
+        "description": "The operation needed to be repeated.",
+        "name": "operation"
+      }
+    ],
+    "examples": [
+      "<caption>Using lazy state ($) to iterate over items in state.data and pass each into an \"insert\" operation</caption>\neach(\n  $.data,\n  // Inside the callback operation, `$.data` is scoped to the item under iteration\n  insert(\"patient\", {\n    patient_name: $.data.properties.case_name,\n    patient_id: $.data.case_id,\n  })\n);",
+      "<caption>Iterate over items in state.data and pass each one into an \"insert\" operation</caption>\neach(\n  $.data,\n  insert(\"patient\", (state) => ({\n    patient_id: state.data.case_id,\n    ...state.data\n  }))\n);",
+      "<caption>Using JSON path to iterate over items in state.data and pass each one into an \"insert\" operation</caption>\neach(\n  \"$.data[*]\",\n  insert(\"patient\", (state) => ({\n    patient_name: state.data.properties.case_name,\n    patient_id: state.data.case_id,\n  }))\n);"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 321,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/image-utils/node_modules/@openfn/language-common/src"
+    },
+    "order": 14,
+    "source": "@openfn/language-common",
+    "signature": [
+      "each(dataSource, operation)"
+    ],
+    "common": true
+  },
+  {
+    "id": "field",
+    "longname": "field",
+    "name": "field()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Returns a key, value pair in an array.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Name of the field",
+        "name": "key"
+      },
+      {
+        "type": {
+          "names": [
+            "Value"
+          ]
+        },
+        "description": "The value itself or a sourceable operation.",
+        "name": "value"
+      }
+    ],
+    "examples": [
+      "field('destination_field_name__c', 'value')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Field"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 392,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/image-utils/node_modules/@openfn/language-common/src"
+    },
+    "order": 17,
+    "source": "@openfn/language-common",
+    "signature": [
+      "field(key, value)"
+    ],
+    "common": true
+  },
+  {
+    "id": "fields",
+    "longname": "fields",
+    "name": "fields()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Zips key value pairs into an object.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Fields"
+          ]
+        },
+        "description": "a list of fields",
+        "name": "fields"
+      }
+    ],
+    "examples": [
+      "fields(list_of_fields)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 405,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/image-utils/node_modules/@openfn/language-common/src"
+    },
+    "order": 18,
+    "source": "@openfn/language-common",
+    "signature": [
+      "fields(fields)"
+    ],
+    "common": true
+  },
+  {
+    "id": "fn",
+    "longname": "fn",
+    "name": "fn()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Creates a custom step (or operation) for more flexible job writing.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "is the function",
+        "name": "func"
+      }
+    ],
+    "examples": [
+      "fn(state => {\n  // do some things to state\n  return state;\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 76,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/image-utils/node_modules/@openfn/language-common/src"
+    },
+    "order": 3,
+    "source": "@openfn/language-common",
+    "signature": [
+      "fn(func)"
+    ],
+    "common": true
+  },
+  {
+    "id": "fnIf",
+    "longname": "fnIf",
+    "name": "fnIf()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Execute a function only when the condition returns true",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Boolean"
+          ]
+        },
+        "description": "The condition that returns true",
+        "name": "condition"
+      },
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        },
+        "description": "The operation needed to be executed.",
+        "name": "operation"
+      }
+    ],
+    "examples": [
+      "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 92,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/image-utils/node_modules/@openfn/language-common/src"
+    },
+    "order": 4,
+    "source": "@openfn/language-common",
+    "signature": [
+      "fnIf(condition, operation)"
+    ],
+    "common": true
+  },
+  {
+    "id": "group",
+    "longname": "group",
+    "name": "group()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Groups an array of objects by a specified key path.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Array.<Object>"
+          ]
+        },
+        "description": "The array of objects to be grouped.",
+        "name": "arrayOfObjects"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The key path to group by.",
+        "name": "keyPath"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "(Optional) Callback function",
+        "name": "callback"
+      }
+    ],
+    "examples": [
+      "const users = [\n  { name: 'Alice', age: 25, city: 'New York' },\n  { name: 'Bob', age: 30, city: 'San Francisco' },\n  { name: 'Charlie', age: 25, city: 'New York' },\n  { name: 'David', age: 30, city: 'San Francisco' }\n];\ngroup(users, 'city');\n// state is { data: { 'New York': [/Alice, Charlie/], 'San Francisco': [ /Bob, David / ] }"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 455,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/image-utils/node_modules/@openfn/language-common/src"
+    },
+    "order": 20,
+    "source": "@openfn/language-common",
+    "signature": [
+      "group(arrayOfObjects, keyPath, callback)"
+    ],
+    "common": true
+  },
+  {
+    "id": "http",
+    "name": "http",
+    "common": true,
+    "kind": "external",
+    "scope": "global",
+    "source": "@openfn/language-common"
+  },
+  {
+    "id": "lastReferenceValue",
+    "longname": "lastReferenceValue",
+    "name": "lastReferenceValue()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Picks out the last reference value from source data.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "JSONPath referencing a point in `references`.",
+        "name": "path"
+      }
+    ],
+    "examples": [
+      "lastReferenceValue('key')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 206,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/image-utils/node_modules/@openfn/language-common/src"
+    },
+    "order": 11,
+    "source": "@openfn/language-common",
+    "signature": [
+      "lastReferenceValue(path)"
+    ],
+    "common": true
+  },
+  {
+    "id": "map",
+    "longname": "map",
+    "name": "map()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Iterates over a collection of items and returns a new array of mapped values,\nlike Javascript's `Array.map()` function.\n\nEach item in the source array will be passed into the callback function. The returned value\nwill be added to the new array. The callback is passed the original item, the current index\nin the source array (ie, the nth item number), and the state object.\n\nWrites a new array to `state.data` with transformed values.c array.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string",
+            "Array"
+          ]
+        },
+        "description": "An array of items or a a JSONPath string which points to an array of items.",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "The mapping function, invoked with `(data, index, state)` for each item in the array.",
+        "name": "callback"
+      }
+    ],
+    "examples": [
+      "<caption> Transform an array of items in state</caption>\nmap($.items', (data, index, state) => {\n  return {\n    id: index + 1,\n    name: data.name,\n    createdAt: state.cursor,\n  };\n});",
+      "<caption>Map items asynchronously (e.g. fetch extra info)</caption>\nmap($.items, async (data, index, state) => {\n  const userInfo = await fetchUserInfo(data.userId);\n  return {\n    id: index + 1,\n    name: data.name,\n    extra: userInfo,\n  };\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "State"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 244,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/image-utils/node_modules/@openfn/language-common/src"
+    },
+    "order": 12,
+    "source": "@openfn/language-common",
+    "signature": [
+      "map(path, callback)"
+    ],
+    "common": true
+  },
+  {
+    "id": "merge",
+    "longname": "merge",
+    "name": "merge()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Merges fields into each item in an array.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "DataSource"
+          ]
+        },
+        "name": "dataSource"
+      },
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        },
+        "description": "Group of fields to merge in.",
+        "name": "fields"
+      }
+    ],
+    "examples": [
+      "merge(\n  \"$.books[*]\",\n  fields(\n    field( \"publisher\", sourceValue(\"$.publisher\") )\n  )\n)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "DataSource"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 425,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/image-utils/node_modules/@openfn/language-common/src"
+    },
+    "order": 19,
+    "source": "@openfn/language-common",
+    "signature": [
+      "merge(dataSource, fields)"
+    ],
+    "common": true
+  },
+  {
+    "id": "scrubEmojis",
+    "longname": "scrubEmojis",
+    "name": "scrubEmojis()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Replaces emojis in a string.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "String that needs to be cleaned",
+        "name": "text"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Characters that replace the emojis",
+        "name": "replacementChars"
+      }
+    ],
+    "examples": [
+      "scrubEmojis('Dove🕊️⭐ 29')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 591,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/image-utils/node_modules/@openfn/language-common/src"
+    },
+    "order": 27,
+    "source": "@openfn/language-common",
+    "signature": [
+      "scrubEmojis(text, replacementChars)"
+    ],
+    "common": true
+  },
+  {
+    "id": "sourceValue",
+    "longname": "sourceValue",
+    "name": "sourceValue()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Picks out a single value from source data.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "JSONPath referencing a point in `state`.",
+        "name": "path"
+      }
+    ],
+    "examples": [
+      "sourceValue('$.key')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 127,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/image-utils/node_modules/@openfn/language-common/src"
+    },
+    "order": 6,
+    "source": "@openfn/language-common",
+    "signature": [
+      "sourceValue(path)"
+    ],
+    "common": true
+  },
+  {
+    "id": "util",
+    "name": "util",
+    "common": true,
+    "kind": "external",
+    "scope": "global",
+    "source": "@openfn/language-common"
+  }
+],
 {"name":"inform","adaptor":"@openfn/language-inform","version":"1.3.2","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#downloadattachment\\\">downloadAttachment(attachmentId, options)</a></dt>\\n<dt>\\n    <a href=\\\"#getattachmentmetadata\\\">getAttachmentMetadata(attachmentId)</a></dt>\\n<dt>\\n    <a href=\\\"#getform\\\">getForm(formId, options)</a></dt>\\n<dt>\\n    <a href=\\\"#getforms\\\">getForms(options)</a></dt>\\n<dt>\\n    <a href=\\\"#getsubmission\\\">getSubmission(formId, submissionId)</a></dt>\\n<dt>\\n    <a href=\\\"#getsubmissions\\\">getSubmissions(formId, options)</a></dt>\\n</dl>\\n\\nThis adaptor exports the following namespaced functions:\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#http_get\\\">http.get(path, options)</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_request\\\">http.request(method, path, options)</a>\\n</dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#as\\\">as()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#log\\\">log()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#util\\\">util</a>\\n</dt></dl>\\n\\n## Functions\\n### downloadAttachment\\n\\n<p><code>downloadAttachment(attachmentId, options) ⇒ Operation</code></p>\\n\\nDownload an attachment in binary or base64 format\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| attachmentId | <code>string</code> | Id of the attachment to be retrieved. |\\n| options | <code>object</code> | Optional request options. Supported options are: `filename` for the specific attachment to be downloaded, and `parseAs` for either `stream` or `base64`. Defaults to `parseAs: stream`. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Download an attachment\\n```js\\ndownloadAttachment('622038', {\\n  filename:\\n    'project/attachments/download_1.png',\\n});\\n```\\n**Example:** Download an attachment in base64 format\\n```js\\ndownloadAttachment('622038', {\\n  filename:\\n    'project/attachments/download_1.png',\\n  parseAs: 'base64',\\n});\\n```\\n\\n* * *\\n\\n### getAttachmentMetadata\\n\\n<p><code>getAttachmentMetadata(attachmentId) ⇒ Operation</code></p>\\n\\nFetch a single attachment's metadata\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| attachmentId | <code>string</code> | Id of the attachment to be retrieved. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\ngetAttachmentMetadata('621985');\\n```\\n\\n* * *\\n\\n### getForm\\n\\n<p><code>getForm(formId, options) ⇒ Operation</code></p>\\n\\nGet metadata or structural data for a single form\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| formId | <code>string</code> | Id of the form to be retrieved. |\\n| options | <code>object</code> | Optional filter options. |\\n| options.structureOnly | <code>boolean</code> | If true, only the form structure is returned in JSON format. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:**  Get a single form \\n```js\\ngetForm('6225');\\n```\\n**Example:**  Get a single form structure \\n```js\\ngetForm('6225', {\\n  structureOnly: true,\\n});\\n```\\n\\n* * *\\n\\n### getForms\\n\\n<p><code>getForms(options) ⇒ Operation</code></p>\\n\\nFetch all forms\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| options | <code>object</code> | Optional filter options. Some supported options are: `public`, `tags`, `page`, and `page_size`. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Get all forms without filter options\\n```js\\ngetForms();\\n```\\n**Example:** Get all forms with filter options\\n```js\\ngetForms({\\n  public: true,\\n  page: 1,\\n  page_size: 5,\\n});\\n```\\n\\n* * *\\n\\n### getSubmission\\n\\n<p><code>getSubmission(formId, submissionId) ⇒ Operation</code></p>\\n\\nGet a single data submission for a single form\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| formId | <code>string</code> | Id of the form's submissions to be retrieved. |\\n| submissionId | <code>string</code> | Id of the submission to be retrieved. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\ngetSubmission('6225', '7783155');\\n```\\n\\n* * *\\n\\n### getSubmissions\\n\\n<p><code>getSubmissions(formId, options) ⇒ Operation</code></p>\\n\\nGet submission data of a single form\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| formId | <code>string</code> | Id of the form's submissions to be retrieved. |\\n| options | <code>object</code> | Optional filter options. Some supported options are: `query`, `limit`, `start`, `page`, and `page_size`. |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Get submissions without filter options\\n```js\\ngetSubmissions('6225');\\n```\\n**Example:** Get submissions with filter options\\n```js\\ngetSubmissions('6225', {\\n  query: `{\\\"_submission_time\\\":{\\\"$gte\\\":\\\"2024-11-05\\\"}}`,\\n  limit: 1,\\n});\\n```\\n\\n* * *\\n\\n\\n## http\\n\\nThese functions belong to the http namespace.\\n### http.get {#http_get}\\n\\n<p><code>get(path, options) ⇒ Operation</code></p>\\n\\nMake a GET request to Inform\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Get all forms\\n```js\\nhttp.get('forms')\\n```\\n\\n* * *\\n\\n\\n### http.request {#http_request}\\n\\n<p><code>request(method, path, options) ⇒ Operation</code></p>\\n\\nMake a general HTTP request to Inform\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Get all forms with a query\\n```js\\nhttp.request('GET', 'forms', {\\n  query: {\\n    public: true,\\n    page: 1,\\n    page_size: 5,\\n  },\\n});\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### RequestOptions\\n\\nOptions provided to the Inform request\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| body | <code>object</code> \\\\| <code>string</code> | body data to append to the request. JSON will be converted to a string. |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-inform <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\ninform API.\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/inform-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/inform-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-inform\\n\\n## 1.3.2\\n\\n### Patch Changes\\n\\n- c5f8728: Update undici dependency\\n- Updated dependencies [c5f8728]\\n  - @openfn/language-common@3.3.4\\n\\n## 1.3.1 - 27 May 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[5276a86]\\n  - @openfn/language-common@3.3.3\\n\\n## 1.3.0 - 21 May 2026\\n\\n### Minor Changes\\n\\n- bf26881: export `log` function from common\\n\\n## 1.2.6 - 20 May 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[9d1e1ae]\\n  - @openfn/language-common@3.3.2\\n\\n## 1.2.5 - 07 April 2026\\n\\n### Patch Changes\\n\\n- add9748: Update dependencies (undici)\\n- Updated dependencies \\\\[add9748]\\n- Updated dependencies \\\\[a9b7597]\\n  - @openfn/language-common@3.3.1\\n\\n## 1.2.4 - 30 March 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[295655f]\\n  - @openfn/language-common@3.3.0\\n\\n## 1.2.3 - 24 February 2026\\n\\n### Patch Changes\\n\\n- 856f85c: Security updates\\n- Updated dependencies \\\\[856f85c]\\n  - @openfn/language-common@3.2.3\\n\\n## 1.2.2 - 09 February 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[8ad6b98]\\n- Updated dependencies \\\\[8ad6b98]\\n  - @openfn/language-common@3.2.2\\n\\n## 1.2.1 - 28 November 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[cfc66df]\\n  - @openfn/language-common@3.2.1\\n\\n## 1.2.0 - 12 November 2025\\n\\n### Minor Changes\\n\\n- 4d7a833: disable redirect warning\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[4d7a833]\\n  - @openfn/language-common@3.2.0\\n\\n## 1.1.7 - 04 November 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@3.1.2\\n\\n## 1.1.6 - 16 October 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[408a3a2]\\n  - @openfn/language-common@3.1.1\\n\\n## 1.1.5 - 18 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[e2bc436]\\n  - @openfn/language-common@3.1.0\\n\\n## 1.1.4 - 01 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[1d60531]\\n  - @openfn/language-common@3.0.3\\n\\n## 1.1.3 - 27 August 2025\\n\\n### Patch Changes\\n\\n- b2aec70: - Removed `common` exports in http\\n\\n## 1.1.2 - 14 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[9b5a4f8]\\n  - @openfn/language-common@3.0.2\\n\\n## 1.1.1 - 10 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[cf9c09f]\\n  - @openfn/language-common@3.0.1\\n\\n## 1.1.0 - 10 July 2025\\n\\n### Minor Changes\\n\\n- 19f2d7e: Exported `as()` function from common.\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[ea85695]\\n- Updated dependencies \\\\[3fce58f]\\n- Updated dependencies \\\\[19f2d7e]\\n- Updated dependencies \\\\[f26bd2b]\\n- Updated dependencies \\\\[19f2d7e]\\n  - @openfn/language-common@3.0.0\\n\\n## 1.0.2 - 20 June 2025\\n\\n### Patch Changes\\n\\n- 28c2e8b: Remove query option from `logResponse` function\\n- Updated dependencies \\\\[28c2e8b]\\n  - @openfn/language-common@2.5.0\\n\\n## 1.0.1 - 28 May 2025\\n\\n### Patch Changes\\n\\n- 62ec0a4: - Update square logo\\n  - Add semi-colon after each example.\\n  - Add options description to downloadAttachment function\\n  - Remove sensitive data in examples\\n\\n## 1.0.0 - 12 May 2025\\n\\n- Implement an `inform` adaptor with `http` and helper functions\\n- A user can use `get()` and `request()` http helpers to make any request to\\n  inform\\n- A user can use different helper functions such as `getForm()`,\\n  `getSubmissions()` to get different types of data from `inform`\\n\"","functions":["downloadAttachment","getAttachmentMetadata","getForm","getForms","getSubmission","getSubmissions"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","anyOf":[{"type":"string"},{"type":"null"}],"description":"The base URL (https://data.inform.unicef.org)","format":"uri","minLength":1,"examples":["https://data.inform.unicef.org"]},"access_token":{"title":"Access Token","type":"string","description":"Your Inform access token","examples":["eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"]},"apiVersion":{"title":"Api Version","type":"string","placeholder":"v1","description":"Inform api version","examples":["v1"]}},"type":"object","additionalProperties":true,"required":["baseUrl","access_token"]}},
 [
   {
