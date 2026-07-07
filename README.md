@@ -154,7 +154,7 @@ for setup and usage instructions.
 ## Build Your Adaptor
 
 We have a comprehensive
-[developer guide](https://github.com/OpenFn/adaptors/wiki/Build-a-new-Adaptor)
+[developer guide](https://github.com/OpenFn/adaptors/blob/main/wiki/build-a-new-adaptor.md)
 to help you build your own adaptor.
 
 ### Quick Start
@@ -173,7 +173,7 @@ to help you build your own adaptor.
    - `rectangle.png` (512x190px)
    - `square.png` (256x256px)
 
-3. [Implement your adaptor](https://github.com/OpenFn/adaptors/wiki/Adaptor-Writing-Best-Practice-&-Common-Patterns)
+3. [Implement your adaptor](https://github.com/OpenFn/adaptors/blob/main/wiki/best-practice.md)
    in `packages/<adaptor-name>/src/Adaptor.js`
 
 4. Update `packages/<adaptor-name>/configuration-schema.json` and validate it
@@ -185,7 +185,7 @@ to help you build your own adaptor.
    ```
 
 5. Test your adaptor:
-   [See unit test guideline](https://github.com/OpenFn/adaptors/wiki/Unit-Testing-Guide)
+   [See unit test guideline](https://github.com/OpenFn/adaptors/blob/main/wiki/unit-test-guide.md)
 
    ```bash
    pnpm test
@@ -203,8 +203,8 @@ to help you build your own adaptor.
 - Update the adaptor's README
 - Keep `configuration-schema.json` valid against JSON Schema draft-07
 - Include comprehensive [JSDoc](https://jsdoc.app/) comments for all functions
-- [Write unit tests for your adaptor functions](https://github.com/OpenFn/adaptors/wiki/Unit-Testing-Guide)
-- [Follow the existing code style and patterns](https://github.com/OpenFn/adaptors/wiki/Adaptor-Writing-Best-Practice-&-Common-Patterns)
+- [Write unit tests for your adaptor functions](https://github.com/OpenFn/adaptors/blob/main/wiki/unit-test-guide.md)
+- [Follow the existing code style and patterns](https://github.com/OpenFn/adaptors/blob/main/wiki/best-practice.md)
 
 ### Testing Documentation Changes
 
@@ -285,7 +285,7 @@ date.
 ## Metadata
 
 Check the Wiki for the metadata creation guide:
-[https://github.com/OpenFn/adaptors/wiki/Magic-Metadata](https://github.com/OpenFn/adaptors/wiki/Magic-Metadata)
+[https://github.com/OpenFn/adaptors/blob/main/wiki/magic-functions.md](https://github.com/OpenFn/adaptors/blob/main/wiki/magic-functions.md)
 
 ## Useful Resources
 
