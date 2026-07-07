@@ -150,13 +150,11 @@ export async function buildAndSendMessage(message) {
 }
 
 async function parseAttachments(attachments) {
-  console.log(' >> PARSING ');
   if (!attachments) return null;
 
   const parsedAttachments = [];
 
   for (const attachment of attachments) {
-    console.log(attachment);
     if (attachment.archive) {
       const archiveAttachment = await parseArchiveAttachment(attachment);
       parsedAttachments.push(archiveAttachment);
@@ -279,12 +277,7 @@ const parsers = {
       });
       // result[sheet] = xlsx.utils.sheet_to_csv(workbook.Sheets[sheet]);
     }
-    console.log(result);
 
-    // utils.book_new();
-    // const worksheet = xlsx.utils.json_to_sheet(data);
-    // const ws_name = 'sheet';
-    // xlsx.utils.book_append_sheet(workbook, worksheet, ws_name);
     return result;
   },
 };

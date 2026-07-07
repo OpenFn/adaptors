@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { google } from 'googleapis';
-import { sendMessage } from '../src/Adaptor.js';
+import { getContentsFromMessages, sendMessage } from '../src/Adaptor.js';
 import { createConnection, removeConnection } from '../src/Utils.js';
 
 const state = {
@@ -81,5 +81,73 @@ describe('sendMessage', () => {
     } catch (error) {
       expect(error.message).to.include('Required parameter');
     }
+  });
+});
+
+describe('getContentsFromMessages', () => {
+  let originalGmail;
+  let mockGmail;
+
+  const bodyText = 'Hello';
+
+  beforeEach(() => {
+    originalGmail = google.gmail;
+
+    const listResponse = {
+      data: {
+        messages: [{ id: 'test-message-id' }],
+        nextPageToken: null,
+      },
+    };
+
+    const getResponse = {
+      data: {
+        payload: {
+          parts: [
+            {
+              mimeType: 'multipart/alternative',
+              parts: [
+                {
+                  mimeType: 'text/plain',
+                  body: { data: Buffer.from(bodyText).toString('base64') },
+                },
+              ],
+            },
+          ],
+          headers: [],
+        },
+      },
+    };
+
+    mockGmail = {
+      users: {
+        messages: {
+          list: async () => listResponse,
+          get: async () => getResponse,
+        },
+      },
+    };
+
+    google.gmail = () => mockGmail;
+
+    createConnection({
+      configuration: {
+        access_token: 'mock-access-token',
+      },
+    });
+  });
+
+  afterEach(() => {
+    google.gmail = originalGmail;
+    removeConnection();
+  });
+
+  it('should get the body from a message', async () => {
+    const { data } = await getContentsFromMessages({ contents: ['body'] })(
+      state,
+    );
+
+    expect(data[0].messageId).to.equal('test-message-id');
+    expect(data[0].body).to.equal(bodyText);
   });
 });

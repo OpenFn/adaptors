@@ -130,7 +130,6 @@ export function getContentsFromMessages(options) {
             messageResult,
             contentIndicator,
           );
-          console.log({ messageContent });
 
           if (messageContent && content[contentIndicator.name]) {
             throw new Error(
