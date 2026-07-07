@@ -1,5 +1,8 @@
 import { expect } from 'chai';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { google } from 'googleapis';
+import xlsx from 'xlsx';
 import { getContentsFromMessages, sendMessage } from '../src/Adaptor.js';
 import { createConnection, removeConnection } from '../src/Utils.js';
 
@@ -90,6 +93,17 @@ describe('getContentsFromMessages', () => {
 
   const bodyText = 'Hello';
 
+  // Load the real xlsx fixture through sheetjs and convert it to the
+  // base64-encoded binary that Gmail's attachments.get endpoint returns.
+  const workbook = xlsx.read(
+    readFileSync(fileURLToPath(new URL('./test.xlsx', import.meta.url))),
+    { type: 'buffer' },
+  );
+  const attachmentData = xlsx.write(workbook, {
+    type: 'base64',
+    bookType: 'xlsx',
+  });
+
   beforeEach(() => {
     originalGmail = google.gmail;
 
@@ -113,9 +127,28 @@ describe('getContentsFromMessages', () => {
                 },
               ],
             },
+            {
+              mimeType:
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+              filename: 'test.xlsx',
+              body: { attachmentId: 'test-attachment-id' },
+              headers: [
+                {
+                  name: 'Content-Type',
+                  value:
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; name="test.xlsx"',
+                },
+              ],
+            },
           ],
           headers: [],
         },
+      },
+    };
+
+    const attachmentResponse = {
+      data: {
+        data: attachmentData,
       },
     };
 
@@ -124,6 +157,9 @@ describe('getContentsFromMessages', () => {
         messages: {
           list: async () => listResponse,
           get: async () => getResponse,
+          attachments: {
+            get: async () => attachmentResponse,
+          },
         },
       },
     };
@@ -149,5 +185,26 @@ describe('getContentsFromMessages', () => {
 
     expect(data[0].messageId).to.equal('test-message-id');
     expect(data[0].body).to.equal(bodyText);
+  });
+
+  it.only('should get an XLSX attachment', async () => {
+    const { data } = await getContentsFromMessages({
+      contents: [
+        {
+          type: 'file',
+          name: 'sheet',
+          file: /.xlsx$/,
+        },
+      ],
+    })(state);
+
+    const expected = {
+      Sheet1: [
+        ['name', 'age'],
+        ['Alice', 30],
+        ['Bob', 25],
+      ],
+    };
+    expect(data[0].sheet.content).to.eql(expected);
   });
 });
