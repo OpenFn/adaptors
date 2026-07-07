@@ -1009,6 +1009,9 @@ importers:
       jszip:
         specifier: ^3.10.1
         version: 3.10.1
+      xlsx:
+        specifier: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
+        version: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
     devDependencies:
       assertion-error:
         specifier: 2.0.0

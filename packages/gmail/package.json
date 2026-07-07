@@ -32,7 +32,8 @@
   "dependencies": {
     "@openfn/language-common": "workspace:*",
     "googleapis": "171.4.0",
-    "jszip": "^3.10.1"
+    "jszip": "^3.10.1",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",

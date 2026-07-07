@@ -1,4 +1,5 @@
 import JSZip from 'jszip';
+import xlsx from 'xlsx';
 import { google } from 'googleapis';
 
 const SEND_MESSAGE_BOUNDARY = '----=_Part_0_123456789.123456789';
@@ -40,7 +41,7 @@ export async function getMessageResult(userId, messageId) {
 
 export function getContentIndicators(
   defaultContentRequests = [],
-  contentRequests = []
+  contentRequests = [],
 ) {
   const contentIndicators = contentRequests.map(getContentIndicator);
   const contentNames = new Set(contentIndicators.map(({ name }) => name));
@@ -68,7 +69,7 @@ function getContentIndicator(contentRequest) {
 
   if (!contentIndicator.type) {
     console.error(
-      `Unable to determine desired content type: ${contentRequest}`
+      `Unable to determine desired content type: ${contentRequest}`,
     );
     throw new Error('No desired content type provided.');
   }
@@ -127,7 +128,7 @@ export async function buildAndSendMessage(message) {
         'Content-Transfer-Encoding: base64',
         `Content-Disposition: attachment; filename="${file}"`,
         '',
-        attachment.content
+        attachment.content,
       );
     }
 
@@ -149,11 +150,13 @@ export async function buildAndSendMessage(message) {
 }
 
 async function parseAttachments(attachments) {
+  console.log(' >> PARSING ');
   if (!attachments) return null;
 
   const parsedAttachments = [];
 
   for (const attachment of attachments) {
+    console.log(attachment);
     if (attachment.archive) {
       const archiveAttachment = await parseArchiveAttachment(attachment);
       parsedAttachments.push(archiveAttachment);
@@ -202,19 +205,19 @@ export function removeConnection(state) {
 async function getFileFromArchiveFromAttachment(message, desiredContent) {
   const attachmentResult = await getAttachmentResult(
     message,
-    desiredContent.archive
+    desiredContent.archive,
   );
 
   return await extractFileFromArchiveAttachment(
     attachmentResult,
-    desiredContent
+    desiredContent,
   );
 }
 
 async function getFileFromAttachment(message, desiredContent) {
   const attachmentResult = await getAttachmentResult(
     message,
-    desiredContent.file
+    desiredContent.file,
   );
 
   return await extractFileFromAttachment(attachmentResult, desiredContent);
@@ -235,12 +238,64 @@ async function getAttachmentResult(message, expression) {
     messageId: message.messageId,
     id: part.body.attachmentId,
   });
-
   return {
-    data: data?.data,
+    //data: await parseAttachmentData(data?.data, part.headers),
+    data: data.data,
+    headers: part.headers,
     filename: part.filename,
     expression,
   };
+}
+
+// map supported mimetypes to content types
+const mimeTypeMap = {
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'xlsx',
+};
+
+const parsers = {
+  xlsx: data => {
+    console.log('Converting XLSX attachment to JSON');
+
+    // const buffer = Buffer.from(data, 'base64');
+    const workbook = xlsx.read(data, { type: 'buffer' });
+
+    const result = {};
+    for (const sheet of workbook.SheetNames) {
+      // TODO do we need to take options for parsing here?
+      // If this gets too complicated we'll have to just return an array of arrays
+
+      // Now, how to parse the sheet? I happen to know mtuchi wants a CSV
+      // I could option drive this
+      // or I could expose xlsx and just return a simple array of arrays
+      // wary of trying to do too much
+      // what is the lowest level abstraction?
+      result[sheet] = xlsx.utils.sheet_to_json(workbook.Sheets[sheet], {
+        // another decision I don't want  to make tbh
+        // header: 0, // use the header to build an array of objects [{ a, b, c }]
+
+        // I think we'll return this, because it serializes well to state
+        // Maybe expose xlsx utils? Or in common?
+        header: 1, // ignore the header to build an array of arrays [[ a, b, c ]]
+      });
+      // result[sheet] = xlsx.utils.sheet_to_csv(workbook.Sheets[sheet]);
+    }
+    console.log(result);
+
+    // utils.book_new();
+    // const worksheet = xlsx.utils.json_to_sheet(data);
+    // const ws_name = 'sheet';
+    // xlsx.utils.book_append_sheet(workbook, worksheet, ws_name);
+    return result;
+  },
+};
+
+function parseContent(data /* base64 buffer */, headers, parseAs) {
+  const contentTypeRaw =
+    headers.find(h => h.name.toLowerCase() === 'content-type')?.value ?? '';
+  const contentType = contentTypeRaw.split(';')[0];
+  let type = parseAs ?? mimeTypeMap[contentType];
+
+  return parsers[type]?.(data) ?? data.toString('utf-8');
 }
 
 async function extractFileFromArchiveAttachment(attachment, desiredContent) {
@@ -250,7 +305,7 @@ async function extractFileFromArchiveAttachment(attachment, desiredContent) {
 
   if (!attachment.data) {
     console.error(
-      `Data not found in the archive attachment for: ${attachment.expression}`
+      `Data not found in the archive attachment for: ${attachment.expression}`,
     );
     return null;
   }
@@ -259,7 +314,7 @@ async function extractFileFromArchiveAttachment(attachment, desiredContent) {
   const zip = await JSZip.loadAsync(compressedBuffer);
 
   const filename = Object.keys(zip.files).find(name =>
-    isExpressionMatch(name, desiredContent.file)
+    isExpressionMatch(name, desiredContent.file),
   );
 
   if (!filename) {
@@ -286,28 +341,30 @@ async function extractFileFromAttachment(attachment, desiredContent) {
 
   if (!attachment.data) {
     console.error(
-      `Data not found in the file attachment for: ${attachment.expression}`
+      `Data not found in the file attachment for: ${attachment.expression}`,
     );
     return null;
   }
 
-  const fileContent = Buffer.from(attachment.data, 'base64').toString('utf-8');
+  // TODO string conversion not great here
+  const fileContent = Buffer.from(attachment.data, 'base64');
+  const content = parseContent(fileContent, attachment.headers);
 
   return {
     filename: attachment.filename,
     content: desiredContent.maxLength
-      ? fileContent.substring(0, desiredContent.maxLength)
-      : fileContent,
+      ? content.substring(0, desiredContent.maxLength)
+      : content,
   };
 }
 
 function getBodyFromMessage(message, desiredContent) {
   const bodyPart = message.parts?.find(
-    part => part.mimeType === 'multipart/alternative'
+    part => part.mimeType === 'multipart/alternative',
   );
 
   const textBodyPart = bodyPart?.parts.find(
-    part => part.mimeType === 'text/plain'
+    part => part.mimeType === 'text/plain',
   );
 
   const textBody = textBodyPart?.body?.data;
@@ -324,7 +381,7 @@ function getBodyFromMessage(message, desiredContent) {
 
 function getValueFromMessageHeader(message, desiredContent) {
   const header = message.headers?.find(
-    h => h.name.toLowerCase() === desiredContent.type
+    h => h.name.toLowerCase() === desiredContent.type,
   );
 
   if (!header) {
