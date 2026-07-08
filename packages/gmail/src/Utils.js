@@ -21,7 +21,6 @@ export async function getMessagesResult(userId, query, pageToken) {
       nextPageToken: data.nextPageToken,
     };
   } catch (error) {
-    console.log({ error });
     throw new Error('Error fetching messages: ' + error.message);
   }
 }
@@ -342,7 +341,6 @@ async function extractFileFromAttachment(attachment, desiredContent) {
     return null;
   }
 
-  // TODO string conversion not great here
   const fileContent = Buffer.from(attachment.data, 'base64');
   const content = parseContent(
     fileContent,
