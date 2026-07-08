@@ -86,5 +86,5 @@ The different output from you running the jobs will be temporarily stored in
 ## Next Steps
 
 Check out the
-[Best Practice](https://github.com/OpenFn/adaptors/wiki/Adaptor-Writing-Best-Practice-&-Common-Patterns)
+[Best Practice](https://github.com/OpenFn/adaptors/blob/main/wiki/best-practice.md)
 page for more guidelines about how to go about creating the ultimate adaptor

@@ -7,10 +7,10 @@ take?), as well how to actually implement the API.
 
 ## What is an adaptor?
 
-An adaptor sits between the OpenFn platform (ie, app.openfn.org) and some
-backing service or system (le, Salesforce, Primero).
+An adaptor sits between the OpenFn platform (ie app.openfn.org) and some
+backing service or system (eg Salesforce or Primero).
 
-It's job is to provide a clean, high-level JavaScript interface to users writing
+Its job is to provide a clean, high-level JavaScript interface to users writing
 workflows in OpenFn.
 
 Users who write OpenFn job code are usually inexperienced programmers, and
@@ -93,7 +93,7 @@ options - and this is a great way to structure the API. It's less subtle than
 `getPatient/getPatients`, and the `list` verb probably gives you a better idea
 of what to expect.
 
-`search()` is probably a good alterantive to `list()`, but our APIs should
+`search()` is probably a good alternative to `list()`, but our APIs should
 generally prefer one or the other across adaptors
 
 ## Operations vs Utility Functions
