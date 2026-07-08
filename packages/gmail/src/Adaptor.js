@@ -87,7 +87,7 @@ export function getContentsFromMessages(options) {
 
     const contentIndicators = getContentIndicators(
       defaultOptions.contents,
-      resolvedOptions.contents
+      resolvedOptions.contents,
     );
 
     const contents = [];
@@ -102,7 +102,7 @@ export function getContentsFromMessages(options) {
       const messagesResult = await getMessagesResult(
         opts.userId,
         opts.query,
-        nextPageToken
+        nextPageToken,
       );
 
       if (!messagesResult.messages?.length) {
@@ -128,12 +128,12 @@ export function getContentsFromMessages(options) {
         for (const contentIndicator of contentIndicators) {
           const messageContent = await getMessageContent(
             messageResult,
-            contentIndicator
+            contentIndicator,
           );
 
           if (messageContent && content[contentIndicator.name]) {
             throw new Error(
-              `Duplicate content name detected: ${contentIndicator.name}`
+              `Duplicate content name detected: ${contentIndicator.name}`,
             );
           }
 
@@ -219,7 +219,7 @@ export function execute(...operations) {
     return commonExecute(
       createConnection,
       ...operations,
-      removeConnection
+      removeConnection,
     )({
       ...initialState,
       ...state,
