@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { execute, assert } from '@openfn/language-common';
 import { toBuf, toBase64Str, saveBase64Image } from './helpers.js';
-import { decodeBase64Image } from '../src/Utils.js';
+import { decodeBase64Image, getExifData } from '../src/Utils.js';
 import {
   fn,
   each,
@@ -9,7 +9,6 @@ import {
   combine,
   dateFns,
   compress,
-  getExifData,
   embedMetadata,
 } from '../src/Adaptor.js';
 
