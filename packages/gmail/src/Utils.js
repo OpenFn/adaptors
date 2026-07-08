@@ -20,6 +20,7 @@ export async function getMessagesResult(userId, query, pageToken) {
       nextPageToken: data.nextPageToken,
     };
   } catch (error) {
+    console.log({ error });
     throw new Error('Error fetching messages: ' + error.message);
   }
 }
@@ -237,7 +238,6 @@ async function getAttachmentResult(message, expression) {
     id: part.body.attachmentId,
   });
   return {
-    //data: await parseAttachmentData(data?.data, part.headers),
     data: data.data,
     headers: part.headers,
     filename: part.filename,
@@ -248,47 +248,52 @@ async function getAttachmentResult(message, expression) {
 // map supported mimetypes to content types
 const mimeTypeMap = {
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'xlsx',
+  'application/vnd.ms-excel': 'xlsx',
+  'text/plain': 'plain',
+  'application/xml': 'plain',
+  'application/json': 'json',
 };
 
 const parsers = {
   xlsx: data => {
-    console.log('Converting XLSX attachment to JSON');
-
-    // const buffer = Buffer.from(data, 'base64');
     const workbook = xlsx.read(data, { type: 'buffer' });
 
     const result = {};
     for (const sheet of workbook.SheetNames) {
-      // TODO do we need to take options for parsing here?
-      // If this gets too complicated we'll have to just return an array of arrays
-
-      // Now, how to parse the sheet? I happen to know mtuchi wants a CSV
-      // I could option drive this
-      // or I could expose xlsx and just return a simple array of arrays
-      // wary of trying to do too much
-      // what is the lowest level abstraction?
+      // parse the sheet into the safest, lowest-level JSON format
+      // Which means arrays of arrays, no headers
       result[sheet] = xlsx.utils.sheet_to_json(workbook.Sheets[sheet], {
-        // another decision I don't want  to make tbh
-        // header: 0, // use the header to build an array of objects [{ a, b, c }]
-
-        // I think we'll return this, because it serializes well to state
-        // Maybe expose xlsx utils? Or in common?
         header: 1, // ignore the header to build an array of arrays [[ a, b, c ]]
       });
-      // result[sheet] = xlsx.utils.sheet_to_csv(workbook.Sheets[sheet]);
     }
 
     return result;
   },
+  plain: data => {
+    return data.toString('utf-8');
+  },
+  json: data => {
+    return JSON.parse(data.toString('utf-8'));
+  },
 };
 
-function parseContent(data /* base64 buffer */, headers, parseAs) {
+function parseContent(data /* decoded buffer */, headers) {
+  if (!data) {
+    return;
+  }
+
   const contentTypeRaw =
     headers.find(h => h.name.toLowerCase() === 'content-type')?.value ?? '';
   const contentType = contentTypeRaw.split(';')[0];
-  let type = parseAs ?? mimeTypeMap[contentType];
+  let type = mimeTypeMap[contentType];
 
-  return parsers[type]?.(data) ?? data.toString('utf-8');
+  if (type in parsers) {
+    return parsers[type](data);
+  }
+
+  // If we can't handle the mimetype, convert to base64 string so that
+  // it can serialize safely
+  return data.toString('base64');
 }
 
 async function extractFileFromArchiveAttachment(attachment, desiredContent) {
