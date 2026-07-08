@@ -1,5 +1,6 @@
 ---
-'@openfn/language-gmail': minor
+'@openfn/language-gmail': major
 ---
 
-Add support to convert XLSX attachments to JSON arrays
+- Automatically parse xlsx, json, xml and plaintext attachments
+- Encode unknown or binary attachments to a base4 string
