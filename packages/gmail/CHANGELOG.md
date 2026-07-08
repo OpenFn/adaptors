@@ -7,6 +7,57 @@
 - 327635a: - Automatically parse xlsx, json, xml and plaintext attachments
   - Encode unknown or binary attachments to a base4 string
 
+## Migration Guide
+
+Some attachments are now auto-parsed into Javascript-friendly formats. Workflows
+which had previously done this work manually will need to make a change.
+
+For example, workflows loading JSON attachments in <3.0 might have loaded them
+like this:
+
+```
+const contents = [
+  'body',
+  {
+    type: 'file',
+    name: 'attachment',
+    file: /data.json/,
+  },
+];
+
+getContentsFromMessages({ query: $.query, contents });
+```
+
+And then manually parsed the file into JSON:
+
+```
+each($.data, (state) => {
+  state.attachment.content = JSON.parse(state.attachment.content)
+  return state;
+})
+```
+
+In version 3.0, you do not need to do this and should update your workflow code
+accordingly.
+
+Migration might be made easier by forcing the adaptor to parse to plain text
+format, regardless of the file type. In which case, set the `parseAs` flag on
+the content expression and the adaptor will behave just as it did before:
+
+```
+const contents = [
+  'body',
+  {
+    type: 'file',
+    name: 'attachment',
+    file: /data.json/,
+    parseAs: 'text'
+  },
+];
+
+getContentsFromMessages({ query: $.query, contents });
+```
+
 ## 2.1.2
 
 ### Patch Changes
@@ -270,7 +321,6 @@
 - 01b4aa9: This patch includes breaking changes to the API - but since the
   adpator has only been released a couple of days we don't anticipate this
   affecting any users.
-
   - Removed the `userId` parameter from `getContentsFromMessages()`. Pass
     `options.email` instead.
   - Renamed `options.desiredContents` to `options.contents`
