@@ -73,7 +73,7 @@ export function embedImageMetadata(inputBuffer, kvPairs) {
 }
 
 export async function compressImage(inputBuffer, options = {}) {
-  const { maxBytes = 700 * 1024, minQuality = 20 } = options;
+  const { maxBytes, minQuality } = options;
   const kb = n => `${(n / 1024).toFixed(1)}KB`;
 
   const image = await Jimp.read(inputBuffer);
@@ -120,6 +120,7 @@ export async function getImageMetadata(inputBuffer) {
     exif: getExifData(inputBuffer),
   };
 }
+
 export function getExifData(inputBuffer, options = {}) {
   const { mergeOutput = true } = options;
   const exifObj = piexif.load(inputBuffer.toString('binary'));
