@@ -99,7 +99,7 @@ describe('getContentsFromMessages', () => {
     readFileSync(fileURLToPath(new URL('./test.xlsx', import.meta.url))),
     { type: 'buffer' },
   );
-  const attachmentData = xlsx.write(workbook, {
+  const sheetData = xlsx.write(workbook, {
     type: 'base64',
     bookType: 'xlsx',
   });
@@ -131,12 +131,34 @@ describe('getContentsFromMessages', () => {
               mimeType:
                 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
               filename: 'test.xlsx',
-              body: { attachmentId: 'test-attachment-id' },
+              body: { attachmentId: 'a' },
               headers: [
                 {
                   name: 'Content-Type',
                   value:
                     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; name="test.xlsx"',
+                },
+              ],
+            },
+            {
+              mimeType: 'text/plain',
+              filename: 'greeting.txt',
+              body: { attachmentId: 'b' },
+              headers: [
+                {
+                  name: 'Content-Type',
+                  value: 'text/plain',
+                },
+              ],
+            },
+            {
+              mimeType: 'application/json',
+              filename: 'data.json',
+              body: { attachmentId: 'c' },
+              headers: [
+                {
+                  name: 'Content-Type',
+                  value: 'application/json',
                 },
               ],
             },
@@ -146,9 +168,21 @@ describe('getContentsFromMessages', () => {
       },
     };
 
-    const attachmentResponse = {
+    const attachmentA = {
       data: {
-        data: attachmentData,
+        data: sheetData,
+      },
+    };
+
+    const attachmentB = {
+      data: {
+        data: Buffer.from('hello').toString('base64'),
+      },
+    };
+
+    const attachmentC = {
+      data: {
+        data: Buffer.from('{ "x": 1 }').toString('base64'),
       },
     };
 
@@ -158,7 +192,17 @@ describe('getContentsFromMessages', () => {
           list: async () => listResponse,
           get: async () => getResponse,
           attachments: {
-            get: async () => attachmentResponse,
+            get: async ({ id }) => {
+              if (id === 'a') {
+                return attachmentA;
+              }
+              if (id === 'b') {
+                return attachmentB;
+              }
+              if (id === 'c') {
+                return attachmentC;
+              }
+            },
           },
         },
       },
@@ -187,7 +231,7 @@ describe('getContentsFromMessages', () => {
     expect(data[0].body).to.equal(bodyText);
   });
 
-  it.only('should get an XLSX attachment', async () => {
+  it('should get an XLSX attachment', async () => {
     const { data } = await getContentsFromMessages({
       contents: [
         {
@@ -206,5 +250,33 @@ describe('getContentsFromMessages', () => {
       ],
     };
     expect(data[0].sheet.content).to.eql(expected);
+  });
+
+  it('should get a plaintext attachment', async () => {
+    const { data } = await getContentsFromMessages({
+      contents: [
+        {
+          type: 'file',
+          name: 'text',
+          file: /.txt$/,
+        },
+      ],
+    })(state);
+
+    expect(data[0].text.content).to.eql('hello');
+  });
+
+  it('should get a json attachment', async () => {
+    const { data } = await getContentsFromMessages({
+      contents: [
+        {
+          type: 'file',
+          name: 'json',
+          file: /.json$/,
+        },
+      ],
+    })(state);
+
+    expect(data[0].json.content).to.eql({ x: 1 });
   });
 });
