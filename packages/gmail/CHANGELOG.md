@@ -1,5 +1,12 @@
 # @openfn/language-gmail
 
+## 3.0.0
+
+### Major Changes
+
+- 327635a: - Automatically parse xlsx, json, xml and plaintext attachments
+  - Encode unknown or binary attachments to a base4 string
+
 ## 2.1.2
 
 ### Patch Changes
