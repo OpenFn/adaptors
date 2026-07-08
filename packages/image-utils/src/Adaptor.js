@@ -1,13 +1,12 @@
 import { expandReferences } from '@openfn/language-common/util';
 import { composeNextState } from '@openfn/language-common';
 import {
+  stripImage,
   resizeImage,
   compressImage,
-  stripImage,
-  embedImageMetadata,
   getImageMetadata,
   decodeBase64Image,
-  getExifData,
+  embedImageMetadata,
 } from './Utils.js';
 
 function resolveInput(raw) {
@@ -31,8 +30,9 @@ function applyParseAs(result, parseAs) {
 /**
  * Resize an image to the given dimensions.
  * Writes `{ buffer, width, height }` to `state.data`.
+ * @public
  * @example
- * resize(state.data.photoBase64, { width: 1200, height: 1600 })
+ * resize($.data.photoBase64, { width: 1200, height: 1600 })
  * @function
  * @param {string|Buffer|Function} base64ImgOrBuffer - Base64 string, data URL, Buffer, or resolver fn
  * @param {object} [options={}]
@@ -63,6 +63,7 @@ export function resize(base64ImgOrBuffer, options = {}) {
 /**
  * Compress an image by reducing image quality until it reaches the criteria.
  * Writes `{ buffer, size, quality }` to `state.data`.
+ * @public
  * @example
  * compress(state.data.buffer, { maxBytes: 700 * 1024, minQuality: 20 })
  * @function
@@ -81,6 +82,7 @@ export function compress(base64ImgOrBuffer, options = {}) {
       base64ImgOrBuffer,
       options,
     );
+    const { maxBytes = 700 * 1024, minQuality = 20 } = resolvedOptions;
     const result = await compressImage(
       resolveInput(resolvedImg),
       resolvedOptions,
@@ -95,8 +97,9 @@ export function compress(base64ImgOrBuffer, options = {}) {
 /**
  * Strip all EXIF metadata from an image. Output is always a JPEG buffer.
  * Writes `{ buffer }` to `state.data`.
+ * @public
  * @example
- * stripMetadata(state.data.photoBase64)
+ * stripMetadata($.data.photoBase64)
  * @function
  * @param {string|Buffer|Function} base64ImgOrBuffer - Base64 string, data URL, Buffer, or resolver fn
  * @param {object} [options={}]
@@ -122,9 +125,10 @@ export function stripMetadata(base64ImgOrBuffer, options = {}) {
 /**
  * Embed EXIF metadata into a JPEG image.
  * Writes `{ buffer }` to `state.data`.
+ * @public
  * @example
- * embedMetadata(state.data.buffer, { UserComment: 'patient-id=42' })
- * embedMetadata(state.data.buffer, { UserComment: 'patient-id=42', Make: 'OpenFn' }, { parseAs: 'base64' })
+ * embedMetadata($.data.buffer, { UserComment: 'patient-id=42' })
+ * embedMetadata($.data.buffer, { UserComment: 'patient-id=42', Make: 'OpenFn' }, { parseAs: 'base64' })
  * @function
  * @param {string|Buffer|Function} base64ImgOrBuffer - Base64 string, data URL, Buffer, or resolver fn
  * @param {object} exifObj - EXIF key-value pairs; keys must be valid EXIF tag names (e.g. UserComment, Make, Model)
@@ -154,8 +158,9 @@ export function embedMetadata(base64ImgOrBuffer, exifObj, options = {}) {
  * Writes `{ width, height, orientation, size, exif }` to `state.data`.
  * `exif` is a flat object of human-readable EXIF tag names (e.g. `{ Make, Model, GPSLatitude, UserComment }`).
  * `UserComment` has the `ASCII\0\0\0` encoding prefix stripped. Images with no EXIF return `exif: {}`.
+ * @public
  * @example
- * metadata(state.data.photoBase64)
+ * metadata($.data.photoBase64)
  * fn(state => {
  *   if (state.data.size > 700 * 1024) { ... }
  *   return state;
@@ -172,7 +177,7 @@ export function metadata(base64ImgOrBuffer) {
     return composeNextState(state, result);
   };
 }
-export { getExifData };
+
 export {
   as,
   combine,
