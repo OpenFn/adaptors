@@ -1,6 +1,7 @@
 import JSZip from 'jszip';
 import xlsx from 'xlsx';
 import { google } from 'googleapis';
+import { basename } from 'node:path';
 
 const SEND_MESSAGE_BOUNDARY = '----=_Part_0_123456789.123456789';
 
@@ -249,8 +250,8 @@ async function getAttachmentResult(message, expression) {
 const mimeTypeMap = {
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'xlsx',
   'application/vnd.ms-excel': 'xlsx',
-  'text/plain': 'plain',
-  'application/xml': 'plain',
+  'text/plain': 'text',
+  'application/xml': 'text',
   'application/json': 'json',
 };
 
@@ -269,15 +270,12 @@ const parsers = {
 
     return result;
   },
-  plain: data => {
-    return data.toString('utf-8');
-  },
-  json: data => {
-    return JSON.parse(data.toString('utf-8'));
-  },
+  text: data => data.toString('utf-8'),
+  json: data => JSON.parse(data.toString('utf-8')),
+  base64: data => data.toString('base64'),
 };
 
-function parseContent(data /* decoded buffer */, headers) {
+function parseContent(data /* decoded buffer */, headers, parseAs) {
   if (!data) {
     return;
   }
@@ -285,7 +283,7 @@ function parseContent(data /* decoded buffer */, headers) {
   const contentTypeRaw =
     headers.find(h => h.name.toLowerCase() === 'content-type')?.value ?? '';
   const contentType = contentTypeRaw.split(';')[0];
-  let type = mimeTypeMap[contentType];
+  let type = parseAs ?? mimeTypeMap[contentType];
 
   if (type in parsers) {
     return parsers[type](data);
@@ -293,7 +291,7 @@ function parseContent(data /* decoded buffer */, headers) {
 
   // If we can't handle the mimetype, convert to base64 string so that
   // it can serialize safely
-  return data.toString('base64');
+  return parsers.base64(data);
 }
 
 async function extractFileFromArchiveAttachment(attachment, desiredContent) {
@@ -346,7 +344,11 @@ async function extractFileFromAttachment(attachment, desiredContent) {
 
   // TODO string conversion not great here
   const fileContent = Buffer.from(attachment.data, 'base64');
-  const content = parseContent(fileContent, attachment.headers);
+  const content = parseContent(
+    fileContent,
+    attachment.headers,
+    desiredContent.parseAs,
+  );
 
   return {
     filename: attachment.filename,

@@ -279,4 +279,19 @@ describe('getContentsFromMessages', () => {
 
     expect(data[0].json.content).to.eql({ x: 1 });
   });
+
+  it('should force an attachment to plaintext', async () => {
+    const { data } = await getContentsFromMessages({
+      contents: [
+        {
+          type: 'file',
+          name: 'json',
+          file: /.json$/,
+          parseAs: 'text',
+        },
+      ],
+    })(state);
+
+    expect(data[0].json.content).to.eql('{ "x": 1 }');
+  });
 });

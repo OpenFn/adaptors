@@ -56,13 +56,9 @@ const mySubject = {
 
 #### Attachment: basic file
 
-Extract content from a file attachment. JSON files will be parsed into JSON,
-XLSX files will be converted to a simple JSON format (arrays of arrays, no
-headers), and XML and text files will be parsed into plain text. Other files
-will be returned as base64 encoded strings.
+Extract content from a file attachment.
 
-`file`: Identify the specific file inside the archive by providing its name as a
-string or using a regular expression to matching a pattern.
+Set `file` to a string or regex to match the attached file name.
 
 ```js
 const myMetadata = {
@@ -72,11 +68,23 @@ const myMetadata = {
 };
 ```
 
+Some file types will be parsed automatically:
+
+- JSON files will be parsed into JSON
+- XLSX and XLS files will be converted to a simple JSON format (arrays of
+  arrays, no headers)
+- XML and text files will be parsed into plain text.
+
+Other files will be returned as base64 encoded strings.
+
+You can force attachments to be parsed into `xlsx`, `text`, `json` or `base64`
+formats by setting `parseAs`.
+
 ```js
 const myMetadata = {
   type: 'file',
-  file: 'summary.txt',
-  maxLength: 500,
+  file: 'summary.text',
+  parseAs: 'json',
 };
 ```
 
