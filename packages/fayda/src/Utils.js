@@ -50,7 +50,7 @@ export const decodeClaims = jwt => {
 
 // Exchanges an authorization code for tokens by POSTing a signed
 // client assertion to eSignet's token endpoint.
-export const getToken = async (configuration, code) => {
+export const getToken = async (configuration, code, options = {}) => {
   const { clientId, redirectUri, tokenEndpoint } = configuration;
 
   const clientAssertion = generateClientAssertion(configuration);
@@ -63,13 +63,19 @@ export const getToken = async (configuration, code) => {
   body.append('client_assertion_type', CLIENT_ASSERTION_TYPE);
   body.append('client_assertion', clientAssertion);
 
-  const options = {
+  const requestOptions = {
+    ...options,
     body: body.toString(),
-    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded',
+      ...options.headers,
+    },
     parseAs: 'json',
   };
 
-  return commonRequest('POST', tokenEndpoint, options).then(logResponse);
+  return commonRequest('POST', tokenEndpoint, requestOptions).then(
+    logResponse
+  );
 };
 
 // Attaches the configured access_token to a request against an
