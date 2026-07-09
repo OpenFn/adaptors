@@ -65,8 +65,30 @@ export function post(path, data) {
 }
 
 /**
- * Create a birth record
+ * Make a general HTTP request to the BDR API
  * @example
+ * request("POST", "/api/v1/UserManagementService/integrations/utility", {
+ *   type: "regions",
+ * });
+ * @function
+ * @public
+ * @param {string} method - HTTP method to use
+ * @param {string} path - Path to resource
+ * @param {object} [body] - Object which will be attached to the request body
+ * @param {object} [options] - Optional request options, e.g. query and headers
+ * @returns {Operation}
+ * @state {HttpState}
+ */
+export function request(method, path, body, options = {}) {
+  return util.request(path, { method, data: body, ...options });
+}
+
+/**
+ * Create a birth record. `child_file_birth_evidence_data` takes an array of
+ * base64-encoded data URIs (truncated in the example below).
+ * @example <caption>Create a birth record from data on state</caption>
+ * createBirthRecord($.data);
+ * @example <caption>Create a birth record with a full payload</caption>
  * createBirthRecord({
  *   status: "COMPLETE",
  *   region_id: 4348,
@@ -130,7 +152,7 @@ export function post(path, data) {
  *   father_religion: "CHRISTIAN",
  *   doubtful_paternity: 0,
  *   child_file_birth_evidence_name: ["Physics.jpg"],
- *   child_file_birth_evidence_data: ["data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAA8AAD/4QOJaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzEzOCA3OS4xNTk4MjQsIDIwMTYvMDkvMTQtMDE6MDk6MDEgICAgICAgICI="]
+ *   child_file_birth_evidence_data: ["data:image/jpeg;base64,/9j/4QAYRXhpZg..."]
  * })
  * @function
  * @public

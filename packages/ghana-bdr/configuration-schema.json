@@ -19,6 +19,6 @@
     }
   },
   "type": "object",
-  "additionalProperties": false,
+  "additionalProperties": true,
   "required": ["baseUrl", "token"]
 }

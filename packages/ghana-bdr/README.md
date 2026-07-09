@@ -17,8 +17,10 @@ View the
 [configuration-schema](https://docs.openfn.org/adaptors/packages/ghana-bdr-configuration-schema/)
 for required and optional `configuration` properties.
 
-The adaptor now uses token-based authentication:
-- Provide your base URL in `configuration.baseUrl` (e.g., https://bdrbeta.npontu.com)
+The adaptor uses token-based authentication:
+
+- Provide your base URL in `configuration.baseUrl` (e.g.,
+  https://bdrbeta.npontu.com)
 - Provide your long-lived API token in `configuration.token`
 
 ## Development

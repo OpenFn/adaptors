@@ -4,7 +4,9 @@ import { createBirthRecord, get } from '../src/Adaptor.js';
 import { testBirthData } from './fixtures.js';
 
 // ─── Configuration ───────────────────────────────────────────────
-// Integration tests hit the real BDR beta server.
+// Integration tests hit the real BDR beta server. WARNING: every run
+// CREATES REAL BIRTH RECORDS on the target server (the get test creates
+// one as setup), so only ever point these at a test/beta environment.
 // Replace the token below with valid beta credentials before running.
 // Run with: pnpm test:integration
 // ─────────────────────────────────────────────────────────────────

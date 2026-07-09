@@ -947,9 +947,6 @@ importers:
       '@openfn/language-common':
         specifier: workspace:*
         version: link:../common
-      ajv:
-        specifier: ^8.20.0
-        version: 8.20.0
     devDependencies:
       assertion-error:
         specifier: 2.0.0
