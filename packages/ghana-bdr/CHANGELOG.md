@@ -1,11 +1,26 @@
 # @openfn/language-ghana-bdr
 
+## 1.0.0 - 09 July 2026
+
+### Major Changes
+
+- Rewrite the adaptor for the new Ghana BDR API
+  (https://documenter.getpostman.com/view/26097188/2sB2qZE2N9).
+
+  Breaking changes:
+
+  - `sendBirthNotification()` has been removed. Use `createBirthRecord()`
+    instead (note that the new API uses a different payload shape).
+  - Authentication has changed: `configuration` now requires `baseUrl` and a
+    long-lived API `token` instead of `username` and `password`. Short-lived
+    access tokens are fetched and refreshed automatically.
+
 ## 0.2.2
 
 ### Patch Changes
 
 - c5f8728: Update undici dependency
-- Updated dependencies [c5f8728]
+- Updated dependencies \[c5f8728]
   - @openfn/language-common@3.3.4
 
 ## 0.2.1 - 27 May 2026
