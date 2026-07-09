@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "clientId": {
+      "title": "Client Id",
+      "type": "string",
+      "minLength": 1,
+      "description": "The OAuth client_id registered with eSignet for your instance (sandbox or production)",
+      "examples": ["the-client-id-issued-by-esignet"]
+    },
+    "privateKey": {
+      "title": "Private Key",
+      "type": "string",
+      "minLength": 1,
+      "writeOnly": true,
+      "description": "Base64-encoded JWK private key used to sign the client assertion (private_key_jwt) presented to eSignet's token endpoint",
+      "examples": ["base64-encoded-jwk-private-key"]
+    },
+    "redirectUri": {
+      "title": "Redirect URI",
+      "type": "string",
+      "format": "uri",
+      "minLength": 1,
+      "description": "The redirect_uri registered with eSignet that the authorization code is sent back to",
+      "examples": ["https://yourapp.example.com/callback"]
+    },
+    "authorizationEndpoint": {
+      "title": "Authorization Endpoint",
+      "type": "string",
+      "format": "uri",
+      "minLength": 1,
+      "description": "eSignet's OIDC authorization endpoint, issued via the developer/partner portal",
+      "examples": ["https://esignet.example.com/authorize"]
+    },
+    "tokenEndpoint": {
+      "title": "Token Endpoint",
+      "type": "string",
+      "format": "uri",
+      "minLength": 1,
+      "description": "eSignet's OIDC token endpoint, issued via the developer/partner portal",
+      "examples": ["https://esignet.example.com/oidc/token"]
+    },
+    "userInfoEndpoint": {
+      "title": "UserInfo Endpoint",
+      "type": "string",
+      "format": "uri",
+      "minLength": 1,
+      "description": "eSignet's OIDC userinfo endpoint, issued via the developer/partner portal",
+      "examples": ["https://esignet.example.com/oidc/userinfo"]
+    },
+    "access_token": {
+      "title": "Access Token",
+      "type": "string",
+      "writeOnly": true,
+      "description": "An access token obtained from a previous getToken call, for jobs that only need to call getUserInfo",
+      "examples": ["the-access-token-returned-by-getToken"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "clientId",
+    "privateKey",
+    "redirectUri",
+    "authorizationEndpoint",
+    "tokenEndpoint",
+    "userInfoEndpoint"
+  ]
+}
