@@ -115,16 +115,19 @@
       "valid": true
     },
     {
-      "name": "sendBirthNotification",
+      "name": "request",
       "params": [
-        "data"
+        "method",
+        "path",
+        "body",
+        "options"
       ],
       "docs": {
-        "description": "Generate a birth certificate",
+        "description": "Make a general HTTP request to the BDR API",
         "tags": [
           {
             "title": "example",
-            "description": "sendBirthNotification({\n  registry_code: 'abc123',\n  child: {},\n  mother: {},\n  father: {},\n})"
+            "description": "request(\"POST\", \"/api/v1/UserManagementService/integrations/utility\", {\n  type: \"regions\",\n});"
           },
           {
             "title": "function",
@@ -138,7 +141,93 @@
           },
           {
             "title": "param",
-            "description": "body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).",
+            "description": "HTTP method to use",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "method"
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Object which will be attached to the request body",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "body"
+          },
+          {
+            "title": "param",
+            "description": "Optional request options, e.g. query and headers",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "createBirthRecord",
+      "params": [
+        "data"
+      ],
+      "docs": {
+        "description": "Create a birth record. `child_file_birth_evidence_data` takes an array of\nbase64-encoded data URIs (truncated in the example below).",
+        "tags": [
+          {
+            "title": "example",
+            "description": "createBirthRecord($.data);",
+            "caption": "Create a birth record from data on state"
+          },
+          {
+            "title": "example",
+            "description": "createBirthRecord({\n  status: \"COMPLETE\",\n  region_id: 4348,\n  district_id: 338,\n  type_of_birth: \"SINGLETON\",\n  informant_type: \"MOTHER\",\n  informant_national_id_type: \"GHANA CARD\",\n  informant_national_id_number: \"34454344\",\n  informant_first_name: \"David\",\n  informant_middle_name: \"\",\n  informant_last_name: \"Godson\",\n  informant_region_id: 4348,\n  informant_district_id: 338,\n  informant_residential_address: \"Dansoman\",\n  informant_phone_number: \"2335648498309\",\n  child_first_name: \"Francis\",\n  child_middle_name: \"\",\n  child_last_name: \"Benzoic\",\n  child_gender: \"MALE\",\n  child_dob: \"2025-06-26\",\n  child_place_of_birth: \"HOSPITAL\",\n  child_birth_attendant: \"MID-WIFE\",\n  child_birth_institution: \"Ludra Hospital\",\n  child_town: \"Ashaiman\",\n  child_house_no: \"H/F286\",\n  child_street_name: \"Ashaiman Newtown\",\n  mother_national_id_type: \"GHANA CARD\",\n  mother_national_id_number: \"32432423433\",\n  mother_phone_number: \"2335456823893\",\n  mother_first_name: \"Adwoa\",\n  mother_middle_name: \"\",\n  mother_last_name: \"Godson\",\n  mother_age: 30,\n  mother_marital_status: \"MARRIED\",\n  mother_previous_birth_no: 50,\n  mother_occupation: \"teacher\",\n  mother_educational_level: \"DIPLOMA\",\n  mother_region_id: 4348,\n  mother_district_id: 338,\n  mother_town: \"Accra\",\n  mother_religion: \"CHRISTIAN\",\n  mother_residence: \"Tamale\",\n  mother_nationality: \"GHANA\",\n  doubtful_maternity: 0,\n  father_national_id_type: \"GHANA CARD\",\n  father_national_id_number: \"32432423433\",\n  father_phone_number: \"233548791223\",\n  father_first_name: \"David\",\n  father_middle_name: \"\",\n  father_last_name: \"Godson\",\n  father_age: 33,\n  father_marital_status: \"MARRIED\",\n  father_children_no: 5,\n  father_occupation: \"Doctor\",\n  father_educational_level: \"DIPLOMA\",\n  father_region_id: 4348,\n  father_district_id: 338,\n  father_town: \"Tema\",\n  father_residence: \"Tema\",\n  father_nationality: \"GHANA\",\n  father_religion: \"CHRISTIAN\",\n  doubtful_paternity: 0,\n  child_file_birth_evidence_name: [\"Physics.jpg\"],\n  child_file_birth_evidence_data: [\"data:image/jpeg;base64,/9j/4QAYRXhpZg...\"]\n})",
+            "caption": "Create a birth record with a full payload"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "body data to append to the request. JSON will be converted to a string.",
             "type": {
               "type": "NameExpression",
               "name": "object"

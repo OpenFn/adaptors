@@ -10,6 +10,7 @@ communicate with external systems. These adaptors are used by
 - [Quick Start](#quick-start)
   - [Prerequisites](#prerequisites)
   - [Setup](#setup)
+  - [Alternative: Using nvm instead of asdf](#alternative-using-nvm-instead-of-asdf)
 - [Using Adaptors](#using-adaptors)
   - [With OpenFn CLI](#with-openfn-cli)
   - [With OpenFn Lightning](#with-openfn-lightning)
