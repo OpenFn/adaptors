@@ -2,4 +2,6 @@
 
 ## 1.0.0
 
-Initial release.
+Implement the eSignet OIDC `authorize` -> `token` -> `userinfo` flow
+(`getAuthorizationUrl`, `getToken`, `getUserInfo`) using a JWK-signed
+client assertion.
