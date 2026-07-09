@@ -19,6 +19,27 @@ The configuration schema uses
 [JSON Schema draft-07](https://json-schema.org/draft-07/json-schema-release-notes).
 Run `pnpm validate:schemas` from the adaptors repo root after editing it.
 
+Authentication is OAuth 2.0 / OIDC via eSignet, using a JWK-signed
+client assertion (`private_key_jwt`) rather than a client secret.
+`configuration.privateKey` is the base64-encoded JWK private key
+issued alongside your `clientId` when you register with eSignet.
+
+### Example: the authorize -> token -> userinfo sequence
+
+```js
+// Step 1: build the authorization URL, and redirect the user to it.
+// Consenting and logging in happens outside of OpenFn.
+getAuthorizationUrl();
+
+// Step 2: once the user is redirected back to your redirectUri with a
+// `code` query param, exchange it for tokens. This also stashes
+// access_token on state.configuration for the next step.
+getToken(state => new URL(state.data.callbackUrl).searchParams.get('code'));
+
+// Step 3: fetch and decode the user's verified identity claims.
+getUserInfo();
+```
+
 ## Development
 
 Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
