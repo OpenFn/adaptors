@@ -14,8 +14,9 @@
   },
   "scripts": {
     "build": "pnpm clean && build-adaptor ghana-bdr",
-    "test": "mocha --experimental-specifier-resolution=node --no-warnings",
-    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings",
+    "test": "mocha --experimental-specifier-resolution=node --no-warnings --ignore 'test/integration.test.js'",
+    "test:watch": "mocha -w --experimental-specifier-resolution=node --no-warnings --ignore 'test/integration.test.js'",
+    "test:integration": "mocha --experimental-specifier-resolution=node --no-warnings test/integration.test.js",
     "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist",
     "lint": "eslint src"

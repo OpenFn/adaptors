@@ -1,8 +1,8 @@
-import { MockAgent } from 'undici';
-import { validateRequestBody } from './Utils.js';
-
-// Sample request body for the new API format (flattened structure)
-const sampleRequestBody = {
+/**
+ * Shared test fixture for birth record data.
+ * Used by unit tests and mock to avoid drifting copies.
+ */
+export const testBirthData = {
   status: 'COMPLETE',
   region_id: 1,
   district_id: 1,
@@ -65,11 +65,16 @@ const sampleRequestBody = {
   father_religion: 'CHRISTIANITY',
   doubtful_paternity: 0,
   child_file_birth_evidence_name: ['Physics.jpg'],
-  child_file_birth_evidence_data: ['data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAA8AAD/4QOJaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzEzOCA3OS4xNTk4MjQsIDIwMTYvMDkvMTQtMDE6MDk6MDEgICAgICAgICI=']
+  child_file_birth_evidence_data: [
+    'data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAA8AAD/4QOJaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzEzOCA3OS4xNTk4MjQsIDIwMTYvMDkvMTQtMDE6MDk6MDEgICAgICAgICI=',
+  ],
 };
 
-// Sample response from the birth creation endpoint
-const birthCreationResponse = {
+/**
+ * Mock response for birth creation endpoint.
+ * BDR returns single-encoded JSON (standard JSON object).
+ */
+export const birthCreationResponse = {
   api_code: 200,
   api_status: 'success',
   api_message: 'Your action has been processed.',
@@ -92,7 +97,7 @@ const birthCreationResponse = {
     child_middle_name: null,
     child_last_name: 'BENZOIC',
     child_gender: 'MALE',
-    child_dob: '2025-06-26',
+    child_dob: '2026-07-01',
     child_national_id_type: null,
     child_national_id_number: null,
     child_place_of_birth: 'HOSPITAL',
@@ -133,120 +138,32 @@ const birthCreationResponse = {
     father_marital_status: 'MARRIED',
     father_religion: 'CHRISTIANITY',
     father_occupation: 'DOCTOR',
-    father_nationality: "GHANA",
+    father_nationality: 'GHANA',
     father_children_no: 5,
     doubtful_paternity: false,
     region_id: 1,
     district_id: 1,
     registry_id: 1,
-    evidence_content: [
-      'Physics.jpg'
-    ],
+    evidence_content: ['Physics.jpg'],
     evidence_url: [
-      'https://bdrbeta.npontu.com/api/v1/EarlyBirthService/storage/third-party-integrations/early-birth-evidences/FRANCIS-BENZOIC-18/file/Physics.jpg'
+      'https://bdr.npontu.com/api/v1/EarlyBirthService/storage/third-party-integrations/early-birth-evidences/FRANCIS-BENZOIC-18/file/Physics.jpg',
     ],
     created_at: '2026-01-27 12:14:35',
     updated_at: '2026-01-27 12:14:36',
-    completed_at: null
-  }
+    completed_at: null,
+  },
 };
 
-// Sample token response
-const tokenResponse = {
+/**
+ * Mock token response.
+ */
+export const tokenResponse = {
   api_code: 200,
   api_status: 'success',
   api_message: 'Token issued successfully',
   api_data: {
-    access_token: 'sample-access-token-12345',
-    refresh_token: 'sample-refresh-token-12345',
+    access_token: 'mock-access-token-abc123',
     token_type: 'Bearer',
-    expires_in: 3600
-  }
+    expires_in: 3600,
+  },
 };
-
-// Mock response headers used across all endpoints
-const mockHeaders = { 'Content-Type': 'application/json' };
-
-// This creates a mock bdr server
-// It should present the same rest API as BDR-MOH-GHS
-export function createServer(url = 'https://bdrbeta.npontu.com') {
-  const agent = new MockAgent();
-  agent.disableNetConnect();
-
-  const mockPool = agent.get(url);
-
-  // Note: BDR data endpoints return double-encoded JSON (JSON string inside JSON string)
-  // The token/refresh endpoints return plain JSON
-
-  // Mock the token endpoint
-  mockPool
-    .intercept({
-      method: 'POST',
-      path: /\/api\/v1\/UserManagementService\/integrations\/auth\/token/,
-    })
-    .reply(200, tokenResponse, { headers: mockHeaders })
-    .persist();
-
-  // Mock the token refresh endpoint
-  mockPool
-    .intercept({
-      method: 'POST',
-      path: /\/api\/v1\/UserManagementService\/integrations\/auth\/refresh/,
-    })
-    .reply(200, tokenResponse, { headers: mockHeaders })
-    .persist();
-
-  // Mock the birth creation endpoint (double-encoded JSON)
-  mockPool
-    .intercept({
-      method: 'POST',
-      path: /\/api\/v1\/UserManagementService\/integrations\/registrations\/birth(\/.*)?/,
-    })
-    .reply(200, birthCreationResponse, { headers: mockHeaders })
-    .persist();
-
-  // Mock the birth retrieval endpoint (GET, double-encoded JSON)
-  mockPool
-    .intercept({
-      method: 'GET',
-      path: /\/api\/v1\/UserManagementService\/integrations\/registrations\/birth\/.+/
-    })
-    .reply(200, birthCreationResponse, { headers: mockHeaders })
-    .persist();
-
-  // Mock the utility endpoint
-  const utilityResponse = {
-    ...tokenResponse,
-    api_data: [
-      { id: 1, country_id: 1, name: 'Ashanti', code: '05' },
-      { id: 2, country_id: 1, name: 'Bono', code: 'BO' }
-    ]
-  };
-  mockPool
-    .intercept({
-      method: 'POST',
-      path: /\/api\/v1\/UserManagementService\/integrations\/utility/
-    })
-    .reply(200, utilityResponse, { headers: mockHeaders })
-    .persist();
-
-  return {
-    agent,
-
-    request: ({ method, path, data, ...rest }) => {
-      const opts = {
-        method,
-        path,
-        origin: url,
-        headers: {
-          ...rest.headers,
-        },
-      };
-
-      if (data) {
-        opts.body = JSON.stringify(data);
-      }
-      return mockPool.request(opts);
-    },
-  };
-}

@@ -22,6 +22,10 @@ export const setMockClient = mockClient => {
   client = mockClient;
 };
 
+export const resetClient = () => {
+  client = null;
+};
+
 /**
  * Get or refresh access token using the long-lived api_token (configuration.token).
  * Returns an object with { accessToken, expiresAt } and updates state.auth.
@@ -57,22 +61,35 @@ const getAccessToken = async state => {
 
   if (credentials.statusCode >= 400) {
     const errorBody = await credentials.body.text();
-    console.log(`[BDR DEBUG] Auth → ${credentials.statusCode}:`, errorBody);
     throwError('BDR_AUTH_ERROR', {
       statusCode: credentials.statusCode,
+      description: credentials.statusText || `HTTP ${credentials.statusCode}`,
       body: errorBody,
     });
   }
 
-  // Token endpoint returns plain JSON (not double-encoded like data endpoints)
+  // Token endpoint returns plain JSON
   const data = await credentials.body.json();
-  const { access_token, expires_in, refresh_token } = data.api_data || {};
+  const apiData = data.api_data || {};
+  const { access_token, expires_in } = apiData;
+
+  if (!access_token) {
+    throwError('BDR_AUTH_ERROR', {
+      description: 'Malformed token response: missing access_token. The API returned a 200 but the response did not contain a valid token.',
+    });
+  }
+
+  if (!expires_in || typeof expires_in !== 'number') {
+    throwError('BDR_AUTH_ERROR', {
+      description: 'Malformed token response: missing or invalid expires_in.',
+    });
+  }
+
   const expiresAt = Date.now() + expires_in * 1000 - 30000; // 30 seconds buffer
 
   return {
     accessToken: access_token,
     expiresAt,
-    refreshToken: refresh_token, // store for potential refresh endpoint use
   };
 };
 
@@ -85,8 +102,8 @@ const getAccessToken = async state => {
 export const prepareNextState = async (state, response) => {
   const { body, ...responseWithoutBody } = response;
 
-  // Please note that the BDR system responds with a valid JSON response, but in
-  // string format. We read the raw text and JSON.parse it here.
+  // BDR data endpoints return standard JSON (single-encoded).
+  // Read the raw text and parse once.
   const bodyText = await body.text();
   const resultAsJson = JSON.parse(bodyText);
 
@@ -158,19 +175,12 @@ export function request(path, options) {
           ...otherOptions,
         };
 
-        // Log payload for debugging
-        if (data) {
-          console.log(`[BDR DEBUG] ${method} ${safePath} body:`, JSON.stringify(data, null, 2));
-        }
-
         const response = await client.request(args);
         if (response.statusCode >= 400) {
           const errorBody = await response.body.text();
-          // Log for debugging before throwing
-          console.log(`[BDR DEBUG] ${method} ${safePath} → ${response.statusCode}:`, errorBody);
           throwError('BDR_ERROR', {
             code: response.statusCode,
-            description: response.statusMessage,
+            description: response.statusText || `HTTP ${response.statusCode}`,
             body: errorBody,
           });
         }
@@ -179,7 +189,8 @@ export function request(path, options) {
         const nextState = await prepareNextState(state, response);
         return nextState;
       } catch (err) {
-        // If we get a 401 and we haven't retried yet, clear auth and retry
+        // On 401, clear auth cache and retry once (token may have expired)
+        // throwError sets err.code to the numeric status when statusCode is passed
         if (
           attempt < maxAttempts - 1 &&
           err.code === 401
@@ -194,8 +205,3 @@ export function request(path, options) {
     }
   };
 }
-export const validateRequestBody = (request, sample) => {
-  // Simple implementation for now - always returns true
-  // TODO: Implement proper validation based on sample
-  return true;
-};
