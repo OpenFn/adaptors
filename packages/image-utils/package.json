@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-image-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "OpenFn image-utils adaptor",
   "type": "module",
   "exports": {
