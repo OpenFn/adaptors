@@ -1,6 +1,6 @@
 # @openfn/language-dhis2
 
-## 8.2.0
+## 8.2.0 - 30 June 2026
 
 ### Minor Changes
 
@@ -10,7 +10,7 @@
 ### Patch Changes
 
 - 99b50c3: Fix: DHIS2 schema will not require username/password when using a PAT
-- Updated dependencies [c5f8728]
+- Updated dependencies \[c5f8728]
   - @openfn/language-common@3.3.4
 
 ## 8.1.1 - 27 May 2026

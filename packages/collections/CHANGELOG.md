@@ -1,11 +1,11 @@
 # @openfn/language-collections
 
-## 0.9.3
+## 0.9.3 - 30 June 2026
 
 ### Patch Changes
 
 - c5f8728: Update undici dependency
-- Updated dependencies [c5f8728]
+- Updated dependencies \[c5f8728]
   - @openfn/language-common@3.3.4
 
 ## 0.9.2 - 27 May 2026
@@ -26,7 +26,7 @@
 
 ### Minor Changes
 
-- Add support for project_id on config
+- Add support for project\_id on config
 
 ## 0.8.6 - 14 April 2026
 

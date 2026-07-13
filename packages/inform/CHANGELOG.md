@@ -1,11 +1,11 @@
 # @openfn/language-inform
 
-## 1.3.2
+## 1.3.2 - 30 June 2026
 
 ### Patch Changes
 
 - c5f8728: Update undici dependency
-- Updated dependencies [c5f8728]
+- Updated dependencies \[c5f8728]
   - @openfn/language-common@3.3.4
 
 ## 1.3.1 - 27 May 2026

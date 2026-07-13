@@ -1,6 +1,6 @@
 # @openfn/language-gmail
 
-## 3.0.0
+## 3.0.0 - 08 July 2026
 
 ### Major Changes
 
@@ -58,12 +58,12 @@ const contents = [
 getContentsFromMessages({ query: $.query, contents });
 ```
 
-## 2.1.2
+## 2.1.2 - 30 June 2026
 
 ### Patch Changes
 
 - c5f8728: Update undici dependency
-- Updated dependencies [c5f8728]
+- Updated dependencies \[c5f8728]
   - @openfn/language-common@3.3.4
 
 ## 2.1.1 - 27 May 2026

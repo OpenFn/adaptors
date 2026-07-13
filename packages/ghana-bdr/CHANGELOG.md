@@ -15,7 +15,7 @@
     long-lived API `token` instead of `username` and `password`. Short-lived
     access tokens are fetched and refreshed automatically.
 
-## 0.2.2
+## 0.2.2 - 30 June 2026
 
 ### Patch Changes
 
