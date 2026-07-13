@@ -1,6 +1,6 @@
 # @openfn/language-fhir-eswatini
 
-## 0.8.0
+## 0.8.0 - 30 June 2026
 
 ### Minor Changes
 
@@ -8,7 +8,7 @@
 
 ### Patch Changes
 
-- Updated dependencies [c5f8728]
+- Updated dependencies \[c5f8728]
   - @openfn/language-common@3.3.4
   - @openfn/language-fhir-4@0.5.5
 

@@ -1,6 +1,6 @@
 # @openfn/language-googlesheets
 
-## 5.0.0
+## 5.0.0 - 09 July 2026
 
 ### Major Changes
 
@@ -43,11 +43,11 @@
   Callback parameter has been removed from `appendValues()`,
   `batchUpdateValues()`, and `getValues()` in favor of a promise-based API.
 
-## 4.1.2
+## 4.1.2 - 30 June 2026
 
 ### Patch Changes
 
-- Updated dependencies [c5f8728]
+- Updated dependencies \[c5f8728]
   - @openfn/language-common@3.3.4
 
 ## 4.1.1 - 27 May 2026
@@ -382,7 +382,7 @@
 ### Patch Changes
 
 - aad9549: Ensure that standard OAuth2 credentials with snake-cased
-  "access_token" keys can be used for OAuth2-reliant adaptors
+  "access\_token" keys can be used for OAuth2-reliant adaptors
 - Updated dependencies \[aad9549]
   - @openfn/language-common@1.10.0
 

@@ -1,11 +1,11 @@
 # @openfn/language-fhir-ndr-et
 
-## 0.2.2
+## 0.2.2 - 30 June 2026
 
 ### Patch Changes
 
 - c5f8728: Update undici dependency
-- Updated dependencies [c5f8728]
+- Updated dependencies \[c5f8728]
   - @openfn/language-common@3.3.4
   - @openfn/language-fhir@5.1.2
 
