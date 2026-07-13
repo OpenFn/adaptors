@@ -3,41 +3,29 @@ import {
   request as commonRequest,
   logResponse,
 } from '@openfn/language-common/util';
+import { importJWK, SignJWT, decodeJwt } from 'jose';
 import crypto from 'node:crypto';
 
 const CLIENT_ASSERTION_TYPE =
   'urn:ietf:params:oauth:client-assertion-type:jwt-bearer';
 
-const base64url = input => Buffer.from(input).toString('base64url');
-
-// Sign a private_key_jwt client assertion (RFC 7523) for the token
-// endpoint. configuration.privateKey is a base64-encoded JWK.
-export const generateClientAssertion = configuration => {
+// Sign a private_key_jwt client assertion for the token endpoint, as in
+// the VeriFayda reference app. configuration.privateKey is a
+// base64-encoded JWK.
+export const generateClientAssertion = async configuration => {
   const { clientId, privateKey, tokenEndpoint } = configuration;
 
-  const jwk = JSON.parse(Buffer.from(privateKey, 'base64').toString('utf8'));
-  const key = crypto.createPrivateKey({ key: jwk, format: 'jwk' });
-
-  const now = Math.floor(Date.now() / 1000);
   const header = { alg: 'RS256', typ: 'JWT' };
-  const claims = {
-    iss: clientId,
-    sub: clientId,
-    aud: tokenEndpoint,
-    iat: now,
-    exp: now + 5 * 60,
-    jti: crypto.randomUUID(),
-  };
+  const payload = { iss: clientId, sub: clientId, aud: tokenEndpoint };
 
-  const signingInput = `${base64url(JSON.stringify(header))}.${base64url(
-    JSON.stringify(claims),
-  )}`;
-  const signature = crypto
-    .createSign('RSA-SHA256')
-    .update(signingInput)
+  const jwk = JSON.parse(Buffer.from(privateKey, 'base64').toString());
+  const key = await importJWK(jwk, 'RS256');
+
+  return new SignJWT(payload)
+    .setProtectedHeader(header)
+    .setIssuedAt()
+    .setExpirationTime('2h')
     .sign(key);
-
-  return `${signingInput}.${base64url(signature)}`;
 };
 
 export const generateCodeVerifier = () =>
@@ -46,15 +34,11 @@ export const generateCodeVerifier = () =>
 export const generateCodeChallenge = verifier =>
   crypto.createHash('sha256').update(verifier).digest('base64url');
 
-// Decode a JWT payload, or return the body as-is if userinfo is
-// unsigned (plain JSON rather than a JWS).
+// Decode the claims from a signed JWT, or return the body as-is if the
+// userinfo response is unsigned (plain JSON rather than a JWS).
 export const decodeClaims = token => {
   const trimmed = token.trim();
-  if (trimmed.startsWith('{')) {
-    return JSON.parse(trimmed);
-  }
-  const [, payload] = trimmed.split('.');
-  return JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
+  return trimmed.startsWith('{') ? JSON.parse(trimmed) : decodeJwt(trimmed);
 };
 
 // Exchange an authorization code for tokens using the signed client
@@ -69,7 +53,7 @@ export const getToken = async (configuration, code, options = {}) => {
   body.append('client_id', clientId);
   body.append('redirect_uri', redirectUri);
   body.append('client_assertion_type', CLIENT_ASSERTION_TYPE);
-  body.append('client_assertion', generateClientAssertion(configuration));
+  body.append('client_assertion', await generateClientAssertion(configuration));
   if (codeVerifier) {
     body.append('code_verifier', codeVerifier);
   }
