@@ -6,7 +6,7 @@
         "options"
       ],
       "docs": {
-        "description": "Build the eSignet authorization URL that a user must visit to\nauthenticate and consent. This makes no network request: redirecting\nthe user and collecting their consent happens outside of OpenFn. The\nresulting `code` query param on your redirectUri is what you pass to\ngetToken.",
+        "description": "Build the eSignet authorization URL for a user to visit and consent.\nMakes no network request. Returns the URL and the PKCE `codeVerifier`\non state; capture the verifier to pass to `getToken`.",
         "tags": [
           {
             "title": "example",
@@ -47,7 +47,7 @@
           },
           {
             "title": "state",
-            "description": "{url}"
+            "description": "{AuthorizationUrlState}"
           }
         ]
       },
@@ -60,12 +60,12 @@
         "options"
       ],
       "docs": {
-        "description": "Exchange an authorization code for tokens at eSignet's token endpoint,\nauthenticating as the client with a signed JWK client assertion\n(private_key_jwt) rather than a shared secret. The returned\naccess_token is stashed on state.configuration so that a following\ngetUserInfo call can use it without it being passed explicitly.",
+        "description": "Exchange an authorization code for tokens, authenticating with a\nsigned JWK client assertion (private_key_jwt). The access token is\nsaved to state.configuration for a following getUserInfo call.",
         "tags": [
           {
             "title": "example",
-            "description": "getToken(state => state.data.code);",
-            "caption": "Exchange the code returned to your redirectUri for tokens"
+            "description": "getToken(state => state.data.code, { codeVerifier: state.data.codeVerifier });",
+            "caption": "Exchange the code and PKCE verifier for tokens"
           },
           {
             "title": "function",
@@ -88,10 +88,10 @@
           },
           {
             "title": "param",
-            "description": "Optional request options",
+            "description": "Optional `codeVerifier` (PKCE) and request options",
             "type": {
               "type": "NameExpression",
-              "name": "RequestOptions"
+              "name": "object"
             },
             "name": "options"
           },
@@ -118,7 +118,7 @@
         "options"
       ],
       "docs": {
-        "description": "Fetch verified identity claims from eSignet's userinfo endpoint. The\nresponse is a signed JWT (JWS); this decodes its claims without\nverifying the signature (JWKS-based verification is a future\naddition, not v1). Falls back to the access_token stored on\nstate.configuration by a prior getToken call if none is provided.",
+        "description": "Fetch and decode verified identity claims from the userinfo endpoint.\nFalls back to the access token saved by getToken if none is passed.",
         "tags": [
           {
             "title": "example",

@@ -4,7 +4,7 @@ import crypto from 'node:crypto';
 import * as util from './Utils.js';
 
 /**
- * State object returned by an HTTP-calling operation
+ * State returned by an HTTP-calling operation
  * @typedef {Object} HttpState
  * @property data - the parsed response body
  * @property response - the response from the HTTP server, including headers, statusCode, body, etc
@@ -21,22 +21,28 @@ import * as util from './Utils.js';
  */
 
 /**
- * Options provided to the authorization URL builder
+ * State returned by getAuthorizationUrl
+ * @typedef {Object} AuthorizationUrlState
+ * @property data.url - the authorization URL to redirect the user to
+ * @property data.codeVerifier - the PKCE code verifier to pass to getToken
+ **/
+
+/**
+ * Options for the authorization URL builder
  * @typedef {Object} AuthorizationUrlOptions
  * @public
- * @property {string} scope - OIDC scopes to request. Default: "openid profile"
- * @property {string} state - CSRF state value returned alongside the authorization code. Default: a random UUID
- * @property {string} nonce - OIDC nonce value, echoed back in the ID token. Default: a random UUID
+ * @property {string} scope - Space-separated OIDC scopes. Default: "openid profile"
+ * @property {string} state - Value returned alongside the code. Default: a random UUID
+ * @property {string} nonce - Value echoed back in the ID token. Default: a random UUID
  * @property {string} acrValues - Space-separated authentication context class references (eg. OTP, biometrics)
- * @property {object|string} claims - The OIDC `claims` parameter, requesting specific userinfo/id_token claims
+ * @property {object|string} claims - The OIDC `claims` parameter
+ * @property {string} codeVerifier - PKCE code verifier. Default: a fresh random verifier
  */
 
 /**
- * Build the eSignet authorization URL that a user must visit to
- * authenticate and consent. This makes no network request: redirecting
- * the user and collecting their consent happens outside of OpenFn. The
- * resulting `code` query param on your redirectUri is what you pass to
- * getToken.
+ * Build the eSignet authorization URL for a user to visit and consent.
+ * Makes no network request. Returns the URL and the PKCE `codeVerifier`
+ * on state; capture the verifier to pass to `getToken`.
  * @example <caption>Build an authorization URL with the default scope</caption>
  * getAuthorizationUrl();
  * @example <caption>Request OTP-based authentication and extra claims</caption>
@@ -48,7 +54,7 @@ import * as util from './Utils.js';
  * @public
  * @param {AuthorizationUrlOptions} options - Optional overrides for the authorization request
  * @returns {Operation}
- * @state {url}
+ * @state {AuthorizationUrlState}
  */
 export function getAuthorizationUrl(options = {}) {
   return state => {
@@ -63,6 +69,7 @@ export function getAuthorizationUrl(options = {}) {
       nonce = crypto.randomUUID(),
       acrValues,
       claims,
+      codeVerifier = util.generateCodeVerifier(),
     } = resolvedOptions;
 
     const params = new URLSearchParams({
@@ -72,6 +79,8 @@ export function getAuthorizationUrl(options = {}) {
       scope,
       state: authState,
       nonce,
+      code_challenge: util.generateCodeChallenge(codeVerifier),
+      code_challenge_method: 'S256',
     });
 
     if (acrValues) {
@@ -80,28 +89,26 @@ export function getAuthorizationUrl(options = {}) {
     if (claims) {
       params.set(
         'claims',
-        typeof claims === 'string' ? claims : JSON.stringify(claims)
+        typeof claims === 'string' ? claims : JSON.stringify(claims),
       );
     }
 
     const url = `${authorizationEndpoint}?${params.toString()}`;
 
-    return composeNextState(state, { url });
+    return composeNextState(state, { url, codeVerifier });
   };
 }
 
 /**
- * Exchange an authorization code for tokens at eSignet's token endpoint,
- * authenticating as the client with a signed JWK client assertion
- * (private_key_jwt) rather than a shared secret. The returned
- * access_token is stashed on state.configuration so that a following
- * getUserInfo call can use it without it being passed explicitly.
- * @example <caption>Exchange the code returned to your redirectUri for tokens</caption>
- * getToken(state => state.data.code);
+ * Exchange an authorization code for tokens, authenticating with a
+ * signed JWK client assertion (private_key_jwt). The access token is
+ * saved to state.configuration for a following getUserInfo call.
+ * @example <caption>Exchange the code and PKCE verifier for tokens</caption>
+ * getToken(state => state.data.code, { codeVerifier: state.data.codeVerifier });
  * @function
  * @public
  * @param {string} code - The authorization code returned to redirectUri
- * @param {RequestOptions} options - Optional request options
+ * @param {object} options - Optional `codeVerifier` (PKCE) and request options
  * @returns {Operation}
  * @state {HttpState}
  */
@@ -110,13 +117,13 @@ export function getToken(code, options = {}) {
     const [resolvedCode, resolvedOptions] = expandReferences(
       state,
       code,
-      options
+      options,
     );
 
     const response = await util.getToken(
       state.configuration,
       resolvedCode,
-      resolvedOptions
+      resolvedOptions,
     );
 
     const nextState = util.prepareNextState(state, response);
@@ -132,11 +139,8 @@ export function getToken(code, options = {}) {
 }
 
 /**
- * Fetch verified identity claims from eSignet's userinfo endpoint. The
- * response is a signed JWT (JWS); this decodes its claims without
- * verifying the signature (JWKS-based verification is a future
- * addition, not v1). Falls back to the access_token stored on
- * state.configuration by a prior getToken call if none is provided.
+ * Fetch and decode verified identity claims from the userinfo endpoint.
+ * Falls back to the access token saved by getToken if none is passed.
  * @example <caption>Fetch claims using the token from a prior getToken call</caption>
  * getUserInfo();
  * @example <caption>Fetch claims with an explicit access token</caption>
@@ -153,7 +157,7 @@ export function getUserInfo(accessToken, options = {}) {
     const [resolvedAccessToken, resolvedOptions] = expandReferences(
       state,
       accessToken,
-      options
+      options,
     );
 
     const token = resolvedAccessToken || state.configuration.access_token;
@@ -163,12 +167,10 @@ export function getUserInfo(accessToken, options = {}) {
       { ...state.configuration, access_token: token },
       'GET',
       userInfoEndpoint,
-      { ...resolvedOptions, parseAs: 'text' }
+      { ...resolvedOptions, parseAs: 'text' },
     );
 
-    const claims = util.decodeClaims(response.body);
-
-    return composeNextState(state, claims);
+    return composeNextState(state, util.decodeClaims(response.body));
   };
 }
 

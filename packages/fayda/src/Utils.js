@@ -10,16 +10,15 @@ const CLIENT_ASSERTION_TYPE =
 
 const base64url = input => Buffer.from(input).toString('base64url');
 
-// Signs a private_key_jwt client assertion for eSignet's token endpoint,
-// per RFC 7523. configuration.privateKey is a base64-encoded JWK.
+// Sign a private_key_jwt client assertion (RFC 7523) for the token
+// endpoint. configuration.privateKey is a base64-encoded JWK.
 export const generateClientAssertion = configuration => {
   const { clientId, privateKey, tokenEndpoint } = configuration;
 
   const jwk = JSON.parse(Buffer.from(privateKey, 'base64').toString('utf8'));
-  const keyObject = crypto.createPrivateKey({ key: jwk, format: 'jwk' });
+  const key = crypto.createPrivateKey({ key: jwk, format: 'jwk' });
 
   const now = Math.floor(Date.now() / 1000);
-
   const header = { alg: 'RS256', typ: 'JWT' };
   const claims = {
     iss: clientId,
@@ -33,27 +32,36 @@ export const generateClientAssertion = configuration => {
   const signingInput = `${base64url(JSON.stringify(header))}.${base64url(
     JSON.stringify(claims),
   )}`;
-
   const signature = crypto
     .createSign('RSA-SHA256')
     .update(signingInput)
-    .sign(keyObject);
+    .sign(key);
 
   return `${signingInput}.${base64url(signature)}`;
 };
 
-// Decodes the claims out of a JWT without verifying its signature.
-export const decodeClaims = jwt => {
-  const [, payload] = jwt.split('.');
+export const generateCodeVerifier = () =>
+  crypto.randomBytes(32).toString('base64url');
+
+export const generateCodeChallenge = verifier =>
+  crypto.createHash('sha256').update(verifier).digest('base64url');
+
+// Decode a JWT payload, or return the body as-is if userinfo is
+// unsigned (plain JSON rather than a JWS).
+export const decodeClaims = token => {
+  const trimmed = token.trim();
+  if (trimmed.startsWith('{')) {
+    return JSON.parse(trimmed);
+  }
+  const [, payload] = trimmed.split('.');
   return JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
 };
 
-// Exchanges an authorization code for tokens by POSTing a signed
-// client assertion to eSignet's token endpoint.
+// Exchange an authorization code for tokens using the signed client
+// assertion (and a PKCE code_verifier, if one was used).
 export const getToken = async (configuration, code, options = {}) => {
   const { clientId, redirectUri, tokenEndpoint } = configuration;
-
-  const clientAssertion = generateClientAssertion(configuration);
+  const { codeVerifier, ...requestOptions } = options;
 
   const body = new URLSearchParams();
   body.append('grant_type', 'authorization_code');
@@ -61,36 +69,34 @@ export const getToken = async (configuration, code, options = {}) => {
   body.append('client_id', clientId);
   body.append('redirect_uri', redirectUri);
   body.append('client_assertion_type', CLIENT_ASSERTION_TYPE);
-  body.append('client_assertion', clientAssertion);
+  body.append('client_assertion', generateClientAssertion(configuration));
+  if (codeVerifier) {
+    body.append('code_verifier', codeVerifier);
+  }
 
-  const requestOptions = {
-    ...options,
+  const opts = {
+    ...requestOptions,
     body: body.toString(),
     headers: {
       'content-type': 'application/x-www-form-urlencoded',
-      ...options.headers,
+      ...requestOptions.headers,
     },
     parseAs: 'json',
   };
 
-  return commonRequest('POST', tokenEndpoint, requestOptions).then(
-    logResponse
-  );
+  return commonRequest('POST', tokenEndpoint, opts).then(logResponse);
 };
 
-// Attaches the configured access_token to a request against an
-// eSignet URL (eg. userInfoEndpoint).
+// Send an authenticated request to an eSignet endpoint.
 export const request = (configuration = {}, method, url, options = {}) => {
   const { access_token } = configuration;
 
-  const headers = {
-    ...options.headers,
-    Authorization: `Bearer ${access_token}`,
-  };
-
   return commonRequest(method, url, {
     ...options,
-    headers,
+    headers: {
+      ...options.headers,
+      Authorization: `Bearer ${access_token}`,
+    },
     parseAs: options.parseAs || 'json',
   }).then(logResponse);
 };

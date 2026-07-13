@@ -4,4 +4,4 @@
 
 Implement the eSignet OIDC `authorize` -> `token` -> `userinfo` flow
 (`getAuthorizationUrl`, `getToken`, `getUserInfo`) using a JWK-signed
-client assertion.
+client assertion and PKCE.

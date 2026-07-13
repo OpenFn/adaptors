@@ -27,14 +27,17 @@ issued alongside your `clientId` when you register with eSignet.
 ### Example: the authorize -> token -> userinfo sequence
 
 ```js
-// Step 1: build the authorization URL, and redirect the user to it.
-// Consenting and logging in happens outside of OpenFn.
+// Step 1: build the authorization URL and redirect the user to it.
+// Consent happens outside of OpenFn. `getAuthorizationUrl` also returns
+// a PKCE `codeVerifier` on state.data — capture it for step 2.
 getAuthorizationUrl();
 
-// Step 2: once the user is redirected back to your redirectUri with a
-// `code` query param, exchange it for tokens. This also stashes
-// access_token on state.configuration for the next step.
-getToken(state => new URL(state.data.callbackUrl).searchParams.get('code'));
+// Step 2: exchange the `code` returned to your redirectUri for tokens,
+// passing back the PKCE verifier from step 1. This also saves
+// access_token to state.configuration for the next step.
+getToken(state => state.data.code, {
+  codeVerifier: state => state.data.codeVerifier,
+});
 
 // Step 3: fetch and decode the user's verified identity claims.
 getUserInfo();

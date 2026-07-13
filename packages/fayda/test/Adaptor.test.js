@@ -59,6 +59,23 @@ describe('getAuthorizationUrl', () => {
     );
   });
 
+  it('emits a PKCE challenge derived from the returned code verifier', async () => {
+    const state = { configuration };
+
+    const finalState = await getAuthorizationUrl()(state);
+    const url = new URL(finalState.data.url);
+
+    const { codeVerifier } = finalState.data;
+    const expectedChallenge = crypto
+      .createHash('sha256')
+      .update(codeVerifier)
+      .digest('base64url');
+
+    expect(codeVerifier).to.be.a('string').with.length.above(0);
+    expect(url.searchParams.get('code_challenge_method')).to.equal('S256');
+    expect(url.searchParams.get('code_challenge')).to.equal(expectedChallenge);
+  });
+
   it('supports acr_values and claims overrides', async () => {
     const state = { configuration };
 
@@ -113,6 +130,22 @@ describe('getToken', () => {
     expect(finalState.configuration.access_token).to.equal(
       'fake-access-token'
     );
+  });
+
+  it('sends the PKCE code_verifier when one is provided', async () => {
+    let capturedBody;
+
+    testServer
+      .intercept({ path: '/oidc/token', method: 'POST' })
+      .reply(200, req => {
+        capturedBody = new URLSearchParams(req.body);
+        return { access_token: 'fake-access-token' };
+      });
+
+    const state = { configuration };
+    await getToken('test-auth-code', { codeVerifier: 'test-verifier' })(state);
+
+    expect(capturedBody.get('code_verifier')).to.equal('test-verifier');
   });
 
   it('throws with the error body when eSignet rejects the code', async () => {
@@ -194,6 +227,19 @@ describe('getUserInfo', () => {
     const finalState = await getUserInfo('explicit-token')(state);
 
     expect(capturedAuthHeader).to.equal('Bearer explicit-token');
+    expect(finalState.data).to.eql(claims);
+  });
+
+  it('handles an unsigned (plain JSON) userinfo response', async () => {
+    testServer
+      .intercept({ path: '/oidc/userinfo', method: 'GET' })
+      .reply(200, claims, { headers: { 'content-type': 'application/json' } });
+
+    const state = {
+      configuration: { ...configuration, access_token: 'stashed-token' },
+    };
+    const finalState = await getUserInfo()(state);
+
     expect(finalState.data).to.eql(claims);
   });
 });
