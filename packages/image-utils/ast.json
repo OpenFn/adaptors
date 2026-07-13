@@ -1,5 +1,510 @@
 {
-  "operations": [],
+  "operations": [
+    {
+      "name": "resize",
+      "params": [
+        "base64ImgOrBuffer",
+        "options"
+      ],
+      "docs": {
+        "description": "Resize an image to the given dimensions.\nWrites `{ buffer, width, height }` to `state.data`.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "resize($.data.photoBase64, { width: 1200, height: 1600 })"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Base64 string, data URL, Buffer, or resolver fn",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "Buffer"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "Function"
+                }
+              ]
+            },
+            "name": "base64ImgOrBuffer"
+          },
+          {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options",
+            "default": "{}"
+          },
+          {
+            "title": "param",
+            "description": "Output width in pixels",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.width"
+          },
+          {
+            "title": "param",
+            "description": "Output height in pixels",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.height"
+          },
+          {
+            "title": "param",
+            "description": "Return format: `'buffer'` (default) or `'base64'`",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "UnionType",
+                "elements": [
+                  {
+                    "type": "StringLiteralType",
+                    "value": "buffer"
+                  },
+                  {
+                    "type": "StringLiteralType",
+                    "value": "base64"
+                  }
+                ]
+              }
+            },
+            "name": "options.parseAs",
+            "default": "'buffer'"
+          },
+          {
+            "title": "state",
+            "description": "{ImageState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "compress",
+      "params": [
+        "base64ImgOrBuffer",
+        "options"
+      ],
+      "docs": {
+        "description": "Compress an image by reducing image quality until it reaches the criteria.\nWrites `{ buffer, size, quality }` to `state.data`.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "compress(state.data.buffer, { maxBytes: 700 * 1024, minQuality: 20 })"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Base64 string, data URL, Buffer, or resolver fn",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "Buffer"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "Function"
+                }
+              ]
+            },
+            "name": "base64ImgOrBuffer"
+          },
+          {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options",
+            "default": "{}"
+          },
+          {
+            "title": "param",
+            "description": "Maximum output file size in bytes",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.maxBytes",
+            "default": "716800"
+          },
+          {
+            "title": "param",
+            "description": "JPEG quality floor (1–100); compression stops here even if maxBytes is not met",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "number"
+              }
+            },
+            "name": "options.minQuality",
+            "default": "20"
+          },
+          {
+            "title": "param",
+            "description": "Return format: `'buffer'` (default) or `'base64'`",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "UnionType",
+                "elements": [
+                  {
+                    "type": "StringLiteralType",
+                    "value": "buffer"
+                  },
+                  {
+                    "type": "StringLiteralType",
+                    "value": "base64"
+                  }
+                ]
+              }
+            },
+            "name": "options.parseAs",
+            "default": "'buffer'"
+          },
+          {
+            "title": "state",
+            "description": "{ImageState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "stripMetadata",
+      "params": [
+        "base64ImgOrBuffer",
+        "options"
+      ],
+      "docs": {
+        "description": "Strip all EXIF metadata from an image. Output is always a JPEG buffer.\nWrites `{ buffer }` to `state.data`.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "stripMetadata($.data.photoBase64)"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Base64 string, data URL, Buffer, or resolver fn",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "Buffer"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "Function"
+                }
+              ]
+            },
+            "name": "base64ImgOrBuffer"
+          },
+          {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options",
+            "default": "{}"
+          },
+          {
+            "title": "param",
+            "description": "Return format: `'buffer'` (default) or `'base64'`",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "UnionType",
+                "elements": [
+                  {
+                    "type": "StringLiteralType",
+                    "value": "buffer"
+                  },
+                  {
+                    "type": "StringLiteralType",
+                    "value": "base64"
+                  }
+                ]
+              }
+            },
+            "name": "options.parseAs",
+            "default": "'buffer'"
+          },
+          {
+            "title": "state",
+            "description": "{ImageState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "embedMetadata",
+      "params": [
+        "base64ImgOrBuffer",
+        "exifObj",
+        "options"
+      ],
+      "docs": {
+        "description": "Embed EXIF metadata into a JPEG image.\nWrites `{ buffer }` to `state.data`.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "embedMetadata($.data.buffer, { UserComment: 'patient-id=42' })\nembedMetadata($.data.buffer, { UserComment: 'patient-id=42', Make: 'OpenFn' }, { parseAs: 'base64' })"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Base64 string, data URL, Buffer, or resolver fn",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "Buffer"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "Function"
+                }
+              ]
+            },
+            "name": "base64ImgOrBuffer"
+          },
+          {
+            "title": "param",
+            "description": "EXIF key-value pairs; keys must be valid EXIF tag names (e.g. UserComment, Make, Model)",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "exifObj"
+          },
+          {
+            "title": "param",
+            "description": null,
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options",
+            "default": "{}"
+          },
+          {
+            "title": "param",
+            "description": "Return format: `'buffer'` (default) or `'base64'`",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "UnionType",
+                "elements": [
+                  {
+                    "type": "StringLiteralType",
+                    "value": "buffer"
+                  },
+                  {
+                    "type": "StringLiteralType",
+                    "value": "base64"
+                  }
+                ]
+              }
+            },
+            "name": "options.parseAs",
+            "default": "'buffer'"
+          },
+          {
+            "title": "state",
+            "description": "{ImageState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "metadata",
+      "params": [
+        "base64ImgOrBuffer"
+      ],
+      "docs": {
+        "description": "Read image metadata without modifying the image.\nWrites `{ width, height, orientation, size, exif }` to `state.data`.\n`exif` is a flat object of human-readable EXIF tag names (e.g. `{ Make, Model, GPSLatitude, UserComment }`).\n`UserComment` has the `ASCII\\0\\0\\0` encoding prefix stripped. Images with no EXIF return `exif: {}`.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "metadata($.data.photoBase64)\nfn(state => {\n  if (state.data.size > 700 * 1024) { ... }\n  return state;\n})"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Base64 string, data URL, Buffer, or resolver fn",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "Buffer"
+                },
+                {
+                  "type": "NameExpression",
+                  "name": "Function"
+                }
+              ]
+            },
+            "name": "base64ImgOrBuffer"
+          },
+          {
+            "title": "state",
+            "description": "{ImageState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    }
+  ],
   "exports": [],
   "common": [
     {

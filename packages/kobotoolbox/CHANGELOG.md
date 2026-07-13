@@ -1,10 +1,10 @@
 # @openfn/language-kobotoolbox
 
-## 4.3.2
+## 4.3.2 - 30 June 2026
 
 ### Patch Changes
 
-- Updated dependencies [c5f8728]
+- Updated dependencies \[c5f8728]
   - @openfn/language-common@3.3.4
 
 ## 4.3.1 - 27 May 2026

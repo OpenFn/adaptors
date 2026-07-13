@@ -1,25 +1,25 @@
 # @openfn/language-salesforce
 
-## 9.1.5
+## 9.1.5 - 30 June 2026
 
 ### Patch Changes
 
-- Updated dependencies [c5f8728]
+- Updated dependencies \[c5f8728]
   - @openfn/language-common@3.3.4
 
-## 9.1.4
+## 9.1.4 - 25 June 2026
 
 ### Patch Changes
 
 - Fix connection
 
-## 9.1.3
+## 9.1.3 - 25 June 2026
 
 ### Patch Changes
 
 - Fix connection hanging on oauth clients
 
-## 9.1.2
+## 9.1.2 - 25 June 2026
 
 ### Patch Changes
 

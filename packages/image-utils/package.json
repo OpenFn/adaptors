@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-image-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "OpenFn image-utils adaptor",
   "type": "module",
   "exports": {
@@ -18,8 +18,7 @@
     "test:integration": "mocha --experimental-specifier-resolution=node --no-warnings test/integration.js",
     "clean": "rimraf dist types docs",
     "pack": "pnpm pack --pack-destination ../../dist",
-    "lint": "eslint src",
-    "benchmark": "echo 'benchmark removed — jsquash dependency dropped'"
+    "lint": "eslint src"
   },
   "author": "Open Function Group",
   "license": "LGPLv3",

@@ -1,10 +1,10 @@
 # @openfn/language-gemini
 
-## 1.0.7
+## 1.0.7 - 30 June 2026
 
 ### Patch Changes
 
-- Updated dependencies [c5f8728]
+- Updated dependencies \[c5f8728]
   - @openfn/language-common@3.3.4
 
 ## 1.0.6 - 27 May 2026
