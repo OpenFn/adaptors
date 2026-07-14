@@ -1,4 +1,3 @@
-import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
   logResponse,
@@ -83,17 +82,4 @@ export const request = (configuration = {}, method, url, options = {}) => {
     },
     parseAs: options.parseAs || 'json',
   }).then(logResponse);
-};
-
-export const prepareNextState = (state, response) => {
-  const { body, ...responseWithoutBody } = response;
-
-  if (!state.references) {
-    state.references = [];
-  }
-
-  return {
-    ...composeNextState(state, body),
-    response: responseWithoutBody,
-  };
 };

@@ -60,12 +60,12 @@
         "options"
       ],
       "docs": {
-        "description": "Exchange an authorization code for tokens, authenticating with a\nsigned JWK client assertion (private_key_jwt). The access token is\nsaved to state.configuration for a following getUserInfo call.",
+        "description": "Exchange an authorization code for tokens, authenticating with a signed\nJWK client assertion (private_key_jwt). The access token is kept on\nstate.configuration for a following getUserInfo call — not on state.data\nor state.response, so it never lands in dataclips or logs.",
         "tags": [
           {
             "title": "example",
-            "description": "getToken(state => state.data.code, { codeVerifier: state.data.codeVerifier });",
-            "caption": "Exchange the code and PKCE verifier for tokens"
+            "description": "// code and codeVerifier come from wherever your trigger delivers them\ngetToken($.code, { codeVerifier: $.codeVerifier });",
+            "caption": "Exchange the authorization code for tokens"
           },
           {
             "title": "function",
@@ -105,7 +105,7 @@
           },
           {
             "title": "state",
-            "description": "{HttpState}"
+            "description": "{TokenState}"
           }
         ]
       },

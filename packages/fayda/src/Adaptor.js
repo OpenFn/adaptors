@@ -4,11 +4,9 @@ import crypto from 'node:crypto';
 import * as util from './Utils.js';
 
 /**
- * State returned by an HTTP-calling operation
- * @typedef {Object} HttpState
- * @property data - the parsed response body
- * @property response - the response from the HTTP server, including headers, statusCode, body, etc
- * @property references - an array of all previous data objects used in the Job
+ * State returned by getToken
+ * @typedef {Object} TokenState
+ * @property configuration.access_token - the access token, kept on configuration for a following getUserInfo call. It is deliberately not written to state.data or state.response, so it doesn't leak into dataclips or logs.
  **/
 
 /**
@@ -100,17 +98,19 @@ export function getAuthorizationUrl(options = {}) {
 }
 
 /**
- * Exchange an authorization code for tokens, authenticating with a
- * signed JWK client assertion (private_key_jwt). The access token is
- * saved to state.configuration for a following getUserInfo call.
- * @example <caption>Exchange the code and PKCE verifier for tokens</caption>
- * getToken(state => state.data.code, { codeVerifier: state.data.codeVerifier });
+ * Exchange an authorization code for tokens, authenticating with a signed
+ * JWK client assertion (private_key_jwt). The access token is kept on
+ * state.configuration for a following getUserInfo call — not on state.data
+ * or state.response, so it never lands in dataclips or logs.
+ * @example <caption>Exchange the authorization code for tokens</caption>
+ * // code and codeVerifier come from wherever your trigger delivers them
+ * getToken($.code, { codeVerifier: $.codeVerifier });
  * @function
  * @public
  * @param {string} code - The authorization code returned to redirectUri
  * @param {object} options - Optional `codeVerifier` (PKCE) and request options
  * @returns {Operation}
- * @state {HttpState}
+ * @state {TokenState}
  */
 export function getToken(code, options = {}) {
   return async state => {
@@ -120,19 +120,20 @@ export function getToken(code, options = {}) {
       options,
     );
 
-    const response = await util.getToken(
+    const { body } = await util.getToken(
       state.configuration,
       resolvedCode,
       resolvedOptions,
     );
 
-    const nextState = util.prepareNextState(state, response);
-
+    // The token is a sensitive credential: keep it on configuration for the
+    // following getUserInfo call, but never write it to state.data or
+    // state.response, where it would surface in dataclips and logs.
     return {
-      ...nextState,
+      ...state,
       configuration: {
-        ...nextState.configuration,
-        access_token: response.body.access_token,
+        ...state.configuration,
+        access_token: body.access_token,
       },
     };
   };

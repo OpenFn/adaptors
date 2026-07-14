@@ -126,10 +126,12 @@ describe('getToken', () => {
       true
     );
 
-    expect(finalState.data.access_token).to.equal('fake-access-token');
     expect(finalState.configuration.access_token).to.equal(
       'fake-access-token'
     );
+    // the raw token must not leak onto inspectable state (dataclips / logs)
+    expect(finalState.data).to.be.undefined;
+    expect(finalState.response).to.be.undefined;
   });
 
   it('sends the PKCE code_verifier when one is provided', async () => {
