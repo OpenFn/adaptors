@@ -1422,6 +1422,34 @@ importers:
         specifier: ^7.28.0
         version: 7.28.0
 
+  packages/langfuse:
+    dependencies:
+      '@langfuse/client':
+        specifier: ^5.9.1
+        version: 5.9.1(@opentelemetry/api@1.9.0)
+      '@openfn/language-common':
+        specifier: workspace:*
+        version: link:../common
+    devDependencies:
+      assertion-error:
+        specifier: 2.0.0
+        version: 2.0.0
+      chai:
+        specifier: 4.3.6
+        version: 4.3.6
+      deep-eql:
+        specifier: 4.1.1
+        version: 4.1.1
+      mocha:
+        specifier: ^10.7.3
+        version: 10.8.2
+      rimraf:
+        specifier: 3.0.2
+        version: 3.0.2
+      undici:
+        specifier: ^7.19.2
+        version: 7.28.0
+
   packages/magpi:
     dependencies:
       '@openfn/language-common':
@@ -5263,6 +5291,22 @@ packages:
     resolution: {integrity: sha512-JQEuMANYRVHs7lm7KY9PCIjkgJk73h4m4J+g2mkw2Vo1ugPZ17UJVqEH8F+HeAdjKz5do1OaLe7ArDz+z308gw==}
     engines: {node: '>= 18'}
     deprecated: Please upgrade to v15 or higher. All reported bugs in this version are fixed in newer releases, dependencies have been updated, and security has been improved.
+
+  '@langfuse/client@5.9.1':
+    resolution: {integrity: sha512-v9lb9GXc7ujmY2k97830MfIg+m1LQWkQNzXP+u2F3KwHVaEvD8zy4v1gLhbTkvemTggAx/tR+tv8BC9CeojTrA==}
+    peerDependencies:
+      '@opentelemetry/api': ^1.9.0
+
+  '@langfuse/core@5.9.1':
+    resolution: {integrity: sha512-KvyAskAO+2ixJwr9wy148ttR/Zn3oapvOJ2Br4Xcp6zhDpjSIIGB4jW/jkp53/KU9MyEHj0RSFPK/yKoxLC4KA==}
+    peerDependencies:
+      '@opentelemetry/api': ^1.9.0
+
+  '@langfuse/tracing@5.9.1':
+    resolution: {integrity: sha512-tJRyVAv1JkuOPh4Uz5eWUNH8U4jcJVtK2F5QNy5cZUzXCSrXobCSHusPbxY6VFZcLcFgtpDtSaxL7ev1tV2JNQ==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      '@opentelemetry/api': ^1.9.0
 
   '@ljharb/through@2.3.14':
     resolution: {integrity: sha512-ajBvlKpWucBB17FuQYUShqpqy8GRgYEpJW0vWJbUu1CV9lWyrDCapy0lScU8T8Z6qn49sSwJB3+M+evYIdGg+A==}
@@ -10339,6 +10383,10 @@ packages:
     engines: {npm: '>=1.4.0'}
     hasBin: true
 
+  mustache@4.2.0:
+    resolution: {integrity: sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ==}
+    hasBin: true
+
   mute-stream@1.0.0:
     resolution: {integrity: sha512-avsJQhyd+680gKXyG/sQc0nXaC6rBkPOfyHYcFb9+hdkqQkR9bdnkJ0AMZhke0oesPqIO+mFFJ+IdBc7mst4IA==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
@@ -15324,6 +15372,22 @@ snapshots:
       path-to-regexp: 6.3.0
     transitivePeerDependencies:
       - supports-color
+
+  '@langfuse/client@5.9.1(@opentelemetry/api@1.9.0)':
+    dependencies:
+      '@langfuse/core': 5.9.1(@opentelemetry/api@1.9.0)
+      '@langfuse/tracing': 5.9.1(@opentelemetry/api@1.9.0)
+      '@opentelemetry/api': 1.9.0
+      mustache: 4.2.0
+
+  '@langfuse/core@5.9.1(@opentelemetry/api@1.9.0)':
+    dependencies:
+      '@opentelemetry/api': 1.9.0
+
+  '@langfuse/tracing@5.9.1(@opentelemetry/api@1.9.0)':
+    dependencies:
+      '@langfuse/core': 5.9.1(@opentelemetry/api@1.9.0)
+      '@opentelemetry/api': 1.9.0
 
   '@ljharb/through@2.3.14':
     dependencies:
@@ -21375,6 +21439,8 @@ snapshots:
       readable-stream: 3.6.2
 
   mustache@2.3.2: {}
+
+  mustache@4.2.0: {}
 
   mute-stream@1.0.0: {}
 
