@@ -3,7 +3,7 @@ import {
 } from '@openfn/language-common';
 import { LangfuseClient } from "@langfuse/client";
 
-let langfuseConn = null;
+let client = null;
 
 
 /**
@@ -34,7 +34,7 @@ export function execute(...operations) {
 async function login(state) {
   const { baseUrl ="https://cloud.langfuse.com", publicKey, secretKey } = state.configuration;
 
-  langfuseConn = new LangfuseClient({
+  client = new LangfuseClient({
     publicKey,
     secretKey,
     baseUrl
@@ -51,9 +51,7 @@ async function login(state) {
  **/
 
 /**
- * The auto-generated Langfuse REST API client, passed as `api` inside a {@link langfuse} callback.
- * Each property is a namespace exposing typed methods for that resource.
- * See the full API reference at {@link https://js.reference.langfuse.com/}.
+ * Access the langfuse client API. Accepts a callback which receives state and the client API object. See the full API reference at {@link https://js.reference.langfuse.com/}.
  * @typedef {Object} LangfuseApiClient
  * @example <caption>Fetch recent observations</caption>
  * langfuse(async (state, api) => {
@@ -84,15 +82,15 @@ async function login(state) {
  */
 export function langfuse(func) {
   return async state => {
-    if (!langfuseConn) {
+    if (!client) {
       throw new Error('Langfuse connection not established. Please check your configuration.');
     }
-    return func(state, langfuseConn.api);
+    return func(state, client.api);
   };
 }
 
-export function setMockClient(client) {
-  langfuseConn = client;
+export function setMockClient(clientMock) {
+  client = clientMock;
 }
 
 
