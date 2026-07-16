@@ -1,5 +1,89 @@
 import { expect } from 'chai';
-import { create, upsert, query, http, setMockConnection } from '../src/index.js';
+import nock from 'nock';
+import {
+  create,
+  execute,
+  upsert,
+  query,
+  http,
+  setMockConnection,
+} from '../src/index.js';
+
+describe('execute', () => {
+  const loginUrl = 'https://login.salesforce.com';
+  const username = 'some@email.org';
+  const salesforceError =
+    'INVALID_OPERATION: SOAP API login() is disabled by default in this org. Contact the org administrator to enable SOAP API login().';
+
+  let originalConsoleInfo;
+  let originalConsoleError;
+  let infoLogs;
+  let errorLogs;
+
+  beforeEach(() => {
+    setMockConnection(null);
+    nock.disableNetConnect();
+
+    originalConsoleInfo = console.info;
+    originalConsoleError = console.error;
+    infoLogs = [];
+    errorLogs = [];
+    console.info = (...args) => infoLogs.push(args);
+    console.error = (...args) => errorLogs.push(args);
+  });
+
+  afterEach(() => {
+    console.info = originalConsoleInfo;
+    console.error = originalConsoleError;
+    nock.cleanAll();
+    nock.enableNetConnect();
+    setMockConnection(null);
+  });
+
+  it('passes through Salesforce SOAP login errors', async () => {
+    const scope = nock(loginUrl)
+      .post('/services/Soap/u/64.0')
+      .reply(
+        500,
+        `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+          <soapenv:Body>
+            <soapenv:Fault>
+              <faultcode>sf:INVALID_OPERATION</faultcode>
+              <faultstring>${salesforceError}</faultstring>
+            </soapenv:Fault>
+          </soapenv:Body>
+        </soapenv:Envelope>`,
+        { 'Content-Type': 'text/xml' },
+      );
+
+    let thrownError;
+    try {
+      await execute()({
+        configuration: {
+          loginUrl,
+          username,
+          password: 'password',
+          securityToken: 'token',
+          apiVersion: '64.0',
+        },
+      });
+    } catch (error) {
+      thrownError = error;
+    }
+
+    expect(scope.isDone()).to.equal(true);
+    expect(infoLogs).to.deep.include([
+      `Attempting Salesforce connection for user: ${username}`,
+    ]);
+    expect(errorLogs).to.deep.equal([[salesforceError]]);
+    expect(thrownError).to.be.instanceOf(Error);
+    expect(thrownError.message).to.equal(salesforceError);
+    expect(thrownError.code).to.equal('FAILED_AUTH');
+    expect(thrownError.fix).to.equal(
+      'Check your username, password, and security token',
+    );
+  });
+});
 
 describe('Adaptor', () => {
   describe('get', () => {
