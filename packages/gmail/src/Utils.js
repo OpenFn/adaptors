@@ -191,7 +191,13 @@ export function createConnection(state) {
   const auth = new google.auth.OAuth2();
   auth.credentials = { access_token };
 
-  gmail = google.gmail({ version: 'v1', auth });
+  gmail = google.gmail({
+    version: 'v1',
+    auth,
+    // Use Node's native fetch transport to avoid node-fetch stream handling.
+    // See https://github.com/OpenFn/adaptors/issues/1707
+    fetchImplementation: globalThis.fetch,
+  });
 
   return state;
 }

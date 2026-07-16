@@ -26,6 +26,9 @@ export function createClient(state) {
 
   client = new Anthropic({
     apiKey,
+    // Use Node's native fetch transport to avoid node-fetch stream handling.
+    // See https://github.com/OpenFn/adaptors/issues/1707
+    fetch: globalThis.fetch,
   });
 
   return state;

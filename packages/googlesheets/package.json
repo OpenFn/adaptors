@@ -42,7 +42,8 @@
     "deep-eql": "4.1.1",
     "nock": "13.2.9",
     "rimraf": "3.0.2",
-    "sinon": "^21.1.2"
+    "sinon": "^21.1.2",
+    "undici": "^7.28.0"
   },
   "type": "module",
   "types": "types/index.d.ts",

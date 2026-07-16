@@ -17,7 +17,13 @@ function createConnection(state) {
   const auth = new google.auth.OAuth2();
   auth.credentials = { access_token: accessToken };
 
-  client = google.sheets({ version: 'v4', auth });
+  client = google.sheets({
+    version: 'v4',
+    auth,
+    // Use Node's native fetch transport to avoid node-fetch stream handling.
+    // See https://github.com/OpenFn/adaptors/issues/1707
+    fetchImplementation: globalThis.fetch,
+  });
   return state;
 }
 
