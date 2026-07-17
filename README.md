@@ -222,8 +222,10 @@ in the wiki.
 
 ## Changesets
 
-Any submitted PRs should have an accompanying
-[changeset](https://github.com/changesets/changesets).
+Every submitted PR must have an accompanying
+[changeset](https://github.com/changesets/changesets), unless a maintainer
+applies the `no changeset required` label. The **Changeset required** GitHub
+check enforces this policy.
 
 - Create a new changeset with `pnpm changeset`. This will prompt you for the
   changes:
@@ -233,9 +235,12 @@ pnpm changeset
 ```
 
 > Follow the prompts to describe your changes. This will create a new changeset
-> file in the `.changesets` folder.
+> file in the `.changeset` folder.
 
 - Commit the changeset to the repo when you're ready.
+- If the PR does not affect a release, such as a development-only change, ask a
+  maintainer to apply the `no changeset required` label. Adding or removing the
+  label reruns the check.
 
 ## Versioning
 
