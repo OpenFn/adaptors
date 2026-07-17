@@ -1,0 +1,75 @@
+name: Changeset
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+permissions:
+  contents: read
+
+jobs:
+  changeset:
+    name: Changeset required
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Record changeset exemption
+        if: contains(github.event.pull_request.labels.*.name, 'no changeset required')
+        run: |
+          echo "Changeset check skipped by the 'no changeset required' label."
+          {
+            echo "## Changeset check skipped"
+            echo
+            echo "A maintainer applied the \`no changeset required\` label."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Checkout repository
+        if: "${{ !contains(github.event.pull_request.labels.*.name, 'no changeset required') }}"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for a changeset
+        if: "${{ !contains(github.event.pull_request.labels.*.name, 'no changeset required') }}"
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          changeset_files=()
+
+          while IFS= read -r file; do
+            if [[ "$(basename "$file")" != "README.md" ]]; then
+              changeset_files+=("$file")
+            fi
+          done < <(
+            git diff --name-only --diff-filter=AM \
+              "$BASE_SHA"...HEAD -- '.changeset/*.md'
+          )
+
+          if (( ${#changeset_files[@]} == 0 )); then
+            docs_url="https://github.com/OpenFn/adaptors/blob/main/README.md#changesets"
+            message="This PR must include a changeset. Run 'pnpm changeset', commit the generated file, and push it. If the change does not need a release, ask a maintainer to apply the 'no changeset required' label. See ${docs_url}."
+
+            echo "::error title=Changeset required::${message}"
+            {
+              echo "## Changeset required"
+              echo
+              echo "This PR does not add or modify a changeset file."
+              echo
+              echo "1. Run \`pnpm changeset\`."
+              echo "2. Commit the generated \`.changeset/*.md\` file."
+              echo "3. Push the commit to update this check."
+              echo
+              echo "If this PR does not need a release, ask a maintainer to apply the \`no changeset required\` label."
+              echo
+              echo "See the [Changesets documentation](${docs_url}) for details."
+            } >> "$GITHUB_STEP_SUMMARY"
+
+            exit 1
+          fi
+
+          printf 'Changeset found: %s\n' "${changeset_files[@]}"
+          {
+            echo "## Changeset found"
+            echo
+            printf -- '- `%s`\n' "${changeset_files[@]}"
+          } >> "$GITHUB_STEP_SUMMARY"
