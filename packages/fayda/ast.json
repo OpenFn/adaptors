@@ -3,7 +3,7 @@
     {
       "name": "getUserInfo",
       "params": [
-        "code",
+        "authorizationCode",
         "options"
       ],
       "docs": {
@@ -31,7 +31,7 @@
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "code"
+            "name": "authorizationCode"
           },
           {
             "title": "param",

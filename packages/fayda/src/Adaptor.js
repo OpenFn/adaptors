@@ -21,25 +21,27 @@ import * as util from './Utils.js';
  * getUserInfo($.code, { codeVerifier: $.codeVerifier });
  * @function
  * @public
- * @param {string} code - The authorization code returned to redirectUri
+ * @param {string} authorizationCode - The authorization code returned to redirectUri
  * @param {UserInfoOptions} options - PKCE `codeVerifier` and request options
  * @returns {Operation}
  * @state {claims}
  */
-export function getUserInfo(code, options = {}) {
+export function getUserInfo(authorizationCode, options = {}) {
   return async state => {
-    const [resolvedCode, resolvedOptions] = expandReferences(
+    const [resolvedAuthorizationCode, resolvedOptions] = expandReferences(
       state,
-      code,
+      authorizationCode,
       options,
     );
 
     const { codeVerifier, ...requestOptions } = resolvedOptions;
 
     // Keep the access token in local scope
-    const { body } = await util.getToken(state.configuration, resolvedCode, {
-      codeVerifier,
-    });
+    const { body } = await util.getToken(
+      state.configuration,
+      resolvedAuthorizationCode,
+      { codeVerifier },
+    );
 
     const { userInfoEndpoint } = state.configuration;
 
