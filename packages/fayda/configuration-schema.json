@@ -21,16 +21,8 @@
       "type": "string",
       "format": "uri",
       "minLength": 1,
-      "description": "The redirect_uri registered with eSignet that the authorization code is sent back to",
+      "description": "The redirect_uri registered with eSignet that the authorization code is sent back to. Must match the value the app used in the authorization request",
       "examples": ["https://yourapp.example.com/callback"]
-    },
-    "authorizationEndpoint": {
-      "title": "Authorization Endpoint",
-      "type": "string",
-      "format": "uri",
-      "minLength": 1,
-      "description": "eSignet's OIDC authorization endpoint, issued via the developer/partner portal",
-      "examples": ["https://esignet.example.com/authorize"]
     },
     "tokenEndpoint": {
       "title": "Token Endpoint",
@@ -48,12 +40,11 @@
       "description": "eSignet's OIDC userinfo endpoint, issued via the developer/partner portal",
       "examples": ["https://esignet.example.com/oidc/userinfo"]
     },
-    "access_token": {
-      "title": "Access Token",
+    "tokenExpirationTime": {
+      "title": "Token Expiration Time",
       "type": "string",
-      "writeOnly": true,
-      "description": "An access token obtained from a previous getToken call, for jobs that only need to call getUserInfo",
-      "examples": ["the-access-token-returned-by-getToken"]
+      "description": "How long the signed client assertion (private_key_jwt) is valid for. Accepts a duration string (eg. '5m', '2m') or a number of seconds. Keep it short — the assertion is single-use. Defaults to '5m'",
+      "examples": ["5m", "2m", "300"]
     }
   },
   "type": "object",
@@ -62,7 +53,6 @@
     "clientId",
     "privateKey",
     "redirectUri",
-    "authorizationEndpoint",
     "tokenEndpoint",
     "userInfoEndpoint"
   ]

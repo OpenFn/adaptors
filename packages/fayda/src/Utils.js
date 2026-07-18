@@ -3,16 +3,16 @@ import {
   logResponse,
 } from '@openfn/language-common/util';
 import { importJWK, SignJWT, decodeJwt } from 'jose';
-import crypto from 'node:crypto';
 
 const CLIENT_ASSERTION_TYPE =
   'urn:ietf:params:oauth:client-assertion-type:jwt-bearer';
 
-// Sign a private_key_jwt client assertion for the token endpoint, as in
-// the VeriFayda reference app. configuration.privateKey is a
-// base64-encoded JWK.
+// Sign a private_key_jwt client assertion for the token endpoint.
+// configuration.privateKey is a base64-encoded JWK. tokenExpirationTime
+// (default '5m') sets how long the single-use assertion is valid.
 export const generateClientAssertion = async configuration => {
-  const { clientId, privateKey, tokenEndpoint } = configuration;
+  const { clientId, privateKey, tokenEndpoint, tokenExpirationTime } =
+    configuration;
 
   const header = { alg: 'RS256', typ: 'JWT' };
   const payload = { iss: clientId, sub: clientId, aud: tokenEndpoint };
@@ -23,18 +23,12 @@ export const generateClientAssertion = async configuration => {
   return new SignJWT(payload)
     .setProtectedHeader(header)
     .setIssuedAt()
-    .setExpirationTime('2h')
+    .setExpirationTime(tokenExpirationTime || '5m')
     .sign(key);
 };
 
-export const generateCodeVerifier = () =>
-  crypto.randomBytes(32).toString('base64url');
-
-export const generateCodeChallenge = verifier =>
-  crypto.createHash('sha256').update(verifier).digest('base64url');
-
-// Decode the claims from a signed JWT, or return the body as-is if the
-// userinfo response is unsigned (plain JSON rather than a JWS).
+// Decode the claims from signed JWT, or return the body as-is if the
+// userinfo response is unsigned (plain JSON rather than JWS).
 export const decodeClaims = token => {
   const trimmed = token.trim();
   return trimmed.startsWith('{') ? JSON.parse(trimmed) : decodeJwt(trimmed);
