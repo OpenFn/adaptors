@@ -1,12 +1,11 @@
 # language-fayda <img src='./assets/square.png' width="30" height="30"/>
 
-An OpenFn **_adaptor_** for building integration jobs for use with the
-fayda API.
+An OpenFn **_adaptor_** for building integration jobs for use with the fayda
+API.
 
 ## Documentation
 
-View the
-[docs site](https://docs.openfn.org/adaptors/packages/fayda-docs) for
+View the [docs site](https://docs.openfn.org/adaptors/packages/fayda-docs) for
 full technical documentation.
 
 ### Configuration
@@ -19,28 +18,32 @@ The configuration schema uses
 [JSON Schema draft-07](https://json-schema.org/draft-07/json-schema-release-notes).
 Run `pnpm validate:schemas` from the adaptors repo root after editing it.
 
-Authentication is OAuth 2.0 / OIDC via eSignet, using a JWK-signed
-client assertion (`private_key_jwt`) rather than a client secret.
-`configuration.privateKey` is the base64-encoded JWK private key
-issued alongside your `clientId` when you register with eSignet.
+Authentication is OAuth 2.0 / OIDC via eSignet, using a JWK-signed client
+assertion (`private_key_jwt`) rather than a client secret.
+`configuration.privateKey` is the base64-encoded JWK private key issued
+alongside your `clientId` when you register with eSignet.
 
-### Example: the authorize -> token -> userinfo sequence
+`configuration.tokenExpirationTime` (optional, default `5m`) controls how long
+the signed client assertion is valid for. It should be left short, as the
+assertion is single-use.
+
+### The flow
+
+This adaptor exposes a single operation, `getUserInfo`. The relying-party app
+builds the eSignet authorization URL, generates the PKCE `codeVerifier`, drives
+user consent, and handles the redirect/callback. It then delivers the resulting
+authorization `code` (and `codeVerifier`) to OpenFn, typically via a webhook.
+
+Inside the workflow, `getUserInfo` exchanges that code for an access token using
+the signed client assertion, calls the userinfo endpoint, and writes the decoded
+identity claims to `state.data`. The access token is used only for the exchange.
+
+### Example: verify a user from a webhook payload
 
 ```js
-// Step 1: build the authorization URL and redirect the user to it.
-// Consent happens outside of OpenFn. `getAuthorizationUrl` also returns
-// a PKCE `codeVerifier` on state.data — capture it for step 2.
-getAuthorizationUrl();
-
-// Step 2: exchange the `code` returned to your redirectUri for tokens,
-// passing back the PKCE verifier from step 1. This also saves
-// access_token to state.configuration for the next step.
-getToken(state => state.data.code, {
-  codeVerifier: state => state.data.codeVerifier,
-});
-
-// Step 3: fetch and decode the user's verified identity claims.
-getUserInfo();
+// `code` and `codeVerifier` arrive on state from the webhook that the
+// relying-party app called after the user consented.
+getUserInfo($.code, { codeVerifier: $.codeVerifier });
 ```
 
 ## Development
