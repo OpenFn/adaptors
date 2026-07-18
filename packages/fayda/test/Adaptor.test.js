@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import crypto from 'node:crypto';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import { getAuthorizationUrl, getToken, getUserInfo } from '../src/Adaptor.js';
+import { getUserInfo } from '../src/Adaptor.js';
 
 // This creates a mock client which acts like a fake server.
 // It enables pattern-matching on the request object and custom responses
@@ -23,7 +23,6 @@ const configuration = {
   clientId: 'test-client-id',
   privateKey: base64PrivateKey,
   redirectUri: 'https://myapp.example.com/callback',
-  authorizationEndpoint: 'https://fake.esignet.com/authorize',
   tokenEndpoint: 'https://fake.esignet.com/oidc/token',
   userInfoEndpoint: 'https://fake.esignet.com/oidc/userinfo',
 };
@@ -35,142 +34,21 @@ const isValidAssertion = assertion => {
   return verifier.verify(publicKey, Buffer.from(signature, 'base64url'));
 };
 
-describe('getAuthorizationUrl', () => {
-  it('builds an authorization URL with the default scope', async () => {
-    const state = { configuration };
+const decodeJwtPayload = jwt =>
+  JSON.parse(Buffer.from(jwt.split('.')[1], 'base64url').toString());
 
-    const finalState = await getAuthorizationUrl()(state);
-    const url = new URL(finalState.data.url);
-
-    expect(url.origin + url.pathname).to.equal(
-      'https://fake.esignet.com/authorize'
-    );
-    expect(url.searchParams.get('client_id')).to.equal('test-client-id');
-    expect(url.searchParams.get('response_type')).to.equal('code');
-    expect(url.searchParams.get('redirect_uri')).to.equal(
-      configuration.redirectUri
-    );
-    expect(url.searchParams.get('scope')).to.equal('openid profile');
-    expect(url.searchParams.get('state')).to.be.a('string').with.length.above(
-      0
-    );
-    expect(url.searchParams.get('nonce')).to.be.a('string').with.length.above(
-      0
-    );
-  });
-
-  it('emits a PKCE challenge derived from the returned code verifier', async () => {
-    const state = { configuration };
-
-    const finalState = await getAuthorizationUrl()(state);
-    const url = new URL(finalState.data.url);
-
-    const { codeVerifier } = finalState.data;
-    const expectedChallenge = crypto
-      .createHash('sha256')
-      .update(codeVerifier)
-      .digest('base64url');
-
-    expect(codeVerifier).to.be.a('string').with.length.above(0);
-    expect(url.searchParams.get('code_challenge_method')).to.equal('S256');
-    expect(url.searchParams.get('code_challenge')).to.equal(expectedChallenge);
-  });
-
-  it('supports acr_values and claims overrides', async () => {
-    const state = { configuration };
-
-    const finalState = await getAuthorizationUrl({
-      acrValues: 'mosip:idp:acr:generated-code',
-      claims: { userinfo: { phone_number: { essential: true } } },
-    })(state);
-    const url = new URL(finalState.data.url);
-
-    expect(url.searchParams.get('acr_values')).to.equal(
-      'mosip:idp:acr:generated-code'
-    );
-    expect(JSON.parse(url.searchParams.get('claims'))).to.eql({
-      userinfo: { phone_number: { essential: true } },
+// Reply helper for the token endpoint: capture the request body and return a
+// token payload.
+const interceptToken = (
+  onBody,
+  response = { access_token: 'fake-access-token', token_type: 'Bearer' }
+) =>
+  testServer
+    .intercept({ path: '/oidc/token', method: 'POST' })
+    .reply(200, req => {
+      onBody(new URLSearchParams(req.body));
+      return response;
     });
-  });
-});
-
-describe('getToken', () => {
-  it('exchanges a code for tokens using a signed client assertion', async () => {
-    let capturedBody;
-
-    testServer
-      .intercept({ path: '/oidc/token', method: 'POST' })
-      .reply(200, req => {
-        capturedBody = new URLSearchParams(req.body);
-        return {
-          access_token: 'fake-access-token',
-          id_token: 'fake-id-token',
-          token_type: 'Bearer',
-          expires_in: 3600,
-        };
-      });
-
-    const state = { configuration };
-    const finalState = await getToken('test-auth-code')(state);
-
-    expect(capturedBody.get('grant_type')).to.equal('authorization_code');
-    expect(capturedBody.get('code')).to.equal('test-auth-code');
-    expect(capturedBody.get('client_id')).to.equal('test-client-id');
-    expect(capturedBody.get('redirect_uri')).to.equal(
-      configuration.redirectUri
-    );
-    expect(capturedBody.get('client_assertion_type')).to.equal(
-      'urn:ietf:params:oauth:client-assertion-type:jwt-bearer'
-    );
-    expect(isValidAssertion(capturedBody.get('client_assertion'))).to.equal(
-      true
-    );
-
-    expect(finalState.configuration.access_token).to.equal(
-      'fake-access-token'
-    );
-    // the raw token must not leak onto inspectable state (dataclips / logs)
-    expect(finalState.data).to.be.undefined;
-    expect(finalState.response).to.be.undefined;
-  });
-
-  it('sends the PKCE code_verifier when one is provided', async () => {
-    let capturedBody;
-
-    testServer
-      .intercept({ path: '/oidc/token', method: 'POST' })
-      .reply(200, req => {
-        capturedBody = new URLSearchParams(req.body);
-        return { access_token: 'fake-access-token' };
-      });
-
-    const state = { configuration };
-    await getToken('test-auth-code', { codeVerifier: 'test-verifier' })(state);
-
-    expect(capturedBody.get('code_verifier')).to.equal('test-verifier');
-  });
-
-  it('throws with the error body when eSignet rejects the code', async () => {
-    testServer
-      .intercept({ path: '/oidc/token', method: 'POST' })
-      .reply(400, {
-        error: 'invalid_grant',
-        error_description: 'Authorization code is invalid or expired',
-      });
-
-    const state = { configuration };
-
-    let error;
-    try {
-      await getToken('bad-code')(state);
-    } catch (e) {
-      error = e;
-    }
-
-    expect(error.statusCode).to.equal(400);
-    expect(error.body.error).to.equal('invalid_grant');
-  });
-});
 
 describe('getUserInfo', () => {
   const claims = {
@@ -186,62 +64,129 @@ describe('getUserInfo', () => {
     'fakesignature',
   ].join('.');
 
-  it('decodes claims using the access_token stashed by getToken', async () => {
-    let capturedAuthHeader;
-
+  const interceptUserInfo = (onAuthHeader = () => {}) =>
     testServer
       .intercept({ path: '/oidc/userinfo', method: 'GET' })
       .reply(
         200,
         req => {
-          capturedAuthHeader = req.headers['Authorization'];
+          onAuthHeader(req.headers['Authorization']);
           return fakeUserInfoJwt;
         },
         { headers: { 'content-type': 'text/plain' } }
       );
 
-    const state = {
-      configuration: { ...configuration, access_token: 'stashed-token' },
-    };
-    const finalState = await getUserInfo()(state);
+  it('exchanges the code for a token and returns decoded claims', async () => {
+    let tokenBody;
+    let authHeader;
 
-    expect(capturedAuthHeader).to.equal('Bearer stashed-token');
+    interceptToken(body => {
+      tokenBody = body;
+    });
+    interceptUserInfo(header => {
+      authHeader = header;
+    });
+
+    const state = { configuration };
+    const finalState = await getUserInfo('test-auth-code')(state);
+
+    // The code was exchanged with a valid signed client assertion.
+    expect(tokenBody.get('grant_type')).to.equal('authorization_code');
+    expect(tokenBody.get('code')).to.equal('test-auth-code');
+    expect(tokenBody.get('client_id')).to.equal('test-client-id');
+    expect(tokenBody.get('redirect_uri')).to.equal(configuration.redirectUri);
+    expect(tokenBody.get('client_assertion_type')).to.equal(
+      'urn:ietf:params:oauth:client-assertion-type:jwt-bearer'
+    );
+    expect(isValidAssertion(tokenBody.get('client_assertion'))).to.equal(true);
+
+    // The token from the exchange authenticates the userinfo call.
+    expect(authHeader).to.equal('Bearer fake-access-token');
+
+    // Only the verified claims land on state.
     expect(finalState.data).to.eql(claims);
+
+    // The access token must never leak onto inspectable state (dataclips / logs).
+    expect(finalState.configuration.access_token).to.be.undefined;
+    expect(finalState.response).to.be.undefined;
   });
 
-  it('accepts an explicit access token, overriding configuration', async () => {
-    let capturedAuthHeader;
+  it('forwards the PKCE code_verifier to the token request', async () => {
+    let tokenBody;
 
-    testServer
-      .intercept({ path: '/oidc/userinfo', method: 'GET' })
-      .reply(
-        200,
-        req => {
-          capturedAuthHeader = req.headers['Authorization'];
-          return fakeUserInfoJwt;
-        },
-        { headers: { 'content-type': 'text/plain' } }
-      );
+    interceptToken(body => {
+      tokenBody = body;
+    });
+    interceptUserInfo();
 
-    const state = {
-      configuration: { ...configuration, access_token: 'stashed-token' },
-    };
-    const finalState = await getUserInfo('explicit-token')(state);
+    const state = { configuration };
+    await getUserInfo('test-auth-code', { codeVerifier: 'test-verifier' })(
+      state
+    );
 
-    expect(capturedAuthHeader).to.equal('Bearer explicit-token');
-    expect(finalState.data).to.eql(claims);
+    expect(tokenBody.get('code_verifier')).to.equal('test-verifier');
   });
 
   it('handles an unsigned (plain JSON) userinfo response', async () => {
+    interceptToken(() => {});
     testServer
       .intercept({ path: '/oidc/userinfo', method: 'GET' })
       .reply(200, claims, { headers: { 'content-type': 'application/json' } });
 
-    const state = {
-      configuration: { ...configuration, access_token: 'stashed-token' },
-    };
-    const finalState = await getUserInfo()(state);
+    const state = { configuration };
+    const finalState = await getUserInfo('test-auth-code')(state);
 
     expect(finalState.data).to.eql(claims);
+  });
+
+  it('signs the client assertion with the default 5-minute expiry', async () => {
+    let tokenBody;
+
+    interceptToken(body => {
+      tokenBody = body;
+    });
+    interceptUserInfo();
+
+    const state = { configuration };
+    await getUserInfo('test-auth-code')(state);
+
+    const assertion = decodeJwtPayload(tokenBody.get('client_assertion'));
+    expect(assertion.exp - assertion.iat).to.equal(300);
+  });
+
+  it('honours a configured tokenExpirationTime', async () => {
+    let tokenBody;
+
+    interceptToken(body => {
+      tokenBody = body;
+    });
+    interceptUserInfo();
+
+    const state = {
+      configuration: { ...configuration, tokenExpirationTime: '2m' },
+    };
+    await getUserInfo('test-auth-code')(state);
+
+    const assertion = decodeJwtPayload(tokenBody.get('client_assertion'));
+    expect(assertion.exp - assertion.iat).to.equal(120);
+  });
+
+  it('throws with the error body when eSignet rejects the code', async () => {
+    testServer.intercept({ path: '/oidc/token', method: 'POST' }).reply(400, {
+      error: 'invalid_grant',
+      error_description: 'Authorization code is invalid or expired',
+    });
+
+    const state = { configuration };
+
+    let error;
+    try {
+      await getUserInfo('bad-code')(state);
+    } catch (e) {
+      error = e;
+    }
+
+    expect(error.statusCode).to.equal(400);
+    expect(error.body.error).to.equal('invalid_grant');
   });
 });
