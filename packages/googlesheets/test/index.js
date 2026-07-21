@@ -138,3 +138,62 @@ describe('getValues', () => {
     expect(result.data).to.deep.equal({ values: [['a', 'b'], ['c', 'd']] });
   });
 });
+
+describe('service account auth', () => {
+  let sandbox;
+  let mockAppend;
+
+  const serviceAccountState = {
+    configuration: {
+      private_key:
+        '-----BEGIN RSA PRIVATE KEY-----\nMOCK_KEY\n-----END RSA PRIVATE KEY-----',
+      client_email: 'service@project-id.iam.gserviceaccount.com',
+    },
+    data: {},
+  };
+
+  beforeEach(() => {
+    sandbox = sinon.createSandbox();
+
+    mockAppend = sandbox.stub().callsArgWith(1, null, {
+      data: { updates: { updatedCells: 1 } },
+    });
+
+    sandbox.stub(google, 'sheets').returns({
+      spreadsheets: {
+        values: { append: mockAppend },
+      },
+    });
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
+
+  it('uses JWT auth when private_key and client_email are provided', async () => {
+    const jwtStub = sandbox.stub(google.auth, 'JWT').returns({});
+
+    await execute(
+      appendValues('123-456-789', 'Sheet1!A1:B1', [['a', 'b']])
+    )(serviceAccountState);
+
+    expect(jwtStub.calledOnce).to.be.true;
+    const jwtArgs = jwtStub.firstCall.args[0];
+    expect(jwtArgs.email).to.equal('service@project-id.iam.gserviceaccount.com');
+    expect(jwtArgs.scopes).to.deep.equal([
+      'https://www.googleapis.com/auth/spreadsheets',
+    ]);
+  });
+
+  it('does not use OAuth2 when service account credentials are used', async () => {
+    const jwtStub = sandbox.stub(google.auth, 'JWT').returns({});
+    const oauth2Spy = sandbox.spy(google.auth, 'OAuth2');
+
+    await execute(
+      appendValues('123-456-789', 'Sheet1!A1:B1', [['a', 'b']])
+    )(serviceAccountState);
+
+    expect(jwtStub.calledOnce).to.be.true;
+    expect(oauth2Spy.called).to.be.false;
+  });
+});

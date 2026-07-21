@@ -169,4 +169,53 @@ describe('createFhirResource', () => {
       'Missing key(s) in fhirStore: cloudRegion, projectId, datasetId, fhirStoreId'
     );
   });
+
+  it('throws an error listing only the missing fhirStore keys', async () => {
+    const state = {
+      configuration: { accessToken: 'aGVsbG86dGhlcmU=a' },
+    };
+
+    const error = await execute(
+      createFhirResource(
+        { cloudRegion: 'us-east7', projectId: 'test-007' },
+        { resourceType: 'Patient' }
+      )
+    )(state).catch(e => e);
+
+    expect(error.message).to.contains('Missing key(s) in fhirStore: datasetId, fhirStoreId');
+    expect(error.message).to.not.contains('cloudRegion');
+    expect(error.message).to.not.contains('projectId');
+  });
+
+  it('accepts access_token (snake_case) and normalizes it to a Bearer token', async () => {
+    const state = {
+      configuration: {
+        access_token: 'snake-case-token',
+      },
+      data: {
+        fhirStore: {
+          cloudRegion: 'us-east7',
+          projectId: 'test-007',
+          datasetId: 'fhir-007',
+          fhirStoreId: 'testing-fhir-007',
+        },
+        resource: {
+          resourceType: 'Patient',
+          name: [{ use: 'official', family: 'Jones', given: ['Bob'] }],
+          gender: 'male',
+          birthDate: '1985-03-10',
+        },
+      },
+    };
+
+    const finalState = await execute(
+      createFhirResource(
+        state => state.data.fhirStore,
+        state => state.data.resource
+      )
+    )(state);
+
+    expect(finalState.data.data).to.have.property('resourceType', 'Patient');
+    expect(finalState.data.data).to.have.property('id', 'abc-123');
+  });
 });

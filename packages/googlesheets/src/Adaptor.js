@@ -12,10 +12,19 @@ import { google } from 'googleapis';
 let client = undefined;
 
 function createConnection(state) {
-  const { accessToken } = state.configuration;
+  const { accessToken, private_key, client_email } = state.configuration;
 
-  const auth = new google.auth.OAuth2();
-  auth.credentials = { access_token: accessToken };
+  let auth;
+  if (private_key && client_email) {
+    auth = new google.auth.JWT({
+      email: client_email,
+      key: private_key,
+      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+    });
+  } else {
+    auth = new google.auth.OAuth2();
+    auth.credentials = { access_token: accessToken };
+  }
 
   client = google.sheets({ version: 'v4', auth });
   return state;
@@ -59,8 +68,8 @@ export function execute(...operations) {
   // why not here?
 
   return state => {
-    // Note: we no longer need `steps` anymore since `commonExecute`
-    // takes each operation as an argument.
+    const isServiceAccount =
+      state.configuration?.private_key && state.configuration?.client_email;
     return commonExecute(
       createConnection,
       ...operations,
@@ -68,7 +77,9 @@ export function execute(...operations) {
     )({
       ...initialState,
       ...state,
-      configuration: normalizeOauthConfig(state.configuration),
+      configuration: isServiceAccount
+        ? state.configuration
+        : normalizeOauthConfig(state.configuration),
     });
   };
 }
