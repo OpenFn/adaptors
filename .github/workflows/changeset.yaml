@@ -25,9 +25,10 @@ jobs:
 
       - name: Checkout repository
         if: "${{ !contains(github.event.pull_request.labels.*.name, 'no changeset required') }}"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Check for a changeset
         if: "${{ !contains(github.event.pull_request.labels.*.name, 'no changeset required') }}"
