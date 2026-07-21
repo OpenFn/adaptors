@@ -24,16 +24,36 @@ jobs:
       - run: pnpm test:git
       - run: pnpm test
 
+      - name: Setup GH user
+        run: git config user.name ${{ secrets.GH_USER }}
+      - name: Setup GH email
+        run: git config user.email ${{ secrets.GH_EMAIL }}
+
+      - name: Update changelog dates
+        run: pnpm run changelog
+      - name: Commit changelog date updates
+        run: |
+          NON_MD=$(git diff --name-only | grep -v '\.md$' || true)
+          if [ -n "$NON_MD" ]; then
+            echo "ERROR: unexpected non-.md changes after changelog update:"
+            echo "$NON_MD"
+            exit 1
+          fi
+          CHANGED=$(git diff --name-only)
+          if [ -n "$CHANGED" ]; then
+            git add -A
+            git commit -m "chore: update changelog dates [skip ci]"
+            git push
+          else
+            echo "No changelog date changes to commit"
+          fi
+
       - run: pnpm config set "//registry.npmjs.org/:_authToken=${NPM_TOKEN}"
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run:
           pnpm publish -r --report-summary --publish-branch main --access=public
 
-      - name: Setup GH user
-        run: git config user.name ${{ secrets.GH_USER }}
-      - name: Setup GH email
-        run: git config user.email ${{ secrets.GH_EMAIL }}
       - run: pnpm changeset tag
       - run: git push --tags
 
