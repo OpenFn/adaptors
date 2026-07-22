@@ -3,12 +3,15 @@ import { setGlobalDispatcher } from 'undici';
 
 import MockAgent from './mockAgent.js';
 import { fixtures } from './fixtures.js';
+import AdmZip from 'adm-zip';
+
 import {
   execute,
   getDrive,
   getFolder,
   getFile,
   uploadFile,
+  zip,
 } from '../src/Adaptor.js';
 
 setGlobalDispatcher(MockAgent);
@@ -498,5 +501,50 @@ describe('uploadFile', () => {
 
     console.log(finalState.buffer);
     expect(data).to.eql(fixtures.uploadFileResponse);
+  });
+});
+
+describe('zip', () => {
+  it('writes a zip archive of the given files to state.data', () => {
+    const state = { data: { foo: 'bar' } };
+
+    const finalState = zip([
+      { name: 'notes.txt', content: 'hello world' },
+      { name: 'data.json', content: state => state.data },
+    ])(state);
+
+    expect(Buffer.isBuffer(finalState.data)).to.eql(true);
+
+    const archive = new AdmZip(finalState.data);
+    const entries = archive.getEntries().map(e => e.entryName);
+
+    expect(entries.sort()).to.eql(['data.json', 'notes.txt']);
+    expect(archive.readAsText('notes.txt')).to.eql('hello world');
+    expect(JSON.parse(archive.readAsText('data.json'))).to.eql({
+      foo: 'bar',
+    });
+  });
+
+  it('accepts a Buffer as file content', () => {
+    const state = {};
+
+    const finalState = zip([
+      { name: 'raw.bin', content: Buffer.from('binary data') },
+    ])(state);
+
+    const archive = new AdmZip(finalState.data);
+    expect(archive.readAsText('raw.bin')).to.eql('binary data');
+  });
+
+  it('invokes an optional callback with the final state', () => {
+    const state = {};
+
+    const finalState = zip(
+      [{ name: 'notes.txt', content: 'hello' }],
+      state => ({ ...state, done: true })
+    )(state);
+
+    expect(finalState.done).to.eql(true);
+    expect(Buffer.isBuffer(finalState.data)).to.eql(true);
   });
 });

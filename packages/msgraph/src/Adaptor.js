@@ -1,3 +1,4 @@
+import AdmZip from 'adm-zip';
 import { execute as commonExecute } from '@openfn/language-common';
 import {
   expandReferences,
@@ -368,6 +369,51 @@ export function uploadFile(resource, data, callback) {
 
       body: resolvedData,
     }).then(response => handleResponse(response, state, callback));
+  };
+}
+
+/**
+ * Add a set of files to a zip archive. Each file is an object of the form `{ name, content }`.
+ * `content` may be a Buffer, a string, or a JSON-serializable value. Writes the generated zip
+ * to state.data.
+ *
+ * Note that zip binaries do not safely serialize on state and should
+ * be removed at the end of the step
+ * @public
+ * @example
+ * zip([
+ *   { name: 'report.json', content: state => state.data },
+ *   { name: 'notes.txt', content: 'hello world' },
+ * ])
+ * @function
+ * @param {Object[]} files - An array of `{ name, content }` objects to add to the zip
+ * @param {function} callback - Optional callback function
+ * @state data the generated zip archive, as a buffer
+ * @return {Operation}
+ */
+export function zip(files, callback) {
+  return state => {
+    const [resolvedFiles] = expandReferences(state, files);
+
+    const archive = new AdmZip();
+
+    resolvedFiles.forEach(({ name, content }) => {
+      let buffer;
+      if (Buffer.isBuffer(content)) {
+        buffer = content;
+      } else if (typeof content === 'string') {
+        buffer = Buffer.from(content, 'utf8');
+      } else {
+        buffer = Buffer.from(JSON.stringify(content), 'utf8');
+      }
+      archive.addFile(name, buffer);
+    });
+
+    const nextState = { ...state, data: archive.toBuffer() };
+
+    if (callback) return callback(nextState);
+
+    return nextState;
   };
 }
 
