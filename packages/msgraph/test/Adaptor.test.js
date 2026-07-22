@@ -536,15 +536,11 @@ describe('zip', () => {
     expect(archive.readAsText('raw.bin')).to.eql('binary data');
   });
 
-  it('invokes an optional callback with the final state', () => {
+  it('throws if content is falsy', () => {
     const state = {};
 
-    const finalState = zip(
-      [{ name: 'notes.txt', content: 'hello' }],
-      state => ({ ...state, done: true })
-    )(state);
-
-    expect(finalState.done).to.eql(true);
-    expect(Buffer.isBuffer(finalState.data)).to.eql(true);
+    expect(() =>
+      zip([{ name: 'empty.txt', content: undefined }])(state)
+    ).to.throw('no content provided for file "empty.txt"');
   });
 });

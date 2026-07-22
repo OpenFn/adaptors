@@ -387,17 +387,20 @@ export function uploadFile(resource, data, callback) {
  * ])
  * @function
  * @param {Object[]} files - An array of `{ name, content }` objects to add to the zip
- * @param {function} callback - Optional callback function
  * @state data the generated zip archive, as a buffer
  * @return {Operation}
  */
-export function zip(files, callback) {
+export function zip(files) {
   return state => {
     const [resolvedFiles] = expandReferences(state, files);
 
     const archive = new AdmZip();
 
     resolvedFiles.forEach(({ name, content }) => {
+      if (!content) {
+        throw new Error(`zip: no content provided for file "${name}"`);
+      }
+
       let buffer;
       if (Buffer.isBuffer(content)) {
         buffer = content;
@@ -409,11 +412,7 @@ export function zip(files, callback) {
       archive.addFile(name, buffer);
     });
 
-    const nextState = { ...state, data: archive.toBuffer() };
-
-    if (callback) return callback(nextState);
-
-    return nextState;
+    return { ...state, data: archive.toBuffer() };
   };
 }
 
