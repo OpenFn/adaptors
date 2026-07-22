@@ -505,7 +505,7 @@ describe('uploadFile', () => {
 });
 
 describe('zip', () => {
-  it('writes a zip archive of the given files to state.data', () => {
+  it('writes a zip archive of the given files to state.zip', () => {
     const state = { data: { foo: 'bar' } };
 
     const finalState = zip([
@@ -513,9 +513,9 @@ describe('zip', () => {
       { name: 'data.json', content: state => state.data },
     ])(state);
 
-    expect(Buffer.isBuffer(finalState.data)).to.eql(true);
+    expect(Buffer.isBuffer(finalState.zip)).to.eql(true);
 
-    const archive = new AdmZip(finalState.data);
+    const archive = new AdmZip(finalState.zip);
     const entries = archive.getEntries().map(e => e.entryName);
 
     expect(entries.sort()).to.eql(['data.json', 'notes.txt']);
@@ -532,7 +532,7 @@ describe('zip', () => {
       { name: 'raw.bin', content: Buffer.from('binary data') },
     ])(state);
 
-    const archive = new AdmZip(finalState.data);
+    const archive = new AdmZip(finalState.zip);
     expect(archive.readAsText('raw.bin')).to.eql('binary data');
   });
 
@@ -542,5 +542,16 @@ describe('zip', () => {
     expect(() =>
       zip([{ name: 'empty.txt', content: undefined }])(state)
     ).to.throw('no content provided for file "empty.txt"');
+  });
+
+  it('is removed from state by execute at the end of the run', done => {
+    const state = { configuration: { accessToken: fixtures.accessToken } };
+
+    execute(zip([{ name: 'notes.txt', content: 'hello world' }]))(state)
+      .then(finalState => {
+        expect(finalState.zip).to.eql(undefined);
+      })
+      .then(done)
+      .catch(done);
   });
 });

@@ -36,6 +36,9 @@ export function execute(...operations) {
     if (finalState?.buffer) {
       delete finalState.buffer;
     }
+    if (finalState?.zip) {
+      delete finalState.zip;
+    }
     if (finalState?.drives) {
       delete finalState.drives;
     }
@@ -375,10 +378,11 @@ export function uploadFile(resource, data, callback) {
 /**
  * Add a set of files to a zip archive. Each file is an object of the form `{ name, content }`.
  * `content` may be a Buffer, a string, or a JSON-serializable value. Writes the generated zip
- * to state.data.
+ * to state.zip.
  *
- * Note that zip binaries do not safely serialize on state and should
- * be removed at the end of the step
+ * Note that zip binaries do not safely serialize on state: state.zip is automatically
+ * removed at the end of the run, so it must be consumed (e.g. by uploadFile) within the
+ * same run.
  * @public
  * @example
  * zip([
@@ -387,7 +391,7 @@ export function uploadFile(resource, data, callback) {
  * ])
  * @function
  * @param {Object[]} files - An array of `{ name, content }` objects to add to the zip
- * @state data the generated zip archive, as a buffer
+ * @state zip the generated zip archive, as a buffer
  * @return {Operation}
  */
 export function zip(files) {
@@ -412,7 +416,7 @@ export function zip(files) {
       archive.addFile(name, buffer);
     });
 
-    return { ...state, data: archive.toBuffer() };
+    return { ...state, zip: archive.toBuffer() };
   };
 }
 
