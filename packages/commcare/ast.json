@@ -102,7 +102,7 @@
           },
           {
             "title": "example",
-            "description": "post(\"case\", {\n  case_type: \"patient\",\n  case_name: \"Elizabeth Harmon\",\n  owner_id: \"20cc9dda-b90a-4af3-aa3d-fc67184e73ef\",\n  properties: { dob: \"1948-11-02\" }\n})\n// Note: set apiVersion: \"v2\" in state.configuration",
+            "description": "post(\"case\", {\n  case_type: \"patient\",\n  case_name: \"Elizabeth Harmon\",\n  owner_id: \"20cc9dda-b90a-4af3-aa3d-fc67184e73ef\",\n  properties: { dob: \"1948-11-02\" }\n})",
             "caption": "Create a case using the v2 API. Equivalent to `POST /a/<domain>/api/case/v2/`"
           },
           {
@@ -287,7 +287,7 @@
         "postUrl"
       ],
       "docs": {
-        "description": "Make a GET request to CommCare's Reports API\nand POST the response somewhere else.",
+        "description": "Make a GET request to CommCare's Reports API\nand POST the response somewhere else. Only works for v1 reports.",
         "tags": [
           {
             "title": "public",
