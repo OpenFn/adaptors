@@ -57,6 +57,16 @@
             "examples": [
                 "supersecretpassword"
             ]
+        },
+        "apiVersion": {
+            "title": "API Version",
+            "type": "string",
+            "description": "Commcare api version",
+            "minLength": 1,
+            "default": "v1",
+            "examples": [
+                "v1"
+            ]
         }
     },
     "type": "object",

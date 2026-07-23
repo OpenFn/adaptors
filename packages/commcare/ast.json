@@ -8,7 +8,7 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a GET request to CommCare. Use this to fetch resources directly from Commcare REST API.\nYou can pass Commcare query parameters as an object of key value pairs, which will map to parameters\nin the URL.\nThe response body will be returned to `state.data` as JSON.\nPaginated responses will be fully downloaded and returned as a single array, _unless_ an `offset` is passed.",
+        "description": "Make a GET request to CommCare. Use this to fetch resources directly from Commcare REST API.\nYou can pass Commcare query parameters as an object of key value pairs, which will map to parameters\nin the URL.\nThe response body will be returned to `state.data` as JSON.\nPaginated responses will be fully downloaded and returned as a single array, _unless_ an `offset` is passed.\nThe `apiVersion` in `state.configuration` controls the API version used (defaults to `\"v1\"`).\nNote: auto-pagination uses `meta.next` (v1-style); the v2 case API uses cursor-based pagination via a top-level `next` field and is not auto-paginated.\nSet `apiVersion: \"v2\"` in configuration to target the {@link https://commcare-hq.readthedocs.io/api/cases-v2.html Case Data API v2}.",
         "tags": [
           {
             "title": "public",
@@ -46,7 +46,7 @@
           },
           {
             "title": "param",
-            "description": "Input parameters for the request. These vary by endpoint,  see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957366/Data+APIs CommCare docs}.",
+            "description": "Input parameters for the request. These vary by endpoint. See {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957366/Data+APIs CommCare v1 docs} and {@link https://commcare-hq.readthedocs.io/api/cases-v2.html CommCare Case API v2 docs}.",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -93,12 +93,17 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a POST request to CommCare. Use this to send resources directly to Commcare REST API.\nYou can pass Commcare body data as a JSON object.",
+        "description": "Make a POST request to CommCare. Use this to send resources directly to Commcare REST API.\nYou can pass Commcare body data as a JSON object.\nTo create or bulk-create cases using the v2 API, set `apiVersion: \"v2\"` in configuration and\npass `\"case\"` as the path. See the {@link https://commcare-hq.readthedocs.io/api/cases-v2.html#create-case Create Case}\nand {@link https://commcare-hq.readthedocs.io/api/cases-v2.html#bulk-create-update-cases Bulk Create/Update Cases} docs.",
         "tags": [
           {
             "title": "example",
-            "description": "post(\"/user\", { \"username\":\"test\", \"password\":\"somepassword\" })",
-            "caption": "Create a user resource.Equivalent to `<baseUrl>/user`"
+            "description": "post(\"user\", { \"username\": \"test\", \"password\": \"somepassword\" })",
+            "caption": "Create a user resource. Equivalent to `POST /a/<domain>/api/user/v1/`"
+          },
+          {
+            "title": "example",
+            "description": "post(\"case\", {\n  case_type: \"patient\",\n  case_name: \"Elizabeth Harmon\",\n  owner_id: \"20cc9dda-b90a-4af3-aa3d-fc67184e73ef\",\n  properties: { dob: \"1948-11-02\" }\n})\n// Note: set apiVersion: \"v2\" in state.configuration",
+            "caption": "Create a case using the v2 API. Equivalent to `POST /a/<domain>/api/case/v2/`"
           },
           {
             "title": "function",
@@ -121,7 +126,7 @@
           },
           {
             "title": "param",
-            "description": "Object or JSON to create a resource",
+            "description": "Object or JSON to create a resource. For v2 case creation, see the {@link https://commcare-hq.readthedocs.io/api/cases-v2.html#case-create-update-upsert-format case format docs}.",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -292,7 +297,7 @@
           {
             "title": "example",
             "description": "fetchReportData(\n  \"abcde\",\n  { limit: 10 },\n  \"https://www.example.com/api/\"\n)",
-            "caption": "Get 10 records from a report and post them to example.com. Equivalent to `<baseUrl>/configurablereportdata/abcde?limit=10`"
+            "caption": "Get 10 records from a report and post them to example.com. Equivalent to `GET <baseUrl>/a/<domain>/api/configurablereportdata/v1/abcde/?limit=10`"
           },
           {
             "title": "function",
@@ -355,13 +360,13 @@
         "tags": [
           {
             "title": "example",
-            "description": "request(\"GET\", \"/a/asri/api/v0.5/case\");",
-            "caption": "Get a resource. Equivalent to `<baseUrl>/a/asri/api/v0.5/case`"
+            "description": "request(\"GET\", \"/a/asri/api/case/v1/\")",
+            "caption": "Get a list of cases. Equivalent to `<baseUrl>/a/asri/api/case/v1/`"
           },
           {
             "title": "example",
-            "description": "request(\"GET\", \"/case\", {}, { offset:0, limit: 20 })",
-            "caption": "Get a resource using query parameters. Equivalent to `<baseUrl>/case?offset=0&limit=20`"
+            "description": "request(\"GET\", \"/a/asri/api/case/v2/79e25a30-8db5-4a5a-827b-0297b254e87f/\")",
+            "caption": "Get an individual case using the v2 API. Equivalent to `<baseUrl>/a/asri/api/case/v2/<case_id>/`"
           },
           {
             "title": "function",

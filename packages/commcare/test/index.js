@@ -1,6 +1,14 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import { execute, submitXls, get, post, request, bulk } from '../src/index.js';
+import {
+  execute,
+  submitXls,
+  get,
+  post,
+  request,
+  bulk,
+  fetchReportData,
+} from '../src/index.js';
 
 const hostUrl = 'http://example.commcare.com';
 const testServer = enableMockClient(hostUrl, {
@@ -24,6 +32,11 @@ const configuration = {
   appId: app,
   username: 'user',
   password: 'password',
+};
+
+const configurationV2 = {
+  ...configuration,
+  apiVersion: 'v2',
 };
 const paginatedResponse = (offset = 0, limit, objects = defaultObjects) => {
   const next =
@@ -183,7 +196,7 @@ describe('getCases', () => {
   it('should fetch cases', async () => {
     testServer
       .intercept({
-        path: `/a/${domain}/api/v0.5/case`,
+        path: `/a/${domain}/api/case/v1`,
         method: 'GET',
       })
       .reply(200, () => {
@@ -240,7 +253,7 @@ describe('getCases', () => {
   it('should fetch a single case', async () => {
     testServer
       .intercept({
-        path: `/a/${domain}/api/v0.5/case/12345`,
+        path: `/a/${domain}/api/case/v1/12345`,
         method: 'GET',
       })
       .reply(200, () => {
@@ -285,7 +298,7 @@ describe('getCases', () => {
   it('should fetch cases and call the callback', async () => {
     testServer
       .intercept({
-        path: `/a/${domain}/api/v0.5/case`,
+        path: `/a/${domain}/api/case/v1`,
         method: 'GET',
       })
       .reply(200, () => {
@@ -385,7 +398,7 @@ describe('get', () => {
 
     testServer
       .intercept({
-        path: /\/a\/my-domain\/api\/v0\.5\/case/,
+        path: /\/a\/my-domain\/api\/case\/v1/,
         method: 'GET',
       })
       .reply(200, req => {
@@ -412,7 +425,7 @@ describe('get', () => {
 
     testServer
       .intercept({
-        path: /\/a\/my-domain\/api\/v0\.5\/case/,
+        path: /\/a\/my-domain\/api\/case\/v1/,
         method: 'GET',
       })
       .reply(200, req => {
@@ -441,7 +454,7 @@ describe('get', () => {
     testServer
       .intercept({
         // This will fail if query params are added to the url
-        path: '/a/my-domain/api/v0.5/case',
+        path: '/a/my-domain/api/case/v1',
         method: 'GET',
       })
       .reply(200, () => {
@@ -468,7 +481,7 @@ describe('get', () => {
 
     testServer
       .intercept({
-        path: '/a/my-domain/api/v0.5/case',
+        path: '/a/my-domain/api/case/v1',
         method: 'GET',
         query: { offset: 1 },
       })
@@ -488,7 +501,7 @@ describe('get', () => {
   it("should respect the user's limit while paginating", async () => {
     testServer
       .intercept({
-        path: /\/a\/my-domain\/api\/v0\.5\/case/,
+        path: /\/a\/my-domain\/api\/case\/v1/,
         method: 'GET',
         query: {
           limit: 2,
@@ -513,7 +526,7 @@ describe('get', () => {
   it('should call the callback once for a single request', async () => {
     testServer
       .intercept({
-        path: `/a/${domain}/api/v0.5/case`,
+        path: `/a/${domain}/api/case/v1`,
         method: 'GET',
       })
       .reply(200, () => {
@@ -546,7 +559,7 @@ describe('createUser', () => {
   it('should create a user', async () => {
     testServer
       .intercept({
-        path: `/a/${domain}/api/v0.5/user`,
+        path: `/a/${domain}/api/user/v1`,
         method: 'POST',
       })
       .reply(201, () => {
@@ -578,7 +591,7 @@ describe('request', () => {
   it('makes a GET request', async () => {
     testServer
       .intercept({
-        path: `/a/asri/api/v0.5/case`,
+        path: `/a/asri/api/case/v1`,
         method: 'GET',
         query: {
           offset: 1,
@@ -595,7 +608,7 @@ describe('request', () => {
 
     const { data, response } = await request(
       'GET',
-      '/a/asri/api/v0.5/case',
+      '/a/asri/api/case/v1',
       {},
       { offset: 1 }
     )(state);
@@ -727,5 +740,217 @@ describe('Bulk', () => {
     // And the adaptor should have uploaded a reasonable looking formdata object
     expect(formdata.get('replace')).to.not.be.undefined;
     expect(formdata.get('replace')).to.equal('false');
+  });
+});
+
+describe('get (v2 case API)', () => {
+  // v2 list response: { matching_records, cases, next? }
+  // https://commcare-hq.readthedocs.io/api/cases-v2.html#get-list-of-cases
+  it('should list cases using the v2 API', async () => {
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/case/v2`,
+        method: 'GET',
+      })
+      .reply(200, () => {
+        return {
+          matching_records: 1,
+          next: null,
+          cases: [
+            {
+              case_id: '79e25a30-8db5-4a5a-827b-0297b254e87f',
+              case_type: 'patient',
+              case_name: 'Elizabeth Harmon',
+              external_id: '1',
+              owner_id: '20cc9dda-b90a-4af3-aa3d-fc67184e73ef',
+              date_opened: '2020-03-19T14:31:34.133000Z',
+              last_modified: '2020-03-19T14:31:34.133000Z',
+              closed: false,
+              date_closed: null,
+              properties: { dob: '1948-11-02' },
+            },
+          ],
+        };
+      });
+
+    const state = { configuration: configurationV2 };
+
+    // v2 returns the whole body on state.data (no body.objects to unwrap)
+    const { data } = await execute(get('case'))(state);
+    expect(data.matching_records).to.equal(1);
+    expect(data.cases).to.have.length(1);
+    expect(data.cases[0].case_id).to.equal(
+      '79e25a30-8db5-4a5a-827b-0297b254e87f'
+    );
+    expect(data.cases[0].case_type).to.equal('patient');
+  });
+
+  it('should list cases filtered by case_type using the v2 API', async () => {
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/case/v2`,
+        method: 'GET',
+        query: { case_type: 'patient', closed: 'false' },
+      })
+      .reply(200, () => {
+        return {
+          matching_records: 1,
+          next: null,
+          cases: [{ case_id: 'abc', case_type: 'patient', closed: false }],
+        };
+      });
+
+    const state = { configuration: configurationV2 };
+
+    const { data } = await execute(
+      get('case', { case_type: 'patient', closed: false })
+    )(state);
+    expect(data.matching_records).to.equal(1);
+    expect(data.cases[0].case_type).to.equal('patient');
+  });
+
+
+  it('should get an individual case by ID using the v2 API', async () => {
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/case/v2/79e25a30-8db5-4a5a-827b-0297b254e87f`,
+        method: 'GET',
+      })
+      .reply(200, () => {
+        return {
+          case_id: '79e25a30-8db5-4a5a-827b-0297b254e87f',
+          case_type: 'patient',
+          case_name: 'Elizabeth Harmon',
+          closed: false,
+          date_closed: null,
+          properties: { dob: '1948-11-02' },
+        };
+      });
+
+    const state = { configuration: configurationV2 };
+
+    const { data } = await execute(
+      get('case/79e25a30-8db5-4a5a-827b-0297b254e87f')
+    )(state);
+    expect(data.case_id).to.equal('79e25a30-8db5-4a5a-827b-0297b254e87f');
+    expect(data.case_type).to.equal('patient');
+    expect(data.closed).to.equal(false);
+  });
+});
+
+describe('post (v2 case API)', () => {  
+  it('should create a single case using the v2 API', async () => {
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/case/v2`,
+        method: 'POST',
+      })
+      .reply(201, () => {
+        return {
+          xform_id: 'form-abc-123',
+          case: {
+            case_id: 'new-case-uuid',
+            case_type: 'patient',
+            case_name: 'Elizabeth Harmon',
+            closed: false,
+            properties: { dob: '1948-11-02' },
+          },
+        };
+      });
+
+    const state = { configuration: configurationV2 };
+
+    const { data, response } = await execute(
+      post('case', {
+        case_type: 'patient',
+        case_name: 'Elizabeth Harmon',
+        owner_id: '20cc9dda-b90a-4af3-aa3d-fc67184e73ef',
+        properties: { dob: '1948-11-02' },
+      })
+    )(state);
+
+    expect(response.statusCode).to.equal(201);
+    expect(data.xform_id).to.equal('form-abc-123');
+    expect(data.case.case_id).to.equal('new-case-uuid');
+  });
+
+
+  it('should bulk create cases using the v2 API', async () => {
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/case/v2`,
+        method: 'POST',
+      })
+      .reply(200, () => {
+        return {
+          xform_id: 'form-bulk-456',
+          cases: [
+            { case_id: 'case-1-uuid', case_type: 'mother', closed: false },
+            { case_id: 'case-2-uuid', case_type: 'baby', closed: false },
+          ],
+        };
+      });
+
+    const state = { configuration: configurationV2 };
+
+    const { data } = await execute(
+      post('case', [
+        {
+          create: true,
+          case_type: 'mother',
+          case_name: 'Cersei Lannister',
+          owner_id: '20cc9dda-b90a-4af3-aa3d-fc67184e73ef',
+          temporary_id: '1',
+          properties: { dob: '1988-11-02' },
+        },
+        {
+          create: true,
+          case_type: 'baby',
+          case_name: 'Tommen Baratheon',
+          owner_id: '9dd08c69-4ace-4e1d-9929-146d22d1070c',
+          properties: { dob: '2008-03-01' },
+          indices: {
+            parent: { temporary_id: '1', case_type: 'mother', relationship: 'child' },
+          },
+        },
+      ])
+    )(state);
+
+    expect(data.xform_id).to.equal('form-bulk-456');
+    expect(data.cases).to.have.length(2);
+    expect(data.cases[0].case_type).to.equal('mother');
+  });
+});
+
+describe('fetchReportData', () => {
+  it('should GET report data from CommCare and POST it to a given URL', async () => {
+    const reportId = '3cb6840b03c79fde8f4075246b7a8c4b';
+    const reportData = { meta: {}, data: [{ row: 1 }] };
+
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/configurablereportdata/v1/${reportId}/`,
+        method: 'GET',
+      })
+      .reply(200, () => reportData);
+
+    let posted;
+    testServer
+      .intercept({
+        path: '/webhook/',
+        method: 'POST',
+      })
+      .reply(200, req => {
+        posted = req.body;
+        return { ok: true };
+      });
+
+    const state = { configuration };
+
+    await execute(
+      fetchReportData(reportId, {}, `${hostUrl}/webhook/`)
+    )(state);
+
+    expect(JSON.parse(posted)).to.deep.equal(reportData);
   });
 });

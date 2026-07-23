@@ -43,6 +43,9 @@ export function execute(...operations) {
  * in the URL.
  * The response body will be returned to `state.data` as JSON.
  * Paginated responses will be fully downloaded and returned as a single array, _unless_ an `offset` is passed.
+ * The `apiVersion` in `state.configuration` controls the API version used (defaults to `"v1"`).
+ * Note: auto-pagination uses `meta.next` (v1-style); the v2 case API uses cursor-based pagination via a top-level `next` field and is not auto-paginated.
+ * Set `apiVersion: "v2"` in configuration to target the {@link https://commcare-hq.readthedocs.io/api/cases-v2.html Case Data API v2}.
  * @public
  * @function
  * @example <caption>Get a resource by Id. Equivalent to GET `<baseUrl>/case/12345`</caption>
@@ -55,24 +58,33 @@ export function execute(...operations) {
  *   return state;
  * })
  * @param {string} path - Path to resource
- * @param {Object} [params] - Input parameters for the request. These vary by endpoint,  see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957366/Data+APIs CommCare docs}.
+ * @param {Object} [params] - Input parameters for the request. These vary by endpoint. See {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957366/Data+APIs CommCare v1 docs} and {@link https://commcare-hq.readthedocs.io/api/cases-v2.html CommCare Case API v2 docs}.
  * @param {function} [callback] - Optional callback function. Invoked once per page of data retrieved.
  * @state {CommcareHttpState}
  * @returns {Operation}
  */
 export function get(path, params = {}, callback = s => s) {
   return async state => {
-    const { domain } = state.configuration;
+    const { domain, apiVersion = 'v1' } = state.configuration;
     const [resolvedPath, resolvedParams] = expandReferences(
       state,
       path,
-      params
+      params,
     );
 
     let offset, limit;
 
     let nextState = state;
     let result;
+    const resolvedPathParts = resolvedPath.split('/');
+
+    let newPath, resolvedId;
+    if (resolvedPathParts.length > 1) {
+      resolvedId = resolvedPathParts[resolvedPathParts.length - 1];
+      newPath = resolvedPathParts.slice(0, resolvedPathParts.length - 1);
+    } else {
+      newPath = resolvedPath;
+    }
 
     // Automatically paginate if the user did not pass an offset
     let allowPagination = isNaN(resolvedParams.offset);
@@ -83,15 +95,16 @@ export function get(path, params = {}, callback = s => s) {
       };
 
       do {
+        const idPresent = resolvedId ? `/${resolvedId}` : '';
         // Make the first request
         const response = await util.request(
           state.configuration,
-          `/a/${domain}/api/v0.5/${resolvedPath}`,
+          `/a/${domain}/api/${newPath}/${apiVersion}${idPresent}`,
           {
             method: 'GET',
             params: requestParams,
             contentType: 'application/json',
-          }
+          },
         );
 
         nextState = util.prepareNextState(state, response, callback);
@@ -137,12 +150,22 @@ export function get(path, params = {}, callback = s => s) {
 /**
  * Make a POST request to CommCare. Use this to send resources directly to Commcare REST API.
  * You can pass Commcare body data as a JSON object.
- * @example <caption>Create a user resource.Equivalent to `<baseUrl>/user`</caption>
- * post("/user", { "username":"test", "password":"somepassword" })
+ * To create or bulk-create cases using the v2 API, set `apiVersion: "v2"` in configuration and
+ * pass `"case"` as the path. See the {@link https://commcare-hq.readthedocs.io/api/cases-v2.html#create-case Create Case}
+ * and {@link https://commcare-hq.readthedocs.io/api/cases-v2.html#bulk-create-update-cases Bulk Create/Update Cases} docs.
+ * @example <caption>Create a user resource. Equivalent to `POST /a/<domain>/api/user/v1/`</caption>
+ * post("user", { "username": "test", "password": "somepassword" })
+ * @example <caption>Create a case using the v2 API. Equivalent to `POST /a/<domain>/api/case/v2/`</caption>
+ * post("case", {
+ *   case_type: "patient",
+ *   case_name: "Elizabeth Harmon",
+ *   owner_id: "20cc9dda-b90a-4af3-aa3d-fc67184e73ef",
+ *   properties: { dob: "1948-11-02" }
+ * })
  * @function
  * @public
  * @param {string} path - Path to resource
- * @param {object} data - Object or JSON to create a resource
+ * @param {object} data - Object or JSON to create a resource. For v2 case creation, see the {@link https://commcare-hq.readthedocs.io/api/cases-v2.html#case-create-update-upsert-format case format docs}.
  * @param {Object} [params] - Optional request params
  * @param {function} [callback] - Optional callback to handle the response
  * @returns {Operation}
@@ -150,24 +173,24 @@ export function get(path, params = {}, callback = s => s) {
  */
 export function post(path, data, params = {}, callback = s => s) {
   return async state => {
-    const { domain } = state.configuration;
+    const { domain, apiVersion = 'v1' } = state.configuration;
     const [resolvedPath, resolvedData, resolvedParams] = expandReferences(
       state,
       path,
       data,
-      params
+      params,
     );
 
     try {
       const response = await util.request(
         state.configuration,
-        `/a/${domain}/api/v0.5/${resolvedPath}`,
+        `/a/${domain}/api/${resolvedPath}/${apiVersion}`,
         {
           method: 'POST',
           data: resolvedData,
           params: resolvedParams,
           contentType: 'application/json',
-        }
+        },
       );
 
       return util.prepareNextState(state, response, callback);
@@ -276,9 +299,9 @@ export function submit(data) {
 
 /**
  * Make a GET request to CommCare's Reports API
- * and POST the response somewhere else.
+ * and POST the response somewhere else. Only works for v1 reports.
  * @public
- * @example <caption>Get 10 records from a report and post them to example.com. Equivalent to `<baseUrl>/configurablereportdata/abcde?limit=10`</caption>
+ * @example <caption>Get 10 records from a report and post them to example.com. Equivalent to `GET <baseUrl>/a/<domain>/api/configurablereportdata/v1/abcde/?limit=10`</caption>
  * fetchReportData(
  *   "abcde",
  *   { limit: 10 },
@@ -293,7 +316,8 @@ export function submit(data) {
  */
 export function fetchReportData(reportId, params, postUrl) {
   return async state => {
-    const path = `/a/${state.configuration.domain}/api/v0.5/configurablereportdata/${reportId}/`;
+    const { domain } = state.configuration;
+    const path = `/a/${domain}/api/configurablereportdata/v1/${reportId}/`;
 
     console.log('with params: '.concat(JSON.stringify(params)));
 
@@ -304,7 +328,6 @@ export function fetchReportData(reportId, params, postUrl) {
 
     await util.request(state.configuration, postUrl, {
       method: 'POST',
-      params,
       data: reportData,
       contentType: 'application/json',
     });
@@ -317,10 +340,10 @@ export function fetchReportData(reportId, params, postUrl) {
 
 /**
  * Make a general HTTP request against the Commcare server. Use this to make any request to Commcare REST API.
- * @example <caption>Get a resource. Equivalent to `<baseUrl>/a/asri/api/v0.5/case`</caption>
- * request("GET", "/a/asri/api/v0.5/case");
- * @example <caption>Get a resource using query parameters. Equivalent to `<baseUrl>/case?offset=0&limit=20`</caption>
- * request("GET", "/case", {}, { offset:0, limit: 20 })
+ * @example <caption>Get a list of cases. Equivalent to `<baseUrl>/a/asri/api/case/v1/`</caption>
+ * request("GET", "/a/asri/api/case/v1/")
+ * @example <caption>Get an individual case using the v2 API. Equivalent to `<baseUrl>/a/asri/api/case/v2/<case_id>/`</caption>
+ * request("GET", "/a/asri/api/case/v2/79e25a30-8db5-4a5a-827b-0297b254e87f/")
  * @function
  * @public
  * @param {string} method - HTTP method to use
@@ -395,7 +418,7 @@ export function bulk(type, data, params) {
     const [resolvedData, resolvedParams] = expandReferences(
       state,
       data,
-      params
+      params,
     );
     let path, file;
 
