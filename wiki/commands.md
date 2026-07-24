@@ -52,3 +52,21 @@ source files.
 ```bash
 pnpm docs:build
 ```
+
+## Code Review
+
+**`/adaptor-review`** - An AI code review command (VS Code Copilot / Claude
+Code) that reviews the current branch's changes against the
+[Code Review Rubric](code-review.md).
+
+Run it from chat after making changes and before opening a PR:
+
+```
+/adaptor-review
+```
+
+It reads [wiki/code-review.md](code-review.md) — the single source of truth for
+review rules — and reports Blocking / Recommended / Nit findings for the diff.
+The same rubric backs the automated Claude review on pull requests, so running
+`/adaptor-review` locally should surface the same issues before CI does.
+
