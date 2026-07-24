@@ -20,6 +20,9 @@ importers:
       '@changesets/cli':
         specifier: ^2.29.8
         version: 2.29.8(@types/node@18.17.5)
+      '@changesets/parse':
+        specifier: ^0.4.2
+        version: 0.4.2
       '@openfn/adaptor-apis':
         specifier: workspace:*
         version: link:tools/adaptor-apis
