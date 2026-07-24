@@ -90,6 +90,7 @@ describe('sendMessage', () => {
 describe('getContentsFromMessages', () => {
   let originalGmail;
   let mockGmail;
+  let attachmentGetCalls;
 
   const bodyText = 'Hello';
 
@@ -106,6 +107,7 @@ describe('getContentsFromMessages', () => {
 
   beforeEach(() => {
     originalGmail = google.gmail;
+    attachmentGetCalls = 0;
 
     const listResponse = {
       data: {
@@ -163,7 +165,20 @@ describe('getContentsFromMessages', () => {
               ],
             },
           ],
-          headers: [],
+          headers: [
+            {
+              name: 'From',
+              value: 'sender@example.org',
+            },
+            {
+              name: 'Date',
+              value: 'Thu, 23 Jul 2026 08:55:46 +0000',
+            },
+            {
+              name: 'Subject',
+              value: 'Monthly report',
+            },
+          ],
         },
       },
     };
@@ -193,6 +208,7 @@ describe('getContentsFromMessages', () => {
           get: async () => getResponse,
           attachments: {
             get: async ({ id }) => {
+              attachmentGetCalls += 1;
               if (id === 'a') {
                 return attachmentA;
               }
@@ -229,6 +245,54 @@ describe('getContentsFromMessages', () => {
 
     expect(data[0].messageId).to.equal('test-message-id');
     expect(data[0].body).to.equal(bodyText);
+  });
+
+  it('should skip file and archive attachments when fetching is disabled', async () => {
+    const result = await getContentsFromMessages({
+      contents: [
+        'body',
+        {
+          type: 'file',
+          name: 'text',
+          file: /.txt$/,
+        },
+        {
+          type: 'archive',
+          name: 'archive',
+          archive: /.zip$/,
+          file: /.json$/,
+        },
+      ],
+      fetchAttachments: false,
+    })(state);
+
+    expect(result.data[0].messageId).to.equal('test-message-id');
+    expect(result.data[0].from).to.equal('sender@example.org');
+    expect(result.data[0].date).to.eql(
+      new Date('Thu, 23 Jul 2026 08:55:46 +0000'),
+    );
+    expect(result.data[0].subject).to.equal('Monthly report');
+    expect(result.data[0].body).to.equal(bodyText);
+    expect(result.data[0]).not.to.have.property('text');
+    expect(result.data[0]).not.to.have.property('archive');
+    expect(result.processedIds).to.eql(['test-message-id']);
+    expect(attachmentGetCalls).to.equal(0);
+  });
+
+  it('should fetch attachments when explicitly enabled', async () => {
+    const { data } = await getContentsFromMessages({
+      contents: [
+        {
+          type: 'file',
+          name: 'text',
+          file: /.txt$/,
+        },
+      ],
+      fetchAttachments: true,
+    })(state);
+
+    expect(data[0].text.content).to.equal('hello');
+    expect(attachmentGetCalls).to.equal(1);
   });
 
   it('should get an XLSX attachment', async () => {

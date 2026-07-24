@@ -41,6 +41,7 @@ import {
  * @property {Array<string>} [processedIds] - Ignore message ids which have already been processed.
  * @property {string?} [email] - The user account to retrieve messages from. Defaults to the authenticated user.
  * @property {int?} [maxResults] - Maximum number of messages to process per request. Default is 1000.
+ * @property {boolean} [fetchAttachments=true] - Whether to download file and archive attachments.
  */
 
 /**
@@ -67,6 +68,17 @@ import {
  *     ]
  *   }
  * )
+ * @example <caption>Get metadata without downloading requested attachments</caption>
+ * getContentsFromMessages(
+ *   {
+ *     query: 'after:2026/07/01',
+ *     contents: [
+ *       'body',
+ *       { type: 'file', name: 'report', file: /\.xlsx$/ }
+ *     ],
+ *     fetchAttachments: false
+ *   }
+ * )
  */
 export function getContentsFromMessages(options) {
   return async state => {
@@ -83,11 +95,19 @@ export function getContentsFromMessages(options) {
       query: resolvedOptions.query,
       processedIds: resolvedOptions.processedIds,
       maxResults: resolvedOptions.maxResults ?? defaultOptions.maxResults,
+      fetchAttachments: resolvedOptions.fetchAttachments !== false,
     };
 
+    const requestedContentIndicators = getContentIndicators(
+      [],
+      resolvedOptions.contents,
+    ).filter(
+      ({ type }) =>
+        opts.fetchAttachments || (type !== 'file' && type !== 'archive'),
+    );
     const contentIndicators = getContentIndicators(
       defaultOptions.contents,
-      resolvedOptions.contents,
+      requestedContentIndicators,
     );
 
     const contents = [];
