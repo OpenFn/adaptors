@@ -158,7 +158,7 @@ export const enableMockClient = (baseUrl, options = {}) => {
   return dispatcher;
 };
 
-const assertOK = async (response, errorMap, fullUrl, method, startTime) => {
+const assertOK = async (response, errorMap, fullUrl, method, startTime, parseAs) => {
   if (errorMap === false) {
     return;
   }
@@ -171,7 +171,7 @@ const assertOK = async (response, errorMap, fullUrl, method, startTime) => {
       : errMapMessage || response.statusCode >= 400;
 
   if (isError) {
-    const body = await readResponseBody(response);
+    const body = await readResponseBody(response, parseAs);
 
     const statusText = getReasonPhrase(response.statusCode);
     const defaultErrorMessage = `${method} to ${fullUrl} returned ${response.statusCode}: ${statusText}`;
@@ -310,7 +310,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
 
   const statusText = getReasonPhrase(response.statusCode);
 
-  await assertOK(response, errors, url, method, startTime);
+  await assertOK(response, errors, url, method, startTime, parseAs);
 
   // redirect codes https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status#redirection_messages
   const hasRedirectStatus = [300, 301, 302, 303, 304, 305, 307, 308].includes(
