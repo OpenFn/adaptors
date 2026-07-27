@@ -23,7 +23,7 @@
   "dependencies": {
     "@openfn/language-common": "workspace:*",
     "JSONPath": "^0.10.0",
-    "jsforce": "1.5.1",
+    "jsforce": "^1.11.1",
     "lodash-fp": "^0.10.4",
     "mustache": "^2.3.2",
     "request": "^2.88.2",
