@@ -1,5 +1,11 @@
 # @openfn/language-bigquery
 
+## 4.1.3 - 28 July 2026
+
+### Patch Changes
+
+- ba0ca39: Remove unused unzipper dependency
+
 ## 4.1.2 - 30 June 2026
 
 ### Patch Changes

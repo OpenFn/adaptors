@@ -1,5 +1,11 @@
 # @openfn/language-dhis2
 
+## 8.2.1 - 28 July 2026
+
+### Patch Changes
+
+- 8acf431: Update axios dependency
+
 ## 8.2.0 - 30 June 2026
 
 ### Minor Changes

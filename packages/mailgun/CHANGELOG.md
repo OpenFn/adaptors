@@ -1,5 +1,11 @@
 # @openfn/language-mailgun
 
+## 0.7.3 - 28 July 2026
+
+### Patch Changes
+
+- 3f31775: Update form-data dependency
+
 ## 0.7.2 - 30 June 2026
 
 ### Patch Changes
