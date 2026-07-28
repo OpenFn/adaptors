@@ -1,5 +1,11 @@
 v0.1.6
 
+## 0.7.3 - 28 July 2026
+
+### Patch Changes
+
+- 383f22f: Update jsforce to 1.11.1
+
 ## 0.7.2 - 30 June 2026
 
 ### Patch Changes

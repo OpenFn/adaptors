@@ -1,5 +1,12 @@
 # @openfn/language-hive
 
+## 0.4.3 - 28 July 2026
+
+### Patch Changes
+
+- 286a20a: Update driver
+- 998b03d: Update client dependency
+
 ## 0.4.2 - 30 June 2026
 
 ### Patch Changes

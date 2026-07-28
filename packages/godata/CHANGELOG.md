@@ -1,5 +1,11 @@
 # @openfn/language-godata
 
+## 3.6.3 - 28 July 2026
+
+### Patch Changes
+
+- 8acf431: Update axios dependency
+
 ## 3.6.2 - 30 June 2026
 
 ### Patch Changes
