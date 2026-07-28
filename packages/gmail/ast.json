@@ -52,6 +52,11 @@
             "title": "example",
             "description": "getContentsFromMessages(\n  {\n    query: 'after:15/01/2025',\n    contents: [\n      'subject',\n      { type: 'file', name: 'metadata', file: 'report.txt'}\n    ]\n  }\n)",
             "caption": "Get messages after a specific date, with subject and report.txt attachment"
+          },
+          {
+            "title": "example",
+            "description": "getContentsFromMessages(\n  {\n    query: 'after:2026/07/01',\n    contents: [\n      'body',\n      { type: 'file', name: 'report', file: /\\.xlsx$/ }\n    ],\n    fetchAttachments: false\n  }\n)",
+            "caption": "Get metadata without downloading requested attachments"
           }
         ]
       },

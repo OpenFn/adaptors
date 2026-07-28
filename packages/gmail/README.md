@@ -19,7 +19,8 @@ customize the output.
 ## Parameters
 
 An `options` object can configure the results of the function call. Optional
-parameters include: `contents`, `query`, `email`, `processedIds`, `maxResults`
+parameters include: `contents`, `query`, `email`, `processedIds`, `maxResults`,
+`fetchAttachments`
 
 ### options.contents
 
@@ -161,6 +162,24 @@ This works in conjuction with the `options.processedIds` parameter. For example:
 - `options.maxResults = 1;`
 - this will skip message #1 and resulting dataset will contain a single message
   #2
+
+### options.fetchAttachments
+
+Set `fetchAttachments` to `false` to return message IDs and non-attachment
+content without downloading requested file or archive attachments. Attachment
+fields are omitted from the output when downloading is disabled. The default is
+`true`.
+
+```js
+getContentsFromMessages({
+  query: 'after:2026/07/01',
+  contents: [
+    'body',
+    { type: 'file', name: 'report', file: /\.xlsx$/ },
+  ],
+  fetchAttachments: false,
+});
+```
 
 ## Example jobs
 
