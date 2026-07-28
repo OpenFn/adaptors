@@ -2,10 +2,46 @@ import JSZip from 'jszip';
 import xlsx from 'xlsx';
 import { google } from 'googleapis';
 import { basename } from 'node:path';
+import {
+  request as commonRequest,
+  logResponse,
+} from '@openfn/language-common/util';
 
 const SEND_MESSAGE_BOUNDARY = '----=_Part_0_123456789.123456789';
 
+const GMAIL_API_BASE_URL = 'https://www.googleapis.com/gmail/v1';
+
 let gmail;
+let accessToken;
+
+/**
+ * INVARIANT: infrastructure helper named `request` - do not rename.
+ * Sends an authenticated raw request to the Gmail API and returns the
+ * response body. Paths are resolved against the Gmail v1 base URL unless
+ * a full URL is given.
+ */
+export async function request(path, options = {}) {
+  const { method = 'GET', query, body, headers = {} } = options;
+
+  const url = /^https?:\/\//.test(path)
+    ? path
+    : `${GMAIL_API_BASE_URL}${path.startsWith('/') ? '' : '/'}${path}`;
+
+  const response = await commonRequest(method, url, {
+    query,
+    body,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'content-type': 'application/json',
+      ...headers,
+    },
+    parseAs: 'json',
+  });
+
+  logResponse(response);
+
+  return response.body;
+}
 
 export async function getMessagesResult(userId, query, pageToken) {
   try {
@@ -25,19 +61,26 @@ export async function getMessagesResult(userId, query, pageToken) {
   }
 }
 
-export async function getMessageResult(userId, messageId) {
-  const { data } = await gmail.users.messages.get({
-    userId,
-    id: messageId,
-    format: 'full',
-  });
+export async function getMessageResult(userId, messageId, format = 'full') {
+  try {
+    const { data } = await gmail.users.messages.get({
+      userId,
+      id: messageId,
+      format,
+      ...(format === 'metadata' && {
+        metadataHeaders: ['From', 'Date', 'Subject'],
+      }),
+    });
 
-  return {
-    userId,
-    messageId,
-    parts: data?.payload?.parts,
-    headers: data?.payload?.headers,
-  };
+    return {
+      userId,
+      messageId,
+      parts: data?.payload?.parts,
+      headers: data?.payload?.headers,
+    };
+  } catch (error) {
+    throw new Error(`Error fetching message ${messageId}: ` + error.message);
+  }
 }
 
 export function getContentIndicators(
@@ -82,13 +125,25 @@ function getContentIndicator(contentRequest) {
   return contentIndicator;
 }
 
-export async function getMessageContent(message, desiredContent) {
+export async function getMessageContent(
+  message,
+  desiredContent,
+  fetchAttachments = true
+) {
   switch (desiredContent.type) {
     case 'archive':
-      return await getFileFromArchiveFromAttachment(message, desiredContent);
+      return await getFileFromArchiveFromAttachment(
+        message,
+        desiredContent,
+        fetchAttachments,
+      );
 
     case 'file':
-      return await getFileFromAttachment(message, desiredContent);
+      return await getFileFromAttachment(
+        message,
+        desiredContent,
+        fetchAttachments,
+      );
 
     case 'body':
       return getBodyFromMessage(message, desiredContent);
@@ -192,16 +247,27 @@ export function createConnection(state) {
   auth.credentials = { access_token };
 
   gmail = google.gmail({ version: 'v1', auth });
+  accessToken = access_token;
 
   return state;
 }
 
 export function removeConnection(state) {
   gmail = undefined;
+  accessToken = undefined;
   return state;
 }
 
-async function getFileFromArchiveFromAttachment(message, desiredContent) {
+async function getFileFromArchiveFromAttachment(
+  message,
+  desiredContent,
+  fetchAttachments
+) {
+  if (!fetchAttachments) {
+    const part = findAttachmentPart(message, desiredContent.archive);
+    return part ? { archiveFilename: part.filename } : null;
+  }
+
   const attachmentResult = await getAttachmentResult(
     message,
     desiredContent.archive,
@@ -213,7 +279,12 @@ async function getFileFromArchiveFromAttachment(message, desiredContent) {
   );
 }
 
-async function getFileFromAttachment(message, desiredContent) {
+async function getFileFromAttachment(message, desiredContent, fetchAttachments) {
+  if (!fetchAttachments) {
+    const part = findAttachmentPart(message, desiredContent.file);
+    return part ? { filename: part.filename } : null;
+  }
+
   const attachmentResult = await getAttachmentResult(
     message,
     desiredContent.file,
@@ -222,13 +293,23 @@ async function getFileFromAttachment(message, desiredContent) {
   return await extractFileFromAttachment(attachmentResult, desiredContent);
 }
 
-async function getAttachmentResult(message, expression) {
+function findAttachmentPart(message, expression) {
   const part = message.parts?.find(p => {
     return isExpressionMatch(p.filename, expression);
   });
 
   if (!part) {
     console.info(`Attachment not found for: ${expression}`);
+    return null;
+  }
+
+  return part;
+}
+
+async function getAttachmentResult(message, expression) {
+  const part = findAttachmentPart(message, expression);
+
+  if (!part) {
     return null;
   }
 

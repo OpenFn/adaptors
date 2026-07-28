@@ -3,7 +3,12 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { google } from 'googleapis';
 import xlsx from 'xlsx';
-import { getContentsFromMessages, sendMessage } from '../src/Adaptor.js';
+import { enableMockClient } from '@openfn/language-common/util';
+import {
+  getContentsFromMessages,
+  sendMessage,
+  request,
+} from '../src/Adaptor.js';
 import { createConnection, removeConnection } from '../src/Utils.js';
 
 const state = {
@@ -11,6 +16,83 @@ const state = {
     access_token: 'mock-access-token',
   },
 };
+
+describe('request', () => {
+  const testServer = enableMockClient('https://www.googleapis.com');
+
+  beforeEach(() => {
+    createConnection(state);
+  });
+
+  afterEach(() => {
+    removeConnection();
+  });
+
+  it('should GET a message by id with an auth header', async () => {
+    testServer
+      .intercept({
+        path: '/gmail/v1/users/me/messages/msg-1',
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer mock-access-token',
+        },
+      })
+      .reply(200, { id: 'msg-1', threadId: 'thread-1' });
+
+    const { data } = await request('/users/me/messages/msg-1')(state);
+
+    expect(data).to.eql({ id: 'msg-1', threadId: 'thread-1' });
+  });
+
+  it('should POST a body to the given path', async () => {
+    testServer
+      .intercept({
+        path: '/gmail/v1/users/me/messages/msg-1/modify',
+        method: 'POST',
+        body: JSON.stringify({ addLabelIds: ['STARRED'] }),
+      })
+      .reply(200, { id: 'msg-1', labelIds: ['STARRED'] });
+
+    const { data } = await request('/users/me/messages/msg-1/modify', {
+      method: 'POST',
+      body: { addLabelIds: ['STARRED'] },
+    })(state);
+
+    expect(data.labelIds).to.eql(['STARRED']);
+  });
+
+  it('should append query parameters', async () => {
+    testServer
+      .intercept({
+        path: '/gmail/v1/users/me/messages',
+        query: { maxResults: 5 },
+        method: 'GET',
+      })
+      .reply(200, { messages: [{ id: 'msg-1' }] });
+
+    const { data } = await request('/users/me/messages', {
+      query: { maxResults: 5 },
+    })(state);
+
+    expect(data.messages).to.eql([{ id: 'msg-1' }]);
+  });
+
+  it('should throw on error responses', async () => {
+    testServer
+      .intercept({
+        path: '/gmail/v1/users/me/messages/nope',
+        method: 'GET',
+      })
+      .reply(404, { error: { message: 'Not Found' } });
+
+    try {
+      await request('/users/me/messages/nope')(state);
+      expect.fail('Should have thrown an error');
+    } catch (error) {
+      expect(error.statusCode).to.equal(404);
+    }
+  });
+});
 describe('sendMessage', () => {
   let originalGmail;
   let mockGmail;
@@ -91,6 +173,8 @@ describe('getContentsFromMessages', () => {
   let originalGmail;
   let mockGmail;
   let attachmentGetCalls;
+  let getCalls;
+  let listCalls;
 
   const bodyText = 'Hello';
 
@@ -108,6 +192,8 @@ describe('getContentsFromMessages', () => {
   beforeEach(() => {
     originalGmail = google.gmail;
     attachmentGetCalls = 0;
+    getCalls = [];
+    listCalls = 0;
 
     const listResponse = {
       data: {
@@ -164,6 +250,17 @@ describe('getContentsFromMessages', () => {
                 },
               ],
             },
+            {
+              mimeType: 'application/zip',
+              filename: 'data.zip',
+              body: { attachmentId: 'd' },
+              headers: [
+                {
+                  name: 'Content-Type',
+                  value: 'application/zip',
+                },
+              ],
+            },
           ],
           headers: [
             {
@@ -204,8 +301,14 @@ describe('getContentsFromMessages', () => {
     mockGmail = {
       users: {
         messages: {
-          list: async () => listResponse,
-          get: async () => getResponse,
+          list: async () => {
+            listCalls += 1;
+            return listResponse;
+          },
+          get: async params => {
+            getCalls.push(params);
+            return getResponse;
+          },
           attachments: {
             get: async ({ id }) => {
               attachmentGetCalls += 1;
@@ -273,8 +376,8 @@ describe('getContentsFromMessages', () => {
     );
     expect(result.data[0].subject).to.equal('Monthly report');
     expect(result.data[0].body).to.equal(bodyText);
-    expect(result.data[0]).not.to.have.property('text');
-    expect(result.data[0]).not.to.have.property('archive');
+    expect(result.data[0].text).to.eql({ filename: 'greeting.txt' });
+    expect(result.data[0].archive).to.eql({ archiveFilename: 'data.zip' });
     expect(result.processedIds).to.eql(['test-message-id']);
     expect(attachmentGetCalls).to.equal(0);
   });
@@ -293,6 +396,137 @@ describe('getContentsFromMessages', () => {
 
     expect(data[0].text.content).to.equal('hello');
     expect(attachmentGetCalls).to.equal(1);
+  });
+
+  it('should return null for unmatched attachments when fetching is disabled', async () => {
+    const { data } = await getContentsFromMessages({
+      contents: [
+        {
+          type: 'file',
+          name: 'missing',
+          file: /\.pdf$/,
+        },
+      ],
+      fetchAttachments: false,
+    })(state);
+
+    expect(data[0].missing).to.equal(null);
+    expect(attachmentGetCalls).to.equal(0);
+  });
+
+  it('should request metadata format when only header contents are requested', async () => {
+    const { data } = await getContentsFromMessages({
+      contents: ['subject'],
+    })(state);
+
+    expect(getCalls[0].format).to.equal('metadata');
+    expect(getCalls[0].metadataHeaders).to.eql(['From', 'Date', 'Subject']);
+    expect(data[0].from).to.equal('sender@example.org');
+    expect(data[0].date).to.eql(new Date('Thu, 23 Jul 2026 08:55:46 +0000'));
+    expect(data[0].subject).to.equal('Monthly report');
+  });
+
+  it('should request full format when body is requested', async () => {
+    await getContentsFromMessages({ contents: ['body'] })(state);
+
+    expect(getCalls[0].format).to.equal('full');
+  });
+
+  it('should request full format for attachment contents even when fetching is disabled', async () => {
+    await getContentsFromMessages({
+      contents: [
+        {
+          type: 'file',
+          name: 'text',
+          file: /.txt$/,
+        },
+      ],
+      fetchAttachments: false,
+    })(state);
+
+    expect(getCalls[0].format).to.equal('full');
+    expect(attachmentGetCalls).to.equal(0);
+  });
+
+  it('should fetch messages by messageIds without calling list', async () => {
+    const { data } = await getContentsFromMessages({
+      messageIds: ['test-message-id'],
+      contents: [
+        {
+          type: 'file',
+          name: 'text',
+          file: /.txt$/,
+        },
+      ],
+    })(state);
+
+    expect(listCalls).to.equal(0);
+    expect(getCalls.length).to.equal(1);
+    expect(getCalls[0].id).to.equal('test-message-id');
+    expect(data[0].messageId).to.equal('test-message-id');
+    expect(data[0].text.content).to.equal('hello');
+    expect(attachmentGetCalls).to.equal(1);
+  });
+
+  it('should throw when both query and messageIds are provided', async () => {
+    try {
+      await getContentsFromMessages({
+        query: 'subject:x',
+        messageIds: ['test-message-id'],
+      })(state);
+      expect.fail('Should have thrown an error');
+    } catch (error) {
+      expect(error.message).to.include('not both');
+    }
+    expect(listCalls).to.equal(0);
+    expect(getCalls.length).to.equal(0);
+  });
+
+  it('should skip processedIds within messageIds but keep them in the cursor', async () => {
+    const result = await getContentsFromMessages({
+      messageIds: ['already-done', 'test-message-id'],
+      contents: ['subject'],
+      processedIds: ['already-done'],
+    })(state);
+
+    expect(getCalls.length).to.equal(1);
+    expect(result.data.length).to.equal(1);
+    expect(result.data[0].messageId).to.equal('test-message-id');
+    expect(result.processedIds).to.eql(['already-done', 'test-message-id']);
+  });
+
+  it('should return no contents for an empty messageIds array', async () => {
+    const result = await getContentsFromMessages({ messageIds: [] })(state);
+
+    expect(result.data).to.eql([]);
+    expect(result.processedIds).to.eql([]);
+    expect(listCalls).to.equal(0);
+    expect(getCalls.length).to.equal(0);
+  });
+
+  it('should respect maxResults when fetching by messageIds', async () => {
+    const result = await getContentsFromMessages({
+      messageIds: ['id-1', 'id-2', 'id-3'],
+      contents: ['subject'],
+      maxResults: 2,
+    })(state);
+
+    expect(result.data.length).to.equal(2);
+    expect(result.processedIds).to.eql(['id-1', 'id-2']);
+  });
+
+  it('should include the message id when messages.get fails', async () => {
+    mockGmail.users.messages.get = async () => {
+      throw new Error('Requested entity was not found.');
+    };
+
+    try {
+      await getContentsFromMessages({ messageIds: ['bad-id'] })(state);
+      expect.fail('Should have thrown an error');
+    } catch (error) {
+      expect(error.message).to.include('bad-id');
+      expect(error.message).to.include('Requested entity was not found.');
+    }
   });
 
   it('should get an XLSX attachment', async () => {

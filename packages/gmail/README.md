@@ -19,8 +19,8 @@ customize the output.
 ## Parameters
 
 An `options` object can configure the results of the function call. Optional
-parameters include: `contents`, `query`, `email`, `processedIds`, `maxResults`,
-`fetchAttachments`
+parameters include: `contents`, `query`, `messageIds`, `email`, `processedIds`,
+`maxResults`, `fetchAttachments`
 
 ### options.contents
 
@@ -125,6 +125,30 @@ options.query = 'from:ple.com rfc822msgid:<somemsgid@example.com> is:unread';
 A full list of supported search operations can be found here:
 [Refine searches in Gmail](https://support.google.com/mail/answer/7190)
 
+### options.messageIds
+
+Pass an array of Gmail API message ids to fetch exactly those messages,
+skipping the search step entirely. `messageIds` cannot be combined with
+`query`.
+
+These are the ids returned by this adaptor as `messageId` on each result and in
+`state.processedIds`. They are not RFC 822 `Message-ID` headers, so they cannot
+be matched with the `rfc822msgid:` search operator.
+
+`processedIds` and `maxResults` apply as usual, and an empty array simply
+returns no messages.
+
+This pairs with `fetchAttachments: false` for a two-step pattern: one job lists
+messages cheaply and records which contain a target attachment, and a later job
+downloads attachments for exactly those messages:
+
+```js
+getContentsFromMessages({
+  messageIds: $.data.filter(m => m.report).map(m => m.messageId),
+  contents: [{ type: 'file', name: 'report', file: /\.xlsx$/ }],
+});
+```
+
 ### options.email
 
 Optionally specify the email address used for the Gmail account. This almost
@@ -166,9 +190,19 @@ This works in conjuction with the `options.processedIds` parameter. For example:
 ### options.fetchAttachments
 
 Set `fetchAttachments` to `false` to return message IDs and non-attachment
-content without downloading requested file or archive attachments. Attachment
-fields are omitted from the output when downloading is disabled. The default is
-`true`.
+content without downloading requested file or archive attachments. The default
+is `true`.
+
+When downloading is disabled, matched attachments are still reported as
+filename-only objects (without `content`), so a later job can tell which
+messages contain the target attachment:
+
+- matched file → `{ filename: 'report.xlsx' }`
+- matched archive → `{ archiveFilename: 'data.zip' }`
+- no match → `null`
+
+Pair this with `options.messageIds` in a follow-up job to download attachments
+for exactly the messages identified here.
 
 ```js
 getContentsFromMessages({
@@ -308,6 +342,33 @@ sendMessage({
 
 This will send an email with two plain attachments and one ZIP archive
 containing two files.
+
+# `request`
+
+Make a raw, authenticated request against any Gmail API endpoint. Use this as
+an escape hatch for resources not covered by the other functions, such as
+labels, threads or drafts.
+
+Paths are relative to `https://www.googleapis.com/gmail/v1` (a full URL is also
+accepted). The parsed response body is written to `state.data`. Note that raw
+message responses contain base64-encoded MIME parts; use
+`getContentsFromMessages` when you want decoded bodies and parsed attachments.
+
+Options: `method` (default `GET`), `query`, `body`, `headers`.
+
+```js
+// Get a single message by its Gmail API id
+request('/users/me/messages/18c93f2a4b1d5e07');
+
+// List labels
+request('/users/me/labels');
+
+// Modify the labels of a message
+request(`/users/me/messages/${$.data[0].messageId}/modify`, {
+  method: 'POST',
+  body: { addLabelIds: ['STARRED'] },
+});
+```
 
 # Acquiring an access token
 
