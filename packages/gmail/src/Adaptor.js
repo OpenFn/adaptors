@@ -225,7 +225,7 @@ export function sendMessage(message) {
  * @returns {Operation}
  * @example <caption>Download attachments for a specific message identified by an earlier step</caption>
  * getMessageById(
- *   $.data.find(m => m.report).messageId,
+ *   $.data.messageId,
  *   {
  *     contents: [
  *       { type: 'file', name: 'report', file: /\.xlsx$/ }

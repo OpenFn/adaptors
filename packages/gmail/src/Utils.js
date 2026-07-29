@@ -138,10 +138,10 @@ export function resolveContentPlan(
   const messageFormat = needsFullFormat ? 'full' : 'metadata';
 
   if (!fetchAttachments) {
-    console.log('fetchAttachments is false: skipping attachment downloads');
     const skippedNames = contentIndicators
       .filter(({ type }) => type === 'file' || type === 'archive')
       .map(({ name }) => name);
+
     if (skippedNames.length) {
       console.log(
         `fetchAttachments is false: skipping attachment downloads for ${skippedNames.join(

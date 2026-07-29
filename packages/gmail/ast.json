@@ -181,7 +181,7 @@
           },
           {
             "title": "example",
-            "description": "getMessageById(\n  $.data.find(m => m.report).messageId,\n  {\n    contents: [\n      { type: 'file', name: 'report', file: /\\.xlsx$/ }\n    ]\n  }\n)",
+            "description": "getMessageById(\n  $.data.messageId,\n  {\n    contents: [\n      { type: 'file', name: 'report', file: /\\.xlsx$/ }\n    ]\n  }\n)",
             "caption": "Download attachments for a specific message identified by an earlier step"
           }
         ]
