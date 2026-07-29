@@ -177,8 +177,8 @@ messages contain the target attachment:
 - matched archive → `{ archiveFilename: 'data.zip' }`
 - no match → `null`
 
-Pair this with `getMessagesByIds` in a follow-up job to download attachments
-for exactly the messages identified here.
+Pair this with `getMessageById` in a follow-up job to download the attachment
+for exactly the message identified here.
 
 ```js
 getContentsFromMessages({
@@ -319,26 +319,24 @@ sendMessage({
 This will send an email with two plain attachments and one ZIP archive
 containing two files.
 
-# `getMessagesByIds`
+# `getMessageById`
 
-Fetch specific messages by their Gmail API message ids, instead of searching
-with a query. Takes the same `contents`, `processedIds`, `maxResults`,
-`email` and `fetchAttachments` options as `getContentsFromMessages`.
+Fetch a single message by its Gmail API message id, instead of searching with
+a query. Takes the same `contents`, `email` and `fetchAttachments` options as
+`getContentsFromMessages`, and returns a single message object (rather than an
+array) on `state.data`.
 
-These are the ids returned by this adaptor as `messageId` on each result and in
-`state.processedIds`. They are not RFC 822 `Message-ID` headers, so they cannot
-be matched with the `rfc822msgid:` search operator.
-
-`processedIds` and `maxResults` apply as usual, and an empty array simply
-returns no messages.
+This is the id returned by this adaptor as `messageId` on each result. It is
+not the RFC 822 `Message-ID` header, so it cannot be matched with the
+`rfc822msgid:` search operator.
 
 This pairs with `getContentsFromMessages`'s `fetchAttachments: false` for a
 two-step pattern: one job lists messages cheaply and records which contain a
-target attachment, and a later job downloads attachments for exactly those
-messages:
+target attachment, and a later job downloads the attachment for one message at
+a time:
 
 ```js
-getMessagesByIds($.data.filter(m => m.report).map(m => m.messageId), {
+getMessageById($.data.find(m => m.report).messageId, {
   contents: [{ type: 'file', name: 'report', file: /\.xlsx$/ }],
 });
 ```

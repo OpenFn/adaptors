@@ -271,33 +271,30 @@ export function sendMessage(message) {
 }
 
 /**
- * Configurable options provided to getMessagesByIds.
- * @typedef {Object} MessageIdsOptions
+ * Configurable options provided to getMessageById.
+ * @typedef {Object} MessageIdOptions
  * @public
  * @property {Array<string|MessageContent>} [contents=['from', 'date', 'subject']]
  *   An array of strings or MessageContent objects used to specify which parts of the message to retrieve.
- * @property {Array<string>} [processedIds] - Ignore message ids which have already been processed.
  * @property {string?} [email] - The user account to retrieve messages from. Defaults to the authenticated user.
- * @property {int?} [maxResults] - Maximum number of messages to process per request. Default is 1000.
  * @property {boolean} [fetchAttachments=true] - Whether to download file and archive attachments.
  *   When false, matched attachments are returned as filename-only objects without content.
  */
 
 /**
- * Downloads contents from specific messages of a Gmail account, identified by
- * their Gmail API message ids, instead of searching with a query. Note that
- * these are the ids returned in `state.processedIds` / `messageId`, not RFC
- * 822 Message-ID headers.
+ * Downloads contents from a single message of a Gmail account, identified by
+ * its Gmail API message id, instead of searching with a query. Note that this
+ * is the id returned as `messageId` / in `state.processedIds`, not the RFC 822
+ * Message-ID header.
  * @public
  * @function
- * @param {Array<string>} messageIds - Gmail API message ids to fetch.
- * @param {MessageIdsOptions} [options] - Customized options including desired contents.
- * @state {Array} data - The returned message objects, of the form `{ messageId, contents } `
- * @state {Array<string>} processedIds - An array of string ids processed by this request
+ * @param {string} messageId - Gmail API message id to fetch.
+ * @param {MessageIdOptions} [options] - Customized options including desired contents.
+ * @state {Object} data - The returned message object, of the form `{ messageId, contents } `
  * @returns {Operation}
- * @example <caption>Download attachments for specific messages identified by an earlier step</caption>
- * getMessagesByIds(
- *   $.data.filter(m => m.report).map(m => m.messageId),
+ * @example <caption>Download attachments for a specific message identified by an earlier step</caption>
+ * getMessageById(
+ *   $.data.find(m => m.report).messageId,
  *   {
  *     contents: [
  *       { type: 'file', name: 'report', file: /\.xlsx$/ }
@@ -305,75 +302,41 @@ export function sendMessage(message) {
  *   }
  * )
  */
-export function getMessagesByIds(messageIds, options = {}) {
+export function getMessageById(messageId, options = {}) {
   return async state => {
-    const [resolvedMessageIds, resolvedOptions] = expandReferences(
+    const [resolvedMessageId, resolvedOptions] = expandReferences(
       state,
-      messageIds,
+      messageId,
       options,
     );
 
-    if (!Array.isArray(resolvedMessageIds)) {
-      throw new Error('getMessagesByIds: messageIds must be an array of Gmail message ids');
+    if (typeof resolvedMessageId !== 'string' || !resolvedMessageId) {
+      throw new Error('getMessageById: messageId must be a non-empty string');
     }
 
     const defaultOptions = {
       contents: ['from', 'date', 'subject'],
       userId: 'me',
-      maxResults: 1000,
     };
 
-    const opts = {
-      userId: resolvedOptions.email ?? defaultOptions.userId,
-      processedIds: resolvedOptions.processedIds,
-      maxResults: resolvedOptions.maxResults ?? defaultOptions.maxResults,
-      fetchAttachments: resolvedOptions.fetchAttachments !== false,
-    };
+    const userId = resolvedOptions.email ?? defaultOptions.userId;
+    const fetchAttachments = resolvedOptions.fetchAttachments !== false;
 
     const { contentIndicators, messageFormat } = resolveContentPlan(
       defaultOptions.contents,
       resolvedOptions.contents,
-      opts.fetchAttachments,
+      fetchAttachments,
     );
 
-    const contents = [];
-    const newIds = [];
-    const previousIds = Array.isArray(opts.processedIds)
-      ? opts.processedIds
-      : [];
+    const content = await buildMessageContent(
+      userId,
+      resolvedMessageId,
+      contentIndicators,
+      messageFormat,
+      fetchAttachments,
+    );
 
-    const uniqueMessageIds = [...new Set(resolvedMessageIds)];
-
-    if (!uniqueMessageIds.length) {
-      console.log('No messages found.');
-    }
-
-    for (const messageId of uniqueMessageIds) {
-      newIds.push(messageId);
-
-      if (previousIds.includes(messageId)) {
-        continue;
-      }
-
-      contents.push(
-        await buildMessageContent(
-          opts.userId,
-          messageId,
-          contentIndicators,
-          messageFormat,
-          opts.fetchAttachments,
-        ),
-      );
-
-      if (contents.length >= opts.maxResults) {
-        break;
-      }
-    }
-
-    return {
-      ...composeNextState(state, contents),
-      processedIds: newIds,
-    };
+    return composeNextState(state, content);
   };
 }
 

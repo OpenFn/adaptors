@@ -5,7 +5,7 @@ import { google } from 'googleapis';
 import xlsx from 'xlsx';
 import {
   getContentsFromMessages,
-  getMessagesByIds,
+  getMessageById,
   sendMessage,
 } from '../src/Adaptor.js';
 import { createConnection, removeConnection } from '../src/Utils.js';
@@ -436,7 +436,7 @@ describe('getContentsFromMessages', () => {
   });
 });
 
-describe('getMessagesByIds', () => {
+describe('getMessageById', () => {
   let originalGmail;
   let mockGmail;
   let attachmentGetCalls;
@@ -518,8 +518,8 @@ describe('getMessagesByIds', () => {
     removeConnection();
   });
 
-  it('should fetch messages by id without calling list', async () => {
-    const { data } = await getMessagesByIds(['test-message-id'], {
+  it('should fetch a message by id without calling list', async () => {
+    const { data } = await getMessageById('test-message-id', {
       contents: [
         {
           type: 'file',
@@ -532,57 +532,18 @@ describe('getMessagesByIds', () => {
     expect(listCalls).to.equal(0);
     expect(getCalls.length).to.equal(1);
     expect(getCalls[0].id).to.equal('test-message-id');
-    expect(data[0].messageId).to.equal('test-message-id');
-    expect(data[0].text.content).to.equal('hello');
+    expect(data.messageId).to.equal('test-message-id');
+    expect(data.text.content).to.equal('hello');
     expect(attachmentGetCalls).to.equal(1);
   });
 
-  it('should dedupe repeated ids', async () => {
-    const { data } = await getMessagesByIds([
-      'test-message-id',
-      'test-message-id',
-    ])(state);
-
-    expect(getCalls.length).to.equal(1);
-    expect(data.length).to.equal(1);
-  });
-
-  it('should skip processedIds but keep them in the cursor', async () => {
-    const result = await getMessagesByIds(
-      ['already-done', 'test-message-id'],
-      { processedIds: ['already-done'] },
-    )(state);
-
-    expect(getCalls.length).to.equal(1);
-    expect(result.data.length).to.equal(1);
-    expect(result.data[0].messageId).to.equal('test-message-id');
-    expect(result.processedIds).to.eql(['already-done', 'test-message-id']);
-  });
-
-  it('should return no contents for an empty messageIds array', async () => {
-    const result = await getMessagesByIds([])(state);
-
-    expect(result.data).to.eql([]);
-    expect(result.processedIds).to.eql([]);
-    expect(getCalls.length).to.equal(0);
-  });
-
-  it('should throw when messageIds is not an array', async () => {
+  it('should throw when messageId is not a non-empty string', async () => {
     try {
-      await getMessagesByIds('not-an-array')(state);
+      await getMessageById('')(state);
       expect.fail('Should have thrown an error');
     } catch (error) {
-      expect(error.message).to.include('must be an array');
+      expect(error.message).to.include('must be a non-empty string');
     }
-  });
-
-  it('should respect maxResults', async () => {
-    const result = await getMessagesByIds(['id-1', 'id-2', 'id-3'], {
-      maxResults: 2,
-    })(state);
-
-    expect(result.data.length).to.equal(2);
-    expect(result.processedIds).to.eql(['id-1', 'id-2']);
   });
 
   it('should include the message id when messages.get fails', async () => {
@@ -591,7 +552,7 @@ describe('getMessagesByIds', () => {
     };
 
     try {
-      await getMessagesByIds(['bad-id'])(state);
+      await getMessageById('bad-id')(state);
       expect.fail('Should have thrown an error');
     } catch (error) {
       expect(error.message).to.include('bad-id');

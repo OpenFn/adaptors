@@ -128,13 +128,13 @@
       "valid": true
     },
     {
-      "name": "getMessagesByIds",
+      "name": "getMessageById",
       "params": [
-        "messageIds",
+        "messageId",
         "options"
       ],
       "docs": {
-        "description": "Downloads contents from specific messages of a Gmail account, identified by\ntheir Gmail API message ids, instead of searching with a query. Note that\nthese are the ids returned in `state.processedIds` / `messageId`, not RFC\n822 Message-ID headers.",
+        "description": "Downloads contents from a single message of a Gmail account, identified by\nits Gmail API message id, instead of searching with a query. Note that this\nis the id returned as `messageId` / in `state.processedIds`, not the RFC 822\nMessage-ID header.",
         "tags": [
           {
             "title": "public",
@@ -148,21 +148,12 @@
           },
           {
             "title": "param",
-            "description": "Gmail API message ids to fetch.",
+            "description": "Gmail API message id to fetch.",
             "type": {
-              "type": "TypeApplication",
-              "expression": {
-                "type": "NameExpression",
-                "name": "Array"
-              },
-              "applications": [
-                {
-                  "type": "NameExpression",
-                  "name": "string"
-                }
-              ]
+              "type": "NameExpression",
+              "name": "string"
             },
-            "name": "messageIds"
+            "name": "messageId"
           },
           {
             "title": "param",
@@ -171,18 +162,14 @@
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "MessageIdsOptions"
+                "name": "MessageIdOptions"
               }
             },
             "name": "options"
           },
           {
             "title": "state",
-            "description": "{Array} data - The returned message objects, of the form `{ messageId, contents } `"
-          },
-          {
-            "title": "state",
-            "description": "{Array<string>} processedIds - An array of string ids processed by this request"
+            "description": "{Object} data - The returned message object, of the form `{ messageId, contents } `"
           },
           {
             "title": "returns",
@@ -194,8 +181,8 @@
           },
           {
             "title": "example",
-            "description": "getMessagesByIds(\n  $.data.filter(m => m.report).map(m => m.messageId),\n  {\n    contents: [\n      { type: 'file', name: 'report', file: /\\.xlsx$/ }\n    ]\n  }\n)",
-            "caption": "Download attachments for specific messages identified by an earlier step"
+            "description": "getMessageById(\n  $.data.find(m => m.report).messageId,\n  {\n    contents: [\n      { type: 'file', name: 'report', file: /\\.xlsx$/ }\n    ]\n  }\n)",
+            "caption": "Download attachments for a specific message identified by an earlier step"
           }
         ]
       },
