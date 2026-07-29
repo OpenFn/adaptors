@@ -3,11 +3,10 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { google } from 'googleapis';
 import xlsx from 'xlsx';
-import { enableMockClient } from '@openfn/language-common/util';
 import {
   getContentsFromMessages,
+  getMessagesByIds,
   sendMessage,
-  request,
 } from '../src/Adaptor.js';
 import { createConnection, removeConnection } from '../src/Utils.js';
 
@@ -17,82 +16,6 @@ const state = {
   },
 };
 
-describe('request', () => {
-  const testServer = enableMockClient('https://www.googleapis.com');
-
-  beforeEach(() => {
-    createConnection(state);
-  });
-
-  afterEach(() => {
-    removeConnection();
-  });
-
-  it('should GET a message by id with an auth header', async () => {
-    testServer
-      .intercept({
-        path: '/gmail/v1/users/me/messages/msg-1',
-        method: 'GET',
-        headers: {
-          Authorization: 'Bearer mock-access-token',
-        },
-      })
-      .reply(200, { id: 'msg-1', threadId: 'thread-1' });
-
-    const { data } = await request('/users/me/messages/msg-1')(state);
-
-    expect(data).to.eql({ id: 'msg-1', threadId: 'thread-1' });
-  });
-
-  it('should POST a body to the given path', async () => {
-    testServer
-      .intercept({
-        path: '/gmail/v1/users/me/messages/msg-1/modify',
-        method: 'POST',
-        body: JSON.stringify({ addLabelIds: ['STARRED'] }),
-      })
-      .reply(200, { id: 'msg-1', labelIds: ['STARRED'] });
-
-    const { data } = await request('/users/me/messages/msg-1/modify', {
-      method: 'POST',
-      body: { addLabelIds: ['STARRED'] },
-    })(state);
-
-    expect(data.labelIds).to.eql(['STARRED']);
-  });
-
-  it('should append query parameters', async () => {
-    testServer
-      .intercept({
-        path: '/gmail/v1/users/me/messages',
-        query: { maxResults: 5 },
-        method: 'GET',
-      })
-      .reply(200, { messages: [{ id: 'msg-1' }] });
-
-    const { data } = await request('/users/me/messages', {
-      query: { maxResults: 5 },
-    })(state);
-
-    expect(data.messages).to.eql([{ id: 'msg-1' }]);
-  });
-
-  it('should throw on error responses', async () => {
-    testServer
-      .intercept({
-        path: '/gmail/v1/users/me/messages/nope',
-        method: 'GET',
-      })
-      .reply(404, { error: { message: 'Not Found' } });
-
-    try {
-      await request('/users/me/messages/nope')(state);
-      expect.fail('Should have thrown an error');
-    } catch (error) {
-      expect(error.statusCode).to.equal(404);
-    }
-  });
-});
 describe('sendMessage', () => {
   let originalGmail;
   let mockGmail;
@@ -448,87 +371,6 @@ describe('getContentsFromMessages', () => {
     expect(attachmentGetCalls).to.equal(0);
   });
 
-  it('should fetch messages by messageIds without calling list', async () => {
-    const { data } = await getContentsFromMessages({
-      messageIds: ['test-message-id'],
-      contents: [
-        {
-          type: 'file',
-          name: 'text',
-          file: /.txt$/,
-        },
-      ],
-    })(state);
-
-    expect(listCalls).to.equal(0);
-    expect(getCalls.length).to.equal(1);
-    expect(getCalls[0].id).to.equal('test-message-id');
-    expect(data[0].messageId).to.equal('test-message-id');
-    expect(data[0].text.content).to.equal('hello');
-    expect(attachmentGetCalls).to.equal(1);
-  });
-
-  it('should throw when both query and messageIds are provided', async () => {
-    try {
-      await getContentsFromMessages({
-        query: 'subject:x',
-        messageIds: ['test-message-id'],
-      })(state);
-      expect.fail('Should have thrown an error');
-    } catch (error) {
-      expect(error.message).to.include('not both');
-    }
-    expect(listCalls).to.equal(0);
-    expect(getCalls.length).to.equal(0);
-  });
-
-  it('should skip processedIds within messageIds but keep them in the cursor', async () => {
-    const result = await getContentsFromMessages({
-      messageIds: ['already-done', 'test-message-id'],
-      contents: ['subject'],
-      processedIds: ['already-done'],
-    })(state);
-
-    expect(getCalls.length).to.equal(1);
-    expect(result.data.length).to.equal(1);
-    expect(result.data[0].messageId).to.equal('test-message-id');
-    expect(result.processedIds).to.eql(['already-done', 'test-message-id']);
-  });
-
-  it('should return no contents for an empty messageIds array', async () => {
-    const result = await getContentsFromMessages({ messageIds: [] })(state);
-
-    expect(result.data).to.eql([]);
-    expect(result.processedIds).to.eql([]);
-    expect(listCalls).to.equal(0);
-    expect(getCalls.length).to.equal(0);
-  });
-
-  it('should respect maxResults when fetching by messageIds', async () => {
-    const result = await getContentsFromMessages({
-      messageIds: ['id-1', 'id-2', 'id-3'],
-      contents: ['subject'],
-      maxResults: 2,
-    })(state);
-
-    expect(result.data.length).to.equal(2);
-    expect(result.processedIds).to.eql(['id-1', 'id-2']);
-  });
-
-  it('should include the message id when messages.get fails', async () => {
-    mockGmail.users.messages.get = async () => {
-      throw new Error('Requested entity was not found.');
-    };
-
-    try {
-      await getContentsFromMessages({ messageIds: ['bad-id'] })(state);
-      expect.fail('Should have thrown an error');
-    } catch (error) {
-      expect(error.message).to.include('bad-id');
-      expect(error.message).to.include('Requested entity was not found.');
-    }
-  });
-
   it('should get an XLSX attachment', async () => {
     const { data } = await getContentsFromMessages({
       contents: [
@@ -591,5 +433,169 @@ describe('getContentsFromMessages', () => {
     })(state);
 
     expect(data[0].json.content).to.eql('{ "x": 1 }');
+  });
+});
+
+describe('getMessagesByIds', () => {
+  let originalGmail;
+  let mockGmail;
+  let attachmentGetCalls;
+  let getCalls;
+  let listCalls;
+
+  const getResponse = {
+    data: {
+      payload: {
+        parts: [
+          {
+            mimeType: 'text/plain',
+            filename: 'greeting.txt',
+            body: { attachmentId: 'b' },
+            headers: [
+              {
+                name: 'Content-Type',
+                value: 'text/plain',
+              },
+            ],
+          },
+        ],
+        headers: [
+          {
+            name: 'From',
+            value: 'sender@example.org',
+          },
+          {
+            name: 'Date',
+            value: 'Thu, 23 Jul 2026 08:55:46 +0000',
+          },
+          {
+            name: 'Subject',
+            value: 'Monthly report',
+          },
+        ],
+      },
+    },
+  };
+
+  beforeEach(() => {
+    originalGmail = google.gmail;
+    attachmentGetCalls = 0;
+    getCalls = [];
+    listCalls = 0;
+
+    mockGmail = {
+      users: {
+        messages: {
+          list: async () => {
+            listCalls += 1;
+            return { data: { messages: [] } };
+          },
+          get: async params => {
+            getCalls.push(params);
+            return getResponse;
+          },
+          attachments: {
+            get: async () => {
+              attachmentGetCalls += 1;
+              return { data: { data: Buffer.from('hello').toString('base64') } };
+            },
+          },
+        },
+      },
+    };
+
+    google.gmail = () => mockGmail;
+
+    createConnection({
+      configuration: {
+        access_token: 'mock-access-token',
+      },
+    });
+  });
+
+  afterEach(() => {
+    google.gmail = originalGmail;
+    removeConnection();
+  });
+
+  it('should fetch messages by id without calling list', async () => {
+    const { data } = await getMessagesByIds(['test-message-id'], {
+      contents: [
+        {
+          type: 'file',
+          name: 'text',
+          file: /.txt$/,
+        },
+      ],
+    })(state);
+
+    expect(listCalls).to.equal(0);
+    expect(getCalls.length).to.equal(1);
+    expect(getCalls[0].id).to.equal('test-message-id');
+    expect(data[0].messageId).to.equal('test-message-id');
+    expect(data[0].text.content).to.equal('hello');
+    expect(attachmentGetCalls).to.equal(1);
+  });
+
+  it('should dedupe repeated ids', async () => {
+    const { data } = await getMessagesByIds([
+      'test-message-id',
+      'test-message-id',
+    ])(state);
+
+    expect(getCalls.length).to.equal(1);
+    expect(data.length).to.equal(1);
+  });
+
+  it('should skip processedIds but keep them in the cursor', async () => {
+    const result = await getMessagesByIds(
+      ['already-done', 'test-message-id'],
+      { processedIds: ['already-done'] },
+    )(state);
+
+    expect(getCalls.length).to.equal(1);
+    expect(result.data.length).to.equal(1);
+    expect(result.data[0].messageId).to.equal('test-message-id');
+    expect(result.processedIds).to.eql(['already-done', 'test-message-id']);
+  });
+
+  it('should return no contents for an empty messageIds array', async () => {
+    const result = await getMessagesByIds([])(state);
+
+    expect(result.data).to.eql([]);
+    expect(result.processedIds).to.eql([]);
+    expect(getCalls.length).to.equal(0);
+  });
+
+  it('should throw when messageIds is not an array', async () => {
+    try {
+      await getMessagesByIds('not-an-array')(state);
+      expect.fail('Should have thrown an error');
+    } catch (error) {
+      expect(error.message).to.include('must be an array');
+    }
+  });
+
+  it('should respect maxResults', async () => {
+    const result = await getMessagesByIds(['id-1', 'id-2', 'id-3'], {
+      maxResults: 2,
+    })(state);
+
+    expect(result.data.length).to.equal(2);
+    expect(result.processedIds).to.eql(['id-1', 'id-2']);
+  });
+
+  it('should include the message id when messages.get fails', async () => {
+    mockGmail.users.messages.get = async () => {
+      throw new Error('Requested entity was not found.');
+    };
+
+    try {
+      await getMessagesByIds(['bad-id'])(state);
+      expect.fail('Should have thrown an error');
+    } catch (error) {
+      expect(error.message).to.include('bad-id');
+      expect(error.message).to.include('Requested entity was not found.');
+    }
   });
 });

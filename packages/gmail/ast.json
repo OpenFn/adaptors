@@ -57,11 +57,6 @@
             "title": "example",
             "description": "getContentsFromMessages(\n  {\n    query: 'after:2026/07/01',\n    contents: [\n      'body',\n      { type: 'file', name: 'report', file: /\\.xlsx$/ }\n    ],\n    fetchAttachments: false\n  }\n)",
             "caption": "Get metadata without downloading requested attachments"
-          },
-          {
-            "title": "example",
-            "description": "getContentsFromMessages(\n  {\n    messageIds: $.data.filter(m => m.report).map(m => m.messageId),\n    contents: [\n      { type: 'file', name: 'report', file: /\\.xlsx$/ }\n    ]\n  }\n)",
-            "caption": "Download attachments for specific messages identified by an earlier step"
           }
         ]
       },
@@ -133,13 +128,13 @@
       "valid": true
     },
     {
-      "name": "request",
+      "name": "getMessagesByIds",
       "params": [
-        "path",
+        "messageIds",
         "options"
       ],
       "docs": {
-        "description": "Make a raw request against the Gmail API. Use this to access any Gmail\nendpoint not covered by other functions, such as labels, threads or drafts.\nPaths are relative to `https://www.googleapis.com/gmail/v1` and are\nauthenticated with the configured credentials. The parsed response body is\nwritten to `state.data`.\n\nINVARIANT: operational function named `request` - do not rename.",
+        "description": "Downloads contents from specific messages of a Gmail account, identified by\ntheir Gmail API message ids, instead of searching with a query. Note that\nthese are the ids returned in `state.processedIds` / `messageId`, not RFC\n822 Message-ID headers.",
         "tags": [
           {
             "title": "public",
@@ -153,28 +148,41 @@
           },
           {
             "title": "param",
-            "description": "Path to the resource, relative to the Gmail v1 API, or a full URL.",
+            "description": "Gmail API message ids to fetch.",
             "type": {
-              "type": "NameExpression",
-              "name": "string"
+              "type": "TypeApplication",
+              "expression": {
+                "type": "NameExpression",
+                "name": "Array"
+              },
+              "applications": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              ]
             },
-            "name": "path"
+            "name": "messageIds"
           },
           {
             "title": "param",
-            "description": "Optional request options.",
+            "description": "Customized options including desired contents.",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "RequestOptions"
+                "name": "MessageIdsOptions"
               }
             },
             "name": "options"
           },
           {
             "title": "state",
-            "description": "{Object} data - The parsed response body from the Gmail API."
+            "description": "{Array} data - The returned message objects, of the form `{ messageId, contents } `"
+          },
+          {
+            "title": "state",
+            "description": "{Array<string>} processedIds - An array of string ids processed by this request"
           },
           {
             "title": "returns",
@@ -186,18 +194,8 @@
           },
           {
             "title": "example",
-            "description": "request('/users/me/messages/18c93f2a4b1d5e07')",
-            "caption": "Get a single message by its Gmail API id"
-          },
-          {
-            "title": "example",
-            "description": "request('/users/me/labels')",
-            "caption": "List labels"
-          },
-          {
-            "title": "example",
-            "description": "request(`/users/me/messages/${$.data[0].messageId}/modify`, {\n  method: 'POST',\n  body: { addLabelIds: ['STARRED'] },\n})",
-            "caption": "Modify the labels of a message"
+            "description": "getMessagesByIds(\n  $.data.filter(m => m.report).map(m => m.messageId),\n  {\n    contents: [\n      { type: 'file', name: 'report', file: /\\.xlsx$/ }\n    ]\n  }\n)",
+            "caption": "Download attachments for specific messages identified by an earlier step"
           }
         ]
       },

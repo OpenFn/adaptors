@@ -2,46 +2,10 @@ import JSZip from 'jszip';
 import xlsx from 'xlsx';
 import { google } from 'googleapis';
 import { basename } from 'node:path';
-import {
-  request as commonRequest,
-  logResponse,
-} from '@openfn/language-common/util';
 
 const SEND_MESSAGE_BOUNDARY = '----=_Part_0_123456789.123456789';
 
-const GMAIL_API_BASE_URL = 'https://www.googleapis.com/gmail/v1';
-
 let gmail;
-let accessToken;
-
-/**
- * INVARIANT: infrastructure helper named `request` - do not rename.
- * Sends an authenticated raw request to the Gmail API and returns the
- * response body. Paths are resolved against the Gmail v1 base URL unless
- * a full URL is given.
- */
-export async function request(path, options = {}) {
-  const { method = 'GET', query, body, headers = {} } = options;
-
-  const url = /^https?:\/\//.test(path)
-    ? path
-    : `${GMAIL_API_BASE_URL}${path.startsWith('/') ? '' : '/'}${path}`;
-
-  const response = await commonRequest(method, url, {
-    query,
-    body,
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      'content-type': 'application/json',
-      ...headers,
-    },
-    parseAs: 'json',
-  });
-
-  logResponse(response);
-
-  return response.body;
-}
 
 export async function getMessagesResult(userId, query, pageToken) {
   try {
@@ -247,14 +211,12 @@ export function createConnection(state) {
   auth.credentials = { access_token };
 
   gmail = google.gmail({ version: 'v1', auth });
-  accessToken = access_token;
 
   return state;
 }
 
 export function removeConnection(state) {
   gmail = undefined;
-  accessToken = undefined;
   return state;
 }
 
