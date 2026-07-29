@@ -134,7 +134,7 @@
         "options"
       ],
       "docs": {
-        "description": "Downloads contents from a single message of a Gmail account, identified by\nits Gmail API message id, instead of searching with a query. Note that this\nis the id returned as `messageId` / in `state.processedIds`, not the RFC 822\nMessage-ID header.",
+        "description": "Downloads contents from a single message of a Gmail account, identified by\nits Gmail API message id.",
         "tags": [
           {
             "title": "public",

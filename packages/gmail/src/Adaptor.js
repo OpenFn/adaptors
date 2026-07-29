@@ -216,9 +216,7 @@ export function sendMessage(message) {
 
 /**
  * Downloads contents from a single message of a Gmail account, identified by
- * its Gmail API message id, instead of searching with a query. Note that this
- * is the id returned as `messageId` / in `state.processedIds`, not the RFC 822
- * Message-ID header.
+ * its Gmail API message id.
  * @public
  * @function
  * @param {string} messageId - Gmail API message id to fetch.
