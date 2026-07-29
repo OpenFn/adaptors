@@ -49,7 +49,7 @@ import {
  * @public
  * @function
  * @param {Options} options - Customized options including desired contents and query.
- * @state {Array} data - The returned message objects, of the form `{ messageId, contents } `
+ * @state {Array} data - The returned message objects, of the form `{ messageId, ...contents } `
  * @state {Array<string>} processedIds - An array of string ids processed by this request
  * @returns {Operation}
  * @example <caption>Get a message with a specific subject</caption>
@@ -221,7 +221,7 @@ export function sendMessage(message) {
  * @function
  * @param {string} messageId - Gmail API message id to fetch.
  * @param {MessageIdOptions} [options] - Customized options including desired contents.
- * @state {Object} data - The returned message object, of the form `{ messageId, contents } `
+ * @state {Object} data - The returned message object, of the form `{ messageId, ...contents } `
  * @returns {Operation}
  * @example <caption>Download attachments for a specific message identified by an earlier step</caption>
  * getMessageById(

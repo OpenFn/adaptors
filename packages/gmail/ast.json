@@ -29,7 +29,7 @@
           },
           {
             "title": "state",
-            "description": "{Array} data - The returned message objects, of the form `{ messageId, contents } `"
+            "description": "{Array} data - The returned message objects, of the form `{ messageId, ...contents } `"
           },
           {
             "title": "state",
@@ -169,7 +169,7 @@
           },
           {
             "title": "state",
-            "description": "{Object} data - The returned message object, of the form `{ messageId, contents } `"
+            "description": "{Object} data - The returned message object, of the form `{ messageId, ...contents } `"
           },
           {
             "title": "returns",
