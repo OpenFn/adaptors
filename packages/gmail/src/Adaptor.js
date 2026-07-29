@@ -46,7 +46,7 @@ import {
  */
 
 // Builds the content indicators and Gmail message `format` (metadata vs
-// full) shared by getContentsFromMessages and getMessagesByIds.
+// full) shared by getContentsFromMessages and getMessageById.
 function resolveContentPlan(defaultContents, requestedContents, fetchAttachments) {
   const contentIndicators = getContentIndicators(
     defaultContents,
@@ -76,7 +76,7 @@ function resolveContentPlan(defaultContents, requestedContents, fetchAttachments
 }
 
 // Fetches one message and builds its content object from the requested
-// contentIndicators. Shared by getContentsFromMessages and getMessagesByIds.
+// contentIndicators. Shared by getContentsFromMessages and getMessageById.
 async function buildMessageContent(
   userId,
   messageId,

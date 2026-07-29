@@ -537,6 +537,74 @@ describe('getMessageById', () => {
     expect(attachmentGetCalls).to.equal(1);
   });
 
+  it('should return the message as a single object, not an array', async () => {
+    const { data } = await getMessageById('test-message-id')(state);
+
+    expect(Array.isArray(data)).to.equal(false);
+    expect(data.messageId).to.equal('test-message-id');
+  });
+
+  it('should default to from, date and subject with metadata format', async () => {
+    const { data } = await getMessageById('test-message-id')(state);
+
+    expect(getCalls[0].format).to.equal('metadata');
+    expect(data.from).to.equal('sender@example.org');
+    expect(data.date).to.eql(new Date('Thu, 23 Jul 2026 08:55:46 +0000'));
+    expect(data.subject).to.equal('Monthly report');
+  });
+
+  it('should not set state.processedIds', async () => {
+    const result = await getMessageById('test-message-id')(state);
+
+    expect(result.processedIds).to.equal(undefined);
+  });
+
+  it('should pass through an existing state.processedIds cursor unchanged', async () => {
+    const stateWithCursor = {
+      ...state,
+      processedIds: ['already-done'],
+    };
+
+    const result = await getMessageById('test-message-id')(stateWithCursor);
+
+    expect(result.processedIds).to.eql(['already-done']);
+  });
+
+  it('should use options.email as the userId', async () => {
+    await getMessageById('test-message-id', {
+      email: 'delegate@example.org',
+    })(state);
+
+    expect(getCalls[0].userId).to.equal('delegate@example.org');
+  });
+
+  it('should return filename-only attachments when fetching is disabled', async () => {
+    const { data } = await getMessageById('test-message-id', {
+      contents: [
+        {
+          type: 'file',
+          name: 'text',
+          file: /.txt$/,
+        },
+      ],
+      fetchAttachments: false,
+    })(state);
+
+    expect(data.text).to.eql({ filename: 'greeting.txt' });
+    expect(attachmentGetCalls).to.equal(0);
+  });
+
+  [undefined, ['array-of-ids'], 42].forEach(badMessageId => {
+    it(`should throw when messageId is ${JSON.stringify(badMessageId)}`, async () => {
+      try {
+        await getMessageById(badMessageId)(state);
+        expect.fail('Should have thrown an error');
+      } catch (error) {
+        expect(error.message).to.include('must be a non-empty string');
+      }
+    });
+  });
+
   it('should throw when messageId is not a non-empty string', async () => {
     try {
       await getMessageById('')(state);
