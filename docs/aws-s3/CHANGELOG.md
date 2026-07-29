@@ -1,5 +1,11 @@
 # @openfn/language-aws-s3
 
+## 1.1.3 - 28 July 2026
+
+### Patch Changes
+
+- 77cc401: Bump @aws-sdk/client-s3
+
 ## 1.1.2 - 30 June 2026
 
 ### Patch Changes
