@@ -19,7 +19,8 @@ customize the output.
 ## Parameters
 
 An `options` object can configure the results of the function call. Optional
-parameters include: `contents`, `query`, `email`, `processedIds`, `maxResults`
+parameters include: `contents`, `query`, `email`, `processedIds`,
+`maxResults`, `fetchAttachments`
 
 ### options.contents
 
@@ -162,6 +163,34 @@ This works in conjuction with the `options.processedIds` parameter. For example:
 - this will skip message #1 and resulting dataset will contain a single message
   #2
 
+### options.fetchAttachments
+
+Set `fetchAttachments` to `false` to return message IDs and non-attachment
+content without downloading requested file or archive attachments. The default
+is `true`.
+
+When downloading is disabled, matched attachments are still reported as
+filename-only objects (without `content`), so a later job can tell which
+messages contain the target attachment:
+
+- matched file → `{ filename: 'report.xlsx' }`
+- matched archive → `{ archiveFilename: 'data.zip' }`
+- no match → `null`
+
+Pair this with `getMessageById` in a follow-up job to download the attachment
+for exactly the message identified here.
+
+```js
+getContentsFromMessages({
+  query: 'after:2026/07/01',
+  contents: [
+    'body',
+    { type: 'file', name: 'report', file: /\.xlsx$/ },
+  ],
+  fetchAttachments: false,
+});
+```
+
 ## Example jobs
 
 ```js
@@ -289,6 +318,28 @@ sendMessage({
 
 This will send an email with two plain attachments and one ZIP archive
 containing two files.
+
+# `getMessageById`
+
+Fetch a single message by its Gmail API message id, instead of searching with
+a query. Takes the same `contents`, `email` and `fetchAttachments` options as
+`getContentsFromMessages`, and returns a single message object (rather than an
+array) on `state.data`.
+
+This is the id returned by this adaptor as `messageId` on each result. It is
+not the RFC 822 `Message-ID` header, so it cannot be matched with the
+`rfc822msgid:` search operator.
+
+This pairs with `getContentsFromMessages`'s `fetchAttachments: false` for a
+two-step pattern: one job lists messages cheaply and records which contain a
+target attachment, and a later job downloads the attachment for one message at
+a time:
+
+```js
+getMessageById($.data.find(m => m.report).messageId, {
+  contents: [{ type: 'file', name: 'report', file: /\.xlsx$/ }],
+});
+```
 
 # Acquiring an access token
 
