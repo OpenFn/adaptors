@@ -1,4 +1,4 @@
-# Adaptor Code Review Rubric
+# Adaptor Code Review Guidelines
 
 This is the canonical checklist for reviewing changes to OpenFn adaptors. It is
 written to be used by **both humans and AI reviewers** (interactive `/review`,
@@ -13,17 +13,30 @@ It distills the rules that live in more detail in:
 - [Build a New Adaptor](build-a-new-adaptor.md)
 - [Magic Functions](magic-functions.md)
 
-When these documents disagree with this rubric, the detailed source document
-wins — update this rubric to match.
+When these documents disagree with this document, the detailed source document
+wins — update this document to match.
 
-## How to use this rubric
+## Review guidelines
 
 - Review **only the diff** and the files it touches. Do not demand changes to
   unrelated code.
-- For each finding, cite the specific rule below and, where possible, the source
-  wiki page.
+- For each finding, cite the section it comes from (e.g. Section 7) and quote or
+  paraphrase the specific rule, plus the source wiki page where possible.
 - Classify each finding as **Blocking** (must fix before merge), **Recommended**
-  (should fix), or **Nit** (optional/style).
+  (should fix), or **NitPicks** (optional/style). Use the default severities
+  below, adjusting up or down when the specific case clearly warrants it (e.g. a
+  missing test on a trivial internal helper may drop from Blocking to
+  Recommended).
+  - **Blocking** — correctness and safety: security/logging of secrets or PII
+    (Section 5), file/structure invariants (Section 1), broken state handling
+    (Section 3), incorrect changeset bump for a breaking change (Section 9),
+    committed secrets/artifacts (Section 10).
+  - **Recommended** — API design and consistency (Section 2), client/lifecycle
+    patterns (Section 4), error handling (Section 6), missing/weak docs or
+    examples (Section 7), missing tests (Section 8), changeset wording
+    (Section 9).
+  - **NitPicks** — style, phrasing, spelling/grammar, and non-behavioural
+    naming preferences.
 - Be concise and specific. Prefer a concrete suggested change over a general
   observation.
 - If the PR is small or purely internal (e.g. a dev-only change), scale the
@@ -33,30 +46,42 @@ wins — update this rubric to match.
 
 ## 1. Structure & file invariants
 
-- [ ] Operations (the functions used in job code) live in `src/Adaptor.js` (or
-      other namespaced source files), **not** in `src/Utils.js`.
 - [ ] `src/Utils.js` contains **infrastructure/helpers only** — no operations.
+      Operations (the functions used in job code) live in `src/Adaptor.js` or
+      other namespaced source files.
 - [ ] HTTP access uses common's `request` (`src/util/http.js`) where possible,
       rather than importing third-party HTTP libraries or native node HTTP. If
       `request` genuinely can't be used, `undici` is preferred in new adaptors.
-- [ ] Namespacing is correct: functions not in `Adaptor.js` are namespaced by
-      filename unless overridden with `@namespace` (`@namespace global` to
-      remove a namespace). Namespaced public functions are exported from
-      `index.ts`/`index.js` where required (see `common`).
-- [ ] `configuration-schema.json` is valid JSON Schema draft-07 and reflects any
-      new/changed config. (`pnpm validate:schemas` must pass.)
+- [ ] Namespacing invariants (namespacing itself is implied by filename — see
+      [best-practice.md](best-practice.md); these are the observable checks):
+  - [ ] `@namespace` is only set when the desired namespace differs from the
+        implied one (the filename).
+  - [ ] Namespaced functions are exported from `index.js`/`index.ts` where
+        required (see `common`).
+  - [ ] Unit tests exercise the namespaced name (`http.get`, not bare `get`).
+  - [ ] Unit tests for public functions import from `index.js`, not directly
+        from the file under test.
+- [ ] `configuration-schema.json` reflects any new/changed config the code
+      actually uses (new fields added, descriptions accurate, secrets marked as
+      such). Schema *validity* is enforced by CI (`pnpm validate:schemas`) — the
+      review focus is whether the schema matches the code.
 
 ## 2. API design
 
-- [ ] Operations are factory functions of the shape
-      `(args) => (state) => Promise<State> | State`. Operations sit at the top
-      level and are not called inside a promise/callback.
-- [ ] "Get one vs get many" uses clear semantics — prefer `getThing(id)` +
-      `listThings(options)` over overloading a single function with an optional
-      id, or near-identical `getThing`/`getThings` names. Prefer `list` (or
-      consistently `search`) across the adaptor.
+- [ ] Each exported operation is written as a function that returns another
+      function. The outer function takes the user's arguments; the inner
+      function takes `state` and returns `state`. In short:
+      `(args) => (state) => state`. The operation should not do its work
+      immediately or return a plain value — the work happens inside the inner
+      function when it receives `state`.
+- [ ] "Get one vs get many" uses clear, distinct operations rather than one
+      function whose behaviour flips based on an optional argument (often a path
+      or resource type, sometimes an id). Prefer separate operations with
+      obviously different names — e.g. `getThing`/`listThings` — over
+      near-identical `getThing`/`getThings`. Prefer `list` (or consistently
+      `search`) across the adaptor.
 - [ ] Function signatures are minimal: required values are positional
-      parameters; everything else goes into a single `options`/config object.
+      parameters; everything else goes into a single `options` object.
 - [ ] Naming and semantics match the layer: low-level HTTP helpers use HTTP
       language (method, url, query); higher-level operations mask HTTP and use
       domain language (e.g. `getUser` should not expose `method`/`url`).
@@ -95,9 +120,12 @@ wins — update this rubric to match.
 
 ## 6. Error handling
 
-- [ ] Failures throw an error (written by the runtime to `state.errors`) rather
-      than silently swallowing problems.
-- [ ] Errors are meaningful and do not leak sensitive data.
+- [ ] Errors are thrown, not logged and ignored. If something fails, the
+      operation should throw so the workflow stops — unless continuing is
+      clearly intended.
+- [ ] Error messages are meaningful and help the user understand what went
+      wrong.
+- [ ] Errors do not leak sensitive data (credentials, tokens, PII).
 
 ## 7. Documentation & JSDoc
 
@@ -106,49 +134,56 @@ wins — update this rubric to match.
 - [ ] Every public operation has at least one example. Examples are concise,
       realistic, tell a single story, and generally read data from state rather
       than defining it inline.
-- [ ] Docs use the right register: HTTP helpers use HTTP language; higher-level
-      operations use backend/domain language. Low-level endpoint wrappers link
-      to external docs instead of re-explaining the backend.
+- [ ] Docs link out to the API's own documentation rather than re-explaining
+      how it works.
 - [ ] `options` (control adaptor behaviour) vs `params`/`parameters` (passed to
       the backing service) are used correctly.
-- [ ] Types follow conventions: primitives lowercase (`string`, `boolean`,
-      `number`, `function`); complex types uppercase (`Array`, `Operation`,
-      `State`, `RequestOptions`). Non-standard types (`Options`, `Response`)
-      have a `@typedef`. Multi-property objects use a `@typedef` rather than
-      many `options.foo` lines. Externally owned types link out.
-- [ ] American English, sentences end with a full stop.
+- [ ] Types are documented properly in accordance with JSDoc conventions.
+- [ ] Documentation is written in American English.
 
 ## 8. Testing
 
-- [ ] Every new or changed function has unit tests. Bug fixes include a test
-      that reproduces the bug.
-- [ ] HTTP is mocked with **undici** `MockAgent` — **no live network calls**.
-- [ ] Library clients are mocked via a setter or injected argument, not real
-      connections.
-- [ ] Tests are focused: each test tells one story ("given A, B should happen")
-      and should fail only when that one behaviour changes. Watch for tests with
-      scattered/irrelevant assertions or that don't actually exercise the
-      function.
-- [ ] Test names describe the behaviour under test, not implementation trivia.
-- [ ] Meaningful paths/branches are covered (not just line coverage).
+- [ ] **Bug fixes should add a regression test** — one that fails before the
+      change and passes after. New features and refactors should add tests where
+      practical. Tests are strongly encouraged but not a hard gate; missing
+      tests are Recommended, not Blocking.
+- [ ] **No live network in unit tests.** HTTP must be mocked with **undici**
+      `MockAgent`. Integration tests may hit real endpoints; unit tests may not.
+- [ ] **Clients are mocked, not connected.** Library clients (DB, SDK, etc.)
+      are injected or set via a setter — unit tests never open real connections.
+- [ ] **Tests are meaningful, not padding.** Prefer a few tests that genuinely
+      exercise the code over many verbose, heavily-mocked tests. Flag tests that
+      assert on mock internals, don't call the function under test, or would pass
+      even if the function were broken.
+- [ ] **One behaviour per test.** Each test tells one story ("given A, B
+      happens") and fails only when that behaviour changes.
+- [ ] **Names describe behaviour**, not implementation trivia.
+- [ ] **Important branches are covered** — the paths that matter, not raw line
+      coverage.
 
 ## 9. Changeset & release hygiene
 
 - [ ] A changeset exists when there is a user-facing change (new adaptor, API or
       behavioural change). Dev-only/internal changes don't need one.
 - [ ] The changeset bump level is correct — **breaking changes are `major`**.
-- [ ] The changeset is written for **users**, not developers: concise, factual,
-      focused on API/behavioural changes, and it calls out breaking changes with
-      any migration/workaround. No selling or internal implementation detail.
+- [ ] The changeset is written for **users**, not developers, and is short —
+      usually a single sentence describing the delta. Flag changesets that read
+      like a full feature write-up or explanation. It should be factual, focused
+      on the API/behavioural change, and call out any breaking change with a
+      migration/workaround. Avoid marketing language and internal implementation
+      details.
 - [ ] For breaking changes, the PR considers whether production jobs need
       updating and whether the release is safe.
 
 ## 10. Build & CI
 
-- [ ] `pnpm build`, `pnpm test`, `pnpm run test:git`, and `pnpm validate:schemas`
-      are expected to pass (these run in CI).
-- [ ] No stray build output, `tmp/` artifacts, credentials, or `state.json`
-      committed.
+CI already runs `pnpm build`, `pnpm test`, `pnpm run test:git`, and
+`pnpm validate:schemas`, and `.gitignore` keeps build output, `tmp/`, and
+`state.json` out of commits — **don't re-check any of that**. The only thing
+worth a human/AI eye here:
+
+- [ ] No credentials, tokens, or real config/secrets committed in the diff
+      (e.g. a live key pasted into a fixture).
 
 ---
 
@@ -164,6 +199,6 @@ wins — update this rubric to match.
 ## Recommended
 - <finding> — <rule / wiki reference>
 
-## Nits
+## NitPicks
 - <finding>
 ```

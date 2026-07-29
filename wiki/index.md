@@ -6,7 +6,7 @@ Here is a list of available resources:
   a new adaptor
 - [Useful Commands](commands.md) - Useful CLI commands provided within this repo
 - [Best Practice](best-practice.md) - Best practices for creating an adaptor
-- [Code Review Rubric](code-review.md) - Checklist for reviewing adaptor
+- [Code Review Guidelines](code-review.md) - Checklist for reviewing adaptor
   changes, used by human and AI reviewers
 - [Documentation Guide](docs.md) - Advice, style and best practices for docs
   and JSDocs
