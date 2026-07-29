@@ -92,7 +92,7 @@ function getContentIndicator(contentRequest) {
 export async function getMessageContent(
   message,
   desiredContent,
-  fetchAttachments = true
+  fetchAttachments = true,
 ) {
   switch (desiredContent.type) {
     case 'archive':
@@ -120,6 +120,72 @@ export async function getMessageContent(
     default:
       return `Unsupported content type: ${desiredContent.type}`;
   }
+}
+
+export function resolveContentPlan(
+  defaultContents,
+  requestedContents,
+  fetchAttachments,
+) {
+  const contentIndicators = getContentIndicators(
+    defaultContents,
+    requestedContents,
+  );
+
+  const needsFullFormat = contentIndicators.some(
+    ({ type }) => type === 'body' || type === 'file' || type === 'archive',
+  );
+  const messageFormat = needsFullFormat ? 'full' : 'metadata';
+
+  if (!fetchAttachments) {
+    console.log('fetchAttachments is false: skipping attachment downloads');
+    const skippedNames = contentIndicators
+      .filter(({ type }) => type === 'file' || type === 'archive')
+      .map(({ name }) => name);
+    if (skippedNames.length) {
+      console.log(
+        `fetchAttachments is false: skipping attachment downloads for ${skippedNames.join(
+          ', ',
+        )}; matched filenames will still be included in the output`,
+      );
+    }
+  }
+
+  return { contentIndicators, messageFormat };
+}
+
+export async function buildMessageContent(
+  userId,
+  messageId,
+  contentIndicators,
+  messageFormat,
+  fetchAttachments,
+) {
+  const content = { messageId };
+
+  const messageResult = await getMessageResult(
+    userId,
+    messageId,
+    messageFormat,
+  );
+
+  for (const contentIndicator of contentIndicators) {
+    const messageContent = await getMessageContent(
+      messageResult,
+      contentIndicator,
+      fetchAttachments,
+    );
+
+    if (messageContent && content[contentIndicator.name]) {
+      throw new Error(
+        `Duplicate content name detected: ${contentIndicator.name}`,
+      );
+    }
+
+    content[contentIndicator.name] ??= messageContent;
+  }
+
+  return content;
 }
 
 export async function buildAndSendMessage(message) {
@@ -223,7 +289,7 @@ export function removeConnection(state) {
 async function getFileFromArchiveFromAttachment(
   message,
   desiredContent,
-  fetchAttachments
+  fetchAttachments,
 ) {
   if (!fetchAttachments) {
     const part = findAttachmentPart(message, desiredContent.archive);
@@ -241,7 +307,11 @@ async function getFileFromArchiveFromAttachment(
   );
 }
 
-async function getFileFromAttachment(message, desiredContent, fetchAttachments) {
+async function getFileFromAttachment(
+  message,
+  desiredContent,
+  fetchAttachments,
+) {
   if (!fetchAttachments) {
     const part = findAttachmentPart(message, desiredContent.file);
     return part ? { filename: part.filename } : null;

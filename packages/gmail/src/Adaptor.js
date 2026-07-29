@@ -10,9 +10,8 @@ import {
 
 import {
   getMessagesResult,
-  getMessageResult,
-  getContentIndicators,
-  getMessageContent,
+  resolveContentPlan,
+  buildMessageContent,
   buildAndSendMessage,
   createConnection,
   removeConnection,
@@ -44,72 +43,6 @@ import {
  * @property {boolean} [fetchAttachments=true] - Whether to download file and archive attachments.
  *   When false, matched attachments are returned as filename-only objects without content.
  */
-
-// Builds the content indicators and Gmail message `format` (metadata vs
-// full) shared by getContentsFromMessages and getMessageById.
-function resolveContentPlan(defaultContents, requestedContents, fetchAttachments) {
-  const contentIndicators = getContentIndicators(
-    defaultContents,
-    requestedContents,
-  );
-
-  const needsFullFormat = contentIndicators.some(
-    ({ type }) => type === 'body' || type === 'file' || type === 'archive',
-  );
-  const messageFormat = needsFullFormat ? 'full' : 'metadata';
-
-  if (!fetchAttachments) {
-    console.log('fetchAttachments is false: skipping attachment downloads');
-    const skippedNames = contentIndicators
-      .filter(({ type }) => type === 'file' || type === 'archive')
-      .map(({ name }) => name);
-    if (skippedNames.length) {
-      console.log(
-        `fetchAttachments is false: skipping attachment downloads for ${skippedNames.join(
-          ', ',
-        )}; matched filenames will still be included in the output`,
-      );
-    }
-  }
-
-  return { contentIndicators, messageFormat };
-}
-
-// Fetches one message and builds its content object from the requested
-// contentIndicators. Shared by getContentsFromMessages and getMessageById.
-async function buildMessageContent(
-  userId,
-  messageId,
-  contentIndicators,
-  messageFormat,
-  fetchAttachments,
-) {
-  const content = { messageId };
-
-  const messageResult = await getMessageResult(
-    userId,
-    messageId,
-    messageFormat,
-  );
-
-  for (const contentIndicator of contentIndicators) {
-    const messageContent = await getMessageContent(
-      messageResult,
-      contentIndicator,
-      fetchAttachments,
-    );
-
-    if (messageContent && content[contentIndicator.name]) {
-      throw new Error(
-        `Duplicate content name detected: ${contentIndicator.name}`,
-      );
-    }
-
-    content[contentIndicator.name] ??= messageContent;
-  }
-
-  return content;
-}
 
 /**
  * Downloads contents from messages of a Gmail account.
