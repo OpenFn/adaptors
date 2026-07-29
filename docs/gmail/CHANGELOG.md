@@ -1,5 +1,14 @@
 # @openfn/language-gmail
 
+## 3.1.0 - 29 July 2026
+
+### Minor Changes
+
+- 59969c6: - Added a `fetchAttachments` option (default `true`) to
+  `getContentsFromMessages` and `getMessageById`.
+- fb55142: Added a `getMessageById` function to fetch a single message by its
+  Gmail API message id.
+
 ## 3.0.0 - 08 July 2026
 
 ### Major Changes

@@ -2,6 +2,8 @@
 <dt>
     <a href="#getcontentsfrommessages">getContentsFromMessages(options)</a></dt>
 <dt>
+    <a href="#getmessagebyid">getMessageById(messageId, [options])</a></dt>
+<dt>
     <a href="#sendmessage">sendMessage(message)</a></dt>
 </dl>
 
@@ -67,7 +69,7 @@ This operation writes the following keys to state:
 
 | State Key | Description |
 | --- | --- |
-| data | The returned message objects, of the form `{ messageId, contents } ` |
+| data | The returned message objects, of the form `{ messageId, ...contents } ` |
 | processedIds | An array of string ids processed by this request |
 
 **Example:** Get a message with a specific subject
@@ -86,6 +88,52 @@ getContentsFromMessages(
     contents: [
       'subject',
       { type: 'file', name: 'metadata', file: 'report.txt'}
+    ]
+  }
+)
+```
+**Example:** Get metadata without downloading requested attachments
+```js
+getContentsFromMessages(
+  {
+    query: 'after:2026/07/01',
+    contents: [
+      'body',
+      { type: 'file', name: 'report', file: /\.xlsx$/ }
+    ],
+    fetchAttachments: false
+  }
+)
+```
+
+* * *
+
+### getMessageById
+
+<p><code>getMessageById(messageId, [options]) ⇒ Operation</code></p>
+
+Downloads contents from a single message of a Gmail account, identified by
+its Gmail API message id.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| messageId | <code>string</code> | Gmail API message id to fetch. |
+| [options] | [<code>MessageIdOptions</code>](#messageidoptions) | Customized options including desired contents. |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The returned message object, of the form `{ messageId, ...contents } ` |
+
+**Example:** Download attachments for a specific message identified by an earlier step
+```js
+getMessageById(
+  $.data.messageId,
+  {
+    contents: [
+      { type: 'file', name: 'report', file: /\.xlsx$/ }
     ]
   }
 )
@@ -146,6 +194,22 @@ Used to isolate the type of content to retrieve from the message.
 
 * * *
 
+### MessageIdOptions
+
+Configurable options provided to getMessageById.
+
+
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [contents] | <code>Array.&lt;(string\|MessageContent)&gt;</code> | <code>[&#x27;from&#x27;, &#x27;date&#x27;, &#x27;subject&#x27;]</code> | An array of strings or MessageContent objects used to specify which parts of the message to retrieve. |
+| [email] | <code>string</code> |  | The user account to retrieve messages from. Defaults to the authenticated user. |
+| [fetchAttachments] | <code>boolean</code> | <code>true</code> | Whether to download file and archive attachments.   When false, matched attachments are returned as filename-only objects without content. |
+
+
+* * *
+
 ### Options
 
 Configurable options provided to the Gmail adaptor.
@@ -156,10 +220,11 @@ Configurable options provided to the Gmail adaptor.
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | [query] | <code>string</code> |  | Gmail search query string. |
-| [contents] | <code>Array.&lt;(string\|MessageContent)&gt;</code> | <code>[&#x27;from&#x27;, &#x27;date&#x27;, &#x27;subject&#x27;, &#x27;body&#x27;]</code> | An array of strings or MessageContent objects used to specify which parts of the message to retrieve. |
+| [contents] | <code>Array.&lt;(string\|MessageContent)&gt;</code> | <code>[&#x27;from&#x27;, &#x27;date&#x27;, &#x27;subject&#x27;]</code> | An array of strings or MessageContent objects used to specify which parts of the message to retrieve. |
 | [processedIds] | <code>Array.&lt;string&gt;</code> |  | Ignore message ids which have already been processed. |
 | [email] | <code>string</code> |  | The user account to retrieve messages from. Defaults to the authenticated user. |
 | [maxResults] | <code>int</code> |  | Maximum number of messages to process per request. Default is 1000. |
+| [fetchAttachments] | <code>boolean</code> | <code>true</code> | Whether to download file and archive attachments.   When false, matched attachments are returned as filename-only objects without content. |
 
 
 * * *
