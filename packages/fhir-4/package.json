@@ -38,7 +38,7 @@
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
-    "mocha": "^10.7.3",
+    "mocha": "^11.7.6",
     "rimraf": "3.0.2",
     "ts-node": "10.9.1",
     "typescript": "5.9.2",
