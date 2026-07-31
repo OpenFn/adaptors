@@ -7,7 +7,7 @@ const mockPool = mockAgent.get('https://api.openconceptlab.org');
 // For get()
 mockPool
   .intercept({
-    path: '/orgs/OpenFn',
+    path: /\/orgs\/OpenFn/,
     method: 'GET',
     headers: {
       'content-type': 'application/json',
