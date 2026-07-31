@@ -4,7 +4,7 @@ import * as util from './Utils.js';
 
 /**
  * State object
- * @typedef {Object} HttpState
+ * @typedef {Object} SanteMPIHttpState
  * @property data - the parsed response body
  * @property response - the response from the HTTP server, including headers, statusCode, body, etc
  * @property references - an array of all previous data objects used in the Job
@@ -14,7 +14,6 @@ import * as util from './Utils.js';
  * Options provided to santeMPI HTTP requests
  * @typedef {Object} RequestOptions
  * @public
- * @property {object|string} body - body data to append to the request. JSON will be converted to a string.
  * @property {object} query - An object of query parameters to be encoded into the URL.
  * @property {object} headers - An object of headers to append to the request.
  */
@@ -38,7 +37,7 @@ import * as util from './Utils.js';
  * @param {string} path - Path to resource
  * @param {RequestOptions} options - Optional request options
  * @returns {Operation}
- * @state {HttpState}
+ * @state {SanteMPIHttpState}
  */
 export function get(path, options) {
   return request('GET', path, null, options);
@@ -79,7 +78,7 @@ export function get(path, options) {
  * @param {object} body - Object which will be attached to the POST body
  * @param {RequestOptions} options - Optional request options
  * @returns {Operation}
- * @state {HttpState}
+ * @state {SanteMPIHttpState}
  */
 export function post(path, body, options) {
   return request('POST', path, body, options);
@@ -118,7 +117,7 @@ export function post(path, body, options) {
  * @param {object} body - Object which will be attached to the POST body
  * @param {RequestOptions} options - Optional request options
  * @returns {Operation}
- * @state {HttpState}
+ * @state {SanteMPIHttpState}
  */
 export function request(method, path, body, options = {}) {
   return async state => {

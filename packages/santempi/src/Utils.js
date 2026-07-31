@@ -49,8 +49,6 @@ export const authorize = state => {
         configuration: {
           ...state.configuration,
           access_token: response.body.access_token,
-          token_type: response.body.token_type,
-          expires_in: response.body.expires_in,
         },
       }),
     );
@@ -65,15 +63,17 @@ export const request = (configuration = {}, method, path, options) => {
   const { baseUrl, access_token } = configuration;
     if (options.query) console.log(`with params: `, options.query);
 
+    const {headers, ...rest} = options;
+
   const opts = {
     parseAs: 'json',
     baseUrl,
 
-    ...options,
+    ...rest,
     headers: {
       'content-type': 'application/json',
       Authorization: `Bearer ${access_token}`,
-      ...options?.headers,
+      ...headers,
     },
   };
 

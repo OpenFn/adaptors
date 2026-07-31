@@ -3,14 +3,7 @@
   "properties": {
     "baseUrl": {
       "title": "Base URL",
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
+      "type": "string",
       "description": "The base URL (https://test.dataforimplementation.org)",
       "format": "uri",
       "minLength": 1,
