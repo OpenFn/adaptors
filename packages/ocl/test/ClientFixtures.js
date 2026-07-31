@@ -7,7 +7,7 @@ const mockPool = mockAgent.get('https://api.openconceptlab.org');
 // For get()
 mockPool
   .intercept({
-    path: '/orgs/OpenFn',
+    path: /\/orgs\/OpenFn/,
     method: 'GET',
     headers: {
       'content-type': 'application/json',
@@ -42,7 +42,7 @@ mockPool
 
 mockPool
   .intercept({
-    path: '/orgs/noAccess',
+    path: /\/orgs\/noAccess/,
     method: 'GET',
   })
   .reply(404, {
@@ -54,7 +54,7 @@ mockPool
 //For getMappings
 mockPool
   .intercept({
-    path: '/orgs/OpenFn/sources/st-lucia-dhis2-dataElems/HEAD/mappings',
+    path: /\/orgs\/OpenFn\/sources\/st-lucia-dhis2-dataElems\/HEAD\/mappings/,
     method: 'GET',
     headers: {
       'content-type': 'application/json',

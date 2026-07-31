@@ -9,14 +9,14 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 1
           fetch-tags: true
       - uses: actions/setup-node@v3
         with:
           node-version: '22.20.0'
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
       - run: pnpm install --frozen-lockfile
       - name: Validate configuration schemas
         run: pnpm validate:schemas

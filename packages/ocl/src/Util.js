@@ -87,7 +87,6 @@ export const request = async (url, params = {}, method = 'GET') => {
 
   const resolvedUrl =
     method == 'GET' ? `${url}?${new URLSearchParams(params).toString()}` : url;
-
   const response = await fetch(resolvedUrl, options);
   const data = await response.json();
 
