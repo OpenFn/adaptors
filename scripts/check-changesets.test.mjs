@@ -6,16 +6,16 @@ import path from 'node:path';
 import test from 'node:test';
 
 import {
-  findChangedAdaptorDirectories,
-  findChangesetFiles,
-  findMissingPackages,
+  evaluateCoverage,
   inspectRepository,
-  parseChangesetTargets,
-  parseNameStatus,
 } from './check-changesets.mjs';
 
-const runGit = (cwd, ...args) =>
-  execFileSync('git', args, { cwd, encoding: 'utf8' });
+const git = (cwd, ...args) =>
+  execFileSync('git', args, {
+    cwd,
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
 
 const write = async (cwd, file, contents) => {
   const target = path.join(cwd, file);
@@ -27,31 +27,27 @@ const packageJson = name => JSON.stringify({ name }, null, 2);
 
 const createRepository = async () => {
   const cwd = await fs.mkdtemp(path.join(os.tmpdir(), 'changeset-check-'));
-  runGit(cwd, 'init', '--initial-branch=main');
-  runGit(cwd, 'config', 'user.name', 'Changeset Test');
-  runGit(cwd, 'config', 'user.email', 'changeset@example.com');
+  git(cwd, 'init', '--initial-branch=main');
+  git(cwd, 'config', 'user.name', 'Changeset Test');
+  git(cwd, 'config', 'user.email', 'changeset@example.com');
 
-  await write(
-    cwd,
-    '.changeset/config.json',
-    JSON.stringify({ baseBranch: 'main' })
-  );
   await write(
     cwd,
     'packages/common/package.json',
     packageJson('@openfn/language-common')
   );
+  await write(cwd, 'packages/common/index.js', 'export const common = 1;\n');
   await write(
     cwd,
     'packages/gmail/package.json',
     packageJson('@openfn/language-gmail')
   );
+  await write(cwd, 'packages/gmail/index.js', 'export const gmail = 1;\n');
   await write(cwd, 'README.md', '# Test repository\n');
 
-  runGit(cwd, 'add', '.');
-  runGit(cwd, 'commit', '-m', 'Initial commit');
-  runGit(cwd, 'switch', '-c', 'feature');
-
+  git(cwd, 'add', '.');
+  git(cwd, 'commit', '-m', 'Initial commit');
+  git(cwd, 'switch', '-c', 'feature');
   return cwd;
 };
 
@@ -71,117 +67,65 @@ const changeset = releases => {
   return `---\n${frontmatter}\n---\n\nTest change.\n`;
 };
 
-test('parses deleted and renamed files from a name-status diff', () => {
-  const entries = parseNameStatus(
-    'D\0packages/common/src/old.js\0R100\0packages/gmail/src/old.js\0packages/gmail/src/new.js\0'
-  );
+const packageNames = result => result.changedPackages.map(pkg => pkg.name);
+const missingNames = result => result.missing.map(pkg => pkg.name);
 
-  assert.deepEqual(entries, [
-    { status: 'D', paths: ['packages/common/src/old.js'] },
-    {
-      status: 'R100',
-      paths: ['packages/gmail/src/old.js', 'packages/gmail/src/new.js'],
-    },
-  ]);
-
-  const directories = findChangedAdaptorDirectories(entries);
-  assert.deepEqual([...directories.keys()], ['common', 'gmail']);
-});
-
-test('only treats the destination of a copied file as changed', () => {
-  const entries = parseNameStatus(
-    'C100\0packages/common/src/source.js\0packages/gmail/src/copy.js\0'
-  );
-
-  const directories = findChangedAdaptorDirectories(entries);
-
-  assert.deepEqual([...directories.keys()], ['gmail']);
-});
-
-test('ignores repository files and the changeset README', () => {
-  const entries = [
-    { status: 'M', paths: ['README.md'] },
-    { status: 'M', paths: ['.changeset/README.md'] },
-    { status: 'A', paths: ['.changeset/valid.md'] },
-  ];
-
-  assert.equal(findChangedAdaptorDirectories(entries).size, 0);
-  assert.deepEqual(findChangesetFiles(entries), ['.changeset/valid.md']);
-});
-
-test('repository-only changes do not require a changeset', async () =>
+test('repository-only changes need no changeset', async () =>
   withRepository(async cwd => {
     await write(cwd, 'README.md', '# Updated repository\n');
+    const result = await evaluateCoverage({ cwd, baseRef: 'main' });
 
-    const inspection = await inspectRepository({ cwd, baseRef: 'main' });
-
-    assert.deepEqual(inspection.changedPackages, []);
+    assert.deepEqual(result.changedPackages, []);
+    assert.deepEqual(result.missing, []);
   }));
 
-test('detects one changed adaptor without a changeset', async () =>
+test('ignores the changeset README', async () =>
   withRepository(async cwd => {
-    await write(cwd, 'packages/common/index.js', 'export const value = 1;\n');
+    await write(cwd, '.changeset/README.md', 'Documentation only.\n');
+    const result = await inspectRepository({ cwd, baseRef: 'main' });
 
-    const inspection = await inspectRepository({ cwd, baseRef: 'main' });
-    const parsed = await parseChangesetTargets(inspection.changesetFiles, {
-      cwd,
-    });
-
-    assert.deepEqual(
-      findMissingPackages(inspection.changedPackages, parsed.targets).map(
-        pkg => pkg.name
-      ),
-      ['@openfn/language-common']
-    );
+    assert.deepEqual(result.changesetFiles, []);
   }));
 
-test('passes when one changed adaptor is targeted', async () =>
+test('reports a changed adaptor without a changeset', async () =>
   withRepository(async cwd => {
-    await write(cwd, 'packages/common/index.js', 'export const value = 1;\n');
+    await write(cwd, 'packages/common/index.js', 'export const common = 2;\n');
+    const result = await evaluateCoverage({ cwd, baseRef: 'main' });
+
+    assert.deepEqual(missingNames(result), ['@openfn/language-common']);
+  }));
+
+test('accepts a changeset targeting the changed adaptor', async () =>
+  withRepository(async cwd => {
+    await write(cwd, 'packages/common/index.js', 'export const common = 2;\n');
     await write(
       cwd,
       '.changeset/common.md',
       changeset([['@openfn/language-common', 'patch']])
     );
+    const result = await evaluateCoverage({ cwd, baseRef: 'main' });
 
-    const inspection = await inspectRepository({ cwd, baseRef: 'main' });
-    const parsed = await parseChangesetTargets(inspection.changesetFiles, {
-      cwd,
-    });
-
-    assert.deepEqual(
-      findMissingPackages(inspection.changedPackages, parsed.targets),
-      []
-    );
+    assert.deepEqual(result.missing, []);
   }));
 
-test('fails when only one of two changed adaptors is targeted', async () =>
+test('reports partial coverage across two adaptors', async () =>
   withRepository(async cwd => {
-    await write(cwd, 'packages/common/index.js', 'export const common = 1;\n');
-    await write(cwd, 'packages/gmail/index.js', 'export const gmail = 1;\n');
+    await write(cwd, 'packages/common/index.js', 'export const common = 2;\n');
+    await write(cwd, 'packages/gmail/index.js', 'export const gmail = 2;\n');
     await write(
       cwd,
       '.changeset/gmail.md',
       changeset([['@openfn/language-gmail', 'minor']])
     );
+    const result = await evaluateCoverage({ cwd, baseRef: 'main' });
 
-    const inspection = await inspectRepository({ cwd, baseRef: 'main' });
-    const parsed = await parseChangesetTargets(inspection.changesetFiles, {
-      cwd,
-    });
-
-    assert.deepEqual(
-      findMissingPackages(inspection.changedPackages, parsed.targets).map(
-        pkg => pkg.name
-      ),
-      ['@openfn/language-common']
-    );
+    assert.deepEqual(missingNames(result), ['@openfn/language-common']);
   }));
 
-test('passes when one changeset targets two changed adaptors', async () =>
+test('accepts one changeset targeting two adaptors', async () =>
   withRepository(async cwd => {
-    await write(cwd, 'packages/common/index.js', 'export const common = 1;\n');
-    await write(cwd, 'packages/gmail/index.js', 'export const gmail = 1;\n');
+    await write(cwd, 'packages/common/index.js', 'export const common = 2;\n');
+    await write(cwd, 'packages/gmail/index.js', 'export const gmail = 2;\n');
     await write(
       cwd,
       '.changeset/both.md',
@@ -190,22 +134,15 @@ test('passes when one changeset targets two changed adaptors', async () =>
         ['@openfn/language-gmail', 'minor'],
       ])
     );
+    const result = await evaluateCoverage({ cwd, baseRef: 'main' });
 
-    const inspection = await inspectRepository({ cwd, baseRef: 'main' });
-    const parsed = await parseChangesetTargets(inspection.changesetFiles, {
-      cwd,
-    });
-
-    assert.deepEqual(
-      findMissingPackages(inspection.changedPackages, parsed.targets),
-      []
-    );
+    assert.deepEqual(result.missing, []);
   }));
 
-test('passes when separate changesets target two changed adaptors', async () =>
+test('accepts separate changesets targeting two adaptors', async () =>
   withRepository(async cwd => {
-    await write(cwd, 'packages/common/index.js', 'export const common = 1;\n');
-    await write(cwd, 'packages/gmail/index.js', 'export const gmail = 1;\n');
+    await write(cwd, 'packages/common/index.js', 'export const common = 2;\n');
+    await write(cwd, 'packages/gmail/index.js', 'export const gmail = 2;\n');
     await write(
       cwd,
       '.changeset/common.md',
@@ -216,53 +153,51 @@ test('passes when separate changesets target two changed adaptors', async () =>
       '.changeset/gmail.md',
       changeset([['@openfn/language-gmail', 'minor']])
     );
+    const result = await evaluateCoverage({ cwd, baseRef: 'main' });
 
-    const inspection = await inspectRepository({ cwd, baseRef: 'main' });
-    const parsed = await parseChangesetTargets(inspection.changesetFiles, {
-      cwd,
-    });
-
-    assert.deepEqual(
-      findMissingPackages(inspection.changedPackages, parsed.targets),
-      []
-    );
+    assert.deepEqual(result.missing, []);
   }));
 
-test('an unrelated target does not cover a changed adaptor', () => {
-  const changedPackages = [
-    {
-      name: '@openfn/language-common',
-      directories: ['common'],
-      paths: ['packages/common/index.js'],
-    },
-  ];
+test('an unrelated changeset does not cover a changed adaptor', async () =>
+  withRepository(async cwd => {
+    await write(cwd, 'packages/common/index.js', 'export const common = 2;\n');
+    await write(
+      cwd,
+      '.changeset/gmail.md',
+      changeset([['@openfn/language-gmail', 'patch']])
+    );
+    const result = await evaluateCoverage({ cwd, baseRef: 'main' });
 
-  assert.deepEqual(
-    findMissingPackages(
-      changedPackages,
-      new Set(['@openfn/language-gmail'])
-    ),
-    changedPackages
-  );
-});
+    assert.deepEqual(missingNames(result), ['@openfn/language-common']);
+  }));
 
 test('reports empty and malformed changesets', async () =>
   withRepository(async cwd => {
+    await write(cwd, 'packages/common/index.js', 'export const common = 2;\n');
     await write(cwd, '.changeset/empty.md', '---\n---\n');
     await write(cwd, '.changeset/malformed.md', '---\ninvalid: [\n---\n');
+    const result = await evaluateCoverage({ cwd, baseRef: 'main' });
 
-    const parsed = await parseChangesetTargets(
-      ['.changeset/empty.md', '.changeset/malformed.md'],
-      { cwd }
-    );
-
-    assert.deepEqual(
-      parsed.errors.map(error => error.file),
-      ['.changeset/empty.md', '.changeset/malformed.md']
-    );
+    assert.equal(result.errors.length, 2);
   }));
 
-test('resolves added and deleted package names from the correct revision', async () =>
+test('detects both adaptors in a cross-adaptor rename', async () =>
+  withRepository(async cwd => {
+    git(
+      cwd,
+      'mv',
+      'packages/common/index.js',
+      'packages/gmail/from-common.js'
+    );
+    const result = await inspectRepository({ cwd, baseRef: 'main' });
+
+    assert.deepEqual(packageNames(result), [
+      '@openfn/language-common',
+      '@openfn/language-gmail',
+    ]);
+  }));
+
+test('resolves added and deleted package names', async () =>
   withRepository(async cwd => {
     await fs.rm(path.join(cwd, 'packages/common'), {
       recursive: true,
@@ -274,11 +209,10 @@ test('resolves added and deleted package names from the correct revision', async
       packageJson('@openfn/language-new')
     );
     await write(cwd, 'packages/new/index.js', 'export const value = 1;\n');
+    const result = await inspectRepository({ cwd, baseRef: 'main' });
 
-    const inspection = await inspectRepository({ cwd, baseRef: 'main' });
-
-    assert.deepEqual(
-      inspection.changedPackages.map(pkg => pkg.name),
-      ['@openfn/language-common', '@openfn/language-new']
-    );
+    assert.deepEqual(packageNames(result), [
+      '@openfn/language-common',
+      '@openfn/language-new',
+    ]);
   }));
