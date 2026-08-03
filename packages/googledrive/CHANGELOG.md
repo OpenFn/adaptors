@@ -1,5 +1,11 @@
 # @openfn/language-googledrive
 
+## 3.2.0 - 03 August 2026
+
+### Minor Changes
+
+- 7dd37fc: Add support for Google Service Account credential
+
 ## 3.1.2 - 30 June 2026
 
 ### Patch Changes

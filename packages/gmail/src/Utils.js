@@ -270,11 +270,34 @@ async function parseArchiveAttachment(attachment) {
   };
 }
 
-export function createConnection(state) {
-  const { access_token } = state.configuration;
+export async function createConnection(state) {
+  const {
+    access_token,
+    private_key,
+    client_email,
+    subject,
+    scopes = [],
+  } = state.configuration;
 
-  const auth = new google.auth.OAuth2();
-  auth.credentials = { access_token };
+  const mandatoryScopes = [
+    'https://mail.google.com/',
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+    'openid',
+  ];
+  let auth;
+  if (private_key && client_email) {
+    auth = new google.auth.JWT({
+      email: client_email,
+      key: private_key,
+      scopes: [...mandatoryScopes, ...scopes],
+      subject,
+    });
+    await auth.authorize();
+  } else {
+    auth = new google.auth.OAuth2();
+    auth.credentials = { access_token };
+  }
 
   gmail = google.gmail({ version: 'v1', auth });
 

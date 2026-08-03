@@ -59,4 +59,24 @@ mockPool
     code: 401,
   });
 
+// Intercept for access_token (snake_case) test — normalizeOauthConfig converts it to the same token value
+mockPool
+  .intercept({
+    path: '/v1/projects/test-007/locations/us-east7/datasets/fhir-007/fhirStores/testing-fhir-007/fhir/Patient',
+    method: 'POST',
+    headers: {
+      'content-type': 'application/fhir+json',
+      Authorization: 'Bearer snake-case-token',
+    },
+  })
+  .reply(200, {
+    data: {
+      id: 'abc-123',
+      resourceType: 'Patient',
+      name: [{ use: 'official', family: 'Jones', given: ['Bob'] }],
+      gender: 'male',
+      birthDate: '1985-03-10',
+    },
+  });
+
 export default mockAgent;
