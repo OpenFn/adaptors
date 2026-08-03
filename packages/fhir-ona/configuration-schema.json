@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "type": "string",
+      "description": "The Ona HAPI base URL",
+      "format": "uri",
+      "minLength": 1,
+      "default": "https://echis-ref.dataforimplementation.org",
+      "examples": ["https://echis-ref.dataforimplementation.org"]
+    },
+    "clientId": {
+      "title": "Client ID",
+      "type": "string",
+      "description": "Client ID",
+      "examples": ["some-client-id"]
+    },
+    "clientSecret": {
+      "title": "Client Secret",
+      "type": "string",
+      "description": "Client Secret",
+      "writeOnly": true,
+      "examples": ["some-client-secret"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["clientId", "clientSecret"]
+}
