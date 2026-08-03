@@ -19,7 +19,7 @@ describe('http.get', () => {
   it('fetches a FHIR resource bundle with the correct Accept header', async () => {
     testServer
       .intercept({
-        path: '/fhir/Patient',
+        path: '/empi/fhir/Patient',
         method: 'GET',
         headers: { Accept: 'application/fhir+json' },
       })
@@ -39,7 +39,7 @@ describe('http.get', () => {
 
   it('fetches a HDSI resource list', async () => {
     testServer
-      .intercept({ path: '/hdsi/AssigningAuthority', method: 'GET' })
+      .intercept({ path: '/empi/hdsi/AssigningAuthority', method: 'GET' })
       .reply(200, {
         $type: 'AmiCollection',
         resource: [{ domainName: 'TEST-NIN' }],
@@ -54,7 +54,7 @@ describe('http.get', () => {
   it('passes query parameters to the request', async () => {
     testServer
       .intercept({
-        path: '/fhir/Patient',
+        path: '/empi/fhir/Patient',
         method: 'GET',
         query: { identifier: 'http://ohie.org/National_Id|NIN-001-TEST' },
       })
@@ -75,7 +75,7 @@ describe('http.get', () => {
 
   it('fetches a single FHIR Patient by ID', async () => {
     testServer
-      .intercept({ path: '/fhir/Patient/p-003', method: 'GET' })
+      .intercept({ path: '/empi/fhir/Patient/p-003', method: 'GET' })
       .reply(200, {
         resourceType: 'Patient',
         id: 'p-003',
@@ -96,7 +96,7 @@ describe('http.get', () => {
 describe('http.post', () => {
   it('creates an AMI resource', async () => {
     testServer
-      .intercept({ path: '/ami/AssigningAuthority', method: 'POST' })
+      .intercept({ path: '/empi/ami/AssigningAuthority', method: 'POST' })
       .reply(201, {
         $type: 'AssigningAuthority',
         id: 'aa-001',
@@ -119,7 +119,7 @@ describe('http.post', () => {
   it('create a FHIR patient without builders', async () => {
     testServer
       .intercept({
-        path: '/fhir/Patient',
+        path: '/empi/fhir/Patient',
         method: 'POST',
         headers: {
           Accept: 'application/fhir+json',
@@ -166,7 +166,7 @@ describe('http.post', () => {
   it('registers a FHIR Patient built with builders', async () => {
     testServer
       .intercept({
-        path: '/fhir/Patient',
+        path: '/empi/fhir/Patient',
         method: 'POST',
         headers: {
           Accept: 'application/fhir+json',
@@ -209,7 +209,7 @@ describe('http.post', () => {
 describe('http.request', () => {
   it('makes a generic GET request', async () => {
     testServer
-      .intercept({ path: '/ami/MatchConfiguration', method: 'GET' })
+      .intercept({ path: '/empi/ami/MatchConfiguration', method: 'GET' })
       .reply(200, {
         $type: 'AmiCollection',
         resource: [{ id: 'mc-001', name: 'Default Match Config' }],
@@ -226,7 +226,7 @@ describe('http.request', () => {
 
   it('makes a generic POST request', async () => {
     testServer
-      .intercept({ path: '/hdsi/Patient/$merge', method: 'POST' })
+      .intercept({ path: '/empi/hdsi/Patient/$merge', method: 'POST' })
       .reply(200, {
         resourceType: 'Patient',
         id: 'p-001',

@@ -43,7 +43,7 @@ export const authorize = state => {
       body: formBody.toString(),
       baseUrl,
     };
-    return commonRequest('POST', '/auth/oauth2_token', options).then(
+    return commonRequest('POST', '/empi/auth/oauth2_token', options).then(
       response => ({
         ...state,
         configuration: {
@@ -77,6 +77,6 @@ export const request = (configuration = {}, method, path, options) => {
     },
   };
 
-  const safePath = nodepath.join(path);
+  const safePath = nodepath.join('/empi', path);
   return commonRequest(method, safePath, opts).then(logResponse);
 };
