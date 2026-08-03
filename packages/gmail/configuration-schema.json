@@ -11,9 +11,29 @@
       "examples": [
         "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmhax0rZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"
       ]
+    },
+    "private_key": {
+      "title": "Private Key",
+      "type": "string",
+      "description": "RSA private key from the Google service account JSON key file. Required for service account",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": ["-----BEGIN RSA PRIVATE KEY-----\nMIIEow..."]
+    },
+    "client_email": {
+      "title": "Client Email",
+      "type": "string",
+      "description": "Service account email address (e.g. my-app@project-id.iam.gserviceaccount.com). Required for service account",
+      "minLength": 1,
+      "examples": ["my-app@project-id.iam.gserviceaccount.com"]
+    },
+    "subject": {
+      "title": "Subject Email",
+      "type": "string",
+      "description": "Gmail user to impersonate via domain-wide delegation (e.g. user@yourdomain.com). For service account",
+      "examples": ["user@yourdomain.com"]
     }
   },
   "type": "object",
-  "additionalProperties": true,
-  "required": ["access_token"]
+  "additionalProperties": true
 }
