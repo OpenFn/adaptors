@@ -52928,6 +52928,1247 @@
     "common": true
   }
 ],
+{"name":"fhir-opensrp","adaptor":"@openfn/language-fhir-opensrp","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#create\\\">create(path, body, options)</a></dt>\\n<dt>\\n    <a href=\\\"#delete\\\">delete(path, options)</a></dt>\\n<dt>\\n    <a href=\\\"#read\\\">read(path, options)</a></dt>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, body, options)</a></dt>\\n<dt>\\n    <a href=\\\"#update\\\">update(path, body, options)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#as\\\">as()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#map\\\">map()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#util\\\">util</a>\\n</dt></dl>\\n\\n## Functions\\n### create\\n\\n<p><code>create(path, body, options) ⇒ Operation</code></p>\\n\\nCreate a resource\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Create a Patient using builders (see [fhir-4 docs](https://docs.openfn.org/adaptors/packages/fhir-4-docs#functions))\\n```js\\ncreate('Patient', builders.patient({\\n  identifier: [\\n    builders.identifier({\\n      use: 'official',\\n      system: 'http://ohie.org/National_Id',\\n      value: 'NIN-TEST-001',\\n    }),\\n  ],\\n  name: [{ use: 'official', family: 'Nakamura', given: ['Aiko'], text: 'Aiko Nakamura' }],\\n  gender: 'female',\\n  birthDate: '1992-04-10',\\n  active: true,\\n  telecom: [{ system: 'phone', value: '0712345678' }],\\n}));\\n```\\n**Example:** Create a Patient without builders\\n```js\\ncreate('Patient', {\\n  resourceType: 'Patient',\\n  active: true,\\n  identifier: [\\n    { use: 'official', system: 'http://ohie.org/National_Id', value: 'NIN-TEST-001' },\\n  ],\\n  name: [{ use: 'official', family: 'Nakamura', given: ['Aiko'] }],\\n  gender: 'female',\\n  birthDate: '1992-04-10',\\n  telecom: [{ system: 'phone', value: '0712345678' }],\\n});\\n```\\n\\n* * *\\n\\n### delete\\n\\n<p><code>delete(path, options) ⇒ Operation</code></p>\\n\\nDelete a resource\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Delete a Patient by ID\\n```js\\ndelete('Patient/97597');\\n```\\n\\n* * *\\n\\n### read\\n\\n<p><code>read(path, options) ⇒ Operation</code></p>\\n\\nRead a resource\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Read server metadata\\n```js\\nread('metadata');\\n```\\n**Example:** Search for recently updated Patients\\n```js\\nread('Patient', {\\n  query: {\\n    '_lastUpdated': 'gt2026-07-01T00:00:00Z',\\n    '_sort': '_lastUpdated',\\n    '_count': 200\\n  }\\n});\\n```\\n\\n* * *\\n\\n### request\\n\\n<p><code>request(method, path, body, options) ⇒ Operation</code></p>\\n\\nMake a general HTTP request\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Search Observations for a specific patient\\n```js\\nrequest('GET', 'Observation', null, {\\n  query: { 'subject': 'Patient/0181038e-682b-4c7c-a946-e3757d2fa2f7' }\\n});\\n```\\n**Example:** Update a Patient resource\\n```js\\nrequest('PUT', 'Patient/0181038e-682b-4c7c-a946-e3757d2fa2f7', {\\n  resourceType: 'Patient',\\n  id: '0181038e-682b-4c7c-a946-e3757d2fa2f7',\\n  active: false,\\n  name: [{ use: 'official', family: 'Mathenge', given: ['Monica'] }],\\n  gender: 'female',\\n  birthDate: '1990-07-07',\\n});\\n```\\n\\n* * *\\n\\n### update\\n\\n<p><code>update(path, body, options) ⇒ Operation</code></p>\\n\\nUpdate a resource\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| body | <code>object</code> | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Update a Patient by ID\\n```js\\nupdate('Patient/0181038e-682b-4c7c-a946-e3757d2fa2f7', {\\n  resourceType: 'Patient',\\n  id: '0181038e-682b-4c7c-a946-e3757d2fa2f7',\\n  active: true,\\n  name: [{ use: 'official', family: 'Mathenge', given: ['Monica'] }],\\n  gender: 'female',\\n  birthDate: '1990-07-07',\\n  telecom: [{ system: 'phone', value: '0712010203' }],\\n  managingOrganization: { reference: 'Organization/eb4963c3-3d6e-4ea9-bde8-6a5b638bc4f8' },\\n});\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### OnaFHIRState\\n\\nState object\\n\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions provided to Ona fhir request\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-fhir-opensrp <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\nfhir-opensrp API.\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/fhir-opensrp-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/fhir-opensrp-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\nThe configuration schema uses\\n[JSON Schema draft-07](https://json-schema.org/draft-07/json-schema-release-notes).\\nRun `pnpm validate:schemas` from the adaptors repo root after editing it.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-fhir-opensrp\\n\\n## 1.0.0\\n\\nImplemented the `fhir-opensrp` adaptor with `create()`, `read()`, `delete()`, `update()` and `request()` methods.\\n\\nExported `fhir-4` builder helper functions for the fhir resources\\n\\n\"","functions":["create","read","request","update"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","type":"string","description":"The Ona HAPI base URL","format":"uri","minLength":1,"default":"https://echis-ref.dataforimplementation.org","examples":["https://echis-ref.dataforimplementation.org"]},"clientId":{"title":"Client ID","type":"string","description":"Client ID","examples":["some-client-id"]},"clientSecret":{"title":"Client Secret","type":"string","description":"Client Secret","writeOnly":true,"examples":["some-client-secret"]}},"type":"object","additionalProperties":true,"required":["clientId","clientSecret"]}},
+[
+  {
+    "id": "create",
+    "longname": "create",
+    "name": "create",
+    "kind": "function",
+    "scope": "global",
+    "description": "Create a resource",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object which will be attached to the POST body",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Create a Patient using builders (see [fhir-4 docs](https://docs.openfn.org/adaptors/packages/fhir-4-docs#functions))</caption>\ncreate('Patient', builders.patient({\n  identifier: [\n    builders.identifier({\n      use: 'official',\n      system: 'http://ohie.org/National_Id',\n      value: 'NIN-TEST-001',\n    }),\n  ],\n  name: [{ use: 'official', family: 'Nakamura', given: ['Aiko'], text: 'Aiko Nakamura' }],\n  gender: 'female',\n  birthDate: '1992-04-10',\n  active: true,\n  telecom: [{ system: 'phone', value: '0712345678' }],\n}));",
+      "<caption>Create a Patient without builders</caption>\ncreate('Patient', {\n  resourceType: 'Patient',\n  active: true,\n  identifier: [\n    { use: 'official', system: 'http://ohie.org/National_Id', value: 'NIN-TEST-001' },\n  ],\n  name: [{ use: 'official', family: 'Nakamura', given: ['Aiko'] }],\n  gender: 'female',\n  birthDate: '1992-04-10',\n  telecom: [{ system: 'phone', value: '0712345678' }],\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 113,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OnaFHIRState"
+      }
+    ],
+    "order": 4,
+    "source": "@openfn/language-fhir-opensrp",
+    "signature": [
+      "create(path, body, options)"
+    ],
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "delete",
+    "longname": "delete",
+    "name": "delete",
+    "kind": "function",
+    "scope": "global",
+    "description": "Delete a resource",
+    "alias": "delete",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Delete a Patient by ID</caption>\ndelete('Patient/97597');"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 154,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OnaFHIRState"
+      }
+    ],
+    "order": 6,
+    "source": "@openfn/language-fhir-opensrp",
+    "signature": [
+      "delete(path, options)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "OnaFHIRState",
+    "longname": "OnaFHIRState",
+    "name": "OnaFHIRState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "the response from the HTTP server, including headers, statusCode, body, etc",
+        "name": "response"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 7,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/src"
+    },
+    "order": 0,
+    "source": "@openfn/language-fhir-opensrp",
+    "level": 0
+  },
+  {
+    "id": "read",
+    "longname": "read",
+    "name": "read",
+    "kind": "function",
+    "scope": "global",
+    "description": "Read a resource",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Read server metadata</caption>\nread('metadata');",
+      "<caption>Search for recently updated Patients</caption>\nread('Patient', {\n  query: {\n    '_lastUpdated': 'gt2026-07-01T00:00:00Z',\n    '_sort': '_lastUpdated',\n    '_count': 200\n  }\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 72,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OnaFHIRState"
+      }
+    ],
+    "order": 3,
+    "source": "@openfn/language-fhir-opensrp",
+    "signature": [
+      "read(path, options)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "request",
+    "longname": "request",
+    "name": "request",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a general HTTP request",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "HTTP method to use",
+        "name": "method"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object which will be attached to the POST body",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Search Observations for a specific patient</caption>\nrequest('GET', 'Observation', null, {\n  query: { 'subject': 'Patient/0181038e-682b-4c7c-a946-e3757d2fa2f7' }\n});",
+      "<caption>Update a Patient resource</caption>\nrequest('PUT', 'Patient/0181038e-682b-4c7c-a946-e3757d2fa2f7', {\n  resourceType: 'Patient',\n  id: '0181038e-682b-4c7c-a946-e3757d2fa2f7',\n  active: false,\n  name: [{ use: 'official', family: 'Mathenge', given: ['Monica'] }],\n  gender: 'female',\n  birthDate: '1990-07-07',\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 183,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OnaFHIRState"
+      }
+    ],
+    "order": 7,
+    "source": "@openfn/language-fhir-opensrp",
+    "signature": [
+      "request(method, path, body, options)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "RequestOptions",
+    "longname": "RequestOptions",
+    "name": "RequestOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options provided to Ona fhir request",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of query parameters to be encoded into the URL.",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of headers to append to the request.",
+        "name": "headers"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 15,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/src"
+    },
+    "order": 1,
+    "source": "@openfn/language-fhir-opensrp",
+    "level": 0
+  },
+  {
+    "id": "update",
+    "longname": "update",
+    "name": "update",
+    "kind": "function",
+    "scope": "global",
+    "description": "Update a resource",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object which will be attached to the POST body",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Update a Patient by ID</caption>\nupdate('Patient/0181038e-682b-4c7c-a946-e3757d2fa2f7', {\n  resourceType: 'Patient',\n  id: '0181038e-682b-4c7c-a946-e3757d2fa2f7',\n  active: true,\n  name: [{ use: 'official', family: 'Mathenge', given: ['Monica'] }],\n  gender: 'female',\n  birthDate: '1990-07-07',\n  telecom: [{ system: 'phone', value: '0712010203' }],\n  managingOrganization: { reference: 'Organization/eb4963c3-3d6e-4ea9-bde8-6a5b638bc4f8' },\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 138,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OnaFHIRState"
+      }
+    ],
+    "order": 5,
+    "source": "@openfn/language-fhir-opensrp",
+    "signature": [
+      "update(path, body, options)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "as",
+    "longname": "as",
+    "name": "as()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Run an operation and save the result to a custom key in state instead of overwriting state.data.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The state key to assign the result of the operation to.",
+        "name": "key"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "An operation that returns a new state object with a `data` property",
+        "name": "operation"
+      }
+    ],
+    "examples": [
+      "<caption>Fetch cce-data from collections and store them under state.cceData</caption>\nas('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 987,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/node_modules/@openfn/language-common/src"
+    },
+    "order": 35,
+    "source": "@openfn/language-common",
+    "signature": [
+      "as(key, operation)"
+    ],
+    "common": true
+  },
+  {
+    "id": "combine",
+    "longname": "combine",
+    "name": "combine()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Combines two operations into one",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Operations"
+          ]
+        },
+        "description": "Operations to be performed.",
+        "name": "operations"
+      }
+    ],
+    "examples": [
+      "combine(\n  create('foo'),\n  delete('bar')\n)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 351,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/node_modules/@openfn/language-common/src"
+    },
+    "order": 15,
+    "source": "@openfn/language-common",
+    "signature": [
+      "combine(operations)"
+    ],
+    "common": true
+  },
+  {
+    "id": "cursor",
+    "longname": "cursor",
+    "name": "cursor()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Sets a cursor property on state.\nSupports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\nwhich will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones\nare not yet supported.\nYou can provide a formatter to customise the final cursor value, which is useful for normalising\ndifferent inputs. The custom formatter runs after natural language date conversion.\nSee the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "description": "the cursor value. Usually an ISO date, natural language date, or page number",
+        "name": "value"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "options to control the cursor.",
+        "name": "options"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "set the cursor key. Will persist through the whole run.",
+        "name": "options.key"
+      },
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "description": "the value to use if value is falsy",
+        "name": "options.defaultValue"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "custom formatter for the final cursor value",
+        "name": "options.format"
+      }
+    ],
+    "examples": [
+      "<caption>Use a cursor from state if present, or else use the default value</caption>\ncursor($.cursor, { defaultValue: 'today' })",
+      "<caption>Use a pagination cursor</caption>\ncursor(22)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 856,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/node_modules/@openfn/language-common/src"
+    },
+    "order": 31,
+    "source": "@openfn/language-common",
+    "signature": [
+      "cursor(value, options)"
+    ],
+    "common": true
+  },
+  {
+    "id": "dataPath",
+    "longname": "dataPath",
+    "name": "dataPath()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Ensures a path points at the data.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "JSONPath referencing a point in `data`.",
+        "name": "path"
+      }
+    ],
+    "examples": [
+      "dataPath('key')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 159,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/node_modules/@openfn/language-common/src"
+    },
+    "order": 8,
+    "source": "@openfn/language-common",
+    "signature": [
+      "dataPath(path)"
+    ],
+    "common": true
+  },
+  {
+    "id": "dataValue",
+    "longname": "dataValue",
+    "name": "dataValue()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Picks out a single value from the source data object—usually `state.data`.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "JSONPath referencing a point in `data`.",
+        "name": "path"
+      }
+    ],
+    "examples": [
+      "dataValue('key')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 177,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/node_modules/@openfn/language-common/src"
+    },
+    "order": 9,
+    "source": "@openfn/language-common",
+    "signature": [
+      "dataValue(path)"
+    ],
+    "common": true
+  },
+  {
+    "id": "dateFns",
+    "name": "dateFns",
+    "common": true,
+    "kind": "external",
+    "scope": "global",
+    "source": "@openfn/language-common"
+  },
+  {
+    "id": "each",
+    "longname": "each",
+    "name": "each()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Iterates over an array of items and invokes an operation upon each one, where the state\nobject is _scoped_ so that state.data is the item under iteration.\nThe rest of the state object is untouched and can be referenced as usual.\nYou can pass an array directly, or use lazy state or a JSONPath string to\nreference a slice of state.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "DataSource"
+          ]
+        },
+        "description": "JSONPath referencing a point in `state`.",
+        "name": "dataSource"
+      },
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        },
+        "description": "The operation needed to be repeated.",
+        "name": "operation"
+      }
+    ],
+    "examples": [
+      "<caption>Using lazy state ($) to iterate over items in state.data and pass each into an \"insert\" operation</caption>\neach(\n  $.data,\n  // Inside the callback operation, `$.data` is scoped to the item under iteration\n  insert(\"patient\", {\n    patient_name: $.data.properties.case_name,\n    patient_id: $.data.case_id,\n  })\n);",
+      "<caption>Iterate over items in state.data and pass each one into an \"insert\" operation</caption>\neach(\n  $.data,\n  insert(\"patient\", (state) => ({\n    patient_id: state.data.case_id,\n    ...state.data\n  }))\n);",
+      "<caption>Using JSON path to iterate over items in state.data and pass each one into an \"insert\" operation</caption>\neach(\n  \"$.data[*]\",\n  insert(\"patient\", (state) => ({\n    patient_name: state.data.properties.case_name,\n    patient_id: state.data.case_id,\n  }))\n);"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 321,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/node_modules/@openfn/language-common/src"
+    },
+    "order": 14,
+    "source": "@openfn/language-common",
+    "signature": [
+      "each(dataSource, operation)"
+    ],
+    "common": true
+  },
+  {
+    "id": "field",
+    "longname": "field",
+    "name": "field()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Returns a key, value pair in an array.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Name of the field",
+        "name": "key"
+      },
+      {
+        "type": {
+          "names": [
+            "Value"
+          ]
+        },
+        "description": "The value itself or a sourceable operation.",
+        "name": "value"
+      }
+    ],
+    "examples": [
+      "field('destination_field_name__c', 'value')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Field"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 392,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/node_modules/@openfn/language-common/src"
+    },
+    "order": 17,
+    "source": "@openfn/language-common",
+    "signature": [
+      "field(key, value)"
+    ],
+    "common": true
+  },
+  {
+    "id": "fields",
+    "longname": "fields",
+    "name": "fields()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Zips key value pairs into an object.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Fields"
+          ]
+        },
+        "description": "a list of fields",
+        "name": "fields"
+      }
+    ],
+    "examples": [
+      "fields(list_of_fields)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 405,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/node_modules/@openfn/language-common/src"
+    },
+    "order": 18,
+    "source": "@openfn/language-common",
+    "signature": [
+      "fields(fields)"
+    ],
+    "common": true
+  },
+  {
+    "id": "fn",
+    "longname": "fn",
+    "name": "fn()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Creates a custom step (or operation) for more flexible job writing.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "is the function",
+        "name": "func"
+      }
+    ],
+    "examples": [
+      "fn(state => {\n  // do some things to state\n  return state;\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 76,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/node_modules/@openfn/language-common/src"
+    },
+    "order": 3,
+    "source": "@openfn/language-common",
+    "signature": [
+      "fn(func)"
+    ],
+    "common": true
+  },
+  {
+    "id": "fnIf",
+    "longname": "fnIf",
+    "name": "fnIf()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Execute a function only when the condition returns true",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Boolean"
+          ]
+        },
+        "description": "The condition that returns true",
+        "name": "condition"
+      },
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        },
+        "description": "The operation needed to be executed.",
+        "name": "operation"
+      }
+    ],
+    "examples": [
+      "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 92,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/node_modules/@openfn/language-common/src"
+    },
+    "order": 4,
+    "source": "@openfn/language-common",
+    "signature": [
+      "fnIf(condition, operation)"
+    ],
+    "common": true
+  },
+  {
+    "id": "group",
+    "longname": "group",
+    "name": "group()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Groups an array of objects by a specified key path.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Array.<Object>"
+          ]
+        },
+        "description": "The array of objects to be grouped.",
+        "name": "arrayOfObjects"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The key path to group by.",
+        "name": "keyPath"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "(Optional) Callback function",
+        "name": "callback"
+      }
+    ],
+    "examples": [
+      "const users = [\n  { name: 'Alice', age: 25, city: 'New York' },\n  { name: 'Bob', age: 30, city: 'San Francisco' },\n  { name: 'Charlie', age: 25, city: 'New York' },\n  { name: 'David', age: 30, city: 'San Francisco' }\n];\ngroup(users, 'city');\n// state is { data: { 'New York': [/Alice, Charlie/], 'San Francisco': [ /Bob, David / ] }"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 455,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/node_modules/@openfn/language-common/src"
+    },
+    "order": 20,
+    "source": "@openfn/language-common",
+    "signature": [
+      "group(arrayOfObjects, keyPath, callback)"
+    ],
+    "common": true
+  },
+  {
+    "id": "lastReferenceValue",
+    "longname": "lastReferenceValue",
+    "name": "lastReferenceValue()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Picks out the last reference value from source data.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "JSONPath referencing a point in `references`.",
+        "name": "path"
+      }
+    ],
+    "examples": [
+      "lastReferenceValue('key')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 206,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/node_modules/@openfn/language-common/src"
+    },
+    "order": 11,
+    "source": "@openfn/language-common",
+    "signature": [
+      "lastReferenceValue(path)"
+    ],
+    "common": true
+  },
+  {
+    "id": "map",
+    "longname": "map",
+    "name": "map()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Iterates over a collection of items and returns a new array of mapped values,\nlike Javascript's `Array.map()` function.\n\nEach item in the source array will be passed into the callback function. The returned value\nwill be added to the new array. The callback is passed the original item, the current index\nin the source array (ie, the nth item number), and the state object.\n\nWrites a new array to `state.data` with transformed values.c array.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string",
+            "Array"
+          ]
+        },
+        "description": "An array of items or a a JSONPath string which points to an array of items.",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "The mapping function, invoked with `(data, index, state)` for each item in the array.",
+        "name": "callback"
+      }
+    ],
+    "examples": [
+      "<caption> Transform an array of items in state</caption>\nmap($.items', (data, index, state) => {\n  return {\n    id: index + 1,\n    name: data.name,\n    createdAt: state.cursor,\n  };\n});",
+      "<caption>Map items asynchronously (e.g. fetch extra info)</caption>\nmap($.items, async (data, index, state) => {\n  const userInfo = await fetchUserInfo(data.userId);\n  return {\n    id: index + 1,\n    name: data.name,\n    extra: userInfo,\n  };\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "State"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 244,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/node_modules/@openfn/language-common/src"
+    },
+    "order": 12,
+    "source": "@openfn/language-common",
+    "signature": [
+      "map(path, callback)"
+    ],
+    "common": true
+  },
+  {
+    "id": "merge",
+    "longname": "merge",
+    "name": "merge()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Merges fields into each item in an array.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "DataSource"
+          ]
+        },
+        "name": "dataSource"
+      },
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        },
+        "description": "Group of fields to merge in.",
+        "name": "fields"
+      }
+    ],
+    "examples": [
+      "merge(\n  \"$.books[*]\",\n  fields(\n    field( \"publisher\", sourceValue(\"$.publisher\") )\n  )\n)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "DataSource"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 425,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/node_modules/@openfn/language-common/src"
+    },
+    "order": 19,
+    "source": "@openfn/language-common",
+    "signature": [
+      "merge(dataSource, fields)"
+    ],
+    "common": true
+  },
+  {
+    "id": "scrubEmojis",
+    "longname": "scrubEmojis",
+    "name": "scrubEmojis()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Replaces emojis in a string.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "String that needs to be cleaned",
+        "name": "text"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Characters that replace the emojis",
+        "name": "replacementChars"
+      }
+    ],
+    "examples": [
+      "scrubEmojis('Dove🕊️⭐ 29')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 591,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/node_modules/@openfn/language-common/src"
+    },
+    "order": 27,
+    "source": "@openfn/language-common",
+    "signature": [
+      "scrubEmojis(text, replacementChars)"
+    ],
+    "common": true
+  },
+  {
+    "id": "sourceValue",
+    "longname": "sourceValue",
+    "name": "sourceValue()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Picks out a single value from source data.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "JSONPath referencing a point in `state`.",
+        "name": "path"
+      }
+    ],
+    "examples": [
+      "sourceValue('$.key')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 127,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/fhir-opensrp/node_modules/@openfn/language-common/src"
+    },
+    "order": 6,
+    "source": "@openfn/language-common",
+    "signature": [
+      "sourceValue(path)"
+    ],
+    "common": true
+  },
+  {
+    "id": "util",
+    "name": "util",
+    "common": true,
+    "kind": "external",
+    "scope": "global",
+    "source": "@openfn/language-common"
+  }
+],
 {"name":"fhir","adaptor":"@openfn/language-fhir","version":"5.1.2","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#create\\\">create(resourceType, resource, params, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#createtransactionbundle\\\">createTransactionBundle(entries, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#get\\\">get(path, params, options, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getclaim\\\">getClaim(claimId, params, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#post\\\">post(path, data, options, callback)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#alterstate\\\">alterState</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#log\\\">log()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### create\\n\\n<p><code>create(resourceType, resource, params, callback) ⇒ Operation</code></p>\\n\\nCreates a new resource with a server assigned resourceType.\\nThe resource object doesn't need resourceType or id\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| resourceType | <code>string</code> | The resource type to create |\\n| resource | <code>object</code> | The resource to create |\\n| params | <code>object</code> | (Optional) FHIR parameters to control and configure resource creation |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the FHIR HTTP server (with the body removed) |\\n| references | an array of all the previous data values |\\n\\n**Example:** Create a new patient\\n```js\\ncreate('Patient', {\\n  name: [\\n    {\\n      use: 'official',\\n      family: 'La Paradisio',\\n      given: ['Josephine', 'Nessa'],\\n    },\\n  ],\\n});\\n```\\n\\n* * *\\n\\n### createTransactionBundle\\n\\n<p><code>createTransactionBundle(entries, callback) ⇒ Operation</code></p>\\n\\nCreate a transaction bundle to process multiple requests at once\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| entries | <code>array</code> | array of transactions |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the FHIR HTTP server (with the body removed) |\\n| references | an array of all the previous data values |\\n\\n**Example**\\n```js\\ncreateTransactionBundle([\\n  {\\n    fullUrl: \\\"https://hapi.fhir.org/baseR4/Patient/592442\\\",\\n    resource: {\\n      resourceType: \\\"Patient\\\",\\n      id: \\\"592442\\\",\\n      name: [{ given: \\\"Caleb\\\", family: \\\"Cushing\\\" }],\\n    },\\n    request: {\\n      method: \\\"POST\\\",\\n      url: \\\"Patient\\\",\\n    },\\n  },\\n]);\\n```\\n\\n* * *\\n\\n### get\\n\\n<p><code>get(path, params, options, callback) ⇒ Operation</code></p>\\n\\nSend a HTTP GET request to the baseURL defined in config\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| params | <code>object</code> | (Optional) Parameters to encode into the URL query |\\n| options | [<code>GetOptions</code>](#getoptions) | (Optional) Options to control the request |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the FHIR HTTP server (with the body removed) |\\n| references | an array of all the previous data values |\\n\\n**Example:** Get a Patient resource by id\\n```js\\nget('Patient/0bd0038b-8aad-4719-8d55-ff94bd3de5d0');\\n```\\n**Example:** Get a resource with query parameters\\n```js\\nget(\\\"Claim\\\", { _include: \\\"Claim:patient\\\", _sort: \\\"-_lastUpdated\\\", _count: 200 })\\n```\\n\\n* * *\\n\\n### getClaim\\n\\n<p><code>getClaim(claimId, params, callback) ⇒ Operation</code></p>\\n\\nGet Claim in a FHIR system\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| claimId | <code>string</code> | claim id |\\n| params | <code>object</code> | query parameters |\\n| callback | <code>function</code> | callback function |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the FHIR HTTP server (with the body removed) |\\n| references | an array of all the previous data values |\\n\\n**Example**\\n```js\\ngetClaim('',{ _include: \\\"Claim:patient\\\", _sort: \\\"-_lastUpdated\\\", _count: 200 });\\n```\\n\\n* * *\\n\\n### post\\n\\n<p><code>post(path, data, options, callback) ⇒ Operation</code></p>\\n\\nSend a HTTP POST request to the baseURL defined in config\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | Path to resource |\\n| data | <code>object</code> | JSON data to append to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | (Optional) Additional options for the request |\\n| callback | <code>function</code> | (Optional) callback function |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the FHIR HTTP server (with the body removed) |\\n| references | an array of all the previous data values |\\n\\n**Example:** Create bundle\\n```js\\npost(\\\"Bundle\\\",{\\n  \\\"resourceType\\\": \\\"Bundle\\\"\\n})\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### GetOptions\\n\\nOptions provided to a GET HTTP request\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions provided to a HTTP request\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| headers | <code>object</code> | Object of headers to append to the request |\\n| body | <code>object</code> | JSON payload to attach to the request |\\n| query | <code>object</code> | Query parameters for the request. Will be encoded into the URL |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-fhir\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the HAPI FHIR\\nAPI.\\n\\n## FHIR Documentation\\n\\nThe Restfull API can be seen here: https://www.hl7.org/fhir/http.html\\n\\n## Documentation\\n\\n\\n\\n### Configuration\\n\\nView all the required and optional properties for `state.configuration` in the\\nofficial\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/fhir-configuration-schema/)\\ndefinition.\\n\\n#### Creates a resource in a destination system using a POST request\\n\\n```js\\ncreate('/endpoint', { foo: 'bar' });\\n```\\n\\n#### Creates a transactionBundle for HAPI FHIR\\n\\n```js\\ncreateTransactionBundle({\\n  entry: [transactionBundle],\\n});\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n`Getting Started` guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo just build the docs run `pnpm build docs`\\n\"","changelog":"\"# @openfn/language-fhir\\n\\n## 5.1.2 - 30 June 2026\\n\\n### Patch Changes\\n\\n- c5f8728: Update undici dependency\\n- Updated dependencies \\\\[c5f8728]\\n  - @openfn/language-common@3.3.4\\n\\n## 5.1.1 - 27 May 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[5276a86]\\n  - @openfn/language-common@3.3.3\\n\\n## 5.1.0 - 21 May 2026\\n\\n### Minor Changes\\n\\n- 71115af: export `combine` function from common\\n- bf26881: export `log` function from common\\n\\n## 5.0.18 - 20 May 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[9d1e1ae]\\n  - @openfn/language-common@3.3.2\\n\\n## 5.0.17 - 07 April 2026\\n\\n### Patch Changes\\n\\n- add9748: Update dependencies (undici)\\n- Updated dependencies \\\\[add9748]\\n- Updated dependencies \\\\[a9b7597]\\n  - @openfn/language-common@3.3.1\\n\\n## 5.0.16 - 30 March 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[295655f]\\n  - @openfn/language-common@3.3.0\\n\\n## 5.0.15 - 24 February 2026\\n\\n### Patch Changes\\n\\n- 856f85c: Security updates\\n- Updated dependencies \\\\[856f85c]\\n  - @openfn/language-common@3.2.3\\n\\n## 5.0.14 - 09 February 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[8ad6b98]\\n- Updated dependencies \\\\[8ad6b98]\\n  - @openfn/language-common@3.2.2\\n\\n## 5.0.13 - 28 November 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[cfc66df]\\n  - @openfn/language-common@3.2.1\\n\\n## 5.0.12 - 12 November 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[4d7a833]\\n  - @openfn/language-common@3.2.0\\n\\n## 5.0.11 - 04 November 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@3.1.2\\n\\n## 5.0.10 - 16 October 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[408a3a2]\\n  - @openfn/language-common@3.1.1\\n\\n## 5.0.9 - 18 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[e2bc436]\\n  - @openfn/language-common@3.1.0\\n\\n## 5.0.8 - 01 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[1d60531]\\n  - @openfn/language-common@3.0.3\\n\\n## 5.0.7 - 14 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[9b5a4f8]\\n  - @openfn/language-common@3.0.2\\n\\n## 5.0.6 - 10 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[cf9c09f]\\n  - @openfn/language-common@3.0.1\\n\\n## 5.0.5 - 10 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[ea85695]\\n- Updated dependencies \\\\[3fce58f]\\n- Updated dependencies \\\\[19f2d7e]\\n- Updated dependencies \\\\[f26bd2b]\\n- Updated dependencies \\\\[19f2d7e]\\n  - @openfn/language-common@3.0.0\\n\\n## 5.0.4 - 22 April 2025\\n\\n### Patch Changes\\n\\n- 99e4b48: - Better handling of HTML content in http requests\\n  - When logging HTTP requests, include query parameters\\n- Updated dependencies \\\\[99e4b48]\\n- Updated dependencies \\\\[13bf08f]\\n  - @openfn/language-common@2.4.0\\n\\n## 5.0.3 - 28 October 2024\\n\\n### Patch Changes\\n\\n- Updated docs for each()\\n- Updated dependencies\\n  - @openfn/language-common@2.1.1\\n\\n## 5.0.2 - 16 August 2024\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies \\\\[8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 5.0.1 - 01 August 2024\\n\\n### Patch Changes\\n\\n- 940996b: Use common helper code to handle invalid absolute URLs\\n- Updated dependencies \\\\[4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 5.0.0 - 19 July 2024\\n\\n#### Added\\n\\n- Improved type definitions for `request()` and `get()`\\n\\n#### Changed\\n\\n- Updated `request` function to the new signature:\\n\\n  ```js\\n  export const request =\\n    async (method, path, options = {}, callback) =>\\n    state => ({\\n      ...state,\\n      data,\\n      response,\\n    });\\n  ```\\n\\n- Updated `post` function to the new signature:\\n\\n  ```js\\n  export const post = (path, data, options, callback) => state => ({\\n    ...state,\\n    data,\\n    response,\\n  });\\n  ```\\n\\n- Updated `get` function to the new signature:\\n\\n  ```js\\n  export const get = (path, params, options, callback) => state => ({\\n    ...state,\\n    data,\\n    response,\\n  });\\n  ```\\n\\n- Updated `create` function to the new signature:\\n\\n  ```js\\n  export const create = (resource, resource, params, callback) => state => ({\\n    ...state,\\n    data,\\n    response,\\n  });\\n  ```\\n\\n- Updated `createTransactionBundle` function:\\n\\n  ```js\\n  export const createTransactionBundle = (entries, callback) => state => ({\\n    ...state,\\n    data,\\n  });\\n  ```\\n\\n- Updated `getClaim` function to the new signature:\\n\\n  ```js\\n  export const getClaim =\\n    (claimId, params, callback = s => s) =>\\n    state => ({\\n      ...state,\\n      data,\\n    });\\n  ```\\n\\n- Updated `configuration-schema.json`\\n  - Removed `authType`\\n  - Rename `token` to `access_token`\\n  - Add `username` and `password`\\n\\n#### Removed\\n\\n- Removed `parseAs` from the options.\\n\\n## 4.0.0 - 14 June 2024\\n\\n### Major Changes\\n\\n- a42ffeb9: - All HTTP methods now write `{ data, response }` to state, where\\n  data is the response body and response is the raw response\\n  - All HTTP methods now support a `throwOnError` param, which defaults to true.\\n    If false, the adaptor will not throw if the HTTP status is an error code\\n  - request: return `{ data, response }` directly\\n  - request: fix an issue where default headers would override user headers\\n  - request: if the body contains application/json content, parse it as JSON\\n\\n## 3.2.0 - 13 June 2024\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 3.1.2 - 17 May 2024\\n\\n### Patch Changes\\n\\n- 2b283549: - Update `create()` example\\n  - Update required properties in configuration schema\\n\\n## 3.1.1 - 08 May 2024\\n\\n### Patch Changes\\n\\n- Security updates (lodash,undici)\\n- Updated dependencies\\n  - @openfn/language-common@1.13.2\\n\\n## 3.1.0 - 28 July 2023\\n\\n### Minor Changes\\n\\n- d94e9ee: Migrate from axios to using `fetch` from `undici` and add uniti tests\\n\\n## 3.0.1 - 19 June 2023\\n\\n### Patch Changes\\n\\n- Update lock files\\n- Updated dependencies\\n  - @openfn/language-common@1.8.1\\n\\n## 3.0.0\\n\\n### Major Changes\\n\\n- 2c1d603: Remove parameter reassignment to ensure proper functioning inside an\\n  `each` block; add eslint\\n\\n  The packages receiving a major bump here exposed functions that didn't work as\\n  expected inside `each` blocks. Users were previously wrapping these functions\\n  inside their own custom `fn` blocks, and this change will ensure that they can\\n  be used inside a standard each.\\n\\n  See https://github.com/OpenFn/adaptors/issues/275 for more details.\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[2c1d603]\\n  - @openfn/language-common@1.8.0\\n\\n## 2.0.0 - 06 June 2023\\n\\n### Major Changes\\n\\n- d4b4094: - Update configuration schema,\\n  - Add `get()` function\\n  - Fix `create()` axios config\\n  - Remove unused code\\n  - Improve error handling\\n  - Improve response handling\\n\\n## 1.1.5 - 30 March 2023\\n\\n### Patch Changes\\n\\n- 14f481e: mark execute as private\\n- Updated dependencies \\\\[2b4c61a]\\n  - @openfn/language-common@1.7.6\\n\\n## 1.1.4 - 15 February 2023\\n\\n### Patch Changes\\n\\n- f7ebd3c: remove sample configuration\\n\\n## 1.1.3 - 15 February 2023\\n\\n### Patch Changes\\n\\n- f2aed32: add examples\\n\\n## 1.1.2 - 13 January 2023\\n\\n### Patch Changes\\n\\n- 6d8de03: change @constructor to @function and remove /\\\\*\\\\_ @module Adaptor \\\\_/\\n\\n## 1.1.1 - 11 November 2022\\n\\n### Patch Changes\\n\\n- f2a91a4: Update package exports\\n- Updated dependencies \\\\[f2a91a4]\\n  - @openfn/language-common@1.7.5\\n\\n## 1.1.0 - 04 November 2022\\n\\n### Minor Changes\\n\\n- fee607e: Migrate FHIR, update package export\\n\\n### Patch Changes\\n\\n- cb5d0ed: Updated to @openfn/simple-ast v0.4.1\\n- 8566b26: Fix typings\\n- b3d45ff: Fix CJS export of npm package.\\n- ecf5d30: remove sinon since it was not being used\\n- Updated dependencies \\\\[8566b26]\\n- Updated dependencies \\\\[b3d45ff]\\n- Updated dependencies \\\\[b5eb665]\\n- Updated dependencies \\\\[ecf5d30]\\n  - @openfn/language-common@1.7.4\\n\"","functions":["create","createTransactionBundle","get","getClaim","post"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"baseUrl":{"title":"Base Url","type":"string","description":"The baseUrl","examples":["https://hapi.fhir.org"]},"apiPath":{"title":"API Path","anyOf":[{"type":"string"},{"type":"null"}],"placeholder":"R4","description":"FHIR api path","minLength":1,"examples":["baseR4","R3","R4"]},"username":{"title":"Username","type":"string","description":"Username","examples":["openfn_test"]},"password":{"title":"Password","type":"string","description":"Password","writeOnly":true,"examples":["@some(!)Str0ngp4ss0w0rd"]},"access_token":{"title":"Access Token","type":"string","description":"Your FHIR access token","writeOnly":true,"minLength":1,"examples":["the-long-access-token-from-your-auth"]}},"required":["baseUrl","apiPath"]}},
 [
   {
