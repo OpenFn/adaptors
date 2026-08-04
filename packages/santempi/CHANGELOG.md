@@ -1,5 +1,6 @@
 # @openfn/language-santempi
 
-## 1.0.0
+## 1.0.0 - 4 August 2026
 
-Implemented `http.get()`,`http.post()` and `http.request()` for santeMPI adaptor
+Initial release with `http.get()`,`http.post()` and `http.request()`, plus fhir
+builders.
