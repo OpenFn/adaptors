@@ -1,21 +1,15 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import {
-  read,
-  create,
-  update,
-  _delete,
-  request,
-  builders,
-} from '../src/Adaptor.js';
+import * as Adaptor from '../src/Adaptor.js';
+const { read, create, update, request, builders } = Adaptor;
 
-const testServer = enableMockClient('https://fake.fhir-ona.com');
+const testServer = enableMockClient('https://fake.fhir-opensrp.com');
 
 
 const baseState = {
   configuration: {
-    baseUrl: 'https://fake.fhir-ona.com',
+    baseUrl: 'https://fake.fhir-opensrp.com',
     access_token: 'test-token-abc123',
   },
 };
@@ -182,13 +176,13 @@ describe('update', () => {
 });
 
 
-describe('_delete', () => {
+describe('delete', () => {
   it('deletes a Patient by ID', async () => {
     testServer
       .intercept({ path: '/gateway/fhir/Patient/97597', method: 'DELETE' })
       .reply(204, {});
 
-    const finalState = await _delete('Patient/97597')(baseState);
+    const finalState = await Adaptor.delete('Patient/97597')(baseState);
 
     expect(finalState.response.statusCode).to.equal(204);
   });

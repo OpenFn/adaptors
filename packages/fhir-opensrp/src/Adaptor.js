@@ -142,7 +142,7 @@ export function update(path, body, options) {
 /**
  * Make a DELETE request
  * @example <caption>Delete a Patient by ID</caption>
- * _delete('Patient/97597');
+ * delete('Patient/97597');
  * @function
  * @public
  * @alias delete
@@ -151,9 +151,10 @@ export function update(path, body, options) {
  * @returns {Operation}
  * @state {OnaFHIRState}
  */
-export function _delete(path, options) {
+function _delete(path, options) {
   return request('DELETE', path, null, options);
 }
+export { _delete as delete };
 
 /**
  * Make a general HTTP request

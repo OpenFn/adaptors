@@ -812,7 +812,7 @@ importers:
         specifier: ^7.28.0
         version: 7.28.0
 
-  packages/fhir-ona:
+  packages/fhir-opensrp:
     dependencies:
       '@openfn/language-common':
         specifier: workspace:*

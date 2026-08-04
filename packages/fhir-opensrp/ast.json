@@ -205,69 +205,6 @@
       "valid": true
     },
     {
-      "name": "_delete",
-      "params": [
-        "path",
-        "options"
-      ],
-      "docs": {
-        "description": "Make a DELETE request",
-        "tags": [
-          {
-            "title": "example",
-            "description": "_delete('Patient/97597');",
-            "caption": "Delete a Patient by ID"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "alias",
-            "description": null,
-            "name": "delete"
-          },
-          {
-            "title": "param",
-            "description": "Path to resource",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "path"
-          },
-          {
-            "title": "param",
-            "description": "Optional request options",
-            "type": {
-              "type": "NameExpression",
-              "name": "RequestOptions"
-            },
-            "name": "options"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{OnaFHIRState}"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "request",
       "params": [
         "method",
