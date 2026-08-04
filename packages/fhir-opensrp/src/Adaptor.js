@@ -51,7 +51,7 @@ export function execute(...operations) {
 }
 
 /**
- * Make a GET request
+ * Read a resource
  * @example <caption>Read server metadata</caption>
  * read('metadata');
  * @example <caption>Search for recently updated Patients</caption>
@@ -74,7 +74,7 @@ export function read(path, options) {
 }
 
 /**
- * Make a POST request
+ * Create a resource
  * @example <caption>Create a Patient using builders (see [fhir-4 docs](https://docs.openfn.org/adaptors/packages/fhir-4-docs#functions))</caption>
  * create('Patient', builders.patient({
  *   identifier: [
@@ -115,7 +115,7 @@ export function create(path, body, options) {
 }
 
 /**
- * Make a PUT request
+ * Update a resource
  * @example <caption>Update a Patient by ID</caption>
  * update('Patient/0181038e-682b-4c7c-a946-e3757d2fa2f7', {
  *   resourceType: 'Patient',
@@ -140,7 +140,7 @@ export function update(path, body, options) {
 }
 
 /**
- * Make a DELETE request
+ * Delete a resource
  * @example <caption>Delete a Patient by ID</caption>
  * delete('Patient/97597');
  * @function
