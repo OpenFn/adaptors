@@ -81,7 +81,7 @@ export function create(resource, data, callback) {
 
     const { accessToken, apiVersion } = state.configuration;
 
-    const url = setUrl({ apiVersion, resolvedResource });
+    const url = setUrl(resolvedResource, apiVersion);
 
     const options = {
       accessToken,
