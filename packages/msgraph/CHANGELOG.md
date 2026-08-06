@@ -1,5 +1,15 @@
 # @openfn/language-msgraph
 
+## 0.10.0 - 06 August 2026
+
+### Minor Changes
+
+- 2027cfb: Add a `zip()` operation that encodes files into a zipfile
+
+### Patch Changes
+
+- 8b624f6: fix create function
+
 ## 0.9.2 - 30 June 2026
 
 ### Patch Changes
