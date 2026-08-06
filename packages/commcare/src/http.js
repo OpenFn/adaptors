@@ -36,30 +36,7 @@ import * as util from './Utils.js';
  * @state {CommcareHttpState}
  */
 export function post(path, data, params = {}) {
-  return async state => {
-    const { domain } = state.configuration;
-    const [resolvedPath, resolvedData, resolvedParams] = expandReferences(
-      state,
-      path,
-      data,
-      params,
-    );
-
-    const url = util.stripUrlPath(resolvedPath, domain);
-
-    try {
-      const response = await util.request(state.configuration, url, {
-        method: 'POST',
-        data: resolvedData,
-        params: resolvedParams,
-        contentType: 'application/json',
-      });
-
-      return util.prepareNextState(state, response);
-    } catch (e) {
-      throw e.body.error ?? e;
-    }
-  };
+   return request('POST', path, data, params);
 }
 
 /**
@@ -76,28 +53,7 @@ export function post(path, data, params = {}) {
  * @state {CommcareHttpState}
  */
 export function get(path, params = {}) {
-  return async state => {
-    const { domain } = state.configuration;
-    const [resolvedPath, resolvedParams] = expandReferences(
-      state,
-      path,
-      params,
-    );
-
-    const url = util.stripUrlPath(resolvedPath, domain);
-
-    try {
-      const response = await util.request(state.configuration, url, {
-        method: 'GET',
-        params: resolvedParams,
-        contentType: 'application/json',
-      });
-
-      return util.prepareNextState(state, response);
-    } catch (e) {
-      throw e.body.error ?? e;
-    }
-  };
+   return request('GET', path, null, params);
 }
 
 /**
