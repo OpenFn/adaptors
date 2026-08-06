@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import * as http from '../src/http.js';
+import { http } from '../src/index.js';
 import { stripUrlPath } from '../src/Utils.js';
 
 const hostUrl = 'http://test-example.commcare.com';
