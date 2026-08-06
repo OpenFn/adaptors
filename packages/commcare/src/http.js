@@ -36,7 +36,7 @@ import * as util from './Utils.js';
  * @state {CommcareHttpState}
  */
 export function post(path, data, params = {}) {
-   return request('POST', path, data, params);
+  return request('POST', path, data, params);
 }
 
 /**
@@ -53,7 +53,7 @@ export function post(path, data, params = {}) {
  * @state {CommcareHttpState}
  */
 export function get(path, params = {}) {
-   return request('GET', path, null, params);
+  return request('GET', path, null, params);
 }
 
 /**
