@@ -11,6 +11,8 @@
     <a href="#getfolder">getFolder(pathOrId, options, [callback])</a></dt>
 <dt>
     <a href="#uploadfile">uploadFile(resource, data, callback)</a></dt>
+<dt>
+    <a href="#zip">zip(files)</a></dt>
 </dl>
 
 This adaptor exports the following namespaced functions:
@@ -234,6 +236,39 @@ uploadFile(
   }),
   state => state.buffer
 );
+```
+
+* * *
+
+### zip
+
+<p><code>zip(files) ⇒ Operation</code></p>
+
+Add a set of files to a zip archive. Each file is an object of the form `{ name, content }`.
+`content` may be a Buffer, a string, or a JSON-serializable value. Writes the generated zip
+to state.zip.
+
+Note that zip binaries do not safely serialize on state: state.zip is automatically
+removed at the end of the run, so it must be consumed (e.g. by uploadFile) within the
+same run.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| files | <code>Array.&lt;Object&gt;</code> | An array of `{ name, content }` objects to add to the zip |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| zip | the generated zip archive, as a buffer |
+
+**Example**
+```js
+zip([
+  { name: 'report.json', content: state => state.data },
+  { name: 'notes.txt', content: 'hello world' },
+])
 ```
 
 * * *
