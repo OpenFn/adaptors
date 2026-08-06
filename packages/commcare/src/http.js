@@ -1,0 +1,139 @@
+import { expandReferences } from '@openfn/language-common/util';
+import * as util from './Utils.js';
+
+/**
+ * State object
+ * @typedef {Object} CommcareHttpState
+ * @property data - The response body (as JSON)
+ * @property response - The HTTP response from the CommCare server (excluding the body)
+ * @property references - An array of all previous data objects used in the Job
+ * @private
+ */
+
+/**
+ * Make a POST request to CommCare. Use this to send resources directly to Commcare REST API.
+ * You can pass Commcare body data as a JSON object.
+ * @example <caption>Create a case using a relative path (prefixed with /a/<domain>/api/)</caption>
+ * http.post('case/v2', {
+ *   case_type: 'patient',
+ *   case_name: 'Elizabeth Harmon',
+ *   owner_id: '20cc9dda-b90a-4af3-aa3d-fc67184e73ef',
+ *   properties: { dob: '1948-11-02' },
+ * });
+ * @example <caption>Create a case using an absolute path (used as-is, starting with /)</caption>
+ * http.post('/a/plan-global-hub-staging/api/case/v2', {
+ *   case_type: 'patient',
+ *   case_name: 'Elizabeth Harmon',
+ *   owner_id: '20cc9dda-b90a-4af3-aa3d-fc67184e73ef',
+ *   properties: { dob: '1948-11-02' },
+ * });
+ * @function
+ * @public
+ * @param {string} path - Path to resource. Relative paths are prefixed with `/a/<domain>/api/`; paths starting with `/` are used as-is.
+ * @param {object} data - Object or JSON to create a resource
+ * @param {Object} [params] - Optional request params
+ * @returns {Operation}
+ * @state {CommcareHttpState}
+ */
+export function post(path, data, params = {}) {
+  return async state => {
+    const { domain } = state.configuration;
+    const [resolvedPath, resolvedData, resolvedParams] = expandReferences(
+      state,
+      path,
+      data,
+      params,
+    );
+
+    const url = util.stripUrlPath(resolvedPath, domain);
+
+    try {
+      const response = await util.request(state.configuration, url, {
+        method: 'POST',
+        data: resolvedData,
+        params: resolvedParams,
+        contentType: 'application/json',
+      });
+
+      return util.prepareNextState(state, response);
+    } catch (e) {
+      throw e.body.error ?? e;
+    }
+  };
+}
+
+/**
+ * Make a GET request to CommCare. Use this to retrieve resources directly from the Commcare REST API.
+ * @example <caption>Get cases using a relative path (prefixed with /a/<domain>/api/)</caption>
+ * http.get('case/v1');
+ * @example <caption>Get cases using an absolute path (used as-is, starting with /)</caption>
+ * http.get('/a/plan-global-hub-staging/api/case/v1/');
+ * @function
+ * @public
+ * @param {string} path - Path to resource. Relative paths are prefixed with `/a/<domain>/api/`; paths starting with `/` are used as-is.
+ * @param {Object} [params] - Optional request params
+ * @returns {Operation}
+ * @state {CommcareHttpState}
+ */
+export function get(path, params = {}) {
+  return async state => {
+    const { domain } = state.configuration;
+    const [resolvedPath, resolvedParams] = expandReferences(
+      state,
+      path,
+      params,
+    );
+
+    const url = util.stripUrlPath(resolvedPath, domain);
+
+    try {
+      const response = await util.request(state.configuration, url, {
+        method: 'GET',
+        params: resolvedParams,
+        contentType: 'application/json',
+      });
+
+      return util.prepareNextState(state, response);
+    } catch (e) {
+      throw e.body.error ?? e;
+    }
+  };
+}
+
+/**
+ * Make a general HTTP request against the Commcare server. Use this to make any request to Commcare REST API.
+ * @example <caption>GET cases with a relative path (prefixed with /a/<domain>/api/)</caption>
+ * http.request('GET', 'case/v1');
+ * @example <caption>POST a case with an absolute path (used as-is, starting with /)</caption>
+ * http.request('POST', '/a/plan-global-hub-staging/api/case/v2', {
+ *   case_type: 'patient',
+ *   case_name: 'Elizabeth Harmon',
+ *   owner_id: '20cc9dda-b90a-4af3-aa3d-fc67184e73ef',
+ *   properties: { dob: '1948-11-02' },
+ * });
+ * @function
+ * @public
+ * @param {string} method - HTTP method to use
+ * @param {string} path - Path to resource
+ * @param {object} body - Object which will be attached to the body
+ * @param {object} params - An object of query parameters to be encoded into the URL
+ * @returns {Operation}
+ * @state {CommcareHttpState}
+ */
+export function request(method, path, body, params = {}) {
+  return async state => {
+    const { domain } = state.configuration;
+    const [resolvedMethod, resolvedPath, resolvedBody, resolvedParams] =
+      expandReferences(state, method, path, body, params);
+
+    const url = util.stripUrlPath(resolvedPath, domain);
+    const response = await util.request(state.configuration, url, {
+      method: resolvedMethod,
+      data: resolvedBody,
+      params: resolvedParams,
+      contentType: 'application/json',
+    });
+
+    return util.prepareNextState(state, response);
+  };
+}
