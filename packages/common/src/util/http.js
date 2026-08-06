@@ -171,9 +171,6 @@ const assertOK = async (response, errorMap, fullUrl, method, startTime, parseAs)
       : errMapMessage || response.statusCode >= 400;
 
   if (isError) {
-    // Honour parseAs for error bodies (e.g. application/fhir+json), but if
-    // JSON parsing fails, keep the raw text so the HTTP status error is thrown
-    // instead of a parse error (plain-text 404 pages, etc).
     let body = await readResponseBody(
       response,
       parseAs === 'json' ? 'text' : parseAs
@@ -181,9 +178,7 @@ const assertOK = async (response, errorMap, fullUrl, method, startTime, parseAs)
     if (parseAs === 'json' && typeof body === 'string') {
       try {
         body = JSON.parse(body);
-      } catch {
-        // leave body as text
-      }
+      } catch {}
     }
 
     const statusText = getReasonPhrase(response.statusCode);
