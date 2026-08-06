@@ -1113,6 +1113,36 @@ describe('helpers', () => {
       expect(error.body).to.not.be.a('string');
     });
 
+    it('should keep http error when parseAs is json but body is not json', async () => {
+      const textBody = 'Message: Not Found';
+
+      client
+        .intercept({
+          path: '/no-access',
+          method: 'POST',
+        })
+        .reply(404, textBody, {
+          headers: {
+            'content-type': 'application/text',
+          },
+        });
+
+      let error;
+      try {
+        await request('POST', 'https://www.example.com/no-access', {
+          parseAs: 'json',
+        });
+      } catch (err) {
+        error = err;
+      }
+
+      expect(error.message).to.eql(
+        'POST to https://www.example.com/no-access returned 404: Not Found'
+      );
+      expect(error.statusCode).to.eql(404);
+      expect(error.body).to.eql(textBody);
+    });
+
     it('should force as stream', async () => {
       client
         .intercept({
