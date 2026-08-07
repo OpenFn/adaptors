@@ -7,7 +7,7 @@
         "options"
       ],
       "docs": {
-        "description": "Read a resource",
+        "description": "Read a resource\nThe response body will be returned to `state.data` as JSON.\nPaginated responses will be fully downloaded and returned as a single array, _unless_ a `getpagesoffset` is passed.",
         "tags": [
           {
             "title": "example",
@@ -16,8 +16,13 @@
           },
           {
             "title": "example",
-            "description": "read('Patient', {\n  query: {\n    '_lastUpdated': 'gt2026-07-01T00:00:00Z',\n    '_sort': '_lastUpdated',\n    '_count': 200\n  }\n});",
-            "caption": "Search for recently updated Patients"
+            "description": "read('Patient', {\n  query: {\n    '_lastUpdated': 'gt2026-07-01T00:00:00Z',\n    '_sort': '_lastUpdated',\n    '_count': 50,\n  }\n});",
+            "caption": "Search for recently updated Patients — auto-paginates through all pages"
+          },
+          {
+            "title": "example",
+            "description": "read('Patient', {\n  query: {\n    '_getpagesoffset': 100,\n    '_count': 50,\n  }\n});",
+            "caption": "Fetch a specific page — auto-pagination disabled when _getpagesoffset is set"
           },
           {
             "title": "function",
@@ -40,7 +45,7 @@
           },
           {
             "title": "param",
-            "description": "Optional request options",
+            "description": "Optional request options. Set `query._getpagesoffset` to fetch a specific page without auto-pagination.",
             "type": {
               "type": "NameExpression",
               "name": "RequestOptions"

@@ -1,8 +1,6 @@
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
-import {
-  execute as commonExecute,
-} from '@openfn/language-common';
+import { execute as commonExecute } from '@openfn/language-common';
 
 /**
  * State object
@@ -52,25 +50,103 @@ export function execute(...operations) {
 
 /**
  * Read a resource
+ * The response body will be returned to `state.data` as JSON.
+ * Paginated responses will be fully downloaded and returned as a single array, _unless_ a `getpagesoffset` is passed.
  * @example <caption>Read server metadata</caption>
  * read('metadata');
- * @example <caption>Search for recently updated Patients</caption>
+ * @example <caption>Search for recently updated Patients — auto-paginates through all pages</caption>
  * read('Patient', {
  *   query: {
  *     '_lastUpdated': 'gt2026-07-01T00:00:00Z',
  *     '_sort': '_lastUpdated',
- *     '_count': 200
+ *     '_count': 50,
+ *   }
+ * });
+ * @example <caption>Fetch a specific page — auto-pagination disabled when _getpagesoffset is set</caption>
+ * read('Patient', {
+ *   query: {
+ *     '_getpagesoffset': 100,
+ *     '_count': 50,
  *   }
  * });
  * @function
  * @public
  * @param {string} path - Path to resource
- * @param {RequestOptions} options - Optional request options
+ * @param {RequestOptions} options - Optional request options. Set `query._getpagesoffset` to fetch a specific page without auto-pagination.
  * @returns {Operation}
  * @state {OnaFHIRState}
  */
-export function read(path, options) {
-  return request('GET', path, null, options);
+export function read(path, options = {}) {
+  return async state => {
+    const [resolvedPath, resolvedOptions] = expandReferences(
+      state,
+      path,
+      options,
+    );
+
+    let _getpagesoffset, _count;
+
+    let nextState = state;
+    let result = [];
+
+    // Automatically paginate unless the user manually set _getpagesoffset
+    let allowPagination = !resolvedOptions?.query?._getpagesoffset;
+
+    try {
+      let requestOptions = {
+        ...resolvedOptions,
+      };
+
+      do {
+        const response = await util.request(
+          state.configuration,
+          'GET',
+          resolvedPath,
+          {
+            body: null,
+            ...requestOptions,
+          },
+        );
+
+        nextState = util.prepareNextState(state, response);
+        const isBundle = response.body?.resourceType === 'Bundle';
+
+        if (!isBundle) {
+          // Non-Bundle response (e.g. metadata, single resource) — return as-is, no pagination
+          result = response.body;
+          allowPagination = false;
+        } else {
+          const nextLink = response?.body?.link?.find(
+            link => link.relation === 'next',
+          );
+          if (nextLink) {
+            const nextUrl = new URL(nextLink.url);
+            _getpagesoffset = nextUrl.searchParams.get('_getpagesoffset');
+            _count = nextUrl.searchParams.get('_count');
+
+            requestOptions = {
+              ...requestOptions,
+              query: {
+                ...requestOptions.query,
+                _getpagesoffset,
+                _count,
+              },
+            };
+          } else {
+            allowPagination = false;
+          }
+          result.push(...(response.body?.entry?.map(e => e.resource) ?? []));
+        }
+      } while (allowPagination);
+
+      return {
+        ...nextState,
+        data: result,
+      };
+    } catch (error) {
+      throw error;
+    }
+  };
 }
 
 /**
@@ -192,7 +268,7 @@ export function request(method, path, body, options = {}) {
       {
         body: resolvedBody,
         ...resolvedoptions,
-      }
+      },
     );
 
     return util.prepareNextState(state, response);

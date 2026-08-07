@@ -16,7 +16,7 @@ const baseState = {
 
 
 describe('read', () => {
-  it('reads server metadata', async () => {
+  it('reads server metadata (non-Bundle response returned as-is)', async () => {
     testServer
       .intercept({ path: '/gateway/fhir/metadata', method: 'GET' })
       .reply(200, { resourceType: 'CapabilityStatement', status: 'active' });
@@ -24,22 +24,20 @@ describe('read', () => {
     const finalState = await read('metadata')(baseState);
 
     expect(finalState.data.resourceType).to.equal('CapabilityStatement');
+    expect(finalState.data.status).to.equal('active');
   });
 
-  it('searches for recently updated Patients with query parameters', async () => {
+  it('returns resources as an array if no pagination is needed', async () => {
     testServer
       .intercept({
         path: '/gateway/fhir/Patient',
         method: 'GET',
-        query: {
-          '_lastUpdated': 'gt2026-07-01T00:00:00Z',
-          '_sort': '_lastUpdated',
-          '_count': '200',
-        },
+        query: { '_count': '50' },
       })
       .reply(200, {
         resourceType: 'Bundle',
         total: 2,
+        link: [],
         entry: [
           { resource: { resourceType: 'Patient', id: 'p-001' } },
           { resource: { resourceType: 'Patient', id: 'p-002' } },
@@ -47,15 +45,92 @@ describe('read', () => {
       });
 
     const finalState = await read('Patient', {
-      query: {
-        '_lastUpdated': 'gt2026-07-01T00:00:00Z',
-        '_sort': '_lastUpdated',
-        '_count': 200,
-      },
+      query: { '_count': 50 },
     })(baseState);
 
-    expect(finalState.data.resourceType).to.equal('Bundle');
-    expect(finalState.data.total).to.equal(2);
+    expect(finalState.data).to.eql([
+      { resourceType: 'Patient', id: 'p-001' },
+      { resourceType: 'Patient', id: 'p-002' },
+    ]);
+    expect(finalState.data).to.have.length(2);
+  });
+
+  it('auto-paginates across multiple pages and resources returned as an array in state.data', async () => {
+    // Page 1 — has a next link
+    testServer
+      .intercept({
+        path: '/gateway/fhir/Patient',
+        method: 'GET',
+        query: { '_count': '2' },
+      })
+      .reply(200, {
+        resourceType: 'Bundle',
+        total: 4,
+        link: [
+          {
+            relation: 'next',
+            url: 'https://fake.fhir-opensrp.com/gateway/fhir/Patient?_getpagesoffset=2&_count=2',
+          },
+        ],
+        entry: [
+          { resource: { resourceType: 'Patient', id: 'p-001' } },
+          { resource: { resourceType: 'Patient', id: 'p-002' } },
+        ],
+      });
+
+    // Page 2 — no next link
+    testServer
+      .intercept({
+        path: '/gateway/fhir/Patient',
+        method: 'GET',
+        query: { '_count': '2', '_getpagesoffset': '2' },
+      })
+      .reply(200, {
+        resourceType: 'Bundle',
+        total: 4,
+        link: [],
+        entry: [
+          { resource: { resourceType: 'Patient', id: 'p-003' } },
+          { resource: { resourceType: 'Patient', id: 'p-004' } },
+        ],
+      });
+
+    const finalState = await read('Patient', {
+      query: { '_count': 2 },
+    })(baseState);
+
+    expect(finalState.data).to.have.length(4);
+    expect(finalState.data.map(p => p.id)).to.eql(['p-001', 'p-002', 'p-003', 'p-004']);
+  });
+
+  it('fetches only one page when _getpagesoffset is set', async () => {
+    testServer
+      .intercept({
+        path: '/gateway/fhir/Patient',
+        method: 'GET',
+        query: { '_getpagesoffset': '50', '_count': '50' },
+      })
+      .reply(200, {
+        resourceType: 'Bundle',
+        total: 200,
+        link: [
+          {
+            relation: 'next',
+            url: 'https://fake.fhir-opensrp.com/gateway/fhir/Patient?_getpagesoffset=100&_count=50',
+          },
+        ],
+        entry: [
+          { resource: { resourceType: 'Patient', id: 'p-051' } },
+          { resource: { resourceType: 'Patient', id: 'p-052' } },
+        ],
+      });
+
+    const finalState = await read('Patient', {
+      query: { '_getpagesoffset': 50, '_count': 50 },
+    })(baseState);
+
+    expect(finalState.data).to.have.length(2);
+    expect(finalState.data[0].id).to.equal('p-051');
   });
 });
 
