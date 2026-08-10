@@ -3,7 +3,7 @@ import * as util from './Utils.js';
 
 /**
  * State object
- * @typedef {Object} CommcareHttpState
+ * @typedef {Object} CommCareHttpState
  * @property data - The response body (as JSON)
  * @property response - The HTTP response from the CommCare server (excluding the body)
  * @property references - An array of all previous data objects used in the Job
@@ -12,7 +12,7 @@ import * as util from './Utils.js';
 
 /**
  * Make a POST request to CommCare. Use this to send resources directly to Commcare REST API.
- * You can pass Commcare body data as a JSON object.
+ * You can pass CommCare body data as a JSON object.
  * @example <caption>Create a case using a relative path (prefixed with /a/<domain>/api/)</caption>
  * http.post('case/v2', {
  *   case_type: 'patient',
@@ -26,14 +26,14 @@ import * as util from './Utils.js';
  * @param {object} data - Object or JSON to create a resource
  * @param {Object} [params] - Optional request params
  * @returns {Operation}
- * @state {CommcareHttpState}
+ * @state {CommCareHttpState}
  */
 export function post(path, data, params = {}) {
   return request('POST', path, data, params);
 }
 
 /**
- * Make a GET request to CommCare. Use this to retrieve resources directly from the Commcare REST API.
+ * Make a GET request to CommCare. Use this to retrieve resources directly from the CommCare REST API.
  * @example <caption>Get cases using a relative path (prefixed with /a/<domain>/api/)</caption>
  * http.get('case/v1');
  * @function
@@ -41,14 +41,14 @@ export function post(path, data, params = {}) {
  * @param {string} path - Path to resource. Relative paths are prefixed with `/a/<domain>/api/`; paths starting with `/` are used as-is.
  * @param {Object} [params] - Optional request params
  * @returns {Operation}
- * @state {CommcareHttpState}
+ * @state {CommCareHttpState}
  */
 export function get(path, params = {}) {
   return request('GET', path, null, params);
 }
 
 /**
- * Make a general HTTP request against the Commcare server. Use this to make any request to Commcare REST API.
+ * Make a general HTTP request against the CommCare server. Use this to make any request to CommCare REST API.
  * @example <caption>GET cases with a relative path (prefixed with /a/<domain>/api/)</caption>
  * http.request('GET', 'case/v1');
  * @function
@@ -58,7 +58,7 @@ export function get(path, params = {}) {
  * @param {object} body - Object which will be attached to the body
  * @param {object} params - An object of query parameters to be encoded into the URL
  * @returns {Operation}
- * @state {CommcareHttpState}
+ * @state {CommCareHttpState}
  */
 export function request(method, path, body, params = {}) {
   return async state => {
