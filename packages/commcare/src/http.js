@@ -20,13 +20,6 @@ import * as util from './Utils.js';
  *   owner_id: '20cc9dda-b90a-4af3-aa3d-fc67184e73ef',
  *   properties: { dob: '1948-11-02' },
  * });
- * @example <caption>Create a case using an absolute path (used as-is, starting with /)</caption>
- * http.post('/a/plan-global-hub-staging/api/case/v2', {
- *   case_type: 'patient',
- *   case_name: 'Elizabeth Harmon',
- *   owner_id: '20cc9dda-b90a-4af3-aa3d-fc67184e73ef',
- *   properties: { dob: '1948-11-02' },
- * });
  * @function
  * @public
  * @param {string} path - Path to resource. Relative paths are prefixed with `/a/<domain>/api/`; paths starting with `/` are used as-is.
@@ -43,8 +36,6 @@ export function post(path, data, params = {}) {
  * Make a GET request to CommCare. Use this to retrieve resources directly from the Commcare REST API.
  * @example <caption>Get cases using a relative path (prefixed with /a/<domain>/api/)</caption>
  * http.get('case/v1');
- * @example <caption>Get cases using an absolute path (used as-is, starting with /)</caption>
- * http.get('/a/plan-global-hub-staging/api/case/v1/');
  * @function
  * @public
  * @param {string} path - Path to resource. Relative paths are prefixed with `/a/<domain>/api/`; paths starting with `/` are used as-is.
@@ -60,13 +51,6 @@ export function get(path, params = {}) {
  * Make a general HTTP request against the Commcare server. Use this to make any request to Commcare REST API.
  * @example <caption>GET cases with a relative path (prefixed with /a/<domain>/api/)</caption>
  * http.request('GET', 'case/v1');
- * @example <caption>POST a case with an absolute path (used as-is, starting with /)</caption>
- * http.request('POST', '/a/plan-global-hub-staging/api/case/v2', {
- *   case_type: 'patient',
- *   case_name: 'Elizabeth Harmon',
- *   owner_id: '20cc9dda-b90a-4af3-aa3d-fc67184e73ef',
- *   properties: { dob: '1948-11-02' },
- * });
  * @function
  * @public
  * @param {string} method - HTTP method to use
