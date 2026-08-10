@@ -13,7 +13,7 @@ import * as util from './Utils.js';
 /**
  * Make a POST request to CommCare. Use this to send resources directly to Commcare REST API.
  * You can pass CommCare body data as a JSON object.
- * @example <caption>Create a case using a relative path (prefixed with /a/<domain>/api/)</caption>
+ * @example <caption>Post to the V2 case API with JSON data (prefixed with /a/<domain>/api/)</caption>
  * http.post('case/v2', {
  *   case_type: 'patient',
  *   case_name: 'Elizabeth Harmon',
@@ -34,7 +34,7 @@ export function post(path, data, params = {}) {
 
 /**
  * Make a GET request to CommCare. Use this to retrieve resources directly from the CommCare REST API.
- * @example <caption>Get cases using a relative path (prefixed with /a/<domain>/api/)</caption>
+ * @example <caption>Get cases using the v1 API (prefixed with /a/<domain>/api/)</caption>
  * http.get('case/v1');
  * @function
  * @public
@@ -49,7 +49,7 @@ export function get(path, params = {}) {
 
 /**
  * Make a general HTTP request against the CommCare server. Use this to make any request to CommCare REST API.
- * @example <caption>GET cases with a relative path (prefixed with /a/<domain>/api/)</caption>
+ * @example <caption>Get cases using the v1 API (prefixed with /a/<domain>/api/)</caption>
  * http.request('GET', 'case/v1');
  * @function
  * @public
