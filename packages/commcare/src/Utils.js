@@ -5,7 +5,7 @@ import {
   logResponse,
 } from '@openfn/language-common/util';
 
-export const stripUrlPath = (url, domain) => {
+export const buildUrl = (url, domain) => {
   let finalUrl = '';
 
   const absoluteUrl = url.startsWith('/');

@@ -66,7 +66,7 @@ export function request(method, path, body, params = {}) {
     const [resolvedMethod, resolvedPath, resolvedBody, resolvedParams] =
       expandReferences(state, method, path, body, params);
 
-    const url = util.stripUrlPath(resolvedPath, domain);
+    const url = util.buildUrl(resolvedPath, domain);
     const response = await util.request(state.configuration, url, {
       method: resolvedMethod,
       data: resolvedBody,

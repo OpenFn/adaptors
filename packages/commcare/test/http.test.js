@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 import { http } from '../src/index.js';
-import { stripUrlPath } from '../src/Utils.js';
+import { buildUrl } from '../src/Utils.js';
 
 const hostUrl = 'http://test-example.commcare.com';
 const domain = 'test-staging';
@@ -18,21 +18,21 @@ const configuration = {
 const baseState = { configuration };
 
 
-describe('stripUrlPath', () => {
+describe('buildUrl', () => {
   it('prefixes a relative path with /a/<domain>/api/', () => {
-    expect(stripUrlPath('case/v1', 'my-domain')).to.equal(
+    expect(buildUrl('case/v1', 'my-domain')).to.equal(
       '/a/my-domain/api/case/v1'
     );
   });
 
   it('passes an absolute path through unchanged', () => {
-    expect(stripUrlPath('/a/my-domain/api/case/v1', 'my-domain')).to.equal(
+    expect(buildUrl('/a/my-domain/api/case/v1', 'my-domain')).to.equal(
       '/a/my-domain/api/case/v1'
     );
   });
 
   it('treats any path starting with / as absolute', () => {
-    expect(stripUrlPath('/some/custom/path', 'my-domain')).to.equal(
+    expect(buildUrl('/some/custom/path', 'my-domain')).to.equal(
       '/some/custom/path'
     );
   });
