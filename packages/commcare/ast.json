@@ -1,6 +1,188 @@
 {
   "operations": [
     {
+      "name": "list",
+      "params": [
+        "resourceType",
+        "options"
+      ],
+      "docs": {
+        "description": "List resources from CommCare, automatically paginating through the cursor\nuntil all results are fetched or the `limit` in `params` is reached.\n\nUses the CommCare v2 API regardless of the `apiVersion` set in configuration,\nas cursor-based pagination is only supported on v2.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "list('location');",
+            "caption": "List all locations in the project"
+          },
+          {
+            "title": "example",
+            "description": "list('case');",
+            "caption": "List all cases in the project"
+          },
+          {
+            "title": "example",
+            "description": "list('case', { params: { limit: 1578 } });",
+            "caption": "Get the first 1578 cases"
+          },
+          {
+            "title": "example",
+            "description": "list('case', { params: { case_type: 'household' } });",
+            "caption": "Filter cases by type"
+          },
+          {
+            "title": "example",
+            "description": "list('case', { params: { indexed_on_start: '2025-01-01T00:00:00' } });",
+            "caption": "Fetch cases modified after a given timestamp"
+          },
+          {
+            "title": "example",
+            "description": "list('form', { params: { user_id: '30517b8d62db4e37ab62c08ad94df10f' } });",
+            "caption": "List forms submitted by a specific user"
+          },
+          {
+            "title": "example",
+            "description": "list('case', { resultsKey: 'cases', params: { limit: 100 } });",
+            "caption": "Explicitly set the results key"
+          },
+          {
+            "title": "param",
+            "description": "The CommCare resource to list (e.g. `case`, `location`).",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "resourceType"
+          },
+          {
+            "title": "param",
+            "description": "Configuration options for the request",
+            "type": {
+              "type": "NameExpression",
+              "name": "ListOptions"
+            },
+            "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{CommcareHttpState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getResource",
+      "params": [
+        "resourceType",
+        "id",
+        "options"
+      ],
+      "docs": {
+        "description": "Fetch one or more resources from CommCare by ID. Accepts a single ID string\nor an array of IDs; when an array is provided, requests are issued in\nparallel and results are returned in the same order as the input.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "getResource('case', '30517b8d62db4e37ab62c08ad94df10f');",
+            "caption": "Fetch a single case by ID"
+          },
+          {
+            "title": "example",
+            "description": "getResource('case', ['abc123', 'def456', 'ghi789']);",
+            "caption": "Fetch multiple cases"
+          },
+          {
+            "title": "param",
+            "description": "The CommCare resource to fetch (e.g. `case`, `location`).",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "resourceType"
+          },
+          {
+            "title": "param",
+            "description": "Resource ID, or array of IDs to fetch in parallel.",
+            "type": {
+              "type": "UnionType",
+              "elements": [
+                {
+                  "type": "NameExpression",
+                  "name": "string"
+                },
+                {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "string"
+                    }
+                  ]
+                }
+              ]
+            },
+            "name": "id"
+          },
+          {
+            "title": "param",
+            "description": "Configuration options for the request.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "GetResourceOptions"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{CommcareState}"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "get",
       "params": [
         "path",
