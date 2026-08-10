@@ -15,6 +15,21 @@ import * as util from './Utils.js';
  */
 
 /**
+ * List Operation Options
+ * @typedef {Object} ListOptions
+ * @property {string} [resultsKey] - The property where the results are stored e.g. `cases` for fetching case data
+ * @property {Object} [params] - HTTP query parameters passed through to CommCare
+ * @property {Object} [headers] - Additional HTTP request headers
+ */
+
+/**
+ * Options provided to the `getResource()` operation.
+ * @typedef {Object} GetResourceOptions
+ * @property {Object} [params] - HTTP query parameters passed through to CommCare.
+ * @property {Object} [headers] - Additional HTTP request headers.
+ */
+
+/**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for commcare.
  * @example
@@ -36,6 +51,124 @@ export function execute(...operations) {
     return commonExecute(...operations)({ ...initialState, ...state });
   };
 }
+/**
+ * List resources from CommCare, automatically paginating through the cursor
+ * until all results are fetched or the `limit` in `params` is reached.
+ * 
+ * Uses the CommCare v2 API regardless of the `apiVersion` set in configuration,
+ * as cursor-based pagination is only supported on v2.
+ * @public
+ * @function
+ * @example <caption>List all locations in the project</caption>
+ * list('location');
+ * 
+ * @example <caption>List all cases in the project</caption>
+ * list('case');
+ * 
+ * @example <caption>Get the first 1578 cases</caption>
+ * list('case', { params: { limit: 1578 } });
+ * 
+ * @example <caption>Filter cases by type</caption>
+ * list('case', { params: { case_type: 'household' } });
+ * 
+ * @example <caption>Fetch cases modified after a given timestamp</caption>
+ * list('case', { params: { indexed_on_start: '2025-01-01T00:00:00' } });
+ * 
+ * @example <caption>List forms submitted by a specific user</caption>
+ * list('form', { params: { user_id: '30517b8d62db4e37ab62c08ad94df10f' } });
+ * 
+ * @example <caption>Explicitly set the results key</caption>
+ * list('case', { resultsKey: 'cases', params: { limit: 100 } });
+ * 
+ * @param {string} resourceType - The CommCare resource to list (e.g. `case`, `location`).
+ * @param {ListOptions} options  - Configuration options for the request
+ * @state {CommcareHttpState}
+ * @returns {Operation}
+ */
+export function list(resourceType, options = {}) {
+  return async state => {
+    const [resolvedResourceType, resolvedOptions] = expandReferences(state, resourceType, options);
+    try {
+      const data = await util.requestWithPagination(state.configuration, resolvedResourceType, resolvedOptions);
+      const nextState = util.prepareNextState(state, data);
+
+      return {
+        ...nextState,
+        data
+      };
+    } catch (e) {
+      if (e.statusCode === 404) {
+        e.body = { error: `Resource ${resolvedResourceType} not found` };
+      }
+      throw e;
+    }
+  }
+};
+/**
+ * Fetch one or more resources from CommCare by ID. Accepts a single ID string
+ * or an array of IDs; when an array is provided, requests are issued in
+ * parallel and results are returned in the same order as the input.
+ * 
+ * @public
+ * @function
+ * @example <caption>Fetch a single case by ID</caption>
+ * getResource('case', '30517b8d62db4e37ab62c08ad94df10f');
+ * 
+ * @example <caption>Fetch multiple cases</caption>
+ * getResource('case', ['abc123', 'def456', 'ghi789']);
+ *  
+ * @param {string} resourceType - The CommCare resource to fetch (e.g. `case`, `location`).
+ * @param {string|string[]} id - Resource ID, or array of IDs to fetch in parallel.
+ * @param {GetResourceOptions} [options] - Configuration options for the request.
+ * @state {CommcareState}
+ * @returns {Operation}
+ */
+export function getResource(resourceType, id, options = {}) {
+  return async state => {
+    const [resolvedResourceType, resolvedIds, resolvedOptions] = expandReferences(
+      state,
+      resourceType,
+      id,
+      options
+    );
+
+    let ids = Array.isArray(resolvedIds) ? resolvedIds : [resolvedIds];
+    ids = [...new Set(ids.filter(Boolean))];
+
+    if (ids.length === 0) {
+      throw new Error(
+        "Please include at least one ID, e.g. getResource('case', 'abcd1245')"
+      );
+    }
+
+    const { domain, apiVersion = 'v2' } = state.configuration;
+    const basePath = `/a/${domain}/api/${resolvedResourceType}/${apiVersion}`;
+
+    try {
+      const responses = await Promise.all(
+        ids.map(id =>
+          util.request(state.configuration, `${basePath}/${id}`, {
+            ...resolvedOptions,
+            method: 'GET'
+          })
+        )
+      );
+
+      const bodies = responses.map(r => r.body);
+      const data = Array.isArray(resolvedIds) ? bodies : bodies[0];
+      const nextState = util.prepareNextState(state, data);
+      return {
+        ...nextState,
+        data
+      };
+    } catch (e) {
+      if (e.statusCode === 404) {
+        e.body = { error: `Resource ${resolvedResourceType} not found` };
+      }
+      throw e;
+    }
+  }
+};
 
 /**
  * Make a GET request to CommCare. Use this to fetch resources directly from Commcare REST API.

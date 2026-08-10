@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import { execute, submitXls, get, post, request, bulk } from '../src/index.js';
+import { execute, submitXls, get, post, request, bulk, getResource, list } from '../src/index.js';
 
 const hostUrl = 'http://example.commcare.com';
 const testServer = enableMockClient(hostUrl, {
@@ -37,6 +37,18 @@ const paginatedResponse = (offset = 0, limit, objects = defaultObjects) => {
       total_count: objects.length,
     },
     objects: objects.slice(offset, limit + offset),
+  };
+};
+
+const cursorResponse = (objects, cursor, nextCursor, resultsKey = 'cases') => {
+  const nextUrl = nextCursor
+    ? `${hostUrl}/a/${domain}/api/case/v2?cursor=${nextCursor}`
+    : null;
+
+  return {
+    [resultsKey]: objects,
+    matching_records: objects.length,
+    next: nextUrl,
   };
 };
 
@@ -727,5 +739,216 @@ describe('Bulk', () => {
     // And the adaptor should have uploaded a reasonable looking formdata object
     expect(formdata.get('replace')).to.not.be.undefined;
     expect(formdata.get('replace')).to.equal('false');
+  });
+});
+
+describe('list', () => {
+  it('should fetch a single page of cases', async () => {
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/case/v2`,
+        method: 'GET',
+      })
+      .reply(200, () => cursorResponse(defaultObjects, null, null));
+
+    const state = { configuration };
+    const { data } = await execute(list('case'))(state);
+
+    expect(data.length).to.equal(6);
+    expect(data[0]).to.haveOwnProperty('case_id');
+  });
+
+  it('should follow the cursor across multiple pages', async () => {
+    let callCount = 0;
+
+    testServer
+      .intercept({
+        path: new RegExp(`/a/${domain}/api/case/v2`),
+        method: 'GET',
+      })
+      .reply(200, req => {
+        callCount++;
+        const cursor = req.query?.cursor;
+        if (!cursor) return cursorResponse(defaultObjects.slice(0, 2), null, 'page2');
+        if (cursor === 'page2') return cursorResponse(defaultObjects.slice(2, 4), 'page2', 'page3');
+        return cursorResponse(defaultObjects.slice(4, 6), 'page3', null);
+      })
+      .times(3);
+
+    const state = { configuration };
+    const { data } = await execute(list('case'))(state);
+
+    expect(callCount).to.equal(3);
+    expect(data.length).to.equal(6);
+  });
+
+  it('should respect a client-side limit and stop paginating', async () => {
+    let callCount = 0;
+
+    testServer
+      .intercept({
+        path: new RegExp(`/a/${domain}/api/case/v2`),
+        method: 'GET',
+      })
+      .reply(200, req => {
+        callCount++;
+        const cursor = req.query?.cursor;
+        if (!cursor) return cursorResponse(defaultObjects.slice(0, 3), null, 'page2');
+        return cursorResponse(defaultObjects.slice(3, 6), 'page2', null);
+      })
+      .times(2);
+
+    const state = { configuration };
+    const { data } = await execute(list('case', { params: { limit: 4 } }))(state);
+
+    expect(data.length).to.equal(4);
+    expect(callCount).to.equal(2);
+  });
+
+  it('should stop when there is no next cursor', async () => {
+    testServer
+      .intercept({
+        path: new RegExp(`/a/${domain}/api/case/v2`),
+        method: 'GET',
+      })
+      .reply(200, () => cursorResponse(defaultObjects.slice(0, 2), null, null));
+
+    const state = { configuration };
+    const { data } = await execute(list('case'))(state);
+
+    expect(data.length).to.equal(2);
+  });
+
+  it('should auto-detect the results key from the response body', async () => {
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/form/v2`,
+        method: 'GET',
+      })
+      .reply(200, () => ({
+        forms: [{ form_id: 'a' }, { form_id: 'b' }],
+        matching_records: 2,
+        next: null,
+      }));
+
+    const state = { configuration };
+    const { data } = await execute(list('form'))(state);
+
+    expect(data.length).to.equal(2);
+    expect(data[0]).to.haveOwnProperty('form_id');
+  });
+
+  it('should use an explicit resultsKey when provided', async () => {
+    testServer
+      .intercept({
+        path: new RegExp(`/a/${domain}/api/case/v2`),
+        method: 'GET',
+      })
+      .reply(200, () => ({
+        cases: [{ case_id: '1' }],
+        related: [{ case_id: 'related-1' }],
+        next: null,
+      }));
+
+    const state = { configuration };
+    const { data } = await execute(list('case', { resultsKey: 'cases' }))(state);
+
+    expect(data.length).to.equal(1);
+    expect(data[0].case_id).to.equal('1');
+  });
+});
+
+describe('getResource', () => {
+  it('should fetch a single resource by string ID', async () => {
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/case/v2/abc123`,
+        method: 'GET',
+      })
+      .reply(200, () => ({ case_id: 'abc123', properties: { case_type: 'household' } }));
+
+    const state = { configuration };
+    const { data } = await execute(getResource('case', 'abc123'))(state);
+
+    expect(data.case_id).to.equal('abc123');
+    expect(Array.isArray(data)).to.be.false;
+  });
+
+  it('should fetch multiple resources by array of IDs', async () => {
+    ['abc', 'def', 'ghi'].forEach(id => {
+      testServer
+        .intercept({
+          path: `/a/${domain}/api/case/v2/${id}`,
+          method: 'GET',
+        })
+        .reply(200, () => ({ case_id: id }));
+    });
+
+    const state = { configuration };
+    const { data } = await execute(getResource('case', ['abc', 'def', 'ghi']))(state);
+
+    expect(Array.isArray(data)).to.be.true;
+    expect(data.length).to.equal(3);
+    expect(data.map(d => d.case_id)).to.eql(['abc', 'def', 'ghi']);
+  });
+
+  it('should deduplicate IDs before fetching', async () => {
+    let callCount = 0;
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/case/v2/abc`,
+        method: 'GET',
+      })
+      .reply(200, () => {
+        callCount++;
+        return { case_id: 'abc' };
+      })
+      .times(1);
+
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/case/v2/def`,
+        method: 'GET',
+      })
+      .reply(200, () => {
+        callCount++;
+        return { case_id: 'def' };
+      })
+      .times(1);
+
+    const state = { configuration };
+    const { data } = await execute(getResource('case', ['abc', 'abc', 'def', 'abc']))(state);
+
+    expect(callCount).to.equal(2);
+    expect(data.length).to.equal(2);
+  });
+
+  it('should filter out falsy IDs', async () => {
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/case/v2/abc`,
+        method: 'GET',
+      })
+      .reply(200, () => ({ case_id: 'abc' }));
+
+    const state = { configuration };
+    const { data } = await execute(getResource('case', ['abc', null, '', undefined]))(state);
+
+    expect(data.length).to.equal(1);
+    expect(data[0].case_id).to.equal('abc');
+  });
+
+  it('should throw when no valid IDs remain', async () => {
+    const state = { configuration };
+
+    let thrown;
+    try {
+      await execute(getResource('case', [null, '', undefined]))(state);
+    } catch (e) {
+      thrown = e;
+    }
+
+    expect(thrown).to.exist;
+    expect(thrown.message).to.match(/at least one ID/i);
   });
 });
