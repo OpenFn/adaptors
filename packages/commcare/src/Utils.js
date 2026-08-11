@@ -5,6 +5,19 @@ import {
   logResponse,
 } from '@openfn/language-common/util';
 
+export const buildUrl = (url, domain) => {
+  let finalUrl = '';
+
+  const absoluteUrl = url.startsWith('/');
+  if (absoluteUrl) {
+    finalUrl = url;
+  } else {
+    finalUrl = `/a/${domain}/api/${url}`;
+  }
+
+  return finalUrl;
+};
+
 export const configureAuth = (auth, headers = {}) => {
   if ('apiKey' in auth) {
     Object.assign(headers, {
@@ -14,7 +27,7 @@ export const configureAuth = (auth, headers = {}) => {
     Object.assign(headers, makeBasicAuthHeader(auth.username, auth.password));
   } else {
     throw new Error(
-      'Invalid authorization credentials. Include an apiKey or password in state.configuration'
+      'Invalid authorization credentials. Include an apiKey or password in state.configuration',
     );
   }
 
