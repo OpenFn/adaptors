@@ -15,6 +15,22 @@
     <a href="#submitxls">submitXls(data, params)</a></dt>
 </dl>
 
+This adaptor exports the following namespaced functions:
+
+<dl>
+<dt>
+    <a href="#http_get">http.get(path, [params])</a>
+</dt>
+
+<dt>
+    <a href="#http_post">http.post(path, data, [params])</a>
+</dt>
+
+<dt>
+    <a href="#http_request">http.request(method, path, body, params)</a>
+</dt>
+</dl>
+
 
 This adaptor exports the following from common:
 <dl>
@@ -335,6 +351,102 @@ submitXls([{ name: 'Mamadou', phone: '000000' }], {
   search_field: 'external_id',
   create_new_cases: 'on',
 });
+```
+
+* * *
+
+
+## http
+
+These functions belong to the http namespace.
+### http.get {#http_get}
+
+<p><code>get(path, [params]) ⇒ Operation</code></p>
+
+Make a GET request to CommCare. Use this to retrieve resources directly from the CommCare REST API.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | Path to resource. Relative paths are prefixed with `/a/<domain>/api/`; paths starting with `/` are used as-is. |
+| [params] | <code>Object</code> | Optional request params |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the CommCare server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
+
+**Example:** Get cases using the v1 API (prefixed with /a/<domain>/api/)
+```js
+http.get('case/v1');
+```
+
+* * *
+
+
+### http.post {#http_post}
+
+<p><code>post(path, data, [params]) ⇒ Operation</code></p>
+
+Make a POST request to CommCare. Use this to send resources directly to Commcare REST API.
+You can pass CommCare body data as a JSON object.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | Path to resource. Relative paths are prefixed with `/a/<domain>/api/`; paths starting with `/` are used as-is. |
+| data | <code>object</code> | Object or JSON to create a resource |
+| [params] | <code>Object</code> | Optional request params |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the CommCare server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
+
+**Example:** Post to the V2 case API with JSON data (prefixed with /a/<domain>/api/)
+```js
+http.post('case/v2', {
+  case_type: 'patient',
+  case_name: 'Elizabeth Harmon',
+  owner_id: '20cc9dda-b90a-4af3-aa3d-fc67184e73ef',
+  properties: { dob: '1948-11-02' },
+});
+```
+
+* * *
+
+
+### http.request {#http_request}
+
+<p><code>request(method, path, body, params) ⇒ Operation</code></p>
+
+Make a general HTTP request against the CommCare server. Use this to make any request to CommCare REST API.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| method | <code>string</code> | HTTP method to use |
+| path | <code>string</code> | Path to resource |
+| body | <code>object</code> | Object which will be attached to the body |
+| params | <code>object</code> | An object of query parameters to be encoded into the URL |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the CommCare server (excluding the body) |
+| references | An array of all previous data objects used in the Job |
+
+**Example:** Get cases using the v1 API (prefixed with /a/<domain>/api/)
+```js
+http.request('GET', 'case/v1');
 ```
 
 * * *
