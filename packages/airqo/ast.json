@@ -158,309 +158,18 @@
       "valid": true
     },
     {
-      "name": "getAllHistoricalMeasurements",
+      "name": "get",
       "params": [
-        "entityType",
-        "entityId",
-        "params"
-      ],
-      "docs": {
-        "description": "Retrieve ALL historical air quality measurements for a monitoring entity,\r\nautomatically fetching every page of results and combining them into a\r\nsingle `measurements` array.\r\n\r\nUse this instead of `getHistoricalMeasurements` when you need a complete\r\ndataset and the total number of records may exceed one page (1000 records).",
-        "tags": [
-          {
-            "title": "example",
-            "description": "getAllHistoricalMeasurements('sites', '60d058c8048305120d######');",
-            "caption": "Get all historical measurements for a site"
-          },
-          {
-            "title": "example",
-            "description": "getAllHistoricalMeasurements('grids', '65e98e11528c9f00133444f8', {\r\n  startTime: '2024-01-01T00:00:00Z',\r\n  endTime: '2024-01-31T23:59:59Z',\r\n});",
-            "caption": "Get all historical measurements for a grid with a date range"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Type of entity: 'sites' | 'devices' | 'grids' | 'cohorts'",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "entityType"
-          },
-          {
-            "title": "param",
-            "description": "The ID of the entity to retrieve measurements for",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "entityId"
-          },
-          {
-            "title": "param",
-            "description": "Optional query parameters passed through to AirQo (e.g. { startTime, endTime }). Do not pass `limit`.",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "object"
-              }
-            },
-            "name": "params"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{AirQoState} data - Object containing combined `measurements` array and `meta` from the last page"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "listMetadata",
-      "params": [
-        "resource",
-        "params"
-      ],
-      "docs": {
-        "description": "Retrieve metadata about publicly available AirQo monitoring entities.\r\n\r\nValid `resource` values:\r\n- `'grids'`   — all publicly available geographic grids\r\n- `'cohorts'` — all publicly available device cohorts\r\n- `'devices'` — all publicly available devices\r\n- `'sites'`   — all publicly available monitoring sites",
-        "tags": [
-          {
-            "title": "example",
-            "description": "listMetadata('sites');",
-            "caption": "Get all publicly available sites"
-          },
-          {
-            "title": "example",
-            "description": "listMetadata('grids');",
-            "caption": "Get all publicly available grids"
-          },
-          {
-            "title": "example",
-            "description": "listMetadata('devices');",
-            "caption": "Get all publicly available devices"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Resource type: 'grids' | 'cohorts' | 'devices' | 'sites'",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "resource"
-          },
-          {
-            "title": "param",
-            "description": "Optional query parameters passed through to AirQo",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "object"
-              }
-            },
-            "name": "params"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{AirQoState} data - Object containing the resource list (e.g. `grids`, `sites`, `devices`, or `cohorts`)"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "getGridSummary",
-      "params": [],
-      "docs": {
-        "description": "Retrieve all site details for publicly available AirQo grids.\r\nReturns a summary of every monitored location grouped by grid,\r\nincluding coordinates, city, country, and data provider.",
-        "tags": [
-          {
-            "title": "example",
-            "description": "getGridSummary();",
-            "caption": "Get grid summary with all site details"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{AirQoState} data - Object with `grids` array, each containing a `sites` array"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "getDailyForecast",
-      "params": [
-        "params"
-      ],
-      "docs": {
-        "description": "Retrieve daily air quality forecasts for a device or site.\r\n\r\nPass either `device_id` or `site_id` in the params object.",
-        "tags": [
-          {
-            "title": "example",
-            "description": "getDailyForecast({ device_id: '5f2036bc70223655545#####' });",
-            "caption": "Get daily forecast for a device"
-          },
-          {
-            "title": "example",
-            "description": "getDailyForecast({ site_id: '60d058c8048305120d######' });",
-            "caption": "Get daily forecast for a site"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Query parameters passed through to AirQo. Provide `device_id` (e.g. `'5f2036bc70223655545#####'`) or `site_id` (e.g. `'60d058c8048305120d######'`). Exactly one is required.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "params"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{AirQoState} data - Object containing a `forecasts` array with `pm2_5`, `time`, and `health_tips`"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "getHourlyForecast",
-      "params": [
-        "params"
-      ],
-      "docs": {
-        "description": "Retrieve hourly air quality forecasts for a device or site.\r\n\r\nPass either `device_id` or `site_id` in the params object.",
-        "tags": [
-          {
-            "title": "example",
-            "description": "getHourlyForecast({ device_id: '5f2036bc70223655545#####' });",
-            "caption": "Get hourly forecast for a device"
-          },
-          {
-            "title": "example",
-            "description": "getHourlyForecast({ site_id: '60d058c8048305120d######' });",
-            "caption": "Get hourly forecast for a site"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "param",
-            "description": "Query parameters passed through to AirQo. Provide `device_id` (e.g. `'5f2036bc70223655545#####'`) or `site_id` (e.g. `'60d058c8048305120d######'`). Exactly one is required.",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "params"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{AirQoState} data - Object containing a `forecasts` array with `pm2_5`, `time`, and `health_tips`"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "toDhis2DataValues",
-      "params": [
-        "measurements",
-        "mappingConfig",
+        "path",
         "options"
       ],
       "docs": {
-        "description": "DHIS2-specific convenience: map AirQo measurements into DHIS2 `dataValue`\r\nentries for batch import. This does not call the AirQo or DHIS2 APIs — it's\r\na pure data-shaping step. If your workflow targets a different system,\r\nwrite your own mapping in job code instead of using this operation.\r\n\r\nThis operation is designed for scheduled workflows where measurements are\r\nfetched first (for example via getAllHistoricalMeasurements) and then mapped\r\nto DHIS2 org units and data elements.",
+        "description": "Make a generic authenticated GET request to any AirQo endpoint.\r\nAlso available as `http.get`.",
         "tags": [
           {
             "title": "example",
-            "description": "toDhis2DataValues(\r\n  state => state.data.measurements,\r\n  {\r\n    orgUnits: {\r\n      site_id_001: 'DHIS2_ORG_UNIT_UID_1',\r\n    },\r\n    dataElements: {\r\n      pm2_5: 'DHIS2_PM25_ELEMENT_UID',\r\n      pm10: 'DHIS2_PM10_ELEMENT_UID',\r\n    },\r\n  },\r\n  { fields: ['pm2_5', 'pm10'], periodType: 'daily' }\r\n);",
-            "caption": "Transform PM2.5 and PM10 measurements into daily data values"
+            "description": "get('devices/measurements/sites/60d058c8048305120d######/recent');",
+            "caption": "Get raw data from any AirQo path"
           },
           {
             "title": "function",
@@ -474,52 +183,16 @@
           },
           {
             "title": "param",
-            "description": "Array of measurements or a state-resolved reference to one",
+            "description": "API path relative to baseUrl (e.g. 'devices/metadata/sites')",
             "type": {
-              "type": "UnionType",
-              "elements": [
-                {
-                  "type": "TypeApplication",
-                  "expression": {
-                    "type": "NameExpression",
-                    "name": "Array"
-                  },
-                  "applications": [
-                    {
-                      "type": "NameExpression",
-                      "name": "AirQoMeasurement"
-                    }
-                  ]
-                },
-                {
-                  "type": "NameExpression",
-                  "name": "function"
-                }
-              ]
+              "type": "NameExpression",
+              "name": "string"
             },
-            "name": "measurements"
+            "name": "path"
           },
           {
             "title": "param",
-            "description": "Mapping config containing `orgUnits` and `dataElements`",
-            "type": {
-              "type": "UnionType",
-              "elements": [
-                {
-                  "type": "NameExpression",
-                  "name": "object"
-                },
-                {
-                  "type": "NameExpression",
-                  "name": "function"
-                }
-              ]
-            },
-            "name": "mappingConfig"
-          },
-          {
-            "title": "param",
-            "description": "Transform options: `fields` and `periodType`",
+            "description": "Additional options (query, headers, etc.)",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -539,23 +212,26 @@
           },
           {
             "title": "state",
-            "description": "{object} data - Object containing `dataValues` array and a `summary`"
+            "description": "{AirQoState} data - The parsed response body from AirQo"
           }
         ]
       },
       "valid": true
     },
     {
-      "name": "listSites",
+      "name": "post",
       "params": [
-        "params"
+        "path",
+        "body",
+        "options"
       ],
       "docs": {
-        "description": "Retrieve metadata for all publicly available AirQo monitoring sites.\r\nConvenience alias for `listMetadata('sites')`.",
+        "description": "Make a generic authenticated POST request to any AirQo endpoint.\r\nAlso available as `http.post`.",
         "tags": [
           {
             "title": "example",
-            "description": "listSites();"
+            "description": "post('devices/some-endpoint', { foo: 'bar' });",
+            "caption": "Post a body to any AirQo path"
           },
           {
             "title": "function",
@@ -569,7 +245,16 @@
           },
           {
             "title": "param",
-            "description": "Optional query parameters passed through to AirQo",
+            "description": "API path relative to baseUrl",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Request body",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -577,7 +262,19 @@
                 "name": "object"
               }
             },
-            "name": "params"
+            "name": "body"
+          },
+          {
+            "title": "param",
+            "description": "Additional options (query, headers, etc.)",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options"
           },
           {
             "title": "returns",
@@ -589,23 +286,26 @@
           },
           {
             "title": "state",
-            "description": "{AirQoState} data - Object containing a `sites` array"
+            "description": "{AirQoState} data - The parsed response body from AirQo"
           }
         ]
       },
       "valid": true
     },
     {
-      "name": "listDevices",
+      "name": "request",
       "params": [
-        "params"
+        "method",
+        "path",
+        "options"
       ],
       "docs": {
-        "description": "Retrieve metadata for all publicly available AirQo devices.\r\nConvenience alias for `listMetadata('devices')`.",
+        "description": "Make a generic authenticated request of any HTTP method to any AirQo endpoint.\r\nAlso available as `http.request`.",
         "tags": [
           {
             "title": "example",
-            "description": "listDevices();"
+            "description": "request('GET', 'devices/metadata/grids');",
+            "caption": "Make an arbitrary request"
           },
           {
             "title": "function",
@@ -619,107 +319,25 @@
           },
           {
             "title": "param",
-            "description": "Optional query parameters passed through to AirQo",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "object"
-              }
-            },
-            "name": "params"
-          },
-          {
-            "title": "returns",
-            "description": null,
+            "description": "HTTP method (e.g. 'GET', 'POST')",
             "type": {
               "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{AirQoState} data - Object containing a `devices` array"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "listGrids",
-      "params": [
-        "params"
-      ],
-      "docs": {
-        "description": "Retrieve metadata for all publicly available AirQo geographic grids.\r\nConvenience alias for `listMetadata('grids')`.",
-        "tags": [
-          {
-            "title": "example",
-            "description": "listGrids();"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
+              "name": "string"
+            },
+            "name": "method"
           },
           {
             "title": "param",
-            "description": "Optional query parameters passed through to AirQo",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "object"
-              }
-            },
-            "name": "params"
-          },
-          {
-            "title": "returns",
-            "description": null,
+            "description": "API path relative to baseUrl",
             "type": {
               "type": "NameExpression",
-              "name": "Operation"
-            }
-          },
-          {
-            "title": "state",
-            "description": "{AirQoState} data - Object containing a `grids` array"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "listCohorts",
-      "params": [
-        "params"
-      ],
-      "docs": {
-        "description": "Retrieve metadata for all publicly available AirQo device cohorts.\r\nConvenience alias for `listMetadata('cohorts')`.",
-        "tags": [
-          {
-            "title": "example",
-            "description": "listCohorts();"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "public",
-            "description": null,
-            "type": null
+              "name": "string"
+            },
+            "name": "path"
           },
           {
             "title": "param",
-            "description": "Optional query parameters passed through to AirQo",
+            "description": "Additional options (query, body, headers, etc.)",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -727,7 +345,7 @@
                 "name": "object"
               }
             },
-            "name": "params"
+            "name": "options"
           },
           {
             "title": "returns",
@@ -739,7 +357,7 @@
           },
           {
             "title": "state",
-            "description": "{AirQoState} data - Object containing a `cohorts` array"
+            "description": "{AirQoState} data - The parsed response body from AirQo"
           }
         ]
       },
