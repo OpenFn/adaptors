@@ -11,11 +11,32 @@ import { google } from 'googleapis';
 
 let client = undefined;
 
-function createConnection(state) {
-  const { accessToken } = state.configuration;
+async function createConnection(state) {
+  const {
+    accessToken,
+    private_key,
+    client_email,
+    scopes = [],
+  } = state.configuration;
+  const mandatoryScopes = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+    'openid',
+  ];
 
-  const auth = new google.auth.OAuth2();
-  auth.credentials = { access_token: accessToken };
+  let auth;
+  if (private_key && client_email) {
+    auth = new google.auth.JWT({
+      email: client_email,
+      key: private_key,
+      scopes: [...mandatoryScopes, ...scopes],
+    });
+    await auth.authorize();
+  } else {
+    auth = new google.auth.OAuth2();
+    auth.credentials = { access_token: accessToken };
+  }
 
   client = google.sheets({ version: 'v4', auth });
   return state;
@@ -59,47 +80,52 @@ export function execute(...operations) {
   // why not here?
 
   return state => {
-    // Note: we no longer need `steps` anymore since `commonExecute`
-    // takes each operation as an argument.
+    const isServiceAccount =
+      state.configuration?.private_key && state.configuration?.client_email;
+
     return commonExecute(
       createConnection,
       ...operations,
-      removeConnection
+      removeConnection,
     )({
       ...initialState,
       ...state,
-      configuration: normalizeOauthConfig(state.configuration),
+      configuration: isServiceAccount
+        ? state.configuration
+        : normalizeOauthConfig(state.configuration),
     });
   };
 }
 
 /**
- * Add an array of rows to the spreadsheet.
+ * Append one or more rows to a spreadsheet range.
  * https://developers.google.com/sheets/api/samples/writing#append_values
  * @public
  * @example
- * appendValues({
- *   spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',
- *   range: 'Sheet1!A1:E1',
- *   values: [
- *     ['From expression', '$15', '2', '3/15/2016'],
- *     ['Really now!', '$100', '1', '3/20/2016'],
- *   ],
- * })
+ * appendValues(
+ *   '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',
+ *   'Sheet1!A1:E1',
+ *   [['From expression', '$15', '2', '3/15/2016'], ['Really now!', '$100', '1', '3/20/2016']]
+ * )
  * @function
- * @param {Object} params - Data object to add to the spreadsheet.
- * @param {string} [params.spreadsheetId] The spreadsheet ID.
- * @param {string} [params.range] The range of values to update.
- * @param {array} [params.values] A 2d array of values to update.
- * @param {function} callback - (Optional) Callback function
+ * @param {string} spreadsheetId - The spreadsheet ID.
+ * @param {string} range - The sheet range.
+ * @param {array} values - The values to append.
+ * @param {Object} [options] - Optional settings.
+ * @param {string} [options.valueInputOption] - Defaults to 'USER_ENTERED'.
  * @returns {Operation}
  */
-export function appendValues(params, callback = s => s) {
+export function appendValues(spreadsheetId, range, values, options = {}) {
   return state => {
-    const [resolvedParams] = expandReferences(state, params);
-    const { spreadsheetId, range, values } = resolvedParams;
+    const [
+      resolvedSpreadsheetId,
+      resolvedRange,
+      resolvedValues,
+      resolvedOptions,
+    ] = expandReferences(state, spreadsheetId, range, values, options);
+    const { valueInputOption = 'USER_ENTERED' } = resolvedOptions;
 
-    if (!values || values.length === 0) {
+    if (!resolvedValues || resolvedValues.length === 0) {
       console.log('Warning: empty values array');
       return state;
     }
@@ -107,13 +133,13 @@ export function appendValues(params, callback = s => s) {
     return new Promise((resolve, reject) => {
       client.spreadsheets.values.append(
         {
-          spreadsheetId,
-          range,
-          valueInputOption: 'USER_ENTERED',
+          spreadsheetId: resolvedSpreadsheetId,
+          range: resolvedRange,
+          valueInputOption,
           resource: {
-            range,
+            range: resolvedRange,
             majorDimension: 'ROWS',
-            values: values,
+            values: resolvedValues,
           },
         },
         function (err, response) {
@@ -123,14 +149,12 @@ export function appendValues(params, callback = s => s) {
           } else {
             console.log('Success! Here is the response from Google:');
             console.log(response.data);
-            resolve(
-              callback({
-                ...composeNextState(state, response.data),
-                response,
-              })
-            );
+            resolve({
+              ...composeNextState(state, response.data),
+              response,
+            });
           }
-        }
+        },
       );
     });
   };
@@ -139,56 +163,46 @@ export function appendValues(params, callback = s => s) {
 /**
  * Batch update values in a Spreadsheet.
  * @example
- * batchUpdateValues({
- *   spreadsheetId: '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',
- *   range: 'Sheet1!A1:E1',
- *   values: [
- *     ['From expression', '$15', '2', '3/15/2016'],
- *     ['Really now!', '$100', '1', '3/20/2016'],
+ * <caption>Update multiple separate ranges</caption>
+ * batchUpdateValues(
+ *   '1O-a4_RgPF_p8W3I6b5M9wobA3-CBW8hLClZfUik5sos',
+ *   [
+ *     { range: 'Sheet1!A1', values: [['value1']] },
+ *     { range: 'Sheet1!B5', values: [['value2']] },
+ *     { range: 'Sheet1!D10:E11', values: [['a', 'b'], ['c', 'd']] },
  *   ],
- * })
+ *   { valueInputOption: 'RAW' }
+ * )
  * @function
  * @public
- * @param {Object} params - Data object to add to the spreadsheet.
- * @param {string} [params.spreadsheetId] The spreadsheet ID.
- * @param {string} [params.range] The range of values to update.
- * @param {string} [params.valueInputOption] (Optional) Value update options. Defaults to 'USER_ENTERED'
- * @param {array} [params.values] A 2d array of values to update.
- * @param {function} callback - (Optional) callback function
+ * @param {string} spreadsheetId - The spreadsheet ID.
+ * @param {Array<{range: string, values: array}>} data - Array of range/values objects to update.
+ * @param {Object} [options] - Optional settings.
+ * @param {string} [options.valueInputOption] - Defaults to 'USER_ENTERED'.
  * @returns {Operation} spreadsheet information
  */
-export function batchUpdateValues(params, callback = s => s) {
+export function batchUpdateValues(spreadsheetId, data, options = {}) {
   return async state => {
-    const [resolvedParams] = expandReferences(state, params);
+    const [resolvedSpreadsheetId, resolvedData, resolvedOptions] =
+      expandReferences(state, spreadsheetId, data, options);
+    const { valueInputOption = 'USER_ENTERED' } = resolvedOptions;
 
-    const {
-      spreadsheetId,
-      range,
-      valueInputOption = 'USER_ENTERED',
-      values,
-    } = resolvedParams;
-
-    if (!values || values.length === 0) {
-      console.log('Warning: empty values array');
+    if (!resolvedData || resolvedData.length === 0) {
+      console.log('Warning: empty data array');
       return state;
     }
 
     const resource = {
-      data: [
-        {
-          range,
-          values,
-        },
-      ],
+      data: resolvedData,
       valueInputOption,
     };
     try {
       const response = await client.spreadsheets.values.batchUpdate({
-        spreadsheetId,
+        spreadsheetId: resolvedSpreadsheetId,
         resource,
       });
       console.log('%d cells updated.', response.data.totalUpdatedCells);
-      return callback({ ...composeNextState(state, response.data), response });
+      return { ...composeNextState(state, response.data), response };
     } catch (err) {
       logError(err);
       throw err;
@@ -204,15 +218,14 @@ export function batchUpdateValues(params, callback = s => s) {
  * @function
  * @param {string} spreadsheetId The spreadsheet ID.
  * @param {string} range The sheet range.
- * @param {function} callback - (Optional) callback function
  * @returns {Operation} spreadsheet information
  */
-export function getValues(spreadsheetId, range, callback = s => s) {
+export function getValues(spreadsheetId, range) {
   return async state => {
     const [resolvedSheetId, resolvedRange] = expandReferences(
       state,
       spreadsheetId,
-      range
+      range,
     );
 
     try {
@@ -225,7 +238,7 @@ export function getValues(spreadsheetId, range, callback = s => s) {
 
       const nextState = { ...composeNextState(state, response.data), response };
 
-      return callback(nextState);
+      return nextState;
     } catch (err) {
       logError(err);
       throw err;
@@ -245,6 +258,7 @@ export {
   fn,
   fnIf,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
 } from '@openfn/language-common';

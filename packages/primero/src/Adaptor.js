@@ -903,6 +903,7 @@ export function getLocations(query, callback) {
 
 export {
   alterState,
+  as,
   beta,
   combine,
   dataPath,
@@ -914,7 +915,7 @@ export {
   fn,
   fnIf,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
-  as,
 } from '@openfn/language-common';

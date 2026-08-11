@@ -1,5 +1,81 @@
 # @openfn/language-googlesheets
 
+## 5.1.0 - 03 August 2026
+
+### Minor Changes
+
+- 7dd37fc: Add support for Google Service Account credential
+
+## 5.0.0 - 09 July 2026
+
+### Major Changes
+
+- 3138733: Updated `appendValues()`, `batchUpdateValues()`, and `getValues()` to
+  use positional arguments instead of a single params object.
+
+  ### Migration Guide
+
+  **`appendValues`**
+
+  ```js
+  // Before
+  appendValues({
+    spreadsheetId: '1abc...',
+    range: 'Sheet1!A1:E1',
+    values: [['a', 'b']],
+  });
+
+  // Now
+  appendValues('1abc...', 'Sheet1!A1:E1', [['a', 'b']]);
+  ```
+
+  **`batchUpdateValues`**
+
+  ```js
+  // Before
+  batchUpdateValues({
+    spreadsheetId: '1abc...',
+    range: 'Sheet1!A1',
+    values: [['a']],
+    valueInputOption: 'RAW',
+  });
+
+  // Now
+  batchUpdateValues('1abc...', [{ range: 'Sheet1!A1', values: [['a']] }], {
+    valueInputOption: 'RAW',
+  });
+  ```
+
+  Callback parameter has been removed from `appendValues()`,
+  `batchUpdateValues()`, and `getValues()` in favor of a promise-based API.
+
+## 4.1.2 - 30 June 2026
+
+### Patch Changes
+
+- Updated dependencies \[c5f8728]
+  - @openfn/language-common@3.3.4
+
+## 4.1.1 - 27 May 2026
+
+### Patch Changes
+
+- Updated dependencies \[5276a86]
+  - @openfn/language-common@3.3.3
+
+## 4.1.0 - 21 May 2026
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
+## 4.0.13 - 20 May 2026
+
+### Patch Changes
+
+- Updated dependencies \[9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 4.0.12 - 17 April 2026
 
 ### Patch Changes

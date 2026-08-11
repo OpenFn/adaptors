@@ -1,5 +1,36 @@
 # @openfn/language-ihris
 
+## 1.2.2 - 30 June 2026
+
+### Patch Changes
+
+- c5f8728: Update undici dependency
+- Updated dependencies \[c5f8728]
+  - @openfn/language-common@3.3.4
+  - @openfn/language-fhir-4@0.5.5
+
+## 1.2.1 - 27 May 2026
+
+### Patch Changes
+
+- Updated dependencies \[5276a86]
+  - @openfn/language-common@3.3.3
+  - @openfn/language-fhir-4@0.5.4
+
+## 1.2.0 - 21 May 2026
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
+## 1.1.2 - 20 May 2026
+
+### Patch Changes
+
+- Updated dependencies \[9d1e1ae]
+  - @openfn/language-common@3.3.2
+  - @openfn/language-fhir-4@0.5.3
+
 ## 1.1.1 - 17 April 2026
 
 ### Patch Changes
@@ -41,14 +72,14 @@
 - Updated dependencies \[d179474]
   - @openfn/language-fhir-4@0.4.2
 
-## 1.0.12
+## 1.0.12 - 25 March 2026
 
 ### Patch Changes
 
 - Updated dependencies \[c5e2b2b]
   - @openfn/language-fhir-4@0.4.1
 
-## 1.0.11
+## 1.0.11 - 23 March 2026
 
 ### Patch Changes
 
@@ -62,7 +93,7 @@
 - Updated dependencies \[317e3c7]
   - @openfn/language-fhir-4@0.3.2
 
-## 1.0.9
+## 1.0.9 - 06 March 2026
 
 ### Patch Changes
 
@@ -110,7 +141,7 @@
 - Updated dependencies \[a78d53e]
   - @openfn/language-fhir-4@0.2.7
 
-## 1.0.3
+## 1.0.3 - 30 January 2026
 
 ### Patch Changes
 
@@ -135,7 +166,7 @@
   - @openfn/language-common@3.2.0
   - @openfn/language-fhir-4@0.2.4
 
-## 1.0.0
+## 1.0.0 - 04 November 2025
 
 Implemented the common http function helpers for `iHRiS` adaptor. These
 functions allow a user to: `http.get()` - Get `fhir` resources `http.post()` -

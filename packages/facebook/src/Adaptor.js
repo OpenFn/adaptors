@@ -93,7 +93,7 @@ export function postMessage(params) {
             console.log('Post Message succeeded.');
             resolve(body);
           }
-        }
+        },
       );
     }).then(response => {
       const nextState = composeNextState(state, response);
@@ -103,15 +103,17 @@ export function postMessage(params) {
 }
 
 export {
-  field,
-  fields,
-  sourceValue,
-  fn,
-  fnIf,
   alterState,
-  each,
-  merge,
+  combine,
   dataPath,
   dataValue,
+  each,
+  field,
+  fields,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
+  merge,
+  sourceValue,
 } from '@openfn/language-common';

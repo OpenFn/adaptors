@@ -150,4 +150,48 @@ describe('Google Drive Adaptor', () => {
       }
     });
   });
+
+  describe('service account auth', () => {
+    const serviceAccountState = {
+      configuration: {
+        private_key:
+          '-----BEGIN RSA PRIVATE KEY-----\nMOCK_KEY\n-----END RSA PRIVATE KEY-----',
+        client_email: 'service@project-id.iam.gserviceaccount.com',
+      },
+    };
+
+    it('uses JWT auth when private_key and client_email are provided', async () => {
+      const mockJwt = { authorize: sandbox.stub().resolves() };
+      const jwtStub = sandbox.stub(google.auth, 'JWT').returns(mockJwt);
+
+      const content = Buffer.from('file content').toString('base64');
+      await execute(create(content, 'test.txt'))(serviceAccountState);
+
+      expect(jwtStub.calledOnce).to.be.true;
+      const jwtArgs = jwtStub.getCall(0).args[0];
+      expect(jwtArgs.email).to.equal(
+        'service@project-id.iam.gserviceaccount.com',
+      );
+      expect(jwtArgs.scopes).to.deep.equal([
+        'https://www.googleapis.com/auth/drive.file',
+        'https://www.googleapis.com/auth/drive.readonly',
+        'https://www.googleapis.com/auth/userinfo.email',
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'openid',
+      ]);
+      expect(mockFiles.create.calledOnce).to.be.true;
+    });
+
+    it('does not call OAuth2 when service account credentials are used', async () => {
+      const mockJwt = { authorize: sandbox.stub().resolves() };
+      const jwtStub = sandbox.stub(google.auth, 'JWT').returns(mockJwt);
+      const oauth2Spy = sandbox.spy(google.auth, 'OAuth2');
+
+      const result = await execute(list('folder123'))(serviceAccountState);
+
+      expect(jwtStub.calledOnce).to.be.true;
+      expect(oauth2Spy.called).to.be.false;
+      expect(result.data).to.be.an('array').with.lengthOf(2);
+    });
+  });
 });

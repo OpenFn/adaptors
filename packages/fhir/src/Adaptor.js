@@ -268,6 +268,7 @@ export function getClaim(claimId, params, callback = s => s) {
 
 export {
   alterState,
+  combine,
   dataPath,
   dataValue,
   dateFns,
@@ -277,6 +278,7 @@ export {
   fn,
   fnIf,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
 } from '@openfn/language-common';

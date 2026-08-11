@@ -52,3 +52,20 @@ source files.
 ```bash
 pnpm docs:build
 ```
+
+## Code Review
+
+**`/code-review`** - An AI code review command that reviews the current
+branch's changes against the [Code Review Guidelines](code-review.md).
+
+Run it from chat after making changes and before opening a PR:
+
+```
+/code-review
+```
+
+It reads [wiki/code-review.md](code-review.md) — the single source of truth for
+review rules — and reports Blocking / Recommended / NitPicks findings for the diff.
+The same guidelines back the automated Claude review on pull requests, so running
+`/code-review` locally should surface the same issues before CI does.
+

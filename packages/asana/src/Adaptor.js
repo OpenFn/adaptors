@@ -50,13 +50,13 @@ export function getTask(taskGid, params, callback) {
     const [resolvedTaskGid, resolvedParams] = expandReferences(
       state,
       taskGid,
-      params
+      params,
     );
     const response = await util.request(
       state,
       `tasks/${resolvedTaskGid}`,
       { query: resolvedParams },
-      callback
+      callback,
     );
     return util.prepareNextState(state, response);
   };
@@ -87,14 +87,14 @@ export function getTasks(projectGid, params, callback) {
     const [resolvedProjectGid, resolvedParams] = expandReferences(
       state,
       projectGid,
-      params
+      params,
     );
 
     const results = await util.requestWithPagination(
       state,
       `projects/${resolvedProjectGid}/tasks`,
       { query: resolvedParams },
-      callback
+      callback,
     );
     console.log(`Fetched ${results.length} tasks`);
     return composeNextState(state, results);
@@ -121,14 +121,14 @@ export function updateTask(taskGid, data, callback) {
     const [resolvedTaskGid, resolvedData] = expandReferences(
       state,
       taskGid,
-      data
+      data,
     );
 
     const response = await util.request(
       state,
       `tasks/${resolvedTaskGid}`,
       { body: { data: resolvedData }, method: 'PUT' },
-      callback
+      callback,
     );
     return util.prepareNextState(state, response);
   };
@@ -157,7 +157,7 @@ export function createTask(params, callback) {
       state,
       'tasks',
       { body: { data: resolvedParams }, method: 'POST' },
-      callback
+      callback,
     );
     return util.prepareNextState(state, response);
   };
@@ -189,7 +189,7 @@ export function upsertTask(projectGid, params, callback) {
     const [resolvedProjectGid, { externalId, data }] = expandReferences(
       state,
       projectGid,
-      params
+      params,
     );
 
     return util
@@ -198,7 +198,7 @@ export function upsertTask(projectGid, params, callback) {
       })
       .then(next => {
         const matchingTask = next.find(
-          task => task[externalId] === data[externalId]
+          task => task[externalId] === data[externalId],
         );
         if (matchingTask) {
           console.log('Matching task found. Performing update.');
@@ -247,7 +247,7 @@ export function searchTask(task, query = {}, options = {}) {
       state,
       task,
       query,
-      options
+      options,
     );
     const { workspaceGid = state.configuration.workspaceGid } = resolvedOptions;
     const { resource_subtype = 'default_task', ...restQuery } = resolvedQuery;
@@ -263,7 +263,7 @@ export function searchTask(task, query = {}, options = {}) {
           text: resolvedTask,
           ...restQuery,
         },
-      }
+      },
     );
 
     return util.prepareNextState(state, response);
@@ -322,7 +322,7 @@ export function createTaskStory(taskGid, params, callback) {
         query: { opt_fields, opt_pretty },
         method: 'POST',
       },
-      callback
+      callback,
     );
     return util.prepareNextState(state, response);
   };
@@ -362,7 +362,7 @@ export function request(path, params = {}, callback) {
     const [resolvedPath, resolvedParams] = expandReferences(
       state,
       path,
-      params
+      params,
     );
 
     const { body, query, method } = resolvedParams;
@@ -371,7 +371,7 @@ export function request(path, params = {}, callback) {
       state,
       resolvedPath,
       { method, body, query },
-      callback
+      callback,
     );
 
     return util.prepareNextState(state, response);
@@ -380,6 +380,8 @@ export function request(path, params = {}, callback) {
 
 export {
   alterState,
+  as,
+  combine,
   cursor,
   dataPath,
   dataValue,
@@ -390,7 +392,7 @@ export {
   fn,
   fnIf,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
-  as,
 } from '@openfn/language-common';

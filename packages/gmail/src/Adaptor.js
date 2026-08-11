@@ -10,9 +10,8 @@ import {
 
 import {
   getMessagesResult,
-  getMessageResult,
-  getContentIndicators,
-  getMessageContent,
+  resolveContentPlan,
+  buildMessageContent,
   buildAndSendMessage,
   createConnection,
   removeConnection,
@@ -36,11 +35,13 @@ import {
  * @typedef {Object} Options
  * @public
  * @property {string?} [query] - Gmail search query string.
- * @property {Array<string|MessageContent>} [contents=['from', 'date', 'subject', 'body']]
+ * @property {Array<string|MessageContent>} [contents=['from', 'date', 'subject']]
  *   An array of strings or MessageContent objects used to specify which parts of the message to retrieve.
  * @property {Array<string>} [processedIds] - Ignore message ids which have already been processed.
  * @property {string?} [email] - The user account to retrieve messages from. Defaults to the authenticated user.
  * @property {int?} [maxResults] - Maximum number of messages to process per request. Default is 1000.
+ * @property {boolean} [fetchAttachments=true] - Whether to download file and archive attachments.
+ *   When false, matched attachments are returned as filename-only objects without content.
  */
 
 /**
@@ -48,7 +49,7 @@ import {
  * @public
  * @function
  * @param {Options} options - Customized options including desired contents and query.
- * @state {Array} data - The returned message objects, of the form `{ messageId, contents } `
+ * @state {Array} data - The returned message objects, of the form `{ messageId, ...contents } `
  * @state {Array<string>} processedIds - An array of string ids processed by this request
  * @returns {Operation}
  * @example <caption>Get a message with a specific subject</caption>
@@ -67,6 +68,17 @@ import {
  *     ]
  *   }
  * )
+ * @example <caption>Get metadata without downloading requested attachments</caption>
+ * getContentsFromMessages(
+ *   {
+ *     query: 'after:2026/07/01',
+ *     contents: [
+ *       'body',
+ *       { type: 'file', name: 'report', file: /\.xlsx$/ }
+ *     ],
+ *     fetchAttachments: false
+ *   }
+ * )
  */
 export function getContentsFromMessages(options) {
   return async state => {
@@ -83,11 +95,13 @@ export function getContentsFromMessages(options) {
       query: resolvedOptions.query,
       processedIds: resolvedOptions.processedIds,
       maxResults: resolvedOptions.maxResults ?? defaultOptions.maxResults,
+      fetchAttachments: resolvedOptions.fetchAttachments !== false,
     };
 
-    const contentIndicators = getContentIndicators(
+    const { contentIndicators, messageFormat } = resolveContentPlan(
       defaultOptions.contents,
-      resolvedOptions.contents
+      resolvedOptions.contents,
+      opts.fetchAttachments,
     );
 
     const contents = [];
@@ -102,7 +116,7 @@ export function getContentsFromMessages(options) {
       const messagesResult = await getMessagesResult(
         opts.userId,
         opts.query,
-        nextPageToken
+        nextPageToken,
       );
 
       if (!messagesResult.messages?.length) {
@@ -119,28 +133,15 @@ export function getContentsFromMessages(options) {
           continue;
         }
 
-        const content = {
-          messageId: message.id,
-        };
-
-        const messageResult = await getMessageResult(opts.userId, message.id);
-
-        for (const contentIndicator of contentIndicators) {
-          const messageContent = await getMessageContent(
-            messageResult,
-            contentIndicator
-          );
-
-          if (messageContent && content[contentIndicator.name]) {
-            throw new Error(
-              `Duplicate content name detected: ${contentIndicator.name}`
-            );
-          }
-
-          content[contentIndicator.name] ??= messageContent;
-        }
-
-        contents.push(content);
+        contents.push(
+          await buildMessageContent(
+            opts.userId,
+            message.id,
+            contentIndicators,
+            messageFormat,
+            opts.fetchAttachments,
+          ),
+        );
 
         if (contents.length >= opts.maxResults) {
           break doNextPageToken;
@@ -203,6 +204,74 @@ export function sendMessage(message) {
 }
 
 /**
+ * Configurable options provided to getMessageById.
+ * @typedef {Object} MessageIdOptions
+ * @public
+ * @property {Array<string|MessageContent>} [contents=['from', 'date', 'subject']]
+ *   An array of strings or MessageContent objects used to specify which parts of the message to retrieve.
+ * @property {string?} [email] - The user account to retrieve messages from. Defaults to the authenticated user.
+ * @property {boolean} [fetchAttachments=true] - Whether to download file and archive attachments.
+ *   When false, matched attachments are returned as filename-only objects without content.
+ */
+
+/**
+ * Downloads contents from a single message of a Gmail account, identified by
+ * its Gmail API message id.
+ * @public
+ * @function
+ * @param {string} messageId - Gmail API message id to fetch.
+ * @param {MessageIdOptions} [options] - Customized options including desired contents.
+ * @state {Object} data - The returned message object, of the form `{ messageId, ...contents } `
+ * @returns {Operation}
+ * @example <caption>Download attachments for a specific message identified by an earlier step</caption>
+ * getMessageById(
+ *   $.data.messageId,
+ *   {
+ *     contents: [
+ *       { type: 'file', name: 'report', file: /\.xlsx$/ }
+ *     ]
+ *   }
+ * )
+ */
+export function getMessageById(messageId, options = {}) {
+  return async state => {
+    const [resolvedMessageId, resolvedOptions] = expandReferences(
+      state,
+      messageId,
+      options,
+    );
+
+    if (typeof resolvedMessageId !== 'string' || !resolvedMessageId) {
+      throw new Error('getMessageById: messageId must be a non-empty string');
+    }
+
+    const defaultOptions = {
+      contents: ['from', 'date', 'subject'],
+      userId: 'me',
+    };
+
+    const userId = resolvedOptions.email ?? defaultOptions.userId;
+    const fetchAttachments = resolvedOptions.fetchAttachments !== false;
+
+    const { contentIndicators, messageFormat } = resolveContentPlan(
+      defaultOptions.contents,
+      resolvedOptions.contents,
+      fetchAttachments,
+    );
+
+    const content = await buildMessageContent(
+      userId,
+      resolvedMessageId,
+      contentIndicators,
+      messageFormat,
+      fetchAttachments,
+    );
+
+    return composeNextState(state, content);
+  };
+}
+
+/**
  * Execute a sequence of operations.
  * Wraps `language-common/execute`, and prepends initial state for http.
  * @private
@@ -216,14 +285,19 @@ export function execute(...operations) {
   };
 
   return state => {
+    const isServiceAccount =
+      state.configuration?.private_key && state.configuration?.client_email;
+
     return commonExecute(
       createConnection,
       ...operations,
-      removeConnection
+      removeConnection,
     )({
       ...initialState,
       ...state,
-      configuration: normalizeOauthConfig(state.configuration),
+      configuration: isServiceAccount
+        ? state.configuration
+        : normalizeOauthConfig(state.configuration),
     });
   };
 }
@@ -240,6 +314,7 @@ export {
   fn,
   fnIf,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
 } from '@openfn/language-common';

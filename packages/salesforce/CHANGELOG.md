@@ -1,5 +1,51 @@
 # @openfn/language-salesforce
 
+## 9.1.5 - 30 June 2026
+
+### Patch Changes
+
+- Updated dependencies \[c5f8728]
+  - @openfn/language-common@3.3.4
+
+## 9.1.4 - 25 June 2026
+
+### Patch Changes
+
+- Fix connection
+
+## 9.1.3 - 25 June 2026
+
+### Patch Changes
+
+- Fix connection hanging on oauth clients
+
+## 9.1.2 - 25 June 2026
+
+### Patch Changes
+
+- 94552ab: Fix an issue where salesforce connections can hang indefinitely
+- 1cf2028: Better logging of auth errors
+
+## 9.1.1 - 27 May 2026
+
+### Patch Changes
+
+- Updated dependencies \[5276a86]
+  - @openfn/language-common@3.3.3
+
+## 9.1.0 - 21 May 2026
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
+## 9.0.9 - 20 May 2026
+
+### Patch Changes
+
+- Updated dependencies \[9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 9.0.8 - 07 April 2026
 
 ### Patch Changes
@@ -122,7 +168,6 @@
 ### Major Changes
 
 - fb30b2a: - Add `bulk1` functions for bulk insert, update, upsert, and destroy
-
   - Removed `bulk()` function in favor of explicit `bulk1` and `bulk2` APIs
   - Removed `bulkQuery()` function in favor of `bulk1.query()` and
     `bulk2.query()`

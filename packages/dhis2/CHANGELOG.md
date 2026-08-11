@@ -1,5 +1,48 @@
 # @openfn/language-dhis2
 
+## 8.2.1 - 28 July 2026
+
+### Patch Changes
+
+- 8acf431: Update axios dependency
+
+## 8.2.0 - 30 June 2026
+
+### Minor Changes
+
+- 92e0b72: Add async option to `tracker.import`. Improve `tracker.export` docs
+  by adding a pagination example and linking pagination query parameters.
+
+### Patch Changes
+
+- 99b50c3: Fix: DHIS2 schema will not require username/password when using a PAT
+- Updated dependencies \[c5f8728]
+  - @openfn/language-common@3.3.4
+
+## 8.1.1 - 27 May 2026
+
+### Patch Changes
+
+- 5276a86: Update ajv dependency
+- 632d536: Update axios dependency version
+- b2ceeb7: Update `qs` library
+- Updated dependencies \[5276a86]
+  - @openfn/language-common@3.3.3
+
+## 8.1.0 - 21 May 2026
+
+### Minor Changes
+
+- 71115af: export `combine` function from common
+- bf26881: export `log` function from common
+
+## 8.0.13 - 20 May 2026
+
+### Patch Changes
+
+- Updated dependencies \[9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 8.0.12 - 07 April 2026
 
 ### Patch Changes

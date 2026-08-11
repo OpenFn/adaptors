@@ -29,7 +29,7 @@
           },
           {
             "title": "state",
-            "description": "{Array} data - The returned message objects, of the form `{ messageId, contents } `"
+            "description": "{Array} data - The returned message objects, of the form `{ messageId, ...contents } `"
           },
           {
             "title": "state",
@@ -52,6 +52,11 @@
             "title": "example",
             "description": "getContentsFromMessages(\n  {\n    query: 'after:15/01/2025',\n    contents: [\n      'subject',\n      { type: 'file', name: 'metadata', file: 'report.txt'}\n    ]\n  }\n)",
             "caption": "Get messages after a specific date, with subject and report.txt attachment"
+          },
+          {
+            "title": "example",
+            "description": "getContentsFromMessages(\n  {\n    query: 'after:2026/07/01',\n    contents: [\n      'body',\n      { type: 'file', name: 'report', file: /\\.xlsx$/ }\n    ],\n    fetchAttachments: false\n  }\n)",
+            "caption": "Get metadata without downloading requested attachments"
           }
         ]
       },
@@ -117,6 +122,67 @@
           {
             "title": "example",
             "description": "sendMessage({\n  to: 'recipient@example.org',\n  subject: 'Test Message',\n  body: 'Hello from OpenFn!',\n  attachments: [\n    { filename: 'test.txt', content: 'Some text content' }\n  ]\n})"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getMessageById",
+      "params": [
+        "messageId",
+        "options"
+      ],
+      "docs": {
+        "description": "Downloads contents from a single message of a Gmail account, identified by\nits Gmail API message id.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Gmail API message id to fetch.",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "messageId"
+          },
+          {
+            "title": "param",
+            "description": "Customized options including desired contents.",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "MessageIdOptions"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "state",
+            "description": "{Object} data - The returned message object, of the form `{ messageId, ...contents } `"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "example",
+            "description": "getMessageById(\n  $.data.messageId,\n  {\n    contents: [\n      { type: 'file', name: 'report', file: /\\.xlsx$/ }\n    ]\n  }\n)",
+            "caption": "Download attachments for a specific message identified by an earlier step"
           }
         ]
       },
@@ -739,6 +805,55 @@
         ]
       },
       "valid": false
+    },
+    {
+      "name": "log",
+      "params": [
+        "args"
+      ],
+      "docs": {
+        "description": "Outputs a message, like calling `console.log`. Use this at the top level of your job code, but not inside callbacks.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "log('Patient List::', $.patients);",
+            "caption": "Log values from state"
+          },
+          {
+            "title": "example",
+            "description": "fn((state) => {\n  console.log(state.data);\n  return state;\n})",
+            "caption": "Use console.log inside a callback or fn block"
+          },
+          {
+            "title": "param",
+            "description": "A value or message to display in the logs",
+            "type": {
+              "type": "NameExpression",
+              "name": "any"
+            },
+            "name": "args"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ]
 }

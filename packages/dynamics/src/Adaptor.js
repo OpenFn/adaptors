@@ -73,7 +73,7 @@ export function createEntity(params) {
             console.log('Create entity succeeded.');
             resolve(response);
           }
-        }
+        },
       );
     }).then(data => {
       const nextState = {
@@ -148,7 +148,7 @@ export function query(params) {
             console.log(JSON.parse(body));
             resolve(response);
           }
-        }
+        },
       );
     }).then(data => {
       const nextState = {
@@ -201,7 +201,7 @@ export function updateEntity(params) {
             console.log('Update succeeded.');
             resolve(response);
           }
-        }
+        },
       );
     }).then(data => {
       const nextState = {
@@ -252,7 +252,7 @@ export function deleteEntity(params) {
             console.log('Delete succeeded.');
             resolve(response);
           }
-        }
+        },
       );
     }).then(data => {
       const nextState = {
@@ -265,15 +265,17 @@ export function deleteEntity(params) {
 }
 
 export {
-  field,
-  fields,
-  sourceValue,
   alterState,
-  fn,
-  fnIf,
-  each,
-  merge,
+  combine,
   dataPath,
   dataValue,
+  each,
+  field,
+  fields,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
+  merge,
+  sourceValue,
 } from '@openfn/language-common';

@@ -44,6 +44,7 @@ export {
   fnIf,
   group,
   lastReferenceValue,
+  log,
   map,
   merge,
   scrubEmojis,

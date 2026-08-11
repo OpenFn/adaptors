@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-memento",
-  "version": "1.0.8",
+  "version": "1.1.2",
   "description": "OpenFn adaptor for Memento Database",
   "type": "module",
   "exports": {
@@ -33,7 +33,6 @@
   },
   "devDependencies": {
     "chai": "4.3.6",
-    "mocha": "^10.7.3",
     "rimraf": "3.0.2"
   },
   "repository": {

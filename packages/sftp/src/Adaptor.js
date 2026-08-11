@@ -30,7 +30,7 @@ export function execute(...operations) {
     commonExecute(
       connect,
       ...operations,
-      disconnect
+      disconnect,
     )({ ...initialState, ...state }).catch(e => {
       disconnect(state);
       throw e;
@@ -121,7 +121,7 @@ export function getCSV(filePath, parsingOptions = {}) {
     if (useParser) {
       const stream = sftp.createReadStream(filePath, readStreamOptions);
       return parseCsv(stream, { ...csvDefaultOptions, ...parsingOptions })(
-        state
+        state,
       );
     } else {
       return sftp
@@ -264,19 +264,20 @@ export function normalizeCSVarray(options, callback) {
 
 export * from 'lodash/fp.js';
 
-
 export {
   alterState,
-  fn,
-  fnIf,
+  chunk,
+  combine,
   dataPath,
   dataValue,
   each,
   field,
   fields,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
   merge,
-  sourceValue,
-  chunk,
   parseCsv,
+  sourceValue,
 } from '@openfn/language-common';

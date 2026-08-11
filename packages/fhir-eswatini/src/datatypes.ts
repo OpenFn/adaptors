@@ -7,6 +7,7 @@ export const {
   coding,
   composite,
   concept,
+  ensureConceptText,
   ext,
   extendSystemMap,
   extendValues,

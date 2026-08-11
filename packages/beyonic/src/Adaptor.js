@@ -103,13 +103,15 @@ export function createCollectionRequest(data) {
 }
 
 export {
-  fn,
-  fnIf,
-  field,
-  fields,
-  sourceValue,
-  merge,
+  combine,
   dataPath,
   dataValue,
+  field,
+  fields,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
+  merge,
+  sourceValue,
 } from '@openfn/language-common';

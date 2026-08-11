@@ -651,6 +651,7 @@ function callNewTracker(
 export {
   alterState,
   as,
+  combine,
   cursor,
   dataPath,
   dataValue,
@@ -662,6 +663,7 @@ export {
   fnIf,
   group,
   lastReferenceValue,
+  log,
   map,
   merge,
   sourceValue,

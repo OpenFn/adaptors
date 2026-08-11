@@ -1,5 +1,5 @@
-import gen from './gen';
+import gen from './gen.js';
 
 export default gen;
 
-export { installAndGen } from './gen';
+export { installAndGen } from './gen.js';

@@ -72,15 +72,17 @@ export function postData(params, callback = s => s) {
 }
 
 export {
-  fn,
-  fnIf,
   alterState,
+  combine,
   dataPath,
   dataValue,
   each,
   field,
   fields,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
 } from '@openfn/language-common';

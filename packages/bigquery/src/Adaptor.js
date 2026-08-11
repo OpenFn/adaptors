@@ -116,17 +116,18 @@ export function load(
 }
 
 export {
-  fn,
-  fnIf,
   alterState,
-  dataPath,
   combine,
+  dataPath,
   dataValue,
   each,
   field,
   fields,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
   merge,
-  sourceValue,
   parseCsv,
+  sourceValue,
 } from '@openfn/language-common';

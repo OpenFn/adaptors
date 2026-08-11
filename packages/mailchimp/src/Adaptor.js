@@ -28,7 +28,7 @@ export function execute(...operations) {
     return commonExecute(
       createClient,
       ...operations,
-      cleanupState
+      cleanupState,
     )({
       ...initialState,
       ...state,
@@ -339,8 +339,8 @@ const assertOK = async (response, fullUrl) => {
     try {
       mailchimpError = await response.body.json();
     } catch (e) {
-      console.warning('Error parsing mailchimp error body');
-      console.warning(e);
+      console.warn('Error parsing mailchimp error body');
+      console.warn(e);
     }
 
     if (mailchimpError) {
@@ -377,12 +377,12 @@ export function request(method, path, options, callback) {
       state,
       method,
       path,
-      options
+      options,
     );
     const { query, body } = { ...defaultOptions, ...resolvedOptions };
 
     const apiToken = Buffer.from(`openfn:${apiKey}`, 'utf-8').toString(
-      'base64'
+      'base64',
     );
 
     const headers = {
@@ -462,16 +462,18 @@ export { axios, md5 };
 
 // What functions do you want from the common adaptor?
 export {
-  fn,
-  fnIf,
   alterState,
+  chunk,
+  combine,
   dataPath,
   dataValue,
   each,
   field,
   fields,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
   merge,
-  chunk,
   sourceValue,
 } from '@openfn/language-common';

@@ -1,5 +1,38 @@
 # @openfn/language-bigquery
 
+## 4.1.3 - 28 July 2026
+
+### Patch Changes
+
+- ba0ca39: Remove unused unzipper dependency
+
+## 4.1.2 - 30 June 2026
+
+### Patch Changes
+
+- Updated dependencies \[c5f8728]
+  - @openfn/language-common@3.3.4
+
+## 4.1.1 - 27 May 2026
+
+### Patch Changes
+
+- Updated dependencies \[5276a86]
+  - @openfn/language-common@3.3.3
+
+## 4.1.0 - 21 May 2026
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
+## 4.0.15 - 20 May 2026
+
+### Patch Changes
+
+- Updated dependencies \[9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 4.0.14 - 07 April 2026
 
 ### Patch Changes

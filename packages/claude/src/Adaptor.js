@@ -47,7 +47,7 @@ export function execute(...operations) {
   return state => {
     return commonExecute(
       createClient,
-      ...operations
+      ...operations,
     )({
       ...initialState,
       ...state,
@@ -74,7 +74,7 @@ export function prompt(message, opts) {
     const [resolvedMessage, resolvedOpts] = expandReferences(
       state,
       message,
-      opts
+      opts,
     );
 
     const payload = {
@@ -90,15 +90,17 @@ export function prompt(message, opts) {
 }
 
 export {
+  combine,
+  cursor,
   dataPath,
   dataValue,
   dateFns,
-  cursor,
   each,
   field,
   fields,
   fn,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
 } from '@openfn/language-common';

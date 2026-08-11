@@ -57,12 +57,22 @@ export const prepareNextState = (state, response, callback = s => s) => {
   return callback(nextState);
 };
 
+const VALID_HOSTS = new Set(['gateway', 'register', 'countryconfig']);
+
 export async function request(configuration, method, path, opts) {
   const { domain, access_token } = configuration;
 
-  const { body = {}, params = {}, parseAs = 'json' } = opts;
+  const { body = {}, params = {}, parseAs = 'json', host = 'gateway' } = opts;
 
   assertRelativeUrl(path);
+
+  if (!VALID_HOSTS.has(host)) {
+    throw new Error(
+      `Unknown OpenCRVS host '${host}'. Expected one of: ${[
+        ...VALID_HOSTS,
+      ].join(', ')}`
+    );
+  }
 
   const options = {
     body,
@@ -72,7 +82,7 @@ export async function request(configuration, method, path, opts) {
     },
     query: params,
     parseAs,
-    baseUrl: `https://gateway.${domain}`,
+    baseUrl: `https://${host}.${domain}`,
   };
 
   return commonRequest(method, path, options).then(logResponse);

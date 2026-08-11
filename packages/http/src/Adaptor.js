@@ -209,6 +209,7 @@ export {
   group,
   humanProper,
   lastReferenceValue,
+  log,
   map,
   merge,
   parseCsv,

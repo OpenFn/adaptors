@@ -352,6 +352,7 @@ export function searchReadRecord(
 }
 
 export {
+  combine,
   dataPath,
   dataValue,
   dateFns,
@@ -360,6 +361,7 @@ export {
   fields,
   fn,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
 } from '@openfn/language-common';

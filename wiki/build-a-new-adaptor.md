@@ -31,7 +31,9 @@ pnpm generate <adaptor-name>
   adhere to the size specifications mentioned in the requirements section.
 - Ensure the images have a transparent background. Navigate to
   configuration-schema.json, and change any configs that do not align with the
-  adaptor
+  adaptor. This file must be valid
+  [JSON Schema draft-07](https://json-schema.org/draft-07/json-schema-release-notes);
+  run `pnpm validate:schemas` from the repo root after editing it.
 - Go to `/src/Adaptor.js` and create the adaptor’s Operations - the functions
   used in job code. You may want to set up `POST, GET,` to fit the current
   adaptor’s requirements
@@ -84,5 +86,5 @@ The different output from you running the jobs will be temporarily stored in
 ## Next Steps
 
 Check out the
-[Best Practice](https://github.com/OpenFn/adaptors/wiki/Adaptor-Writing-Best-Practice-&-Common-Patterns)
+[Best Practice](https://github.com/OpenFn/adaptors/blob/main/wiki/best-practice.md)
 page for more guidelines about how to go about creating the ultimate adaptor

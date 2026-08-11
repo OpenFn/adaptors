@@ -47,6 +47,7 @@ import * as util from './util.js';
  * @param {string} strategy - The effect the import should have. Can either be CREATE, UPDATE, CREATE_AND_UPDATE and DELETE.
  * @param {object} payload - The data to be imported.
  * @param {TrackerOptions} [options] - An optional object containing parseAs, and apiVersion, and queries for the request
+ * @param {boolean} [options.async=false] - Whether to perform the import asynchronously. Defaults to false. See [Sync and async imports](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html#sync-and-async)
  * @state {DHIS2State}
  * @returns {Operation}
  */
@@ -57,7 +58,7 @@ function _import(strategy, payload, options = {}) {
     const [resolvedStrategy, resolvedPayload, resolvedOptions] =
       expandReferences(state, strategy, payload, options);
 
-    const { apiVersion, parseAs, ...query } = resolvedOptions;
+    const { apiVersion, parseAs, async = false, ...query } = resolvedOptions;
 
     const response = await util.request(state.configuration, {
       method: 'POST',
@@ -67,14 +68,14 @@ function _import(strategy, payload, options = {}) {
           ...resolvedOptions,
           resolvedStrategy,
         },
-        'tracker'
+        'tracker',
       ),
       options: {
         apiVersion,
         parseAs,
         query: {
           ...query,
-          async: false,
+          async,
         },
       },
       data: resolvedPayload,
@@ -95,15 +96,17 @@ export { _import as import };
  * @example <caption>Export all enrollment resources</caption>
  * tracker.export('enrollments', {orgUnit: 'TSyzvBiovKh'});
  * @example <caption>Export all events</caption>
- * tracker.export('events')
+ * tracker.export('events', { paging: false})
+ * @example <caption>Export the first page of events with pagination metadata</caption>
+ * tracker.export('events', { totalPages: true, pageSize: 1000, page: 1 })
  * @function
  * @param {string} path - Path to the resource, relative to the /tracker endpoint
- * @param {object} query - An object of query parameters to be encoded into the URL
+ * @param {object} query - An object of query parameters to be encoded into the URL. Can include [pagination parameters](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/tracker.html#request-parameters-for-pagination), filters, etc.
  * @param {TrackerOptions} [options] - An optional object containing parseAs, and apiVersion for the request
  * @state {DHIS2State}
  * @returns {Operation}
  */
-function _export(path, query, options = {}) {
+function _export(path, query = {}, options = {}) {
   return async state => {
     console.log('Preparing tracker export operation...');
 
@@ -111,7 +114,7 @@ function _export(path, query, options = {}) {
       state,
       path,
       query,
-      options
+      options,
     );
 
     const response = await util.request(state.configuration, {
@@ -119,13 +122,12 @@ function _export(path, query, options = {}) {
       path: util.prefixVersionToPath(
         state.configuration,
         resolvedOptions,
-        `tracker/${resolvedPath}`
+        `tracker/${resolvedPath}`,
       ),
       options: {
         ...resolvedOptions,
         query: {
           ...resolvedQuery,
-          async: false,
         },
       },
     });

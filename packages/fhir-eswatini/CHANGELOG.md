@@ -1,5 +1,33 @@
 # @openfn/language-fhir-eswatini
 
+## 0.8.0 - 30 June 2026
+
+### Minor Changes
+
+- 605a816: Add support for Patient.\_birthDate and Patient.\_birthTime
+
+### Patch Changes
+
+- Updated dependencies \[c5f8728]
+  - @openfn/language-common@3.3.4
+  - @openfn/language-fhir-4@0.5.5
+
+## 0.7.8 - 27 May 2026
+
+### Patch Changes
+
+- Updated dependencies \[5276a86]
+  - @openfn/language-common@3.3.3
+  - @openfn/language-fhir-4@0.5.4
+
+## 0.7.7 - 20 May 2026
+
+### Patch Changes
+
+- Updated dependencies \[9d1e1ae]
+  - @openfn/language-common@3.3.2
+  - @openfn/language-fhir-4@0.5.3
+
 ## 0.7.6 - 17 April 2026
 
 ### Patch Changes
@@ -38,13 +66,13 @@
 - Updated dependencies \[d179474]
   - @openfn/language-fhir-4@0.4.2
 
-## 0.7.2
+## 0.7.2 - 26 March 2026
 
 ### Patch Changes
 
 - cb80145: Update profile definitions from IG (includes updated profile URLs)
 
-## 0.7.1
+## 0.7.1 - 25 March 2026
 
 ### Patch Changes
 
@@ -52,7 +80,7 @@
 - Updated dependencies \[c5e2b2b]
   - @openfn/language-fhir-4@0.4.1
 
-## 0.7.0
+## 0.7.0 - 23 March 2026
 
 ### Minor Changes
 
@@ -94,7 +122,7 @@
 - Updated dependencies \[317e3c7]
   - @openfn/language-fhir-4@0.3.2
 
-## 0.5.0
+## 0.5.0 - 09 March 2026
 
 ### Minor Changes
 

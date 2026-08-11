@@ -1,5 +1,34 @@
 # @openfn/language-fhir
 
+## 5.1.2 - 30 June 2026
+
+### Patch Changes
+
+- c5f8728: Update undici dependency
+- Updated dependencies \[c5f8728]
+  - @openfn/language-common@3.3.4
+
+## 5.1.1 - 27 May 2026
+
+### Patch Changes
+
+- Updated dependencies \[5276a86]
+  - @openfn/language-common@3.3.3
+
+## 5.1.0 - 21 May 2026
+
+### Minor Changes
+
+- 71115af: export `combine` function from common
+- bf26881: export `log` function from common
+
+## 5.0.18 - 20 May 2026
+
+### Patch Changes
+
+- Updated dependencies \[9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 5.0.17 - 07 April 2026
 
 ### Patch Changes

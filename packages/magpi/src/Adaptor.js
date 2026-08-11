@@ -100,18 +100,18 @@ export function fetchSurveyData(params) {
               }
 
               console.log(
-                `Converted ${submissions.length} submission(s) to JSON:`
+                `Converted ${submissions.length} submission(s) to JSON:`,
               );
               // console.log(submissions);
               resolve(submissions);
             } else {
               console.log(
-                'There is no survey data matching the current parameters.'
+                'There is no survey data matching the current parameters.',
               );
               resolve([]);
             }
           }
-        }
+        },
       );
     })
       .then(submissions => {
@@ -132,7 +132,7 @@ export function fetchSurveyData(params) {
               } else {
                 console.log('POST succeeded.');
               }
-            }
+            },
           );
         });
         return submissions;
@@ -142,7 +142,7 @@ export function fetchSurveyData(params) {
           // TODO: if Magpi API does not return in date order, find oldest...
           state.lastSubmissionDate = submissions[0].LastSubmissionDate;
           console.log(
-            `Set \"lastSubmissionDate\" for next run to: ${submissions[0].LastSubmissionDate}`
+            `Set \"lastSubmissionDate\" for next run to: ${submissions[0].LastSubmissionDate}`,
           );
         }
         // Set the lastSubmissionDate for the next time the job runs.
@@ -183,15 +183,17 @@ export function submitRecord(jsonData) {
 }
 
 export {
-  fn,
-  fnIf,
   alterState,
-  field,
-  fields,
-  sourceValue,
-  each,
-  merge,
+  combine,
   dataPath,
   dataValue,
+  each,
+  field,
+  fields,
+  fn,
+  fnIf,
   lastReferenceValue,
+  log,
+  merge,
+  sourceValue,
 } from '@openfn/language-common';

@@ -1,5 +1,106 @@
 # @openfn/language-gmail
 
+## 3.2.0 - 03 August 2026
+
+### Minor Changes
+
+- 7dd37fc: Add support for Google Service Account credential
+
+## 3.1.0 - 29 July 2026
+
+### Minor Changes
+
+- 59969c6: - Added a `fetchAttachments` option (default `true`) to
+  `getContentsFromMessages` and `getMessageById`.
+- fb55142: Added a `getMessageById` function to fetch a single message by its
+  Gmail API message id.
+
+## 3.0.0 - 08 July 2026
+
+### Major Changes
+
+- 327635a: - Automatically parse xlsx, json, xml and plaintext attachments
+  - Encode unknown or binary attachments to a base4 string
+
+## Migration Guide
+
+Some attachments are now auto-parsed into Javascript-friendly formats. Workflows
+which had previously done this work manually will need to make a change.
+
+For example, workflows loading JSON attachments in <3.0 might have loaded them
+like this:
+
+```
+const contents = [
+  'body',
+  {
+    type: 'file',
+    name: 'attachment',
+    file: /data.json/,
+  },
+];
+
+getContentsFromMessages({ query: $.query, contents });
+```
+
+And then manually parsed the file into JSON:
+
+```
+each($.data, (state) => {
+  state.attachment.content = JSON.parse(state.attachment.content)
+  return state;
+})
+```
+
+In version 3.0, you do not need to do this and should update your workflow code
+accordingly.
+
+Migration might be made easier by forcing the adaptor to parse to plain text
+format, regardless of the file type. In which case, set the `parseAs` flag on
+the content expression and the adaptor will behave just as it did before:
+
+```
+const contents = [
+  'body',
+  {
+    type: 'file',
+    name: 'attachment',
+    file: /data.json/,
+    parseAs: 'text'
+  },
+];
+
+getContentsFromMessages({ query: $.query, contents });
+```
+
+## 2.1.2 - 30 June 2026
+
+### Patch Changes
+
+- c5f8728: Update undici dependency
+- Updated dependencies \[c5f8728]
+  - @openfn/language-common@3.3.4
+
+## 2.1.1 - 27 May 2026
+
+### Patch Changes
+
+- Updated dependencies \[5276a86]
+  - @openfn/language-common@3.3.3
+
+## 2.1.0 - 21 May 2026
+
+### Minor Changes
+
+- bf26881: export `log` function from common
+
+## 2.0.15 - 20 May 2026
+
+### Patch Changes
+
+- Updated dependencies \[9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 2.0.14 - 17 April 2026
 
 ### Patch Changes
@@ -235,7 +336,6 @@
 - 01b4aa9: This patch includes breaking changes to the API - but since the
   adpator has only been released a couple of days we don't anticipate this
   affecting any users.
-
   - Removed the `userId` parameter from `getContentsFromMessages()`. Pass
     `options.email` instead.
   - Renamed `options.desiredContents` to `options.contents`

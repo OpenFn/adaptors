@@ -212,6 +212,7 @@ export {
   fn,
   fnIf,
   lastReferenceValue,
+  log,
   map,
   merge,
   sourceValue,

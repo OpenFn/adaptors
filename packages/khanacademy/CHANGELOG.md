@@ -1,5 +1,35 @@
 # @openfn/language-khanacademy
 
+## 0.6.2 - 30 June 2026
+
+### Patch Changes
+
+- Updated dependencies \[c5f8728]
+  - @openfn/language-common@3.3.4
+
+## 0.6.1 - 27 May 2026
+
+### Patch Changes
+
+- 5276a86: Update ajv dependency
+- b2ceeb7: Update `qs` library
+- Updated dependencies \[5276a86]
+  - @openfn/language-common@3.3.3
+
+## 0.6.0 - 21 May 2026
+
+### Minor Changes
+
+- 71115af: export `combine` function from common
+- bf26881: export `log` function from common
+
+## 0.5.31 - 20 May 2026
+
+### Patch Changes
+
+- Updated dependencies \[9d1e1ae]
+  - @openfn/language-common@3.3.2
+
 ## 0.5.30 - 07 April 2026
 
 ### Patch Changes

@@ -1,3 +1,4 @@
+import AdmZip from 'adm-zip';
 import { execute as commonExecute } from '@openfn/language-common';
 import {
   expandReferences,
@@ -34,6 +35,9 @@ export function execute(...operations) {
   const cleanup = finalState => {
     if (finalState?.buffer) {
       delete finalState.buffer;
+    }
+    if (finalState?.zip) {
+      delete finalState.zip;
     }
     if (finalState?.drives) {
       delete finalState.drives;
@@ -72,12 +76,12 @@ export function create(resource, data, callback) {
     const [resolvedResource, resolvedData] = expandReferences(
       state,
       resource,
-      data
+      data,
     );
 
     const { accessToken, apiVersion } = state.configuration;
 
-    const url = setUrl({ apiVersion, resolvedResource });
+    const url = setUrl(resolvedResource, apiVersion);
 
     const options = {
       accessToken,
@@ -86,7 +90,7 @@ export function create(resource, data, callback) {
     };
 
     return request(url, options).then(response =>
-      handleResponse(response, state, callback)
+      handleResponse(response, state, callback),
     );
   };
 }
@@ -110,7 +114,7 @@ export function get(path, query, callback = false) {
     const url = setUrl(resolvedPath, apiVersion);
 
     return request(url, { query: resolvedQuery, accessToken }).then(response =>
-      handleResponse(response, state, callback)
+      handleResponse(response, state, callback),
     );
   };
 }
@@ -138,7 +142,7 @@ export function getDrive(specifier, name = 'default', callback = s => s) {
     const [resolvedSpecifier, resolvedName] = expandReferences(
       state,
       specifier,
-      name
+      name,
     );
 
     const { id, owner = 'drive' } = resolvedSpecifier;
@@ -182,7 +186,7 @@ export function getFolder(pathOrId, options, callback = s => s) {
     const [resolvedPathOrId, resolvedOptions] = expandReferences(
       state,
       pathOrId,
-      options
+      options,
     );
 
     const { driveName, metadata } = { ...defaultOptions, ...resolvedOptions };
@@ -195,7 +199,7 @@ export function getFolder(pathOrId, options, callback = s => s) {
 
     if (resolvedPathOrId.startsWith('/')) {
       resource = `drives/${driveId}/root:/${encodeURIComponent(
-        resolvedPathOrId
+        resolvedPathOrId,
       )}`;
     } else {
       resource = `drives/${driveId}/items/${resolvedPathOrId}`;
@@ -208,7 +212,7 @@ export function getFolder(pathOrId, options, callback = s => s) {
     const url = setUrl(resource, apiVersion);
 
     return request(url, { accessToken }).then(response =>
-      handleResponse(response, state, callback)
+      handleResponse(response, state, callback),
     );
   };
 }
@@ -237,7 +241,7 @@ export function getFile(pathOrId, options, callback = s => s) {
     const [resolvedPathOrId, resolvedOptions] = expandReferences(
       state,
       pathOrId,
-      options
+      options,
     );
 
     const { driveName, metadata } = {
@@ -253,7 +257,7 @@ export function getFile(pathOrId, options, callback = s => s) {
 
     if (resolvedPathOrId.startsWith('/')) {
       resource = `drives/${driveId}/root:/${encodeURIComponent(
-        resolvedPathOrId
+        resolvedPathOrId,
       )}`;
     } else {
       resource = `drives/${driveId}/items/${resolvedPathOrId}`;
@@ -323,7 +327,7 @@ export function uploadFile(resource, data, callback) {
     const [resolvedResource, resolvedData] = expandReferences(
       state,
       resource,
-      data
+      data,
     );
 
     const { contentType, driveId, siteId, folderId, onConflict, fileName } = {
@@ -371,9 +375,56 @@ export function uploadFile(resource, data, callback) {
   };
 }
 
+/**
+ * Add a set of files to a zip archive. Each file is an object of the form `{ name, content }`.
+ * `content` may be a Buffer, a string, or a JSON-serializable value. Writes the generated zip
+ * to state.zip.
+ *
+ * Note that zip binaries do not safely serialize on state: state.zip is automatically
+ * removed at the end of the run, so it must be consumed (e.g. by uploadFile) within the
+ * same run.
+ * @public
+ * @example
+ * zip([
+ *   { name: 'report.json', content: state => state.data },
+ *   { name: 'notes.txt', content: 'hello world' },
+ * ])
+ * @function
+ * @param {Object[]} files - An array of `{ name, content }` objects to add to the zip
+ * @state zip the generated zip archive, as a buffer
+ * @return {Operation}
+ */
+export function zip(files) {
+  return state => {
+    const [resolvedFiles] = expandReferences(state, files);
+
+    const archive = new AdmZip();
+
+    resolvedFiles.forEach(({ name, content }) => {
+      if (!content) {
+        throw new Error(`zip: no content provided for file "${name}"`);
+      }
+
+      let buffer;
+      if (Buffer.isBuffer(content)) {
+        buffer = content;
+      } else if (typeof content === 'string') {
+        buffer = Buffer.from(content, 'utf8');
+      } else {
+        buffer = Buffer.from(JSON.stringify(content), 'utf8');
+      }
+      archive.addFile(name, buffer);
+    });
+
+    return { ...state, zip: archive.toBuffer() };
+  };
+}
+
 export { request, sheetToBuffer } from './Utils.js';
 
 export {
+  as,
+  combine,
   cursor,
   dataPath,
   dataValue,
@@ -384,8 +435,8 @@ export {
   fn,
   fnIf,
   lastReferenceValue,
+  log,
   merge,
-  sourceValue,
   parseCsv,
-  as
+  sourceValue,
 } from '@openfn/language-common';

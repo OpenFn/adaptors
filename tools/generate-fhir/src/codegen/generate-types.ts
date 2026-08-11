@@ -53,6 +53,30 @@ export const generateType = (
       continue;
     }
 
+    // Primitive extension props (_birthDate etc) are typed as `any` --
+    // their content depends on which extensions are present
+    if ((s as any).isPrimitiveExtension) {
+      // emit the container prop, eg _birthDate
+      props.push(
+        b.tsPropertySignature(
+          b.identifier(key),
+          b.tsTypeAnnotation(b.tsAnyKeyword()),
+          true,
+        ),
+      );
+      // emit shorthand child props, eg _birthTime
+      for (const childKey of Object.keys((s as any).typeDef || {})) {
+        props.push(
+          b.tsPropertySignature(
+            b.identifier(`_${childKey}`),
+            b.tsTypeAnnotation(b.tsAnyKeyword()),
+            true,
+          ),
+        );
+      }
+      continue;
+    }
+
     // TODO need to handle this stuff!
     // let type;
     // if (s.typeDef) {

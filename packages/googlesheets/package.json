@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-googlesheets",
   "label": "Google Sheets",
-  "version": "4.0.12",
+  "version": "5.1.0",
   "description": "A Google Sheets Language Pack for OpenFn",
   "homepage": "https://docs.openfn.org",
   "repository": {
@@ -40,8 +40,10 @@
     "assertion-error": "1.1.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
+    "mocha": "^10.7.3",
     "nock": "13.2.9",
-    "rimraf": "3.0.2"
+    "rimraf": "3.0.2",
+    "sinon": "^21.1.2"
   },
   "type": "module",
   "types": "types/index.d.ts",

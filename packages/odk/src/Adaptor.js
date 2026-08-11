@@ -50,7 +50,7 @@ export function getSubmissions(projectId, xmlFormId, query = {}) {
       'GET',
       path,
       null,
-      { query: resolvedQuery }
+      { query: resolvedQuery },
     );
 
     responseWithoutBody['@odata.context'] = body['@odata.context'];
@@ -60,7 +60,7 @@ export function getSubmissions(projectId, xmlFormId, query = {}) {
         ...state,
         response: responseWithoutBody,
       },
-      body.value
+      body.value,
     );
   };
 }
@@ -146,7 +146,7 @@ export function request(method, path, body, options = {}) {
       resolvedMethod,
       resolvedPath,
       resolvedBody,
-      resolvedOptions
+      resolvedOptions,
     );
 
     return util.prepareNextState(state, response);
@@ -168,16 +168,18 @@ export function execute(...operations) {
 }
 
 export {
+  combine,
+  cursor,
   dataPath,
   dataValue,
   dateFns,
-  cursor,
   each,
   field,
   fields,
   fn,
   fnIf,
   lastReferenceValue,
+  log,
   merge,
   sourceValue,
 } from '@openfn/language-common';

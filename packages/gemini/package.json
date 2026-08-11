@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-gemini",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "description": "OpenFn gemini adaptor",
   "type": "module",
   "exports": {
@@ -27,14 +27,13 @@
     "configuration-schema.json"
   ],
   "dependencies": {
-    "@google/genai": "^1.37.0",
+    "@google/genai": "^1.52.0",
     "@openfn/language-common": "workspace:*"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
-    "mocha": "^10.7.3",
     "rimraf": "3.0.2"
   },
   "repository": {

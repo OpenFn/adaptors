@@ -269,6 +269,7 @@ export function insert(table, records, options = {}) {
 export {
   alterState,
   arrayToString,
+  as,
   combine,
   cursor,
   dataPath,
@@ -281,10 +282,10 @@ export {
   fnIf,
   group,
   lastReferenceValue,
+  log,
   map,
   merge,
   sourceValue,
-  as,
 } from '@openfn/language-common';
 
 export { util };
