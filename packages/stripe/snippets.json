@@ -1,0 +1,90 @@
+{
+  "CREATE": {
+    "Cancel Subscription": {
+      "description": "Cancels a subscription.",
+      "code": ""
+    },
+    "Confirm Payment": {
+      "description": "Confirms an existing payment, also known as a PaymentIntent.",
+      "code": ""
+    },
+    "Create Checkout Session": {
+      "description": "Creates a new Checkout Session.",
+      "code": ""
+    },
+    "Create Customer": {
+      "description": "Creates a new customer.",
+      "code": ""
+    },
+    "Create Invoice": {
+      "description": "Creates a new invoice.",
+      "code": ""
+    },
+    "Create Payment": {
+      "description": "Creates a new payment, also known as a PaymentIntent.",
+      "code": ""
+    },
+    "Create Payment Link": {
+      "description": "Creates a payment link.",
+      "code": ""
+    },
+    "Create Price": {
+      "description": "Creates a price.",
+      "code": ""
+    },
+    "Create Product": {
+      "description": "Creates a new product.",
+      "code": ""
+    },
+    "Create Subscription": {
+      "description": "Creates a new subscription.",
+      "code": ""
+    },
+    "Deactivate Payment Link": {
+      "description": "Deactivates a payment link.",
+      "code": ""
+    },
+    "Update Customer": {
+      "description": "Updates an existing customer.",
+      "code": ""
+    },
+    "API Request (Beta)": {
+      "description": "This is an advanced action which makes a raw HTTP request that includes this integration's authentication.",
+      "code": ""
+    }
+  },
+  "SEARCH": {
+    "Find Account Balance": {
+      "description": "Finds the account balance for your stripe account",
+      "code": "// Retrieve the current balance for the connected Stripe account.\nget('balance', '');"
+    },
+    "Find Account by ID": {
+      "description": "Finds a Stripe account by its ID.",
+      "code": "// Retrieve a connected account by its acct_* ID.\nget('accounts', $.data.accountId);"
+    },
+    "Find Balance Transactions": {
+      "description": "Finds transactions that have contributed to the Stripe account balance, such as charges, transfers, and more.",
+      "code": "// List recent balance transactions.\nlist('balance_transactions', {\n  // Page size (max 100).\n  limit: 25,\n});"
+    },
+    "Find Charge": {
+      "description": "Finds an existing charge by its Stripe ID.",
+      "code": "// Fetch a single charge by its ch_* ID.\nget('charges', $.data.chargeId);"
+    },
+    "Find Customer": {
+      "description": "Finds an existing customer by their Stripe ID or email address.",
+      "code": "// Look up by customer ID.\nget('customers', $.data.customerId);\n\n// Or — find by email by listing with a filter.\n// list('customers', { email: $.data.email, limit: 1 });"
+    },
+    "Find Invoice": {
+      "description": "Finds an existing invoice by its Stripe ID.",
+      "code": "// Fetch a single invoice by its in_* ID.\nget('invoices', $.data.invoiceId);"
+    },
+    "Find Payment": {
+      "description": "Finds an existing payment intent by its Stripe ID.",
+      "code": "// Fetch a single payment intent by its pi_* ID.\nget('payment_intents', $.data.paymentIntentId);"
+    },
+    "Find Subscription": {
+      "description": "Finds an existing subscription.",
+      "code": "// Look up by subscription ID.\nget('subscriptions', $.data.subscriptionId);\n\n// Or — list every subscription for a given customer.\n// list('subscriptions', { customer: $.data.customerId, status: 'active' });"
+    }
+  }
+}

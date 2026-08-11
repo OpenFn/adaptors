@@ -1,0 +1,82 @@
+{
+  "CREATE": {
+    "Add Note to Subscriber": {
+      "description": "Adds a new note to an existing subscriber.",
+      "code": ""
+    },
+    "Add/Update Subscriber": {
+      "description": "Add a new subscriber or update an existing one.",
+      "code": "// Add or update one or more subscribers on a list.\nupsertMembers({\n  // The Mailchimp audience (list) id.\n  listId: $.configuration.listId,\n  // Array of users to upsert.\n  users: [\n    {\n      email: $.data.email,\n      status: 'subscribed',\n      mergeFields: { FNAME: $.data.firstName, LNAME: $.data.lastName },\n    },\n  ],\n});"
+    },
+    "Archive Subscriber": {
+      "description": "Archives an existing subscriber.",
+      "code": "// Archive a single subscriber by email.\narchiveMember({\n  listId: $.configuration.listId,\n  email:  $.data.email,\n});"
+    },
+    "Create Audience": {
+      "description": "Creates a new audience in your MailChimp account.",
+      "code": ""
+    },
+    "Create Campaign": {
+      "description": "Creates a campaign draft.",
+      "code": ""
+    },
+    "Create Custom Event": {
+      "description": "Creates a custom event for an existing subscriber.",
+      "code": ""
+    },
+    "Create Tag": {
+      "description": "Creates a new tag.",
+      "code": ""
+    },
+    "Permanently Delete Member": {
+      "description": "Deletes all personally identifiable information related to a member.",
+      "code": "// Permanently delete a member (cannot be undone; member can't be re-subscribed).\ndeleteMember({\n  listId: $.configuration.listId,\n  email:  $.data.email,\n});"
+    },
+    "Remove Subscriber from Tag": {
+      "description": "Removes a subscriber from a tag within an audience.",
+      "code": "// Remove a tag from a subscriber by marking the tag as inactive.\nupdateMemberTags({\n  listId: $.configuration.listId,\n  email:  $.data.email,\n  tags: [\n    { name: $.data.tagName, status: 'inactive' },\n  ],\n});"
+    },
+    "Unsubscribe or Delete Contact": {
+      "description": "Unsubscribe or delete a contact by email address.",
+      "code": "// Unsubscribe a member (set status to 'unsubscribed').\nupdateMember({\n  listId: $.configuration.listId,\n  email:  $.data.email,\n  status: 'unsubscribed',\n});"
+    },
+    "API Request (Beta)": {
+      "description": "Raw HTTP request with authentication.",
+      "code": "// Make an arbitrary request to the Mailchimp API.\n// Path is relative to https://{dc}.api.mailchimp.com/3.0\nrequest('GET', '/ping');"
+    }
+  },
+  "SEARCH": {
+    "Campaign Report": {
+      "description": "Get report details for a specific sent campaign.",
+      "code": "// Fetch the summary report for a campaign.\nget(`/reports/${$.data.campaignId}`);"
+    },
+    "Click Report": {
+      "description": "Get report details for specific link clicks.",
+      "code": "// Fetch click-detail report for a campaign.\nget(`/reports/${$.data.campaignId}/click-details`);"
+    },
+    "Find a Campaign": {
+      "description": "Finds an existing campaign.",
+      "code": "// Fetch a single campaign by id.\nget(`/campaigns/${$.data.campaignId}`);"
+    },
+    "Find a Subscriber": {
+      "description": "Searches for a subscriber on your MailChimp audience.",
+      "code": "// Search every audience for a subscriber matching this email.\nget('/search-members', { query: $.data.email });"
+    },
+    "Find Customer": {
+      "description": "Finds a customer by email address.",
+      "code": "// Fetch an e-commerce customer by id on a store.\nget(`/ecommerce/stores/${$.data.storeId}/customers/${$.data.customerId}`);"
+    },
+    "Find or Create Campaign": {
+      "description": "Finds an existing campaign.",
+      "code": ""
+    },
+    "Find or Create Subscriber": {
+      "description": "Searches for a subscriber on your MailChimp audience.",
+      "code": ""
+    },
+    "Find Tag": {
+      "description": "Find a tag.",
+      "code": "// Look up segments (tags) for a list.\nget(`/lists/${$.configuration.listId}/segments`, {\n  type: 'static',\n});"
+    }
+  }
+}

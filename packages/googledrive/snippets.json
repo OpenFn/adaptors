@@ -1,0 +1,86 @@
+{
+  "CREATE": {
+    "Copy File": {
+      "description": "Create a copy of the specified file.",
+      "code": ""
+    },
+    "Copy File from Another Service": {
+      "description": "Copies an existing file from another service to Google Drive.",
+      "code": ""
+    },
+    "Create File From Text": {
+      "description": "Create a new file from plain text.",
+      "code": "// Create a new file from a string of text.\ncreate(\n  // 1) File body (text or binary buffer).\n  `Report generated on ${new Date().toISOString()}\\n\\n${$.data.body}`,\n  // 2) File name (extension determines the default mime type).\n  'report.txt'\n);"
+    },
+    "Create Folder": {
+      "description": "Create a new, empty folder.",
+      "code": "// Create an empty folder.\n// Pass `null` for content and the folder mime type via options.\ncreate(null, 'My new folder', {\n  mimeType: 'application/vnd.google-apps.folder',\n});"
+    },
+    "Create Shared Drive": {
+      "description": "Create a new shared drive (Team Drive) in Google Drive.",
+      "code": ""
+    },
+    "Create Shortcut": {
+      "description": "Create a shortcut to a file.",
+      "code": ""
+    },
+    "Delete File": {
+      "description": "Delete a file in Google Drive (requires file ID).",
+      "code": ""
+    },
+    "Export File": {
+      "description": "Export Google Workspace files to different formats (PDF, Word, Excel, etc.).",
+      "code": ""
+    },
+    "Move File": {
+      "description": "Move a file from one folder to another.",
+      "code": ""
+    },
+    "Permanently Delete File": {
+      "description": "Permanently delete a file from Google Drive. Cannot be undone.",
+      "code": ""
+    },
+    "Remove File Access": {
+      "description": "Remove specific user access to a file.",
+      "code": ""
+    },
+    "Upload File": {
+      "description": "Uploads a file to the given path.",
+      "code": "// Upload a file's contents to Drive.\n// `content` can be a string or a Buffer; the file name carries the extension.\ncreate(\n  $.data.fileContent,\n  $.data.fileName,\n  {\n    // Optional parent folder id.\n    parents: [$.configuration.parentFolderId],\n    // Optional mime type override.\n    mimeType: 'text/csv',\n  }\n);"
+    },
+    "API Request (Beta)": {
+      "description": "Raw HTTP request with authentication.",
+      "code": ""
+    }
+  },
+  "SEARCH": {
+    "Find a File": {
+      "description": "Search for a specific file by name.",
+      "code": "// Search for files by name. `list` returns matching items on state.data.\nlist(\n  // 1) Folder id to scope the search to (or null to search the whole Drive).\n  $.configuration.parentFolderId,\n  // 2) Drive list query options.\n  {\n    // Drive query syntax: https://developers.google.com/drive/api/guides/search-files\n    q: `name = '${$.data.fileName}' and trashed = false`,\n    fields: 'files(id,name,mimeType,modifiedTime)',\n  }\n);"
+    },
+    "Find a Folder": {
+      "description": "Search for a specific folder by name.",
+      "code": "// Search for folders by name.\nlist(null, {\n  q: `mimeType = 'application/vnd.google-apps.folder' and name = '${$.data.folderName}' and trashed = false`,\n  fields: 'files(id,name)',\n});"
+    },
+    "Find or Create File": {
+      "description": "Finds or creates a specific file.",
+      "code": ""
+    },
+    "Find or Create Folder": {
+      "description": "Finds or creates a specific folder.",
+      "code": ""
+    },
+    "List File Permissions": {
+      "description": "List all users who have access to a file.",
+      "code": ""
+    },
+    "Retrieve File or Folder by ID": {
+      "description": "Get a file or folder by its ID.",
+      "code": "// Retrieve metadata for a file or folder by its id.\nget($.data.fileId);"
+    },
+    "Retrieve Files": {
+      "description": "GET request to the Google Drive API to retrieve a list of files.",
+      "code": "// List files inside a folder.\nlist(\n  $.configuration.parentFolderId,\n  {\n    fields: 'files(id,name,mimeType,modifiedTime)',\n    pageSize: 100,\n  }\n);"
+    }
+  }
+}
