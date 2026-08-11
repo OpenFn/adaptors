@@ -3,7 +3,7 @@ import * as util from './Utils.js';
 
 /**
  * State object
- * @typedef {Object} CommCareHttpState
+ * @typedef {Object} CommCareState
  * @property data - The response body (as JSON)
  * @property response - The HTTP response from the CommCare server (excluding the body)
  * @property references - An array of all previous data objects used in the Job
@@ -26,7 +26,7 @@ import * as util from './Utils.js';
  * @param {object} data - Object or JSON to create a resource
  * @param {Object} [params] - Optional request params
  * @returns {Operation}
- * @state {CommCareHttpState}
+ * @state {CommCareState}
  */
 export function post(path, data, params = {}) {
   return request('POST', path, data, params);
@@ -41,7 +41,7 @@ export function post(path, data, params = {}) {
  * @param {string} path - Path to resource. Relative paths are prefixed with `/a/<domain>/api/`; paths starting with `/` are used as-is.
  * @param {Object} [params] - Optional request params
  * @returns {Operation}
- * @state {CommCareHttpState}
+ * @state {CommCareState}
  */
 export function get(path, params = {}) {
   return request('GET', path, null, params);
@@ -58,7 +58,7 @@ export function get(path, params = {}) {
  * @param {object} body - Object which will be attached to the body
  * @param {object} params - An object of query parameters to be encoded into the URL
  * @returns {Operation}
- * @state {CommCareHttpState}
+ * @state {CommCareState}
  */
 export function request(method, path, body, params = {}) {
   return async state => {
