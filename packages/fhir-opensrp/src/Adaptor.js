@@ -89,8 +89,7 @@ export function read(path, options = {}) {
     let nextState = state;
     let result = [];
 
-    // Automatically paginate unless the user manually set _getpagesoffset
-    let allowPagination = !resolvedOptions?.query?._getpagesoffset;
+    let allowPagination = isNaN(resolvedOptions?.query?._getpagesoffset);
 
     try {
       let requestOptions = {
