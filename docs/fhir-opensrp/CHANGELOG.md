@@ -1,7 +1,26 @@
 # @openfn/language-fhir-opensrp
 
-## 1.0.0 - 11 August 2026
+## 1.1.0 - 12 August 2026
 
-Implemented the `fhir-opensrp` adaptor with `create()`, `read()`, `delete()`, `update()` and `request()` methods.
+### Minor Changes
+
+- 5fdaff6: `read()` now auto-paginates FHIR Bundle responses, returning all
+  resources as a flat array in `state.data`.
+
+  ```js
+  // Auto-paginate — fetches all pages, 50 resources per request
+  read('Patient', { query: { _count: 50 } });
+
+  // Set _getpagesoffset to fetch resources page without auto-pagination
+  read('Patient', { query: { _getpagesoffset: 100, _count: 50 } });
+
+  // Non-Bundle responses (e.g. metadata) are returned as-is in state.data
+  read('metadata');
+  ```
+
+## 1.0.0
+
+Implemented the `fhir-opensrp` adaptor with `create()`, `read()`, `delete()`,
+`update()` and `request()` methods.
 
 Exported `fhir-4` builder helper functions for the fhir resources

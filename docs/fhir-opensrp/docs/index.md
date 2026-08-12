@@ -157,12 +157,14 @@ delete('Patient/97597');
 <p><code>read(path, options) ⇒ Operation</code></p>
 
 Read a resource
+The response body will be returned to `state.data` as JSON.
+Paginated responses will be fully downloaded and returned as a single array, _unless_ a `getpagesoffset` is passed.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource |
-| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |
+| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options. Set `query._getpagesoffset` to fetch a specific page without auto-pagination. |
 
 This operation writes the following keys to state:
 
@@ -176,13 +178,22 @@ This operation writes the following keys to state:
 ```js
 read('metadata');
 ```
-**Example:** Search for recently updated Patients
+**Example:** Search for recently updated Patients — auto-paginates through all pages
 ```js
 read('Patient', {
   query: {
     '_lastUpdated': 'gt2026-07-01T00:00:00Z',
     '_sort': '_lastUpdated',
-    '_count': 200
+    '_count': 50,
+  }
+});
+```
+**Example:** Fetch a specific page — auto-pagination disabled when _getpagesoffset is set
+```js
+read('Patient', {
+  query: {
+    '_getpagesoffset': 100,
+    '_count': 50,
   }
 });
 ```
