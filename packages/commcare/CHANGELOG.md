@@ -1,5 +1,12 @@
 # @openfn/language-commcare
 
+## 4.2.0 - 11 August 2026
+
+### Minor Changes
+
+- 20fa4ec: Add `http` namespace with `http.get()`, `http.post()`, and
+  `http.request()` for direct access to the CommCare REST API.
+
 ## 4.1.2 - 30 June 2026
 
 ### Patch Changes
