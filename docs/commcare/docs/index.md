@@ -368,7 +368,7 @@ Make a GET request to CommCare. Use this to retrieve resources directly from the
 
 | Param | Type | Description |
 | --- | --- | --- |
-| path | <code>string</code> | Path to resource. Relative paths are prefixed with `/a/<domain>/api/`; paths starting with `/` are used as-is. |
+| path | <code>string</code> | Path to resource. Relative paths are prefixed with `/a/[domain]/api/`; paths starting with `/` are used as-is. |
 | [params] | <code>Object</code> | Optional request params |
 
 This operation writes the following keys to state:
@@ -379,7 +379,7 @@ This operation writes the following keys to state:
 | response | The HTTP response from the CommCare server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
 
-**Example:** Get cases using the v1 API (prefixed with /a/<domain>/api/)
+**Example:** Get cases using the v1 API (prefixed with /a/[domain]/api/)
 ```js
 http.get('case/v1');
 ```
@@ -397,7 +397,7 @@ You can pass CommCare body data as a JSON object.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| path | <code>string</code> | Path to resource. Relative paths are prefixed with `/a/<domain>/api/`; paths starting with `/` are used as-is. |
+| path | <code>string</code> | Path to resource. Relative paths are prefixed with `/a/[domain]/api/`; paths starting with `/` are used as-is. |
 | data | <code>object</code> | Object or JSON to create a resource |
 | [params] | <code>Object</code> | Optional request params |
 
@@ -409,7 +409,7 @@ This operation writes the following keys to state:
 | response | The HTTP response from the CommCare server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
 
-**Example:** Post to the V2 case API with JSON data (prefixed with /a/<domain>/api/)
+**Example:** Post to the V2 case API with JSON data (prefixed with /a/[domain]/api/)
 ```js
 http.post('case/v2', {
   case_type: 'patient',
@@ -444,7 +444,7 @@ This operation writes the following keys to state:
 | response | The HTTP response from the CommCare server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
 
-**Example:** Get cases using the v1 API (prefixed with /a/<domain>/api/)
+**Example:** Get cases using the v1 API (prefixed with /a/[domain]/api/)
 ```js
 http.request('GET', 'case/v1');
 ```
