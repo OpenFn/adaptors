@@ -5,11 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  request>form-data: ^2.5.6
-  tar: ^7.5.7
-  '@modelcontextprotocol/sdk': ^1.29.0
-  json-sql>underscore: ^1.13.8
-  twilio>axios: ^0.33.0
+  '@babel/plugin-transform-modules-systemjs': 7.29.4
 
 importers:
 
@@ -3784,8 +3780,8 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
-  '@babel/plugin-transform-modules-systemjs@7.27.1':
-    resolution: {integrity: sha512-w5N1XzsRbc0PQStASMksmUeqECuzKuTJer7kFagK8AXgpCMkeDMO5S+aaFb7A51ZYDF7XI34qsTX+fkHiIm5yA==}
+  '@babel/plugin-transform-modules-systemjs@7.29.4':
+    resolution: {integrity: sha512-N7QmZ0xRZfjHOfZeQLJjwgX2zS9pdGHSVl/cjSGlo4dXMqvurfxXDMKY4RqEKzPozV78VMcd0lxyG13mlbKc4w==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -4906,7 +4902,7 @@ packages:
     resolution: {integrity: sha512-gwSvbpiN/17O9TbsqSsE/OzZcpv5Fo4RQjdngGgogtuB9RsyJ8ZHhX5KjHj1bp5N9snN2eK8LDGXSaWW2hof8Q==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      '@modelcontextprotocol/sdk': ^1.29.0
+      '@modelcontextprotocol/sdk': ^1.25.2
     peerDependenciesMeta:
       '@modelcontextprotocol/sdk':
         optional: true
@@ -6324,11 +6320,11 @@ packages:
   aws4@1.13.2:
     resolution: {integrity: sha512-lHe62zvbTB5eEABUVi/AwVh0ZKY9rMMDhmm+eeyuuUQbQ3+J+fONVQOZyj+DdrvD4BY33uYniyRJ4UJIaSKAfw==}
 
+  axios@0.26.1:
+    resolution: {integrity: sha512-fPwcX4EvnSHuInCMItEhAGnaSEXRBjtzh9fOtsE6E1G6p7vl7edEeZe11QHf18+6+9gR5PbKV/sGKNaD8YaMeA==}
+
   axios@0.27.2:
     resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
-
-  axios@0.33.0:
-    resolution: {integrity: sha512-juz19g7B3UWT9r3+tgRFQf2Bdy6IKDVroiyuVOUrkILVKHpqHL++K1l8ybvfdEP9B/VE72vk8vllbnedVCm/og==}
 
   axios@1.18.1:
     resolution: {integrity: sha512-3nTvFlvpn9Zu/RkHUqtc7/+al4UpRW5az71ap5zccp6e8RAYEzhMTecX8Dz1wWDYrPpUoB1HAQEGEAEvUr7S9g==}
@@ -8248,6 +8244,10 @@ packages:
   form-data@1.0.0-rc3:
     resolution: {integrity: sha512-Z5JWXWsFDI8x73Rt/Dc7SK/EvKBzudhqIVBtEhcAhtoevCTqO3YJmctGBLzT0Ggg39xFcefkXt00t1TYLz6D0w==}
     engines: {node: '>= 0.10'}
+
+  form-data@2.3.3:
+    resolution: {integrity: sha512-1lLKB2Mu3aGP1Q/2eCOx0fNbRMe7XdwktwOruhfqqd0rIJWwN4Dh+E3hrPSlDCXnSR7UtZ1N38rVXm+6+MEhJQ==}
+    engines: {node: '>= 0.12'}
 
   form-data@2.5.6:
     resolution: {integrity: sha512-Ogz/E85h9tlfJzpI6TuFpGcHZFhLrb9Gw8wq9v40CxSCPnv7ahKr6Xgtkn0KYCDQJ8DNn5VoMO8EXr9V5PadyA==}
@@ -10638,9 +10638,6 @@ packages:
     resolution: {integrity: sha512-/FPD0nUc9jH6rfFjji9IBqOz4pcSE3CsT1m7Ep6Mdb0LxSUMj8hgl6GomOvZzpNpAqqGaXA0P3VSrZLFzIhQrw==}
     engines: {node: '>=12.0.0'}
 
-  proxy-from-env@1.1.0:
-    resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
-
   proxy-from-env@2.1.0:
     resolution: {integrity: sha512-cJ+oHTW1VAEa8cJslgmUZrc+sjRKgAKl3Zyse6+PV38hZe/V6Z14TbCuXcan9F9ghlz4QrFr2c92TNF82UkYHA==}
     engines: {node: '>=10'}
@@ -11919,6 +11916,9 @@ packages:
 
   underscore@1.13.8:
     resolution: {integrity: sha512-DXtD3ZtEQzc7M8m4cXotyHR+FAS18C64asBYY5vqZexfYryNNnDc02W4hKg3rdQuqOYas1jkseX0+nZXjTXnvQ==}
+
+  underscore@1.8.2:
+    resolution: {integrity: sha512-CHzhycUy6eSLBV/Yksw4nSDIcsNAsdAExaSILTOSvZkfmymBxxrvnrUGoFJSYEUJvEe8C/p8a5Cs844mtwgNOw==}
 
   undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
@@ -13313,13 +13313,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@babel/plugin-transform-modules-systemjs@7.27.1(@babel/core@7.28.4)':
+  '@babel/plugin-transform-modules-systemjs@7.29.4(@babel/core@7.28.4)':
     dependencies:
       '@babel/core': 7.28.4
-      '@babel/helper-module-transforms': 7.28.3(@babel/core@7.28.4)
-      '@babel/helper-plugin-utils': 7.27.1
-      '@babel/helper-validator-identifier': 7.27.1
-      '@babel/traverse': 7.28.4
+      '@babel/helper-module-transforms': 7.29.7(@babel/core@7.28.4)
+      '@babel/helper-plugin-utils': 7.29.7
+      '@babel/helper-validator-identifier': 7.29.7
+      '@babel/traverse': 7.29.7
     transitivePeerDependencies:
       - supports-color
 
@@ -13540,7 +13540,7 @@ snapshots:
       '@babel/plugin-transform-member-expression-literals': 7.27.1(@babel/core@7.28.4)
       '@babel/plugin-transform-modules-amd': 7.27.1(@babel/core@7.28.4)
       '@babel/plugin-transform-modules-commonjs': 7.27.1(@babel/core@7.28.4)
-      '@babel/plugin-transform-modules-systemjs': 7.27.1(@babel/core@7.28.4)
+      '@babel/plugin-transform-modules-systemjs': 7.29.4(@babel/core@7.28.4)
       '@babel/plugin-transform-modules-umd': 7.27.1(@babel/core@7.28.4)
       '@babel/plugin-transform-named-capturing-groups-regex': 7.27.1(@babel/core@7.28.4)
       '@babel/plugin-transform-new-target': 7.27.1(@babel/core@7.28.4)
@@ -15813,18 +15813,16 @@ snapshots:
 
   aws4@1.13.2: {}
 
+  axios@0.26.1:
+    dependencies:
+      follow-redirects: 1.16.0
+    transitivePeerDependencies:
+      - debug
+
   axios@0.27.2:
     dependencies:
       follow-redirects: 1.16.0
       form-data: 4.0.6
-    transitivePeerDependencies:
-      - debug
-
-  axios@0.33.0:
-    dependencies:
-      follow-redirects: 1.16.0
-      form-data: 4.0.6
-      proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
 
@@ -18261,6 +18259,12 @@ snapshots:
       combined-stream: 1.0.8
       mime-types: 2.1.35
 
+  form-data@2.3.3:
+    dependencies:
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      mime-types: 2.1.35
+
   form-data@2.5.6:
     dependencies:
       asynckit: 0.4.0
@@ -19442,7 +19446,7 @@ snapshots:
 
   json-sql@0.3.10:
     dependencies:
-      underscore: 1.13.8
+      underscore: 1.8.2
 
   json-stable-stringify-without-jsonify@1.0.1: {}
 
@@ -20959,8 +20963,6 @@ snapshots:
       '@types/node': 18.17.5
       long: 5.3.2
 
-  proxy-from-env@1.1.0: {}
-
   proxy-from-env@2.1.0: {}
 
   psl@1.15.0:
@@ -21253,7 +21255,7 @@ snapshots:
       combined-stream: 1.0.8
       extend: 3.0.2
       forever-agent: 0.6.1
-      form-data: 2.5.6
+      form-data: 2.3.3
       har-validator: 5.1.5
       http-signature: 1.2.0
       is-typedarray: 1.0.0
@@ -22458,7 +22460,7 @@ snapshots:
 
   twilio@3.83.2:
     dependencies:
-      axios: 0.33.0
+      axios: 0.26.1
       dayjs: 1.11.18
       https-proxy-agent: 5.0.1
       jsonwebtoken: 8.5.1
@@ -22576,6 +22578,8 @@ snapshots:
   underscore@1.12.1: {}
 
   underscore@1.13.8: {}
+
+  underscore@1.8.2: {}
 
   undici-types@5.26.5: {}
 
