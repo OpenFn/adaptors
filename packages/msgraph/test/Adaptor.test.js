@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { setGlobalDispatcher } from 'undici';
 
-import MockAgent from './mockAgent.js';
+import MockAgent, { captured } from './mockAgent.js';
 import { fixtures } from './fixtures.js';
 import AdmZip from 'adm-zip';
 
@@ -466,41 +466,83 @@ describe('getFile', () => {
 });
 
 describe('uploadFile', () => {
-  it.skip('should convert array of object to excel and post to specified path', async () => {
-    const state = {
-      configuration: {
-        accessToken: fixtures.accessToken,
-      },
-      siteId: 'openfn.sharepoint.com',
-      folderId: '01LUM6XOGVJ2OK2Z5RJRAKU3WAK2MTC5XD',
-      drives: {},
-      rows: [
-        [
-          {
-            name: 'Mtuchi',
-            birthday: '1/1/1973',
-          },
-          {
-            name: 'Aleksa',
-            birthday: '1/1/2023',
-          },
-        ],
-      ],
-    };
+  const buffer = Buffer.from('a,b,c\n1,2,3');
 
-    const finalState = await uploadFile(
+  const uploadState = () => ({
+    configuration: {
+      accessToken: fixtures.accessToken,
+    },
+    driveId: 'b!YXzpkoLwR06bxC8tNdg71m_',
+    folderId: '01LUM6XOGVJ2OK2Z5RJRAKU3WAK2MTC5XD',
+    buffer,
+  });
+
+  const upload = (state, resource = {}) =>
+    uploadFile(
       state => ({
-        siteId: state.siteId,
-        parentItemId: state.folderId,
-        fileName: `invalidGrantCodeRows_${new Date()
-          .toISOString()
-          .replace(/[-:.]/g, '_')}.csv`,
+        driveId: state.driveId,
+        folderId: state.folderId,
+        fileName: 'Tracker.xlsx',
+        ...resource,
       }),
       state => state.buffer
     )(state);
 
-    console.log(finalState.buffer);
-    expect(data).to.eql(fixtures.uploadFileResponse);
+  const conflictBehaviour = () =>
+    JSON.parse(captured.createUploadSession.body).item[
+      '@microsoft.graph.conflictBehavior'
+    ];
+
+  it('should upload a file and return the created drive item', async () => {
+    const finalState = await upload(uploadState());
+
+    expect(finalState.data).to.eql(fixtures.submitXlsResponse);
+    expect(finalState.response).to.eql(fixtures.submitXlsResponse);
+  });
+
+  it('should wrap the file metadata in an item property', async () => {
+    // onConflict is passed explicitly so this test describes the envelope
+    // only, and doesn't also fail if the default conflict behaviour changes
+    await upload(uploadState(), { onConflict: 'replace' });
+
+    expect(JSON.parse(captured.createUploadSession.body)).to.eql({
+      item: {
+        '@microsoft.graph.conflictBehavior': 'replace',
+        name: 'Tracker.xlsx',
+      },
+    });
+  });
+
+  it('should default onConflict to replace', async () => {
+    await upload(uploadState());
+
+    expect(conflictBehaviour()).to.eql('replace');
+  });
+
+  it('should send the given onConflict behaviour', async () => {
+    await upload(uploadState(), { onConflict: 'rename' });
+
+    expect(conflictBehaviour()).to.eql('rename');
+  });
+
+  it('should send onConflict from state', async () => {
+    const state = { ...uploadState(), conflictMode: 'fail' };
+
+    await upload(state, { onConflict: state.conflictMode });
+
+    expect(conflictBehaviour()).to.eql('fail');
+  });
+
+  it('should send the file with content headers describing the whole buffer', async () => {
+    await upload(uploadState());
+
+    const { headers } = captured.upload;
+
+    expect(headers['Content-Type']).to.eql('application/octet-stream');
+    expect(headers['Content-Length']).to.eql(`${buffer.length}`);
+    expect(headers['Content-Range']).to.eql(
+      `bytes 0-${buffer.length - 1}/${buffer.length}`
+    );
   });
 });
 

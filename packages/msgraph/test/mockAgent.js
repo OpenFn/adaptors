@@ -3,6 +3,9 @@ import { fixtures } from './fixtures.js';
 
 const mockAgent = new MockAgent();
 
+// Any request without a matching intercept must throw, not reach the network.
+mockAgent.disableNetConnect();
+
 const mockPool = mockAgent.get('https://graph.microsoft.com');
 
 const jsonResponse = {
@@ -135,12 +138,39 @@ mockPool
   .reply(200, fixtures.itemContent)
   .persist();
 
+export const captured = {};
+
 mockPool
   .intercept({
-    path: '/v1.0/sites/openfn.sharepoint.com/drive/items/01LUM6XOGVJ2OK2Z5RJRAKU3WAK2MTC5XD:/2023_09_19T07_29_09_369Z.xls:/content',
-    method: 'PUT',
+    path: '/v1.0/drives/b!YXzpkoLwR06bxC8tNdg71m_/items/01LUM6XOGVJ2OK2Z5RJRAKU3WAK2MTC5XD:/Tracker.xlsx:/createUploadSession',
+    method: 'POST',
     headers: headers,
   })
-  .reply(200, fixtures.submitXlsResponse);
+  .reply(
+    200,
+    opts => {
+      captured.createUploadSession = opts;
+      return fixtures.uploadSessionResponse;
+    },
+    jsonResponse,
+  )
+  .persist();
+
+const uploadPool = mockAgent.get('https://openfn.sharepoint.com');
+
+uploadPool
+  .intercept({
+    path: '/_api/v2.0/drives/b!YXzpkoLwR06bxC8tNdg71m_/items/01LUM6XOGVJ2OK2Z5RJRAKU3WAK2MTC5XD/uploadSession',
+    method: 'PUT',
+  })
+  .reply(
+    200,
+    opts => {
+      captured.upload = opts;
+      return fixtures.submitXlsResponse;
+    },
+    jsonResponse,
+  )
+  .persist();
 
 export default mockAgent;
