@@ -22,11 +22,10 @@ let client;
  * @returns {state}
  */
 export function createClient(state) {
-  const { apiKey } = state.configuration;
+  const { apiKey, baseUrl } = state.configuration;
 
-  client = new Anthropic({
-    apiKey,
-  });
+  const clientOptions = baseUrl ? { apiKey, baseUrl } : { apiKey };
+  client = new Anthropic(clientOptions);
 
   return state;
 }
