@@ -180,8 +180,6 @@ const itemsResponse = {
   ],
 };
 
-// The upload session is created on graph.microsoft.com, but the uploadUrl it
-// returns points at a different host, which the PUT then goes to directly.
 const uploadSessionUrl =
   'https://openfn.sharepoint.com/_api/v2.0/drives/b!YXzpkoLwR06bxC8tNdg71m_/items/01LUM6XOGVJ2OK2Z5RJRAKU3WAK2MTC5XD/uploadSession';
 

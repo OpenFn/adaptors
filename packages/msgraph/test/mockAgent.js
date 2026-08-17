@@ -3,7 +3,6 @@ import { fixtures } from './fixtures.js';
 
 const mockAgent = new MockAgent();
 
-// Any request without a matching intercept must throw, not reach the network.
 mockAgent.disableNetConnect();
 
 const mockPool = mockAgent.get('https://graph.microsoft.com');

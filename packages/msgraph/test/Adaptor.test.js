@@ -91,7 +91,7 @@ describe('getDrive', () => {
         // write the drives object back to state before it gets cleaned up
         state.result = state.drives;
         return state;
-      })
+      }),
     )(state);
 
     expect(finalState.result.default).to.eql(fixtures.driveResponse);
@@ -109,7 +109,7 @@ describe('getDrive', () => {
         // write the drives object back to state before it gets cleaned up
         state.result = state.drives;
         return state;
-      })
+      }),
     )(state);
 
     expect(finalState.result.mydrive).to.eql(fixtures.driveResponse);
@@ -130,8 +130,8 @@ describe('getDrive', () => {
           // write the drives object back to state before it gets cleaned up
           state.result = state.drives;
           return state;
-        }
-      )
+        },
+      ),
     )(state);
 
     expect(finalState.result.default).to.eql(fixtures.driveResponse);
@@ -146,9 +146,9 @@ describe('getDrive', () => {
     await execute(
       getDrive({ id: 'noAccess', owner: 'sites' })(state).catch(e => {
         expect(e.message).to.contain(
-          fixtures.invalidRequestResponse.error.message
+          fixtures.invalidRequestResponse.error.message,
         );
-      })
+      }),
     )(state);
   });
 
@@ -163,10 +163,10 @@ describe('getDrive', () => {
       getDrive({ id: 'openfn.sharepoint.com', owner: 'sites' })(state).catch(
         e => {
           expect(e.message).to.contain(
-            fixtures.invalidTokenResponse.error.message
+            fixtures.invalidTokenResponse.error.message,
           );
-        }
-      )
+        },
+      ),
     )(state);
   });
 
@@ -181,10 +181,10 @@ describe('getDrive', () => {
       getDrive({ id: 'openfn.sharepoint.com', owner: 'sites' })(state).catch(
         e => {
           expect(e.message).to.contain(
-            fixtures.expiredTokenResponse.error.message
+            fixtures.expiredTokenResponse.error.message,
           );
-        }
-      )
+        },
+      ),
     )(state);
   });
 });
@@ -203,7 +203,7 @@ describe('getFolder', () => {
     };
 
     const finalState = await execute(
-      getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3', { metadata: true })
+      getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3', { metadata: true }),
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemResponse);
@@ -222,7 +222,7 @@ describe('getFolder', () => {
     };
 
     const finalState = await execute(
-      getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3')
+      getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3'),
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemsResponse);
@@ -244,7 +244,7 @@ describe('getFolder', () => {
       getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3', {
         driveName: 'mydrive',
         metadata: true,
-      })
+      }),
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemResponse);
@@ -263,7 +263,7 @@ describe('getFolder', () => {
     };
 
     const finalState = await execute(
-      getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3', { driveName: 'mydrive' })
+      getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3', { driveName: 'mydrive' }),
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemsResponse);
@@ -282,7 +282,7 @@ describe('getFolder', () => {
     };
 
     const finalState = await execute(
-      getFolder('/Sample Data', { metadata: true })
+      getFolder('/Sample Data', { metadata: true }),
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemResponse);
@@ -317,7 +317,7 @@ describe('getFolder', () => {
       },
     };
     const finalState = await execute(
-      getFolder('/Sample Data', { driveName: 'mydrive', metadata: true })
+      getFolder('/Sample Data', { driveName: 'mydrive', metadata: true }),
     )(state);
     expect(finalState.data).to.eql(fixtures.itemResponse);
   });
@@ -334,7 +334,7 @@ describe('getFolder', () => {
       },
     };
     const finalState = await execute(
-      getFolder('/Sample Data', { driveName: 'mydrive' })
+      getFolder('/Sample Data', { driveName: 'mydrive' }),
     )(state);
     expect(finalState.data).to.eql(fixtures.itemsResponse);
   });
@@ -367,7 +367,7 @@ describe('getFile', () => {
     };
 
     const finalState = await execute(
-      getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW')
+      getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW'),
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemContent);
@@ -388,7 +388,7 @@ describe('getFile', () => {
     const finalState = await execute(
       getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW', {
         metadata: true,
-      })
+      }),
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemWithDownloadUrl);
@@ -409,7 +409,7 @@ describe('getFile', () => {
     const finalState = await execute(
       getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW', {
         driveName: 'mydrive',
-      })
+      }),
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemContent);
@@ -445,7 +445,7 @@ describe('getFile', () => {
     };
 
     const finalState = await execute(
-      getFile('/Sample Data/test.csv', { metadata: true })
+      getFile('/Sample Data/test.csv', { metadata: true }),
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemWithDownloadUrl);
@@ -485,7 +485,7 @@ describe('uploadFile', () => {
         fileName: 'Tracker.xlsx',
         ...resource,
       }),
-      state => state.buffer
+      state => state.buffer,
     )(state);
 
   const conflictBehaviour = () =>
@@ -501,13 +501,11 @@ describe('uploadFile', () => {
   });
 
   it('should wrap the file metadata in an item property', async () => {
-    // onConflict is passed explicitly so this test describes the envelope
-    // only, and doesn't also fail if the default conflict behaviour changes
-    await upload(uploadState(), { onConflict: 'replace' });
+    await upload(uploadState(), { onConflict: 'fail' });
 
     expect(JSON.parse(captured.createUploadSession.body)).to.eql({
       item: {
-        '@microsoft.graph.conflictBehavior': 'replace',
+        '@microsoft.graph.conflictBehavior': 'fail',
         name: 'Tracker.xlsx',
       },
     });
@@ -541,7 +539,7 @@ describe('uploadFile', () => {
     expect(headers['Content-Type']).to.eql('application/octet-stream');
     expect(headers['Content-Length']).to.eql(`${buffer.length}`);
     expect(headers['Content-Range']).to.eql(
-      `bytes 0-${buffer.length - 1}/${buffer.length}`
+      `bytes 0-${buffer.length - 1}/${buffer.length}`,
     );
   });
 });
@@ -582,7 +580,7 @@ describe('zip', () => {
     const state = {};
 
     expect(() =>
-      zip([{ name: 'empty.txt', content: undefined }])(state)
+      zip([{ name: 'empty.txt', content: undefined }])(state),
     ).to.throw('no content provided for file "empty.txt"');
   });
 
