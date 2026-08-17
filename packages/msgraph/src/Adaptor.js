@@ -350,8 +350,10 @@ export function uploadFile(resource, data, callback) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        '@microsoft.graph.conflictBehavior': onConflict,
-        name: fileName,
+        item: {
+          '@microsoft.graph.conflictBehavior': onConflict,
+          name: fileName,
+        },
       }),
     });
 

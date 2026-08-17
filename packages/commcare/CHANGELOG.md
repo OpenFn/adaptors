@@ -1,5 +1,11 @@
 # @openfn/language-commcare
 
+## 4.2.1 - 17 August 2026
+
+### Patch Changes
+
+- 52d6a74: Fix an issue in docs which caused mdx parsers to fail
+
 ## 4.2.0 - 11 August 2026
 
 ### Minor Changes
