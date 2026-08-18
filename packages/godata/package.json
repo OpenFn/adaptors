@@ -22,7 +22,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "axios": "^1.18.1"
+    "axios": "^1.19.0"
   },
   "devDependencies": {
     "assertion-error": "^1.0.1",
