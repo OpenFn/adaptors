@@ -25,19 +25,26 @@ export async function getMessagesResult(userId, query, pageToken) {
   }
 }
 
-export async function getMessageResult(userId, messageId) {
-  const { data } = await gmail.users.messages.get({
-    userId,
-    id: messageId,
-    format: 'full',
-  });
+export async function getMessageResult(userId, messageId, format = 'full') {
+  try {
+    const { data } = await gmail.users.messages.get({
+      userId,
+      id: messageId,
+      format,
+      ...(format === 'metadata' && {
+        metadataHeaders: ['From', 'Date', 'Subject'],
+      }),
+    });
 
-  return {
-    userId,
-    messageId,
-    parts: data?.payload?.parts,
-    headers: data?.payload?.headers,
-  };
+    return {
+      userId,
+      messageId,
+      parts: data?.payload?.parts,
+      headers: data?.payload?.headers,
+    };
+  } catch (error) {
+    throw new Error(`Error fetching message ${messageId}: ` + error.message);
+  }
 }
 
 export function getContentIndicators(
@@ -82,13 +89,25 @@ function getContentIndicator(contentRequest) {
   return contentIndicator;
 }
 
-export async function getMessageContent(message, desiredContent) {
+export async function getMessageContent(
+  message,
+  desiredContent,
+  fetchAttachments = true,
+) {
   switch (desiredContent.type) {
     case 'archive':
-      return await getFileFromArchiveFromAttachment(message, desiredContent);
+      return await getFileFromArchiveFromAttachment(
+        message,
+        desiredContent,
+        fetchAttachments,
+      );
 
     case 'file':
-      return await getFileFromAttachment(message, desiredContent);
+      return await getFileFromAttachment(
+        message,
+        desiredContent,
+        fetchAttachments,
+      );
 
     case 'body':
       return getBodyFromMessage(message, desiredContent);
@@ -101,6 +120,72 @@ export async function getMessageContent(message, desiredContent) {
     default:
       return `Unsupported content type: ${desiredContent.type}`;
   }
+}
+
+export function resolveContentPlan(
+  defaultContents,
+  requestedContents,
+  fetchAttachments,
+) {
+  const contentIndicators = getContentIndicators(
+    defaultContents,
+    requestedContents,
+  );
+
+  const needsFullFormat = contentIndicators.some(
+    ({ type }) => type === 'body' || type === 'file' || type === 'archive',
+  );
+  const messageFormat = needsFullFormat ? 'full' : 'metadata';
+
+  if (!fetchAttachments) {
+    const skippedNames = contentIndicators
+      .filter(({ type }) => type === 'file' || type === 'archive')
+      .map(({ name }) => name);
+
+    if (skippedNames.length) {
+      console.log(
+        `fetchAttachments is false: skipping attachment downloads for ${skippedNames.join(
+          ', ',
+        )}; matched filenames will still be included in the output`,
+      );
+    }
+  }
+
+  return { contentIndicators, messageFormat };
+}
+
+export async function buildMessageContent(
+  userId,
+  messageId,
+  contentIndicators,
+  messageFormat,
+  fetchAttachments,
+) {
+  const content = { messageId };
+
+  const messageResult = await getMessageResult(
+    userId,
+    messageId,
+    messageFormat,
+  );
+
+  for (const contentIndicator of contentIndicators) {
+    const messageContent = await getMessageContent(
+      messageResult,
+      contentIndicator,
+      fetchAttachments,
+    );
+
+    if (messageContent && content[contentIndicator.name]) {
+      throw new Error(
+        `Duplicate content name detected: ${contentIndicator.name}`,
+      );
+    }
+
+    content[contentIndicator.name] ??= messageContent;
+  }
+
+  return content;
 }
 
 export async function buildAndSendMessage(message) {
@@ -185,11 +270,34 @@ async function parseArchiveAttachment(attachment) {
   };
 }
 
-export function createConnection(state) {
-  const { access_token } = state.configuration;
+export async function createConnection(state) {
+  const {
+    access_token,
+    private_key,
+    client_email,
+    subject,
+    scopes = [],
+  } = state.configuration;
 
-  const auth = new google.auth.OAuth2();
-  auth.credentials = { access_token };
+  const mandatoryScopes = [
+    'https://mail.google.com/',
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+    'openid',
+  ];
+  let auth;
+  if (private_key && client_email) {
+    auth = new google.auth.JWT({
+      email: client_email,
+      key: private_key,
+      scopes: [...mandatoryScopes, ...scopes],
+      subject,
+    });
+    await auth.authorize();
+  } else {
+    auth = new google.auth.OAuth2();
+    auth.credentials = { access_token };
+  }
 
   gmail = google.gmail({ version: 'v1', auth });
 
@@ -201,7 +309,16 @@ export function removeConnection(state) {
   return state;
 }
 
-async function getFileFromArchiveFromAttachment(message, desiredContent) {
+async function getFileFromArchiveFromAttachment(
+  message,
+  desiredContent,
+  fetchAttachments,
+) {
+  if (!fetchAttachments) {
+    const part = findAttachmentPart(message, desiredContent.archive);
+    return part ? { archiveFilename: part.filename } : null;
+  }
+
   const attachmentResult = await getAttachmentResult(
     message,
     desiredContent.archive,
@@ -213,7 +330,16 @@ async function getFileFromArchiveFromAttachment(message, desiredContent) {
   );
 }
 
-async function getFileFromAttachment(message, desiredContent) {
+async function getFileFromAttachment(
+  message,
+  desiredContent,
+  fetchAttachments,
+) {
+  if (!fetchAttachments) {
+    const part = findAttachmentPart(message, desiredContent.file);
+    return part ? { filename: part.filename } : null;
+  }
+
   const attachmentResult = await getAttachmentResult(
     message,
     desiredContent.file,
@@ -222,13 +348,23 @@ async function getFileFromAttachment(message, desiredContent) {
   return await extractFileFromAttachment(attachmentResult, desiredContent);
 }
 
-async function getAttachmentResult(message, expression) {
+function findAttachmentPart(message, expression) {
   const part = message.parts?.find(p => {
     return isExpressionMatch(p.filename, expression);
   });
 
   if (!part) {
     console.info(`Attachment not found for: ${expression}`);
+    return null;
+  }
+
+  return part;
+}
+
+async function getAttachmentResult(message, expression) {
+  const part = findAttachmentPart(message, expression);
+
+  if (!part) {
     return null;
   }
 

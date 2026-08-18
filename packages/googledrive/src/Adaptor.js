@@ -25,10 +25,34 @@ let client;
  * @param {Object} state - object containing the access token.
  * @returns {Object} state with Google Drive client initialized.
  */
-function createConnection(state) {
-  const { accessToken } = state.configuration;
-  const auth = new google.auth.OAuth2();
-  auth.credentials = { access_token: accessToken };
+async function createConnection(state) {
+  const {
+    accessToken,
+    private_key,
+    client_email,
+    scopes = [],
+  } = state.configuration;
+
+  const mandatoryScopes = [
+    'https://www.googleapis.com/auth/drive.file',
+    'https://www.googleapis.com/auth/drive.readonly',
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+    'openid',
+  ];
+  let auth;
+  if (private_key && client_email) {
+    auth = new google.auth.JWT({
+      email: client_email,
+      key: private_key,
+      scopes: [...mandatoryScopes, ...scopes],
+    });
+    await auth.authorize();
+  } else {
+    auth = new google.auth.OAuth2();
+    auth.credentials = { access_token: accessToken };
+  }
+
   client = google.drive({ version: 'v3', auth });
   return state;
 }
@@ -63,6 +87,8 @@ export function execute(...operations) {
   };
 
   return state => {
+    const isServiceAccount =
+      state.configuration?.private_key && state.configuration?.client_email;
     return commonExecute(
       createConnection,
       ...operations,
@@ -70,7 +96,9 @@ export function execute(...operations) {
     )({
       ...initialState,
       ...state,
-      configuration: normalizeOauthConfig(state.configuration),
+      configuration: isServiceAccount
+        ? state.configuration
+        : normalizeOauthConfig(state.configuration),
     });
   };
 }

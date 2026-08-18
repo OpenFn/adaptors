@@ -1,5 +1,11 @@
 # @openfn/language-mailchimp
 
+## 1.1.3 - 28 July 2026
+
+### Patch Changes
+
+- 8acf431: Update axios dependency
+
 ## 1.1.2 - 30 June 2026
 
 ### Patch Changes

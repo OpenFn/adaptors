@@ -1,5 +1,11 @@
 # @openfn/language-googlesheets
 
+## 5.1.0 - 03 August 2026
+
+### Minor Changes
+
+- 7dd37fc: Add support for Google Service Account credential
+
 ## 5.0.0 - 09 July 2026
 
 ### Major Changes

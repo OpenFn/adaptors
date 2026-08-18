@@ -11,9 +11,23 @@
       "examples": [
         "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"
       ]
+    },
+    "private_key": {
+      "title": "Private Key",
+      "type": "string",
+      "description": "RSA private key from the Google service account JSON key file. Required for service accounts",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": ["-----BEGIN RSA PRIVATE KEY-----\nMIIEow..."]
+    },
+    "client_email": {
+      "title": "Client Email",
+      "type": "string",
+      "description": "Service account email address (e.g. my-app@project-id.iam.gserviceaccount.com). Required for service accounts",
+      "minLength": 1,
+      "examples": ["my-app@project-id.iam.gserviceaccount.com"]
     }
   },
   "type": "object",
-  "additionalProperties": true,
-  "required": ["access_token"]
+  "additionalProperties": true
 }

@@ -19,7 +19,8 @@ customize the output.
 ## Parameters
 
 An `options` object can configure the results of the function call. Optional
-parameters include: `contents`, `query`, `email`, `processedIds`, `maxResults`
+parameters include: `contents`, `query`, `email`, `processedIds`,
+`maxResults`, `fetchAttachments`
 
 ### options.contents
 
@@ -162,6 +163,34 @@ This works in conjuction with the `options.processedIds` parameter. For example:
 - this will skip message #1 and resulting dataset will contain a single message
   #2
 
+### options.fetchAttachments
+
+Set `fetchAttachments` to `false` to return message IDs and non-attachment
+content without downloading requested file or archive attachments. The default
+is `true`.
+
+When downloading is disabled, matched attachments are still reported as
+filename-only objects (without `content`), so a later job can tell which
+messages contain the target attachment:
+
+- matched file → `{ filename: 'report.xlsx' }`
+- matched archive → `{ archiveFilename: 'data.zip' }`
+- no match → `null`
+
+Pair this with `getMessageById` in a follow-up job to download the attachment
+for exactly the message identified here.
+
+```js
+getContentsFromMessages({
+  query: 'after:2026/07/01',
+  contents: [
+    'body',
+    { type: 'file', name: 'report', file: /\.xlsx$/ },
+  ],
+  fetchAttachments: false,
+});
+```
+
 ## Example jobs
 
 ```js
@@ -290,14 +319,47 @@ sendMessage({
 This will send an email with two plain attachments and one ZIP archive
 containing two files.
 
-# Acquiring an access token
+# `getMessageById`
 
-The Gmail adaptor implicitly uses the Gmail account of the Google account that
-is used to authenticate the application.
+Fetch a single message by its Gmail API message id, instead of searching with
+a query. Takes the same `contents`, `email` and `fetchAttachments` options as
+`getContentsFromMessages`, and returns a single message object (rather than an
+array) on `state.data`.
+
+This is the id returned by this adaptor as `messageId` on each result. It is
+not the RFC 822 `Message-ID` header, so it cannot be matched with the
+`rfc822msgid:` search operator.
+
+This pairs with `getContentsFromMessages`'s `fetchAttachments: false` for a
+two-step pattern: one job lists messages cheaply and records which contain a
+target attachment, and a later job downloads the attachment for one message at
+a time:
+
+```js
+getMessageById($.data.find(m => m.report).messageId, {
+  contents: [{ type: 'file', name: 'report', file: /\.xlsx$/ }],
+});
+```
+
+# Authentication
+
+This adaptor supports two authentication methods: **OAuth2** and **Service Account**.
+
+## OAuth2
+
+**On app.openfn.org:** Click **Sign in with Gmail** in the credential setup form. Authentication is handled for you and no manual token management is needed.
+
+**Using the OpenFn CLI locally:** Use the [gcloud CLI](https://cloud.google.com/sdk/docs/install) to print a temporary access token:
+
+```bash
+gcloud auth print-access-token
+```
+
+The Gmail adaptor implicitly uses the Gmail account of the Google account that is used to authenticate the application.
 
 Allowing the Gmail adaptor to access a Gmail account is a multi-step process.
 
-## Create an OAuth 2.0 client ID
+### Create an OAuth 2.0 client ID
 
 Follow the instructions are found here:
 https://support.google.com/googleapi/answer/6158849
@@ -314,7 +376,7 @@ https://support.google.com/googleapi/answer/6158849
 - On the resulting popup screen, find and click "DOWNLOAD JSON" and save this
   file to a secure location.
 
-## Retrieve an access token
+### Retrieve an access token
 
 - Navigate to
   [OAuth 2.0 Playground](https://developers.google.com/oauthplayground/).
@@ -344,7 +406,7 @@ https://support.google.com/googleapi/answer/6158849
   token before it expires** or manually refresh it using the **Refresh access
   token** button.
 
-## Configure OpenFn CLI to find the access token
+### Configure OpenFn CLI to find the access token
 
 The Gmail adaptor looks for the access token in the configuration section under
 `access_token`.
@@ -367,3 +429,20 @@ Example configuration using a workflow:
   ]
 }
 ```
+
+## Service Account
+
+Service accounts allow the adaptor to access Gmail without user interaction,
+making them well-suited for automated workflows.
+
+> **Important:** Gmail service account access requires **Google Workspace**.
+> It does **not** work with personal Gmail accounts (`@gmail.com`). If your
+> organisation uses personal Google accounts, use the OAuth2 method instead.
+
+To create a service account and JSON key file, follow the
+[Google Cloud service account documentation](https://cloud.google.com/iam/docs/service-accounts-create).
+Your OpenFn credential requires the `client_email` and `private_key` fields from the downloaded JSON key file. You can also optionally provide a `subject` field for impersonation -- see [Google's domain-wide delegation guide](https://developers.google.com/identity/protocols/oauth2/service-account#delegatingauthority) for details.
+
+For enabling domain-wide delegation and authorising the required Gmail API
+scopes, see the
+[Google Workspace domain-wide delegation guide](https://support.google.com/a/answer/162106).

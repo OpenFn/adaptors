@@ -102,7 +102,7 @@ describe('getMappings', () => {
     const finalState = await execute(
       getMappings('OpenFn', 'st-lucia-dhis2-dataElems', {
         repository: 'sources',
-      })
+      }),
     )(state);
 
     expect(finalState.data).to.eql({
