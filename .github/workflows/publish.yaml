@@ -33,16 +33,16 @@ jobs:
         run: pnpm run changelog
       - name: Commit changelog date updates
         run: |
-          NON_MD=$(git diff --name-only | grep -v '\.md$' || true)
+          NON_MD=$(git status --short | awk '{print $2}' | grep -v '^\.md$' | grep -v '\.md$' || true)
           if [ -n "$NON_MD" ]; then
             echo "ERROR: unexpected non-.md changes after changelog update:"
             echo "$NON_MD"
             exit 1
           fi
-          CHANGED=$(git diff --name-only)
+          CHANGED=$(git status --short)
           if [ -n "$CHANGED" ]; then
             git add -A
-            git commit -m "chore: update changelog dates [skip ci]"
+            git commit -m "automation: update changelog dates [skip ci]"
             git push
           else
             echo "No changelog date changes to commit"
