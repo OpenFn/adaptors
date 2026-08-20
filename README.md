@@ -222,8 +222,14 @@ in the wiki.
 
 ## Changesets
 
-Any submitted PRs should have an accompanying
-[changeset](https://github.com/changesets/changesets).
+Every submitted PR that changes one or more adaptors under `packages/` must have
+an accompanying [changeset](https://github.com/changesets/changesets) for each
+changed adaptor. A single changeset may target multiple adaptors. Repository
+tooling and top-level documentation changes do not require a changeset.
+
+The **Changeset required** GitHub check enforces this policy. It detects changed
+adaptors and verifies that every corresponding package appears in an added or
+modified changeset.
 
 - Create a new changeset with `pnpm changeset`. This will prompt you for the
   changes:
@@ -233,9 +239,14 @@ pnpm changeset
 ```
 
 > Follow the prompts to describe your changes. This will create a new changeset
-> file in the `.changesets` folder.
+> file in the `.changeset` folder.
 
 - Commit the changeset to the repo when you're ready.
+- Run `pnpm changeset:check` to verify changeset coverage before pushing.
+- Test, documentation, and development-only changes inside an adaptor directory
+  still count as adaptor changes. If such a change does not need a release, ask
+  a maintainer to apply the exact `no changeset required` label. Adding or
+  removing the label reruns the check.
 
 ## Versioning
 

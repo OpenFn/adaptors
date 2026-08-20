@@ -10,6 +10,7 @@
     "build:tools": "pnpm --filter \"./tools/**\" build",
     "build": "pnpm build:tools && pnpm build:adaptors",
     "changelog": "pnpm -C tools/changelog update-latest-versions",
+    "changeset:check": "node scripts/check-changesets.mjs validate",
     "docs:build": "pnpm exec scripts/build-docs.sh",
     "docs:publish": "pnpm exec scripts/publish-docs.sh",
     "docs:watch": "chokidar packages/*/docs/*.md -c 'pnpm docs:build'",
@@ -21,7 +22,8 @@
     "setup": "pnpm --filter \"./tools/**\" install",
     "slack:notify": "cd tools/slack && pnpm notify",
     "test:imports": "cd tools/import-tests && pnpm test",
-    "test": "pnpm lint && pnpm --filter \"./packages/**\" test && pnpm test:imports",
+    "test": "pnpm lint && pnpm --filter \"./packages/**\" test && pnpm test:imports && pnpm test:changesets",
+    "test:changesets": "node --test scripts/check-changesets.test.mjs",
     "test:git": "pnpm exec scripts/status-check.sh",
     "validate:schemas": "node scripts/validate-configuration-schemas.mjs",
     "version": "pnpm changeset version && pnpm run changelog"
@@ -30,6 +32,7 @@
   "license": "ISC",
   "devDependencies": {
     "@changesets/cli": "^2.29.8",
+    "@changesets/parse": "^0.4.2",
     "@openfn/adaptor-apis": "workspace:*",
     "@openfn/buildtools": "workspace:^1.0.2",
     "@openfn/generate-fhir": "workspace:^",
