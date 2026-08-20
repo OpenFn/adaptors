@@ -72,3 +72,35 @@ export async function request(configuration, path, opts) {
 
   return commonRequest(method, path, options).then(logResponse);
 }
+
+export async function requestWithPagination(configuration, path, options = {}) {
+  const { domain, apiVersion = 'v2' } = configuration;
+  const { resultsKey } = options;
+  const targetUrl = `/a/${domain}/api/${path}/v2`;
+
+  if (configuration.apiVersion && configuration.apiVersion !== 'v2') {
+    console.warn(
+      `Cursor pagination requires v2; ignoring configured apiVersion "${configuration.apiVersion}".`
+    );
+  }
+
+  const params = { ...(options.params ?? {}) };
+  const results = [];
+
+  while (true) {
+    const { body = {} } = await request(configuration, targetUrl, {
+      method: 'GET',
+      params
+    });
+
+    const key = resultsKey ?? Object.keys(body).find(key => Array.isArray(body[key]));
+    if (key) results.push(...body[key]);
+
+    if (params.limit && results.length >= params.limit) break;
+    if (!body.next) break;
+
+    params.cursor = new URL(body.next).searchParams.get('cursor');
+  }
+
+  return params.limit ? results.slice(0, params.limit) : results;
+};
