@@ -30,8 +30,10 @@ let client;
 export function createClient(state) {
   const { apiKey, baseUrl } = state.configuration;
 
-  const clientOptions = baseUrl ? { apiKey, baseUrl } : { apiKey };
-  client = new OpenAI(clientOptions);
+  client = new OpenAI({
+    apiKey,
+    baseUrl,
+  });
 
   return state;
 }
