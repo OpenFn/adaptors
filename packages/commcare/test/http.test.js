@@ -84,7 +84,7 @@ describe('http.get', () => {
     expect(finalState.data).to.eql([{ case_id: 'abc-002' }]);
   });
 
-  describe('no pagination (default)', () => {
+  describe('no pagination', () => {
     it('does not paginate even when meta.next is present (v1)', async () => {
       testServer
         .intercept({ path: /\/a\/test-staging\/api\/case\/v1/, method: 'GET' })

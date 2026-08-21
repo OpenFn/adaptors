@@ -36,18 +36,20 @@ export function post(path, data, params = {}) {
  * Make a GET request to CommCare. Use this to retrieve resources directly from the CommCare REST API.
  * @example <caption>Get cases using the v1 API (prefixed with /a/[domain]/api/)</caption>
  * http.get('case/v1');
- * @example <caption>Get all cases paginated into state.data </caption>
+ * @example <caption>Filter cases by type using query parameters</caption>
+ * http.get('case/v1', { case_type: 'patient', limit: 100 });
+ * @example <caption>Paginate all results into state.data</caption>
  * http.get('case/v2', { paginate: true });
- * @example <caption>Get all cases paginated and return each response to a callback</caption>
- * http.get('case/v2', { paginate: true }, (state) => {
+ * @example <caption>Stream each page to a callback without accumulating in memory</caption>
+ * http.get('case/v2', { paginate: true }, state => {
  *   console.log(state.data); // one page at a time
  *   return state;
  * });
  * @function
  * @public
  * @param {string} path - Path to resource. Relative paths are prefixed with `/a/[domain]/api/`; paths starting with `/` are used as-is.
- * @param {Object} [params] - Optional request params. Set `paginate: true` to enable automatic pagination.
- * @param {Function} [callback] - Optional per-page callback. When provided with `paginate: true`, each page is passed to the callback and NOT accumulated into state.data.
+ * @param {Object} [params] - Query parameters to append to the URL. All keys except `params.paginate` are sent as query strings (e.g. `{ case_type: 'patient' }` becomes `?case_type=patient`). Set `params.paginate` to `true` to enable automatic pagination.
+ * @param {Function} [callback] - Optional per-page callback. When provided alongside `params.paginate`, each page's records are passed as `state.data` and the full dataset is NOT accumulated. `state.data` will be `{}` when the operation completes.
  * @returns {Operation}
  * @state {CommCareState}
  */
@@ -61,9 +63,9 @@ export function get(path, params = {}, callback) {
     );
 
     const { paginate, ...requestParams } = resolvedParams;
-    const shouldPaginate = paginate === true;
+
     // Return response data to callback if provided
-    const callbackFn = typeof callback === 'function';
+    const callbackMode = typeof callback === 'function';
 
     const url = util.buildUrl(resolvedPath, domain);
 
@@ -83,7 +85,7 @@ export function get(path, params = {}, callback) {
         // Only return response array data
         const items = Object.values(body).find(Array.isArray) ?? [];
 
-        if (callbackFn) {
+        if (callbackMode) {
 
           const pageState = util.prepareNextState(state, response);
           nextState = await callback({ ...pageState, data: items });
@@ -93,21 +95,20 @@ export function get(path, params = {}, callback) {
           results.push(...items);
         }
 
-        const v1Next = body?.meta?.next;
-        const v2Next = !body?.meta && body?.next;
-        const hasMore = shouldPaginate && (v1Next || v2Next);
+        // cursor API (body.next) takes precedence over paging API (body.meta.next)
+        const next = body?.next ?? body?.meta?.next;
+        const hasMore = paginate === true && next;
 
         if (hasMore) {
-          if (v1Next) {
+          if (body?.next) {
+            const cursor = new URL(body.next).searchParams.get('cursor');
+            currentParams = { ...requestParams, cursor };
+          } else {
             currentParams = {
               ...requestParams,
               offset: body.meta.offset + body.meta.limit,
               limit: body.meta.limit,
             };
-          } else {
-            // extract cursor from the absolute next URL
-            const cursor = new URL(v2Next).searchParams.get('cursor');
-            currentParams = { ...requestParams, cursor };
           }
         } else {
           break;
@@ -116,7 +117,7 @@ export function get(path, params = {}, callback) {
 
       return {
         ...nextState,
-        data: callbackFn ? {} : results ?? nextState.data,
+        data: callbackMode ? {} : results ?? nextState.data,
       };
     } catch (error) {
       throw error;
