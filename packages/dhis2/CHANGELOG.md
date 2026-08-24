@@ -1,5 +1,12 @@
 # @openfn/language-dhis2
 
+## 8.3.0 - 24 August 2026
+
+### Minor Changes
+
+- 3e3f2dd: Add `util.deriveUid()` function which derives a stable DHIS2 UID from
+  a seed string.
+
 ## 8.2.1 - 28 July 2026
 
 ### Patch Changes
