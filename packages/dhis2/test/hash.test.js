@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { createHash } from 'node:crypto';
-import { hash, sha256 } from '../../src/util/hash.js';
+import { hash, sha256 } from '../../src/util.js';
 
 describe('util.hash', () => {
   it('hashes a string with sha256 by default', () => {
