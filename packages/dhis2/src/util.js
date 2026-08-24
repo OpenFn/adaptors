@@ -213,23 +213,8 @@ const UID_TAIL_CHARS =
   '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
 /**
- * Derives a stable DHIS2 UID from a seed string. The same seed always returns
- * the same UID, which lets you set the id of a resource before you create it
- * and re-run a workflow without creating duplicates.
- *
- * The seed is hashed with SHA-256 and the first 16 bytes of the digest are read
- * as a single integer N. The 10 trailing characters are N in base 62; the
- * leading letter is the remaining high bits mod 52. That covers the entire
- * valid-UID space (52 * 62^10, about 2^65 values), and reducing 128 bits into
- * 65 makes the modulo bias negligible.
- *
- * The seed is hashed exactly as given, so it is the caller's job to make it
- * unique across resource types - include a prefix if two different resources
- * could otherwise share a seed.
- *
- * This mapping is a stability guarantee: it will not change in a future
- * release, because doing so would orphan every record already created with it.
- *
+ * Derives a stable DHIS2 UID from a string. The same string always returns
+ * the same UID.
  * @public
  * @function
  * @namespace util
