@@ -71,7 +71,6 @@ function _import(strategy, payload, options = {}) {
         apiVersion,
         parseAs,
         query: {
-          // Spread first so an explicit options.importStrategy still wins
           ...(resolvedStrategy ? { importStrategy: resolvedStrategy } : {}),
           ...query,
           async,
