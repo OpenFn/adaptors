@@ -92,7 +92,7 @@ describe(' get', () => {
       get('dataValueSets', {
         ...query,
         fields: '*',
-      })
+      }),
     )(state);
 
     expect(finalState.data).to.eql({
@@ -126,7 +126,7 @@ describe(' get', () => {
       get('dataValueSets', {
         ...query,
         fields: '*',
-      })
+      }),
     )(state);
 
     expect(finalState.data).to.eql({
@@ -209,7 +209,7 @@ describe('create', () => {
       });
 
     const finalState = await execute(create('events', state => state.data))(
-      state
+      state,
     );
 
     expect(finalState.data).to.eql({
@@ -231,7 +231,10 @@ describe('create', () => {
       });
 
     const finalState = await execute(
-      create('events', { program: 'abc', orgUnit: state => state.data.orgUnit })
+      create('events', {
+        program: 'abc',
+        orgUnit: state => state.data.orgUnit,
+      }),
     )(state);
 
     expect(finalState.data).to.eql({
@@ -267,7 +270,7 @@ describe('update', () => {
       update('dataValueSets', 'AsQj6cDsUq4', state => ({
         ...state.data,
         date: state.data.currentDate,
-      }))
+      })),
     )(state);
 
     expect(finalState.data).to.eql({
@@ -292,7 +295,7 @@ describe('update', () => {
         program: dataValue('program'),
         orgUnit: 'hardcoded',
         date: resp => resp.data.currentDate,
-      })
+      }),
     )(state);
 
     expect(finalState.data).to.eql({
@@ -339,8 +342,8 @@ describe('upsert', () => {
         {
           orgUnit: 'DiszpKrYNg8',
           trackedEntityType: 'nEenWmSyUEp',
-        }
-      )
+        },
+      ),
     )(state);
 
     expect(finalState.references).to.eql([
@@ -385,8 +388,8 @@ describe('upsert', () => {
         {
           orgUnit: 'DiszpKrYNg8',
           trackedEntityType: 'nEenWmSyUEp',
-        }
-      )
+        },
+      ),
     )(state);
 
     expect(finalState.references).to.eql([
@@ -439,10 +442,10 @@ describe('upsert', () => {
             {
               orgUnit: 'TSyzvBiovKh',
               trackedEntityType: 'nEenWmSyUEp',
-            }
-          )
+            },
+          ),
         )(state),
-      '409: Upsert failed: Multiple records found for a non-unique attribute.'
+      '409: Upsert failed: Multiple records found for a non-unique attribute.',
     );
   });
 
@@ -470,7 +473,7 @@ describe('upsert', () => {
             },
           ],
         },
-      ])
+      ]),
     )(state);
 
     expect(finalState.data).to.eql({
@@ -499,7 +502,7 @@ describe('URL builders', () => {
       const finalURL = util.prefixVersionToPath(
         fixture.configuration,
         fixture.options,
-        fixture.resourceType
+        fixture.resourceType,
       );
       const expectedURL = 'https://play.dhis2.org/2.36.4/api/dataValueSets';
 
@@ -513,7 +516,7 @@ describe('URL builders', () => {
       const finalURL = util.prefixVersionToPath(
         configuration,
         fixture.options,
-        fixture.resourceType
+        fixture.resourceType,
       );
       const expectedURL = `https://play.dhis2.org/2.36.4/api/${configuration.apiVersion}/dataValueSets`;
 
@@ -527,7 +530,7 @@ describe('URL builders', () => {
       const finalURL = util.prefixVersionToPath(
         fixture.configuration,
         options,
-        fixture.resourceType
+        fixture.resourceType,
       );
       const expectedURL = 'https://play.dhis2.org/2.36.4/api/33/dataValueSets';
 
@@ -545,7 +548,7 @@ describe('URL builders', () => {
       const finalURL = util.prefixVersionToPath(
         fixture.configuration,
         options,
-        fixture.resourceType
+        fixture.resourceType,
       );
 
       const expectedURL = 'https://play.dhis2.org/2.36.4/api/33/dataValueSets';
@@ -621,5 +624,73 @@ describe('findAttributeValue', () => {
 
     const theValue = util.findAttributeValue(tei, 'Surname');
     expect(theValue).to.eql('McTesterson');
+  });
+});
+
+describe('util.deriveUid', () => {
+  const UID = /^[A-Za-z][A-Za-z0-9]{10}$/;
+
+  // Frozen vectors. If a refactor changes any of these, it has broken the
+  // stability guarantee and will orphan records already in DHIS2.
+  const VECTORS = {
+    a: 'RmTkRxw6Obd',
+    'wf1:ImspTQPwCqd:2024Q1': 'SEjIrqc6gOQ',
+    'wf1:ImspTQPwCqd:2024Q2': 'ocoGmNEcDbk',
+    'wf1:O6uvpzGd5pu:2025Q4': 'KXUW4Ir08sh',
+    'événement:2024Q1': 'R7I4CUWXpFG',
+    '🙂:2024Q1': 'FpOUJFFJyIa',
+  };
+
+  it('returns a valid DHIS2 UID', () => {
+    expect(util.deriveUid('wf1:ImspTQPwCqd:2024Q1')).to.match(UID);
+  });
+
+  it('is stable across calls', () => {
+    const seed = 'wf1:ImspTQPwCqd:2024Q1';
+    expect(util.deriveUid(seed)).to.equal(util.deriveUid(seed));
+  });
+
+  it('matches the frozen test vectors', () => {
+    for (const [seed, uid] of Object.entries(VECTORS)) {
+      expect(util.deriveUid(seed)).to.equal(uid);
+    }
+  });
+
+  it('returns different UIDs for different seeds', () => {
+    expect(util.deriveUid('wf1:ImspTQPwCqd:2024Q1')).to.not.equal(
+      util.deriveUid('wf1:ImspTQPwCqd:2024Q2'),
+    );
+  });
+
+  it('handles non-ascii seeds', () => {
+    expect(util.deriveUid('🙂:2024Q1')).to.match(UID);
+  });
+
+  it('produces valid, distinct UIDs across many seeds', () => {
+    const seen = new Set();
+    for (let i = 0; i < 20000; i++) {
+      const uid = util.deriveUid(`wf1:OU${i}:2024Q${(i % 4) + 1}`);
+      expect(uid).to.match(UID);
+      seen.add(uid);
+    }
+    expect(seen.size).to.equal(20000);
+  });
+
+  it('uses the whole leading-letter alphabet', () => {
+    const heads = new Set();
+    for (let i = 0; i < 5000; i++) heads.add(util.deriveUid(`x${i}`)[0]);
+    expect(heads.size).to.equal(52);
+  });
+
+  it('throws on a non-string seed', () => {
+    expect(() => util.deriveUid({ orgUnit: 'a', period: 'b' })).to.throw(
+      TypeError,
+    );
+    expect(() => util.deriveUid(42)).to.throw(TypeError);
+    expect(() => util.deriveUid(undefined)).to.throw(TypeError);
+  });
+
+  it('throws on an empty seed', () => {
+    expect(() => util.deriveUid('')).to.throw(RangeError);
   });
 });
