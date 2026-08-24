@@ -19,6 +19,10 @@ This adaptor exports the following namespaced functions:
 </dt>
 
 <dt>
+    <a href="#util_deriveUid">util.deriveUid(seed)</a>
+</dt>
+
+<dt>
     <a href="#util_dv">util.dv(dataElement, value)</a>
 </dt>
 
@@ -567,6 +571,45 @@ fn(state => {
    console.log(s);
    return state;
 })
+```
+
+* * *
+
+
+### util.deriveUid {#util_deriveUid}
+
+<p><code>deriveUid(seed) ⇒ string</code></p>
+
+Derives a stable DHIS2 UID from a string. The same string always returns
+the same UID.
+
+**Returns**: <code>string</code> - An 11-character DHIS2 UID, matching /^[A-Za-z][A-Za-z0-9]{10}$/  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| seed | <code>string</code> | The string to derive the UID from. |
+
+
+**Example:** Derive an event UID from an org unit and period
+```js
+fn(state => {
+  const uid = util.deriveUid(`event:${state.orgUnit}:${state.period}`);
+  console.log(uid);
+  return state;
+})
+```
+**Example:** Create an event idempotently
+```js
+create('tracker', state => ({
+  events: [
+    {
+      event: util.deriveUid(`event:${state.orgUnit}:${state.period}`),
+      program: state.program,
+      orgUnit: state.orgUnit,
+      occurredAt: state.date,
+    },
+  ],
+}));
 ```
 
 * * *
