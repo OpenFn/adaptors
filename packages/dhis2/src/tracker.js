@@ -64,16 +64,15 @@ function _import(strategy, payload, options = {}) {
       method: 'POST',
       path: util.prefixVersionToPath(
         state.configuration,
-        {
-          ...resolvedOptions,
-          resolvedStrategy,
-        },
+        resolvedOptions,
         'tracker',
       ),
       options: {
         apiVersion,
         parseAs,
         query: {
+          // Spread first so an explicit options.importStrategy still wins
+          ...(resolvedStrategy ? { importStrategy: resolvedStrategy } : {}),
           ...query,
           async,
         },

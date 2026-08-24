@@ -3,6 +3,7 @@ import { execute, create, update, upsert, get } from '../src/Adaptor.js';
 import { dataValue } from '@openfn/language-common';
 import { enableMockClient } from '@openfn/language-common/util';
 import * as util from '../src/util.js';
+import * as tracker from '../src/tracker.js';
 
 const { expect } = chai;
 
@@ -692,5 +693,54 @@ describe('util.deriveUid', () => {
 
   it('throws on an empty seed', () => {
     expect(() => util.deriveUid('')).to.throw(RangeError);
+  });
+});
+
+describe('tracker.import', () => {
+  const state = { configuration, data: { events: [{ event: 'SEjIrqc6gOQ' }] } };
+
+  it('sends the strategy argument as importStrategy', async () => {
+    testServer
+      .intercept({
+        path: getPath('tracker'),
+        method: 'POST',
+        query: { async: false, importStrategy: 'DELETE' },
+      })
+      .reply(200, { status: 'OK' });
+
+    const finalState = await tracker.import('DELETE', state => state.data)(
+      state
+    );
+    expect(finalState.data).to.eql({ status: 'OK' });
+  });
+
+  it('lets options.importStrategy override the positional strategy', async () => {
+    testServer
+      .intercept({
+        path: getPath('tracker'),
+        method: 'POST',
+        query: { async: false, importStrategy: 'CREATE' },
+      })
+      .reply(200, { status: 'OK' });
+
+    const finalState = await tracker.import('DELETE', state => state.data, {
+      importStrategy: 'CREATE',
+    })(state);
+    expect(finalState.data).to.eql({ status: 'OK' });
+  });
+
+  it('omits importStrategy when no strategy is given', async () => {
+    testServer
+      .intercept({
+        path: getPath('tracker'),
+        method: 'POST',
+        query: { async: false },
+      })
+      .reply(200, { status: 'OK' });
+
+    const finalState = await tracker.import(undefined, state => state.data)(
+      state
+    );
+    expect(finalState.data).to.eql({ status: 'OK' });
   });
 });
