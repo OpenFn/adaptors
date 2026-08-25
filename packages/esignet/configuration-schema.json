@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "OAuth2",
+  "properties": {
+    "baseUrl": {
+      "title": "eSignet Base URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The eSignet server URL",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://esignet-mock.collab.mosip.net"]
+    },
+    "access_token": {
+      "title": "Access Token",
+      "type": "string",
+      "description": "Your eSignet access token",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": [
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["access_token", "baseUrl"]
+}
