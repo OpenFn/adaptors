@@ -1,6 +1,6 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { assembleError, scrubResponse, tryJson } from './Utils.js';
+import { assembleError, scrubResponse, tryJson, getNextPageParams, request as utilRequest } from './Utils.js';
 import request from 'request';
 
 export const composeNextState = (state, data, meta) => {
@@ -898,6 +898,47 @@ export function getLocations(query, callback) {
         }
       });
     });
+  };
+}
+
+/**
+ * Make a GET request to any Primero endpoint. Automatically paginates through all pages.
+ * @public
+ * @function
+ * @example <caption>Fetch all registry records</caption>
+ * get('registry_records');
+ * @example <caption>Fetch with a fixed page size of 50</caption>
+ * get('registry_records', { count: 50 });
+ * @param {string} path - Path to the resource
+ * @param {object} query - Query parameters to append to the URL. Use `count` (or `per`) to control the page size.
+ * @returns {Operation}
+ */
+export function get(path, query = {}) {
+  return async state => {
+    const [resolvedPath, resolvedQuery] = expandReferences(state, path, query);
+    const { count, per, ...queryParams } = resolvedQuery;
+
+    let currentQuery = { ...queryParams };
+    if (count ?? per) currentQuery.per = count ?? per;
+
+    let results = [];
+
+    do {
+      const response = await utilRequest(state, 'GET', resolvedPath, {
+        query: currentQuery,
+      });
+
+      results.push(...(response.body.data ?? []));
+
+      const next = getNextPageParams(response.body.metadata, resolvedQuery);
+      if (next) {
+        currentQuery = { ...queryParams, page: next.page, per: next.per };
+      } else {
+        break;
+      }
+    } while (true);
+
+    return composeNextState(state, results);
   };
 }
 

@@ -14,6 +14,22 @@ export const prepareNextState = (state, response) => {
   };
 };
 
+const DEFAULT_PAGE_SIZE = 1000;
+
+
+export function getNextPageParams(metadata, queryParams = {}) {
+  const { total, page } = metadata ?? {};
+  if (!total || !page) return null;
+
+  // If the user explicitly set per or count, treat it as a one-page limit
+  if (queryParams.count != null || queryParams.per != null) return null;
+
+  const totalPages = Math.ceil(total / DEFAULT_PAGE_SIZE);
+  if (page >= totalPages) return null;
+
+  return { page: page + 1, per: DEFAULT_PAGE_SIZE };
+}
+
 export function setUrl(configuration, path) {
   console.log(configuration);
 

@@ -593,6 +593,65 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "get",
+      "params": [
+        "path",
+        "query"
+      ],
+      "docs": {
+        "description": "Make a GET request to any Primero endpoint. Automatically paginates through all pages.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "get('registry_records');",
+            "caption": "Fetch all registry records"
+          },
+          {
+            "title": "example",
+            "description": "get('registry_records', { count: 50 });",
+            "caption": "Fetch with a fixed page size of 50"
+          },
+          {
+            "title": "param",
+            "description": "Path to the resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Query parameters to append to the URL. Use `count` (or `per`) to control the page size.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ],
   "exports": [],
