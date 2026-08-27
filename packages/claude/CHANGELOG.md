@@ -1,5 +1,11 @@
 # @openfn/language-claude
 
+## 1.2.0 - 27 August 2026
+
+### Minor Changes
+
+- Enable baseURL to be set in prompt calls
+
 ## 1.1.2 - 30 June 2026
 
 ### Patch Changes
