@@ -1,5 +1,11 @@
 # @openfn/language-chatgpt
 
+## 2.2.0 - 27 August 2026
+
+### Minor Changes
+
+- Enable baseURL to be set in prompt calls
+
 ## 2.1.2 - 30 June 2026
 
 ### Patch Changes
