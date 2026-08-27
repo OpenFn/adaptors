@@ -601,7 +601,7 @@
         "query"
       ],
       "docs": {
-        "description": "Make a GET request to any Primero endpoint. Automatically paginates through all pages.",
+        "description": "GET resources from Primero. Automatically paginates through all pages.",
         "tags": [
           {
             "title": "public",
@@ -620,7 +620,7 @@
           },
           {
             "title": "example",
-            "description": "get('registry_records', { count: 50 });",
+            "description": "get('registry_records', { per: 50 });",
             "caption": "Fetch with a fixed page size of 50"
           },
           {
@@ -634,7 +634,7 @@
           },
           {
             "title": "param",
-            "description": "Query parameters to append to the URL. Use `count` (or `per`) to control the page size.",
+            "description": "Query parameters to append to the URL. Use `per` to control the page size..",
             "type": {
               "type": "NameExpression",
               "name": "object"

@@ -21,8 +21,7 @@ export function getNextPageParams(metadata, queryParams = {}) {
   const { total, page } = metadata ?? {};
   if (!total || !page) return null;
 
-  // If the user sets per or count, treat it as a one-page limit
-  if (queryParams.count != null || queryParams.per != null) return null;
+  if (queryParams.per >= 1) return null;
 
   const totalPages = Math.ceil(total / DEFAULT_PAGE_SIZE);
   if (page >= totalPages) return null;

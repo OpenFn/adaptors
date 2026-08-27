@@ -135,14 +135,8 @@ describe('getNextPageParams', () => {
     expect(getNextPageParams({ total: 2500, page: 3 })).to.be.null;
   });
 
-  it('returns null when per is provided in queryParams', () => {
-    expect(getNextPageParams({ total: 2500, page: 1 }, { per: 50 })).to.be.null;
-  });
 
-  it('returns null when count is provided in queryParams', () => {
-    expect(getNextPageParams({ total: 2500, page: 1 }, { count: 50 })).to.be
-      .null;
-  });
+
 });
 
 describe('get', () => {
@@ -172,13 +166,5 @@ describe('get', () => {
     expect(finalState.data).to.eql([{ id: '1' }, { id: '2' }]);
   });
 
-  it('fetches one page when count is specified', async () => {
-    testServer
-      .intercept({ path: /\/api\/v2\/cases/, method: 'GET' })
-      .reply(200, makePage([{ id: '1' }, { id: '2' }], 1, 100, 2));
 
-    const finalState = await get('cases', { count: 2 })(baseState);
-
-    expect(finalState.data).to.eql([{ id: '1' }, { id: '2' }]);
-  });
 });

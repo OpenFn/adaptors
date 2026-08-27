@@ -902,25 +902,22 @@ export function getLocations(query, callback) {
 }
 
 /**
- * Make a GET request to any Primero endpoint. Automatically paginates through all pages.
+ * GET resources from Primero. Automatically paginates through all pages.
  * @public
  * @function
  * @example <caption>Fetch all registry records</caption>
  * get('registry_records');
  * @example <caption>Fetch with a fixed page size of 50</caption>
- * get('registry_records', { count: 50 });
+ * get('registry_records', { per: 50 });
  * @param {string} path - Path to the resource
- * @param {object} query - Query parameters to append to the URL. Use `count` (or `per`) to control the page size.
+ * @param {object} query - Query parameters to append to the URL. Use `per` to control the page size..
  * @returns {Operation}
  */
 export function get(path, query = {}) {
   return async state => {
     const [resolvedPath, resolvedQuery] = expandReferences(state, path, query);
-    const { count, per, ...queryParams } = resolvedQuery;
 
-    let currentQuery = { ...queryParams };
-    if (count ?? per) currentQuery.per = count ?? per;
-
+    let currentQuery = resolvedQuery;
     let results = [];
 
     do {
@@ -928,14 +925,13 @@ export function get(path, query = {}) {
         query: currentQuery,
       });
 
-      results.push(...(response.body.data ?? []));
+      const { data, metadata } = response.body;
+      results = results.concat(data);
 
-      const next = getNextPageParams(response.body.metadata, resolvedQuery);
-      if (next) {
-        currentQuery = { ...queryParams, page: next.page, per: next.per };
-      } else {
-        break;
-      }
+      const next = getNextPageParams(metadata, resolvedQuery);
+      if (!next) break;
+
+      currentQuery = { ...resolvedQuery, page: next.page, per: next.per };
     } while (true);
 
     return composeNextState(state, results);
