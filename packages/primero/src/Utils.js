@@ -16,7 +16,6 @@ export const prepareNextState = (state, response) => {
 
 const DEFAULT_PAGE_SIZE = 1000;
 
-
 export function getNextPageParams(metadata) {
   const { total, page } = metadata ?? {};
   if (!total || !page) return null;
@@ -28,8 +27,6 @@ export function getNextPageParams(metadata) {
 }
 
 export function setUrl(configuration, path) {
-  console.log(configuration);
-
   if (configuration && configuration.url) return configuration.url + path;
   else return path;
 }
@@ -91,12 +88,10 @@ export const request = (state, method, path, options = {}) => {
 
   const { query = {}, body = {}, headers = {}, parseAs = 'json' } = options;
 
-  
-
   const opts = {
     parseAs,
     baseUrl: `${baseUrl}/api/v2/`,
-    body:{ data: body},
+    body: { data: body },
     query,
     headers: {
       'Content-type': 'application/json',
@@ -104,8 +99,6 @@ export const request = (state, method, path, options = {}) => {
       ...headers,
     },
   };
-
-  
 
   return commonRequest(method, path, opts).then(logResponse);
 };
