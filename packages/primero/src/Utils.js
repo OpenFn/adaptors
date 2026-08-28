@@ -17,11 +17,9 @@ export const prepareNextState = (state, response) => {
 const DEFAULT_PAGE_SIZE = 1000;
 
 
-export function getNextPageParams(metadata, queryParams = {}) {
+export function getNextPageParams(metadata) {
   const { total, page } = metadata ?? {};
   if (!total || !page) return null;
-
-  if (queryParams.per >= 1) return null;
 
   const totalPages = Math.ceil(total / DEFAULT_PAGE_SIZE);
   if (page >= totalPages) return null;

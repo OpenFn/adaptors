@@ -926,9 +926,9 @@ export function get(path, query = {}) {
       });
 
       const { data, metadata } = response.body;
-      results = results.concat(data);
+      results.push(...data);
 
-      const next = getNextPageParams(metadata, resolvedQuery);
+      const next = getNextPageParams(metadata);
       if (!next) break;
 
       currentQuery = { ...resolvedQuery, page: next.page, per: next.per };
