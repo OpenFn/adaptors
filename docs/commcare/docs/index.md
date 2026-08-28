@@ -19,7 +19,7 @@ This adaptor exports the following namespaced functions:
 
 <dl>
 <dt>
-    <a href="#http_get">http.get(path, [params])</a>
+    <a href="#http_get">http.get(path, [params], [callback])</a>
 </dt>
 
 <dt>
@@ -361,7 +361,7 @@ submitXls([{ name: 'Mamadou', phone: '000000' }], {
 These functions belong to the http namespace.
 ### http.get {#http_get}
 
-<p><code>get(path, [params]) ⇒ Operation</code></p>
+<p><code>get(path, [params], [callback]) ⇒ Operation</code></p>
 
 Make a GET request to CommCare. Use this to retrieve resources directly from the CommCare REST API.
 
@@ -369,7 +369,8 @@ Make a GET request to CommCare. Use this to retrieve resources directly from the
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | Path to resource. Relative paths are prefixed with `/a/[domain]/api/`; paths starting with `/` are used as-is. |
-| [params] | <code>Object</code> | Optional request params |
+| [params] | <code>Object</code> | Query parameters to append to the URL. All keys except `params.paginate` are sent as query strings (e.g. `{ case_type: 'patient' }` becomes `?case_type=patient`). Set `params.paginate` to `true` to enable automatic pagination. |
+| [callback] | <code>function</code> | Optional per-page callback. When provided alongside `params.paginate`, each page's records are passed as `state.data` and the full dataset is NOT accumulated. `state.data` will be `{}` when the operation completes. |
 
 This operation writes the following keys to state:
 
@@ -382,6 +383,21 @@ This operation writes the following keys to state:
 **Example:** Get cases using the v1 API (prefixed with /a/[domain]/api/)
 ```js
 http.get('case/v1');
+```
+**Example:** Filter cases by type using query parameters
+```js
+http.get('case/v1', { case_type: 'patient', limit: 100 });
+```
+**Example:** Paginate all results into state.data
+```js
+http.get('case/v2', { paginate: true });
+```
+**Example:** Stream each page to a callback without accumulating in memory
+```js
+http.get('case/v2', { paginate: true }, state => {
+  console.log(state.data); // one page at a time
+  return state;
+});
 ```
 
 * * *
