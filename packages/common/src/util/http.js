@@ -158,7 +158,7 @@ export const enableMockClient = (baseUrl, options = {}) => {
   return dispatcher;
 };
 
-const assertOK = async (response, errorMap, fullUrl, method, startTime, parseAs) => {
+const assertOK = async (response, errorMap, fullUrl, method, startTime) => {
   if (errorMap === false) {
     return;
   }
@@ -171,15 +171,7 @@ const assertOK = async (response, errorMap, fullUrl, method, startTime, parseAs)
       : errMapMessage || response.statusCode >= 400;
 
   if (isError) {
-    let body = await readResponseBody(
-      response,
-      parseAs === 'json' ? 'text' : parseAs
-    );
-    if (parseAs === 'json' && typeof body === 'string') {
-      try {
-        body = JSON.parse(body);
-      } catch {}
-    }
+    const body = await readResponseBody(response);
 
     const statusText = getReasonPhrase(response.statusCode);
     const defaultErrorMessage = `${method} to ${fullUrl} returned ${response.statusCode}: ${statusText}`;
@@ -318,7 +310,7 @@ export async function request(method, fullUrlOrPath, options = {}) {
 
   const statusText = getReasonPhrase(response.statusCode);
 
-  await assertOK(response, errors, url, method, startTime, parseAs);
+  await assertOK(response, errors, url, method, startTime);
 
   // redirect codes https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status#redirection_messages
   const hasRedirectStatus = [300, 301, 302, 303, 304, 305, 307, 308].includes(
@@ -440,7 +432,9 @@ async function readResponseBody(response, parseAs) {
         const arrayBuffer = await response.body.arrayBuffer();
         return encode(arrayBuffer, { parseJson: false });
       default:
-        return contentType && contentType.includes('application/json')
+        return contentType &&
+          (contentType.includes('application/json') ||
+            contentType.includes('+json'))
           ? await response.body.json()
           : response.body.text();
     }
