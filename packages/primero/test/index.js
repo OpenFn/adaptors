@@ -123,16 +123,21 @@ describe('getNextPageParams', () => {
   });
 
   it('returns null when all records fit on the first page', () => {
-    expect(getNextPageParams({ total: 5, page: 1 })).to.be.null;
+    expect(getNextPageParams({ total: 5, per: 1000, page: 1 })).to.be.null;
   });
 
   it('returns next page params when more pages exist', () => {
-    const result = getNextPageParams({ total: 2500, page: 1 });
+    const result = getNextPageParams({ total: 2500, per: 1000, page: 1 });
     expect(result).to.eql({ page: 2, per: 1000 });
   });
 
+  it('respects the page size reported in metadata', () => {
+    const result = getNextPageParams({ total: 25, per: 10, page: 1 });
+    expect(result).to.eql({ page: 2, per: 10 });
+  });
+
   it('returns null on the last page', () => {
-    expect(getNextPageParams({ total: 2500, page: 3 })).to.be.null;
+    expect(getNextPageParams({ total: 2500, per: 1000, page: 3 })).to.be.null;
   });
 
 
@@ -156,15 +161,62 @@ describe('get', () => {
     expect(finalState.data).to.eql([...items1, ...items2]);
   });
 
-  it('fetches one page when per is specified', async () => {
+  it('uses per as the page size and paginates through all pages', async () => {
+    const items1 = [{ id: '1' }, { id: '2' }];
+    const items2 = [{ id: '3' }, { id: '4' }];
+
     testServer
       .intercept({ path: /\/api\/v2\/cases/, method: 'GET' })
-      .reply(200, makePage([{ id: '1' }, { id: '2' }], 1, 100, 2));
+      .reply(200, makePage(items1, 1, 4, 2));
+    testServer
+      .intercept({ path: /\/api\/v2\/cases/, method: 'GET' })
+      .reply(200, makePage(items2, 2, 4, 2));
 
     const finalState = await get('cases', { per: 2 })(baseState);
 
-    expect(finalState.data).to.eql([{ id: '1' }, { id: '2' }]);
+    expect(finalState.data).to.eql([...items1, ...items2]);
   });
 
+  it('stops once the limit is reached and does not send it to the API', async () => {
+    const items1 = [{ id: '1' }, { id: '2' }];
 
+    testServer
+      .intercept({
+        path: /\/api\/v2\/cases/,
+        method: 'GET',
+      })
+      .reply(200, req => {
+        expect(req.path).to.not.include('limit');
+        return makePage(items1, 1, 100, 2);
+      });
+
+    const finalState = await get('cases', { per: 2, limit: 1 })(baseState);
+
+    expect(finalState.data).to.eql([{ id: '1' }]);
+  });
+
+  it('returns a single item when fetching by id', async () => {
+    const item = { id: '123a', name: 'Edwine' };
+
+    testServer
+      .intercept({ path: /\/api\/v2\/cases\/123a/, method: 'GET' })
+      .reply(200, { data: item });
+
+    const finalState = await get('cases/123a')(baseState);
+
+    expect(finalState.data).to.eql(item);
+  });
+
+  it('does not paginate when fetching a single item by id', async () => {
+    const item = { id: '123a', name: 'Edwine' };
+
+
+    testServer
+      .intercept({ path: /\/api\/v2\/cases\/123a/, method: 'GET' })
+      .reply(200, { data: item });
+
+    const finalState = await get('cases/123a', { per: 2 })(baseState);
+
+    expect(finalState.data).to.eql(item);
+  });
 });

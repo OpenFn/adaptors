@@ -601,7 +601,7 @@
         "query"
       ],
       "docs": {
-        "description": "GET resources from Primero. Automatically paginates through all pages.",
+        "description": "Get resources from Primero. Automatically paginates through all pages.",
         "tags": [
           {
             "title": "public",
@@ -624,8 +624,18 @@
             "caption": "Fetch with a fixed page size of 50"
           },
           {
+            "title": "example",
+            "description": "get('registry_records', { limit: 5000 });",
+            "caption": "Fetch at most 5000 records"
+          },
+          {
+            "title": "example",
+            "description": "get('registry_records/fc686dff-b1ee-4206-9be6-066dbf4e3a54');",
+            "caption": "Fetch a single registry record by ID"
+          },
+          {
             "title": "param",
-            "description": "Path to the resource",
+            "description": "Path to a resource",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -634,7 +644,7 @@
           },
           {
             "title": "param",
-            "description": "Query parameters to append to the URL. Use `per` to control the page size..",
+            "description": "Query parameters to append to the URL. Use `per` to control the page size. Use `limit` to cap the total number of records fetched.",
             "type": {
               "type": "NameExpression",
               "name": "object"

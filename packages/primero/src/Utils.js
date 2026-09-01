@@ -16,15 +16,44 @@ export const prepareNextState = (state, response) => {
 
 const DEFAULT_PAGE_SIZE = 1000;
 
-
 export function getNextPageParams(metadata) {
-  const { total, page } = metadata ?? {};
+  const { total, per = DEFAULT_PAGE_SIZE, page } = metadata ?? {};
   if (!total || !page) return null;
 
-  const totalPages = Math.ceil(total / DEFAULT_PAGE_SIZE);
+  const totalPages = Math.ceil(total / per);
   if (page >= totalPages) return null;
 
-  return { page: page + 1, per: DEFAULT_PAGE_SIZE };
+  return { page: page + 1, per };
+}
+
+
+export async function requestWithPagination(state, method, path, query = {}) {
+  const { limit, ...urlQuery } = query;
+
+  let currentQuery = urlQuery;
+  let results = [];
+
+  do {
+    const response = await request(state, method, path, { query: currentQuery });
+
+    const { data, metadata } = response.body;
+
+    if (!Array.isArray(data)) return data;
+
+    results.push(...data);
+
+    if (limit && results.length >= limit) {
+      results = results.slice(0, limit);
+      break;
+    }
+
+    const next = getNextPageParams(metadata);
+    if (!next) break;
+
+    currentQuery = { ...urlQuery, page: next.page, per: next.per };
+  } while (true);
+
+  return results;
 }
 
 export function setUrl(configuration, path) {
