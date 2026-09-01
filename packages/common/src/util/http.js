@@ -7,6 +7,8 @@ import { encode } from './base64.js';
 import { MockAgent, Agent, interceptors, FormData } from 'undici';
 import _ from 'lodash';
 
+export { FormData };
+
 // Maps undici dispatchers to keys (where a key is the base url + encoded options)
 const agents = new Map();
 
@@ -348,6 +350,21 @@ export async function request(method, fullUrlOrPath, options = {}) {
     requestResponse.query = queryParams;
   }
   return requestResponse;
+}
+
+/**
+ * Creates a typed, optionally named Blob from raw binary data.
+ * Pass the result as a value in the object given to encodeFormBody.
+ * @param {Buffer|ArrayBuffer|string} data - The binary content
+ * @param {string} type - MIME type (e.g. 'image/jpeg')
+ * @param {string} [filename] - Optional filename
+ * @returns {File|Blob}
+ */
+export function createBlob(data, type, filename) {
+  if (filename) {
+    return new File([data], filename, { type });
+  }
+  return new Blob([data], { type });
 }
 
 /**

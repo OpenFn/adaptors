@@ -13,6 +13,7 @@ import {
   logResponse,
   generateAgentKey,
   encodeFormBody,
+  createBlob,
 } from '../../src/util/http.js';
 import { encode } from '../../src/util/base64.js';
 
@@ -1386,5 +1387,29 @@ describe('encodeFormBody', () => {
     const blob = new Blob(['data'], { type: 'text/plain' });
     const form = encodeFormBody({ file: blob });
     expect(form.get('file')).to.be.instanceof(Blob);
+  });
+
+  it('wraps a Buffer into a typed Blob via createBlob', () => {
+    const buf = Buffer.from([0xff, 0xd8, 0xff]);
+    const form = encodeFormBody({ file: createBlob(buf, 'image/jpeg') });
+    const appended = form.get('file');
+    expect(appended).to.be.instanceof(Blob);
+    expect(appended.type).to.equal('image/jpeg');
+    expect(appended.size).to.equal(3);
+  });
+
+  it('wraps a Buffer into a named File via createBlob', () => {
+    const buf = Buffer.from([0xff, 0xd8, 0xff]);
+    const form = encodeFormBody({ file: createBlob(buf, 'image/jpeg', 'photo.jpg') });
+    const appended = form.get('file');
+    expect(appended).to.be.instanceof(File);
+    expect(appended.type).to.equal('image/jpeg');
+    expect(appended.name).to.equal('photo.jpg');
+  });
+
+  it('createBlob without filename returns a Blob not a File', () => {
+    const entry = createBlob(Buffer.from('x'), 'text/plain');
+    expect(entry).to.be.instanceof(Blob);
+    expect(entry).to.not.be.instanceof(File);
   });
 });
