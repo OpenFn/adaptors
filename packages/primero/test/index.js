@@ -118,6 +118,7 @@ describe('getNextPageParams', () => {
   });
 
   it('returns null when total or page is missing', () => {
+    expect(getNextPageParams({})).to.be.null;
     expect(getNextPageParams({ total: 10 })).to.be.null;
     expect(getNextPageParams({ page: 1 })).to.be.null;
   });
@@ -139,9 +140,6 @@ describe('getNextPageParams', () => {
   it('returns null on the last page', () => {
     expect(getNextPageParams({ total: 2500, per: 1000, page: 3 })).to.be.null;
   });
-
-
-
 });
 
 describe('get', () => {
