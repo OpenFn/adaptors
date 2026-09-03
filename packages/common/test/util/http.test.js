@@ -1075,6 +1075,74 @@ describe('helpers', () => {
       expect(result.body).to.eql({ name: 'aissa' });
     });
 
+    it('should parse error body as json when parseAs is json', async () => {
+      const outcome = {
+        resourceType: 'OperationOutcome',
+        issue: [
+          {
+            severity: 'error',
+            code: 'invalid',
+            diagnostics: 'Patient.name is required',
+          },
+        ],
+      };
+
+      client
+        .intercept({
+          path: '/fhir',
+          method: 'POST',
+        })
+        .reply(422, outcome, {
+          headers: {
+            'content-type': 'application/fhir+json; charset=utf-8',
+          },
+        });
+
+      let error;
+      try {
+        await request('POST', 'https://www.example.com/fhir', {
+          body: { resourceType: 'Patient' },
+          parseAs: 'json',
+        });
+      } catch (err) {
+        error = err;
+      }
+
+      expect(error.statusCode).to.eql(422);
+      expect(error.body).to.eql(outcome);
+      expect(error.body).to.not.be.a('string');
+    });
+
+    it('should keep http error when parseAs is json but body is not json', async () => {
+      const textBody = 'Message: Not Found';
+
+      client
+        .intercept({
+          path: '/no-access',
+          method: 'POST',
+        })
+        .reply(404, textBody, {
+          headers: {
+            'content-type': 'application/text',
+          },
+        });
+
+      let error;
+      try {
+        await request('POST', 'https://www.example.com/no-access', {
+          parseAs: 'json',
+        });
+      } catch (err) {
+        error = err;
+      }
+
+      expect(error.message).to.eql(
+        'POST to https://www.example.com/no-access returned 404: Not Found'
+      );
+      expect(error.statusCode).to.eql(404);
+      expect(error.body).to.eql(textBody);
+    });
+
     it('should force as stream', async () => {
       client
         .intercept({

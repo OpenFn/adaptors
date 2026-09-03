@@ -432,7 +432,9 @@ async function readResponseBody(response, parseAs) {
         const arrayBuffer = await response.body.arrayBuffer();
         return encode(arrayBuffer, { parseJson: false });
       default:
-        return contentType && contentType.includes('application/json')
+        return contentType &&
+          (contentType.includes('application/json') ||
+            contentType.includes('+json'))
           ? await response.body.json()
           : response.body.text();
     }
