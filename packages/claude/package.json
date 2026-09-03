@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-claude",
   "label": "Claude",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "OpenFn adaptor for Claude",
   "type": "module",
   "exports": {

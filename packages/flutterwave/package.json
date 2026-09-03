@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-flutterwave",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "OpenFn flutterwave adaptor",
   "type": "module",
   "exports": {
