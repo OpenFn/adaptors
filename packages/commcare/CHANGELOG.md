@@ -1,5 +1,21 @@
 # @openfn/language-commcare
 
+## 4.3.1 - 03 September 2026
+
+### Patch Changes
+
+- Updated dependencies \[654026d]
+- Updated dependencies \[fd1b2be]
+  - @openfn/language-common@3.3.5
+
+## 4.3.0 - 28 August 2026
+
+### Minor Changes
+
+- 7bf9586: Add opt-in pagination to `http.get`. Pass `params.paginate: true` to
+  accumulate all pages into `state.data`, or also provide a callback to stream
+  each page without accumulating.
+
 ## 4.2.1 - 17 August 2026
 
 ### Patch Changes

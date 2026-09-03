@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
@@ -7,7 +8,7 @@ import {
 
 export function shouldUseNewTracker(resourceType) {
   return /^(enrollments|relationships|events|trackedEntities)$/.test(
-    resourceType
+    resourceType,
   );
 }
 /**
@@ -62,7 +63,7 @@ export function dv(dataElement, value) {
  */
 export function findAttributeValue(trackedEntity, attributeDisplayName) {
   return trackedEntity?.attributes?.find(
-    a => a?.displayName.toLowerCase() == attributeDisplayName.toLowerCase()
+    a => a?.displayName.toLowerCase() == attributeDisplayName.toLowerCase(),
   )?.value;
 }
 
@@ -143,7 +144,7 @@ export function prefixVersionToPath(
   configuration,
   options,
   resourceType,
-  path = null
+  path = null,
 ) {
   let { apiVersion } = configuration;
   const urlString = '/' + resourceType;
@@ -172,7 +173,7 @@ export const configureAuth = (auth, headers = {}) => {
     Object.assign(headers, makeBasicAuthHeader(auth.username, auth.password));
   } else {
     throw new Error(
-      'Invalid authorization credentials. Include a PAT or a username and password in state.configuration'
+      'Invalid authorization credentials. Include a PAT or a username and password in state.configuration',
     );
   }
 
@@ -205,4 +206,59 @@ export async function request(configuration, requestData) {
   };
 
   return commonRequest(method, path, opts).then(logResponse);
+}
+
+const UID_HEAD_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+const UID_TAIL_CHARS =
+  '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
+/**
+ * Derives a stable DHIS2 UID from a string. The same string always returns
+ * the same UID.
+ * @public
+ * @function
+ * @namespace util
+ * @param {string} seed - The string to derive the UID from.
+ * @returns {string} An 11-character DHIS2 UID, matching /^[A-Za-z][A-Za-z0-9]{10}$/
+ * @example <caption>Derive an event UID from an org unit and period</caption>
+ * fn(state => {
+ *   const uid = util.deriveUid(`event:${state.orgUnit}:${state.period}`);
+ *   console.log(uid);
+ *   return state;
+ * })
+ * @example <caption>Create an event idempotently</caption>
+ * create('tracker', state => ({
+ *   events: [
+ *     {
+ *       event: util.deriveUid(`event:${state.orgUnit}:${state.period}`),
+ *       program: state.program,
+ *       orgUnit: state.orgUnit,
+ *       occurredAt: state.date,
+ *     },
+ *   ],
+ * }));
+ */
+export function deriveUid(seed) {
+  if (typeof seed !== 'string') {
+    throw new TypeError(
+      `util.deriveUid expects a string seed, but got ${typeof seed}. ` +
+        'Build the seed yourself, eg `event:${orgUnit}:${period}`.',
+    );
+  }
+  if (seed.length === 0) {
+    throw new RangeError('util.deriveUid expects a non-empty string seed');
+  }
+
+  const digest = createHash('sha256').update(seed, 'utf8').digest('hex');
+  let n = BigInt(`0x${digest.slice(0, 32)}`);
+
+  const base = BigInt(UID_TAIL_CHARS.length);
+  const tail = new Array(10);
+  for (let i = 9; i >= 0; i--) {
+    tail[i] = UID_TAIL_CHARS[Number(n % base)];
+    n = n / base;
+  }
+
+  const head = UID_HEAD_CHARS[Number(n % BigInt(UID_HEAD_CHARS.length))];
+  return head + tail.join('');
 }

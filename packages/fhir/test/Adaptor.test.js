@@ -174,6 +174,25 @@ describe('get', () => {
     expect(path1State.data).to.eql(fixtures.patient);
     expect(path2State.data).to.eql(fixtures.patient);
   });
+
+  it('should make a request using tls options from configuration', async () => {
+    const tls = { ca: 'test-ca-cert', cert: 'test-cert', key: 'test-key' };
+
+    enableMockClient(baseUrl, { tls })
+      .intercept({
+        path: '/baseR4/Patient',
+        method: 'GET',
+      })
+      .reply(200, fixtures.patientBundle);
+
+    const state = {
+      configuration: { ...configuration, tls },
+    };
+
+    const finalState = await execute(get('Patient'))(state);
+
+    expect(finalState.data).to.eql(fixtures.patientBundle);
+  });
 });
 
 describe('getClaim', () => {

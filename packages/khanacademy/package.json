@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-khanacademy",
   "label": "Khan Academy",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "A Khan Academy Language Pack for OpenFn",
   "main": "dist/index.cjs",
   "scripts": {
@@ -22,7 +22,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "qs": "^6.15.2",
+    "qs": "^6.16.0",
     "request": "^2.88.2"
   },
   "devDependencies": {

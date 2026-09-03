@@ -1,5 +1,16 @@
 # @openfn/language-fhir-ndr-et
 
+## 0.2.3 - 03 September 2026
+
+### Patch Changes
+
+- fd1b2be: Security update
+- Updated dependencies \[654026d]
+- Updated dependencies \[fd1b2be]
+- Updated dependencies \[6fa326a]
+  - @openfn/language-common@3.3.5
+  - @openfn/language-fhir@5.2.0
+
 ## 0.2.2 - 30 June 2026
 
 ### Patch Changes

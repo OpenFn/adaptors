@@ -1,5 +1,20 @@
 # @openfn/language-claude
 
+## 1.2.1 - 03 September 2026
+
+### Patch Changes
+
+- fd1b2be: Security update
+- Updated dependencies \[654026d]
+- Updated dependencies \[fd1b2be]
+  - @openfn/language-common@3.3.5
+
+## 1.2.0 - 27 August 2026
+
+### Minor Changes
+
+- Enable baseURL to be set in prompt calls
+
 ## 1.1.2 - 30 June 2026
 
 ### Patch Changes

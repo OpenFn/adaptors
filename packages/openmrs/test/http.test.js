@@ -71,6 +71,27 @@ describe('http.request', () => {
 
     expect(result.response.statusCode).to.equal(404);
   });
+
+  it('should make a request using tls options from configuration', async () => {
+    const tls = { ca: 'test-ca-cert', cert: 'test-cert', key: 'test-key' };
+
+    enableMockClient('https://http-tests.openmrs.org', { tls })
+      .intercept({
+        path: '/ws/rest/v1/patient',
+        query: { q: 'Sarah 1' },
+        method: 'GET',
+      })
+      .reply(200, { results: testData.patientResults }, { ...jsonHeaders });
+
+    const { data } = await http.request('GET', '/ws/rest/v1/patient', {
+      query: { q: 'Sarah 1' },
+    })({
+      ...state,
+      configuration: { ...configuration, tls },
+    });
+
+    expect(data.results[0].display).to.eql(testData.patientResults[0].display);
+  });
 });
 
 describe('http.get', () => {
@@ -102,7 +123,7 @@ describe('http.get', () => {
             },
           ],
         },
-        { ...jsonHeaders }
+        { ...jsonHeaders },
       );
   });
 
@@ -150,7 +171,7 @@ describe('http.post', () => {
   it('should make http request with the "POST" verb', async () => {
     const response = await http.post(
       '/ws/rest/v1/patient',
-      testData.newPatient
+      testData.newPatient,
     )(state);
     expect(response.response.method).to.eql('POST');
   });
@@ -158,7 +179,7 @@ describe('http.post', () => {
   it('should make a successful POST request to openmrs', async () => {
     const { data } = await http.post(
       '/ws/rest/v1/patient',
-      testData.newPatient
+      testData.newPatient,
     )(state);
     expect(data.results[0].display).to.eql(testData.patientResults[0].display);
   });
@@ -186,7 +207,7 @@ describe('http.put', () => {
   it('should make http request with the PUT verb', async () => {
     const response = await http.put(
       '/ws/rest/v1/patient',
-      testData.newPatient
+      testData.newPatient,
     )(state);
     expect(response.response.statusCode).to.eql(200);
     expect(response.response.method).to.eql('PUT');
