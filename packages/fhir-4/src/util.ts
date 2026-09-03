@@ -97,7 +97,7 @@ export const request = (
   assertRelativeUrl(path);
 
   const { configuration, ...otherOptions } = options;
-  const fullPath = nodepath.join(configuration.apiPath ?? '/fhir', path);
+  const fullPath = nodepath.join(configuration.apiPath ?? '', path);
   const opts = {
     ...otherOptions,
     headers: Object.assign(
