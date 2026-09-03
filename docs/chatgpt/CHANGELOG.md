@@ -1,5 +1,14 @@
 # @openfn/language-chatgpt
 
+## 2.2.1 - 03 September 2026
+
+### Patch Changes
+
+- fd1b2be: Security update
+- Updated dependencies \[654026d]
+- Updated dependencies \[fd1b2be]
+  - @openfn/language-common@3.3.5
+
 ## 2.2.0 - 27 August 2026
 
 ### Minor Changes
