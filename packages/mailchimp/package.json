@@ -23,7 +23,7 @@
   "dependencies": {
     "@mailchimp/mailchimp_marketing": "^3.0.80",
     "@openfn/language-common": "workspace:*",
-    "axios": "^1.18.1",
+    "axios": "^1.19.0",
     "md5": "^2.3.0",
     "undici": "^7.29.0"
   },
