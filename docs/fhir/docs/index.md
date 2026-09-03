@@ -260,6 +260,7 @@ Options provided to a HTTP request
 | query | <code>object</code> | Query parameters for the request. Will be encoded into the URL |
 | errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |
 | timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |
+| tls | <code>object</code> | TLS/SSL options for this request. Overrides `configuration.tls`. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions |
 
 
 * * *

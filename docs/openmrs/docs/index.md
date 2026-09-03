@@ -688,6 +688,7 @@ Options object
 | data | <code>object</code> |  | The request body (as JSON) |
 | errors | <code>object</code> \| <code>boolean</code> |  | Pass `false` to not throw on errors. Pass a map of errorCodes: error messages, ie, `{ 404: 'Resource not found' }`, or `false` to suppress errors for a specific code. |
 | [parseAs] | <code>string</code> | <code>&quot;&#x27;json&#x27;&quot;</code> | The response format to parse (e.g., 'json', 'text', or 'stream') |
+| tls | <code>object</code> |  | TLS/SSL options for this request. Overrides `configuration.tls`. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions |
 
 
 * * *

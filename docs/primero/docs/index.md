@@ -4,6 +4,8 @@
 <dt>
     <a href="#createreferrals">createReferrals(params, callback)</a></dt>
 <dt>
+    <a href="#get">get(path, query)</a></dt>
+<dt>
     <a href="#getcases">getCases(query, options, callback)</a></dt>
 <dt>
     <a href="#getforms">getForms(query, callback)</a></dt>
@@ -145,6 +147,38 @@ createReferrals({
     notes: "This is a bulk referral",
   },
 });
+```
+
+* * *
+
+### get
+
+<p><code>get(path, query) ⇒ Operation</code></p>
+
+Get resources from Primero. Automatically paginates through all pages.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | Path to a resource |
+| query | <code>object</code> | Query parameters to append to the URL. Use `per` to control the page size. Use `limit` to cap the total number of records fetched. |
+
+
+**Example:** Fetch all registry records
+```js
+get('registry_records');
+```
+**Example:** fetch all records in pages of 50 at a time
+```js
+get('registry_records', { per: 50 });
+```
+**Example:** Fetch at most 5000 records
+```js
+get('registry_records', { limit: 5000 });
+```
+**Example:** Fetch a single registry record by ID
+```js
+get('registry_records/fc686dff-b1ee-4206-9be6-066dbf4e3a54');
 ```
 
 * * *
