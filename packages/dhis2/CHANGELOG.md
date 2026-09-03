@@ -1,5 +1,15 @@
 # @openfn/language-dhis2
 
+## 8.3.1 - 03 September 2026
+
+### Patch Changes
+
+- 349781e: Security update
+- 19f1642: Security update
+- Updated dependencies \[654026d]
+- Updated dependencies \[fd1b2be]
+  - @openfn/language-common@3.3.5
+
 ## 8.3.0 - 24 August 2026
 
 ### Minor Changes
@@ -253,6 +263,7 @@ other adaptors).
 
 - dfe53ef: - Implement a new `tracker` namespace for `tracker.import()` and
   `tracker.export()` functions.
+
   - Throw an error when `create('tracker')` is called.
 
 - 5b73844: - Add importStrategy to query params for `create` and `update`

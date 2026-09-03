@@ -1,5 +1,15 @@
 # @openfn/language-mailchimp
 
+## 1.1.4 - 03 September 2026
+
+### Patch Changes
+
+- fd1b2be: Security update
+- 19f1642: Security update
+- Updated dependencies \[654026d]
+- Updated dependencies \[fd1b2be]
+  - @openfn/language-common@3.3.5
+
 ## 1.1.3 - 28 July 2026
 
 ### Patch Changes

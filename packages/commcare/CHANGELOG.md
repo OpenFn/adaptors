@@ -1,5 +1,13 @@
 # @openfn/language-commcare
 
+## 4.3.1 - 03 September 2026
+
+### Patch Changes
+
+- Updated dependencies \[654026d]
+- Updated dependencies \[fd1b2be]
+  - @openfn/language-common@3.3.5
+
 ## 4.3.0 - 28 August 2026
 
 ### Minor Changes

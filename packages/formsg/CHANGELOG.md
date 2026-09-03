@@ -1,5 +1,13 @@
 # @openfn/language-formsg
 
+## 1.0.12 - 03 September 2026
+
+### Patch Changes
+
+- Updated dependencies \[654026d]
+- Updated dependencies \[fd1b2be]
+  - @openfn/language-common@3.3.5
+
 ## 1.0.11 - 30 June 2026
 
 ### Patch Changes
