@@ -1,5 +1,11 @@
 import { expect } from 'chai';
-import { sortBundle, logValidationErrors } from '../src/util';
+import { enableMockClient } from '@openfn/language-common/util';
+import {
+  sortBundle,
+  logValidationErrors,
+  getTLSOptions,
+  request,
+} from '../src/util';
 
 const mockLogger = { log: () => {}, error: () => {} };
 
@@ -202,5 +208,59 @@ describe('logValidationErrors', () => {
         },
       },
     });
+  });
+});
+
+describe('request() with tls', () => {
+  it('should make a request using tls options from configuration', async () => {
+    const tls = { ca: 'test-ca-cert', cert: 'test-cert', key: 'test-key' };
+    const baseUrl = 'https://fhir4-tls-tests.example.com';
+    const apiPath = 'baseR4';
+
+    enableMockClient(baseUrl, { tls })
+      .intercept({
+        path: '/baseR4/Patient/123',
+        method: 'GET',
+      })
+      .reply(
+        200,
+        { resourceType: 'Patient', id: '123' },
+        { headers: { 'content-type': 'application/fhir+json' } },
+      );
+
+    const response = await request('GET', 'Patient/123', {
+      configuration: { baseUrl, apiPath, tls },
+    });
+
+    expect(response.body).to.eql({ resourceType: 'Patient', id: '123' });
+  });
+});
+
+describe('getTLSOptions', () => {
+  it('prefers requestOptions.tls over configuration.tls', () => {
+    const configuration = {
+      tls: { ca: 'config-ca', cert: 'config-cert' },
+    };
+
+    const requestOptions = {
+      tls: { ca: 'request-ca', cert: 'request-cert' },
+    };
+
+    const result = getTLSOptions(configuration, requestOptions);
+    expect(result).to.deep.equal(requestOptions.tls);
+  });
+
+  it('falls back to configuration.tls if requestOptions.tls is not provided', () => {
+    const configuration = {
+      tls: { ca: 'config-ca', cert: 'config-cert' },
+    };
+
+    const result = getTLSOptions(configuration, {});
+    expect(result).to.deep.equal(configuration.tls);
+  });
+
+  it('returns undefined if no TLS config is found', () => {
+    const result = getTLSOptions({}, {});
+    expect(result).to.be.undefined;
   });
 });

@@ -22,7 +22,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "qs": "^6.15.2",
+    "qs": "^6.16.0",
     "request": "^2.88.2"
   },
   "devDependencies": {

@@ -36,9 +36,9 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "axios": "^1.18.1",
+    "axios": "^1.19.0",
     "lodash": "^4.18.1",
-    "qs": "^6.15.2"
+    "qs": "^6.16.0"
   },
   "devDependencies": {
     "assertion-error": "2.0.0",

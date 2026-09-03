@@ -69,6 +69,29 @@ describe('request()', () => {
     expect(result.data).to.eql('hello');
   });
 
+  it('should make a request using tls options from configuration', async () => {
+    const tls = { ca: 'test-ca-cert', cert: 'test-cert', key: 'test-key' };
+
+    enableMockClient('https://www.example.com', {
+      defaultContentType: 'text',
+      maxRedirections: 5,
+      tls,
+    })
+      .intercept({ path: '/greeting' })
+      .reply(200, 'hello');
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://www.example.com',
+        tls,
+      },
+    };
+
+    const result = await execute(request('GET', '/greeting'))(state);
+
+    expect(result.data).to.eql('hello');
+  });
+
   it('should throw if no baseUrl is set and no url is provided', async () => {
     const state = {
       configuration: null,

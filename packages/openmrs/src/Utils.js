@@ -48,6 +48,10 @@ export async function fetchAndLog(method, url, opts = {}) {
   }
 }
 
+export function getTLSOptions(state, requestOptions = {}) {
+  return requestOptions.tls ?? state.configuration?.tls;
+}
+
 export function validateCredentials(state) {
   const config = state.configuration || {};
 
@@ -181,6 +185,8 @@ export async function request(state, method, path, options = {}) {
     finalHeaders['Accept-Language'] = language;
   }
 
+  const tls = getTLSOptions(state, options);
+
   const requestOptions = {
     body: data,
     headers: finalHeaders,
@@ -188,6 +194,7 @@ export async function request(state, method, path, options = {}) {
     parseAs,
     baseUrl,
     errors,
+    tls,
     _onrequest,
   };
 
