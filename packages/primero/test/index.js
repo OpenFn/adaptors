@@ -217,4 +217,94 @@ describe('get', () => {
 
     expect(finalState.data).to.eql(item);
   });
+
+  it('returns exactly limit items when limit is smaller than a full page span', async () => {
+    const page1 = [1, 2, 3, 4, 5].map(id => ({ id: `${id}` }));
+    const page2 = [6, 7, 8, 9, 10].map(id => ({ id: `${id}` }));
+
+    testServer
+      .intercept({ path: /\/api\/v2\/cases/, method: 'GET' })
+      .reply(200, makePage(page1, 1, 20, 5));
+    testServer
+      .intercept({ path: /\/api\/v2\/cases/, method: 'GET' })
+      .reply(200, makePage(page2, 2, 20, 5));
+
+    const finalState = await get('cases', { per: 5, limit: 6 })(baseState);
+
+    expect(finalState.data).to.eql([...page1, { id: '6' }]);
+    expect(finalState.data).to.have.length(6);
+  });
+
+  it('caps per to limit when limit is smaller than per', async () => {
+    const page1 = [1, 2, 3].map(id => ({ id: `${id}` }));
+
+    let sentQuery;
+    testServer
+      .intercept({ path: /\/api\/v2\/cases/, method: 'GET' })
+      .reply(200, req => {
+        sentQuery = req.query;
+        return makePage(page1, 1, 20, 3);
+      });
+
+    const finalState = await get('cases', { per: 5, limit: 3 })(baseState);
+
+    expect(sentQuery.per).to.eql(3);
+    expect(finalState.data).to.eql(page1);
+  });
+
+  it('shrinks per on the final page but keeps the page number from metadata', async () => {
+    const page1 = [1, 2, 3, 4, 5].map(id => ({ id: `${id}` }));
+    const page2 = [6, 7, 8, 9, 10].map(id => ({ id: `${id}` }));
+    const page3 = [11, 12].map(id => ({ id: `${id}` }));
+
+    const sentQueries = [];
+    const record = body => req => {
+      sentQueries.push(req.query);
+      return body;
+    };
+
+    testServer
+      .intercept({ path: /\/api\/v2\/cases/, method: 'GET' })
+      .reply(200, record(makePage(page1, 1, 20, 5)));
+    testServer
+      .intercept({ path: /\/api\/v2\/cases/, method: 'GET' })
+      .reply(200, record(makePage(page2, 2, 20, 5)));
+    testServer
+      .intercept({ path: /\/api\/v2\/cases/, method: 'GET' })
+      .reply(200, record(makePage(page3, 3, 20, 2)));
+
+    const finalState = await get('cases', { per: 5, limit: 12 })(baseState);
+
+    expect(finalState.data).to.eql([...page1, ...page2, ...page3]);
+    expect(finalState.data).to.have.length(12);
+    expect(sentQueries[2]).to.include({ page: 3, per: 2 });
+  });
+
+  it('shrinks per to the remaining count on the final page regardless of alignment', async () => {
+    const page1 = [1, 2, 3, 4, 5].map(id => ({ id: `${id}` }));
+    const page2 = [6, 7, 8, 9, 10].map(id => ({ id: `${id}` }));
+    const page3 = [11, 12, 13].map(id => ({ id: `${id}` }));
+
+    const sentQueries = [];
+    const record = body => req => {
+      sentQueries.push(req.query);
+      return body;
+    };
+
+    testServer
+      .intercept({ path: /\/api\/v2\/cases/, method: 'GET' })
+      .reply(200, record(makePage(page1, 1, 20, 5)));
+    testServer
+      .intercept({ path: /\/api\/v2\/cases/, method: 'GET' })
+      .reply(200, record(makePage(page2, 2, 20, 5)));
+    testServer
+      .intercept({ path: /\/api\/v2\/cases/, method: 'GET' })
+      .reply(200, record(makePage(page3, 3, 20, 3)));
+
+    const finalState = await get('cases', { per: 5, limit: 13 })(baseState);
+
+    expect(finalState.data).to.have.length(13);
+    expect(finalState.data).to.eql([...page1, ...page2, ...page3]);
+    expect(sentQueries[2]).to.include({ page: 3, per: 3 });
+  });
 });

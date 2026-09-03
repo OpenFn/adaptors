@@ -907,7 +907,7 @@ export function getLocations(query, callback) {
  * @function
  * @example <caption>Fetch all registry records</caption>
  * get('registry_records');
- * @example <caption>Fetch with a fixed page size of 50</caption>
+ * @example <caption>fetch all records in pages of 50 at a time</caption>
  * get('registry_records', { per: 50 });
  * @example <caption>Fetch at most 5000 records</caption>
  * get('registry_records', { limit: 5000 });

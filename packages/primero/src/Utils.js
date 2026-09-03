@@ -30,6 +30,10 @@ export function getNextPageParams(metadata) {
 export async function requestWithPagination(state, method, path, query = {}) {
   const { limit, ...urlQuery } = query;
 
+  if (limit && limit < urlQuery.per) {
+    urlQuery.per = limit;
+  }
+
   let currentQuery = urlQuery;
   let results = [];
 
@@ -50,7 +54,16 @@ export async function requestWithPagination(state, method, path, query = {}) {
     const next = getNextPageParams(metadata);
     if (!next) break;
 
-    currentQuery = { ...urlQuery, page: next.page, per: next.per };
+    let { page, per } = next;
+
+    if (limit) {
+      const remaining = limit - results.length;
+      if (remaining < per) {
+        per = remaining;
+      }
+    }
+
+    currentQuery = { ...urlQuery, page, per };
   } while (true);
 
   return results;
