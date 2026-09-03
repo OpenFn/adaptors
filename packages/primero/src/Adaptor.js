@@ -1,6 +1,6 @@
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
-import { assembleError, scrubResponse, tryJson, getNextPageParams, request as utilRequest } from './Utils.js';
+import { assembleError, scrubResponse, tryJson, requestWithPagination } from './Utils.js';
 import request from 'request';
 
 export const composeNextState = (state, data, meta) => {
@@ -902,37 +902,31 @@ export function getLocations(query, callback) {
 }
 
 /**
- * GET resources from Primero. Automatically paginates through all pages.
+ * Get resources from Primero. Automatically paginates through all pages.
  * @public
  * @function
  * @example <caption>Fetch all registry records</caption>
  * get('registry_records');
- * @example <caption>Fetch with a fixed page size of 50</caption>
+ * @example <caption>fetch all records in pages of 50 at a time</caption>
  * get('registry_records', { per: 50 });
- * @param {string} path - Path to the resource
- * @param {object} query - Query parameters to append to the URL. Use `per` to control the page size..
+ * @example <caption>Fetch at most 5000 records</caption>
+ * get('registry_records', { limit: 5000 });
+ * @example <caption>Fetch a single registry record by ID</caption>
+ * get('registry_records/fc686dff-b1ee-4206-9be6-066dbf4e3a54');
+ * @param {string} path - Path to a resource
+ * @param {object} query - Query parameters to append to the URL. Use `per` to control the page size. Use `limit` to cap the total number of records fetched.
  * @returns {Operation}
  */
 export function get(path, query = {}) {
   return async state => {
     const [resolvedPath, resolvedQuery] = expandReferences(state, path, query);
 
-    let currentQuery = resolvedQuery;
-    let results = [];
-
-    do {
-      const response = await utilRequest(state, 'GET', resolvedPath, {
-        query: currentQuery,
-      });
-
-      const { data, metadata } = response.body;
-      results.push(...data);
-
-      const next = getNextPageParams(metadata);
-      if (!next) break;
-
-      currentQuery = { ...resolvedQuery, page: next.page, per: next.per };
-    } while (true);
+    const results = await requestWithPagination(
+      state,
+      'GET',
+      resolvedPath,
+      resolvedQuery
+    );
 
     return composeNextState(state, results);
   };
