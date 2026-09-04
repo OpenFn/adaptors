@@ -8,12 +8,12 @@ Note that the URL structure changes: the version segment moves from before the r
 
 ```js
 // before
-get('/case/12345');
+get('v0.5/case/12345');
 // after
 http.get('case/v2/12345');
 
 // before
-post('/user', { username: 'test', password: 'somepassword' });
+post('v0.5/user', { username: 'test', password: 'somepassword' });
 // after
 http.post('user/v2', { username: 'test', password: 'somepassword' });
 
