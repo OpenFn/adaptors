@@ -38,29 +38,36 @@ export function execute(...operations) {
 }
 
 /**
- * Make a GET request to CommCare. Use this to fetch resources directly from Commcare REST API.
+ * Make a GET request to CommCare's legacy v0.5 API.
  * You can pass Commcare query parameters as an object of key value pairs, which will map to parameters
  * in the URL.
  * The response body will be returned to `state.data` as JSON.
  * Paginated responses will be fully downloaded and returned as a single array, _unless_ an `offset` is passed.
+ * @deprecated This function only works against CommCare's legacy v0.5 API (path: `/a/domain/api/v0.5/...`).
+ * For current CommCare APIs, use {@link http.get} instead.
  * @public
  * @function
- * @example <caption>Get a resource by Id. Equivalent to GET `<baseUrl>/case/12345`</caption>
+ * @example <caption>Get a resource by Id. Equivalent to GET `/a/domain/api/v0.5/case/12345`</caption>
  * get("/case/12345")
- * @example <caption>Get a resource with exactly 20 items. Equivalent to `<baseUrl>/case?offset=0&limit=20`</caption>
+ * @example <caption>Get a resource with exactly 20 items. Equivalent to `/a/domain/api/v0.5/case?offset=0&limit=20`</caption>
  * get("/case", { offset:0, limit: 20 })
- * @example <caption>Get all items in a resource, and add them to state. Equivalent to `<baseUrl>/case`</caption>
+ * @example <caption>Get all items in a resource, and add them to state. Equivalent to `/a/domain/api/v0.5/case`</caption>
  * get("/case", {}, (state) => {
  *   state.cases.push(...state.data) // adds all cases to the cases array
  *   return state;
  * })
- * @param {string} path - Path to resource
- * @param {Object} [params] - Input parameters for the request. These vary by endpoint,  see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957366/Data+APIs CommCare docs}.
+ * @param {string} path - Path to a v0.5 resource (e.g. `case`, `form`)
+ * @param {Object} [params] - Input parameters for the request. These vary by endpoint, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957366/Data+APIs CommCare v0.5 docs}.
  * @param {function} [callback] - Optional callback function. Invoked once per page of data retrieved.
  * @state {CommcareHttpState}
  * @returns {Operation}
  */
 export function get(path, params = {}, callback = s => s) {
+  console.warn(
+    'DEPRECATION WARNING: get() only works with CommCare\'s legacy v0.5 API ' +
+      '(/a/domain/api/v0.5/...). Use http.get() for current CommCare APIs. ' +
+      'get() will be removed in a future major version.'
+  );
   return async state => {
     const { domain } = state.configuration;
     const [resolvedPath, resolvedParams] = expandReferences(
@@ -135,13 +142,15 @@ export function get(path, params = {}, callback = s => s) {
 }
 
 /**
- * Make a POST request to CommCare. Use this to send resources directly to Commcare REST API.
+ * Make a POST request to CommCare's legacy v0.5 API.
  * You can pass Commcare body data as a JSON object.
- * @example <caption>Create a user resource.Equivalent to `<baseUrl>/user`</caption>
+ * @deprecated This function only works against CommCare's legacy v0.5 API (path: `/a/domain/api/v0.5/...`).
+ * For current CommCare APIs, use {@link http.post} instead.
+ * @example <caption>Create a user resource. Equivalent to `/a/domain/api/v0.5/user`</caption>
  * post("/user", { "username":"test", "password":"somepassword" })
  * @function
  * @public
- * @param {string} path - Path to resource
+ * @param {string} path - Path to a v0.5 resource (e.g. `user`, `case`)
  * @param {object} data - Object or JSON to create a resource
  * @param {Object} [params] - Optional request params
  * @param {function} [callback] - Optional callback to handle the response
@@ -149,6 +158,11 @@ export function get(path, params = {}, callback = s => s) {
  * @state {CommcareHttpState}
  */
 export function post(path, data, params = {}, callback = s => s) {
+  console.warn(
+    'DEPRECATION WARNING: post() only works with CommCare\'s legacy v0.5 API ' +
+      '(/a/domain/api/v0.5/...). Use http.post() for current CommCare APIs. ' +
+      'post() will be removed in a future major version.'
+  );
   return async state => {
     const { domain } = state.configuration;
     const [resolvedPath, resolvedData, resolvedParams] = expandReferences(
@@ -275,10 +289,9 @@ export function submit(data) {
 }
 
 /**
- * Make a GET request to CommCare's Reports API
- * and POST the response somewhere else.
+ * Make a GET request to CommCare's Reports API (v0.5) and POST the response somewhere else.
  * @public
- * @example <caption>Get 10 records from a report and post them to example.com. Equivalent to `<baseUrl>/configurablereportdata/abcde?limit=10`</caption>
+ * @example <caption>Get 10 records from a report and post them to example.com. Equivalent to `/a/domain/api/v0.5/configurablereportdata/abcde?limit=10`</caption>
  * fetchReportData(
  *   "abcde",
  *   { limit: 10 },
@@ -286,7 +299,7 @@ export function submit(data) {
  * )
  * @function
  * @param {String} reportId - API name of the report.
- * @param {Object} params - Input parameters for the request, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957341/Download+Report+Data Commcare docs}.
+ * @param {Object} params - Input parameters for the request, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957341/Download+Report+Data CommCare v0.5 docs}.
  * @param {String} postUrl - URL to which the response object will be posted.
  * @state {CommcareHttpState}
  * @returns {Operation}
@@ -316,11 +329,12 @@ export function fetchReportData(reportId, params, postUrl) {
 }
 
 /**
- * Make a general HTTP request against the Commcare server. Use this to make any request to Commcare REST API.
- * @example <caption>Get a resource. Equivalent to `<baseUrl>/a/asri/api/v0.5/case`</caption>
+ * Make a general HTTP request against the CommCare server.
+ * @deprecated Use {@link http.request} instead.
+ * @example <caption>Get a resource at a v0.5 path</caption>
  * request("GET", "/a/asri/api/v0.5/case");
- * @example <caption>Get a resource using query parameters. Equivalent to `<baseUrl>/case?offset=0&limit=20`</caption>
- * request("GET", "/case", {}, { offset:0, limit: 20 })
+ * @example <caption>Get a resource using query parameters</caption>
+ * request("GET", "/a/asri/api/v0.5/case", {}, { offset:0, limit: 20 })
  * @function
  * @public
  * @param {string} method - HTTP method to use
@@ -331,6 +345,11 @@ export function fetchReportData(reportId, params, postUrl) {
  * @state {CommcareHttpState}
  */
 export function request(method, path, body, params = {}) {
+  console.warn(
+    'DEPRECATION WARNING: request() is designed around the legacy v0.5 API. ' +
+      'Use http.request() instead. ' +
+      'request() will be removed in a future major version.'
+  );
   return async state => {
     const [resolvedMethod, resolvedPath, resolvedBody, resolvedParams] =
       expandReferences(state, method, path, body, params);
