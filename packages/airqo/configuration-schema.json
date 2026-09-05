@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["token"],
+  "properties": {
+    "token": {
+      "type": "string",
+      "title": "Access Token",
+      "description": "AirQo API access token. Generate one via analytics.airqo.net under Account Settings > API."
+    },
+    "baseUrl": {
+      "type": "string",
+      "title": "Base URL",
+      "description": "AirQo API base URL. Defaults to https://api.airqo.net/api/v2",
+      "default": "https://api.airqo.net/api/v2"
+    }
+  }
+}
