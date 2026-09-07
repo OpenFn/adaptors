@@ -29,8 +29,9 @@ Before merging, the reviewer should check the following items:
 - [ ] If this PR includes breaking changes, do we need to update any jobs in
       production? Is it safe to release?
 - [ ] Are there any unit tests?
-- [ ] Is there a changeset associated with this PR? Should there be? Note that
-      dev only changes don't need a changeset.
+- [ ] Does every changed adaptor have a corresponding changeset? If an adaptor
+      change does not affect a release, has a maintainer applied the
+      `no changeset required` label? Repository-only changes need neither.
 - [ ] If there is a changeset, was `pnpm run version` used to bump versions (not
       `pnpm changeset version` directly)? This ensures changelog dates are stamped correctly.
 - [ ] Have you ticked a box under AI Usage?
