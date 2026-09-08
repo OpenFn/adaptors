@@ -152,8 +152,6 @@ export function set(name, keyGen, values) {
       throw e;
     }
 
-    const batchSize = 1000;
-
     const [resolvedName, resolvedValues] = expandReferences(
       state,
       name,
@@ -190,37 +188,111 @@ export function set(name, keyGen, values) {
       });
     }
 
-    while (kvPairs.length) {
-      const batch = kvPairs.splice(0, batchSize);
+    await uploadValues(state, resolvedName, kvPairs, name);
 
+    return state;
+  };
+}
+
+// Upload key/value pairs to a collection in batches.
+// `logName` is the name as written by the user, so log output is unchanged
+// when a lazy state reference is passed as the collection name.
+const uploadValues = async (state, resolvedName, kvPairs, logName) => {
+  const batchSize = 1000;
+
+  while (kvPairs.length) {
+    const batch = kvPairs.splice(0, batchSize);
+
+    console.log(
+      `Collections: uploading batch of ${batch.length} values to "${logName}"...`,
+    );
+    const response = await request(state, getClient(state), resolvedName, {
+      method: 'POST',
+      body: JSON.stringify({ items: batch }),
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
+
+    if (response.statusCode >= 400) {
       console.log(
-        `Collections: uploading batch of ${batch.length} values to "${name}"...`,
+        `Collections: Error setting ${batch.length} values in "${logName}"`,
       );
-      const response = await request(state, getClient(state), resolvedName, {
-        method: 'POST',
-        body: JSON.stringify({ items: batch }),
-        headers: {
-          'content-type': 'application/json',
-        },
-      });
+      const text = await response.body.text();
+      const e = new Error('ERROR from collections server:' + 400);
+      e.body = text;
+      throw e;
+    }
 
-      if (response.statusCode >= 400) {
-        console.log(
-          `Collections: Error setting ${batch.length} values in "${name}"`,
-        );
-        const text = await response.body.text();
-        const e = new Error('ERROR from collections server:' + 400);
-        e.body = text;
+    const result = await response.body.json();
+    console.log(`Collections: set ${result.upserted} values in "${logName}"`);
+
+    if (result.error) {
+      console.log(`Collections: errors reported on set:`, result.error);
+    }
+  }
+};
+
+/**
+ * Adds an array of key/value pairs to a collection. If a key already exists, its
+ * value will be replaced by the new value.
+ *
+ * Use this when the key cannot be derived from the value itself, which is the
+ * case set()'s key generator does not cover: with set() the key has to be
+ * carried on the value, even when it is not part of the data being stored.
+ * @public
+ * @function
+ * @param {string} name - The name of the collection to upload to
+ * @param {Array<{key: string, value: any}>} items - an array of key/value pairs to set
+ * @example <caption>Set values whose keys are not part of the data</caption>
+ * collections.setBatch('my-collection', [
+ *   { key: 'a', value: ['some', 'strings'] },
+ *   { key: 'b', value: ['more', 'strings'] },
+ * ])
+ */
+export function setBatch(name, items) {
+  const argCount = arguments.length;
+  return async state => {
+    if (argCount < 2) {
+      const e = new Error('ILLEGAL_ARGUMENTS');
+      e.description = 'Insufficient arguments passed to setBatch()';
+      e.fix = 'Make sure to pass two arguments to: setBatch(name, items)';
+      e.args = { name, items };
+      throw e;
+    }
+
+    const [resolvedName, resolvedItems] = expandReferences(state, name, items);
+
+    if (!Array.isArray(resolvedItems)) {
+      const e = new Error('ILLEGAL_ARGUMENTS');
+      e.description = 'The second argument to setBatch() must be an array';
+      e.fix =
+        'Pass an array of key/value pairs, ie [{ key: "a", value: { ... } }]';
+      throw e;
+    }
+
+    const kvPairs = resolvedItems.map((item, index) => {
+      if (!item || typeof item !== 'object' || Array.isArray(item)) {
+        const e = new Error('ILLEGAL_ARGUMENTS');
+        e.description = `Item at index ${index} is not a key/value pair`;
+        e.fix =
+          'Each item passed to setBatch() must be an object like { key: "a", value: { ... } }';
         throw e;
       }
-
-      const result = await response.body.json();
-      console.log(`Collections: set ${result.upserted} values in "${name}"`);
-
-      if (result.error) {
-        console.log(`Collections: errors reported on set:`, result.error);
+      if (typeof item.key !== 'string') {
+        const e = new Error('KEY_ERROR');
+        e.description = `Item at index ${index} does not have a string key`;
+        e.fix =
+          'Each item passed to setBatch() must have a `key` property which is a string';
+        throw e;
       }
-    }
+      return {
+        key: item.key,
+        value: JSON.stringify(item.value),
+      };
+    });
+
+    await uploadValues(state, resolvedName, kvPairs, name);
 
     return state;
   };
