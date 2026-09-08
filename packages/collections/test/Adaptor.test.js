@@ -468,6 +468,76 @@ describe('set', () => {
     expect(result).to.eql(item);
   });
 
+  it('setBatch: should set an array of key/value pairs', async () => {
+    const { state } = init();
+
+    await collections.setBatch(COLLECTION, [
+      { key: 'a', value: { id: 'a' } },
+      { key: 'b', value: { id: 'b' } },
+    ])(state);
+
+    expect(api.asJSON(PROJECT, COLLECTION, 'a')).to.eql({ id: 'a' });
+    expect(api.asJSON(PROJECT, COLLECTION, 'b')).to.eql({ id: 'b' });
+  });
+
+  it('setBatch: should set values which carry no key of their own', async () => {
+    const { state } = init();
+
+    await collections.setBatch(COLLECTION, [
+      { key: 'a', value: ['some', 'strings'] },
+    ])(state);
+
+    expect(api.asJSON(PROJECT, COLLECTION, 'a')).to.eql(['some', 'strings']);
+  });
+
+  it('setBatch: should throw if only one arg passed', async () => {
+    const { state } = init();
+
+    let err;
+    try {
+      await collections.setBatch(COLLECTION)(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.message).to.eql('ILLEGAL_ARGUMENTS');
+  });
+
+  it('setBatch: should throw if items is not an array', async () => {
+    const { state } = init();
+
+    let err;
+    try {
+      await collections.setBatch(COLLECTION, { key: 'a', value: 1 })(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.message).to.eql('ILLEGAL_ARGUMENTS');
+  });
+
+  it('setBatch: should throw if an item has no string key', async () => {
+    const { state } = init();
+
+    let err;
+    try {
+      await collections.setBatch(COLLECTION, [{ value: { id: 'a' } }])(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.message).to.eql('KEY_ERROR');
+  });
+
+  it('setBatch: should throw if an item is not an object', async () => {
+    const { state } = init();
+
+    let err;
+    try {
+      await collections.setBatch(COLLECTION, ['nope'])(state);
+    } catch (e) {
+      err = e;
+    }
+    expect(err.message).to.eql('ILLEGAL_ARGUMENTS');
+  });
+
   it('should resolve a value reference', async () => {
     const { state } = init();
 
