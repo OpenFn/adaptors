@@ -140,9 +140,15 @@ describe('Adaptor', () => {
 
       console.log(`Total time: ${totalTime}ms`);
 
+      // 11 concurrent calls, each paging through the same 11 records, so the
+      // number of successful responses is fixed by pagination rather than timing.
       expect(successfulRequests).to.eq(33);
-      expect(totalRequests).to.greaterThanOrEqual(56);
-      expect(rateLimitCount).to.greaterThanOrEqual(23);
+
+      // How many 403s come back depends on how many retries fit inside a real
+      // 2s throttle window, which varies with machine speed and load. Assert
+      // that throttling happened and was retried through, not how many times.
+      expect(rateLimitCount).to.be.greaterThan(0);
+      expect(totalRequests).to.eq(successfulRequests + rateLimitCount);
     }).timeout(6e4);
   });
   describe('createEntry', () => {
