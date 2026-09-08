@@ -96,8 +96,13 @@ describe('handleRateLimit', () => {
 
     const now = Date.now();
 
-    // Test normal delay between requests
-    await handleRateLimit([now - 1000], requestConfig);
+    // Test normal delay between requests.
+    // Age this request well inside throttleTime (1000ms): handleRateLimit drops
+    // entries once `now - requestTime > throttleTime`, and it reads its own
+    // `Date.now()`. At exactly `now - 1000` a single elapsed millisecond tips
+    // the entry over the threshold, so it is discarded, nothing is logged and
+    // this assertion reads an undefined log line.
+    await handleRateLimit([now - 500], requestConfig);
     expect(consoleLogCalls[1]).to.equal('Waiting 0.2s before next request');
 
     // Test max requests reached
