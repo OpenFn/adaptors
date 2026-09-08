@@ -5,6 +5,15 @@ import js2xmlparser from 'js2xmlparser';
 import xlsx from 'xlsx';
 
 import * as util from './Utils.js';
+
+let hasWarnedDeprecated = false;
+function warnDeprecated(message) {
+  if (!hasWarnedDeprecated) {
+    hasWarnedDeprecated = true;
+    console.warn(message);
+  }
+}
+
 /**
  * State object
  * @typedef {Object} CommcareHttpState
@@ -63,17 +72,17 @@ export function execute(...operations) {
  * @returns {Operation}
  */
 export function get(path, params = {}, callback = s => s) {
-  console.warn(
-    'DEPRECATION WARNING: get() only works with CommCare\'s legacy v0.5 API ' +
+  warnDeprecated(
+    "DEPRECATION WARNING: get() only works with CommCare's legacy v0.5 API " +
       '(/a/domain/api/v0.5/...). Use http.get() for current CommCare APIs. ' +
-      'get() will be removed in a future major version.'
+      'get() will be removed in a future major version.',
   );
   return async state => {
     const { domain } = state.configuration;
     const [resolvedPath, resolvedParams] = expandReferences(
       state,
       path,
-      params
+      params,
     );
 
     let offset, limit;
@@ -98,7 +107,7 @@ export function get(path, params = {}, callback = s => s) {
             method: 'GET',
             params: requestParams,
             contentType: 'application/json',
-          }
+          },
         );
 
         nextState = util.prepareNextState(state, response, callback);
@@ -158,10 +167,10 @@ export function get(path, params = {}, callback = s => s) {
  * @state {CommcareHttpState}
  */
 export function post(path, data, params = {}, callback = s => s) {
-  console.warn(
-    'DEPRECATION WARNING: post() only works with CommCare\'s legacy v0.5 API ' +
+  warnDeprecated(
+    "DEPRECATION WARNING: post() only works with CommCare's legacy v0.5 API " +
       '(/a/domain/api/v0.5/...). Use http.post() for current CommCare APIs. ' +
-      'post() will be removed in a future major version.'
+      'post() will be removed in a future major version.',
   );
   return async state => {
     const { domain } = state.configuration;
@@ -169,7 +178,7 @@ export function post(path, data, params = {}, callback = s => s) {
       state,
       path,
       data,
-      params
+      params,
     );
 
     try {
@@ -181,7 +190,7 @@ export function post(path, data, params = {}, callback = s => s) {
           data: resolvedData,
           params: resolvedParams,
           contentType: 'application/json',
-        }
+        },
       );
 
       return util.prepareNextState(state, response, callback);
@@ -345,10 +354,10 @@ export function fetchReportData(reportId, params, postUrl) {
  * @state {CommcareHttpState}
  */
 export function request(method, path, body, params = {}) {
-  console.warn(
+  warnDeprecated(
     'DEPRECATION WARNING: request() is designed around the legacy v0.5 API. ' +
       'Use http.request() instead. ' +
-      'request() will be removed in a future major version.'
+      'request() will be removed in a future major version.',
   );
   return async state => {
     const [resolvedMethod, resolvedPath, resolvedBody, resolvedParams] =
@@ -414,7 +423,7 @@ export function bulk(type, data, params) {
     const [resolvedData, resolvedParams] = expandReferences(
       state,
       data,
-      params
+      params,
     );
     let path, file;
 
