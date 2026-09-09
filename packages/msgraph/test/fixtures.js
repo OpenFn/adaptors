@@ -180,10 +180,20 @@ const itemsResponse = {
   ],
 };
 
+const uploadSessionUrl =
+  'https://openfn.sharepoint.com/_api/v2.0/drives/b!YXzpkoLwR06bxC8tNdg71m_/items/01LUM6XOGVJ2OK2Z5RJRAKU3WAK2MTC5XD/uploadSession';
+
 const fixtures = {
   accessToken: 'validAccessToken=',
   expiredToken: 'expiredAccessToken',
   invalidToken: 'invalidAccessToken',
+  uploadSessionUrl: uploadSessionUrl,
+  uploadSessionResponse: {
+    '@odata.context':
+      'https://graph.microsoft.com/v1.0/$metadata#microsoft.graph.uploadSession',
+    expirationDateTime: '2023-09-19T07:34:09.369Z',
+    uploadUrl: uploadSessionUrl,
+  },
   driveResponse: driveResponse,
   invalidRequestResponse: {
     // 400

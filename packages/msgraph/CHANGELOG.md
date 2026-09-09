@@ -1,5 +1,12 @@
 # @openfn/language-msgraph
 
+## 0.10.1 - 17 August 2026
+
+### Patch Changes
+
+- c29cc83: Fix `uploadFile` to wrap upload session metadata in an `item`
+  property, as required by the Microsoft Graph createUploadSession API
+
 ## 0.10.0 - 06 August 2026
 
 ### Minor Changes

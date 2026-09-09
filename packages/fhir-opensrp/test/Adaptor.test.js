@@ -6,14 +6,12 @@ const { read, create, update, request, builders } = Adaptor;
 
 const testServer = enableMockClient('https://fake.fhir-opensrp.com');
 
-
 const baseState = {
   configuration: {
     baseUrl: 'https://fake.fhir-opensrp.com',
     access_token: 'test-token-abc123',
   },
 };
-
 
 describe('read', () => {
   it('reads server metadata (non-Bundle response returned as-is)', async () => {
@@ -32,7 +30,7 @@ describe('read', () => {
       .intercept({
         path: '/gateway/fhir/Patient',
         method: 'GET',
-        query: { '_count': '50' },
+        query: { _count: '50' },
       })
       .reply(200, {
         resourceType: 'Bundle',
@@ -45,12 +43,12 @@ describe('read', () => {
       });
 
     const finalState = await read('Patient', {
-      query: { '_count': 50 },
+      query: { _count: 50 },
     })(baseState);
 
     expect(finalState.data).to.eql([
-      { resourceType: 'Patient', id: 'p-001' },
-      { resourceType: 'Patient', id: 'p-002' },
+      { resource: { resourceType: 'Patient', id: 'p-001' } },
+      { resource: { resourceType: 'Patient', id: 'p-002' } },
     ]);
     expect(finalState.data).to.have.length(2);
   });
@@ -61,7 +59,7 @@ describe('read', () => {
       .intercept({
         path: '/gateway/fhir/Patient',
         method: 'GET',
-        query: { '_count': '2' },
+        query: { _count: '2' },
       })
       .reply(200, {
         resourceType: 'Bundle',
@@ -83,7 +81,7 @@ describe('read', () => {
       .intercept({
         path: '/gateway/fhir/Patient',
         method: 'GET',
-        query: { '_count': '2', '_getpagesoffset': '2' },
+        query: { _count: '2', _getpagesoffset: '2' },
       })
       .reply(200, {
         resourceType: 'Bundle',
@@ -96,11 +94,16 @@ describe('read', () => {
       });
 
     const finalState = await read('Patient', {
-      query: { '_count': 2 },
+      query: { _count: 2 },
     })(baseState);
 
     expect(finalState.data).to.have.length(4);
-    expect(finalState.data.map(p => p.id)).to.eql(['p-001', 'p-002', 'p-003', 'p-004']);
+    expect(finalState.data.map(p => p.resource.id)).to.eql([
+      'p-001',
+      'p-002',
+      'p-003',
+      'p-004',
+    ]);
   });
 
   it('fetches only one page when _getpagesoffset is set', async () => {
@@ -108,7 +111,7 @@ describe('read', () => {
       .intercept({
         path: '/gateway/fhir/Patient',
         method: 'GET',
-        query: { '_getpagesoffset': '50', '_count': '50' },
+        query: { _getpagesoffset: '50', _count: '50' },
       })
       .reply(200, {
         resourceType: 'Bundle',
@@ -126,14 +129,13 @@ describe('read', () => {
       });
 
     const finalState = await read('Patient', {
-      query: { '_getpagesoffset': 50, '_count': 50 },
+      query: { _getpagesoffset: 50, _count: 50 },
     })(baseState);
 
     expect(finalState.data).to.have.length(2);
-    expect(finalState.data[0].id).to.equal('p-051');
+    expect(finalState.data[0].resource.id).to.equal('p-051');
   });
 });
-
 
 describe('create', () => {
   it('creates a Patient using builders', async () => {
@@ -153,7 +155,14 @@ describe('create', () => {
           value: 'NIN-TEST-001',
         }),
       ],
-      name: [{ use: 'official', family: 'Nakamura', given: ['Aiko'], text: 'Aiko Nakamura' }],
+      name: [
+        {
+          use: 'official',
+          family: 'Nakamura',
+          given: ['Aiko'],
+          text: 'Aiko Nakamura',
+        },
+      ],
       gender: 'female',
       birthDate: '1992-04-10',
       active: true,
@@ -179,7 +188,11 @@ describe('create', () => {
       resourceType: 'Patient',
       active: true,
       identifier: [
-        { use: 'official', system: 'http://ohie.org/National_Id', value: 'NIN-TEST-002' },
+        {
+          use: 'official',
+          system: 'http://ohie.org/National_Id',
+          value: 'NIN-TEST-002',
+        },
       ],
       name: [{ use: 'official', family: 'Mathenge', given: ['Monica'] }],
       gender: 'female',
@@ -192,7 +205,6 @@ describe('create', () => {
     expect(finalState.data.name[0].family).to.equal('Mathenge');
   });
 });
-
 
 describe('update', () => {
   it('updates a Patient by ID', async () => {
@@ -218,7 +230,7 @@ describe('update', () => {
         gender: 'female',
         birthDate: '1990-07-07',
         telecom: [{ system: 'phone', value: '0712010203' }],
-      }
+      },
     )(baseState);
 
     expect(finalState.data.id).to.equal('0181038e-682b-4c7c-a946-e3757d2fa2f7');
@@ -250,7 +262,6 @@ describe('update', () => {
   });
 });
 
-
 describe('delete', () => {
   it('deletes a Patient by ID', async () => {
     testServer
@@ -262,7 +273,6 @@ describe('delete', () => {
     expect(finalState.response.statusCode).to.equal(204);
   });
 });
-
 
 describe('request', () => {
   it('makes a GET request for Observations for a specific patient', async () => {
@@ -308,10 +318,9 @@ describe('request', () => {
         name: [{ use: 'official', family: 'Mathenge', given: ['Monica'] }],
         gender: 'female',
         birthDate: '1990-07-07',
-      }
+      },
     )(baseState);
 
     expect(finalState.data.active).to.equal(false);
   });
 });
-

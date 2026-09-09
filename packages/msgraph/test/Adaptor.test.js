@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { setGlobalDispatcher } from 'undici';
 
-import MockAgent from './mockAgent.js';
+import MockAgent, { captured } from './mockAgent.js';
 import { fixtures } from './fixtures.js';
 import AdmZip from 'adm-zip';
 
@@ -91,7 +91,7 @@ describe('getDrive', () => {
         // write the drives object back to state before it gets cleaned up
         state.result = state.drives;
         return state;
-      })
+      }),
     )(state);
 
     expect(finalState.result.default).to.eql(fixtures.driveResponse);
@@ -109,7 +109,7 @@ describe('getDrive', () => {
         // write the drives object back to state before it gets cleaned up
         state.result = state.drives;
         return state;
-      })
+      }),
     )(state);
 
     expect(finalState.result.mydrive).to.eql(fixtures.driveResponse);
@@ -130,8 +130,8 @@ describe('getDrive', () => {
           // write the drives object back to state before it gets cleaned up
           state.result = state.drives;
           return state;
-        }
-      )
+        },
+      ),
     )(state);
 
     expect(finalState.result.default).to.eql(fixtures.driveResponse);
@@ -146,9 +146,9 @@ describe('getDrive', () => {
     await execute(
       getDrive({ id: 'noAccess', owner: 'sites' })(state).catch(e => {
         expect(e.message).to.contain(
-          fixtures.invalidRequestResponse.error.message
+          fixtures.invalidRequestResponse.error.message,
         );
-      })
+      }),
     )(state);
   });
 
@@ -163,10 +163,10 @@ describe('getDrive', () => {
       getDrive({ id: 'openfn.sharepoint.com', owner: 'sites' })(state).catch(
         e => {
           expect(e.message).to.contain(
-            fixtures.invalidTokenResponse.error.message
+            fixtures.invalidTokenResponse.error.message,
           );
-        }
-      )
+        },
+      ),
     )(state);
   });
 
@@ -181,10 +181,10 @@ describe('getDrive', () => {
       getDrive({ id: 'openfn.sharepoint.com', owner: 'sites' })(state).catch(
         e => {
           expect(e.message).to.contain(
-            fixtures.expiredTokenResponse.error.message
+            fixtures.expiredTokenResponse.error.message,
           );
-        }
-      )
+        },
+      ),
     )(state);
   });
 });
@@ -203,7 +203,7 @@ describe('getFolder', () => {
     };
 
     const finalState = await execute(
-      getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3', { metadata: true })
+      getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3', { metadata: true }),
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemResponse);
@@ -222,7 +222,7 @@ describe('getFolder', () => {
     };
 
     const finalState = await execute(
-      getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3')
+      getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3'),
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemsResponse);
@@ -244,7 +244,7 @@ describe('getFolder', () => {
       getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3', {
         driveName: 'mydrive',
         metadata: true,
-      })
+      }),
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemResponse);
@@ -263,7 +263,7 @@ describe('getFolder', () => {
     };
 
     const finalState = await execute(
-      getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3', { driveName: 'mydrive' })
+      getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3', { driveName: 'mydrive' }),
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemsResponse);
@@ -282,7 +282,7 @@ describe('getFolder', () => {
     };
 
     const finalState = await execute(
-      getFolder('/Sample Data', { metadata: true })
+      getFolder('/Sample Data', { metadata: true }),
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemResponse);
@@ -317,7 +317,7 @@ describe('getFolder', () => {
       },
     };
     const finalState = await execute(
-      getFolder('/Sample Data', { driveName: 'mydrive', metadata: true })
+      getFolder('/Sample Data', { driveName: 'mydrive', metadata: true }),
     )(state);
     expect(finalState.data).to.eql(fixtures.itemResponse);
   });
@@ -334,7 +334,7 @@ describe('getFolder', () => {
       },
     };
     const finalState = await execute(
-      getFolder('/Sample Data', { driveName: 'mydrive' })
+      getFolder('/Sample Data', { driveName: 'mydrive' }),
     )(state);
     expect(finalState.data).to.eql(fixtures.itemsResponse);
   });
@@ -367,7 +367,7 @@ describe('getFile', () => {
     };
 
     const finalState = await execute(
-      getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW')
+      getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW'),
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemContent);
@@ -388,7 +388,7 @@ describe('getFile', () => {
     const finalState = await execute(
       getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW', {
         metadata: true,
-      })
+      }),
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemWithDownloadUrl);
@@ -409,7 +409,7 @@ describe('getFile', () => {
     const finalState = await execute(
       getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW', {
         driveName: 'mydrive',
-      })
+      }),
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemContent);
@@ -445,7 +445,7 @@ describe('getFile', () => {
     };
 
     const finalState = await execute(
-      getFile('/Sample Data/test.csv', { metadata: true })
+      getFile('/Sample Data/test.csv', { metadata: true }),
     )(state);
 
     expect(finalState.data).to.eql(fixtures.itemWithDownloadUrl);
@@ -466,41 +466,81 @@ describe('getFile', () => {
 });
 
 describe('uploadFile', () => {
-  it.skip('should convert array of object to excel and post to specified path', async () => {
-    const state = {
-      configuration: {
-        accessToken: fixtures.accessToken,
-      },
-      siteId: 'openfn.sharepoint.com',
-      folderId: '01LUM6XOGVJ2OK2Z5RJRAKU3WAK2MTC5XD',
-      drives: {},
-      rows: [
-        [
-          {
-            name: 'Mtuchi',
-            birthday: '1/1/1973',
-          },
-          {
-            name: 'Aleksa',
-            birthday: '1/1/2023',
-          },
-        ],
-      ],
-    };
+  const buffer = Buffer.from('a,b,c\n1,2,3');
 
-    const finalState = await uploadFile(
+  const uploadState = () => ({
+    configuration: {
+      accessToken: fixtures.accessToken,
+    },
+    driveId: 'b!YXzpkoLwR06bxC8tNdg71m_',
+    folderId: '01LUM6XOGVJ2OK2Z5RJRAKU3WAK2MTC5XD',
+    buffer,
+  });
+
+  const upload = (state, resource = {}) =>
+    uploadFile(
       state => ({
-        siteId: state.siteId,
-        parentItemId: state.folderId,
-        fileName: `invalidGrantCodeRows_${new Date()
-          .toISOString()
-          .replace(/[-:.]/g, '_')}.csv`,
+        driveId: state.driveId,
+        folderId: state.folderId,
+        fileName: 'Tracker.xlsx',
+        ...resource,
       }),
-      state => state.buffer
+      state => state.buffer,
     )(state);
 
-    console.log(finalState.buffer);
-    expect(data).to.eql(fixtures.uploadFileResponse);
+  const conflictBehaviour = () =>
+    JSON.parse(captured.createUploadSession.body).item[
+      '@microsoft.graph.conflictBehavior'
+    ];
+
+  it('should upload a file and return the created drive item', async () => {
+    const finalState = await upload(uploadState());
+
+    expect(finalState.data).to.eql(fixtures.submitXlsResponse);
+    expect(finalState.response).to.eql(fixtures.submitXlsResponse);
+  });
+
+  it('should wrap the file metadata in an item property', async () => {
+    await upload(uploadState(), { onConflict: 'fail' });
+
+    expect(JSON.parse(captured.createUploadSession.body)).to.eql({
+      item: {
+        '@microsoft.graph.conflictBehavior': 'fail',
+        name: 'Tracker.xlsx',
+      },
+    });
+  });
+
+  it('should default onConflict to replace', async () => {
+    await upload(uploadState());
+
+    expect(conflictBehaviour()).to.eql('replace');
+  });
+
+  it('should send the given onConflict behaviour', async () => {
+    await upload(uploadState(), { onConflict: 'rename' });
+
+    expect(conflictBehaviour()).to.eql('rename');
+  });
+
+  it('should send onConflict from state', async () => {
+    const state = { ...uploadState(), conflictMode: 'fail' };
+
+    await upload(state, { onConflict: state.conflictMode });
+
+    expect(conflictBehaviour()).to.eql('fail');
+  });
+
+  it('should send the file with content headers describing the whole buffer', async () => {
+    await upload(uploadState());
+
+    const { headers } = captured.upload;
+
+    expect(headers['Content-Type']).to.eql('application/octet-stream');
+    expect(headers['Content-Length']).to.eql(`${buffer.length}`);
+    expect(headers['Content-Range']).to.eql(
+      `bytes 0-${buffer.length - 1}/${buffer.length}`,
+    );
   });
 });
 
@@ -540,7 +580,7 @@ describe('zip', () => {
     const state = {};
 
     expect(() =>
-      zip([{ name: 'empty.txt', content: undefined }])(state)
+      zip([{ name: 'empty.txt', content: undefined }])(state),
     ).to.throw('no content provided for file "empty.txt"');
   });
 

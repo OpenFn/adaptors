@@ -134,7 +134,7 @@ export function read(path, options = {}) {
           } else {
             allowPagination = false;
           }
-          result.push(...(response.body?.entry?.map(e => e.resource) ?? []));
+          result.push(...(response.body?.entry || []));
         }
       } while (allowPagination);
 

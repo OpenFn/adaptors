@@ -121,3 +121,6 @@ dist
 .idea
 
 /pnpm-publish-summary.json
+
+# graphify knowledge graph output
+graphify-out/
