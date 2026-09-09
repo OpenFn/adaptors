@@ -1,5 +1,11 @@
 # @openfn/language-commcare
 
+## 4.3.0 - 09 September 2026
+
+### Minor Changes
+
+- 3348d07: Added "getResource" and "list" helper functions
+
 ## 4.2.1 - 17 August 2026
 
 ### Patch Changes
