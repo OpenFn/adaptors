@@ -74,7 +74,7 @@ export async function request(configuration, path, opts) {
 }
 
 export async function requestWithPagination(configuration, path, options = {}) {
-  const { domain, apiVersion = 'v2' } = configuration;
+  const { domain = 'v2' } = configuration;
   const { resultsKey } = options;
   const targetUrl = `/a/${domain}/api/${path}/v2`;
 
