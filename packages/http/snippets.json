@@ -1,0 +1,22 @@
+{
+  "CREATE": {
+    "Custom Request": {
+      "description": "Fire off a custom request by providing raw details.",
+      "code": "// Make an arbitrary HTTP request.\n// state.data is set to the parsed response body.\nrequest('POST', 'https://api.example.org/v1/things', {\n  // JSON body (sent as application/json by default).\n  body: { name: $.data.name, amount: $.data.amount },\n  // Extra headers.\n  headers: { 'X-Trace-Id': $.run.id },\n  // Querystring parameters.\n  query: { ref: $.data.ref },\n});"
+    },
+    "PUT Request": {
+      "description": "Fire off a single PUT request as a form or JSON.",
+      "code": "// Send a PUT request with a JSON body.\nput('https://api.example.org/v1/things/123', $.data.payload, {\n  headers: { 'X-Trace-Id': $.run.id },\n});"
+    },
+    "POST Request": {
+      "description": "Fire off a single POST request as a form or JSON.",
+      "code": "// Send a POST request with a JSON body.\npost('https://api.example.org/v1/things', $.data.payload, {\n  headers: { 'X-Trace-Id': $.run.id },\n});"
+    }
+  },
+  "SEARCH": {
+    "GET Request": {
+      "description": "Fire off a single GET request with optional querystrings.",
+      "code": "// Send a GET request.\nget('https://api.example.org/v1/things', {\n  query: { limit: 10, status: 'active' },\n});"
+    }
+  }
+}

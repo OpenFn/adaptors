@@ -1,0 +1,16 @@
+{
+  "CREATE": {
+    "Send Freeform Message": {
+      "description": "Send a freeform text message (within 24-hour window only).",
+      "code": "// Send a freeform text message via the WhatsApp Business API.\n// Only allowed within the 24-hour customer-service window.\nrequest('POST', 'messages', {\n  messaging_product: 'whatsapp',\n  to:   $.data.toPhone,        // E.164, no '+' (e.g. '254712345678')\n  type: 'text',\n  text: { body: $.data.body },\n});"
+    },
+    "Send Media Message": {
+      "description": "Send a media message (document, image, video, or audio) within 24-hour window.",
+      "code": "// Send a media attachment. `type` is one of image | video | document | audio.\nrequest('POST', 'messages', {\n  messaging_product: 'whatsapp',\n  to:   $.data.toPhone,\n  type: 'image',\n  image: {\n    // Either a public URL...\n    link: $.data.imageUrl,\n    // ...or `id` referencing a previously uploaded media id.\n    caption: $.data.caption,\n  },\n});"
+    },
+    "Send Template Message": {
+      "description": "Sends an approved template message.",
+      "code": "// Send an approved WhatsApp template message.\nrequest('POST', 'messages', {\n  messaging_product: 'whatsapp',\n  to:   $.data.toPhone,\n  type: 'template',\n  template: {\n    name: 'hello_world',\n    language: { code: 'en_US' },\n    // Template body variables, if your template uses {{1}}, {{2}}, ...\n    // components: [{\n    //   type: 'body',\n    //   parameters: [{ type: 'text', text: $.data.firstName }],\n    // }],\n  },\n});"
+    }
+  }
+}

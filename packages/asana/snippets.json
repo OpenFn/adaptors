@@ -1,0 +1,66 @@
+{
+  "CREATE": {
+    "Add Task to Section of Project": {
+      "description": "Adds a Task to a Section of a Project.",
+      "code": ""
+    },
+    "Create Comment/Story": {
+      "description": "Adds a comment or story to a task.",
+      "code": "// Add a comment / story to a task.\ncreateTaskStory(\n  // 1) The task's globally unique id.\n  $.data.taskGid,\n  {\n    // 2) The comment body (HTML supported when html_text is used).\n    text: 'Status update: imported from the upstream system.',\n  }\n);"
+    },
+    "Create Duplicate Task": {
+      "description": "Duplicates an existing task.",
+      "code": ""
+    },
+    "Create Project": {
+      "description": "Adds a new project.",
+      "code": ""
+    },
+    "Create Section": {
+      "description": "Creates a new section within a project.",
+      "code": ""
+    },
+    "Create Task": {
+      "description": "Creates a new task in Asana with specified details.",
+      "code": "// Create a new task.\ncreateTask({\n  // The task's title.\n  name: 'Follow up with patient',\n  // Long-form description (optional).\n  notes: `Imported from upstream system on ${new Date().toISOString()}`,\n  // Workspace gid this task lives in.\n  workspace: $.configuration.workspaceGid,\n  // Optional: place the task into a project on creation.\n  projects: [$.data.projectGid],\n  // Optional: assign to a user gid.\n  assignee: $.data.assigneeGid,\n  // Optional ISO date string.\n  due_on: '2026-06-01',\n});"
+    },
+    "Create Task From Template": {
+      "description": "Creates a new task in Asana from a selected template.",
+      "code": ""
+    },
+    "Update Task": {
+      "description": "Updates multiple properties of an existing Asana task.",
+      "code": "// Update properties on an existing task.\nupdateTask(\n  // 1) Task gid.\n  $.data.taskGid,\n  // 2) Fields to change.\n  {\n    name: 'Updated task title',\n    completed: true,\n    notes: 'Closed after upstream sync.',\n  }\n);"
+    },
+    "API Request (Beta)": {
+      "description": "Raw HTTP request with authentication.",
+      "code": "// Make an arbitrary request against the Asana API.\n// Path is relative to the Asana base URL.\nrequest('/workspaces', {\n  method: 'GET',\n  query: { limit: 10 },\n});"
+    }
+  },
+  "SEARCH": {
+    "Find All Tasks From Project": {
+      "description": "Searches for all tasks in a specific project with optional filters.",
+      "code": "// List tasks in a project.\ngetTasks(\n  // 1) Project gid.\n  $.data.projectGid,\n  // 2) Query params.\n  {\n    // Fields to return per task.\n    opt_fields: 'name,notes,assignee,completed,due_on',\n    // Cap the result size.\n    limit: 100,\n  }\n);"
+    },
+    "Find Project": {
+      "description": "Finds an existing project.",
+      "code": ""
+    },
+    "Find Section in Project": {
+      "description": "Finds an existing section within a workspace project.",
+      "code": ""
+    },
+    "Find Task Comments": {
+      "description": "Finds comments for a specific task.",
+      "code": ""
+    },
+    "Find Tasks in Workspace": {
+      "description": "Searches for tasks in a workspace using Asana's search API (premium only).",
+      "code": "// Search tasks across a workspace using Asana's typeahead/search API.\n// Note: this endpoint requires a premium Asana plan.\nsearchTask(\n  // 1) The search term (matches task name).\n  $.data.searchTerm,\n  // 2) Query params (assignee, completed, etc).\n  {\n    'assignee.any': $.data.assigneeGid,\n    completed: false,\n  }\n);"
+    },
+    "Find User": {
+      "description": "Finds an existing user of your Asana account.",
+      "code": ""
+    }
+  }
+}

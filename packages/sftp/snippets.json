@@ -1,0 +1,14 @@
+{
+  "CREATE": {
+    "Upload File": {
+      "description": "Uploads a file to the given path.",
+      "code": ""
+    }
+  },
+  "SEARCH": {
+    "Download File": {
+      "description": "Downloads the file at the given path.",
+      "code": ""
+    }
+  }
+}
