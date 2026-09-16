@@ -1,5 +1,17 @@
 # @openfn/language-openmrs
 
+## 5.5.0 - 03 September 2026
+
+### Minor Changes
+
+- feb712f: Add support for `tls` options in `state.configuration`
+
+### Patch Changes
+
+- Updated dependencies \[654026d]
+- Updated dependencies \[fd1b2be]
+  - @openfn/language-common@3.3.5
+
 ## 5.4.2 - 30 June 2026
 
 ### Patch Changes

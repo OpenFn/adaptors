@@ -1,5 +1,26 @@
 # @openfn/language-dhis2
 
+## 8.3.1 - 03 September 2026
+
+### Patch Changes
+
+- 349781e: Security update
+- 19f1642: Security update
+- Updated dependencies \[654026d]
+- Updated dependencies \[fd1b2be]
+  - @openfn/language-common@3.3.5
+
+## 8.3.0 - 24 August 2026
+
+### Minor Changes
+
+- 3e3f2dd: Add `util.deriveUid()` function which derives a stable DHIS2 UID from
+  a seed string.
+
+### Patch Changes
+
+- Fix `tracker.import()` not sending its `strategy` argument.
+
 ## 8.2.1 - 28 July 2026
 
 ### Patch Changes
@@ -548,7 +569,6 @@ fn((state) => {
 ### Patch Changes
 
 - 222184d: remove Class Log and replaced
-
   - `Log.success` with `console.log`
   - `Log.warn` with `console.warn`
   - `Log.error` with `console.error`

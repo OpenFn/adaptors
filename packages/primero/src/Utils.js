@@ -14,9 +14,62 @@ export const prepareNextState = (state, response) => {
   };
 };
 
-export function setUrl(configuration, path) {
-  console.log(configuration);
+const DEFAULT_PAGE_SIZE = 1000;
 
+export function getNextPageParams(metadata) {
+  const { total, per = DEFAULT_PAGE_SIZE, page } = metadata ?? {};
+  if (!total || !page) return null;
+
+  const totalPages = Math.ceil(total / per);
+  if (page >= totalPages) return null;
+
+  return { page: page + 1, per };
+}
+
+
+export async function requestWithPagination(state, method, path, query = {}) {
+  const { limit, ...urlQuery } = query;
+
+  if (limit && limit < urlQuery.per) {
+    urlQuery.per = limit;
+  }
+
+  let currentQuery = urlQuery;
+  let results = [];
+
+  do {
+    const response = await request(state, method, path, { query: currentQuery });
+
+    const { data, metadata } = response.body;
+
+    if (!Array.isArray(data)) return data;
+
+    results.push(...data);
+
+    if (limit && results.length >= limit) {
+      results = results.slice(0, limit);
+      break;
+    }
+
+    const next = getNextPageParams(metadata);
+    if (!next) break;
+
+    let { page, per } = next;
+
+    if (limit) {
+      const remaining = limit - results.length;
+      if (remaining < per) {
+        per = remaining;
+      }
+    }
+
+    currentQuery = { ...urlQuery, page, per };
+  } while (true);
+
+  return results;
+}
+
+export function setUrl(configuration, path) {
   if (configuration && configuration.url) return configuration.url + path;
   else return path;
 }
@@ -78,12 +131,10 @@ export const request = (state, method, path, options = {}) => {
 
   const { query = {}, body = {}, headers = {}, parseAs = 'json' } = options;
 
-  
-
   const opts = {
     parseAs,
     baseUrl: `${baseUrl}/api/v2/`,
-    body:{ data: body},
+    body: { data: body },
     query,
     headers: {
       'Content-type': 'application/json',
@@ -91,8 +142,6 @@ export const request = (state, method, path, options = {}) => {
       ...headers,
     },
   };
-
-  
 
   return commonRequest(method, path, opts).then(logResponse);
 };

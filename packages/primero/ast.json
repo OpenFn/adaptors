@@ -593,6 +593,75 @@
         ]
       },
       "valid": true
+    },
+    {
+      "name": "get",
+      "params": [
+        "path",
+        "query"
+      ],
+      "docs": {
+        "description": "Get resources from Primero. Automatically paginates through all pages.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "example",
+            "description": "get('registry_records');",
+            "caption": "Fetch all registry records"
+          },
+          {
+            "title": "example",
+            "description": "get('registry_records', { per: 50 });",
+            "caption": "fetch all records in pages of 50 at a time"
+          },
+          {
+            "title": "example",
+            "description": "get('registry_records', { limit: 5000 });",
+            "caption": "Fetch at most 5000 records"
+          },
+          {
+            "title": "example",
+            "description": "get('registry_records/fc686dff-b1ee-4206-9be6-066dbf4e3a54');",
+            "caption": "Fetch a single registry record by ID"
+          },
+          {
+            "title": "param",
+            "description": "Path to a resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Query parameters to append to the URL. Use `per` to control the page size. Use `limit` to cap the total number of records fetched.",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "query"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          }
+        ]
+      },
+      "valid": true
     }
   ],
   "exports": [],

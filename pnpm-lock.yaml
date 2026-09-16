@@ -87,8 +87,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/asana:
     dependencies:
@@ -131,8 +131,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
     optionalDependencies:
       '@aws-sdk/client-s3':
         specifier: ^3.1095.0
@@ -160,8 +160,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/beyonic:
     dependencies:
@@ -250,8 +250,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/cartodb:
     dependencies:
@@ -309,8 +309,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/cht:
     dependencies:
@@ -331,8 +331,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/claude:
     dependencies:
@@ -356,8 +356,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/collections:
     dependencies:
@@ -368,8 +368,8 @@ importers:
         specifier: ^1.8.0
         version: 1.8.0
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -439,8 +439,8 @@ importers:
         specifier: ^4.18.1
         version: 4.18.1
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
     devDependencies:
       chai:
         specifier: 4.3.6
@@ -483,8 +483,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/dhis2:
     dependencies:
@@ -492,14 +492,14 @@ importers:
         specifier: workspace:*
         version: link:../common
       axios:
-        specifier: ^1.18.1
-        version: 1.18.1
+        specifier: ^1.19.0
+        version: 1.19.0
       lodash:
         specifier: ^4.18.1
         version: 4.18.1
       qs:
-        specifier: ^6.15.2
-        version: 6.15.2
+        specifier: ^6.16.0
+        version: 6.16.0
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -539,8 +539,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/dynamics:
     dependencies:
@@ -592,8 +592,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/et-mfr:
     dependencies:
@@ -648,8 +648,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -705,13 +705,13 @@ importers:
         version: 3.0.2
       ts-node:
         specifier: 10.9.1
-        version: 10.9.1(@swc/core@1.10.9)(@types/node@18.19.130)(typescript@5.9.2)
+        version: 10.9.1(@swc/core@1.10.9)(@types/node@18.17.5)(typescript@5.9.2)
       typescript:
         specifier: 5.9.2
         version: 5.9.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/fhir-eswatini:
     dependencies:
@@ -736,13 +736,13 @@ importers:
         version: 3.0.2
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@swc/core@1.10.9)(@types/node@18.19.130)(typescript@4.8.4)
+        version: 10.9.1(@swc/core@1.10.9)(@types/node@18.17.5)(typescript@4.8.4)
       typescript:
         specifier: 4.8.4
         version: 4.8.4
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/fhir-fr:
     dependencies:
@@ -766,8 +766,8 @@ importers:
         specifier: 4.8.4
         version: 4.8.4
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/fhir-ndr-et:
     dependencies:
@@ -809,8 +809,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/fhir-opensrp:
     dependencies:
@@ -834,8 +834,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.19.2
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/flutterwave:
     dependencies:
@@ -862,8 +862,8 @@ importers:
         specifier: ^21.0.1
         version: 21.0.1
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/formsg:
     dependencies:
@@ -894,7 +894,7 @@ importers:
         version: 3.0.2
       ts-node:
         specifier: 10.9.1
-        version: 10.9.1(@swc/core@1.10.9)(@types/node@18.19.130)(typescript@5.9.2)
+        version: 10.9.1(@swc/core@1.10.9)(@types/node@18.17.5)(typescript@5.9.2)
       typescript:
         specifier: 5.9.2
         version: 5.9.2
@@ -949,8 +949,8 @@ importers:
         specifier: ^8.20.0
         version: 8.20.0
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -996,8 +996,8 @@ importers:
         specifier: ^19.0.4
         version: 19.0.4
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/godata:
     dependencies:
@@ -1005,8 +1005,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       axios:
-        specifier: ^1.18.1
-        version: 1.18.1
+        specifier: ^1.19.0
+        version: 1.19.0
     devDependencies:
       assertion-error:
         specifier: ^1.0.1
@@ -1052,8 +1052,8 @@ importers:
         specifier: ^19.0.4
         version: 19.0.4
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/googlehealthcare:
     dependencies:
@@ -1074,8 +1074,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/googlesheets:
     dependencies:
@@ -1183,8 +1183,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/ibipimo:
     dependencies:
@@ -1208,8 +1208,8 @@ importers:
         specifier: ^21.0.1
         version: 21.0.1
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/ihris:
     dependencies:
@@ -1233,8 +1233,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/image-utils:
     dependencies:
@@ -1280,8 +1280,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/intuit:
     dependencies:
@@ -1302,8 +1302,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/khanacademy:
     dependencies:
@@ -1311,8 +1311,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       qs:
-        specifier: ^6.15.2
-        version: 6.15.2
+        specifier: ^6.16.0
+        version: 6.16.0
       request:
         specifier: ^2.88.2
         version: 2.88.2
@@ -1371,8 +1371,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/langfuse:
     dependencies:
@@ -1396,8 +1396,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.19.2
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/magpi:
     dependencies:
@@ -1448,14 +1448,14 @@ importers:
         specifier: workspace:*
         version: link:../common
       axios:
-        specifier: ^1.18.1
-        version: 1.18.1
+        specifier: ^1.19.0
+        version: 1.19.0
       md5:
         specifier: ^2.3.0
         version: 2.3.0
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
     devDependencies:
       assertion-error:
         specifier: ^1.1.0
@@ -1616,8 +1616,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/mogli:
     dependencies:
@@ -1681,8 +1681,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/mongodb:
     dependencies:
@@ -1728,8 +1728,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/motherduck:
     dependencies:
@@ -1756,8 +1756,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/mpesa:
     dependencies:
@@ -1778,8 +1778,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/msgraph:
     dependencies:
@@ -1790,8 +1790,8 @@ importers:
         specifier: ^0.6.0
         version: 0.6.0
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
       xlsx:
         specifier: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
         version: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
@@ -1850,8 +1850,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/mtn-momo:
     dependencies:
@@ -1872,8 +1872,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/mysql:
     dependencies:
@@ -1882,10 +1882,10 @@ importers:
         version: link:../common
       knex:
         specifier: ^3.1.0
-        version: 3.1.0(mysql2@3.15.3)
+        version: 3.1.0(mysql2@3.23.1(@types/node@18.17.5))
       mysql2:
-        specifier: ^3.15.3
-        version: 3.15.3
+        specifier: ^3.23.1
+        version: 3.23.1(@types/node@18.17.5)
     devDependencies:
       assertion-error:
         specifier: ^1.0.1
@@ -1944,8 +1944,8 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/odk:
     dependencies:
@@ -1966,8 +1966,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/odoo:
     dependencies:
@@ -1991,8 +1991,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/openboxes:
     dependencies:
@@ -2013,8 +2013,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/opencrvs:
     dependencies:
@@ -2038,8 +2038,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/openelis:
     dependencies:
@@ -2060,8 +2060,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/openfn:
     dependencies:
@@ -2160,8 +2160,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/openmrs:
     dependencies:
@@ -2207,8 +2207,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/pdfshift:
     dependencies:
@@ -2229,8 +2229,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/pesapal:
     dependencies:
@@ -2251,8 +2251,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/ping:
     dependencies:
@@ -2273,8 +2273,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/postgresql:
     dependencies:
@@ -2391,8 +2391,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/rapidpro:
     dependencies:
@@ -2400,8 +2400,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
     devDependencies:
       chai:
         specifier: ^3.4.0
@@ -2525,8 +2525,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.19.2
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/satusehat:
     dependencies:
@@ -2547,8 +2547,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/senaite:
     dependencies:
@@ -2569,8 +2569,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/sftp:
     dependencies:
@@ -2628,8 +2628,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/stripe:
     dependencies:
@@ -2650,8 +2650,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/sunbird-rc:
     dependencies:
@@ -2672,8 +2672,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/surveycto:
     dependencies:
@@ -2778,8 +2778,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/vtiger:
     dependencies:
@@ -2834,8 +2834,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/wigal-sms:
     dependencies:
@@ -2843,8 +2843,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -2878,8 +2878,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2
       undici:
-        specifier: ^7.28.0
-        version: 7.28.0
+        specifier: ^7.29.0
+        version: 7.29.0
 
   packages/zoho:
     dependencies:
@@ -2940,7 +2940,7 @@ importers:
         version: 6.1.3
       ts-node:
         specifier: 10.9.1
-        version: 10.9.1(@swc/core@1.10.9)(@types/node@18.19.130)(typescript@4.8.4)
+        version: 10.9.1(@swc/core@1.10.9)(@types/node@18.17.5)(typescript@4.8.4)
       tsup:
         specifier: 8.5.0
         version: 8.5.0(@swc/core@1.10.9)(tsx@4.22.3)(typescript@4.8.4)(yaml@2.8.2)
@@ -3207,6 +3207,9 @@ packages:
   '@aws-sdk/core@3.977.1':
     resolution: {integrity: sha512-KVtQRtc00ES/y+Sc3vYXeP6pCIcNlBJCZOwvqSy8ZpVGmbM5+IG+AfhuTKQ2oXmIVqZJewaGMMpzPkywC6xg0w==}
     engines: {node: '>=20.0.0'}
+    deprecated: |-
+      Deprecated due to Document number parsing bug in JSON, see
+        https://github.com/aws/aws-sdk-js-v3/issues/8246. Newer version available.
 
   '@aws-sdk/credential-provider-env@3.972.61':
     resolution: {integrity: sha512-qihs2ekMb89Nxd2JenCgVFhjbkb3EIo7HEBCBzyZACKVJdrLUZBLOmAE3xr0Sayml8n/jZSzwO/IufIiIzO7PQ==}
@@ -5864,9 +5867,6 @@ packages:
   '@types/node@18.17.5':
     resolution: {integrity: sha512-xNbS75FxH6P4UXTPUJp/zNPq6/xsfdJKussCWNOnz4aULWIRwMgP1LgaB5RiBnMX1DPCYenuqGZfnIAx5mbFLA==}
 
-  '@types/node@18.19.130':
-    resolution: {integrity: sha512-GRaXQx6jGfL8sKfaIDD6OupbIHBr9jv7Jnaml9tB7l4v068PAOXqfcujMMo5PhbIs6ggR1XODELqahT2R8v0fg==}
-
   '@types/node@8.10.66':
     resolution: {integrity: sha512-tktOkFUA4kXx2hhhrB8bIFb5TbwzS4uOhKEmwiD+NoiL0qtP2OQ9mFldbgD4dV1djrlBYP6eBuQZiWjuHUpqFw==}
 
@@ -6012,8 +6012,8 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  acorn@8.17.0:
-    resolution: {integrity: sha512-xRQbDb9BnwDafYNn6Vwl839DYVjqXYb1XVGtWAZ1kcDc6iwAL4hg3B1dZlRiuENFeO2H53gFG3in621AdERVAg==}
+  acorn@8.18.0:
+    resolution: {integrity: sha512-lGq+9yr1/GuAWaVYIHRjvvySG5/4VfKIvC8EWxStPdcDh/Ka7FG3twP6v4d5BkravUilhIAsG4Qj83t02LWUPQ==}
     engines: {node: '>=0.4.0'}
     hasBin: true
 
@@ -6330,8 +6330,8 @@ packages:
   axios@0.33.0:
     resolution: {integrity: sha512-juz19g7B3UWT9r3+tgRFQf2Bdy6IKDVroiyuVOUrkILVKHpqHL++K1l8ybvfdEP9B/VE72vk8vllbnedVCm/og==}
 
-  axios@1.18.1:
-    resolution: {integrity: sha512-3nTvFlvpn9Zu/RkHUqtc7/+al4UpRW5az71ap5zccp6e8RAYEzhMTecX8Dz1wWDYrPpUoB1HAQEGEAEvUr7S9g==}
+  axios@1.19.0:
+    resolution: {integrity: sha512-ht/iuYZXEjFxLH/Hkezgd7m6JKlHHXEUSneaDz8uZe1Gj5QZtCnpyDsckvAiEnT89OEbCLmnte4R4sn7P0EKFw==}
 
   babel-cli@6.26.0:
     resolution: {integrity: sha512-wau+BDtQfuSBGQ9PzzFL3REvR9Sxnd4LKwtcHAiPjhugA7K/80vpHXafj+O5bAqJOuSefjOx5ZJnNSR2J1Qw6Q==}
@@ -6619,8 +6619,8 @@ packages:
     resolution: {integrity: sha512-5T6P4xPgpp0YDFvSWwEZ4NoE3aM4QBQXDzmVbraCkFj8zHM+mba8SyqB5DbZWyR7mYHo6Y7BdQo3MoA4m0TeQg==}
     engines: {node: '>=0.10.0'}
 
-  baseline-browser-mapping@2.11.3:
-    resolution: {integrity: sha512-sbT0Ui/CZwyAyy7icT1Gw5P1LKRlFaHwaF6tDCW5YHq2X5SeeZFphBuIagopSfwSSZq3sQcbmEL072yphxm7ew==}
+  baseline-browser-mapping@2.11.20:
+    resolution: {integrity: sha512-H0ulySigv6icDJ1F7SjtdCD6PrhTpdYCmP0CactWy1+ekh0AFd0o1Wn5T8b+hnTmdBx19u9yhL6wvCylXMY7zw==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -6718,8 +6718,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
 
-  browserslist@4.28.7:
-    resolution: {integrity: sha512-JxV13hNrFxqjOc8alRbq9dK1MM79NEXYpma2B2J4wAtpWS5zIEIKqWPGCl7N4o7Uc7B7itylh7SuDujATRyyTw==}
+  browserslist@4.28.8:
+    resolution: {integrity: sha512-V2NpofLblG64mfOtSgDhOJESZEGogzDMBv/q+W6oc4LXWP/q75eOXoOaaOu1EOadB9U4Bwx/e0yzbvwKH8zalA==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
 
@@ -6822,8 +6822,8 @@ packages:
   caniuse-lite@1.0.30001748:
     resolution: {integrity: sha512-5P5UgAr0+aBmNiplks08JLw+AW/XG/SurlgZLgB1dDLfAw7EfRGxIwzPHxdSCGY/BTKDqIVyJL87cCN6s0ZR0w==}
 
-  caniuse-lite@1.0.30001806:
-    resolution: {integrity: sha512-72Cuvd95zbSYPKq6Fhg8eDJRlzgWDf7/mtoZv6Qe/DYNCEBdNxoA3+rZAU2ZhGCpZlns3EssFavaZomckT5Uuw==}
+  caniuse-lite@1.0.30001810:
+    resolution: {integrity: sha512-TITQPUkaz+aVk5GL6NhOdwk1aEaNTSDPsGFWrTuhKGtjTF70jL/Oht2W4c6rXUe5fu7Ie19VIahAXHIIiWWNeg==}
 
   caseless@0.12.0:
     resolution: {integrity: sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==}
@@ -7568,8 +7568,8 @@ packages:
   electron-to-chromium@1.5.230:
     resolution: {integrity: sha512-A6A6Fd3+gMdaed9wX83CvHYJb4UuapPD5X5SLq72VZJzxHSY0/LUweGXRWmQlh2ln7KV7iw7jnwXK7dlPoOnHQ==}
 
-  electron-to-chromium@1.5.396:
-    resolution: {integrity: sha512-yHiw2Y3C3H9U6TMbOfoWK/BPreiOPXRfTWPBwQBoZG6/8TB6eOPnsy5oaRYuatR7Fw2SJ4kKforgufeo7fq0EQ==}
+  electron-to-chromium@1.5.420:
+    resolution: {integrity: sha512-2yD6XreGusOfNV+dUcvipJEXc3n/n7fgr7996aszTG+YY5E4mqM4tOq/3uhP129cazL9YHbVWSpc79ePotWtPA==}
 
   emittery@1.2.0:
     resolution: {integrity: sha512-KxdRyyFcS85pH3dnU8Y5yFUm2YJdaHwcBZWrfG8o89ZY9a13/f9itbN+YG3ELbBo9Pg5zvIozstmuV8bX13q6g==}
@@ -7598,8 +7598,8 @@ packages:
   end-of-stream@1.4.5:
     resolution: {integrity: sha512-ooEGc6HP26xXq/N+GCGOT0JKCLDGrq2bQUZrQ7gyrJiZANJ/8YDTxTpQBXGMn+WbIQXNVpyWymm7KYVICQnyOg==}
 
-  enhanced-resolve@5.24.3:
-    resolution: {integrity: sha512-PwKooW9JUzh5chmYfHM3IQl5OkK2u2Nm011MgeZrss3JmFraUx/fqrf78kk8GUMYoibx/14MdwTl/1WKkG7TpQ==}
+  enhanced-resolve@5.24.5:
+    resolution: {integrity: sha512-L1l8TNvomm6UVW5B253AGxQagSQr+vGwhMlrrfRS2qmhx46AMpMVJKQYLvWYbysTMY8VoicOvzHzoHMbyzB+4A==}
     engines: {node: '>=10.13.0'}
 
   enquirer@2.4.1:
@@ -8676,8 +8676,8 @@ packages:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
     engines: {node: '>=0.10.0'}
 
-  iconv-lite@0.7.0:
-    resolution: {integrity: sha512-cf6L2Ds3h57VVmkZe+Pn+5APsT7FpqJtEhhieDCvrE2MK5Qk9MyffgQyuxQTm6BChfeZNtcOLHp9IcWRVcIcBQ==}
+  iconv-lite@0.7.3:
+    resolution: {integrity: sha512-IKXpvIzjnC9XTAUbVBcMfGS0EPaIXtW6v+zr+RRp+hqULEpo0owZax6wyRwPOJbWbzjYspQwusTsfVr0ifh4uQ==}
     engines: {node: '>=0.10.0'}
 
   ieee754@1.2.1:
@@ -9580,12 +9580,8 @@ packages:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
 
-  lru-cache@7.18.3:
-    resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
-    engines: {node: '>=12'}
-
-  lru.min@1.1.3:
-    resolution: {integrity: sha512-Lkk/vx6ak3rYkRR0Nhu4lFUT2VDnQSxBe8Hbl7f36358p6ow8Bnvr8lrLt98H8J1aGxfhbX4Fs5tYg2+FTwr5Q==}
+  lru.min@1.1.5:
+    resolution: {integrity: sha512-5J9ysMYUpYIg9RF2vJpy9SinEmSviFSe0GyPpCQ4L5QSkLAgeLXlTAOu2ZwWUU5m+0SBl6gUU1R1ZQB3aKypfA==}
     engines: {bun: '>=1.0.0', deno: '>=1.30.0', node: '>=8.0.0'}
 
   lunr@2.3.9:
@@ -9960,16 +9956,18 @@ packages:
     resolution: {integrity: sha512-avsJQhyd+680gKXyG/sQc0nXaC6rBkPOfyHYcFb9+hdkqQkR9bdnkJ0AMZhke0oesPqIO+mFFJ+IdBc7mst4IA==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
 
-  mysql2@3.15.3:
-    resolution: {integrity: sha512-FBrGau0IXmuqg4haEZRBfHNWB5mUARw6hNwPDXXGg0XzVJ50mr/9hb267lvpVMnhZ1FON3qNd4Xfcez1rbFwSg==}
+  mysql2@3.23.1:
+    resolution: {integrity: sha512-tTuRnC7qCet2IOfSNMYZ5SwXuBnfvBPAcIA28P0gtruXyZlU1LMxA6uha32kYypoFgyYklMqhLWwt4laYwXR/Q==}
     engines: {node: '>= 8.0'}
+    peerDependencies:
+      '@types/node': '>= 8'
 
   mz@2.7.0:
     resolution: {integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==}
 
-  named-placeholders@1.1.3:
-    resolution: {integrity: sha512-eLoBxg6wE/rZkJPhU/xRX1WTpkFEwDJEN96oxFrTsqBdbT5ec295Q+CoHrL9IT0DipqKhmGcaZmwOt8OON5x1w==}
-    engines: {node: '>=12.0.0'}
+  named-placeholders@1.1.6:
+    resolution: {integrity: sha512-Tz09sEL2EEuv5fFowm419c1+a/jSMiBjI9gHxVLrVdbUkkNUUfjsVYs9pVZu5oCon/kmRh9TfLEObFtkVxmY0w==}
+    engines: {node: '>=8.0.0'}
 
   nan@2.23.0:
     resolution: {integrity: sha512-1UxuyYGdoQHcGg87Lkqm3FzefucTa0NAiOcuRsDmysep3c1LVCRK2krrUDafMWtjSG04htvAmvg96+SDknOmgQ==}
@@ -10052,8 +10050,8 @@ packages:
   node-releases@2.0.23:
     resolution: {integrity: sha512-cCmFDMSm26S6tQSDpBCg/NR8NENrVPhAJSf+XbxBG4rPFaaonlEoE9wHQmun+cls499TQGSb7ZyPBRlzgKfpeg==}
 
-  node-releases@2.0.51:
-    resolution: {integrity: sha512-wRNIrw4DmVLKQlbgOMdkMx27Wrpzes2hh5Jtbi2bjPd+4wJstWIqP5A+lscnqbm0xxmT5Bpg8Lec5ItEBwx6BQ==}
+  node-releases@2.0.54:
+    resolution: {integrity: sha512-YHs7BmmcsdAI5Ozuf8JZo6PT0mv2GIWC9vMfvUC3dp65M8hn7Ux8CPL+2oBI7juNuj9d0ndhTcznq2ODBps9cQ==}
     engines: {node: '>=18'}
 
   nofilter@3.1.0:
@@ -10688,8 +10686,8 @@ packages:
     resolution: {integrity: sha512-YWWTjgABSKcvs/nWBi9PycY/JiPJqOD4JA6o9Sej2AtvSGarXxKC3OQSk4pAarbdQlKAh5D4FCQkJNkW+GAn3w==}
     engines: {node: '>=0.6'}
 
-  qs@6.15.2:
-    resolution: {integrity: sha512-Rzq0KEyX/w/tEybncDgdkZrJgVUsUMk3xjh3t5bv3S1HTAtg+uOYt72+ZfwiQwKdysThkTBdL/rTi6HDmX9Ddw==}
+  qs@6.16.0:
+    resolution: {integrity: sha512-h6fhOIaRrID2CbEY2fqs+7t+UXZo+MLAnU5gRIq85uFtdiUPCdsApMlHhXogKVM4HM2DVbIjGNTTYH2OcmP1vA==}
     engines: {node: '>=0.6'}
 
   qs@6.5.5:
@@ -11060,9 +11058,6 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  seq-queue@0.0.5:
-    resolution: {integrity: sha512-hr3Wtp/GZIc/6DAGPDcV4/9WoZhjrkXsi5B/07QgX8tsdc6ilr7BFM6PM6rbdAX1kFSDYeZGLipIZZKyQP0O5Q==}
-
   sequin@0.1.1:
     resolution: {integrity: sha512-hJWMZRwP75ocoBM+1/YaCsvS0j5MTPeBHJkS2/wruehl9xwtX30HlDF1Gt6UZ8HHHY8SJa2/IL+jo+JJCd59rA==}
     engines: {node: '>=0.4.0'}
@@ -11122,8 +11117,8 @@ packages:
     resolution: {integrity: sha512-WPS/HvHQTYnHisLo9McqBHOJk2FkHO/tlpvldyrnem4aeQp4hai3gythswg6p01oSoTl58rcpiFAjF2br2Ak2A==}
     engines: {node: '>= 0.4'}
 
-  side-channel@1.1.0:
-    resolution: {integrity: sha512-ZX99e6tRweoUXqR+VBrslhda51Nh5MTQwou5tnUDgbtyM0dBgmhEDtWGP/xbKn6hqfPRHujUNwz5fy/wbbhnpw==}
+  side-channel@1.1.1:
+    resolution: {integrity: sha512-6x6dK6zJdpTzF4sQeNYxwtvBzf6Eg4GtlesS94HOvTudUeyK2WXAaIfmDgsyslYrRBeFIlsi54AYsFGUuhmvrQ==}
     engines: {node: '>= 0.4'}
 
   signal-exit@3.0.7:
@@ -11266,9 +11261,9 @@ packages:
   sprintf-js@1.1.3:
     resolution: {integrity: sha512-Oo+0REFV59/rz3gfJNKQiBlwfHaSESl1pcGyABQsnnIfWOFt6JNj5gCog2U6MLZ//IGYD+nA8nI+mTShREReaA==}
 
-  sqlstring@2.3.3:
-    resolution: {integrity: sha512-qC9iz2FlN7DQl3+wjwn3802RTyjCx7sDvfQEXchwa6CWOx07/WVfh91gBmQ9fahw8snwGEWU3xGzOt4tFyHLxg==}
-    engines: {node: '>= 0.6'}
+  sql-escaper@1.5.1:
+    resolution: {integrity: sha512-4toX5E1fQbBrpfXidaHnF0669nkAdETeIPTs2SUjxxD7RRIs9ICG4gtpmfc68JCEKehsdwLFqBu9VlQqZ1P1gg==}
+    engines: {bun: '>=1.0.0', deno: '>=2.0.0', node: '>=12.0.0'}
 
   ssh2-sftp-client@9.0.4:
     resolution: {integrity: sha512-fHAXUgmtmqUq/IdMlN9DBhkzrRFQRfORsQYglZMdnvosr4oo/6js+jxrJgGU+alNLW8ZN1IZFfRSoAejyvr8zg==}
@@ -11590,8 +11585,8 @@ packages:
       uglify-js:
         optional: true
 
-  terser@5.49.0:
-    resolution: {integrity: sha512-SNiDnXyHSrxVcIOtVbULzcTmniUiwcV7Nwdyj1twVubeTmbjoa8p69KKDpfkdoOavuM4/GRm1+ykI8qqnavHoA==}
+  terser@5.51.2:
+    resolution: {integrity: sha512-bWnjSNscmuI+GJze6ZupnHP8G/cTcsJF+bXCeQknk2SHQsgbNJnLrqiH9jZ2W4STPVXH2mDKKRX3iwPhc9Cn/Q==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -11920,11 +11915,8 @@ packages:
   underscore@1.13.8:
     resolution: {integrity: sha512-DXtD3ZtEQzc7M8m4cXotyHR+FAS18C64asBYY5vqZexfYryNNnDc02W4hKg3rdQuqOYas1jkseX0+nZXjTXnvQ==}
 
-  undici-types@5.26.5:
-    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
-
-  undici@7.28.0:
-    resolution: {integrity: sha512-cRZYrTDwWznlnRiPjggAGxZXanty6M8RV1ff8Wm4LWXBp7/IG8v5DnOm74DtUBp9OONpK75YlPnIjQqX0dBDtA==}
+  undici@7.29.0:
+    resolution: {integrity: sha512-IDxfleLmmbSskfWSUATiN1nfn2rDuvnMOqb5CWR92iIfojA0Ud+ulOAAEQ57LPr9rWmsreUyf5lwyao+7GNNVw==}
     engines: {node: '>=20.18.1'}
 
   unicode-canonical-property-names-ecmascript@2.0.1:
@@ -11984,8 +11976,8 @@ packages:
     peerDependencies:
       browserslist: '>= 4.21.0'
 
-  update-browserslist-db@1.2.3:
-    resolution: {integrity: sha512-Js0m9cx+qOgDxo0eMiFGEueWztz+d4+M3rGlmKPT+T4IS/jP4ylw3Nwpu6cpTTP8R1MAC1kF4VbdLt3ARf209w==}
+  update-browserslist-db@1.3.2:
+    resolution: {integrity: sha512-UQ+MSxlhRm1bzjhU+DcuXfjFO1FzNtqhK5+9Yvlp90ItDLk5vT932A0rFu619nf7RVS+Y/VeaUW1jaRDqZ8VJw==}
     hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
@@ -14306,7 +14298,7 @@ snapshots:
   '@inquirer/external-editor@1.0.3(@types/node@18.17.5)':
     dependencies:
       chardet: 2.1.1
-      iconv-lite: 0.7.0
+      iconv-lite: 0.7.3
     optionalDependencies:
       '@types/node': 18.17.5
 
@@ -14713,7 +14705,7 @@ snapshots:
 
   '@opengovsg/formsg-sdk@0.15.0':
     dependencies:
-      axios: 1.18.1
+      axios: 1.19.0
       tweetnacl: 1.0.3
       tweetnacl-util: 0.15.1
     transitivePeerDependencies:
@@ -15282,10 +15274,6 @@ snapshots:
 
   '@types/node@18.17.5': {}
 
-  '@types/node@18.19.130':
-    dependencies:
-      undici-types: 5.26.5
-
   '@types/node@8.10.66': {}
 
   '@types/qs@6.14.0': {}
@@ -15450,9 +15438,9 @@ snapshots:
     dependencies:
       acorn: 8.16.0
 
-  acorn-import-phases@1.0.4(acorn@8.17.0):
+  acorn-import-phases@1.0.4(acorn@8.18.0):
     dependencies:
-      acorn: 8.17.0
+      acorn: 8.18.0
 
   acorn-jsx@5.3.2(acorn@8.16.0):
     dependencies:
@@ -15470,7 +15458,7 @@ snapshots:
 
   acorn@8.16.0: {}
 
-  acorn@8.17.0: {}
+  acorn@8.18.0: {}
 
   adm-zip@0.6.0: {}
 
@@ -15828,7 +15816,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  axios@1.18.1:
+  axios@1.19.0:
     dependencies:
       follow-redirects: 1.16.0
       form-data: 4.0.6
@@ -16439,7 +16427,7 @@ snapshots:
       pascalcase: 0.1.1
     optional: true
 
-  baseline-browser-mapping@2.11.3: {}
+  baseline-browser-mapping@2.11.20: {}
 
   baseline-browser-mapping@2.8.12: {}
 
@@ -16555,13 +16543,13 @@ snapshots:
       node-releases: 2.0.23
       update-browserslist-db: 1.1.3(browserslist@4.26.3)
 
-  browserslist@4.28.7:
+  browserslist@4.28.8:
     dependencies:
-      baseline-browser-mapping: 2.11.3
-      caniuse-lite: 1.0.30001806
-      electron-to-chromium: 1.5.396
-      node-releases: 2.0.51
-      update-browserslist-db: 1.2.3(browserslist@4.28.7)
+      baseline-browser-mapping: 2.11.20
+      caniuse-lite: 1.0.30001810
+      electron-to-chromium: 1.5.420
+      node-releases: 2.0.54
+      update-browserslist-db: 1.3.2(browserslist@4.28.8)
 
   bson@1.1.6: {}
 
@@ -16654,7 +16642,7 @@ snapshots:
 
   caniuse-lite@1.0.30001748: {}
 
-  caniuse-lite@1.0.30001806: {}
+  caniuse-lite@1.0.30001810: {}
 
   caseless@0.12.0: {}
 
@@ -16677,7 +16665,7 @@ snapshots:
       cookiejar: 2.1.4
       is-ip: 2.0.0
       methods: 1.1.2
-      qs: 6.15.2
+      qs: 6.16.0
       superagent: 3.8.3
     transitivePeerDependencies:
       - supports-color
@@ -16903,7 +16891,7 @@ snapshots:
     dependencies:
       '@hapi/bourne': 3.0.0
       inflation: 2.1.0
-      qs: 6.15.2
+      qs: 6.16.0
       raw-body: 2.5.3
       type-is: 1.6.18
 
@@ -17438,7 +17426,7 @@ snapshots:
 
   electron-to-chromium@1.5.230: {}
 
-  electron-to-chromium@1.5.396: {}
+  electron-to-chromium@1.5.420: {}
 
   emittery@1.2.0: {}
 
@@ -17458,7 +17446,7 @@ snapshots:
     dependencies:
       once: 1.4.0
 
-  enhanced-resolve@5.24.3:
+  enhanced-resolve@5.24.5:
     dependencies:
       graceful-fs: 4.2.11
       tapable: 2.3.3
@@ -18300,7 +18288,7 @@ snapshots:
       '@paralleldrive/cuid2': 2.2.2
       dezalgo: 1.0.4
       once: 1.4.0
-      qs: 6.15.2
+      qs: 6.16.0
 
   fragment-cache@0.2.1:
     dependencies:
@@ -18309,7 +18297,7 @@ snapshots:
 
   frappe-js-sdk@1.11.0:
     dependencies:
-      axios: 1.18.1
+      axios: 1.19.0
     transitivePeerDependencies:
       - debug
       - supports-color
@@ -18607,7 +18595,7 @@ snapshots:
       extend: 3.0.2
       gaxios: 7.1.4
       google-auth-library: 10.6.2
-      qs: 6.15.2
+      qs: 6.16.0
       url-template: 2.0.8
     transitivePeerDependencies:
       - supports-color
@@ -18824,7 +18812,7 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
-  iconv-lite@0.7.0:
+  iconv-lite@0.7.3:
     dependencies:
       safer-buffer: 2.1.2
 
@@ -18881,7 +18869,7 @@ snapshots:
     dependencies:
       es-errors: 1.3.0
       hasown: 2.0.4
-      side-channel: 1.1.0
+      side-channel: 1.1.1
 
   interpret@2.2.0: {}
 
@@ -19574,7 +19562,7 @@ snapshots:
     dependencies:
       graceful-fs: 4.2.11
 
-  knex@3.1.0(mysql2@3.15.3):
+  knex@3.1.0(mysql2@3.23.1(@types/node@18.17.5)):
     dependencies:
       colorette: 2.0.19
       commander: 10.0.1
@@ -19591,7 +19579,7 @@ snapshots:
       tarn: 3.0.2
       tildify: 2.0.0
     optionalDependencies:
-      mysql2: 3.15.3
+      mysql2: 3.23.1(@types/node@18.17.5)
     transitivePeerDependencies:
       - supports-color
 
@@ -19766,9 +19754,7 @@ snapshots:
     dependencies:
       yallist: 4.0.0
 
-  lru-cache@7.18.3: {}
-
-  lru.min@1.1.3: {}
+  lru.min@1.1.5: {}
 
   lunr@2.3.9: {}
 
@@ -19784,7 +19770,7 @@ snapshots:
 
   mailgun.js@9.2.0:
     dependencies:
-      axios: 1.18.1
+      axios: 1.19.0
       base-64: 1.0.0
       url-join: 4.0.1
     transitivePeerDependencies:
@@ -20278,17 +20264,17 @@ snapshots:
 
   mute-stream@1.0.0: {}
 
-  mysql2@3.15.3:
+  mysql2@3.23.1(@types/node@18.17.5):
     dependencies:
+      '@types/node': 18.17.5
       aws-ssl-profiles: 1.1.2
       denque: 2.1.0
       generate-function: 2.3.1
-      iconv-lite: 0.7.0
+      iconv-lite: 0.7.3
       long: 5.3.2
-      lru.min: 1.1.3
-      named-placeholders: 1.1.3
-      seq-queue: 0.0.5
-      sqlstring: 2.3.3
+      lru.min: 1.1.5
+      named-placeholders: 1.1.6
+      sql-escaper: 1.5.1
 
   mz@2.7.0:
     dependencies:
@@ -20296,9 +20282,9 @@ snapshots:
       object-assign: 4.1.1
       thenify-all: 1.6.0
 
-  named-placeholders@1.1.3:
+  named-placeholders@1.1.6:
     dependencies:
-      lru-cache: 7.18.3
+      lru.min: 1.1.5
 
   nan@2.23.0:
     optional: true
@@ -20391,7 +20377,7 @@ snapshots:
       lodash: 4.18.1
       mkdirp: 0.5.6
       propagate: 0.4.0
-      qs: 6.15.2
+      qs: 6.16.0
     transitivePeerDependencies:
       - supports-color
 
@@ -20415,7 +20401,7 @@ snapshots:
 
   node-releases@2.0.23: {}
 
-  node-releases@2.0.51: {}
+  node-releases@2.0.54: {}
 
   nofilter@3.1.0: {}
 
@@ -20998,11 +20984,12 @@ snapshots:
 
   qs@6.14.0:
     dependencies:
-      side-channel: 1.1.0
+      side-channel: 1.1.1
 
-  qs@6.15.2:
+  qs@6.16.0:
     dependencies:
-      side-channel: 1.1.0
+      es-define-property: 1.0.1
+      side-channel: 1.1.1
 
   qs@6.5.5: {}
 
@@ -21485,8 +21472,6 @@ snapshots:
 
   semver@7.7.4: {}
 
-  seq-queue@0.0.5: {}
-
   sequin@0.1.1: {}
 
   serialize-error@7.0.1:
@@ -21566,7 +21551,7 @@ snapshots:
       object-inspect: 1.13.4
       side-channel-map: 1.0.1
 
-  side-channel@1.1.0:
+  side-channel@1.1.1:
     dependencies:
       es-errors: 1.3.0
       object-inspect: 1.13.4
@@ -21743,7 +21728,7 @@ snapshots:
 
   sprintf-js@1.1.3: {}
 
-  sqlstring@2.3.3: {}
+  sql-escaper@1.5.1: {}
 
   ssh2-sftp-client@9.0.4:
     dependencies:
@@ -22001,7 +21986,7 @@ snapshots:
       formidable: 1.2.6
       methods: 1.1.2
       mime: 1.6.0
-      qs: 6.15.2
+      qs: 6.16.0
       readable-stream: 2.3.8
     transitivePeerDependencies:
       - supports-color
@@ -22016,7 +22001,7 @@ snapshots:
       formidable: 1.2.6
       methods: 1.1.2
       mime: 1.6.0
-      qs: 6.15.2
+      qs: 6.16.0
       readable-stream: 2.3.8
     transitivePeerDependencies:
       - supports-color
@@ -22133,15 +22118,15 @@ snapshots:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
       schema-utils: 4.3.3
-      terser: 5.49.0
+      terser: 5.51.2
       webpack: 5.102.0(@swc/core@1.10.9)
     optionalDependencies:
       '@swc/core': 1.10.9
 
-  terser@5.49.0:
+  terser@5.51.2:
     dependencies:
       '@jridgewell/source-map': 0.3.11
-      acorn: 8.17.0
+      acorn: 8.18.0
       commander: 2.20.3
       source-map-support: 0.5.21
 
@@ -22167,7 +22152,7 @@ snapshots:
       http-basic: 8.1.3
       http-response-object: 3.0.2
       promise: 8.3.0
-      qs: 6.15.2
+      qs: 6.16.0
 
   thenify-all@1.6.0:
     dependencies:
@@ -22321,46 +22306,6 @@ snapshots:
     optionalDependencies:
       '@swc/core': 1.10.9
 
-  ts-node@10.9.1(@swc/core@1.10.9)(@types/node@18.19.130)(typescript@4.8.4):
-    dependencies:
-      '@cspotcode/source-map-support': 0.8.1
-      '@tsconfig/node10': 1.0.11
-      '@tsconfig/node12': 1.0.11
-      '@tsconfig/node14': 1.0.3
-      '@tsconfig/node16': 1.0.4
-      '@types/node': 18.19.130
-      acorn: 8.16.0
-      acorn-walk: 8.3.4
-      arg: 4.1.3
-      create-require: 1.1.1
-      diff: 4.0.2
-      make-error: 1.3.6
-      typescript: 4.8.4
-      v8-compile-cache-lib: 3.0.1
-      yn: 3.1.1
-    optionalDependencies:
-      '@swc/core': 1.10.9
-
-  ts-node@10.9.1(@swc/core@1.10.9)(@types/node@18.19.130)(typescript@5.9.2):
-    dependencies:
-      '@cspotcode/source-map-support': 0.8.1
-      '@tsconfig/node10': 1.0.11
-      '@tsconfig/node12': 1.0.11
-      '@tsconfig/node14': 1.0.3
-      '@tsconfig/node16': 1.0.4
-      '@types/node': 18.19.130
-      acorn: 8.16.0
-      acorn-walk: 8.3.4
-      arg: 4.1.3
-      create-require: 1.1.1
-      diff: 4.0.2
-      make-error: 1.3.6
-      typescript: 5.9.2
-      v8-compile-cache-lib: 3.0.1
-      yn: 3.1.1
-    optionalDependencies:
-      '@swc/core': 1.10.9
-
   tsconfig-paths@3.15.0:
     dependencies:
       '@types/json5': 0.0.29
@@ -22464,7 +22409,7 @@ snapshots:
       jsonwebtoken: 8.5.1
       lodash: 4.18.1
       q: 2.0.3
-      qs: 6.15.2
+      qs: 6.16.0
       rootpath: 0.1.2
       scmp: 2.1.0
       url-parse: 1.5.10
@@ -22577,9 +22522,7 @@ snapshots:
 
   underscore@1.13.8: {}
 
-  undici-types@5.26.5: {}
-
-  undici@7.28.0: {}
+  undici@7.29.0: {}
 
   unicode-canonical-property-names-ecmascript@2.0.1: {}
 
@@ -22647,9 +22590,9 @@ snapshots:
       escalade: 3.2.0
       picocolors: 1.1.1
 
-  update-browserslist-db@1.2.3(browserslist@4.28.7):
+  update-browserslist-db@1.3.2(browserslist@4.28.8):
     dependencies:
-      browserslist: 4.28.7
+      browserslist: 4.28.8
       escalade: 3.2.0
       picocolors: 1.1.1
 
@@ -22760,11 +22703,11 @@ snapshots:
       '@webassemblyjs/ast': 1.14.1
       '@webassemblyjs/wasm-edit': 1.14.1
       '@webassemblyjs/wasm-parser': 1.14.1
-      acorn: 8.17.0
-      acorn-import-phases: 1.0.4(acorn@8.17.0)
-      browserslist: 4.28.7
+      acorn: 8.18.0
+      acorn-import-phases: 1.0.4(acorn@8.18.0)
+      browserslist: 4.28.8
       chrome-trace-event: 1.0.4
-      enhanced-resolve: 5.24.3
+      enhanced-resolve: 5.24.5
       es-module-lexer: 1.7.0
       eslint-scope: 5.1.1
       events: 3.3.0

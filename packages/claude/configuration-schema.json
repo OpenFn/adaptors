@@ -15,6 +15,21 @@
       "type": "string",
       "minLength": 1,
       "examples": ["sk-ant-api03-YOUR_SECRET_KEY"]
+    },
+    "baseUrl": {
+      "title": "Base URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The URL for the endpoint of the LLM provider compatible with the Messages API for Claude",
+      "type": "string",
+      "minLength": 1,
+      "examples": ["https://api.anthropic.com"]
     }
   },
   "type": "object",

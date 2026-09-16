@@ -18,6 +18,7 @@ import * as util from './Utils.js';
  * @property {object} data - The request body (as JSON)
  * @property {object|boolean} errors - Pass `false` to not throw on errors. Pass a map of errorCodes: error messages, ie, `{ 404: 'Resource not found' }`, or `false` to suppress errors for a specific code.
  * @property {string} [parseAs='json'] - The response format to parse (e.g., 'json', 'text', or 'stream')
+ * @property {object} tls - TLS/SSL options for this request. Overrides `configuration.tls`. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions
  */
 
 /**

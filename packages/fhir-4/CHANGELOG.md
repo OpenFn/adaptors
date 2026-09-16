@@ -1,5 +1,18 @@
 # @openfn/language-fhir-4
 
+## 0.6.0 - 03 September 2026
+
+### Minor Changes
+
+- 96c6822: Add support for `tls` options in `state.configuration`
+
+### Patch Changes
+
+- fd1b2be: Security update
+- Updated dependencies \[654026d]
+- Updated dependencies \[fd1b2be]
+  - @openfn/language-common@3.3.5
+
 ## 0.5.5 - 30 June 2026
 
 ### Patch Changes

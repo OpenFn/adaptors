@@ -1,5 +1,14 @@
 # @openfn/language-mysql
 
+## 4.1.3 - 03 September 2026
+
+### Patch Changes
+
+- 931a3fb: Update mysql2 to 3.23.1
+- Updated dependencies \[654026d]
+- Updated dependencies \[fd1b2be]
+  - @openfn/language-common@3.3.5
+
 ## 4.1.2 - 30 June 2026
 
 ### Patch Changes

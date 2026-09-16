@@ -1,5 +1,14 @@
 # @openfn/language-satusehat
 
+## 3.1.3 - 03 September 2026
+
+### Patch Changes
+
+- fd1b2be: Security update
+- Updated dependencies \[654026d]
+- Updated dependencies \[fd1b2be]
+  - @openfn/language-common@3.3.5
+
 ## 3.1.2 - 30 June 2026
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @openfn/language-primero
 
+## 4.2.0 - 03 September 2026
+
+### Minor Changes
+
+- a0dafc8: Add `get` helper, which fetches resources with automatic pagination.
+
+### Patch Changes
+
+- Updated dependencies \[654026d]
+- Updated dependencies \[fd1b2be]
+  - @openfn/language-common@3.3.5
+
 ## 4.1.2 - 30 June 2026
 
 ### Patch Changes

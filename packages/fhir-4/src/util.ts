@@ -76,11 +76,24 @@ type RequestOptions = {
     username?: string;
     password?: string;
     access_token?: string;
+    tls?: Record<string, any>;
   };
   query?: Record<string, string>;
+  tls?: Record<string, any>;
 };
 
-export const request = (method, path, options: RequestOptions) => {
+export function getTLSOptions(
+  configuration: RequestOptions['configuration'] = {},
+  requestOptions: Partial<RequestOptions> = {},
+) {
+  return requestOptions.tls ?? configuration.tls;
+}
+
+export const request = (
+  method: string,
+  path: string,
+  options: RequestOptions,
+) => {
   assertRelativeUrl(path);
 
   const { configuration, ...otherOptions } = options;
@@ -98,6 +111,7 @@ export const request = (method, path, options: RequestOptions) => {
     ),
     baseUrl: configuration.baseUrl,
     parseAs: 'json',
+    tls: getTLSOptions(configuration, otherOptions),
   };
 
   // TODO add common error handlers for 404, 401

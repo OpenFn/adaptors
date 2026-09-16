@@ -21,6 +21,7 @@ import * as util from './Utils.js';
  * @property {object} query - Query parameters for the request. Will be encoded into the URL
  * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
  * @property {number} timeout - Request timeout in ms. Default: 300 seconds.
+ * @property {object} tls - TLS/SSL options for this request. Overrides `configuration.tls`. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions
  */
 
 /**

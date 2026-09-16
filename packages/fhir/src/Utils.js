@@ -20,6 +20,10 @@ export function addAuth(configuration = {}, headers) {
   }
 }
 
+export function getTLSOptions(configuration = {}, requestOptions = {}) {
+  return requestOptions.tls ?? configuration.tls;
+}
+
 export const prepareNextState = (state, response, callback) => {
   const { body, ...responseWithoutBody } = response;
 
@@ -38,6 +42,8 @@ export const request = (configuration, method, path, options = {}) => {
 
   addAuth(configuration, headers);
 
+  const tls = getTLSOptions(configuration, otherOptions);
+
   const opts = {
     ...otherOptions,
     headers: {
@@ -47,6 +53,7 @@ export const request = (configuration, method, path, options = {}) => {
     },
     baseUrl,
     parseAs: 'json',
+    tls,
   };
 
   return commonRequest(method, fullPath, opts).then(logResponse);

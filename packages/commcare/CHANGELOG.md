@@ -1,10 +1,49 @@
 # @openfn/language-commcare
 
-## 4.3.0 - 09 September 2026
+## 4.3.2 - 16 September 2026
+
+### Patch Changes
+
+- 5eeb93e: Deprecate `get`, `post`, and `request`. These functions only work
+  with CommCare's legacy v0.5 API. Use `http.get`, `http.post`, and
+  `http.request` instead.
+
+  Note that `get`/`post`/`request` hard-code the `v0.5` version segment into the
+  URL, but the `http.*` functions do not add a version automatically — you must
+  include `v0.5` yourself in the path to get the same behaviour.
+
+  ```js
+  // before
+  get('/case/12345');
+  // after
+  http.get('v0.5/case/12345');
+
+  // before
+  post('/user', { username: 'test', password: 'somepassword' });
+  // after
+  http.post('v0.5/user', { username: 'test', password: 'somepassword' });
+
+  // before
+  request('GET', '/a/asri/api/v0.5/case');
+  // after
+  http.request('GET', 'v0.5/case');
+  ```
+
+## 4.3.1 - 03 September 2026
+
+### Patch Changes
+
+- Updated dependencies \[654026d]
+- Updated dependencies \[fd1b2be]
+  - @openfn/language-common@3.3.5
+
+## 4.3.0 - 28 August 2026
 
 ### Minor Changes
 
-- 3348d07: Added "getResource" and "list" helper functions
+- 7bf9586: Add opt-in pagination to `http.get`. Pass `params.paginate: true` to
+  accumulate all pages into `state.data`, or also provide a callback to stream
+  each page without accumulating.
 
 ## 4.2.1 - 17 August 2026
 

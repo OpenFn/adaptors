@@ -36,7 +36,7 @@ describe('tracker', () => {
         .intercept({
           path: getPath('tracker'),
           method: 'POST',
-          query: { async: false },
+          query: { async: false, importStrategy: 'CREATE' },
         })
         .reply(200, { httpStatus: 'OK', status: 'OK' });
 
@@ -53,7 +53,7 @@ describe('tracker', () => {
         .intercept({
           path: getPath('tracker'),
           method: 'POST',
-          query: { async: true },
+          query: { async: true, importStrategy: 'CREATE' },
         })
         .reply(200, {
           httpStatus: 'OK',
@@ -73,7 +73,7 @@ describe('tracker', () => {
         .intercept({
           path: getPath('tracker'),
           method: 'POST',
-          query: { async: false, atomicMode: 'ALL' },
+          query: { async: false, atomicMode: 'ALL', importStrategy: 'CREATE' },
         })
         .reply(200, { httpStatus: 'OK' });
 

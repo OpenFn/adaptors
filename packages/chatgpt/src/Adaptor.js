@@ -28,10 +28,11 @@ let client;
  * @returns {state}
  */
 export function createClient(state) {
-  const { apiKey } = state.configuration;
+  const { apiKey, baseUrl } = state.configuration;
 
   client = new OpenAI({
     apiKey,
+    baseUrl,
   });
 
   return state;

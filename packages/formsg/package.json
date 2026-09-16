@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-formsg",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "OpenFn formsg adaptor",
   "type": "module",
   "exports": {

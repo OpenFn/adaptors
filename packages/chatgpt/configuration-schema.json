@@ -15,6 +15,21 @@
       "type": "string",
       "minLength": 1,
       "examples": ["sk-proj-api03-YOUR_SECRET_KEY"]
+    },
+    "baseUrl": {
+      "title": "Base URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The URL for the OpenAI-compatible endpoint of the LLM provider",
+      "type": "string",
+      "minLength": 1,
+      "examples": ["https://api.openai.com/v1"]
     }
   },
   "type": "object",

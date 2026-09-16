@@ -1,5 +1,13 @@
 ## 3.0.1 - 11 July 2025
 
+## 3.3.5 - 03 September 2026
+
+### Patch Changes
+
+- 654026d: Parse +json content types (e.g. application/fhir+json) as JSON so
+  error bodies are objects, not strings
+- fd1b2be: Security update
+
 ## 3.3.4 - 30 June 2026
 
 ### Patch Changes

@@ -3,7 +3,7 @@ import { afterEach } from 'mocha';
 
 import { enableMockClient } from '@openfn/language-common/util';
 import testData from './fixtures.json' with { type: 'json' };
-import { request, requestWithPagination } from '../src/Utils.js';
+import { request, requestWithPagination, getTLSOptions } from '../src/Utils.js';
 
 const testServer = enableMockClient('https://util-tests.openmrs.org');
 
@@ -386,6 +386,43 @@ describe('request()', () => {
       'X-Custom-Header': 'custom-value',
       'content-type': 'application/json',
     });
+  });
+});
+
+describe('getTLSOptions', () => {
+  it('prefers requestOptions.tls over configuration.tls', () => {
+    const testState = {
+      configuration: {
+        tls: { ca: 'config-ca', cert: 'config-cert' },
+      },
+    };
+
+    const requestOptions = {
+      tls: { ca: 'request-ca', cert: 'request-cert' },
+    };
+
+    const result = getTLSOptions(testState, requestOptions);
+    expect(result).to.deep.equal(requestOptions.tls);
+  });
+
+  it('falls back to configuration.tls if requestOptions.tls is not provided', () => {
+    const testState = {
+      configuration: {
+        tls: { ca: 'config-ca', cert: 'config-cert' },
+      },
+    };
+
+    const result = getTLSOptions(testState, {});
+    expect(result).to.deep.equal(testState.configuration.tls);
+  });
+
+  it('returns undefined if no TLS config is found', () => {
+    const testState = {
+      configuration: {},
+    };
+
+    const result = getTLSOptions(testState, {});
+    expect(result).to.be.undefined;
   });
 });
 
