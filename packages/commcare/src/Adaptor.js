@@ -53,7 +53,7 @@ export function execute(...operations) {
  * The response body will be returned to `state.data` as JSON.
  * Paginated responses will be fully downloaded and returned as a single array, _unless_ an `offset` is passed.
  * @deprecated This function only works against CommCare's legacy v0.5 API (path: `/a/domain/api/v0.5/...`).
- * For current CommCare APIs, use {@link http.get} instead.
+ * For current CommCare APIs, use {@link #http_get} instead.
  * @public
  * @function
  * @example <caption>Get a resource by Id. Equivalent to GET `/a/domain/api/v0.5/case/12345`</caption>
@@ -154,7 +154,7 @@ export function get(path, params = {}, callback = s => s) {
  * Make a POST request to CommCare's legacy v0.5 API.
  * You can pass Commcare body data as a JSON object.
  * @deprecated This function only works against CommCare's legacy v0.5 API (path: `/a/domain/api/v0.5/...`).
- * For current CommCare APIs, use {@link http.post} instead.
+ * For current CommCare APIs, use {@link #http_post} instead.
  * @example <caption>Create a user resource. Equivalent to `/a/domain/api/v0.5/user`</caption>
  * post("/user", { "username":"test", "password":"somepassword" })
  * @function
@@ -339,7 +339,7 @@ export function fetchReportData(reportId, params, postUrl) {
 
 /**
  * Make a general HTTP request against the CommCare server.
- * @deprecated Use {@link http.request} instead.
+ * @deprecated Use {@link #http_request} instead.
  * @example <caption>Get a resource at a v0.5 path</caption>
  * request("GET", "/a/asri/api/v0.5/case");
  * @example <caption>Get a resource using query parameters</caption>

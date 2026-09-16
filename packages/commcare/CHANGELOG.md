@@ -1,5 +1,11 @@
 # @openfn/language-commcare
 
+## 4.3.3 - 16 September 2026
+
+### Patch Changes
+
+- 9c04e40: Fix broken links in docs
+
 ## 4.3.2 - 16 September 2026
 
 ### Patch Changes
