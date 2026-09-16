@@ -8,8 +8,12 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a GET request to CommCare. Use this to fetch resources directly from Commcare REST API.\nYou can pass Commcare query parameters as an object of key value pairs, which will map to parameters\nin the URL.\nThe response body will be returned to `state.data` as JSON.\nPaginated responses will be fully downloaded and returned as a single array, _unless_ an `offset` is passed.",
+        "description": "Make a GET request to CommCare's legacy v0.5 API.\nYou can pass Commcare query parameters as an object of key value pairs, which will map to parameters\nin the URL.\nThe response body will be returned to `state.data` as JSON.\nPaginated responses will be fully downloaded and returned as a single array, _unless_ an `offset` is passed.",
         "tags": [
+          {
+            "title": "deprecated",
+            "description": "This function only works against CommCare's legacy v0.5 API (path: `/a/domain/api/v0.5/...`).\nFor current CommCare APIs, use {@link http.get} instead."
+          },
           {
             "title": "public",
             "description": null,
@@ -23,21 +27,21 @@
           {
             "title": "example",
             "description": "get(\"/case/12345\")",
-            "caption": "Get a resource by Id. Equivalent to GET `<baseUrl>/case/12345`"
+            "caption": "Get a resource by Id. Equivalent to GET `/a/domain/api/v0.5/case/12345`"
           },
           {
             "title": "example",
             "description": "get(\"/case\", { offset:0, limit: 20 })",
-            "caption": "Get a resource with exactly 20 items. Equivalent to `<baseUrl>/case?offset=0&limit=20`"
+            "caption": "Get a resource with exactly 20 items. Equivalent to `/a/domain/api/v0.5/case?offset=0&limit=20`"
           },
           {
             "title": "example",
             "description": "get(\"/case\", {}, (state) => {\n  state.cases.push(...state.data) // adds all cases to the cases array\n  return state;\n})",
-            "caption": "Get all items in a resource, and add them to state. Equivalent to `<baseUrl>/case`"
+            "caption": "Get all items in a resource, and add them to state. Equivalent to `/a/domain/api/v0.5/case`"
           },
           {
             "title": "param",
-            "description": "Path to resource",
+            "description": "Path to a v0.5 resource (e.g. `case`, `form`)",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -46,7 +50,7 @@
           },
           {
             "title": "param",
-            "description": "Input parameters for the request. These vary by endpoint,  see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957366/Data+APIs CommCare docs}.",
+            "description": "Input parameters for the request. These vary by endpoint, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957366/Data+APIs CommCare v0.5 docs}.",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -93,12 +97,16 @@
         "callback"
       ],
       "docs": {
-        "description": "Make a POST request to CommCare. Use this to send resources directly to Commcare REST API.\nYou can pass Commcare body data as a JSON object.",
+        "description": "Make a POST request to CommCare's legacy v0.5 API.\nYou can pass Commcare body data as a JSON object.",
         "tags": [
+          {
+            "title": "deprecated",
+            "description": "This function only works against CommCare's legacy v0.5 API (path: `/a/domain/api/v0.5/...`).\nFor current CommCare APIs, use {@link http.post} instead."
+          },
           {
             "title": "example",
             "description": "post(\"/user\", { \"username\":\"test\", \"password\":\"somepassword\" })",
-            "caption": "Create a user resource.Equivalent to `<baseUrl>/user`"
+            "caption": "Create a user resource. Equivalent to `/a/domain/api/v0.5/user`"
           },
           {
             "title": "function",
@@ -112,7 +120,7 @@
           },
           {
             "title": "param",
-            "description": "Path to resource",
+            "description": "Path to a v0.5 resource (e.g. `user`, `case`)",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -282,7 +290,7 @@
         "postUrl"
       ],
       "docs": {
-        "description": "Make a GET request to CommCare's Reports API\nand POST the response somewhere else.",
+        "description": "Make a GET request to CommCare's Reports API (v0.5) and POST the response somewhere else.",
         "tags": [
           {
             "title": "public",
@@ -292,7 +300,7 @@
           {
             "title": "example",
             "description": "fetchReportData(\n  \"abcde\",\n  { limit: 10 },\n  \"https://www.example.com/api/\"\n)",
-            "caption": "Get 10 records from a report and post them to example.com. Equivalent to `<baseUrl>/configurablereportdata/abcde?limit=10`"
+            "caption": "Get 10 records from a report and post them to example.com. Equivalent to `/a/domain/api/v0.5/configurablereportdata/abcde?limit=10`"
           },
           {
             "title": "function",
@@ -310,7 +318,7 @@
           },
           {
             "title": "param",
-            "description": "Input parameters for the request, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957341/Download+Report+Data Commcare docs}.",
+            "description": "Input parameters for the request, see {@link https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957341/Download+Report+Data CommCare v0.5 docs}.",
             "type": {
               "type": "NameExpression",
               "name": "Object"
@@ -351,17 +359,21 @@
         "params"
       ],
       "docs": {
-        "description": "Make a general HTTP request against the Commcare server. Use this to make any request to Commcare REST API.",
+        "description": "Make a general HTTP request against the CommCare server.",
         "tags": [
           {
-            "title": "example",
-            "description": "request(\"GET\", \"/a/asri/api/v0.5/case\");",
-            "caption": "Get a resource. Equivalent to `<baseUrl>/a/asri/api/v0.5/case`"
+            "title": "deprecated",
+            "description": "Use {@link http.request} instead."
           },
           {
             "title": "example",
-            "description": "request(\"GET\", \"/case\", {}, { offset:0, limit: 20 })",
-            "caption": "Get a resource using query parameters. Equivalent to `<baseUrl>/case?offset=0&limit=20`"
+            "description": "request(\"GET\", \"/a/asri/api/v0.5/case\");",
+            "caption": "Get a resource at a v0.5 path"
+          },
+          {
+            "title": "example",
+            "description": "request(\"GET\", \"/a/asri/api/v0.5/case\", {}, { offset:0, limit: 20 })",
+            "caption": "Get a resource using query parameters"
           },
           {
             "title": "function",
