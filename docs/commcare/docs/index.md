@@ -153,14 +153,13 @@ bulk(
 
 <p><code>fetchReportData(reportId, params, postUrl) ⇒ Operation</code></p>
 
-Make a GET request to CommCare's Reports API
-and POST the response somewhere else.
+Make a GET request to CommCare's Reports API (v0.5) and POST the response somewhere else.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | reportId | <code>String</code> | API name of the report. |
-| params | <code>Object</code> | Input parameters for the request, see [Commcare docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957341/Download+Report+Data). |
+| params | <code>Object</code> | Input parameters for the request, see [CommCare v0.5 docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957341/Download+Report+Data). |
 | postUrl | <code>String</code> | URL to which the response object will be posted. |
 
 This operation writes the following keys to state:
@@ -171,7 +170,7 @@ This operation writes the following keys to state:
 | response | The HTTP response from the CommCare server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
 
-**Example:** Get 10 records from a report and post them to example.com. Equivalent to `<baseUrl>/configurablereportdata/abcde?limit=10`
+**Example:** Get 10 records from a report and post them to example.com. Equivalent to `/a/domain/api/v0.5/configurablereportdata/abcde?limit=10`
 ```js
 fetchReportData(
   "abcde",
@@ -184,9 +183,12 @@ fetchReportData(
 
 ### get
 
-<p><code>get(path, [params], [callback]) ⇒ Operation</code></p>
+~~<p><code>get(path, [params], [callback]) ⇒ Operation</code></p>
+~~***This function only works against CommCare's legacy v0.5 API (path: `/a/domain/api/v0.5/...`).
+For current CommCare APIs, use [http.get](http.get) instead.***
 
-Make a GET request to CommCare. Use this to fetch resources directly from Commcare REST API.
+
+Make a GET request to CommCare's legacy v0.5 API.
 You can pass Commcare query parameters as an object of key value pairs, which will map to parameters
 in the URL.
 The response body will be returned to `state.data` as JSON.
@@ -195,8 +197,8 @@ Paginated responses will be fully downloaded and returned as a single array, _un
 
 | Param | Type | Description |
 | --- | --- | --- |
-| path | <code>string</code> | Path to resource |
-| [params] | <code>Object</code> | Input parameters for the request. These vary by endpoint,  see [CommCare docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957366/Data+APIs). |
+| path | <code>string</code> | Path to a v0.5 resource (e.g. `case`, `form`) |
+| [params] | <code>Object</code> | Input parameters for the request. These vary by endpoint, see [CommCare v0.5 docs](https://dimagi.atlassian.net/wiki/spaces/commcarepublic/pages/2143957366/Data+APIs). |
 | [callback] | <code>function</code> | Optional callback function. Invoked once per page of data retrieved. |
 
 This operation writes the following keys to state:
@@ -207,15 +209,15 @@ This operation writes the following keys to state:
 | response | The HTTP response from the CommCare server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
 
-**Example:** Get a resource by Id. Equivalent to GET `<baseUrl>/case/12345`
+**Example:** Get a resource by Id. Equivalent to GET `/a/domain/api/v0.5/case/12345`
 ```js
 get("/case/12345")
 ```
-**Example:** Get a resource with exactly 20 items. Equivalent to `<baseUrl>/case?offset=0&limit=20`
+**Example:** Get a resource with exactly 20 items. Equivalent to `/a/domain/api/v0.5/case?offset=0&limit=20`
 ```js
 get("/case", { offset:0, limit: 20 })
 ```
-**Example:** Get all items in a resource, and add them to state. Equivalent to `<baseUrl>/case`
+**Example:** Get all items in a resource, and add them to state. Equivalent to `/a/domain/api/v0.5/case`
 ```js
 get("/case", {}, (state) => {
   state.cases.push(...state.data) // adds all cases to the cases array
@@ -227,15 +229,18 @@ get("/case", {}, (state) => {
 
 ### post
 
-<p><code>post(path, data, [params], [callback]) ⇒ Operation</code></p>
+~~<p><code>post(path, data, [params], [callback]) ⇒ Operation</code></p>
+~~***This function only works against CommCare's legacy v0.5 API (path: `/a/domain/api/v0.5/...`).
+For current CommCare APIs, use [http.post](http.post) instead.***
 
-Make a POST request to CommCare. Use this to send resources directly to Commcare REST API.
+
+Make a POST request to CommCare's legacy v0.5 API.
 You can pass Commcare body data as a JSON object.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| path | <code>string</code> | Path to resource |
+| path | <code>string</code> | Path to a v0.5 resource (e.g. `user`, `case`) |
 | data | <code>object</code> | Object or JSON to create a resource |
 | [params] | <code>Object</code> | Optional request params |
 | [callback] | <code>function</code> | Optional callback to handle the response |
@@ -248,7 +253,7 @@ This operation writes the following keys to state:
 | response | The HTTP response from the CommCare server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
 
-**Example:** Create a user resource.Equivalent to `<baseUrl>/user`
+**Example:** Create a user resource. Equivalent to `/a/domain/api/v0.5/user`
 ```js
 post("/user", { "username":"test", "password":"somepassword" })
 ```
@@ -257,9 +262,11 @@ post("/user", { "username":"test", "password":"somepassword" })
 
 ### request
 
-<p><code>request(method, path, body, params) ⇒ Operation</code></p>
+~~<p><code>request(method, path, body, params) ⇒ Operation</code></p>
+~~***Use [http.request](http.request) instead.***
 
-Make a general HTTP request against the Commcare server. Use this to make any request to Commcare REST API.
+
+Make a general HTTP request against the CommCare server.
 
 
 | Param | Type | Description |
@@ -277,13 +284,13 @@ This operation writes the following keys to state:
 | response | The HTTP response from the CommCare server (excluding the body) |
 | references | An array of all previous data objects used in the Job |
 
-**Example:** Get a resource. Equivalent to `<baseUrl>/a/asri/api/v0.5/case`
+**Example:** Get a resource at a v0.5 path
 ```js
 request("GET", "/a/asri/api/v0.5/case");
 ```
-**Example:** Get a resource using query parameters. Equivalent to `<baseUrl>/case?offset=0&limit=20`
+**Example:** Get a resource using query parameters
 ```js
-request("GET", "/case", {}, { offset:0, limit: 20 })
+request("GET", "/a/asri/api/v0.5/case", {}, { offset:0, limit: 20 })
 ```
 
 * * *
