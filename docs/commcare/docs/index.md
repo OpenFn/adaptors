@@ -185,7 +185,7 @@ fetchReportData(
 
 ~~<p><code>get(path, [params], [callback]) ⇒ Operation</code></p>
 ~~***This function only works against CommCare's legacy v0.5 API (path: `/a/domain/api/v0.5/...`).
-For current CommCare APIs, use [http.get](http.get) instead.***
+For current CommCare APIs, use [#http_get](#http_get) instead.***
 
 
 Make a GET request to CommCare's legacy v0.5 API.
@@ -231,7 +231,7 @@ get("/case", {}, (state) => {
 
 ~~<p><code>post(path, data, [params], [callback]) ⇒ Operation</code></p>
 ~~***This function only works against CommCare's legacy v0.5 API (path: `/a/domain/api/v0.5/...`).
-For current CommCare APIs, use [http.post](http.post) instead.***
+For current CommCare APIs, use [#http_post](#http_post) instead.***
 
 
 Make a POST request to CommCare's legacy v0.5 API.
@@ -263,7 +263,7 @@ post("/user", { "username":"test", "password":"somepassword" })
 ### request
 
 ~~<p><code>request(method, path, body, params) ⇒ Operation</code></p>
-~~***Use [http.request](http.request) instead.***
+~~***Use [#http_request](#http_request) instead.***
 
 
 Make a general HTTP request against the CommCare server.
