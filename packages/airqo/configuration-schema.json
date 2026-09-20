@@ -9,6 +9,11 @@
       "title": "Access Token",
       "description": "AirQo API access token. Generate one via analytics.airqo.net under Account Settings > API."
     },
+    "clientSecret": {
+      "type": "string",
+      "title": "Client Secret",
+      "description": "Optional AirQo client secret sent as the X-Client-Secret header when client-secret protection is enabled."
+    },
     "baseUrl": {
       "type": "string",
       "title": "Base URL",

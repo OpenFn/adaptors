@@ -17,6 +17,11 @@ const configuration = {
   token: 'test_token_abc123',
 };
 
+const secureConfiguration = {
+  ...configuration,
+  clientSecret: 'test_client_secret_xyz789',
+};
+
 const measurementFixture = {
   success: true,
   isCache: false,
@@ -137,21 +142,21 @@ describe('getRecentMeasurements', () => {
     expect(finalState.data.isCache).to.equal(false);
   });
 
-  it('passes optional query parameters to the request', async () => {
+  it('sends the optional client secret as a header', async () => {
     testServer
       .intercept({
         path: '/api/v2/devices/measurements/sites/site_id_001/recent',
         method: 'GET',
-        query: { token: 'test_token_abc123', limit: '10' },
+        query: { token: 'test_token_abc123' },
+        headers: { 'x-client-secret': 'test_client_secret_xyz789' },
       })
-      .reply(200, { ...measurementFixture, meta: { total: 1, limit: 10 } });
+      .reply(200, measurementFixture);
 
-    const state = { configuration };
-    const finalState = await getRecentMeasurements('sites', 'site_id_001', {
-      limit: 10,
-    })(state);
+    const finalState = await getRecentMeasurements('sites', 'site_id_001')({
+      configuration: secureConfiguration,
+    });
 
-    expect(finalState.data.meta.limit).to.equal(10);
+    expect(finalState.data.success).to.equal(true);
   });
 
   it('stores previous data in references', async () => {
@@ -174,47 +179,6 @@ describe('getRecentMeasurements', () => {
     );
 
     expect(finalState.references).to.deep.include({ previous: 'data' });
-  });
-
-  it('throws when limit is not a positive integer', async () => {
-    try {
-      await getRecentMeasurements('sites', 'site_id_001', { limit: 'all' })({ configuration });
-      expect.fail('Should have thrown an error');
-    } catch (error) {
-      expect(error.message).to.equal('params.limit must be a positive integer.');
-    }
-  });
-
-  it('throws when limit exceeds 1000', async () => {
-    try {
-      await getRecentMeasurements('sites', 'site_id_001', { limit: 5000 })({ configuration });
-      expect.fail('Should have thrown an error');
-    } catch (error) {
-      expect(error.message).to.include('params.limit cannot exceed 1000');
-    }
-  });
-
-  it('throws when startTime is not a valid ISO string', async () => {
-    try {
-      await getRecentMeasurements('sites', 'site_id_001', { startTime: 'not-a-date' })({ configuration });
-      expect.fail('Should have thrown an error');
-    } catch (error) {
-      expect(error.message).to.include('params.startTime must be a valid ISO 8601 date string');
-    }
-  });
-
-  it('throws when startTime is later than endTime', async () => {
-    try {
-      await getRecentMeasurements('sites', 'site_id_001', {
-        startTime: '2024-02-01T00:00:00Z',
-        endTime: '2024-01-01T00:00:00Z',
-      })({ configuration });
-      expect.fail('Should have thrown an error');
-    } catch (error) {
-      expect(error.message).to.equal(
-        'params.startTime must not be later than params.endTime.'
-      );
-    }
   });
 
   it('throws a clear error for an invalid entity type', async () => {

@@ -23,13 +23,31 @@ export const prepareNextState = (state, response) => {
   };
 };
 
-const logResponseSafely = response => {
-  if (response.query?.token) {
-    const redactedQuery = { ...response.query, token: '[REDACTED]' };
-    logResponse({ ...response, query: redactedQuery });
-  } else {
-    logResponse(response);
+export const assertNonEmptyString = (value, label) => {
+  if (typeof value !== 'string' || !value.trim()) {
+    throw new Error(`${label} must be a non-empty string.`);
   }
+};
+
+export const assertAllowedValue = (value, allowedValues, label) => {
+  assertNonEmptyString(value, label);
+
+  if (!allowedValues.includes(value)) {
+    throw new Error(
+      `Invalid ${label}: ${value}. Expected one of: ${allowedValues.join(', ')}.`
+    );
+  }
+};
+
+const logResponseSafely = response => {
+  const redactedQuery = response.query?.token
+    ? { ...response.query, token: '[REDACTED]' }
+    : response.query;
+  const redactedHeaders = response.headers?.['X-Client-Secret']
+    ? { ...response.headers, 'X-Client-Secret': '[REDACTED]' }
+    : response.headers;
+
+  logResponse({ ...response, query: redactedQuery, headers: redactedHeaders });
 
   return response;
 };
@@ -43,7 +61,11 @@ const logResponseSafely = response => {
  * @param {object} options 
  */
 export const request = (configuration = {}, method, path, options = {}) => {
-  const { baseUrl = 'https://api.airqo.net/api/v2', token } = configuration;
+  const {
+    baseUrl = 'https://api.airqo.net/api/v2',
+    token,
+    clientSecret,
+  } = configuration;
 
   if (!token || typeof token !== 'string' || !token.trim()) {
     throw new Error('token missing from configuration.');
@@ -51,7 +73,7 @@ export const request = (configuration = {}, method, path, options = {}) => {
 
   assertRelativeUrl(path);
 
-  const { query = {}, ...rest } = options;
+  const { query = {}, headers = {}, ...rest } = options;
 
   const errors = {
     400: 'Bad Request - Invalid AirQo request parameters',
@@ -67,10 +89,14 @@ export const request = (configuration = {}, method, path, options = {}) => {
   const opts = {
     parseAs: 'json',
     errors,
-    baseUrl: baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`,
+    baseUrl,
     query: {
       token,
       ...query,
+    },
+    headers: {
+      ...headers,
+      ...(clientSecret ? { 'X-Client-Secret': clientSecret } : {}),
     },
     ...rest,
   };

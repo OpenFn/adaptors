@@ -5,29 +5,22 @@
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
 
-const assertNonEmptyString = (value, label) => {
-  if (typeof value !== 'string' || !value.trim()) {
-    throw new Error(`${label} must be a non-empty string.`);
-  }
-};
-
 /**
  * Make a generic authenticated GET request to any AirQo endpoint.
  *
  * @example <caption>Get raw data from any AirQo path</caption>
- 
+ * http.get('devices/measurements/sites/site123/recent');
  * @function
  * @public
  * @param {string} path 
- * @param {object} [options] -
+ * @param {object} [options] - Additional options such as query parameters or headers.
  * @returns {Operation}
- * @state 
  */
 export function get(path, options = {}) {
   return async state => {
     const [resolvedPath, resolvedOptions] = expandReferences(state, path, options);
 
-    assertNonEmptyString(resolvedPath, 'path');
+    util.assertNonEmptyString(resolvedPath, 'path');
 
     const response = await util.request(
       state.configuration,
@@ -44,14 +37,13 @@ export function get(path, options = {}) {
  * Make a generic authenticated POST request to any AirQo endpoint.
  *
  * @example <caption>Post a body to any AirQo path</caption>
- 
+ * http.post('devices/metadata/sites', { name: 'Kampala' });
  * @function
  * @public
- * @param {string} path 
- * @param {object} [body] 
- * @param {object} [options]
+ * @param {string} path - API path relative to the configured base URL.
+ * @param {object} [body] - JSON request body.
+ * @param {object} [options] - Additional request options.
  * @returns {Operation}
- * @state 
  */
 export function post(path, body = {}, options = {}) {
   return async state => {
@@ -62,7 +54,7 @@ export function post(path, body = {}, options = {}) {
       options
     );
 
-    assertNonEmptyString(resolvedPath, 'path');
+    util.assertNonEmptyString(resolvedPath, 'path');
 
     const response = await util.request(state.configuration, 'POST', resolvedPath, {
       ...resolvedOptions,
@@ -77,14 +69,13 @@ export function post(path, body = {}, options = {}) {
  * Make a generic authenticated request of any HTTP method to any AirQo endpoint.
  *
  * @example <caption>Make an arbitrary request</caption>
-
+ * http.request('GET', 'devices/measurements/sites/site123/recent');
  * @function
  * @public
- * @param {string} method 
- * @param {string} path 
- * @param {object} [options] 
+ * @param {string} method - HTTP method.
+ * @param {string} path - API path relative to the configured base URL.
+ * @param {object} [options] - Additional request options.
  * @returns {Operation}
- * @state 
  */
 export function request(method, path, options = {}) {
   return async state => {
@@ -95,8 +86,8 @@ export function request(method, path, options = {}) {
       options
     );
 
-    assertNonEmptyString(resolvedMethod, 'method');
-    assertNonEmptyString(resolvedPath, 'path');
+    util.assertNonEmptyString(resolvedMethod, 'method');
+    util.assertNonEmptyString(resolvedPath, 'path');
 
     const response = await util.request(
       state.configuration,

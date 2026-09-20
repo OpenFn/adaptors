@@ -13,6 +13,11 @@ const configuration = {
   token: 'test_token_abc123',
 };
 
+const secureConfiguration = {
+  ...configuration,
+  clientSecret: 'test_client_secret_xyz789',
+};
+
 describe('http.get', () => {
   it('makes an authenticated GET request to an arbitrary path', async () => {
     testServer
@@ -43,6 +48,23 @@ describe('http.get', () => {
     const finalState = await http.get('devices/metadata/sites', {
       query: { limit: 5 },
     })(state);
+
+    expect(finalState.data.success).to.equal(true);
+  });
+
+  it('sends the optional client secret as a header', async () => {
+    testServer
+      .intercept({
+        path: '/api/v2/devices/metadata/sites',
+        method: 'GET',
+        query: { token: 'test_token_abc123' },
+        headers: { 'x-client-secret': 'test_client_secret_xyz789' },
+      })
+      .reply(200, { success: true });
+
+    const finalState = await http.get('devices/metadata/sites')({
+      configuration: secureConfiguration,
+    });
 
     expect(finalState.data.success).to.equal(true);
   });

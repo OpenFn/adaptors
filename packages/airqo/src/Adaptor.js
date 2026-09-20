@@ -7,22 +7,6 @@ import * as util from './Utils.js';
 
 const VALID_ENTITY_TYPES = ['sites', 'devices', 'grids', 'cohorts'];
 
-const assertNonEmptyString = (value, label) => {
-  if (typeof value !== 'string' || !value.trim()) {
-    throw new Error(`${label} must be a non-empty string.`);
-  }
-};
-
-const assertAllowedValue = (value, allowedValues, label) => {
-  assertNonEmptyString(value, label);
-
-  if (!allowedValues.includes(value)) {
-    throw new Error(
-      `Invalid ${label}: ${value}. Expected one of: ${allowedValues.join(', ')}.`
-    );
-  }
-};
-
 // Requires a time and timezone/offset, e.g. "2024-01-01T00:00:00Z".
 const ISO_8601_DATE_TIME_RE =
   /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|[+-]\d{2}:\d{2})$/;
@@ -77,28 +61,6 @@ const assertMeasurementParams = params => {
 };
 
 /**
- * @typedef {Object} AirQoMeasurement
- * @property {string} device  
- * @property {string} device_id 
- * @property {string} site_id 
- * @property {string} time 
- * @property {{ value: number }} pm2_5 
- * @property {{ value: number }} pm10 
- * @property {object} no2 
- * @property {string} frequency 
- * @property {string} aqi_category 
- * @property {string} aqi_color 
- * @property {object} siteDetails 
- */
-
-/**
- * @typedef {Object} AirQoState
- * @property {AirQoMeasurement[]|object} data 
- * @property {object} response 
- * @property {Array} references 
- */
-
-/**
  * Retrieve the most recent air quality measurements for a monitoring entity.
  *
  * The `entityType` determines which kind of entity is queried. Valid values are:
@@ -108,37 +70,32 @@ const assertMeasurementParams = params => {
  * - `'cohorts'` — a user-defined group of devices
  *
  * @example <caption>Get recent measurements for a site</caption>
-
+ * getRecentMeasurements('sites', 'site123');
  * @example <caption>Get recent measurements for a grid</caption>
-
+ * getRecentMeasurements('grids', 'grid123');
  * @example <caption>Get recent measurements for a device</caption>
-
+ * getRecentMeasurements('devices', 'device123');
  * @function
  * @public
- * @param {string} entityType 
- * @param {string} entityId 
- * @param {object} [params] 
+ * @param {string} entityType - Type of entity: `sites`, `devices`, `grids`, or `cohorts`.
+ * @param {string} entityId - ID of the entity to retrieve measurements for.
  * @returns {Operation}
- * @state 
  */
-export function getRecentMeasurements(entityType, entityId, params = {}) {
+export function getRecentMeasurements(entityType, entityId) {
   return async state => {
-    const [resolvedType, resolvedId, resolvedParams] = expandReferences(
+    const [resolvedType, resolvedId] = expandReferences(
       state,
       entityType,
-      entityId,
-      params
+      entityId
     );
 
-    assertAllowedValue(resolvedType, VALID_ENTITY_TYPES, 'entityType');
-    assertNonEmptyString(resolvedId, 'entityId');
-    assertMeasurementParams(resolvedParams);
+    util.assertAllowedValue(resolvedType, VALID_ENTITY_TYPES, 'entityType');
+    util.assertNonEmptyString(resolvedId, 'entityId');
 
     const response = await util.request(
       state.configuration,
       'GET',
-      `devices/measurements/${resolvedType}/${resolvedId}/recent`,
-      { query: resolvedParams }
+      `devices/measurements/${resolvedType}/${resolvedId}/recent`
     );
 
     return util.prepareNextState(state, response);
@@ -155,16 +112,18 @@ export function getRecentMeasurements(entityType, entityId, params = {}) {
  * - `'cohorts'` — a user-defined group of devices
  *
  * @example <caption>Get historical measurements for a site</caption>
-
+ * getHistoricalMeasurements('sites', 'site123', { limit: 100 });
  * @example <caption>Get historical measurements for a grid with date range</caption>
-
+ * getHistoricalMeasurements('grids', 'grid123', {
+ *   startTime: '2024-01-01T00:00:00Z',
+ *   endTime: '2024-01-31T23:59:59Z',
+ * });
  * @function
  * @public
- * @param {string} entityType 
- * @param {string} entityId 
- * @param {object} [params] 
+ * @param {string} entityType - Type of entity: `sites`, `devices`, `grids`, or `cohorts`.
+ * @param {string} entityId - ID of the entity to retrieve measurements for.
+ * @param {object} [params] - Request parameters documented in {@link https://platform.airqo.net/docs/api/for-partners/historical-data/#request-parameters Request parameters}.
  * @returns {Operation}
- * @state 
  */
 export function getHistoricalMeasurements(entityType, entityId, params = {}) {
   return async state => {
@@ -175,8 +134,8 @@ export function getHistoricalMeasurements(entityType, entityId, params = {}) {
       params
     );
 
-    assertAllowedValue(resolvedType, VALID_ENTITY_TYPES, 'entityType');
-    assertNonEmptyString(resolvedId, 'entityId');
+    util.assertAllowedValue(resolvedType, VALID_ENTITY_TYPES, 'entityType');
+    util.assertNonEmptyString(resolvedId, 'entityId');
     assertMeasurementParams(resolvedParams);
 
     const response = await util.request(

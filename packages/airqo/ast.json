@@ -4,25 +4,24 @@
       "name": "getRecentMeasurements",
       "params": [
         "entityType",
-        "entityId",
-        "params"
+        "entityId"
       ],
       "docs": {
         "description": "Retrieve the most recent air quality measurements for a monitoring entity.\r\n\r\nThe `entityType` determines which kind of entity is queried. Valid values are:\r\n- `'sites'`   — a single monitoring site\r\n- `'devices'` — a specific sensor device\r\n- `'grids'`   — a named geographic grid (e.g. a city or country)\r\n- `'cohorts'` — a user-defined group of devices",
         "tags": [
           {
             "title": "example",
-            "description": "getRecentMeasurements('sites', '60d058c8048305120d######');",
+            "description": "getRecentMeasurements('sites', 'site123');",
             "caption": "Get recent measurements for a site"
           },
           {
             "title": "example",
-            "description": "getRecentMeasurements('grids', '65e98e11528c9f00133444f8');",
+            "description": "getRecentMeasurements('grids', 'grid123');",
             "caption": "Get recent measurements for a grid"
           },
           {
             "title": "example",
-            "description": "getRecentMeasurements('devices', '5f2036bc70223655545#####');",
+            "description": "getRecentMeasurements('devices', 'device123');",
             "caption": "Get recent measurements for a device"
           },
           {
@@ -37,7 +36,7 @@
           },
           {
             "title": "param",
-            "description": "Type of entity: 'sites' | 'devices' | 'grids' | 'cohorts'",
+            "description": "Type of entity: `sites`, `devices`, `grids`, or `cohorts`.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -46,24 +45,12 @@
           },
           {
             "title": "param",
-            "description": "The ID of the entity to retrieve measurements for",
+            "description": "ID of the entity to retrieve measurements for.",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
             "name": "entityId"
-          },
-          {
-            "title": "param",
-            "description": "Optional query parameters passed through to AirQo (e.g. { limit: 100 })",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "object"
-              }
-            },
-            "name": "params"
           },
           {
             "title": "returns",
@@ -72,10 +59,6 @@
               "type": "NameExpression",
               "name": "Operation"
             }
-          },
-          {
-            "title": "state",
-            "description": "{AirQoState} data - Object containing `measurements` array and `meta` pagination info"
           }
         ]
       },
@@ -93,12 +76,12 @@
         "tags": [
           {
             "title": "example",
-            "description": "getHistoricalMeasurements('sites', '60d058c8048305120d######');",
+            "description": "getHistoricalMeasurements('sites', 'site123', { limit: 100 });",
             "caption": "Get historical measurements for a site"
           },
           {
             "title": "example",
-            "description": "getHistoricalMeasurements('grids', '65e98e11528c9f00133444f8', {\r\n  startTime: '2024-01-01T00:00:00Z',\r\n  endTime: '2024-01-31T23:59:59Z',\r\n});",
+            "description": "getHistoricalMeasurements('grids', 'grid123', {\r\n  startTime: '2024-01-01T00:00:00Z',\r\n  endTime: '2024-01-31T23:59:59Z',\r\n});",
             "caption": "Get historical measurements for a grid with date range"
           },
           {
@@ -113,7 +96,7 @@
           },
           {
             "title": "param",
-            "description": "Type of entity: 'sites' | 'devices' | 'grids' | 'cohorts'",
+            "description": "Type of entity: `sites`, `devices`, `grids`, or `cohorts`.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -122,7 +105,7 @@
           },
           {
             "title": "param",
-            "description": "The ID of the entity to retrieve measurements for",
+            "description": "ID of the entity to retrieve measurements for.",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -131,7 +114,7 @@
           },
           {
             "title": "param",
-            "description": "Optional query parameters passed through to AirQo (e.g. { startTime, endTime, limit })",
+            "description": "Request parameters documented in {@link https://platform.airqo.net/docs/api/for-partners/historical-data/#request-parameters Request parameters}.",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -148,10 +131,6 @@
               "type": "NameExpression",
               "name": "Operation"
             }
-          },
-          {
-            "title": "state",
-            "description": "{AirQoState} data - Object containing `measurements` array and `meta` pagination info"
           }
         ]
       },

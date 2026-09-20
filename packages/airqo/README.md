@@ -22,7 +22,7 @@ The adaptor currently exposes:
 - Generic `get()`, `post()`, and `request()` operations for calling any
   AirQo endpoint directly (also available grouped under `http.get()`,
   `http.post()`, and `http.request()` if you prefer that style).
-- `getRecentMeasurements(entityType, entityId, params)` and
+- `getRecentMeasurements(entityType, entityId)` and
   `getHistoricalMeasurements(entityType, entityId, params)` for the most
   common use case: fetching air quality readings for a site, device, grid,
   or cohort.
