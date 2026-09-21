@@ -2609,6 +2609,28 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
 
+  packages/sheetjs:
+    dependencies:
+      '@openfn/language-common':
+        specifier: workspace:*
+        version: link:../common
+      xlsx:
+        specifier: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
+        version: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
+    devDependencies:
+      assertion-error:
+        specifier: 2.0.0
+        version: 2.0.0
+      chai:
+        specifier: 4.3.6
+        version: 4.3.6
+      deep-eql:
+        specifier: 4.1.1
+        version: 4.1.1
+      rimraf:
+        specifier: 3.0.2
+        version: 3.0.2
+
   packages/siuben-rd:
     dependencies:
       '@openfn/language-common':
