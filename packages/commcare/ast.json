@@ -12,7 +12,7 @@
         "tags": [
           {
             "title": "deprecated",
-            "description": "This function only works against CommCare's legacy v0.5 API (path: `/a/domain/api/v0.5/...`).\nFor current CommCare APIs, use {@link http.get} instead."
+            "description": "This function only works against CommCare's legacy v0.5 API (path: `/a/domain/api/v0.5/...`).\nFor current CommCare APIs, use {@link #http_get} instead."
           },
           {
             "title": "public",
@@ -101,7 +101,7 @@
         "tags": [
           {
             "title": "deprecated",
-            "description": "This function only works against CommCare's legacy v0.5 API (path: `/a/domain/api/v0.5/...`).\nFor current CommCare APIs, use {@link http.post} instead."
+            "description": "This function only works against CommCare's legacy v0.5 API (path: `/a/domain/api/v0.5/...`).\nFor current CommCare APIs, use {@link #http_post} instead."
           },
           {
             "title": "example",
@@ -363,7 +363,7 @@
         "tags": [
           {
             "title": "deprecated",
-            "description": "Use {@link http.request} instead."
+            "description": "Use {@link #http_request} instead."
           },
           {
             "title": "example",
