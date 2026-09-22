@@ -10,22 +10,6 @@ import {
   writeWorkbook,
 } from './Utils.js';
 
-let workbook = null;
-
-export const setWorkbook = wb => (workbook = wb);
-
-const useWorkbook = (content, options) => {
-  if (content) {
-    workbook = parseWorkbook(content, options);
-  }
-  if (!workbook) {
-    throw new Error(
-      'sheetjs: no workbook to read. Pass file content, or call parse() first.'
-    );
-  }
-  return workbook;
-};
-
 /**
  * State object
  * @typedef {Object} SheetjsState
@@ -102,9 +86,8 @@ const useWorkbook = (content, options) => {
 /**
  * Parse spreadsheet file content into a workbook.
  *
- * Writes `{ sheetNames }` to `state.data`. The workbook itself is held in
- * memory for the rest of the job, so `sheetToJson()` and `sheetToCsv()` can
- * read it without re-parsing the file.
+ * Writes `{ sheetNames }` to `state.data`, so a later step can check which
+ * sheets a file contains before pulling one out.
  *
  * Handles `.xlsx`, `.xls`, `.csv` and every other format SheetJS supports.
  * Buffers, base64 strings and data URLs are detected automatically - pass
@@ -130,7 +113,7 @@ export function parse(content, options = {}) {
       options
     );
 
-    workbook = parseWorkbook(resolvedContent, resolvedOptions);
+    const workbook = parseWorkbook(resolvedContent, resolvedOptions);
 
     return composeNextState(state, { sheetNames: workbook.SheetNames });
   };
@@ -140,22 +123,18 @@ export function parse(content, options = {}) {
  * Convert a worksheet into an array of objects, one per row, and write it to
  * `state.data`.
  *
- * Pass file content to convert it directly, or `null` to reuse the workbook
- * from an earlier `parse()` and skip re-parsing the file.
- *
  * Reads the first sheet unless `sheetName` or `sheetIndex` says otherwise.
  * @public
  * @example <caption>Convert the first sheet of a file to JSON</caption>
  * sheetToJson($.data.fileContent);
- * @example <caption>Convert a named sheet from an earlier parse()</caption>
- * parse($.data.fileContent);
- * sheetToJson(null, { sheetName: 'Sheet1', raw: false });
+ * @example <caption>Convert a named sheet, as formatted text</caption>
+ * sheetToJson($.data.fileContent, { sheetName: 'Sheet1', raw: false });
  * @example <caption>Return rows as arrays of cell values instead of objects</caption>
  * sheetToJson($.data.fileContent, { header: 1 });
  * @example <caption>Only read a fixed range, and fill empty cells</caption>
  * sheetToJson($.data.fileContent, { range: 'A2:D40', defval: null });
  * @function
- * @param {FileContent} content - File content to convert, or `null` to reuse an earlier `parse()`
+ * @param {FileContent} content - The file content to convert
  * @param {SheetToJsonOptions} options - Optional conversion options
  * @state {SheetjsState}
  * @returns {Operation}
@@ -183,7 +162,7 @@ export function sheetToJson(content, options = {}) {
     } = resolvedOptions;
 
     const { worksheet } = getWorksheet(
-      useWorkbook(resolvedContent, compact({ type, cellDates, sheetRows })),
+      parseWorkbook(resolvedContent, compact({ type, cellDates, sheetRows })),
       { sheetName, sheetIndex }
     );
 
@@ -199,20 +178,16 @@ export function sheetToJson(content, options = {}) {
 /**
  * Convert a worksheet into a CSV string and write it to `state.data`.
  *
- * Pass file content to convert it directly, or `null` to reuse the workbook
- * from an earlier `parse()`.
- *
  * Reads the first sheet unless `sheetName` or `sheetIndex` says otherwise.
  * @public
  * @example <caption>Convert an uploaded xlsx file straight to CSV</caption>
  * sheetToCsv($.data.fileContent);
- * @example <caption>Convert a named sheet from an earlier parse()</caption>
- * parse($.data.fileContent);
- * sheetToCsv(null, { sheetName: 'Orders' });
+ * @example <caption>Convert a named sheet</caption>
+ * sheetToCsv($.data.fileContent, { sheetName: 'Orders' });
  * @example <caption>Use a semi-colon as the field separator</caption>
  * sheetToCsv($.data.fileContent, { FS: ';' });
  * @function
- * @param {FileContent} content - File content to convert, or `null` to reuse an earlier `parse()`
+ * @param {FileContent} content - The file content to convert
  * @param {SheetToCsvOptions} options - Optional conversion options
  * @state {SheetjsState}
  * @returns {Operation}
@@ -239,7 +214,7 @@ export function sheetToCsv(content, options = {}) {
       strip,
     } = resolvedOptions;
     const { worksheet } = getWorksheet(
-      useWorkbook(resolvedContent, compact({ type, cellDates, sheetRows })),
+      parseWorkbook(resolvedContent, compact({ type, cellDates, sheetRows })),
       { sheetName, sheetIndex }
     );
 
@@ -298,8 +273,6 @@ export function jsonToSheet(data, options = {}) {
       compression,
     } = resolvedOptions;
 
-    // Named to avoid shadowing the module-level `workbook`: building a file
-    // must not disturb the workbook cached by parse()
     const outputWorkbook = buildWorkbook(resolvedData, {
       sheetName,
       header,

@@ -7,7 +7,7 @@
         "options"
       ],
       "docs": {
-        "description": "Parse spreadsheet file content into a workbook.\n\nWrites `{ sheetNames }` to `state.data`. The workbook itself is held in\nmemory for the rest of the job, so `sheetToJson()` and `sheetToCsv()` can\nread it without re-parsing the file.\n\nHandles `.xlsx`, `.xls`, `.csv` and every other format SheetJS supports.\nBuffers, base64 strings and data URLs are detected automatically - pass\n`type` to override, eg for a single-column CSV that is also valid base64.",
+        "description": "Parse spreadsheet file content into a workbook.\n\nWrites `{ sheetNames }` to `state.data`, so a later step can check which\nsheets a file contains before pulling one out.\n\nHandles `.xlsx`, `.xls`, `.csv` and every other format SheetJS supports.\nBuffers, base64 strings and data URLs are detected automatically - pass\n`type` to override, eg for a single-column CSV that is also valid base64.",
         "tags": [
           {
             "title": "public",
@@ -75,7 +75,7 @@
         "options"
       ],
       "docs": {
-        "description": "Convert a worksheet into an array of objects, one per row, and write it to\n`state.data`.\n\nPass file content to convert it directly, or `null` to reuse the workbook\nfrom an earlier `parse()` and skip re-parsing the file.\n\nReads the first sheet unless `sheetName` or `sheetIndex` says otherwise.",
+        "description": "Convert a worksheet into an array of objects, one per row, and write it to\n`state.data`.\n\nReads the first sheet unless `sheetName` or `sheetIndex` says otherwise.",
         "tags": [
           {
             "title": "public",
@@ -89,8 +89,8 @@
           },
           {
             "title": "example",
-            "description": "parse($.data.fileContent);\nsheetToJson(null, { sheetName: 'Sheet1', raw: false });",
-            "caption": "Convert a named sheet from an earlier parse()"
+            "description": "sheetToJson($.data.fileContent, { sheetName: 'Sheet1', raw: false });",
+            "caption": "Convert a named sheet, as formatted text"
           },
           {
             "title": "example",
@@ -109,7 +109,7 @@
           },
           {
             "title": "param",
-            "description": "File content to convert, or `null` to reuse an earlier `parse()`",
+            "description": "The file content to convert",
             "type": {
               "type": "NameExpression",
               "name": "FileContent"
@@ -148,7 +148,7 @@
         "options"
       ],
       "docs": {
-        "description": "Convert a worksheet into a CSV string and write it to `state.data`.\n\nPass file content to convert it directly, or `null` to reuse the workbook\nfrom an earlier `parse()`.\n\nReads the first sheet unless `sheetName` or `sheetIndex` says otherwise.",
+        "description": "Convert a worksheet into a CSV string and write it to `state.data`.\n\nReads the first sheet unless `sheetName` or `sheetIndex` says otherwise.",
         "tags": [
           {
             "title": "public",
@@ -162,8 +162,8 @@
           },
           {
             "title": "example",
-            "description": "parse($.data.fileContent);\nsheetToCsv(null, { sheetName: 'Orders' });",
-            "caption": "Convert a named sheet from an earlier parse()"
+            "description": "sheetToCsv($.data.fileContent, { sheetName: 'Orders' });",
+            "caption": "Convert a named sheet"
           },
           {
             "title": "example",
@@ -177,7 +177,7 @@
           },
           {
             "title": "param",
-            "description": "File content to convert, or `null` to reuse an earlier `parse()`",
+            "description": "The file content to convert",
             "type": {
               "type": "NameExpression",
               "name": "FileContent"
