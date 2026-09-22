@@ -39,18 +39,12 @@ single-column CSV that is also valid base64:
 parse($.data.fileContent, { type: 'string' });
 ```
 
-The workbook itself is not written to `state` - it is held in memory for the
-rest of the job, so later operations can read it without re-parsing the file.
-
-`sheetToJson()` converts a worksheet into an array of objects. Give it file
-content to convert directly, or pass `null` to read the workbook from an
-earlier `parse()`:
+`sheetToJson()` converts a worksheet into an array of objects. Every operation
+takes the file content, so each one stands on its own:
 
 ```js
 sheetToJson($.data.fileContent);
-
-parse($.data.fileContent);
-sheetToJson(null, { sheetName: 'Orders' });
+sheetToJson($.data.fileContent, { sheetName: 'Orders' });
 ```
 
 By default cells come back as raw values - numbers as numbers and dates as JS
@@ -126,20 +120,13 @@ Sanitise untrusted data before writing a CSV that a person will open.
 
 ### Performance
 
-`sheetToJson()` and `sheetToCsv()` parse the file each time they are given
-content. When reading more than one sheet, call `parse()` once and then pass
-`null` - on a 10MB file that is roughly 9x faster:
-
-```js
-parse($.data.fileContent);
-sheetToJson(null, { sheetName: 'People' });
-sheetToCsv(null, { sheetName: 'Orders' });
-```
-
-The workbook is held in a closure rather than on `state`, following
-`wiki/best-practice.md` ("Handling Clients"). That keeps a parsed workbook -
-which is around 1.6x the size of the file it came from - out of the state that
-OpenFn carries between steps and writes to logs.
+Each operation parses the file it is given, so reading several sheets from one
+file parses it several times - around 470ms per call on a 10MB file, and a few
+milliseconds on a typical one. A parsed workbook is never written to `state`,
+which keeps state small and avoids a subtle failure: OpenFn resolves operation
+arguments by rebuilding objects from their own keys, and a `Date` has none, so
+a workbook passed through `state` would come back with every date nulled. File
+content is a Buffer or a string, so it passes through untouched.
 
 ## Development
 

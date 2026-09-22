@@ -6,7 +6,6 @@ import {
   sheetToJson,
   sheetToCsv,
   jsonToSheet,
-  setWorkbook,
 } from '../src/Adaptor.js';
 import { toBuf, toBase64, toText, localDateParts } from './helpers.js';
 
@@ -17,14 +16,6 @@ describe('parse', () => {
     const finalState = await parse(toBuf('sample.xlsx'))(state);
 
     expect(finalState.data.sheetNames).to.eql(['People', 'Orders']);
-  });
-
-  it('leaves the workbook available to later operations', async () => {
-    await parse(toBuf('sample.xlsx'))(state);
-
-    const finalState = await sheetToJson(null, { sheetName: 'Orders' })(state);
-
-    expect(finalState.data.map(o => o.orderId)).to.eql(['ORD-1', 'ORD-2']);
   });
 
   it('does not put the workbook on state', async () => {
@@ -224,18 +215,12 @@ describe('sheetToJson', () => {
     expect(finalState.data[0].orderId).to.equal('ORD-1');
   });
 
-  it('throws a helpful error when nothing has been parsed', async () => {
-    setWorkbook(null);
-
+  it('throws when no file content is given', async () => {
     try {
       await sheetToJson(null, { sheetName: 'Orders' })(state);
     } catch (e) {
-      expect(e.message).to.equal(
-        'sheetjs: no workbook to read. Pass file content, or call parse() first.'
-      );
+      expect(e.message).to.match(/must be a Buffer, Uint8Array or string/);
       return;
-    } finally {
-      setWorkbook(null);
     }
     expect.fail('should have thrown');
   });
@@ -295,10 +280,10 @@ describe('sheetToCsv', () => {
     );
   });
 
-  it('reads the workbook from an earlier parse', async () => {
-    await parse(toBuf('sample.xlsx'))(state);
-
-    const finalState = await sheetToCsv(null, { sheetName: 'Orders' })(state);
+  it('converts a sheet given base64 content', async () => {
+    const finalState = await sheetToCsv(toBase64('sample.xlsx'), {
+      sheetName: 'Orders',
+    })(state);
 
     expect(finalState.data).to.include('ORD-2,99');
   });
@@ -363,15 +348,6 @@ describe('jsonToSheet', () => {
     expect(finalState.data.buffer.toString('utf8')).to.equal(
       '\ufeffid,name\n1,Amara\n2,Bukayo'
     );
-  });
-
-  it('does not disturb the workbook cached by parse', async () => {
-    await parse(toBuf('sample.xlsx'))(state);
-
-    await jsonToSheet([{ unrelated: 1 }], { sheetName: 'Other' })(state);
-
-    const finalState = await sheetToJson(null, { sheetName: 'Orders' })(state);
-    expect(finalState.data[0].orderId).to.equal('ORD-1');
   });
 
   it('throws if the data is not an array', async () => {
@@ -508,14 +484,10 @@ describe('security and edge cases', () => {
     expect.fail('should have thrown');
   });
 
-  it('preserves Date cells when a workbook is passed between operations', async () => {
-    // Regression guard: a workbook must never be passed through
-    // expandReferences(), which rebuilds each object from its own keys. A Date
-    // has none, so every date cell would collapse to {} and read back as null.
-    // Keeping the workbook in a closure rather than on state is what avoids it.
-    await parse(toBuf('sample.xlsx'))(state);
+  it('preserves Date cells when content comes from a lazy state reference', async () => {
+    const withFile = { ...state, data: { fileContent: toBuf('sample.xlsx') } };
 
-    const finalState = await sheetToJson(null)(state);
+    const finalState = await sheetToJson(state => state.data.fileContent)(withFile);
 
     expect(finalState.data[0].dateOfBirth).to.be.an.instanceOf(Date);
     expect(localDateParts(finalState.data[0].dateOfBirth)).to.eql([1991, 4, 12]);
