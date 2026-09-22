@@ -14,7 +14,6 @@ let workbook = null;
 
 export const setWorkbook = wb => (workbook = wb);
 
-// The worksheet source: the content just given, or the workbook last parsed
 const useWorkbook = (content, options) => {
   if (content) {
     workbook = parseWorkbook(content, options);
