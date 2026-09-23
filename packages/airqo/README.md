@@ -19,13 +19,12 @@ for required and optional `configuration` properties.
 
 The adaptor currently exposes:
 
-- Generic `get()`, `post()`, and `request()` operations for calling any
-  AirQo endpoint directly (also available grouped under `http.get()`,
-  `http.post()`, and `http.request()` if you prefer that style).
 - `getRecentMeasurements(entityType, entityId)` and
   `getHistoricalMeasurements(entityType, entityId, params)` for the most
   common use case: fetching air quality readings for a site, device, grid,
   or cohort.
+- Generic `http.get()`, `http.post()`, and `http.request()` operations for
+  calling any other AirQo endpoint directly.
 
 ```js
 // Adaptor: @openfn/language-airqo
@@ -41,10 +40,8 @@ getHistoricalMeasurements('grids', 'YOUR_AIRQO_GRID_ID', {
 
 // Call any other AirQo endpoint directly while you find out which
 // resource-specific helpers are worth promoting
-get('devices/metadata/grids');
-// ...or equivalently: http.get('devices/metadata/grids');
+http.get('devices/metadata/grids');
 ```
-
 
 ## Development
 
