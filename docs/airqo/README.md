@@ -1,4 +1,4 @@
-# language-airqo ![AirQo logo](./assets/square.png)
+# language-airqo <img src='./assets/square.png' width="30" height="30"/>
 
 An OpenFn **_adaptor_** for building integration jobs for use with the
 [AirQo](https://www.airqo.net) air quality monitoring API.
