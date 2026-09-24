@@ -21,11 +21,39 @@ if (!existsSync(pkgPath)) {
 
 const { name } = JSON.parse(readFileSync(pkgPath, 'utf8'));
 
+// npm trust requires the package to already be on the registry. Check first
+// (this is an unauthenticated read, unlike everything below it) so an
+// unpublished adaptor doesn't burn a 2FA prompt on a call that's bound to fail.
+const published = spawnSync('npm', ['view', name, 'version'], {
+  stdio: 'ignore',
+});
+if (published.status !== 0) {
+  console.log();
+  console.log(`${name} isn't published on npm yet, so it can't be trusted.`);
+  console.log(`Publish it first, then run this again.`);
+  console.log();
+  process.exit(0);
+}
+
 const existing = spawnSync('npm', ['trust', 'list', name, '--json'], {
   encoding: 'utf8',
 });
-if (existing.stdout?.trim()) {
-  const { id, repository, file } = JSON.parse(existing.stdout);
+const existingOutput = existing.stdout?.trim();
+if (existingOutput) {
+  const parsed = JSON.parse(existingOutput);
+  if (parsed.error) {
+    // e.g. the 2FA/OTP session has expired — this is a real failure, not
+    // "no trust configured", so don't let it look like a clean skip.
+    console.error();
+    console.error(`Couldn't check trust status for ${name}:`);
+    console.error(`  ${parsed.error.summary || parsed.error.code}`);
+    if (parsed.error.authUrl) {
+      console.error(`  ${parsed.error.authUrl}`);
+    }
+    console.error();
+    process.exit(1);
+  }
+  const { id, repository, file } = parsed;
   console.log();
   console.log(`${name} is already trusted (id ${id}, ${repository}/${file})`);
   console.log();
@@ -58,4 +86,20 @@ const { status } = spawnSync(
   { stdio: 'inherit' },
 );
 
-process.exit(status ?? 1);
+if (status !== 0) {
+  process.exit(status ?? 1);
+}
+
+// Lock the package to "require 2FA, disallow tokens" so ad-hoc publishes
+// with a bypass-2FA token are no longer possible — only this trusted
+// publisher (and an interactive, 2FA'd `npm publish`) can publish it.
+console.log();
+console.log(`Disallowing token publishes for ${name}`);
+
+const { status: mfaStatus } = spawnSync(
+  'npm',
+  ['access', 'set', 'mfa=publish', name],
+  { stdio: 'inherit' }
+);
+
+process.exit(mfaStatus ?? 1);
