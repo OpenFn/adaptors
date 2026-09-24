@@ -63,12 +63,16 @@ function otpRejected(result) {
   }
 }
 
+// Exit code 2 specifically means "the OTP was the problem" (as opposed to
+// exit 1 for any other failure), so a caller like trust-all.mjs can tell
+// the two apart — an expired OTP is recoverable with a fresh one, most
+// other failures aren't.
 function failOtp(step) {
   console.error();
   console.error(`Your OTP was rejected running ${step} (wrong or expired).`);
   console.error(`Get a fresh one from your authenticator and try again.`);
   console.error();
-  process.exit(1);
+  process.exit(2);
 }
 
 // Read-only, so this needs structured output to give a friendly skip
