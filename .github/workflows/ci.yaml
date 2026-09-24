@@ -59,10 +59,6 @@ jobs:
       - name: Setup pnpm
         run: pnpm install --frozen-lockfile
 
-      - name: Setup NPM config
-        run: pnpm config set "//registry.npmjs.org/:_authToken=${NPM_TOKEN}"
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: git config
         run: git config user.name $GIT_USER
         env:
@@ -71,5 +67,5 @@ jobs:
         env:
           GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
 
-      - name: Do pre-release
-        run: pnpm prerelease
+      # - name: Do pre-release
+      #   run: pnpm prerelease
