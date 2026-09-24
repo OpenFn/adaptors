@@ -1,121 +1,116 @@
-## Functions
-
 <dl>
 <dt>
-    <a href="#addRowsToRefs">addRowsToRefs(state, rows)</a></dt>
+    <a href="#describetable">describeTable(tableName, options)</a></dt>
 <dt>
-    <a href="#cleanupState">cleanupState(state)</a></dt>
-<dt>
-    <a href="#createConnection">createConnection(state)</a></dt>
-<dt>
-    <a href="#describeTable">describeTable(tableName, options)</a></dt>
-<dt>
-    <a href="#findValue">findValue(filter)</a></dt>
-<dt>
-    <a href="#flattenRows">flattenRows(state, rows)</a></dt>
+    <a href="#findvalue">findValue(filter)</a></dt>
 <dt>
     <a href="#insert">insert(table, record, options)</a></dt>
 <dt>
-    <a href="#insertMany">insertMany(table, records, options)</a></dt>
+    <a href="#insertmany">insertMany(table, records, options)</a></dt>
 <dt>
-    <a href="#insertTable">insertTable(tableName, columns, options)</a></dt>
+    <a href="#inserttable">insertTable(tableName, columns, options)</a></dt>
 <dt>
-    <a href="#modifyTable">modifyTable(tableName, columns, options)</a></dt>
+    <a href="#modifytable">modifyTable(tableName, columns, options)</a></dt>
 <dt>
     <a href="#sql">sql(params)</a></dt>
 <dt>
     <a href="#upsert">upsert(table, uuid, record, options)</a></dt>
 <dt>
-    <a href="#upsertIf">upsertIf(logical, table, uuid, record, options)</a></dt>
+    <a href="#upsertif">upsertIf(logical, table, uuid, record, options)</a></dt>
 <dt>
-    <a href="#upsertMany">upsertMany(table, uuid, records, options)</a></dt>
+    <a href="#upsertmany">upsertMany(table, uuid, records, options)</a></dt>
 </dl>
 
-## addRowsToRefs
 
-addRowsToRefs(state, rows) ⇒ <code>State</code>
-Sets the returned rows from a query as the first item in the state.references
-array, leaving state.data unchanged between operations.
+This adaptor exports the following from common:
+<dl>
+<dt>
+    <a href="/adaptors/packages/common-docs#alterstate">alterState</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#as">as()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#combine">combine()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#cursor">cursor()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datefns">dateFns</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#each">each()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#field">field()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fields">fields()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fn">fn()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#log">log()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#merge">merge()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
+</dt></dl>
 
-**Kind**: global function  
+## Functions
+### describeTable
 
-| Param | Type | Description |
-| --- | --- | --- |
-| state | <code>State</code> |  |
-| rows | <code>array</code> | the array of rows returned from the sql query |
+<p><code>describeTable(tableName, options) ⇒ Operation</code></p>
 
-
-* * *
-
-## cleanupState
-
-cleanupState(state) ⇒ <code>State</code>
-Removes unserializable keys from the state.
-
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| state | <code>State</code> | 
-
-**Example**  
-```js
-cleanupState(state)
-```
-
-* * *
-
-## createConnection
-
-createConnection(state) ⇒ <code>State</code>
-Creates a connection.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| state | <code>State</code> | Runtime state. |
-
-**Example**  
-```js
-createConnection(state)
-```
-
-* * *
-
-## describeTable
-
-describeTable(tableName, options) ⇒ <code>Operation</code>
 List the columns of a table in a database.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | tableName | <code>string</code> | The name of the table to describe |
 | options | <code>object</code> | Optional options argument |
 
-**Example**  
+
+**Example**
 ```js
 describeTable('clinic_visits')
 ```
 
 * * *
 
-## findValue
+### findValue
 
-findValue(filter) ⇒ <code>Operation</code>
+<p><code>findValue(filter) ⇒ Operation</code></p>
+
 Fetch a uuid key given a condition
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | filter | <code>object</code> | A filter object with the lookup table, a uuid and the condition |
+| filter.uuid | <code>string</code> | The uuid column to determine a matching/existing record |
+| filter.relation | <code>string</code> | The table to lookup the value in |
+| filter.where | <code>object</code> | The condition to use for the lookup. Values are automatically escaped for security. |
+| filter.operator | <code>object</code> | The operator to use for the lookup |
 
-**Example**  
+
+**Example**
 ```js
 findValue({
    uuid: 'id',
@@ -127,28 +122,12 @@ findValue({
 
 * * *
 
-## flattenRows
+### insert
 
-flattenRows(state, rows) ⇒ <code>State</code>
-Returns a flatten object of the rows (array of arrays) with rowCount.
+<p><code>insert(table, record, options) ⇒ Operation</code></p>
 
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| state | <code>State</code> |  |
-| rows | <code>array</code> | the array of rows returned from the sql query |
-
-
-* * *
-
-## insert
-
-insert(table, record, options) ⇒ <code>Operation</code>
 Insert a record
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -156,20 +135,20 @@ Insert a record
 | record | <code>object</code> | Payload data for the record as a JS object |
 | options | <code>object</code> | Optional options argument |
 
-**Example**  
+
+**Example**
 ```js
 insert(table, record, {setNull: ["'undefined'", "''"], logValues: false})
 ```
 
 * * *
 
-## insertMany
+### insertMany
 
-insertMany(table, records, options) ⇒ <code>Operation</code>
+<p><code>insertMany(table, records, options) ⇒ Operation</code></p>
+
 Insert many records, using the keys of the first as the column template
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -177,20 +156,20 @@ Insert many records, using the keys of the first as the column template
 | records | <code>function</code> | A function that takes state and returns an array of records |
 | options | <code>object</code> | Optional options argument |
 
-**Example**  
+
+**Example**
 ```js
 insertMany(table, records, { setNull: false, writeSql: true, logValues: false })
 ```
 
 * * *
 
-## insertTable
+### insertTable
 
-insertTable(tableName, columns, options) ⇒ <code>Operation</code>
+<p><code>insertTable(tableName, columns, options) ⇒ Operation</code></p>
+
 Create a table in database when given an array of columns and a table_name.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -198,7 +177,8 @@ Create a table in database when given an array of columns and a table_name.
 | columns | <code>array</code> | An array of form columns |
 | options | <code>object</code> | Optional options argument |
 
-**Example**  
+
+**Example**
 ```js
 insertTable('table_name', state => state.data.map(
   column => ({
@@ -212,13 +192,12 @@ insertTable('table_name', state => state.data.map(
 
 * * *
 
-## modifyTable
+### modifyTable
 
-modifyTable(tableName, columns, options) ⇒ <code>Operation</code>
+<p><code>modifyTable(tableName, columns, options) ⇒ Operation</code></p>
+
 Alter an existing table in the database.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -226,7 +205,8 @@ Alter an existing table in the database.
 | columns | <code>array</code> | An array of form columns |
 | options | <code>object</code> | Optional options argument |
 
-**Example**  
+
+**Example**
 ```js
 modifyTable('table_name', state => state.data.map(
   newColumn => ({
@@ -240,32 +220,36 @@ modifyTable('table_name', state => state.data.map(
 
 * * *
 
-## sql
+### sql
 
-sql(params) ⇒ <code>Operation</code>
-Execute an SQL statement
+<p><code>sql(params) ⇒ Operation</code></p>
 
-**Kind**: global function  
-**Access**: public  
+Execute a raw SQL statement
+
 
 | Param | Type | Description |
 | --- | --- | --- |
-| params | <code>object</code> | Payload data for the message |
+| params | <code>object</code> | Payload data for the SQL query |
+| params.query | <code>string</code> | The SQL query to execute |
+| [params.options] | <code>object</code> | Optional query options |
 
-**Example**  
+
+**Example**
 ```js
-sql({ query, options })
+sql({
+  query: 'SELECT * FROM users WHERE id = @id',
+  options
+})
 ```
 
 * * *
 
-## upsert
+### upsert
 
-upsert(table, uuid, record, options) ⇒ <code>Operation</code>
+<p><code>upsert(table, uuid, record, options) ⇒ Operation</code></p>
+
 Insert or update a record using SQL MERGE
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -274,7 +258,8 @@ Insert or update a record using SQL MERGE
 | record | <code>object</code> | Payload data for the record as a JS object |
 | options | <code>object</code> | Optional options argument |
 
-**Example**  
+
+**Example**
 ```js
 upsert(table, uuid, record, { setNull: "'undefined'", logValues: false})
 upsert(table, [uuid1, uuid2], record, { setNull: "'undefined'", logValues: false})
@@ -282,13 +267,12 @@ upsert(table, [uuid1, uuid2], record, { setNull: "'undefined'", logValues: false
 
 * * *
 
-## upsertIf
+### upsertIf
 
-upsertIf(logical, table, uuid, record, options) ⇒ <code>Operation</code>
+<p><code>upsertIf(logical, table, uuid, record, options) ⇒ Operation</code></p>
+
 Insert or update a record based on a logical condition using ON CONFLICT UPDATE
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -298,7 +282,8 @@ Insert or update a record based on a logical condition using ON CONFLICT UPDATE
 | record | <code>object</code> | Payload data for the record as a JS object or function |
 | options | <code>object</code> | Optional options argument |
 
-**Example**  
+
+**Example**
 ```js
 upsertIf(
   dataValue('name'),
@@ -311,13 +296,12 @@ upsertIf(
 
 * * *
 
-## upsertMany
+### upsertMany
 
-upsertMany(table, uuid, records, options) ⇒ <code>Operation</code>
+<p><code>upsertMany(table, uuid, records, options) ⇒ Operation</code></p>
+
 Insert or update multiple records using ON CONFLICT UPDATE and excluded
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -326,7 +310,8 @@ Insert or update multiple records using ON CONFLICT UPDATE and excluded
 | records | <code>function</code> | A function that takes state and returns an array of records |
 | options | <code>object</code> | Optional options argument |
 
-**Example**  
+
+**Example**
 ```js
 upsertMany(
  'users', 'email', records, { logValues: false }
@@ -337,4 +322,5 @@ upsertMany(
 ```
 
 * * *
+
 

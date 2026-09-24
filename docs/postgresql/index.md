@@ -1,68 +1,135 @@
-## Functions
-
 <dl>
 <dt>
-    <a href="#describeTable">describeTable(tableName, [options], callback)</a></dt>
+    <a href="#describetable">describeTable(tableName, [options])</a></dt>
 <dt>
-    <a href="#findValue">findValue([filter])</a></dt>
+    <a href="#findvalue">findValue(filter)</a></dt>
 <dt>
-    <a href="#insert">insert(table, record, [options], callback)</a></dt>
+    <a href="#insert">insert(table, record, [options])</a></dt>
 <dt>
-    <a href="#insertMany">insertMany(table, records, [options], callback)</a></dt>
+    <a href="#insertmany">insertMany(table, records, [options])</a></dt>
 <dt>
-    <a href="#insertTable">insertTable(tableName, columns, [options], callback)</a></dt>
+    <a href="#inserttable">insertTable(tableName, columns, [options])</a></dt>
 <dt>
-    <a href="#modifyTable">modifyTable(tableName, columns, [options], callback)</a></dt>
+    <a href="#modifytable">modifyTable(tableName, columns, [options])</a></dt>
 <dt>
-    <a href="#sql">sql(sqlQuery, [options], callback)</a></dt>
+    <a href="#sql">sql(sqlQuery, [options])</a></dt>
 <dt>
-    <a href="#upsert">upsert(table, uuid, record, [options], callback)</a></dt>
+    <a href="#upsert">upsert(table, uuid, record, [options])</a></dt>
 <dt>
-    <a href="#upsertIf">upsertIf(logical, table, uuid, record, [options], callback)</a></dt>
+    <a href="#upsertif">upsertIf(logical, table, uuid, record, [options])</a></dt>
 <dt>
-    <a href="#upsertMany">upsertMany(table, uuid, data, [options], callback)</a></dt>
+    <a href="#upsertmany">upsertMany(table, uuid, data, [options])</a></dt>
 </dl>
 
-## describeTable
 
-describeTable(tableName, [options], callback) ⇒ <code>Operation</code>
+This adaptor exports the following from common:
+<dl>
+<dt>
+    <a href="/adaptors/packages/common-docs#alterstate">alterState</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#arraytostring">arrayToString()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#as">as()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#assert">assert()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#combine">combine()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#cursor">cursor()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datefns">dateFns</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#each">each()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#field">field()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fields">fields()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fn">fn()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#group">group()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#log">log()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#merge">merge()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
+</dt></dl>
+
+## Functions
+### describeTable
+
+<p><code>describeTable(tableName, [options]) ⇒ Operation</code></p>
+
 List the columns of a table in a database.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | tableName | <code>string</code> | The name of the table to describe |
-| [options] | <code>object</code> | Optional options argument |
-| [options.writeSql] | <code>boolean</code> | A boolean value that specifies whether to log the generated SQL statement. Defaults to false. |
-| [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
-| callback | <code>function</code> | (Optional) callback function |
+| [options] | <code>ExecutionOptions</code> | Execution options. (OpenFn only) |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed result rows |
+| result | the result from a successful query |
+| references | an array of all previous data objects used in the job |
+
+**Example:** Describe a table
 ```js
 describeTable('clinic_visits')
 ```
 
 * * *
 
-## findValue
+### findValue
 
-findValue([filter]) ⇒ <code>value</code>
+<p><code>findValue(filter) ⇒ Operation</code></p>
+
 Fetch a uuid key given a condition
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [filter] | <code>object</code> | A filter object with the lookup table, a uuid and the condition |
-| [filter.uuid] | <code>string</code> | The uuid value to search for in the specified relation. |
-| [filter.relation] | <code>string</code> | The name of the relation to search for the uuid value. |
-| [filter.where] | <code>object</code> | An object that contains key-value pairs to filter the search results. |
-| [filter.operator] | <code>object</code> | An object that contains key-value pairs to specify the type of comparison to perform on the where clause. |
+| filter | <code>FindValueFilter</code> | A filter object with the lookup table, a uuid and the condition |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the value of the found uuid |
+| result | the result from a successful query |
+| references | an array of all previous data objects used in the job |
+
+**Example:** Find a user by first name
 ```js
 findValue({
    uuid: 'id',
@@ -74,76 +141,84 @@ findValue({
 
 * * *
 
-## insert
+### insert
 
-insert(table, record, [options], callback) ⇒ <code>Operation</code>
+<p><code>insert(table, record, [options]) ⇒ Operation</code></p>
+
 Insert a record
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | table | <code>string</code> | The target table |
 | record | <code>object</code> | Payload data for the record as a JS object or function |
-| [options] | <code>object</code> | Optional options argument |
-| [options.setNull] | <code>string</code> | A string value that specifies the behavior for inserting null values. |
-| [options.logValues] | <code>boolean</code> | A boolean value that specifies whether to log the inserted values to the console. Defaults to false. |
-| [options.writeSql] | <code>boolean</code> | A boolean value that specifies whether to log the generated SQL statement. Defaults to false. |
-| [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
-| callback | <code>function</code> | (Optional) callback function |
+| [options] | <code>GeneralOptions</code> | Shared options. (OpenFn only) |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed result rows |
+| result | the result from a successful query |
+| references | an array of all previous data objects used in the job |
+
+**Example:** Insert a record
 ```js
 insert('users', { name: 'Elodie', id: 7 }, { setNull: "'NaN'", logValues: true });
 ```
 
 * * *
 
-## insertMany
+### insertMany
 
-insertMany(table, records, [options], callback) ⇒ <code>Operation</code>
+<p><code>insertMany(table, records, [options]) ⇒ Operation</code></p>
+
 Insert many records, using the keys of the first as the column template
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | table | <code>string</code> | The target table |
 | records | <code>array</code> | An array or a function that takes state and returns an array |
-| [options] | <code>object</code> | Optional options argument |
-| [options.setNull] | <code>string</code> | A string value that specifies the behavior for inserting null values. |
-| [options.logValues] | <code>boolean</code> | A boolean value that specifies whether to log the inserted values to the console. Defaults to false. |
-| [options.writeSql] | <code>boolean</code> | A boolean value that specifies whether to log the generated SQL statement. Defaults to false. |
-| [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
-| callback | <code>function</code> | (Optional) callback function |
+| [options] | <code>GeneralOptions</code> | Shared options. (OpenFn only) |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed result rows |
+| result | the result from a successful query |
+| references | an array of all previous data objects used in the job |
+
+**Example:** Insert many records
 ```js
 insertMany('users', state => state.data.recordArray, { setNull: "'undefined'", logValues: true });
 ```
 
 * * *
 
-## insertTable
+### insertTable
 
-insertTable(tableName, columns, [options], callback) ⇒ <code>Operation</code>
+<p><code>insertTable(tableName, columns, [options]) ⇒ Operation</code></p>
+
 Create a table in database when given an array of columns and a table_name.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | tableName | <code>string</code> | The name of the table to create |
 | columns | <code>array</code> | An array of form columns |
-| [options] | <code>object</code> | Optional options argument |
-| [options.writeSql] | <code>boolean</code> | A boolean value that specifies whether to log the generated SQL statement. Defaults to false. |
-| [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
-| callback | <code>function</code> | (Optional) callback function |
+| [options] | <code>ExecutionOptions</code> | Execution options. (OpenFn only) |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed result rows |
+| result | the result from a successful query |
+| references | an array of all previous data objects used in the job |
+
+**Example**
 ```js
 insertTable('table_name', state => state.data.map(
   column => ({
@@ -157,24 +232,28 @@ insertTable('table_name', state => state.data.map(
 
 * * *
 
-## modifyTable
+### modifyTable
 
-modifyTable(tableName, columns, [options], callback) ⇒ <code>Operation</code>
+<p><code>modifyTable(tableName, columns, [options]) ⇒ Operation</code></p>
+
 Alter an existing table in the database.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | tableName | <code>string</code> | The name of the table to alter |
 | columns | <code>array</code> | An array of form columns |
-| [options] | <code>object</code> | Optional options argument |
-| [options.writeSql] | <code>boolean</code> | A boolean value that specifies whether to log the generated SQL statement. Defaults to false. |
-| [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
-| callback | <code>function</code> | (Optional) callback function |
+| [options] | <code>ExecutionOptions</code> | Execution options. (OpenFn only) |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed result rows |
+| result | the result from a successful query |
+| references | an array of all previous data objects used in the job |
+
+**Example**
 ```js
 modifyTable('table_name', state => state.data.map(
   newColumn => ({
@@ -188,68 +267,98 @@ modifyTable('table_name', state => state.data.map(
 
 * * *
 
-## sql
+### sql
 
-sql(sqlQuery, [options], callback) ⇒ <code>Operation</code>
+<p><code>sql(sqlQuery, [options]) ⇒ Operation</code></p>
+
 Execute an SQL statement
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| sqlQuery | <code>function</code> | a function which takes state and returns a string of SQL. |
-| [options] | <code>object</code> | Optional options argument |
-| [options.writeSql] | <code>boolean</code> | A boolean value that specifies whether to log the generated SQL statement. Defaults to false. |
-| [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
-| callback | <code>function</code> | (Optional) callback function |
+| sqlQuery | <code>string</code> \| <code>SqlQueryConfig</code> | SQL query string or a query config object. |
+| [options] | <code>ExecutionOptions</code> | Execution options. (OpenFn only) |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed result rows |
+| result | the result from a successful query |
+| references | an array of all previous data objects used in the job |
+
+**Example:** Text-only Query
 ```js
-sql(state => `select(*) from ${state.data.tableName};`, { writeSql: true })
+sql('SELECT * FROM users;');
+```
+**Example:** Text-only Query with writeSql option
+```js
+sql("select id from users where first_name = 'Mamadou'", { writeSql: true });
+```
+**Example:** Parameterized Query
+```js
+sql("INSERT INTO users(name, age) VALUES ($1, $2);", { values: ["Alice", 25]});
+```
+**Example:** Format query with util.format
+```js
+sql(util.format('INSERT INTO users(name, age) VALUES (%L, %L);', 'Alice', 25));
+```
+**Example:**  Prepared Statements
+```js
+sql({
+  // give the query a unique name
+  name: "fetch-user",
+  text: "SELECT * FROM user WHERE id = $1",
+  values: [1],
+});
 ```
 
 * * *
 
-## upsert
+### upsert
 
-upsert(table, uuid, record, [options], callback) ⇒ <code>Operation</code>
+<p><code>upsert(table, uuid, record, [options]) ⇒ Operation</code></p>
+
 Insert or update a record using ON CONFLICT UPDATE
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | table | <code>string</code> | The target table |
 | uuid | <code>string</code> | The uuid column to determine a matching/existing record |
 | record | <code>object</code> | Payload data for the record as a JS object or function |
-| [options] | <code>object</code> | Optional options argument |
-| [options.setNull] | <code>string</code> | A string value that specifies the behavior for inserting null values. |
-| [options.writeSql] | <code>boolean</code> | A boolean value that specifies whether to log the generated SQL statement. Defaults to false. |
-| [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
-| [options.logValues] | <code>boolean</code> | A boolean value that specifies whether to log the inserted values to the console. Defaults to false. |
-| callback | <code>function</code> | (Optional) callback function |
+| [options] | <code>GeneralOptions</code> | Shared options. (OpenFn only) |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed result rows |
+| result | the result from a successful query |
+| references | an array of all previous data objects used in the job |
+
+**Example:** Insert or update a record
 ```js
 upsert(
-  'users', // the DB table
-  'ON CONSTRAINT users_pkey', // a DB column with a unique constraint OR a CONSTRAINT NAME
-  { name: 'Elodie', id: 7 },
-  { setNull: ["''", "'undefined'"], writeSql:true, execute: true, logValues: true }
-)
+  "users", // the DB table
+  "ON CONSTRAINT users_pkey", // a DB column with a unique constraint OR a CONSTRAINT NAME
+  { name: "Elodie", id: 7 },
+  {
+    setNull: ["''", "'undefined'"],
+    writeSql: true,
+    logValues: true,
+  }
+);
 ```
 
 * * *
 
-## upsertIf
+### upsertIf
 
-upsertIf(logical, table, uuid, record, [options], callback) ⇒ <code>Operation</code>
+<p><code>upsertIf(logical, table, uuid, record, [options]) ⇒ Operation</code></p>
+
 Insert or update a record based on a logical condition using ON CONFLICT UPDATE
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -257,47 +366,52 @@ Insert or update a record based on a logical condition using ON CONFLICT UPDATE
 | table | <code>string</code> | The target table |
 | uuid | <code>string</code> | The uuid column to determine a matching/existing record |
 | record | <code>object</code> | Payload data for the record as a JS object or function |
-| [options] | <code>object</code> | Optional options argument |
-| [options.setNull] | <code>string</code> | A string value that specifies the behavior for inserting null values. |
-| [options.writeSql] | <code>boolean</code> | A boolean value that specifies whether to log the generated SQL statement. Defaults to false. |
-| [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
-| [options.logValues] | <code>boolean</code> | A boolean value that specifies whether to log the inserted values to the console. Defaults to false. |
-| callback | <code>function</code> | (Optional) callback function |
+| [options] | <code>GeneralOptions</code> | Shared options. (OpenFn only) |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed result rows |
+| result | the result from a successful query |
+| references | an array of all previous data objects used in the job |
+
+**Example:** Insert or update a record conditionally
 ```js
 upsertIf(
-  dataValue('name'),
-  'users', // the DB table
-  'ON CONSTRAINT users_pkey', // a DB column with a unique constraint OR a CONSTRAINT NAME
-  { name: 'Elodie', id: 7 },
-  { writeSql:true, execute: true }
-)
+  $.data.name,
+  "users", // the DB table
+  "ON CONSTRAINT users_pkey", // a DB column with a unique constraint OR a CONSTRAINT NAME
+  { name: "Elodie", id: 7 },
+  { writeSql: true }
+);
 ```
 
 * * *
 
-## upsertMany
+### upsertMany
 
-upsertMany(table, uuid, data, [options], callback) ⇒ <code>Operation</code>
+<p><code>upsertMany(table, uuid, data, [options]) ⇒ Operation</code></p>
+
 Insert or update multiple records using ON CONFLICT UPDATE and excluded
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | table | <code>string</code> | The target table |
 | uuid | <code>string</code> | The uuid column to determine a matching/existing record |
 | data | <code>array</code> | An array of objects or a function that returns an array |
-| [options] | <code>object</code> | Optional options argument |
-| [options.setNull] | <code>string</code> | A string value that specifies the behavior for inserting null values. |
-| [options.writeSql] | <code>boolean</code> | A boolean value that specifies whether to log the generated SQL statement. Defaults to false. |
-| [options.execute] | <code>boolean</code> | A boolean value that specifies whether to execute the generated SQL statement. Defaults to false. |
-| [options.logValues] | <code>boolean</code> | A boolean value that specifies whether to log the inserted values to the console. Defaults to false. |
-| callback | <code>function</code> | (Optional) callback function |
+| [options] | <code>GeneralOptions</code> | Shared options. (OpenFn only) |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed result rows |
+| result | the result from a successful query |
+| references | an array of all previous data objects used in the job |
+
+**Example:** Insert or update multiple records
 ```js
 upsertMany(
   'users', // the DB table
@@ -306,9 +420,9 @@ upsertMany(
     { name: 'one', email: 'one@openfn.org' },
     { name: 'two', email: 'two@openfn.org' },
   ]
- { logValues: true }
 )
 ```
 
 * * *
+
 

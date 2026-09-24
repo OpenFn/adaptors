@@ -1,5 +1,3 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#fetch">fetch(params)</a></dt>
@@ -9,18 +7,63 @@
     <a href="#update75">update75(params)</a></dt>
 </dl>
 
-## fetch
 
-fetch(params) ⇒ <code>Operation</code>
+This adaptor exports the following from common:
+<dl>
+<dt>
+    <a href="/adaptors/packages/common-docs#alterstate">alterState</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#combine">combine()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#each">each()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#field">field()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fields">fields()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fn">fn()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#log">log()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#merge">merge()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
+</dt></dl>
+
+## Functions
+### fetch
+
+<p><code>fetch(params) ⇒ Operation</code></p>
+
 Make a GET request and POST it somewhere else
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | data to make the fetch |
 
-**Example**  
+
+**Example**
 ```js
 fetch({
  endpoint: 'maxrest/rest/os/mxinventory',
@@ -34,43 +77,48 @@ fetch({
 
 * * *
 
-## update
+### update
 
-update(params) ⇒ <code>Operation</code>
+<p><code>update(params) ⇒ Operation</code></p>
+
 Make an update in Maximo 7.6 and beyond
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | data to make the update |
 
-**Example**  
+
+**Example:** Update a workorder
 ```js
-execute(
-  update(params)
-)(state)
+update({
+  endpoint: "maxrest/rest/mbo/workorder/1234",
+  body: state => state.data,
+});
 ```
 
 * * *
 
-## update75
+### update75
 
-update75(params) ⇒ <code>Operation</code>
+<p><code>update75(params) ⇒ Operation</code></p>
+
 Make an upadte in Maximo 7.5
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | data to make the update |
 
-**Example**  
+
+**Example:** Update an inventory balance
 ```js
-execute(
-  update75(params)
-)(state)
+update75({
+  endpoint: "maxrest/rest/mbo/invbalances",
+  body: state => state.inventoryBalances,
+});
 ```
 
 * * *
+
 

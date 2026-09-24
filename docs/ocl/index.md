@@ -1,19 +1,60 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#get">get(path, query, callback)</a></dt>
 <dt>
-    <a href="#getMappings">getMappings(ownerId, repositoryId, [options], callback)</a></dt>
+    <a href="#getmappings">getMappings(ownerId, repositoryId, [options], callback)</a></dt>
 </dl>
 
-## get
 
-get(path, query, callback) ⇒ <code>Operation</code>
+This adaptor exports the following from common:
+<dl>
+<dt>
+    <a href="/adaptors/packages/common-docs#alterstate">alterState</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#combine">combine()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#each">each()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#field">field()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fields">fields()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fn">fn()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#log">log()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#merge">merge()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
+</dt></dl>
+
+## Functions
+### get
+
+<p><code>get(path, query, callback) ⇒ Operation</code></p>
+
 Get a resource in OCL
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -21,7 +62,8 @@ Get a resource in OCL
 | query | <code>object</code> | A query object that will limit what resources are retrieved when converted into request params. |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+
+**Example**
 ```js
 get(
   "orgs/MSFOCG/collections/lime-demo/HEAD/mappings",
@@ -42,13 +84,12 @@ get(
 
 * * *
 
-## getMappings
+### getMappings
 
-getMappings(ownerId, repositoryId, [options], callback) ⇒ <code>Operation</code>
+<p><code>getMappings(ownerId, repositoryId, [options], callback) ⇒ Operation</code></p>
+
 Get a source repository in OCL
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -57,7 +98,8 @@ Get a source repository in OCL
 | [options] | <code>Object</code> | Optional. `options`  which can be passed to  See more [on OCL swagger docs](https://api.openconceptlab.org/swagger/) |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+
+**Example**
 ```js
 getMappings(
   "MSFOCG",
@@ -72,4 +114,5 @@ getMappings(
 ```
 
 * * *
+
 

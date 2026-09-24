@@ -1,90 +1,69 @@
-## Functions
-
 <dl>
 <dt>
-    <a href="#connect">connect(state)</a></dt>
+    <a href="#finddocuments">findDocuments(params)</a></dt>
 <dt>
-    <a href="#disconnect">disconnect(state)</a></dt>
+    <a href="#insertdocuments">insertDocuments(params)</a></dt>
 <dt>
-    <a href="#execute">execute(operations)</a></dt>
-<dt>
-    <a href="#findDocuments">findDocuments(params)</a></dt>
-<dt>
-    <a href="#insertDocuments">insertDocuments(params)</a></dt>
-<dt>
-    <a href="#updateDocument">updateDocument(params)</a></dt>
+    <a href="#updatedocument">updateDocument(params)</a></dt>
 </dl>
 
-## connect
 
-connect(state) ⇒ <code>State</code>
-Connects to a mongoDb instance
+This adaptor exports the following from common:
+<dl>
+<dt>
+    <a href="/adaptors/packages/common-docs#alterstate">alterState</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#combine">combine()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#each">each()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#field">field()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fields">fields()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fn">fn()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#log">log()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#merge">merge()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
+</dt></dl>
 
-**Kind**: global function  
+## Functions
+### findDocuments
 
-| Param | Type | Description |
-| --- | --- | --- |
-| state | <code>State</code> | Runtime state. |
+<p><code>findDocuments(params) ⇒ State</code></p>
 
-**Example**  
-```js
-connect(state)
-```
-
-* * *
-
-## disconnect
-
-disconnect(state) ⇒ <code>State</code>
-Removes connection from the state.
-
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| state | <code>State</code> | 
-
-**Example**  
-```js
-disconnect(state)
-```
-
-* * *
-
-## execute
-
-execute(operations) ⇒ <code>Operation</code>
-Execute a sequence of operations.
-Wraps `@openfn/language-common/execute`, and prepends initial state for http.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| operations | <code>Operations</code> | Operations to be performed. |
-
-**Example**  
-```js
-execute(
-  insertDocuments(params),
-  findDocuments(params)
-)(state)
-```
-
-* * *
-
-## findDocuments
-
-findDocuments(params) ⇒ <code>State</code>
 Find documents in a mongoDb collection
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | Configuration for mongo |
 
-**Example**  
+
+**Example**
 ```js
 findDocuments({
    database: 'str',
@@ -95,18 +74,19 @@ findDocuments({
 
 * * *
 
-## insertDocuments
+### insertDocuments
 
-insertDocuments(params) ⇒ <code>State</code>
+<p><code>insertDocuments(params) ⇒ State</code></p>
+
 Inserts documents into a mongoDb collection
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | Configuration for mongo |
 
-**Example**  
+
+**Example**
 ```js
 insertDocuments({
    database: 'str',
@@ -117,18 +97,19 @@ insertDocuments({
 
 * * *
 
-## updateDocument
+### updateDocument
 
-updateDocument(params) ⇒ <code>State</code>
+<p><code>updateDocument(params) ⇒ State</code></p>
+
 Updates document (optionally upserting) into a mongoDb collection
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | Configuration for mongo |
 
-**Example**  
+
+**Example**
 ```js
 updateDocuments({
    database: 'str',
@@ -140,4 +121,5 @@ updateDocuments({
 ```
 
 * * *
+
 

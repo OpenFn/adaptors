@@ -1,70 +1,113 @@
-## Functions
+<dl>
+<dt>
+    <a href="#createcase">createCase(params, callback)</a></dt>
+<dt>
+    <a href="#createreferrals">createReferrals(params, callback)</a></dt>
+<dt>
+    <a href="#get">get(path, query)</a></dt>
+<dt>
+    <a href="#getcases">getCases(query, options, callback)</a></dt>
+<dt>
+    <a href="#getforms">getForms(query, callback)</a></dt>
+<dt>
+    <a href="#getlocations">getLocations(query, callback)</a></dt>
+<dt>
+    <a href="#getlookups">getLookups(query, callback)</a></dt>
+<dt>
+    <a href="#getreferrals">getReferrals(params, callback)</a></dt>
+<dt>
+    <a href="#updatecase">updateCase(id, params, callback)</a></dt>
+<dt>
+    <a href="#updatereferral">updateReferral(params, callback)</a></dt>
+<dt>
+    <a href="#upsertcase">upsertCase(params, callback)</a></dt>
+</dl>
+
+This adaptor exports the following namespaced functions:
 
 <dl>
 <dt>
-    <a href="#cleanupState">cleanupState(state)</a></dt>
+    <a href="#http_get">http.get(path, [options])</a>
+</dt>
+
 <dt>
-    <a href="#createCase">createCase(params, callback)</a></dt>
+    <a href="#http_patch">http.patch(path, data, [options])</a>
+</dt>
+
 <dt>
-    <a href="#createReferrals">createReferrals(params, callback)</a></dt>
-<dt>
-    <a href="#generateAuthString">generateAuthString(state)</a></dt>
-<dt>
-    <a href="#getCases">getCases(query, options, callback)</a></dt>
-<dt>
-    <a href="#getForms">getForms(query, callback)</a></dt>
-<dt>
-    <a href="#getLocations">getLocations(query, callback)</a></dt>
-<dt>
-    <a href="#getLookups">getLookups(query, callback)</a></dt>
-<dt>
-    <a href="#getReferrals">getReferrals(params, callback)</a></dt>
-<dt>
-    <a href="#login">login(state)</a></dt>
-<dt>
-    <a href="#queryHandler">queryHandler(state, params, callback)</a></dt>
-<dt>
-    <a href="#updateCase">updateCase(id, params, callback)</a></dt>
-<dt>
-    <a href="#updateReferral">updateReferral(params, callback)</a></dt>
-<dt>
-    <a href="#upsertCase">upsertCase(params, callback)</a></dt>
+    <a href="#http_post">http.post(path, data, [options])</a>
+</dt>
 </dl>
 
-## cleanupState
 
-cleanupState(state) ⇒ <code>State</code>
-Removes unserializable keys from the state.
+This adaptor exports the following from common:
+<dl>
+<dt>
+    <a href="/adaptors/packages/common-docs#alterstate">alterState</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#as">as()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#beta">beta</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#combine">combine()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datefns">dateFns</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#each">each()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#field">field()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fields">fields()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fn">fn()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#log">log()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#merge">merge()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
+</dt></dl>
 
-**Kind**: global function  
+## Functions
+### createCase
 
-| Param | Type |
-| --- | --- |
-| state | <code>State</code> | 
+<p><code>createCase(params, callback) ⇒ Operation</code></p>
 
-**Example**  
-```js
-cleanupState(state)
-```
-
-* * *
-
-## createCase
-
-createCase(params, callback) ⇒ <code>Operation</code>
 Create a new case in Primero
 
 Use this function to create a new case in Primero based on a set of Data.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | an object with some case data. |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example** *(Create a new case in Primero based on a set of Data)*  
+
+**Example:** Create a new case in Primero based on a set of Data
 ```js
 createCase({
   data: {
@@ -77,22 +120,22 @@ createCase({
 
 * * *
 
-## createReferrals
+### createReferrals
 
-createReferrals(params, callback) ⇒ <code>Operation</code>
+<p><code>createReferrals(params, callback) ⇒ Operation</code></p>
+
 Create referrals in Primero
 
 Use this function to bulk refer to one or multiple cases from Primero to a single user
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | an object with referral data. |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example** *(Create referrals for multiple cases in Primero)*  
+
+**Example:** Create referrals for multiple cases in Primero
 ```js
 createReferrals({
   data: {
@@ -108,80 +151,105 @@ createReferrals({
 
 * * *
 
-## generateAuthString
+### get
 
-generateAuthString(state) ⇒ <code>string</code>
-Generate an auth string to support multiple types of auth credentials.
+<p><code>get(path, query) ⇒ Operation</code></p>
 
-**Kind**: global function  
+Get resources from Primero. Automatically paginates through all pages.
 
-| Param | Type |
-| --- | --- |
-| state | <code>State</code> | 
-
-**Example**  
-```js
-generateAuthString(state)
-```
-
-* * *
-
-## getCases
-
-getCases(query, options, callback) ⇒ <code>Operation</code>
-Get cases from Primero
-
-Use this function to get cases from Primero based on a set of query parameters.
-Note that in many implementations, the `remote` attribute should be set to `true` to ensure that only cases marked for remote access will be retrieved.
-You can specify a `case_id` value to fetch a unique case and a query string to filter result.
-
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| query | <code>object</code> | an object with a query param at minimum, option to getReferrals |
-| options | <code>object</code> | (Optional) an object with a getReferrals key to fetch referrals |
-| callback | <code>function</code> | (Optional) Callback function |
+| path | <code>string</code> | Path to a resource |
+| query | <code>object</code> | Query parameters to append to the URL. Use `per` to control the page size. Use `limit` to cap the total number of records fetched. |
 
-**Example** *( Get cases from Primero with query parameters)*  
+
+**Example:** Fetch all registry records
 ```js
-getCases({
-  remote: true,
-  query: "sex=male",
-});
+get('registry_records');
 ```
-**Example** *(Get case from Primero for a specific case id)*  
+**Example:** fetch all records in pages of 50 at a time
 ```js
-getCases({
-  remote: true,
-  case_id: "6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz",
-});
+get('registry_records', { per: 50 });
+```
+**Example:** Fetch at most 5000 records
+```js
+get('registry_records', { limit: 5000 });
+```
+**Example:** Fetch a single registry record by ID
+```js
+get('registry_records/fc686dff-b1ee-4206-9be6-066dbf4e3a54');
 ```
 
 * * *
 
-## getForms
+### getCases
 
-getForms(query, callback) ⇒ <code>Operation</code>
+<p><code>getCases(query, options, callback) ⇒ Operation</code></p>
+
+Use this function to get cases from Primero based on a set of query parameters.
+Note that in many implementations, the `remote` attribute should be set to `true` to ensure that only cases marked for remote access will be retrieved.
+Set `case_id` on the query object to fetch a specific case.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| query | <code>object</code> | Query parameters to send to primero, which will be built into URL parameters. See [Primero Docs](https://github.com/primeroIMS/primero/blob/master/doc/api/cases/get.md) for a list of valid parameters. |
+| options | <code>object</code> | (Optional) Additional options |
+| options.withReferrals | <code>boolean</code> | Set to true to include referrals with each case. This will generate an extra request for each case and may take some time to process. |
+| callback | <code>function</code> | (Optional) Callback function |
+
+
+**Example:** Fetch all cases
+```js
+getCases();
+```
+**Example:** Fetch all cases which match query criteria
+```js
+getCases({
+  remote: true,
+  sex: "male",
+  age: "10..15",
+  protection_concerns :"unaccompanied,separated",
+});
+```
+**Example:** Fetch a specific case by id
+```js
+getCases({
+  case_id: "6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz",
+});
+```
+**Example:** Get all remote cases and their referrals
+```js
+getCases(
+ { remote: true },
+ { withReferrals: true }
+);
+```
+
+* * *
+
+### getForms
+
+<p><code>getForms(query, callback) ⇒ Operation</code></p>
+
 Get forms from Primero
 
 Use this function to get forms from Primero that are accessible to this user based on a set of query parameters.
 The user can filter the form list by record type and module.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | query | <code>object</code> | an object with a query param at minimum |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example** *(Get the list of all forms)*  
+
+**Example:** Get the list of all forms
 ```js
 getForms();
 ```
-**Example** *(Get the list of all forms for a specific module)*  
+**Example:** Get the list of all forms for a specific module
 ```js
 getForms({
   module_id: "6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz",
@@ -190,9 +258,10 @@ getForms({
 
 * * *
 
-## getLocations
+### getLocations
 
-getLocations(query, callback) ⇒ <code>Operation</code>
+<p><code>getLocations(query, callback) ⇒ Operation</code></p>
+
 Get locations from Primero
 
 Use this function to get a paginated list of all locations that are accessible to this user from Primero.
@@ -200,15 +269,14 @@ Note: You can specify a `per` value to fetch records per page(Defaults to 20).
 Also you can specify `page` value to fetch pagination (Defaults to 1).
 Another parameter is `hierarchy: true` (Defaults to false)
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | query | <code>object</code> | an object with a query param at minimum |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example** *(Get loocations from Primero with query parameters)*  
+
+**Example:** Get loocations from Primero with query parameters
 ```js
 getLocations({
   page: 1,
@@ -218,24 +286,24 @@ getLocations({
 
 * * *
 
-## getLookups
+### getLookups
 
-getLookups(query, callback) ⇒ <code>Operation</code>
+<p><code>getLookups(query, callback) ⇒ Operation</code></p>
+
 Get lookups from Primero
 
 Use this function to get a paginated list of all lookups that are accessible to this user from Primero.
 Note: You can specify a `per` value to fetch records per page(Defaults to 20).
 Also you can specify `page` value to fetch pagination (Defaults to 1)
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | query | <code>object</code> | an object with a query param at minimum |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example** *(Get lookups from Primero with query parameters)*  
+
+**Example:** Get lookups from Primero with query parameters
 ```js
 getLookups({
   per: 10000,
@@ -245,30 +313,30 @@ getLookups({
 
 * * *
 
-## getReferrals
+### getReferrals
 
-getReferrals(params, callback) ⇒ <code>Operation</code>
+<p><code>getReferrals(params, callback) ⇒ Operation</code></p>
+
 Get referrals for a specific case in Primero
 
 Use this function to get the list of referrals of one case from Primero.
 The search can be done using either `record id` or `case id`.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | an object with an externalId field to select the attribute to use for matching on case and an externalId value for that case. |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example** *(Get referrals for a case in Primero by record id)*  
+
+**Example:** Get referrals for a case in Primero by record id
 ```js
 getReferrals({
   externalId: "record_id",
   id: "6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz",
 });
 ```
-**Example** *(Get referrals for a case in Primero by case id)*  
+**Example:** Get referrals for a case in Primero by case id
 ```js
  getReferrals({
   id: "6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz",
@@ -277,43 +345,10 @@ getReferrals({
 
 * * *
 
-## login
+### updateCase
 
-login(state) ⇒ <code>State</code>
-Logs in to Primero.
+<p><code>updateCase(id, params, callback) ⇒ Operation</code></p>
 
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| state | <code>State</code> | Runtime state. |
-
-**Example**  
-```js
-login(state)
-```
-
-* * *
-
-## queryHandler
-
-queryHandler(state, params, callback) ⇒ <code>State</code>
-Execute custom query
-
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| state | <code>State</code> | 
-| params | <code>object</code> | 
-| callback | <code>function</code> | 
-
-
-* * *
-
-## updateCase
-
-updateCase(id, params, callback) ⇒ <code>Operation</code>
 Update an existing case in Primero
 
 Use this function to update an existing case from Primero.
@@ -323,8 +358,6 @@ Fields not specified in this request will not be modified.
 For nested subform fields, the subform arrays will be recursively merged,
 keeping both the existing values and appending the new
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -332,7 +365,8 @@ keeping both the existing values and appending the new
 | params | <code>object</code> | an object with some case data. |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example** *(Update case for a specific case id)*  
+
+**Example:** Update case for a specific case id
 ```js
 updateCase("6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz", {
   data: {
@@ -345,20 +379,20 @@ updateCase("6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz", {
 
 * * *
 
-## updateReferral
+### updateReferral
 
-updateReferral(params, callback) ⇒ <code>Operation</code>
+<p><code>updateReferral(params, callback) ⇒ Operation</code></p>
+
 Update a single referral for a specific case in Primero
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | an object with an caseExternalId value to use, the id and the referral id to update. |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example** *(Update referral by record id)*  
+
+**Example:** Update referral by record id
 ```js
 updateReferral({
   caseExternalId: "record_id",
@@ -370,24 +404,24 @@ updateReferral({
 
 * * *
 
-## upsertCase
+### upsertCase
 
-upsertCase(params, callback) ⇒ <code>Operation</code>
+<p><code>upsertCase(params, callback) ⇒ Operation</code></p>
+
 Upsert case to Primero
 
 Use this function to update an existing case from Primero or to create it otherwise.
 In this implementation, we first fetch the list of cases,
 then we check if the case exist before choosing the right operation to do.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | an object with an externalIds and some case data. |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example** *(Upsert case for a specific case id)*  
+
+**Example:** Upsert case for a specific case id
 ```js
 upsertCase({
   externalIds: ["case_id"],
@@ -400,6 +434,122 @@ upsertCase({
   }),
 });
 ```
+
+* * *
+
+
+## http
+
+These functions belong to the http namespace.
+### http.get {#http_get}
+
+<p><code>get(path, [options]) ⇒ Operation</code></p>
+
+Make a GET request to any Primero endpoint.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| path | <code>string</code> |  | Path to the resource. |
+| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the Primero server (excluding the body). Responses will be returned in JSON format |
+| references | An array of all previous data objects used in the Job |
+
+**Example:** GET all cases
+```js
+http.get('/cases');
+```
+
+* * *
+
+
+### http.patch {#http_patch}
+
+<p><code>patch(path, data, [options]) ⇒ Operation</code></p>
+
+Make a PATCH request to Primero
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| path | <code>string</code> |  | Path to the resource. |
+| data | <code>object</code> |  | the body data in JSON format. |
+| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the Primero server (excluding the body). Responses will be returned in JSON format |
+| references | An array of all previous data objects used in the Job |
+
+**Example:** Update a single case resource 
+```js
+http.patch('cases/344f3c08-affc-4d8a-b4d3-925b9f4d2867', {
+  age: 17,
+  sex: "female",
+  name: "Edwine Edgemont",
+ });
+```
+
+* * *
+
+
+### http.post {#http_post}
+
+<p><code>post(path, data, [options]) ⇒ Operation</code></p>
+
+Make a POST request to any Primero endpoint.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| path | <code>string</code> |  | Path to the resource. |
+| data | <code>object</code> |  | the body data in JSON format. |
+| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | An object containing query params and headers for the request |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | The response body (as JSON) |
+| response | The HTTP response from the Primero server (excluding the body). Responses will be returned in JSON format |
+| references | An array of all previous data objects used in the Job |
+
+**Example:** POST a case to Primero
+```js
+http.post('cases',{
+    age: 16,
+    sex: "female",
+    name: "Edwine Edgemont",
+});
+```
+
+* * *
+
+
+##  Interfaces
+
+### RequestOptions
+
+Options object
+
+
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| query | <code>object</code> |  | An object of query parameters to be encoded into the URL |
+| headers | <code>object</code> |  | An object of all request headers |
+| [parseAs] | <code>string</code> | <code>&quot;&#x27;json&#x27;&quot;</code> | The response format to parse (e.g., 'json', 'text', or 'stream') |
+
 
 * * *
 

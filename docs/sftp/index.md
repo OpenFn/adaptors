@@ -1,32 +1,80 @@
-## Functions
-
 <dl>
 <dt>
-    <a href="#getCSV">getCSV(filePath, [parsingOptions])</a></dt>
+    <a href="#getcsv">getCSV(filePath, [parsingOptions])</a></dt>
 <dt>
-    <a href="#getJSON">getJSON(filePath, encoding)</a></dt>
+    <a href="#getjson">getJSON(filePath, encoding)</a></dt>
 <dt>
-    <a href="#list">list(dirPath, [callback])</a></dt>
+    <a href="#list">list(dirPath, filter, [callback])</a></dt>
 <dt>
-    <a href="#normalizeCSVarray">normalizeCSVarray(options, callback)</a></dt>
+    <a href="#normalizecsvarray">normalizeCSVarray(options, callback)</a></dt>
 <dt>
-    <a href="#putCSV">putCSV(localFilePath, remoteFilePath, parsingOptions)</a></dt>
+    <a href="#putcsv">putCSV(localFilePath, remoteFilePath, parsingOptions)</a></dt>
 </dl>
 
-## getCSV
 
-getCSV(filePath, [parsingOptions]) ⇒ <code>Operation</code>
+This adaptor exports the following from common:
+<dl>
+<dt>
+    <a href="/adaptors/packages/common-docs#alterstate">alterState</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#chunk">chunk()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#combine">combine()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#each">each()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#field">field()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fields">fields()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fn">fn()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#log">log()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#merge">merge()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#parsecsv">parseCsv()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
+</dt></dl>
+
+## Functions
+### getCSV
+
+<p><code>getCSV(filePath, [parsingOptions]) ⇒ Operation</code></p>
+
 Get a CSV and return a JSON array of strings for each item separated by the delimiter
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | filePath | <code>string</code> | Path to resource |
 | [parsingOptions] | <code>Object</code> | Optional. `parsingOptions` Parsing options which can be passed to convert csv to json See more [on csvtojson docs](https://github.com/Keyang/node-csvtojson#parameters) |
 
-**Example**  
+
+**Example**
 ```js
 getCSV(
   '/some/path/to_file.csv',
@@ -36,20 +84,20 @@ getCSV(
 
 * * *
 
-## getJSON
+### getJSON
 
-getJSON(filePath, encoding) ⇒ <code>Operation</code>
+<p><code>getJSON(filePath, encoding) ⇒ Operation</code></p>
+
 Fetch a json file from an FTP server
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | filePath | <code>string</code> | Path to resource |
 | encoding | <code>string</code> | Character encoding for the json |
 
-**Example**  
+
+**Example**
 ```js
 getJSON(
   '/path/To/File',
@@ -59,53 +107,72 @@ getJSON(
 
 * * *
 
-## list
+### list
 
-list(dirPath, [callback]) ⇒ <code>Operation</code>
+<p><code>list(dirPath, filter, [callback]) ⇒ Operation</code></p>
+
 List files present in a directory
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| dirPath | <code>string</code> | Path to resource |
+| dirPath | <code>string</code> | Path to remote directory |
+| filter | <code>function</code> | a filter function used to select return entries |
 | [callback] | <code>function</code> | Optional callback to handle the response |
 
-**Example**  
+
+**Example:** basic files listing
 ```js
 list('/some/path/')
+```
+**Example:** list files with filters
+```js
+list('/some/path/', file=> {
+ return /foo.\.txt/.test(file.name);
+})
+```
+**Example:** list files with filters and use callback
+```js
+list(
+  "/some/path/",
+  (file) => /foo.\.txt/.test(file.name),
+  (state) => {
+    const latestFile = state.data.filter(
+      (file) => file.modifyTime <= new Date()
+    );
+    return { ...state, latestFile };
+  }
+);
 ```
 
 * * *
 
-## normalizeCSVarray
+### normalizeCSVarray
 
-normalizeCSVarray(options, callback) ⇒ <code>Operation</code>
+<p><code>normalizeCSVarray(options, callback) ⇒ Operation</code></p>
+
 Convert JSON array of strings into a normalized object
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | options | <code>options</code> | Options passed to csvtojson parser |
 | callback | <code>callback</code> | Options passed to csvtojson parser |
 
-**Example**  
+
+**Example**
 ```js
 normalizeCSVarray({ delimiter: ';', noheader: true });
 ```
 
 * * *
 
-## putCSV
+### putCSV
 
-putCSV(localFilePath, remoteFilePath, parsingOptions) ⇒ <code>Operation</code>
+<p><code>putCSV(localFilePath, remoteFilePath, parsingOptions) ⇒ Operation</code></p>
+
 Convert JSON to CSV and upload to an FTP server
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -113,7 +180,8 @@ Convert JSON to CSV and upload to an FTP server
 | remoteFilePath | <code>string</code> | Path to the remote file to be created on the server. |
 | parsingOptions | <code>object</code> | Options which can be passed to adjust the read and write stream used in sending the data to the remote server |
 
-**Example**  
+
+**Example**
 ```js
 putCSV(
   '/some/path/to_local_file.csv',
@@ -123,4 +191,5 @@ putCSV(
 ```
 
 * * *
+
 

@@ -1,71 +1,105 @@
-## Functions
-
 <dl>
 <dt>
-    <a href="#createCollectionRequest">createCollectionRequest(data)</a></dt>
+    <a href="#createcollectionrequest">createCollectionRequest(data)</a></dt>
 <dt>
-    <a href="#createContact">createContact(data)</a></dt>
+    <a href="#createcontact">createContact(data)</a></dt>
 <dt>
-    <a href="#createPayment">createPayment(data)</a></dt>
+    <a href="#createpayment">createPayment(data)</a></dt>
 </dl>
 
-## createCollectionRequest
 
-createCollectionRequest(data) ⇒ <code>Operation</code>
+This adaptor exports the following from common:
+<dl>
+<dt>
+    <a href="/adaptors/packages/common-docs#combine">combine()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#field">field()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fields">fields()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fn">fn()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#log">log()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#merge">merge()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
+</dt></dl>
+
+## Functions
+### createCollectionRequest
+
+<p><code>createCollectionRequest(data) ⇒ Operation</code></p>
+
 Create a collection request
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | data | <code>object</code> | Payload data for the collection request |
 
-**Example**  
+
+**Example:** Create a collection request
 ```js
-execute(
-  createCollectionRequest(data)
-)(state)
+createCollectionRequest(data)
 ```
 
 * * *
 
-## createContact
+### createContact
 
-createContact(data) ⇒ <code>Operation</code>
+<p><code>createContact(data) ⇒ Operation</code></p>
+
 Create a contact
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | data | <code>object</code> | Payload data for the contact |
 
-**Example**  
+
+**Example:** Create a contact
 ```js
-execute(
-  createContact(data)
-)(state)
+createContact(data)
 ```
 
 * * *
 
-## createPayment
+### createPayment
 
-createPayment(data) ⇒ <code>Operation</code>
+<p><code>createPayment(data) ⇒ Operation</code></p>
+
 Create a payment
 
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | data | <code>object</code> | Payload data for the payment |
 
-**Example**  
+
+**Example:** Create a payment with a reference to a customer
 ```js
-execute(
-  createPayment(data)
-)(state)
+createPayment(data)
 ```
 
 * * *
+
 

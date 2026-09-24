@@ -1,182 +1,437 @@
-## Functions
+<dl>
+<dt>
+    <a href="#del">del(path, options)</a></dt>
+<dt>
+    <a href="#get">get(path, options)</a></dt>
+<dt>
+    <a href="#parsexml">parseXML(data, script)</a></dt>
+<dt>
+    <a href="#patch">patch(path, data, options)</a></dt>
+<dt>
+    <a href="#post">post(path, data, options)</a></dt>
+<dt>
+    <a href="#put">put(path, data, options)</a></dt>
+<dt>
+    <a href="#request">request(method, path, options)</a></dt>
+</dl>
+
+This adaptor exports the following namespaced functions:
 
 <dl>
 <dt>
-    <a href="#del">del(path, params, callback)</a></dt>
+    <a href="#util_decode">util.decode(base64Data)</a>
+</dt>
+
 <dt>
-    <a href="#get">get(path, params, callback)</a></dt>
+    <a href="#util_encode">util.encode(data)</a>
+</dt>
+
 <dt>
-    <a href="#parseXML">parseXML(body, script)</a></dt>
-<dt>
-    <a href="#patch">patch(path, params, callback)</a></dt>
-<dt>
-    <a href="#post">post(path, params, callback)</a></dt>
-<dt>
-    <a href="#put">put(path, params, callback)</a></dt>
-<dt>
-    <a href="#request">request(params)</a></dt>
+    <a href="#util_uuid">util.uuid()</a>
+</dt>
 </dl>
 
-## del
 
-del(path, params, callback) ⇒ <code>Operation</code>
-Make a DELETE request
+This adaptor exports the following from common:
+<dl>
+<dt>
+    <a href="/adaptors/packages/common-docs#alterstate">alterState</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#arraytostring">arrayToString()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#as">as()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#chunk">chunk()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#combine">combine()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#cursor">cursor()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datefns">dateFns</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#each">each()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#field">field()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fields">fields()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fn">fn()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#group">group()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#humanproper">humanProper()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#log">log()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#map">map()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#merge">merge()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#parsecsv">parseCsv()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#scrubemojis">scrubEmojis()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#splitkeys">splitKeys()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#toarray">toArray()</a>
+</dt></dl>
 
-**Kind**: global function  
-**Access**: public  
+## Functions
+### del
+
+<p><code>del(path, options) ⇒ Operation</code></p>
+
+Make a DELETE request. If `configuration.baseUrl` is set, paths must be relative.
+
 
 | Param | Type | Description |
 | --- | --- | --- |
-| path | <code>string</code> | Path to resource |
-| params | <code>object</code> | Body, Query, Headers and Auth parameters |
-| callback | <code>function</code> | (Optional) Callback function |
+| path | <code>string</code> | Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`. |
+| options | [<code>RequestOptions</code>](#requestoptions) | Query, Headers and Auth parameters |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** DELETE a resource by ID
 ```js
-del(`/myendpoint/${state => state.data.id}`, {
-   headers: {'content-type': 'application/json'}
- })
+del(`/myendpoint/${$.data.id}`);
 ```
 
 * * *
 
-## get
+### get
 
-get(path, params, callback) ⇒ <code>Operation</code>
-Make a GET request
+<p><code>get(path, options) ⇒ Operation</code></p>
 
-**Kind**: global function  
-**Access**: public  
+Make a GET request. If `configuration.baseUrl` is set, paths must be relative.
+
 
 | Param | Type | Description |
 | --- | --- | --- |
-| path | <code>string</code> | Path to resource |
-| params | <code>object</code> | Query, Headers and Authentication parameters |
-| callback | <code>function</code> | (Optional) Callback function |
+| path | <code>string</code> | Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`. |
+| options | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Authentication parameters |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** GET request with query parameters and custom headers
 ```js
-get('/myEndpoint', {
-   query: {foo: 'bar', a: 1},
-   headers: {'content-type': 'application/json'},
-   authentication: {username: 'user', password: 'pass'}
- })
+get('/patient', {
+  query: { foo: 'bar', a: 1 },
+});
 ```
 
 * * *
 
-## parseXML
+### parseXML
 
-parseXML(body, script) ⇒ <code>Operation</code>
+<p><code>parseXML(data, script) ⇒ Operation</code></p>
+
 Parse XML with the Cheerio parser
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| body | <code>String</code> | data string to be parsed |
+| data | <code>String</code> | Body string to be parsed |
 | script | <code>function</code> | script for extracting data |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed XML as a JSON object |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** Parse XML from state.response
 ```js
-parseXML(body, function($){
-   return $("table[class=your_table]").parsetable(true, true, true);
- })
+ parseXML(
+  (state) => state.response,
+  ($) => {
+    return $("table[class=your_table]").parsetable(true, true, true);
+  }
+);
+```
+**Example:** Using parseXML with a callback to extract data
+```js
+parseXML(
+  (state) => state.response,
+  ($) => $("table[class=your_table]").parsetable(true, true, true)
+).then((next) => ({ ...next, results: next.data.data }));
 ```
 
 * * *
 
-## patch
+### patch
 
-patch(path, params, callback) ⇒ <code>Operation</code>
-Make a PATCH request
+<p><code>patch(path, data, options) ⇒ Operation</code></p>
 
-**Kind**: global function  
-**Access**: public  
+Make a PATCH request. If `configuration.baseUrl` is set, paths must be relative.
+
 
 | Param | Type | Description |
 | --- | --- | --- |
-| path | <code>string</code> | Path to resource |
-| params | <code>object</code> | Body, Query, Headers and Auth parameters |
-| callback | <code>function</code> | (Optional) Callback function |
+| path | <code>string</code> | Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`. |
+| data | <code>object</code> | Body data to append to the request. JSON will be converted to a string. |
+| options | [<code>RequestOptions</code>](#requestoptions) | Query, Headers and Auth parameters |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** PATCH a resource from state
 ```js
-patch('/myEndpoint', {
-   body: {'foo': 'bar'},
-   headers: {'content-type': 'application/json'},
-   authentication: {username: 'user', password: 'pass'}
- })
+patch('/patient', $.data);
+```
+**Example:** PATCH a resource with custom headers
+```js
+patch('/patient', $.data, {
+  headers: { 'content-type': 'application/fhir+json' },
+});
 ```
 
 * * *
 
-## post
+### post
 
-post(path, params, callback) ⇒ <code>operation</code>
-Make a POST request
+<p><code>post(path, data, options) ⇒ operation</code></p>
 
-**Kind**: global function  
-**Access**: public  
+Make a POST request. If `configuration.baseUrl` is set, paths must be relative.
+
 
 | Param | Type | Description |
 | --- | --- | --- |
-| path | <code>string</code> | Path to resource |
-| params | <code>object</code> | Body, Query, Headers and Authentication parameters |
-| callback | <code>function</code> | (Optional) Callback function |
+| path | <code>string</code> | Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`. |
+| data | <code>object</code> | Body data to append to the request. JSON will be converted to a string. |
+| options | [<code>RequestOptions</code>](#requestoptions) | Query, Headers and Authentication parameters |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** POST a resource with from state
 ```js
-post('/myEndpoint', {
-   body: {'foo': 'bar'},
-   headers: {'content-type': 'application/json'},
-   authentication: {username: 'user', password: 'pass'}
- })
+post('/patient', $.data);
+```
+**Example:** POST a resource with custom headers
+```js
+post('/patient', $.data, {
+  headers: { 'content-type': 'application/fhir+json' },
+});
 ```
 
 * * *
 
-## put
+### put
 
-put(path, params, callback) ⇒ <code>Operation</code>
-Make a PUT request
+<p><code>put(path, data, options) ⇒ Operation</code></p>
 
-**Kind**: global function  
-**Access**: public  
+Make a PUT request. If `configuration.baseUrl` is set, paths must be relative.
+
 
 | Param | Type | Description |
 | --- | --- | --- |
-| path | <code>string</code> | Path to resource |
-| params | <code>object</code> | Body, Query, Headers and Auth parameters |
-| callback | <code>function</code> | (Optional) Callback function |
+| path | <code>string</code> | Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`. |
+| data | <code>object</code> | Body data to append to the request. JSON will be converted to a string. |
+| options | [<code>RequestOptions</code>](#requestoptions) | Query, Headers and Auth parameters |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** PUT a resource from state
 ```js
-put('/myEndpoint', {
-   body: {'foo': 'bar'},
-   headers: {'content-type': 'application/json'},
-   authentication: {username: 'user', password: 'pass'}
- })
+put('/patient', $.data);
+```
+**Example:** PUT a resource with custom headers
+```js
+put('/patient', $.data, {
+  headers: { 'content-type': 'application/fhir+json' },
+})
 ```
 
 * * *
 
-## request
+### request
 
-request(params) ⇒ <code>Operation</code>
-Make a request using the 'request' node module. This module is deprecated.
+<p><code>request(method, path, options) ⇒ Operation</code></p>
 
-**Kind**: global function  
+Make a HTTP request. If `configuration.baseUrl` is set, paths must be relative.
+
 
 | Param | Type | Description |
 | --- | --- | --- |
-| params | <code>object</code> | Query, Headers and Authentication parameters |
+| method | <code>string</code> | The HTTP method to use. |
+| path | <code>string</code> | Path to resource. Can be an absolute URL if baseURL is NOT set on `state.configuration`. |
+| options | [<code>RequestOptions</code>](#requestoptions) | Body, Query, Headers and Authentication parameters |
 
-**Example**  
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** Make a GET request
 ```js
-request(params);
+request('GET', '/patient', {
+  query: { foo: 'bar', a: 1 },
+});
 ```
+**Example:** Make a POST request with a body
+```js
+request('POST', '/todos', {
+  body:{
+    "userId": 1,
+    "title": "delectus aut autem",
+    "completed": false
+  },
+});
+```
+
+* * *
+
+
+## util
+
+These functions belong to the util namespace.
+### util.decode {#util_decode}
+
+<p><code>decode(base64Data) ⇒ string</code></p>
+
+Decodes a Base64 encoded string back to its original format.
+
+**Returns**: <code>string</code> - - The decoded string.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| base64Data | <code>string</code> | The Base64 encoded string. |
+
+
+**Example:** Decode a Base64 string
+```js
+const decoded = util.decode('SGVsbG8gV29ybGQ=');
+console.log(decoded); // Output: Hello World
+```
+
+* * *
+
+
+### util.encode {#util_encode}
+
+<p><code>encode(data) ⇒ string</code></p>
+
+Encodes a given string into Base64 format.
+
+**Returns**: <code>string</code> - - The Base64 encoded string.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>string</code> | The string to be encoded. |
+
+
+**Example:** Encode a string
+```js
+const encoded = util.encode('Hello World');
+console.log(encoded); // Output: SGVsbG8gV29ybGQ=
+```
+
+* * *
+
+
+### util.uuid {#util_uuid}
+
+<p><code>uuid() ⇒ string</code></p>
+
+Generates a UUID (Universally Unique Identifier).
+
+**Returns**: <code>string</code> - - A newly generated UUID.  
+
+**Example:** Generate a UUID
+```js
+const id = util.uuid();
+console.log(id); // Output:'3f4e254e-8f6f-4f8b-9651-1c1c262cc83f'
+```
+
+* * *
+
+
+##  Interfaces
+
+### RequestOptions
+
+Options provided to the HTTP request
+
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |
+| contentType | <code>string</code> | Sets the `Content-Type` header on the request. Defaults to `json`. Supported values: `json`, `xml`, `string`, and `form` (for FormData). |
+| body | <code>object</code> \| <code>string</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request).This is only applicable to the request function |
+| query | <code>object</code> | An object of query parameters to be encoded into the URL. |
+| headers | <code>object</code> | An object of headers to append to the request. |
+| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |
+| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |
+| tls | <code>object</code> | TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions |
+
 
 * * *
 

@@ -1,32 +1,28 @@
-## Functions
-
 <dl>
 <dt>
-    <a href="#alterState">alterState(func)</a></dt>
+    <a href="#arraytostring">arrayToString(arr, separator)</a></dt>
 <dt>
-    <a href="#arrayToString">arrayToString(arr, separator)</a></dt>
+    <a href="#as">as(key, operation)</a></dt>
 <dt>
-    <a href="#asData">asData(data, state)</a></dt>
+    <a href="#asdata">asData(data, state)</a></dt>
+<dt>
+    <a href="#assert">assert(expression, errorMessage)</a></dt>
 <dt>
     <a href="#chunk">chunk(array, chunkSize)</a></dt>
 <dt>
     <a href="#combine">combine(operations)</a></dt>
 <dt>
-    <a href="#composeNextState">composeNextState(state, response)</a></dt>
+    <a href="#composenextstate">composeNextState(state, response)</a></dt>
 <dt>
-    <a href="#dataPath">dataPath(path)</a></dt>
+    <a href="#cursor">cursor(value, options)</a></dt>
 <dt>
-    <a href="#dataValue">dataValue(path)</a></dt>
+    <a href="#datapath">dataPath(path)</a></dt>
 <dt>
-    <a href="#del">del(requestParams)</a></dt>
+    <a href="#datavalue">dataValue(path)</a></dt>
+<dt>
+    <a href="#debug">debug(args)</a></dt>
 <dt>
     <a href="#each">each(dataSource, operation)</a></dt>
-<dt>
-    <a href="#each">each(dataSource, operation)</a></dt>
-<dt>
-    <a href="#expandReferences">expandReferences(value, [skipFilter])</a></dt>
-<dt>
-    <a href="#expandRequestReferences">expandRequestReferences(value)</a></dt>
 <dt>
     <a href="#field">field(key, value)</a></dt>
 <dt>
@@ -34,77 +30,105 @@
 <dt>
     <a href="#fn">fn(func)</a></dt>
 <dt>
-    <a href="#get">get(requestParams)</a></dt>
+    <a href="#fnif">fnIf(condition, operation)</a></dt>
 <dt>
-    <a href="#head">head(requestParams)</a></dt>
+    <a href="#group">group(arrayOfObjects, keyPath, callback)</a></dt>
 <dt>
-    <a href="#humanProper">humanProper(str)</a></dt>
+    <a href="#humanproper">humanProper(str)</a></dt>
 <dt>
     <a href="#index">index()</a></dt>
 <dt>
     <a href="#join">join(targetPath, sourcePath, targetKey)</a></dt>
 <dt>
-    <a href="#jsonValue">jsonValue(obj, path)</a></dt>
+    <a href="#jsonvalue">jsonValue(obj, path)</a></dt>
 <dt>
-    <a href="#lastReferenceValue">lastReferenceValue(path)</a></dt>
+    <a href="#lastreferencevalue">lastReferenceValue(path)</a></dt>
 <dt>
-    <a href="#map">map(path, operation, state)</a></dt>
+    <a href="#lodash">lodash()</a></dt>
+<dt>
+    <a href="#log">log(args)</a></dt>
+<dt>
+    <a href="#map">map(path, callback)</a></dt>
 <dt>
     <a href="#merge">merge(dataSource, fields)</a></dt>
 <dt>
-    <a href="#options">options(requestParams)</a></dt>
+    <a href="#parsecsv">parseCsv(csvData, [parsingOptions], [callback])</a></dt>
 <dt>
-    <a href="#parseCsv">parseCsv(csvData, [parsingOptions], [callback])</a></dt>
+    <a href="#referencepath">referencePath(path)</a></dt>
 <dt>
-    <a href="#patch">patch(requestParams)</a></dt>
-<dt>
-    <a href="#post">post(requestParams)</a></dt>
-<dt>
-    <a href="#put">put(requestParams)</a></dt>
-<dt>
-    <a href="#referencePath">referencePath(path)</a></dt>
-<dt>
-    <a href="#scrubEmojis">scrubEmojis(text, replacementChars)</a></dt>
+    <a href="#scrubemojis">scrubEmojis(text, replacementChars)</a></dt>
 <dt>
     <a href="#source">source(path)</a></dt>
 <dt>
-    <a href="#sourceValue">sourceValue(path)</a></dt>
+    <a href="#sourcevalue">sourceValue(path)</a></dt>
 <dt>
-    <a href="#splitKeys">splitKeys(obj, keys)</a></dt>
+    <a href="#splitkeys">splitKeys(obj, keys)</a></dt>
 <dt>
-    <a href="#toArray">toArray(arg)</a></dt>
+    <a href="#toarray">toArray(arg)</a></dt>
 <dt>
-    <a href="#withAgent">withAgent(params)</a></dt>
+    <a href="#validate">validate(schema, data)</a></dt>
 </dl>
 
-## alterState
+This adaptor exports the following namespaced functions:
 
-alterState(func) ⇒ <code>Operation</code>
-alias for "fn()"
+<dl>
+<dt>
+    <a href="#util_decode">util.decode(base64Data, options)</a>
+</dt>
 
-**Kind**: global function  
+<dt>
+    <a href="#util_encode">util.encode(data, options)</a>
+</dt>
 
-| Param | Type | Description |
-| --- | --- | --- |
-| func | <code>function</code> | is the function |
+<dt>
+    <a href="#util_uuid">util.uuid()</a>
+</dt>
+
+<dt>
+    <a href="#beta_each">beta.each(dataSource, operation)</a>
+</dt>
+
+<dt>
+    <a href="#dateFns_format">dateFns.format()</a>
+</dt>
+
+<dt>
+    <a href="#dateFns_parse">dateFns.parse()</a>
+</dt>
+
+<dt>
+    <a href="#http_get">http.get(url, options)</a>
+</dt>
+
+<dt>
+    <a href="#http_options">http.options(opts)</a>
+</dt>
+
+<dt>
+    <a href="#http_post">http.post(url, data, options)</a>
+</dt>
+
+<dt>
+    <a href="#http_request">http.request(method, url, options)</a>
+</dt>
+</dl>
 
 
-* * *
+## Functions
+### arrayToString
 
-## arrayToString
+<p><code>arrayToString(arr, separator) ⇒ string</code></p>
 
-arrayToString(arr, separator) ⇒ <code>string</code>
 Turns an array into a string, separated by X.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | arr | <code>array</code> | Array of toString'able primatives. |
 | separator | <code>string</code> | Separator string. |
 
-**Example**  
+
+**Example**
 ```js
 field("destination_string__c", function(state) {
   return arrayToString(dataValue("path_of_array")(state), ', ')
@@ -113,63 +137,103 @@ field("destination_string__c", function(state) {
 
 * * *
 
-## asData
+### as
 
-asData(data, state) ⇒ <code>array</code>
+<p><code>as(key, operation) ⇒ Operation</code></p>
+
+Run an operation and save the result to a custom key in state instead of overwriting state.data.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>string</code> | The state key to assign the result of the operation to. |
+| operation | <code>function</code> | An operation that returns a new state object with a `data` property |
+
+
+**Example:** Fetch cce-data from collections and store them under state.cceData
+```js
+as('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));
+```
+
+* * *
+
+### asData
+
+<p><code>asData(data, state) ⇒ array</code></p>
+
 Simple switcher allowing other expressions to use either a JSONPath or
 object literals as a data source.
 - JSONPath referencing a point in `state`
 - Object Literal of the data itself.
 - Function to be called with state.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | data | <code>String</code> \| <code>object</code> \| <code>function</code> |  |
 | state | <code>object</code> | The current state. |
 
-**Example**  
+
+**Example**
 ```js
 asData('$.key'| key | callback)
 ```
 
 * * *
 
-## chunk
+### assert
 
-chunk(array, chunkSize) ⇒ <code>Object</code>
+<p><code>assert(expression, errorMessage) ⇒ operation</code></p>
+
+Asserts the given expression or function resolves to `true`, or else throws an exception. Optionally accepts and error message.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| expression | <code>any</code> | The expression or function to be evaluated. |
+| errorMessage | <code>string</code> | The error message thrown in case of a failed state. |
+
+
+**Example**
+```js
+assert('a' === 'b', '"a" is not equal to "b"')
+```
+
+* * *
+
+### chunk
+
+<p><code>chunk(array, chunkSize) ⇒ Object</code></p>
+
 Chunks an array into an array of arrays, each with no more than a certain size.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | array | <code>Object</code> | Array to be chunked |
 | chunkSize | <code>Integer</code> | The maxiumum size of each chunks |
 
-**Example**  
+
+**Example**
 ```js
 chunk([1,2,3,4,5], 2)
 ```
 
 * * *
 
-## combine
+### combine
 
-combine(operations) ⇒ <code>Operation</code>
+<p><code>combine(operations) ⇒ Operation</code></p>
+
 Combines two operations into one
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | operations | <code>Operations</code> | Operations to be performed. |
 
-**Example**  
+
+**Example**
 ```js
 combine(
   create('foo'),
@@ -179,233 +243,228 @@ combine(
 
 * * *
 
-## composeNextState
+### composeNextState
 
-composeNextState(state, response) ⇒ <code>State</code>
+<p><code>composeNextState(state, response) ⇒ State</code></p>
+
 Prepares next state
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | state | <code>State</code> | state |
 | response | <code>Object</code> | Response to be added |
 
-**Example**  
+
+**Example**
 ```js
 composeNextState(state, response)
 ```
 
 * * *
 
-## dataPath
+### cursor
 
-dataPath(path) ⇒ <code>string</code>
+<p><code>cursor(value, options) ⇒ Operation</code></p>
+
+Sets a cursor property on state.
+Supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,
+which will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones
+are not yet supported.
+You can provide a formatter to customise the final cursor value, which is useful for normalising
+different inputs. The custom formatter runs after natural language date conversion.
+See the usage guide at [https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors](https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors)
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| value | <code>any</code> | the cursor value. Usually an ISO date, natural language date, or page number |
+| options | <code>object</code> | options to control the cursor. |
+| options.key | <code>string</code> | set the cursor key. Will persist through the whole run. |
+| options.defaultValue | <code>any</code> | the value to use if value is falsy |
+| options.format | <code>function</code> | custom formatter for the final cursor value |
+
+
+**Example:** Use a cursor from state if present, or else use the default value
+```js
+cursor($.cursor, { defaultValue: 'today' })
+```
+**Example:** Use a pagination cursor
+```js
+cursor(22)
+```
+
+* * *
+
+### dataPath
+
+<p><code>dataPath(path) ⇒ string</code></p>
+
 Ensures a path points at the data.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | JSONPath referencing a point in `data`. |
 
-**Example**  
+
+**Example**
 ```js
 dataPath('key')
 ```
 
 * * *
 
-## dataValue
+### dataValue
 
-dataValue(path) ⇒ <code>Operation</code>
+<p><code>dataValue(path) ⇒ Operation</code></p>
+
 Picks out a single value from the source data object—usually `state.data`.
 If a JSONPath returns more than one value for the reference, the first
 item will be returned.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>String</code> | JSONPath referencing a point in `data`. |
 
-**Example**  
+
+**Example**
 ```js
 dataValue('key')
 ```
 
 * * *
 
-## del
+### debug
 
-del(requestParams) ⇒ <code>Operation</code>
-Make a DELETE request
+<p><code>debug(args) ⇒ Operation</code></p>
 
-**Kind**: global function  
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-**Access**: public  
+Outputs a message to the console with the debug log level. This is usually filtered out by default. Use this at the top level of your job code, but not inside callbacks.
+
 
 | Param | Type | Description |
 | --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
+| args | <code>any</code> | A value or message to display in the logs |
 
-**Example** *(Deleting a record with data that comes from state)*  
+
+**Example:** Log values from state
 ```js
-delete({
-   url: state => `https://www.example.com/api/items/${state.id}`,
- })(state);
+debug('Patient List::', $.patients);
+```
+**Example:** Use console.debug inside a callback or fn block
+```js
+fn((state) => {
+  console.debug(state.data);
+  return state;
+})
 ```
 
 * * *
 
-## each
+### each
 
-each(dataSource, operation) ⇒ <code>Operation</code>
-Scopes an array of data based on a JSONPath.
-Useful when the source data has `n` items you would like to map to
-an operation.
-The operation will receive a slice of the data based of each item
-of the JSONPath provided.
+<p><code>each(dataSource, operation) ⇒ Operation</code></p>
 
-It also ensures the results of an operation make their way back into
-the state's references.
+Iterates over an array of items and invokes an operation upon each one, where the state
+object is _scoped_ so that state.data is the item under iteration.
+The rest of the state object is untouched and can be referenced as usual.
+You can pass an array directly, or use lazy state or a JSONPath string to
+reference a slice of state.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | dataSource | <code>DataSource</code> | JSONPath referencing a point in `state`. |
 | operation | <code>Operation</code> | The operation needed to be repeated. |
 
-**Example**  
+
+**Example:** Using lazy state ($) to iterate over items in state.data and pass each into an "insert" operation
 ```js
-each("$.[*]",
-  create("SObject",
-    field("FirstName", sourceValue("$.firstName"))
-  )
-)
+each(
+  $.data,
+  // Inside the callback operation, `$.data` is scoped to the item under iteration
+  insert("patient", {
+    patient_name: $.data.properties.case_name,
+    patient_id: $.data.case_id,
+  })
+);
+```
+**Example:** Iterate over items in state.data and pass each one into an "insert" operation
+```js
+each(
+  $.data,
+  insert("patient", (state) => ({
+    patient_id: state.data.case_id,
+    ...state.data
+  }))
+);
+```
+**Example:** Using JSON path to iterate over items in state.data and pass each one into an "insert" operation
+```js
+each(
+  "$.data[*]",
+  insert("patient", (state) => ({
+    patient_name: state.data.properties.case_name,
+    patient_id: state.data.case_id,
+  }))
+);
 ```
 
 * * *
 
-## each
+### field
 
-each(dataSource, operation) ⇒ <code>Operation</code>
-Scopes an array of data based on a JSONPath.
-Useful when the source data has `n` items you would like to map to
-an operation.
-The operation will receive a slice of the data based of each item
-of the JSONPath provided.
+<p><code>field(key, value) ⇒ Field</code></p>
 
-It also ensures the results of an operation make their way back into
-the state's references.
-
-**Kind**: global function  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| dataSource | <code>DataSource</code> | JSONPath referencing a point in `state`. |
-| operation | <code>Operation</code> | The operation needed to be repeated. |
-
-**Example**  
-```js
-each("$.[*]",
-   create("SObject",
-   field("FirstName", sourceValue("$.firstName")))
- )
-```
-
-* * *
-
-## expandReferences
-
-expandReferences(value, [skipFilter]) ⇒ <code>Operation</code>
-Recursively resolves objects that have resolvable values (functions).
-
-**Kind**: global function  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| value | <code>object</code> | data |
-| [skipFilter] | <code>function</code> | a function which returns true if a value should be skipped |
-
-
-* * *
-
-## expandRequestReferences
-
-expandRequestReferences(value) ⇒ <code>Operation</code>
-Recursively resolves objects that have resolvable values (functions), but
-omits HTTP request specific modules like `FormData`.
-
-**Kind**: global function  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| value | <code>object</code> | data |
-
-
-* * *
-
-## field
-
-field(key, value) ⇒ <code>Field</code>
 Returns a key, value pair in an array.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | key | <code>string</code> | Name of the field |
 | value | <code>Value</code> | The value itself or a sourceable operation. |
 
-**Example**  
+
+**Example**
 ```js
 field('destination_field_name__c', 'value')
 ```
 
 * * *
 
-## fields
+### fields
 
-fields(fields) ⇒ <code>Object</code>
+<p><code>fields(fields) ⇒ Object</code></p>
+
 Zips key value pairs into an object.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | fields | <code>Fields</code> | a list of fields |
 
-**Example**  
+
+**Example**
 ```js
 fields(list_of_fields)
 ```
 
 * * *
 
-## fn
+### fn
 
-fn(func) ⇒ <code>Operation</code>
+<p><code>fn(func) ⇒ Operation</code></p>
+
 Creates a custom step (or operation) for more flexible job writing.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | func | <code>function</code> | is the function |
 
-**Example**  
+
+**Example**
 ```js
 fn(state => {
   // do some things to state
@@ -415,92 +474,94 @@ fn(state => {
 
 * * *
 
-## get
+### fnIf
 
-get(requestParams) ⇒ <code>Operation</code>
-Make a GET request
+<p><code>fnIf(condition, operation) ⇒ Operation</code></p>
 
-**Kind**: global function  
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-**Access**: public  
+Execute a function only when the condition returns true
+
 
 | Param | Type | Description |
 | --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
+| condition | <code>Boolean</code> | The condition that returns true |
+| operation | <code>Operation</code> | The operation needed to be executed. |
 
-**Example** *(Get an item with a specified id from state)*  
+
+**Example**
 ```js
- get({
-     url: state => `https://www.example.com/api/items/${state.id},
-     headers: {"content-type": "application/json"}
-});
+fnIf((state) => state?.data?.name, get("https://example.com"));
 ```
 
 * * *
 
-## head
+### group
 
-head(requestParams) ⇒ <code>Operation</code>
-Make a HEAD request
+<p><code>group(arrayOfObjects, keyPath, callback) ⇒ Operation</code></p>
 
-**Kind**: global function  
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-**Access**: public  
+Groups an array of objects by a specified key path.
+
 
 | Param | Type | Description |
 | --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
+| arrayOfObjects | <code>Array.&lt;Object&gt;</code> | The array of objects to be grouped. |
+| keyPath | <code>string</code> | The key path to group by. |
+| callback | <code>function</code> | (Optional) Callback function |
 
-**Example** *(Gets the headers that would be returned if the HEAD request&#x27;s URL was instead requested with the HTTP GET method)*  
+
+**Example**
 ```js
-head({
-  url: 'https://www.example.com/api/items',
-});
+const users = [
+  { name: 'Alice', age: 25, city: 'New York' },
+  { name: 'Bob', age: 30, city: 'San Francisco' },
+  { name: 'Charlie', age: 25, city: 'New York' },
+  { name: 'David', age: 30, city: 'San Francisco' }
+];
+group(users, 'city');
+// state is { data: { 'New York': [/Alice, Charlie/], 'San Francisco': [ /Bob, David / ] }
 ```
 
 * * *
 
-## humanProper
+### humanProper
 
-humanProper(str) ⇒ <code>string</code>
+<p><code>humanProper(str) ⇒ string</code></p>
+
 Substitutes underscores for spaces and proper-cases a string
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | str | <code>string</code> | String that needs converting |
 
-**Example**  
+
+**Example**
 ```js
 field("destination_string__c", humanProper(state.data.path_to_string))
 ```
 
 * * *
 
-## index
+### index
 
-index() ⇒ <code>DataSource</code>
+<p><code>index() ⇒ DataSource</code></p>
+
 Returns the index of the current array being iterated.
 To be used with `each` as a data source.
 
-**Kind**: global function  
-**Access**: public  
-**Example**  
+
+**Example**
 ```js
 index()
 ```
 
 * * *
 
-## join
+### join
 
-join(targetPath, sourcePath, targetKey) ⇒ <code>Operation</code>
+<p><code>join(targetPath, sourcePath, targetKey) ⇒ Operation</code></p>
+
 Adds data from a target object
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -508,97 +569,160 @@ Adds data from a target object
 | sourcePath | <code>String</code> | Source path |
 | targetKey | <code>String</code> | Target Key |
 
-**Example**  
+
+**Example**
 ```js
 join('$.key','$.data','newKey')
 ```
 
 * * *
 
-## jsonValue
+### jsonValue
 
-jsonValue(obj, path) ⇒ <code>Operation</code>
+<p><code>jsonValue(obj, path) ⇒ Operation</code></p>
+
 Picks out a single value from a JSON object.
 If a JSONPath returns more than one value for the reference, the first
 item will be returned.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | obj | <code>object</code> | A valid JSON object. |
 | path | <code>String</code> | JSONPath referencing a point in given JSON object. |
 
-**Example**  
+
+**Example**
 ```js
 jsonValue({ a:1 }, 'a')
 ```
 
 * * *
 
-## lastReferenceValue
+### lastReferenceValue
 
-lastReferenceValue(path) ⇒ <code>Operation</code>
+<p><code>lastReferenceValue(path) ⇒ Operation</code></p>
+
 Picks out the last reference value from source data.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>String</code> | JSONPath referencing a point in `references`. |
 
-**Example**  
+
+**Example**
 ```js
 lastReferenceValue('key')
 ```
 
 * * *
 
-## map
+### lodash
 
-map(path, operation, state) ⇒ <code>State</code>
-Scopes an array of data based on a JSONPath.
-Useful when the source data has `n` items you would like to map to
-an operation.
-The operation will receive a slice of the data based of each item
-of the JSONPath provided.
+<p><code>lodash()</code></p>
 
-**Kind**: global function  
-**Access**: public  
+Lodash utility library.
+All lodash v4.17 functions are available on the `_` namespace, eg,
+`_.map`, `_.cloneDeep`, etc.
 
-| Param | Type | Description |
-| --- | --- | --- |
-| path | <code>string</code> | JSONPath referencing a point in `state.data`. |
-| operation | <code>function</code> | The operation needed to be repeated. |
-| state | <code>State</code> | Runtime state. |
+**See**: https://lodash.com/docs/  
 
-**Example**  
+**Example:** Split an array into chunks of 2 items each
 ```js
-map("$.[*]",
-  create("SObject",
-    field("FirstName", sourceValue("$.firstName"))
-  )
-)
+fn(state => {
+  const items = [1, 2, 3, 4, 5];
+  const chunks = lodash.chunk(items, 2);
+  return { ...state, chunks };
+});
 ```
 
 * * *
 
-## merge
+### log
 
-merge(dataSource, fields) ⇒ <code>DataSource</code>
+<p><code>log(args) ⇒ Operation</code></p>
+
+Outputs a message, like calling `console.log`. Use this at the top level of your job code, but not inside callbacks.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| args | <code>any</code> | A value or message to display in the logs |
+
+
+**Example:** Log values from state
+```js
+log('Patient List::', $.patients);
+```
+**Example:** Use console.log inside a callback or fn block
+```js
+fn((state) => {
+  console.log(state.data);
+  return state;
+})
+```
+
+* * *
+
+### map
+
+<p><code>map(path, callback) ⇒ State</code></p>
+
+Iterates over a collection of items and returns a new array of mapped values,
+like Javascript's `Array.map()` function.
+
+Each item in the source array will be passed into the callback function. The returned value
+will be added to the new array. The callback is passed the original item, the current index
+in the source array (ie, the nth item number), and the state object.
+
+Writes a new array to `state.data` with transformed values.c array.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> \| <code>Array</code> | An array of items or a a JSONPath string which points to an array of items. |
+| callback | <code>function</code> | The mapping function, invoked with `(data, index, state)` for each item in the array. |
+
+
+**Example:**  Transform an array of items in state
+```js
+map($.items', (data, index, state) => {
+  return {
+    id: index + 1,
+    name: data.name,
+    createdAt: state.cursor,
+  };
+});
+```
+**Example:** Map items asynchronously (e.g. fetch extra info)
+```js
+map($.items, async (data, index, state) => {
+  const userInfo = await fetchUserInfo(data.userId);
+  return {
+    id: index + 1,
+    name: data.name,
+    extra: userInfo,
+  };
+});
+```
+
+* * *
+
+### merge
+
+<p><code>merge(dataSource, fields) ⇒ DataSource</code></p>
+
 Merges fields into each item in an array.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | dataSource | <code>DataSource</code> |  |
 | fields | <code>Object</code> | Group of fields to merge in. |
 
-**Example**  
+
+**Example**
 ```js
 merge(
   "$.books[*]",
@@ -610,31 +734,10 @@ merge(
 
 * * *
 
-## options
+### parseCsv
 
-options(requestParams) ⇒ <code>Operation</code>
-Make a OPTIONS request
+<p><code>parseCsv(csvData, [parsingOptions], [callback]) ⇒ Operation</code></p>
 
-**Kind**: global function  
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
-
-**Example** *(Requests permitted communication options for a given URL or server, with data from state.)*  
-```js
-options({
-  url: 'https://www.example.com/api/items',
-});
-```
-
-* * *
-
-## parseCsv
-
-parseCsv(csvData, [parsingOptions], [callback]) ⇒ <code>Operation</code>
 Takes a CSV file string or stream and parsing options as input, and returns a promise that
 resolves to the parsed CSV data as an array of objects.
 Options for `parsingOptions` include:
@@ -649,9 +752,7 @@ Options for `parsingOptions` include:
 - `chunkSize` {number} - The size of each chunk of CSV data. Default: `Infinity`
 - `skip_empty_lines` {boolean} - Ignore empty lines in the CSV file. Default: `true`
 
-**Kind**: global function  
 **Returns**: <code>Operation</code> - The function returns a Promise that resolves to the result of parsing a CSV `stringOrStream`.  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -660,179 +761,99 @@ Options for `parsingOptions` include:
 | [callback] | <code>function</code> | (Optional) callback function. If used it will be called state and an array of rows. |
 
 
-* * *
-
-## patch
-
-patch(requestParams) ⇒ <code>Operation</code>
-Make a PATCH request
-
-**Kind**: global function  
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
-
-**Example** *(Applies partial modifications to a resource, with data from state.)*  
-```js
-patch({
-  url: state => `https://www.example.com/api/items/${state.id}`,
-  data: state => state.data
-});
-```
 
 * * *
 
-## post
+### referencePath
 
-post(requestParams) ⇒ <code>Operation</code>
-Make a POST request
+<p><code>referencePath(path) ⇒ string</code></p>
 
-**Kind**: global function  
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
-
-**Example** *(Sending a payload with data that comes from state)*  
-```js
-post({
-  url: "https://example.com",
-  data: (state) => state.data
-});
-```
-**Example** *( Capturing the response for later use in state )*  
-```js
-alterState((state) => {
-  return post({
-    url: "https://example.com",
-    data: (state) => state.data
-  })(state).then(({response}) => {
-   state.responseData = response.data
-  })
-});
-```
-
-* * *
-
-## put
-
-put(requestParams) ⇒ <code>Operation</code>
-Make a PUT request
-
-**Kind**: global function  
-**Returns**: <code>Operation</code> - - Function which takes state and returns a Promise  
-**Access**: public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| requestParams | <code>object</code> | Supports the exact parameters as Axios. See [here](https://github.com/axios/axios#axios-api) |
-
-**Example** *(Creates a new resource or replaces a representation of the target resource with the request payload, with data from state.)*  
-```js
-put({
-  url: state => `https://www.example.com/api/items/${state.id}`,
-  data: state => state.data
-});
-```
-
-* * *
-
-## referencePath
-
-referencePath(path) ⇒ <code>string</code>
 Ensures a path points at references.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>string</code> | JSONPath referencing a point in `references`. |
 
-**Example**  
+
+**Example**
 ```js
 referencePath('key')
 ```
 
 * * *
 
-## scrubEmojis
+### scrubEmojis
 
-scrubEmojis(text, replacementChars) ⇒ <code>string</code>
+<p><code>scrubEmojis(text, replacementChars) ⇒ string</code></p>
+
 Replaces emojis in a string.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | text | <code>string</code> | String that needs to be cleaned |
 | replacementChars | <code>string</code> | Characters that replace the emojis |
 
-**Example**  
+
+**Example**
 ```js
 scrubEmojis('Dove🕊️⭐ 29')
 ```
 
 * * *
 
-## source
+### source
 
-source(path) ⇒ <code>Array.&lt;(String\|Object)&gt;</code>
+<p><code>source(path) ⇒ Array.&lt;(String|Object)&gt;</code></p>
+
 Picks out a value from source data.
 Will return whatever JSONPath returns, which will always be an array.
 If you need a single value use `sourceValue` instead.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>String</code> | JSONPath referencing a point in `state`. |
 
-**Example**  
+
+**Example**
 ```js
 source('$.key')
 ```
 
 * * *
 
-## sourceValue
+### sourceValue
 
-sourceValue(path) ⇒ <code>Operation</code>
+<p><code>sourceValue(path) ⇒ Operation</code></p>
+
 Picks out a single value from source data.
 If a JSONPath returns more than one value for the reference, the first
 item will be returned.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>String</code> | JSONPath referencing a point in `state`. |
 
-**Example**  
+
+**Example**
 ```js
 sourceValue('$.key')
 ```
 
 * * *
 
-## splitKeys
+### splitKeys
 
-splitKeys(obj, keys) ⇒ <code>Array.&lt;Object&gt;</code>
+<p><code>splitKeys(obj, keys) ⇒ Array.&lt;Object&gt;</code></p>
+
 Splits an object into two objects based on a list of keys.
 The first object contains the keys that are not in the list,
 and the second contains the keys that are.
 
-**Kind**: global function  
 **Returns**: <code>Array.&lt;Object&gt;</code> - - Tuple of objects, first object contains keys not in list, second contains keys that are.  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -840,22 +861,23 @@ and the second contains the keys that are.
 | keys | <code>Array.&lt;string&gt;</code> | List of keys to split on. |
 
 
+
 * * *
 
-## toArray
+### toArray
 
-toArray(arg) ⇒ <code>array</code>
+<p><code>toArray(arg) ⇒ array</code></p>
+
 Ensures primitive data types are wrapped in an array.
 Does not affect array objects.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | arg | <code>any</code> | Data required to be in an array |
 
-**Example**  
+
+**Example**
 ```js
 each(function(state) {
   return toArray( dataValue("path_of_array")(state) )
@@ -864,16 +886,350 @@ each(function(state) {
 
 * * *
 
-## withAgent
+### validate
 
-withAgent(params) ⇒ <code>Operation</code>
-Creates an https agent for axios from the agentOptions key passed in params.
+<p><code>validate(schema, data) ⇒ Operation</code></p>
 
-**Kind**: global function  
+Validate against a JSON schema. Any errors are written to an array at `state.validationErrors`.
+Schema can be passed directly, loaded as a JSON path from state, or loaded from a URL
+Data can be passed directly or loaded as a JSON path from state.
+By default, schema is loaded from `state.schema` and data from `state.data`.
+
 
 | Param | Type | Description |
 | --- | --- | --- |
-| params | <code>object</code> | data |
+| schema | <code>string</code> \| <code>object</code> | The schema, path or URL to validate against |
+| data | <code>string</code> \| <code>object</code> | The data or path to validate |
+
+
+**Example:** Validate `state.data` with `state.schema`
+```js
+validate()
+```
+**Example:** Validate form data at `state.form` with a schema from a URL
+```js
+validate("https://www.example.com/schema/record", "form")
+```
+**Example:** Validate the each item in `state.records` with a schema from a URL
+```js
+each("records[*]", validate("https://www.example.com/schema/record"))
+```
+
+* * *
+
+
+## util
+
+These functions belong to the util namespace.
+### util.decode {#util_decode}
+
+<p><code>decode(base64Data, options) ⇒ string | object</code></p>
+
+Decodes a Base64 encoded string back to its original format.
+
+**Returns**: <code>string</code> \| <code>object</code> - - The decoded string or JavaScript Object.  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| base64Data | <code>string</code> |  | The Base64 encoded string. |
+| options | <code>object</code> |  | Options. |
+| [options.parseJson] | <code>boolean</code> | <code>true</code> | If false, no attempt will be made to parse the decoded data into a JSON object. |
+
+
+**Example:** Decode a Base64 string
+```js
+const decoded = util.decode('SGVsbG8gV29ybGQ=');
+```
+**Example:** Decode a Base64 JSON object to a standard JavaScript object
+```js
+const decoded = util.decode('eyJuYW1lIjoiSmFuZSBEb2UifQ==');
+console.log(decoded); // Output: {name: 'Jane Doe' }
+```
+**Example:** To skip the JSON stringification step
+```js
+const decodedString = util.decode('Hello World', { parseJson: false })
+```
+
+* * *
+
+
+### util.encode {#util_encode}
+
+<p><code>encode(data, options) ⇒ string</code></p>
+
+Encodes a given string or Javascript object into Base64 format.
+
+**Returns**: <code>string</code> - - The Base64 encoded string.  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| data | <code>string</code> \| <code>object</code> |  | The string or object to be encoded. |
+| options | <code>object</code> |  | Options |
+| [options.parseJson] | <code>boolean</code> | <code>true</code> | If false, no attempt will be made to stringiy the data before encoding it. |
+
+
+**Example:** Encode a string
+```js
+const encodedString = util.encode('Hello World');
+console.log(encoded); // Output: SGVsbG8gV29ybGQ=
+```
+**Example:** Encode an object
+```js
+const encodedObject = util.encode({name: 'Jane Doe' })
+console.log(encodedObject); //output eyJuYW1lIjoiSmFuZSBEb2UifQ==
+```
+**Example:** To skip the JSON stringification step
+```js
+const encodedObject = util.encode('Hello World', { parseJson: false })
+```
+
+* * *
+
+
+### util.uuid {#util_uuid}
+
+<p><code>uuid() ⇒ string</code></p>
+
+Generates a UUID (Universally Unique Identifier)
+
+**Returns**: <code>string</code> - - A newly generated UUID  
+
+**Example:** Generate a UUID
+```js
+const id = util.uuid();
+console.log(id); // Output:'3f4e254e-8f6f-4f8b-9651-1c1c262cc83f'
+```
+
+* * *
+
+
+## beta
+
+These functions belong to the beta namespace.
+### beta.each {#beta_each}
+
+<p><code>each(dataSource, operation) ⇒ Operation</code></p>
+
+Scopes an array of data based on a JSONPath.
+Useful when the source data has `n` items you would like to map to
+an operation.
+The operation will receive a slice of the data based of each item
+of the JSONPath provided.
+
+It also ensures the results of an operation make their way back into
+the state's references.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| dataSource | <code>DataSource</code> | JSONPath referencing a point in `state`. |
+| operation | <code>Operation</code> | The operation needed to be repeated. |
+
+
+**Example**
+```js
+each("$.[*]",
+   create("SObject",
+   field("FirstName", sourceValue("$.firstName")))
+ )
+```
+
+* * *
+
+
+## dateFns
+
+These functions belong to the dateFns namespace.
+### dateFns.format {#dateFns_format}
+
+<p><code>format()</code></p>
+
+The format function from the date-fns library. See [https://date-fns.org/v3.6.0/docs/parse](https://date-fns.org/v3.6.0/docs/parse)
+
+
+
+* * *
+
+
+### dateFns.parse {#dateFns_parse}
+
+<p><code>parse()</code></p>
+
+The parse function from the date-fns library. See [https://date-fns.org/v3.6.0/docs/parse](https://date-fns.org/v3.6.0/docs/parse)
+
+
+
+* * *
+
+
+## http
+
+These functions belong to the http namespace.
+### http.get {#http_get}
+
+<p><code>get(url, options) ⇒ Operation</code></p>
+
+Make a GET request.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| url | <code>string</code> | URL to access |
+| options | [<code>CommonRequestOptions</code>](#commonrequestoptions) | Request options |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** Request a resource
+```js
+http.get('https://jsonplaceholder.typicode.com/todos')
+```
+**Example:** Request a resource with basic auth
+```js
+http.get(
+ 'https://jsonplaceholder.typicode.com/todos',
+ http.options().basic('user', 'pass')
+)
+```
+**Example:** Request a resource with oauth
+```js
+http.get(
+ 'https://jsonplaceholder.typicode.com/todos',
+ http.options().oauth($.configuration.access_token)
+)
+```
+
+* * *
+
+
+### http.options {#http_options}
+
+<p><code>options(opts) ⇒ OptionsHelpers</code></p>
+
+Builder function to create request options. Returns an object with helpers to
+easily add commonly used options. The return object is chainable so you can set
+as many options as you want.
+Pass an object to set your own options.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| opts | [<code>OptionsHelpers</code>](#optionshelpers) | options to pass to the request |
+
+
+**Example:** Get with a query an oauth token
+```js
+http.get($.data.url, http.options({ query: $.query }).oauth($.configuration.access_token))
+```
+
+* * *
+
+
+### http.post {#http_post}
+
+<p><code>post(url, data, options) ⇒ Operation</code></p>
+
+Make a POST request.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| url | <code>string</code> | URL to access |
+| data | <code>object</code> | Body data to append to the request. |
+| options | [<code>CommonRequestOptions</code>](#commonrequestoptions) | Request options |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** Post a JSON object (setting the content-type header)
+```js
+http.post(
+  "https://jsonplaceholder.typicode.com/todos",
+  $.data,
+  http.options().json()
+);
+```
+
+* * *
+
+
+### http.request {#http_request}
+
+<p><code>request(method, url, options) ⇒ Operation</code></p>
+
+Make a HTTP request.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| method | <code>string</code> | The HTTP method to use. |
+| url | <code>string</code> | URL to resource. |
+| options | [<code>CommonRequestOptions</code>](#commonrequestoptions) | Request options |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body |
+| response | the response from the HTTP server, including headers, statusCode, body, etc |
+| references | an array of all previous data objects used in the Job |
+
+**Example**
+```js
+http.request(
+  'GET',
+  'https://jsonplaceholder.typicode.com/todos'
+)
+```
+
+* * *
+
+
+##  Interfaces
+
+### CommonRequestOptions
+
+Options provided to the HTTP request
+
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| errors | <code>object</code> \| <code>boolean</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors. |
+| form | <code>object</code> | Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body. |
+| query | <code>object</code> | An object of query parameters to be encoded into the URL. |
+| headers | <code>object</code> | An object of headers to append to the request. |
+| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |
+| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |
+| tls | <code>object</code> | TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions |
+
+
+* * *
+
+### OptionsHelpers
+
+Helper functions provided by `http.options`.
+
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| json | <code>function</code> | Sets the `content-type' header to 'application/json' |
+| basic | <code>function</code> | Sets basic auth on the Authorization header. Pass username and password |
+| bearer | <code>function</code> | Sets a Bearer token on the Authorization header. Pass the token. |
+| oauth | <code>function</code> | Sets a Bearer token on the Authorization header. Pass the oauth token. |
 
 
 * * *

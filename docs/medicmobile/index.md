@@ -1,41 +1,82 @@
-## Functions
-
 <dl>
 <dt>
-    <a href="#changesApi">changesApi(params, callback)</a></dt>
+    <a href="#changesapi">changesApi(params, callback)</a></dt>
 <dt>
-    <a href="#fetchSubmissions">fetchSubmissions(formId, params, postUrl)</a></dt>
+    <a href="#fetchsubmissions">fetchSubmissions(formId, params, postUrl)</a></dt>
 <dt>
-    <a href="#pickFormData">pickFormData(formId)</a></dt>
+    <a href="#pickformdata">pickFormData(formId)</a></dt>
 </dl>
 
-## changesApi
 
-changesApi(params, callback) ⇒ <code>Operation</code>
+This adaptor exports the following from common:
+<dl>
+<dt>
+    <a href="/adaptors/packages/common-docs#alterstate">alterState</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#combine">combine()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#each">each()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#field">field()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fields">fields()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fn">fn()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#log">log()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#merge">merge()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
+</dt></dl>
+
+## Functions
+### changesApi
+
+<p><code>changesApi(params, callback) ⇒ Operation</code></p>
+
 Access the CouchDB Changes API
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | Query parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+
+**Example**
 ```js
 changesApi(params, callback)
 ```
 
 * * *
 
-## fetchSubmissions
+### fetchSubmissions
 
-fetchSubmissions(formId, params, postUrl) ⇒ <code>Operation</code>
+<p><code>fetchSubmissions(formId, params, postUrl) ⇒ Operation</code></p>
+
 Access form submissions and post them as JSON.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -43,7 +84,8 @@ Access form submissions and post them as JSON.
 | params | <code>object</code> | Starting sequence id |
 | postUrl | <code>string</code> | Inbox to post form data |
 
-**Example**  
+
+**Example**
 ```js
 fetchSubmissions(
   "pregnancy", // formId
@@ -54,22 +96,23 @@ fetchSubmissions(
 
 * * *
 
-## pickFormData
+### pickFormData
 
-pickFormData(formId) ⇒ <code>Operation</code>
+<p><code>pickFormData(formId) ⇒ Operation</code></p>
+
 Select submissions for a specific form
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | formId | <code>string</code> | The form ID. |
 
-**Example**  
+
+**Example**
 ```js
 pickFormData(formId)
 ```
 
 * * *
+
 

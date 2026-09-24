@@ -1,30 +1,72 @@
-## Functions
-
 <dl>
 <dt>
-    <a href="#addContact">addContact(params, callback)</a></dt>
+    <a href="#addcontact">addContact(params, callback)</a></dt>
 <dt>
-    <a href="#sendBroadcast">sendBroadcast(params, callback)</a></dt>
+    <a href="#sendbroadcast">sendBroadcast(params, callback)</a></dt>
 <dt>
-    <a href="#startFlow">startFlow(params, callback)</a></dt>
+    <a href="#startflow">startFlow(params, callback)</a></dt>
 <dt>
-    <a href="#upsertContact">upsertContact(params, callback)</a></dt>
+    <a href="#upsertcontact">upsertContact(params, callback)</a></dt>
 </dl>
 
-## addContact
 
-addContact(params, callback) ⇒ <code>Operation</code>
+This adaptor exports the following from common:
+<dl>
+<dt>
+    <a href="/adaptors/packages/common-docs#alterstate">alterState</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#combine">combine()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#each">each()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#field">field()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fields">fields()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fn">fn()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#log">log()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#merge">merge()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
+</dt></dl>
+
+## Functions
+### addContact
+
+<p><code>addContact(params, callback) ⇒ Operation</code></p>
+
 Adds a new contact to RapidPro
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | data to create the new resource |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+
+**Example**
 ```js
 addContact({
   name: "Mamadou",
@@ -35,20 +77,20 @@ addContact({
 
 * * *
 
-## sendBroadcast
+### sendBroadcast
 
-sendBroadcast(params, callback) ⇒ <code>Operation</code>
+<p><code>sendBroadcast(params, callback) ⇒ Operation</code></p>
+
 Sends a message to a list of contacts and/or URNs
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | data to create the new resource |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+
+**Example**
 ```js
 sendBroadcast({
   text: "Hello world",
@@ -59,20 +101,20 @@ sendBroadcast({
 
 * * *
 
-## startFlow
+### startFlow
 
-startFlow(params, callback) ⇒ <code>Operation</code>
+<p><code>startFlow(params, callback) ⇒ Operation</code></p>
+
 Start a RapidPro flow for a number of contacts
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | data to create the new resource |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+
+**Example**
 ```js
 startFlow({
   flow: "f5901b62-ba76-4003-9c62-72fdacc1b7b7",
@@ -83,20 +125,20 @@ startFlow({
 
 * * *
 
-## upsertContact
+### upsertContact
 
-upsertContact(params, callback) ⇒ <code>Operation</code>
+<p><code>upsertContact(params, callback) ⇒ Operation</code></p>
+
 Upserts a contact to RapidPro by URN
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | data to upsert a contact |
 | callback | <code>function</code> | (Optional) callback function |
 
-**Example**  
+
+**Example**
 ```js
 upsertContact({
   name: "Mamadou",
@@ -106,4 +148,5 @@ upsertContact({
 ```
 
 * * *
+
 

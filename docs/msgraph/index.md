@@ -1,25 +1,87 @@
-## Functions
-
 <dl>
 <dt>
     <a href="#create">create(resource, data, callback)</a></dt>
 <dt>
     <a href="#get">get(path, query, callback)</a></dt>
 <dt>
-    <a href="#getDrive">getDrive(specifier, name, [callback])</a></dt>
+    <a href="#getdrive">getDrive(specifier, name, [callback])</a></dt>
 <dt>
-    <a href="#getFile">getFile(pathOrId, options, [callback])</a></dt>
+    <a href="#getfile">getFile(pathOrId, options, [callback])</a></dt>
 <dt>
-    <a href="#getFolder">getFolder(pathOrId, options, [callback])</a></dt>
+    <a href="#getfolder">getFolder(pathOrId, options, [callback])</a></dt>
+<dt>
+    <a href="#uploadfile">uploadFile(resource, data, callback)</a></dt>
+<dt>
+    <a href="#zip">zip(files)</a></dt>
 </dl>
 
-## create
+This adaptor exports the following namespaced functions:
 
-create(resource, data, callback) ⇒ <code>Operation</code>
+<dl>
+<dt>
+    <a href="#Utils_sheetToBuffer">Utils.sheetToBuffer(rows, options)</a>
+</dt>
+</dl>
+
+
+This adaptor exports the following from common:
+<dl>
+<dt>
+    <a href="/adaptors/packages/common-docs#as">as()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#combine">combine()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#cursor">cursor()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datapath">dataPath()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datavalue">dataValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#datefns">dateFns</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#each">each()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#field">field()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fields">fields()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fn">fn()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#fnif">fnIf()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#lastreferencevalue">lastReferenceValue()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#log">log()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#merge">merge()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#parsecsv">parseCsv()</a>
+</dt>
+<dt>
+    <a href="/adaptors/packages/common-docs#sourcevalue">sourceValue()</a>
+</dt></dl>
+
+## Functions
+### create
+
+<p><code>create(resource, data, callback) ⇒ Operation</code></p>
+
 Create some resource in msgraph
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -27,20 +89,20 @@ Create some resource in msgraph
 | data | <code>object</code> | The data to create the new resource |
 | callback | <code>function</code> | An optional callback function |
 
-**Example**  
+
+**Example**
 ```js
 create("applications", {"displayName": "My App"})
 ```
 
 * * *
 
-## get
+### get
 
-get(path, query, callback) ⇒ <code>Operation</code>
+<p><code>get(path, query, callback) ⇒ Operation</code></p>
+
 Make a GET request to msgraph resource
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -48,23 +110,23 @@ Make a GET request to msgraph resource
 | query | <code>object</code> | Query, Headers and Authentication parameters |
 | callback | <code>function</code> | (Optional) Callback function |
 
-**Example**  
+
+**Example**
 ```js
 get('sites/root/lists')
 ```
 
 * * *
 
-## getDrive
+### getDrive
 
-getDrive(specifier, name, [callback]) ⇒ <code>Operation</code>
+<p><code>getDrive(specifier, name, [callback]) ⇒ Operation</code></p>
+
 Get a Drive or SharePoint document library. The drive metadata will be written
 to state.drives, where it can be used by other adaptor functions.
 Pass { id } to get a drive by id or { id, owner } to get default drive for
 some parent resource, like a group
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -72,24 +134,24 @@ some parent resource, like a group
 | name | <code>string</code> |  | The local name of the drive used to write to state.drives, ie, state.drives[name] |
 | [callback] | <code>function</code> | <code>s &#x3D;&gt; s</code> | (Optional) Callback function |
 
-**Example** *(Get a drive by ID)*  
+
+**Example:** Get a drive by ID
 ```js
 getDrive({ id: "YXzpkoLwR06bxC8tNdg71m" })
 ```
-**Example** *(Get the default drive for a site)*  
+**Example:** Get the default drive for a site
 ```js
 getDrive({ id: "openfn.sharepoint.com", owner: "sites" })
 ```
 
 * * *
 
-## getFile
+### getFile
 
-getFile(pathOrId, options, [callback]) ⇒ <code>Operation</code>
+<p><code>getFile(pathOrId, options, [callback]) ⇒ Operation</code></p>
+
 Get file metadata or file content.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -97,24 +159,24 @@ Get file metadata or file content.
 | options | <code>object</code> |  | (Optional) Query parameters |
 | [callback] | <code>function</code> | <code>s &#x3D;&gt; s</code> | (Optional) Callback function |
 
-**Example** *(Get a file by ID)*  
+
+**Example:** Get a file by ID
 ```js
 getFile('01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW')
 ```
-**Example** *(Get a file for a named drive by id)*  
+**Example:** Get a file for a named drive by id
 ```js
 getFile("01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW",{ driveName: "mydrive"})
 ```
 
 * * *
 
-## getFolder
+### getFolder
 
-getFolder(pathOrId, options, [callback]) ⇒ <code>Operation</code>
+<p><code>getFolder(pathOrId, options, [callback]) ⇒ Operation</code></p>
+
 Get the contents or metadata of a folder.
 
-**Kind**: global function  
-**Access**: public  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -122,34 +184,125 @@ Get the contents or metadata of a folder.
 | options | <code>object</code> |  | (Optional) Query parameters |
 | [callback] | <code>function</code> | <code>s &#x3D;&gt; s</code> | (Optional) Callback function |
 
-**Example** *(Get a folder by ID)*  
+
+**Example:** Get a folder by ID
 ```js
 getFolder('01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3')
 ```
-**Example** *(Get a folder for a named drive by id)*  
+**Example:** Get a folder for a named drive by id
 ```js
 getFolder("01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3",{ driveName: "mydrive"})
 ```
 
 * * *
 
-## request
+### uploadFile
 
-request ⇒
-This is an asynchronous function that sends a request to a specified URL with optional parameters
-and headers, and returns the response data in JSON format.
+<p><code>uploadFile(resource, data, callback) ⇒ Operation</code></p>
 
-**Kind**: global constant  
-**Returns**: The `request` function is returning the parsed JSON data from the response of the HTTP
-request made to the specified `url` with the given `params` and `method`. If there is an error in
-the response, the function will throw an error.  
+Upload a file to a drive
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| url | <code>string</code> |  | The URL of the API endpoint that the request is being made to. |
-| [params] | <code>object</code> |  | An object containing any additional parameters to be sent with the request, such as query parameters or request body data. It is an optional parameter and defaults to an empty object if not provided. |
-| [method] | <code>string</code> | <code>&quot;GET&quot;</code> | The HTTP method to be used for the request. It defaults to 'GET' if not specified. |
 
+| Param | Type | Description |
+| --- | --- | --- |
+| resource | <code>Object</code> | Resource Object |
+| [resource.driveId] | <code>String</code> | Drive Id |
+| [resource.driveId] | <code>String</code> | Site Id |
+| [resource.folderId] | <code>String</code> | Parent folder id |
+| [resource.contentType] | <code>String</code> | Resource content-type |
+| [resource.onConflict] | <code>String</code> | Specify conflict behavior if file with the same name exists. Can be "rename | fail | replace" |
+| data | <code>Object</code> | A buffer containing the file. |
+| callback | <code>function</code> | Optional callback function |
+
+
+**Example:** Upload Excel file to a drive using `driveId` and `parantItemId`
+```js
+uploadFile(
+  state => ({
+    driveId: state.driveId,
+    folderId: state.folderId,
+    fileName: `Tracker.xlsx`,
+  }),
+  state => state.buffer
+);
+```
+**Example:** Upload Excel file to a SharePoint drive using `siteId` and `parantItemId`
+```js
+uploadFile(
+  state => ({
+    siteId: state.siteId,
+    folderId: state.folderId,
+    fileName: `Report.xlsx`,
+  }),
+  state => state.buffer
+);
+```
 
 * * *
+
+### zip
+
+<p><code>zip(files) ⇒ Operation</code></p>
+
+Add a set of files to a zip archive. Each file is an object of the form `{ name, content }`.
+`content` may be a Buffer, a string, or a JSON-serializable value. Writes the generated zip
+to state.zip.
+
+Note that zip binaries do not safely serialize on state: state.zip is automatically
+removed at the end of the run, so it must be consumed (e.g. by uploadFile) within the
+same run.
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| files | <code>Array.&lt;Object&gt;</code> | An array of `{ name, content }` objects to add to the zip |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| zip | the generated zip archive, as a buffer |
+
+**Example**
+```js
+zip([
+  { name: 'report.json', content: state => state.data },
+  { name: 'notes.txt', content: 'hello world' },
+])
+```
+
+* * *
+
+
+## Utils
+
+These functions belong to the Utils namespace.
+### Utils.sheetToBuffer {#Utils_sheetToBuffer}
+
+<p><code>sheetToBuffer(rows, options) ⇒</code></p>
+
+The function `sheetToBuffer` takes in rows, options and optional callback, It creates a workbook
+and worksheet using the rows, appends the worksheet to the workbook, and returns the workbook as a
+buffer.
+
+**Returns**: a buffer containing the Excel file in `state.buffer`.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| rows |  | The `rows` parameter is an array of objects representing the data to be written to the Excel sheet. Each object in the array represents a row in the sheet, and the keys of the object represent the column headers. The values of the object represent the data in each cell of the row. |
+| options |  | The `options` parameter is an object that contains additional configuration options |
+| [options.wsName] | <code>String</code> | Worksheet name i.e 32 Characters |
+| [options.bookType] | <code>String</code> | File format of the exported file, Default is 'xlsx'. See [here](https://docs.sheetjs.com/docs/api/write-options/#supported-output-formats) for the function. It can have the following properties: |
+
+
+**Example:** Create a buffer containing excel file with `xlsx` output format  
+```js
+sheetToBuffer('$.data[*]', {
+ wsName: 'Invalid Grant Codes',
+ bookType: 'xlsx',
+});
+```
+
+* * *
+
 
