@@ -52,7 +52,8 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run:
-          pnpm publish -r --report-summary --publish-branch main --access=public
+          pnpm stage publish -r --report-summary --publish-branch main
+          --access=public
 
       - run: pnpm changeset tag
       - run: git push --tags
