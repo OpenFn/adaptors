@@ -242,34 +242,45 @@ pnpm changeset
 
 ## Releases
 
-Releases are automated via GitHub Actions when merging to `main`.
-
-As of September 2026, releases as STAGED on npm and must be manually approved.
-See [docs.npmjs.com/staged-publishing](https://docs.npmjs.com/staged-publishing)
+Releases for existing adaptors are automated upon merging to `main`. See
+[Publishing a new adaptor](#publishing-a-new-adaptor) for new releases.
 
 Github Actions will:
 
 - Build and test (just in case)
-- Publish any new version numbers to npm
+- Ensure dates exist in changelogs
+- Deploy to NPM (using Trusted Publishing)
 - Generate and push tags for all new versions
 - Send a notification to slack
 - Update `docs/docs.json` with new markdown and update docs.openfn.org
 
-Trusted users can approve a staged package with the CLI or from npmjs.com
+### Publishing a new adaptor
 
-List staged packages:
+npm's Trusted Publishing requires package to already exist on the registry, so a
+brand new adaptor can't go through the automated flow above for its first
+release. A maintainer with npm publish rights has to publish it once, from their
+own machine.
 
+```bash
+pnpm publish:new <adaptor> <otp>
 ```
-npm stage list @openfn/language-<name>
-```
 
-This will give you a staging id.
+Use the short adaptor name (e.g. `airqo`, not `@openfn/language-airqo`) and a
+fresh one-time password from your authenticator. This will:
 
-Approve staged packages:
+1. Build the adaptor (skip with `--no-build`)
+2. Publish it to npm
+3. Tag the release and push the tag
+4. Configure [trusted publishing](https://docs.npmjs.com/trusted-publishers) for
+   the package, and lock it so ad-hoc token publishes are no longer allowed
+   (`npm access set mfa=publish`) — only the trusted CI workflow, or an
+   interactive `npm publish` with 2FA, can publish it from here on
 
-```
-npm stage approve <stage-id>
-```
+If the trusted publishing step fails (because your OTP expired), you'll get a
+warning nnd told to run`pnpm trust <adaptor> <otp>`.
+
+After this one-off run, every later release of that adaptor goes through the
+normal automated flow above.
 
 ## Pre-releases
 
