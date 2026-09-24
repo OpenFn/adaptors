@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "clientId": {
+      "title": "Client Id",
+      "type": "string",
+      "minLength": 1,
+      "description": "The OAuth client_id registered with eSignet for your instance (sandbox or production)",
+      "examples": ["the-client-id-issued-by-esignet"]
+    },
+    "privateKey": {
+      "title": "Private Key",
+      "type": "string",
+      "minLength": 1,
+      "writeOnly": true,
+      "description": "Base64-encoded JWK private key used to sign the client assertion (private_key_jwt) presented to eSignet's token endpoint",
+      "examples": ["base64-encoded-jwk-private-key"]
+    },
+    "redirectUri": {
+      "title": "Redirect URI",
+      "type": "string",
+      "format": "uri",
+      "minLength": 1,
+      "description": "The redirect_uri registered with eSignet that the authorization code is sent back to. Must match the value the app used in the authorization request",
+      "examples": ["https://yourapp.example.com/callback"]
+    },
+    "tokenEndpoint": {
+      "title": "Token Endpoint",
+      "type": "string",
+      "format": "uri",
+      "minLength": 1,
+      "description": "eSignet's OIDC token endpoint, issued via the developer/partner portal",
+      "examples": ["https://esignet.example.com/oidc/token"]
+    },
+    "userInfoEndpoint": {
+      "title": "UserInfo Endpoint",
+      "type": "string",
+      "format": "uri",
+      "minLength": 1,
+      "description": "eSignet's OIDC userinfo endpoint, issued via the developer/partner portal",
+      "examples": ["https://esignet.example.com/oidc/userinfo"]
+    },
+    "tokenExpirationTime": {
+      "title": "Token Expiration Time",
+      "type": "string",
+      "description": "How long the signed client assertion (private_key_jwt) is valid for. Accepts a duration string (eg. '5m', '2m') or a number of seconds. Keep it short — the assertion is single-use. Defaults to '5m'",
+      "examples": ["5m", "2m", "300"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "clientId",
+    "privateKey",
+    "redirectUri",
+    "tokenEndpoint",
+    "userInfoEndpoint"
+  ]
+}
