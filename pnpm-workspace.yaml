@@ -7,8 +7,16 @@ packages:
   - '!**/test/**'
   # exclude testing
   - '!packages/testing/**'
+
 allowBuilds:
+  '@google/genai': true
+  '@swc/core': true
+  core-js: true
+  cpu-features: true
   esbuild: true
+  protobufjs: true
+  ssh2: true
+
 minimumReleaseAge: 1440 # 1 day
 
 overrides:
