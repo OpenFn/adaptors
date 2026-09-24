@@ -1,0 +1,34 @@
+{
+  "CREATE": {
+    "Create/Update Module Entry": {
+      "description": "Creates or updates an entry in a specified module.",
+      "code": ""
+    },
+    "Relate Module Entry": {
+      "description": "Relates an entry in this module with an entry in another module.",
+      "code": ""
+    },
+    "Update Module Entry": {
+      "description": "Updates an existing module entry.",
+      "code": ""
+    },
+    "API Request (Beta)": {
+      "description": "Raw HTTP request with authentication.",
+      "code": ""
+    }
+  },
+  "SEARCH": {
+    "Find Module Entry": {
+      "description": "Finds an entry in a module.",
+      "code": ""
+    },
+    "Find Multiple Module Entries": {
+      "description": "Finds multiple entries in a module (with line item support).",
+      "code": ""
+    },
+    "Find or Create Module Entry": {
+      "description": "Finds or creates an entry in a module.",
+      "code": ""
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "CREATE": {
+    "Call Phone": {
+      "description": "Call a number or numbers and say a message.",
+      "code": ""
+    },
+    "Send SMS": {
+      "description": "Send a SMS to a number or numbers.",
+      "code": "// Send an SMS via Twilio.\n// state.references is populated with Twilio's API response.\nsendSMS({\n  // Message body (max 1600 chars, billed per 160-char segment).\n  body: `Hi ${$.data.name}, your appointment is confirmed.`,\n  // Your Twilio sending number, in E.164 format (e.g. +14155551212).\n  from: $.configuration.fromNumber,\n  // Recipient, in E.164 format.\n  to: $.data.phone,\n});"
+    },
+    "Send WhatsApp Message": {
+      "description": "Send a WhatsApp message to one or more recipients.",
+      "code": ""
+    },
+    "API Request (Beta)": {
+      "description": "This is an advanced action which makes a raw HTTP request that includes this integration's authentication.",
+      "code": ""
+    }
+  }
+}

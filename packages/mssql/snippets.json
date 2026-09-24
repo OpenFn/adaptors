@@ -1,0 +1,26 @@
+{
+  "CREATE": {
+    "New Row": {
+      "description": "Adds a new row.",
+      "code": "// Insert a row into a SQL Server table.\ninsert(\n  'users',\n  { name: 'Elodie', email: 'elodie@example.org', age: 31 },\n  { writeSql: true }\n);"
+    },
+    "Update Row": {
+      "description": "Updates an existing row.",
+      "code": "// Update a row using a parameterised query.\n// In mssql, named parameters use @-prefixed placeholders.\nsql({\n  query: 'UPDATE users SET email = @email WHERE id = @id;',\n  params: { email: $.data.email, id: $.data.id },\n  writeSql: true,\n});"
+    }
+  },
+  "SEARCH": {
+    "Find Row": {
+      "description": "Finds a row in a table via a lookup column.",
+      "code": "// Fetch a single value from a row matched by an equality filter.\nfindValue({\n  uuid: 'id',\n  relation: 'users',\n  where: { email: $.data.email },\n});"
+    },
+    "Find Row via Custom Query": {
+      "description": "Finds a row in a table via a custom query you control.",
+      "code": "// Run a custom SELECT returning a single row.\nsql({\n  query: 'SELECT TOP 1 * FROM users WHERE email = @email;',\n  params: { email: $.data.email },\n});"
+    },
+    "Find Rows via Custom Query": {
+      "description": "Finds multiple rows in a table via a custom query you control.",
+      "code": "// Run a custom SELECT returning many rows.\nsql({\n  query: 'SELECT id, name, email FROM users WHERE created_at > @since ORDER BY id;',\n  params: { since: '2026-01-01' },\n});"
+    }
+  }
+}

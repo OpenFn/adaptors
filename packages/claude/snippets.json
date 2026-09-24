@@ -1,0 +1,30 @@
+{
+  "CREATE": {
+    "Delete File": {
+      "description": "Delete a file from Anthropic",
+      "code": ""
+    },
+    "Download File": {
+      "description": "Download file content from Anthropic",
+      "code": ""
+    },
+    "Send Message": {
+      "description": "Sends a message to Claude and the model generates the next message in the conversation, storing the messages as you go.",
+      "code": "// Send a prompt to Claude.\n// The model's reply is written to state.data.\nprompt(\n  // 1) The message text. Reference upstream state with $.\n  `Summarize this text: ${JSON.stringify($.data)}`,\n  {\n    // 2) Model id. Defaults to the latest Sonnet if omitted.\n    model: 'claude-sonnet-4-6',\n    // 3) Maximum tokens to generate in the reply.\n    max_tokens: 1024,\n    // 4) 0.0 = analytical / deterministic, 1.0 = creative.\n    temperature: 0.7,\n  }\n);"
+    },
+    "Upload File": {
+      "description": "Upload a file to Anthropic",
+      "code": ""
+    }
+  },
+  "SEARCH": {
+    "Get File Metadata": {
+      "description": "Get metadata for a specific file",
+      "code": ""
+    },
+    "List Files": {
+      "description": "List all files uploaded to Anthropic",
+      "code": ""
+    }
+  }
+}
