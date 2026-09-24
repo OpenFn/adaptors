@@ -1,5 +1,4 @@
-// Usage: pnpm publish:new <adaptor> <otp> [--no-build]
-//
+#!/usr/bin/env node
 // For a package's first release only — staged publishing (and trust) both
 // require the package to already exist on npm, so this does a plain
 // `pnpm publish`, tags it, and then hands it off to scripts/trust.mjs so
@@ -7,21 +6,31 @@
 import { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 
-const rawArgs = process.argv.slice(2);
-const otp = rawArgs.pop();
-const noBuild = rawArgs.includes('--no-build');
-const [adaptor] = rawArgs.filter(arg => arg !== '--no-build');
-
-if (!adaptor) {
-  console.error('Usage: pnpm publish:new <adaptor> <otp> [--no-build]');
-  process.exit(1);
-}
-if (!otp) {
-  console.error('Usage: pnpm publish:new <adaptor> <otp> [--no-build]');
-  console.error('A one-time password from your authenticator is required.');
-  process.exit(1);
-}
+const { adaptor, otp, build } = yargs(hideBin(process.argv))
+  .command(
+    '$0 <adaptor> <otp>',
+    "Publish a new adaptor's first release, tag it, and configure trust for future releases."
+  )
+  .positional('adaptor', {
+    type: 'string',
+    description: 'short adaptor name, e.g. common',
+  })
+  .positional('otp', {
+    type: 'string',
+    description: 'a one-time password from your authenticator',
+  })
+  .option('build', {
+    type: 'boolean',
+    default: true,
+    description: 'build the adaptor first (use --no-build to skip)',
+  })
+  .example('$0 airqo 123456', 'publish @openfn/language-airqo for the first time')
+  .demandCommand(0, 0)
+  .strict()
+  .parse();
 
 const pkgPath = path.resolve('packages', adaptor, 'package.json');
 if (!existsSync(pkgPath)) {
@@ -39,7 +48,10 @@ const published = spawnSync('npm', ['view', name, 'version'], {
 if (published.status === 0) {
   console.error();
   console.error(
-    `${name} is already published — this script is only for a package's first release.`,
+    `${name} is already published — this script is only for a package's first release.`
+  );
+  console.error(
+    `Later releases go through CI once it's trusted; see "pnpm trust ${adaptor} <otp>".`
   );
   console.error();
   process.exit(1);
@@ -57,8 +69,8 @@ function run(command, args) {
 
 console.log(`Publishing ${name}@${version} for the first time`);
 
-if (!noBuild) {
-  run('pnpm', ['build']);
+if (build) {
+  run('pnpm', ['--filter', `./packages/${adaptor}`, 'build']);
 } else {
   console.log('\nSkipping build (--no-build)');
 }

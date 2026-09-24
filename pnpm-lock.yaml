@@ -225,6 +225,9 @@ importers:
       typescript:
         specifier: 4.8.4
         version: 4.8.4
+      yargs:
+        specifier: 17.6.0
+        version: 17.6.0
 
   packages/airqo:
     dependencies:

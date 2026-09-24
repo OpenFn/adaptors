@@ -1,24 +1,35 @@
-// Usage: pnpm trust <adaptor> <otp>   e.g. pnpm trust common 123456
+#!/usr/bin/env node
 import { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 
 const REPO = 'OpenFn/adaptors';
 const WORKFLOW = 'publish.yaml';
 
-const rawArgs = process.argv.slice(2);
-const otp = rawArgs.pop();
-const [adaptor, ...extraArgs] = rawArgs;
-
-if (!adaptor) {
-  console.error('Usage: pnpm trust <adaptor> <otp>');
-  process.exit(1);
-}
-if (!otp) {
-  console.error('Usage: pnpm trust <adaptor> <otp>');
-  console.error('A one-time password from your authenticator is required.');
-  process.exit(1);
-}
+const { adaptor, otp, dryRun } = yargs(hideBin(process.argv))
+  .command(
+    '$0 <adaptor> <otp>',
+    'Configure npm trusted publishing for an adaptor, and disallow token publishes for it.'
+  )
+  .positional('adaptor', {
+    type: 'string',
+    description: 'short adaptor name, e.g. common',
+  })
+  .positional('otp', {
+    type: 'string',
+    description: 'a one-time password from your authenticator',
+  })
+  .option('dry-run', {
+    type: 'boolean',
+    default: false,
+    description: "show what would happen, don't configure anything",
+  })
+  .example('$0 common 123456', 'trust @openfn/language-common')
+  .demandCommand(0, 0)
+  .strict()
+  .parse();
 
 const pkgPath = path.resolve('packages', adaptor, 'package.json');
 if (!existsSync(pkgPath)) {
@@ -52,9 +63,9 @@ function otpRejected(result) {
   }
 }
 
-function failOtp(name) {
+function failOtp(step) {
   console.error();
-  console.error(`Your OTP was rejected running ${name} (wrong or expired).`);
+  console.error(`Your OTP was rejected running ${step} (wrong or expired).`);
   console.error(`Get a fresh one from your authenticator and try again.`);
   console.error();
   process.exit(1);
@@ -109,7 +120,7 @@ const trustResult = spawnSync(
     '--yes',
     '--json',
     `--otp=${otp}`,
-    ...extraArgs,
+    ...(dryRun ? ['--dry-run'] : []),
   ],
   { encoding: 'utf8' }
 );
@@ -117,10 +128,18 @@ if (otpRejected(trustResult)) {
   failOtp('trust github');
 }
 if (trustResult.status !== 0) {
-  console.error(trustResult.stderr || `Failed to configure trust for ${name}`);
+  console.error(
+    trustResult.stderr || `Failed to configure trust for ${name}`
+  );
   process.exit(trustResult.status ?? 1);
 }
 console.log(`Trusted: ${REPO}/${WORKFLOW} can publish ${name}`);
+
+if (dryRun) {
+  console.log();
+  console.log('Dry run: not touching the mfa setting.');
+  process.exit(0);
+}
 
 // Lock the package to "require 2FA, disallow tokens" so ad-hoc publishes
 // with a bypass-2FA token are no longer possible — only this trusted

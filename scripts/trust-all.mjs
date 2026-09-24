@@ -1,22 +1,30 @@
-// Usage: pnpm trust:all <otp>
-//
+#!/usr/bin/env node
 // Runs scripts/trust.mjs for every published adaptor in the workspace.
 // See https://docs.npmjs.com/cli/v11/commands/npm-trust#bulk-usage
 import { spawnSync } from 'node:child_process';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 
 const DELAY_MS = 2000;
 
-const otp = process.argv.slice(2).pop();
-if (!otp) {
-  console.error('Usage: pnpm trust:all <otp>');
-  console.error('A one-time password from your authenticator is required.');
-  process.exit(1);
-}
+const { otp } = yargs(hideBin(process.argv))
+  .command(
+    '$0 <otp>',
+    'Configure npm trusted publishing for every published adaptor in the workspace.'
+  )
+  .positional('otp', {
+    type: 'string',
+    description: 'a one-time password from your authenticator',
+  })
+  .example('$0 123456', 'trust every published adaptor')
+  .demandCommand(0, 0)
+  .strict()
+  .parse();
 
 const list = spawnSync(
   'pnpm',
   ['-r', 'list', '--depth', '-1', '--filter', './packages/**', '--json'],
-  { encoding: 'utf8' },
+  { encoding: 'utf8' }
 );
 if (list.status !== 0) {
   console.error('Failed to list workspace packages');
@@ -51,7 +59,7 @@ for (const [i, adaptor] of packages.entries()) {
 }
 
 console.log(
-  `\nDone. ${packages.length - failed.length}/${packages.length} ok.`,
+  `\nDone. ${packages.length - failed.length}/${packages.length} ok.`
 );
 if (failed.length) {
   console.log(`Failed: ${failed.join(', ')}`);
