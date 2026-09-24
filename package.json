@@ -23,6 +23,7 @@
     "test:imports": "cd tools/import-tests && pnpm test",
     "test": "pnpm lint && pnpm --filter \"./packages/**\" test && pnpm test:imports",
     "test:git": "pnpm exec scripts/status-check.sh",
+    "trust": "node scripts/trust.mjs",
     "validate:schemas": "node scripts/validate-configuration-schemas.mjs",
     "version": "pnpm changeset version && pnpm run changelog"
   },
