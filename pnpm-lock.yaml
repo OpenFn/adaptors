@@ -2190,9 +2190,6 @@ importers:
       '@openfn/language-common':
         specifier: workspace:*
         version: link:../common
-      odoo-await:
-        specifier: ^3.4.1
-        version: 3.4.1
     devDependencies:
       assertion-error:
         specifier: 2.0.0

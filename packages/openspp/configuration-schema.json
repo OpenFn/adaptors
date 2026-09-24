@@ -3,44 +3,29 @@
   "properties": {
     "baseUrl": {
       "title": "Base URL",
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "description": "The base URL (http://www.example.com)",
+      "type": "string",
+      "description": "The base URL of the OpenSPP instance, without the API path",
       "format": "uri",
       "minLength": 1,
-      "default": "http://localhost",
-      "examples": ["https://dev.newlogic-demo.com"]
+      "examples": ["https://openspp.example.org"]
     },
-    "username": {
-      "title": "Username",
+    "clientId": {
+      "title": "Client ID",
       "type": "string",
-      "description": "Username",
-      "default": "admin",
-      "examples": ["test@openfn.org"]
+      "description": "OAuth client ID of an OpenSPP API client",
+      "minLength": 1,
+      "examples": ["client_AbC123dEf456"]
     },
-    "password": {
-      "title": "Password",
+    "clientSecret": {
+      "title": "Client Secret",
       "type": "string",
-      "description": "Password",
-      "default": "admin",
+      "description": "OAuth client secret of an OpenSPP API client",
       "writeOnly": true,
+      "minLength": 1,
       "examples": ["@some(!)Str0ngp4ss0w0rd"]
-    },
-    "database": {
-      "title": "Database Name",
-      "type": "string",
-      "default": "devel",
-      "description": "Database Name",
-      "examples": ["devel"]
     }
   },
   "type": "object",
   "additionalProperties": true,
-  "required": ["password", "username", "database", "baseUrl"]
+  "required": ["baseUrl", "clientId", "clientSecret"]
 }

@@ -1,13 +1,15 @@
 {
   "operations": [
     {
-      "name": "getGroup",
+      "name": "request",
       "params": [
-        "spp_id",
-        "callback"
+        "method",
+        "path",
+        "body",
+        "options"
       ],
       "docs": {
-        "description": "get group information from OpenSPP",
+        "description": "Make a request to any OpenSPP REST API v2 endpoint.\nPaths are relative to `/api/v2/spp`.",
         "tags": [
           {
             "title": "public",
@@ -16,7 +18,13 @@
           },
           {
             "title": "example",
-            "description": "getGroup(\"GRP_Q4VGGZPF\")"
+            "description": "request(\"GET\", \"/Vocabulary\", null, { query: { _count: 10 } });",
+            "caption": "List vocabularies"
+          },
+          {
+            "title": "example",
+            "description": "request(\"GET\", \"/gis/ogc/collections\");",
+            "caption": "Read GIS layers"
           },
           {
             "title": "function",
@@ -25,21 +33,45 @@
           },
           {
             "title": "param",
-            "description": "The spp_id of the group",
+            "description": "HTTP method",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "spp_id"
+            "name": "method"
           },
           {
             "title": "param",
-            "description": "An optional callback function",
+            "description": "Path relative to /api/v2/spp, eg `/Individual`",
             "type": {
               "type": "NameExpression",
-              "name": "function"
+              "name": "string"
             },
-            "name": "callback"
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Request body, sent as JSON",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "body"
+          },
+          {
+            "title": "param",
+            "description": "`query` (query parameters) and `ifMatch` (ETag for optimistic locking)",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options"
           },
           {
             "title": "returns",
@@ -48,6 +80,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{OpenSPPState}"
           }
         ]
       },
@@ -56,11 +92,11 @@
     {
       "name": "getIndividual",
       "params": [
-        "spp_id",
-        "callback"
+        "id",
+        "options"
       ],
       "docs": {
-        "description": "get individual information from OpenSPP",
+        "description": "Get an individual by identifier.",
         "tags": [
           {
             "title": "public",
@@ -69,61 +105,12 @@
           },
           {
             "title": "example",
-            "description": "getIndividual(\"IND_Q4VGGZPF\")"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "The spp_id of the individual",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "spp_id"
-          },
-          {
-            "title": "param",
-            "description": "An optional callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "getGroupMembers",
-      "params": [
-        "spp_id",
-        "options",
-        "callback"
-      ],
-      "docs": {
-        "description": "get group members information from OpenSPP",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
+            "description": "getIndividual(\"urn:openspp:vocab:id-type#national_id|PH-123456789\");"
           },
           {
             "title": "example",
-            "description": "getGroupMembers(\"GRP_Q4VGGZPF\")"
+            "description": "getIndividual(\"urn:openspp:vocab:id-type#national_id|PH-123456789\", { elements: [\"identifier\", \"name\"] });",
+            "caption": "Only return some fields"
           },
           {
             "title": "function",
@@ -132,16 +119,16 @@
           },
           {
             "title": "param",
-            "description": "The name of the group",
+            "description": "Identifier as `system|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "spp_id"
+            "name": "id"
           },
           {
             "title": "param",
-            "description": "Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records",
+            "description": "`elements` and `extensions` (see SearchOptions)",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -149,17 +136,7 @@
                 "name": "object"
               }
             },
-            "name": "options",
-            "default": "{}"
-          },
-          {
-            "title": "param",
-            "description": "An optional callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
+            "name": "options"
           },
           {
             "title": "returns",
@@ -168,137 +145,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "getServicePoint",
-      "params": [
-        "spp_id",
-        "callback"
-      ],
-      "docs": {
-        "description": "get service points information from OpenSPP",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
           },
           {
-            "title": "example",
-            "description": "getServicePoint(\"SVP_8P4KP4RT\")"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "The spp_id of the agent",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "spp_id"
-          },
-          {
-            "title": "param",
-            "description": "An optional callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "searchGroup",
-      "params": [
-        "domain",
-        "options",
-        "callback"
-      ],
-      "docs": {
-        "description": "get groups from OpenSPP",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "searchGroup([[\"spp_id\", \"=\", \"GRP_Q4VGGZPF\"]])",
-            "caption": "search group by domain"
-          },
-          {
-            "title": "example",
-            "description": "searchGroup([[\"spp_id\", \"ilike\", \"GRP\"]], { offset: 100 }})",
-            "caption": "search group by domain with offset"
-          },
-          {
-            "title": "example",
-            "description": "searchGroup([[\"address\", \"!=\", false], [\"phone\", \"!=\", false]])",
-            "caption": "search group by complex domain for more accuracy"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "searching domain",
-            "type": {
-              "type": "NameExpression",
-              "name": "Array"
-            },
-            "name": "domain"
-          },
-          {
-            "title": "param",
-            "description": "Searching options, eg: limit for limiting number of records returning, order for ordering search, offset for skipping records",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "object"
-              }
-            },
-            "name": "options",
-            "default": "{}"
-          },
-          {
-            "title": "param",
-            "description": "An optional callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
+            "title": "state",
+            "description": "{OpenSPPState}"
           }
         ]
       },
@@ -307,12 +157,11 @@
     {
       "name": "searchIndividual",
       "params": [
-        "domain",
-        "options",
-        "callback"
+        "query",
+        "options"
       ],
       "docs": {
-        "description": "get individuals from OpenSPP",
+        "description": "Search individuals.\nRecords the API client may not see (for example without consent) are left\nout, and `state.response.page.total` is then only the page size. Use\n`state.response.page.next` to check for more pages.",
         "tags": [
           {
             "title": "public",
@@ -321,18 +170,18 @@
           },
           {
             "title": "example",
-            "description": "searchIndividual([[\"spp_id\", \"=\", \"IND_Q4VGGZPF\"]])",
-            "caption": "search individual by domain"
+            "description": "searchIndividual({ name: \"Santos\" });",
+            "caption": "Search by name"
           },
           {
             "title": "example",
-            "description": "searchIndividual([[\"spp_id\", \"ilike\", \"IND\"]], { offset: 100 })",
-            "caption": "search individual by domain with offset"
+            "description": "searchIndividual({ birthdate: \"ge2010-01-01\" }, { count: 50, offset: 50 });",
+            "caption": "Born on or after 2010, 50 per page, second page"
           },
           {
             "title": "example",
-            "description": "searchIndividual([[\"address\", \"!=\", false], [\"birthdate\", \"=\", false]])",
-            "caption": "search individual by complex domain for more accuracy"
+            "description": "searchIndividual({ group: \"urn:openspp:vocab:id-type#household_id|HH-1\", \"membership-role\": \"head\" });",
+            "caption": "Heads of household in a group"
           },
           {
             "title": "function",
@@ -341,16 +190,7 @@
           },
           {
             "title": "param",
-            "description": "searching domain",
-            "type": {
-              "type": "NameExpression",
-              "name": "Array"
-            },
-            "name": "domain"
-          },
-          {
-            "title": "param",
-            "description": "Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records",
+            "description": "OpenSPP search parameters: `identifier`, `name`, `birthdate`, `gender`, `address`, `group`, `membership-role`, `_lastUpdated`",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -358,127 +198,19 @@
                 "name": "object"
               }
             },
-            "name": "options",
-            "default": "{}"
+            "name": "query"
           },
           {
             "title": "param",
-            "description": "An optional callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "getProgram",
-      "params": [
-        "program_id",
-        "callback"
-      ],
-      "docs": {
-        "description": "get program information from OpenSPP",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "getProgram(\"PROG_2023_00000001\")"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "searching domain",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "program_id"
-          },
-          {
-            "title": "param",
-            "description": "An optional callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "getPrograms",
-      "params": [
-        "options",
-        "callback"
-      ],
-      "docs": {
-        "description": "get programs list from OpenSPP",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "getPrograms(100)"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "offset from start",
+            "description": "Paging and field options",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "number"
+                "name": "SearchOptions"
               }
             },
-            "name": "options",
-            "default": "{}"
-          },
-          {
-            "title": "param",
-            "description": "An optional callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
+            "name": "options"
           },
           {
             "title": "returns",
@@ -487,149 +219,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "getEnrolledPrograms",
-      "params": [
-        "spp_id",
-        "callback"
-      ],
-      "docs": {
-        "description": "get programs list for specific registrant from OpenSPP",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
           },
           {
-            "title": "example",
-            "description": "getEnrolledPrograms(\"IND_Q4VGGZPF\")"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "spp_id of group / individual wanted to search",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "spp_id"
-          },
-          {
-            "title": "param",
-            "description": "An optional callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "enroll",
-      "params": [
-        "spp_id",
-        "program_id"
-      ],
-      "docs": {
-        "description": "enroll registrant to program in OpenSPP",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "enroll(\"IND_Q4VGGZPF\", \"PROG_2023_00000001\")"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "spp_id of group / individual wanted to enroll",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "spp_id"
-          },
-          {
-            "title": "param",
-            "description": "program_id of program",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "program_id"
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "unenroll",
-      "params": [
-        "spp_id",
-        "program_id"
-      ],
-      "docs": {
-        "description": "unenroll registrant from program in OpenSPP",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "unenroll(\"IND_Q4VGGZPF\", \"PROG_2023_00000001\")"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "spp_id of group / individual wanted to unenroll",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "spp_id"
-          },
-          {
-            "title": "param",
-            "description": "program_id of program",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "program_id"
+            "title": "state",
+            "description": "{OpenSPPState}"
           }
         ]
       },
@@ -638,117 +231,10 @@
     {
       "name": "createIndividual",
       "params": [
-        "data",
-        "callback"
-      ],
-      "docs": {
-        "description": "create new individual for OpenSPP",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "createIndividual({ name: \"Individual 1\" })"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "registrant create data",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "data"
-          },
-          {
-            "title": "param",
-            "description": "An optional callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "createGroup",
-      "params": [
-        "data",
-        "callback"
-      ],
-      "docs": {
-        "description": "create new group for OpenSPP",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "createGroup({ name: \"Group 1\" })"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "registrant create data",
-            "type": {
-              "type": "NameExpression",
-              "name": "object"
-            },
-            "name": "data"
-          },
-          {
-            "title": "param",
-            "description": "An optional callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "updateGroup",
-      "params": [
-        "group_id",
         "data"
       ],
       "docs": {
-        "description": "update group for OpenSPP",
+        "description": "Create an individual. `data` follows the OpenSPP Individual resource and\nmust include at least one identifier.",
         "tags": [
           {
             "title": "public",
@@ -757,7 +243,7 @@
           },
           {
             "title": "example",
-            "description": "updateGroup(\"GRP_B2BRHJN2\", { name: \"Group 1\" })"
+            "description": "createIndividual({\n  identifier: [{ system: \"urn:openspp:vocab:id-type#national_id\", value: \"PH-123456789\" }],\n  name: { family: \"Santos\", given: \"Maria\" },\n  birthDate: \"1985-03-15\",\n  gender: { coding: [{ system: \"urn:iso:std:iso:5218\", code: \"2\" }] },\n});"
           },
           {
             "title": "function",
@@ -766,16 +252,7 @@
           },
           {
             "title": "param",
-            "description": "group registrant id",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "group_id"
-          },
-          {
-            "title": "param",
-            "description": "registrant update data",
+            "description": "Individual resource",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -789,6 +266,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{OpenSPPState}"
           }
         ]
       },
@@ -797,11 +278,12 @@
     {
       "name": "updateIndividual",
       "params": [
-        "individual_id",
-        "data"
+        "id",
+        "data",
+        "options"
       ],
       "docs": {
-        "description": "update individual for OpenSPP",
+        "description": "Update some fields of an individual (JSON Merge Patch). Omitted fields are\nunchanged; `null` clears a field.",
         "tags": [
           {
             "title": "public",
@@ -810,7 +292,7 @@
           },
           {
             "title": "example",
-            "description": "updateIndividual(\"IND_8DUQL4M4\", { name: \"Individual 1\" })"
+            "description": "updateIndividual(\"urn:openspp:vocab:id-type#national_id|PH-123456789\", { birthDate: \"1985-03-16\" });"
           },
           {
             "title": "function",
@@ -819,16 +301,198 @@
           },
           {
             "title": "param",
-            "description": "individual registrant id",
+            "description": "Identifier as `system|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "individual_id"
+            "name": "id"
           },
           {
             "title": "param",
-            "description": "registrant update data",
+            "description": "Fields to change",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "`ifMatch`: ETag from a previous read, to fail if the record changed",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{OpenSPPState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getGroup",
+      "params": [
+        "id",
+        "options"
+      ],
+      "docs": {
+        "description": "Get a group by identifier. Note: `member[].entity.reference` values returned\nby OpenSPP can't be used to read the members; use `getGroupMembers` instead.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getGroup(\"urn:openspp:vocab:id-type#household_id|HH-1\");"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Identifier as `system|value`",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "id"
+          },
+          {
+            "title": "param",
+            "description": "`elements` and `extensions` (see SearchOptions)",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{OpenSPPState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "searchGroup",
+      "params": [
+        "query",
+        "options"
+      ],
+      "docs": {
+        "description": "Search groups.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "searchGroup({ name: \"Santos\", type: \"household\" }, { count: 50 });"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "OpenSPP search parameters: `identifier`, `name`, `type`, `member`",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "Paging and field options",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "SearchOptions"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{OpenSPPState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "createGroup",
+      "params": [
+        "data"
+      ],
+      "docs": {
+        "description": "Create a group. `data` follows the OpenSPP Group resource and must include\nat least one identifier.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "createGroup({\n  identifier: [{ system: \"urn:openspp:vocab:id-type#household_id\", value: \"HH-1\" }],\n  name: \"Santos Household\",\n  groupType: \"household\",\n});"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Group resource",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -842,6 +506,145 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{OpenSPPState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "updateGroup",
+      "params": [
+        "id",
+        "data",
+        "options"
+      ],
+      "docs": {
+        "description": "Update some fields of a group (JSON Merge Patch).",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "updateGroup(\"urn:openspp:vocab:id-type#household_id|HH-1\", { name: \"Santos-Reyes Household\" });"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Identifier as `system|value`",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "id"
+          },
+          {
+            "title": "param",
+            "description": "Fields to change",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "`ifMatch`: ETag from a previous read",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{OpenSPPState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getGroupMembers",
+      "params": [
+        "groupId",
+        "options"
+      ],
+      "docs": {
+        "description": "List the individuals who are members of a group.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getGroupMembers(\"urn:openspp:vocab:id-type#household_id|HH-1\");"
+          },
+          {
+            "title": "example",
+            "description": "getGroupMembers(\"urn:openspp:vocab:id-type#household_id|HH-1\", { role: \"head\" });",
+            "caption": "Only the head of household"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Group identifier as `system|value`",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "groupId"
+          },
+          {
+            "title": "param",
+            "description": "`role` (membership role code) plus SearchOptions",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{OpenSPPState}"
           }
         ]
       },
@@ -850,12 +653,13 @@
     {
       "name": "addToGroup",
       "params": [
-        "group_id",
-        "individual_id",
-        "role"
+        "groupId",
+        "individualId",
+        "role",
+        "options"
       ],
       "docs": {
-        "description": "add individual to group in OpenSPP",
+        "description": "Add an individual to a group. If the individual is already a member, their\nrole is updated when `role` is given, and left unchanged otherwise.",
         "tags": [
           {
             "title": "public",
@@ -864,18 +668,13 @@
           },
           {
             "title": "example",
-            "description": "addToGroup(\"GRP_B2BRHJN2\", \"IND_8DUQL4M4\", \"Head\")",
-            "caption": "create a new head for group"
+            "description": "addToGroup(\"urn:openspp:vocab:id-type#household_id|HH-1\", \"urn:openspp:vocab:id-type#national_id|PH-123\", \"head\");",
+            "caption": "Add as head of household"
           },
           {
             "title": "example",
-            "description": "addToGroup(\"GRP_B2BRHJN2\", \"IND_8DUQL4M4\")",
-            "caption": "create a new ordinary member for group"
-          },
-          {
-            "title": "example",
-            "description": "addToGroup(\"GRP_B2BRHJN2\", \"IND_8DUQL4M4\", \"new-role-name\")",
-            "caption": "create a new member with new role for group"
+            "description": "addToGroup(\"urn:openspp:vocab:id-type#household_id|HH-1\", \"urn:openspp:vocab:id-type#national_id|PH-123\");",
+            "caption": "Add with the default role"
           },
           {
             "title": "function",
@@ -884,30 +683,54 @@
           },
           {
             "title": "param",
-            "description": "group registrant id",
+            "description": "Group identifier as `system|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "group_id"
+            "name": "groupId"
           },
           {
             "title": "param",
-            "description": "individual registrant id",
+            "description": "Individual identifier as `system|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "individual_id"
+            "name": "individualId"
           },
           {
             "title": "param",
-            "description": "individual role in group",
+            "description": "Role code in `urn:openspp:vocab:group-membership-type` (eg \"head\", \"spouse\", \"child\"), or a CodeableConcept",
             "type": {
-              "type": "NameExpression",
-              "name": "string"
+              "type": "OptionalType",
+              "expression": {
+                "type": "UnionType",
+                "elements": [
+                  {
+                    "type": "NameExpression",
+                    "name": "string"
+                  },
+                  {
+                    "type": "NameExpression",
+                    "name": "object"
+                  }
+                ]
+              }
             },
             "name": "role"
+          },
+          {
+            "title": "param",
+            "description": "`startDate` (YYYY-MM-DD)",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options"
           },
           {
             "title": "returns",
@@ -916,6 +739,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{OpenSPPState}"
           }
         ]
       },
@@ -924,11 +751,12 @@
     {
       "name": "removeFromGroup",
       "params": [
-        "group_id",
-        "individual_id"
+        "groupId",
+        "individualId",
+        "options"
       ],
       "docs": {
-        "description": "remove individual from group in OpenSPP",
+        "description": "End an individual's membership of a group. OpenSPP sets the end date to\nnow unless `endedDate` is given.\nNote: current OpenSPP2 versions may still report the membership as\n`active` (and list the individual in group searches) until OpenSPP's\nscheduled membership repair runs. The end date is saved either way.",
         "tags": [
           {
             "title": "public",
@@ -937,7 +765,7 @@
           },
           {
             "title": "example",
-            "description": "removeFromGroup(\"GRP_B2BRHJN2\", \"IND_8DUQL4M4\")"
+            "description": "removeFromGroup(\"urn:openspp:vocab:id-type#household_id|HH-1\", \"urn:openspp:vocab:id-type#national_id|PH-123\", { reason: \"Moved out\" });"
           },
           {
             "title": "function",
@@ -946,21 +774,33 @@
           },
           {
             "title": "param",
-            "description": "group registrant id",
+            "description": "Group identifier as `system|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "group_id"
+            "name": "groupId"
           },
           {
             "title": "param",
-            "description": "individual registrant id",
+            "description": "Individual identifier as `system|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
             },
-            "name": "individual_id"
+            "name": "individualId"
+          },
+          {
+            "title": "param",
+            "description": "`reason`, `endedDate` (YYYY-MM-DD)",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options"
           },
           {
             "title": "returns",
@@ -969,6 +809,364 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{OpenSPPState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getProgram",
+      "params": [
+        "id"
+      ],
+      "docs": {
+        "description": "Get a program by identifier.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getProgram(\"urn:openspp:program|universal-child-grant\");"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Program identifier as `system|value`",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "id"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{OpenSPPState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getPrograms",
+      "params": [
+        "query",
+        "options"
+      ],
+      "docs": {
+        "description": "List programs. Programs page with a cursor: pass the `lastId` from the\nprevious page instead of an offset.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getPrograms();"
+          },
+          {
+            "title": "example",
+            "description": "getPrograms({ targetType: \"group\" }, { count: 10 });",
+            "caption": "Programs for groups, 10 per page"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "OpenSPP search parameters: `identifier`, `name`, `status`, `type`, `targetType`",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "query"
+          },
+          {
+            "title": "param",
+            "description": "`count`, `lastId`",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{OpenSPPState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getEnrolledPrograms",
+      "params": [
+        "beneficiary"
+      ],
+      "docs": {
+        "description": "List the programs a registrant is enrolled in, as ProgramMembership\nresources (each has a `program` reference).",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getEnrolledPrograms(\"Group/urn:openspp:vocab:id-type#household_id|HH-1\");"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Typed reference: `Individual/system|value` or `Group/system|value`",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "beneficiary"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{OpenSPPState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "enroll",
+      "params": [
+        "beneficiary",
+        "programId",
+        "options"
+      ],
+      "docs": {
+        "description": "Enroll a registrant in a program. Does nothing if they are already enrolled.\nIf they have a membership in this program that isn't enrolled (eg exited),\nit is set back to enrolled. Until OpenSPP2 can address memberships per\nprogram, that update is refused when the registrant has memberships in\nother programs too.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "enroll(\"Individual/urn:openspp:vocab:id-type#national_id|PH-123\", \"urn:openspp:program|universal-child-grant\");"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Typed reference: `Individual/system|value` or `Group/system|value`",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "beneficiary"
+          },
+          {
+            "title": "param",
+            "description": "Program identifier as `system|value`",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "programId"
+          },
+          {
+            "title": "param",
+            "description": "`enrollmentDate` (YYYY-MM-DD) for new memberships",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{OpenSPPState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "unenroll",
+      "params": [
+        "beneficiary",
+        "programId",
+        "options"
+      ],
+      "docs": {
+        "description": "Unenroll a registrant from a program by setting their membership to\n`exited`. Does nothing if the membership isn't enrolled. Until OpenSPP2 can\naddress memberships per program, this is refused when the registrant has\nmemberships in other programs too.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "unenroll(\"Individual/urn:openspp:vocab:id-type#national_id|PH-123\", \"urn:openspp:program|universal-child-grant\");"
+          },
+          {
+            "title": "example",
+            "description": "unenroll(\"Group/urn:openspp:vocab:id-type#household_id|HH-1\", \"urn:openspp:program|cash-transfer\", { exitDate: \"2026-09-30\", exitReason: { text: \"Graduated\" } });",
+            "caption": "With exit details"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Typed reference: `Individual/system|value` or `Group/system|value`",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "beneficiary"
+          },
+          {
+            "title": "param",
+            "description": "Program identifier as `system|value`",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "programId"
+          },
+          {
+            "title": "param",
+            "description": "`exitDate` (YYYY-MM-DD), `exitReason` (CodeableConcept)",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{OpenSPPState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "getServicePoint",
+      "params": [
+        "name"
+      ],
+      "docs": {
+        "description": "Get a service point by its identifier (the service point name).",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "getServicePoint(\"Agoncillo Payment Center\");"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Service point identifier (its name)",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "name"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{OpenSPPState}"
           }
         ]
       },
@@ -977,12 +1175,11 @@
     {
       "name": "searchServicePoint",
       "params": [
-        "domain",
-        "options",
-        "callback"
+        "query",
+        "options"
       ],
       "docs": {
-        "description": "searching for service point in OpenSPP",
+        "description": "Search service points.",
         "tags": [
           {
             "title": "public",
@@ -991,13 +1188,7 @@
           },
           {
             "title": "example",
-            "description": "searchServicePoint([[\"name\", \"ilike\", \"agent 1\"]])",
-            "caption": "search without offset"
-          },
-          {
-            "title": "example",
-            "description": "searchServicePoint([[\"name\", \"ilike\", \"agent 1\"]], { offset: 100 })",
-            "caption": "search with offset"
+            "description": "searchServicePoint({ country: \"PH\", contractActive: true });"
           },
           {
             "title": "function",
@@ -1006,16 +1197,7 @@
           },
           {
             "title": "param",
-            "description": "searching domain",
-            "type": {
-              "type": "NameExpression",
-              "name": "Array"
-            },
-            "name": "domain"
-          },
-          {
-            "title": "param",
-            "description": "Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records",
+            "description": "OpenSPP search parameters: `name`, `area`, `country`, `contractActive`, `_lastUpdated`",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -1023,125 +1205,11 @@
                 "name": "object"
               }
             },
-            "name": "options",
-            "default": "{}"
+            "name": "query"
           },
           {
             "title": "param",
-            "description": "An optional callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "getArea",
-      "params": [
-        "spp_id",
-        "callback"
-      ],
-      "docs": {
-        "description": "get area by id in OpenSPP",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "getArea(\"LOC_7M92NLDH\")"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "spp_id of area",
-            "type": {
-              "type": "NameExpression",
-              "name": "string"
-            },
-            "name": "spp_id"
-          },
-          {
-            "title": "param",
-            "description": "An optional callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
-      "name": "searchArea",
-      "params": [
-        "domain",
-        "options",
-        "callback"
-      ],
-      "docs": {
-        "description": "searching for service point in OpenSPP",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "searchArea([[\"code\", \"=\", \"10732\"]])",
-            "caption": "search without offset"
-          },
-          {
-            "title": "example",
-            "description": "searchArea([[\"kind\", \"=\", 1]], { offset: 10 }})",
-            "caption": "search with offset"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "searching domain",
-            "type": {
-              "type": "NameExpression",
-              "name": "Array"
-            },
-            "name": "domain"
-          },
-          {
-            "title": "param",
-            "description": "Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records",
+            "description": "`count`, `offset`",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -1149,17 +1217,7 @@
                 "name": "object"
               }
             },
-            "name": "options",
-            "default": "{}"
-          },
-          {
-            "title": "param",
-            "description": "An optional callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
+            "name": "options"
           },
           {
             "title": "returns",
@@ -1168,6 +1226,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{OpenSPPState}"
           }
         ]
       },
