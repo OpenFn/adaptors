@@ -88,6 +88,25 @@ run('pnpm', [
 run('pnpm', ['changeset', 'tag']);
 run('git', ['push', '--tags']);
 
-run('node', ['scripts/trust.mjs', adaptor, otp]);
+// By this point the package is live on npm and tagged — that can't be
+// undone from here, and re-running this script won't work either (the
+// "already published" guard above would just reject it). So if trust
+// fails, say so loudly and give the one command that actually finishes it.
+const trustResult = spawnSync('node', ['scripts/trust.mjs', adaptor, otp], {
+  stdio: 'inherit',
+});
+if (trustResult.status !== 0) {
+  console.error();
+  console.error('='.repeat(60));
+  console.error(`${name}@${version} IS published and tagged.`);
+  console.error(`Only trust setup failed — this did NOT get undone.`);
+  console.error();
+  console.error(`Finish it with a fresh OTP:`);
+  console.error();
+  console.error(`  pnpm trust ${adaptor} <otp>`);
+  console.error('='.repeat(60));
+  console.error();
+  process.exit(trustResult.status ?? 1);
+}
 
 console.log(`\nDone. ${name}@${version} is published and trusted.`);
