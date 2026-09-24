@@ -1,4 +1,1120 @@
 [
+{"name":"airqo","adaptor":"@openfn/language-airqo","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#gethistoricalmeasurements\\\">getHistoricalMeasurements(entityType, entityId, [params])</a></dt>\\n<dt>\\n    <a href=\\\"#getrecentmeasurements\\\">getRecentMeasurements(entityType, entityId)</a></dt>\\n</dl>\\n\\nThis adaptor exports the following namespaced functions:\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#http_get\\\">http.get(path, [options])</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_post\\\">http.post(path, [body], [options])</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_request\\\">http.request(method, path, [options])</a>\\n</dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#as\\\">as()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#map\\\">map()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### getHistoricalMeasurements\\n\\n<p><code>getHistoricalMeasurements(entityType, entityId, [params]) ⇒ Operation</code></p>\\n\\nRetrieve historical (past) air quality measurements for a monitoring entity.\\n\\nThe `entityType` determines which kind of entity is queried. Valid values are:\\n- `'sites'`   — a single monitoring site\\n- `'devices'` — a specific sensor device\\n- `'grids'`   — a named geographic grid (e.g. a city or country)\\n- `'cohorts'` — a user-defined group of devices\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| entityType | <code>string</code> | Type of entity: `sites`, `devices`, `grids`, or `cohorts`. |\\n| entityId | <code>string</code> | ID of the entity to retrieve measurements for. |\\n| [params] | <code>object</code> | Request parameters documented in [Request parameters](https://platform.airqo.net/docs/api/for-partners/historical-data/#request-parameters). |\\n\\n\\n**Example:** Get historical measurements for a site\\n```js\\ngetHistoricalMeasurements('sites', 'site123', { limit: 100 });\\n```\\n**Example:** Get historical measurements for a grid with date range\\n```js\\ngetHistoricalMeasurements('grids', 'grid123', {\\n  startTime: '2024-01-01T00:00:00Z',\\n  endTime: '2024-01-31T23:59:59Z',\\n});\\n```\\n\\n* * *\\n\\n### getRecentMeasurements\\n\\n<p><code>getRecentMeasurements(entityType, entityId) ⇒ Operation</code></p>\\n\\nRetrieve the most recent air quality measurements for a monitoring entity.\\n\\nThe `entityType` determines which kind of entity is queried. Valid values are:\\n- `'sites'`   — a single monitoring site\\n- `'devices'` — a specific sensor device\\n- `'grids'`   — a named geographic grid (e.g. a city or country)\\n- `'cohorts'` — a user-defined group of devices\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| entityType | <code>string</code> | Type of entity: `sites`, `devices`, `grids`, or `cohorts`. |\\n| entityId | <code>string</code> | ID of the entity to retrieve measurements for. |\\n\\n\\n**Example:** Get recent measurements for a site\\n```js\\ngetRecentMeasurements('sites', 'site123');\\n```\\n**Example:** Get recent measurements for a grid\\n```js\\ngetRecentMeasurements('grids', 'grid123');\\n```\\n**Example:** Get recent measurements for a device\\n```js\\ngetRecentMeasurements('devices', 'device123');\\n```\\n\\n* * *\\n\\n\\n## http\\n\\nThese functions belong to the http namespace.\\n### http.get {#http_get}\\n\\n<p><code>get(path, [options]) ⇒ Operation</code></p>\\n\\nMake a generic authenticated GET request to any AirQo endpoint.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> |  |\\n| [options] | <code>object</code> | Additional options such as query parameters or headers. |\\n\\n\\n**Example:** Get raw data from any AirQo path\\n```js\\nhttp.get('devices/measurements/sites/site123/recent');\\n```\\n\\n* * *\\n\\n\\n### http.post {#http_post}\\n\\n<p><code>post(path, [body], [options]) ⇒ Operation</code></p>\\n\\nMake a generic authenticated POST request to any AirQo endpoint.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| path | <code>string</code> | API path relative to the configured base URL. |\\n| [body] | <code>object</code> | JSON request body. |\\n| [options] | <code>object</code> | Additional request options. |\\n\\n\\n**Example:** Post a body to any AirQo path\\n```js\\nhttp.post('devices/metadata/sites', { name: 'Kampala' });\\n```\\n\\n* * *\\n\\n\\n### http.request {#http_request}\\n\\n<p><code>request(method, path, [options]) ⇒ Operation</code></p>\\n\\nMake a generic authenticated request of any HTTP method to any AirQo endpoint.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method. |\\n| path | <code>string</code> | API path relative to the configured base URL. |\\n| [options] | <code>object</code> | Additional request options. |\\n\\n\\n**Example:** Make an arbitrary request\\n```js\\nhttp.request('GET', 'devices/measurements/sites/site123/recent');\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# language-airqo ![AirQo logo](./assets/square.png)\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\n[AirQo](https://www.airqo.net) air quality monitoring API.\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/airqo-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/airqo-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Usage\\n\\nThe adaptor currently exposes:\\n\\n- `getRecentMeasurements(entityType, entityId)` and\\n  `getHistoricalMeasurements(entityType, entityId, params)` for the most\\n  common use case: fetching air quality readings for a site, device, grid,\\n  or cohort.\\n- Generic `http.get()`, `http.post()`, and `http.request()` operations for\\n  calling any other AirQo endpoint directly.\\n\\n```js\\n// Adaptor: @openfn/language-airqo\\n\\n// Fetch recent PM2.5/PM10 readings for a site\\ngetRecentMeasurements('sites', 'YOUR_AIRQO_SITE_ID');\\n\\n// Fetch historical readings for a grid over a date range\\ngetHistoricalMeasurements('grids', 'YOUR_AIRQO_GRID_ID', {\\n  startTime: '2024-01-01T00:00:00Z',\\n  endTime: '2024-01-31T23:59:59Z',\\n});\\n\\n// Call any other AirQo endpoint directly while you find out which\\n// resource-specific helpers are worth promoting\\nhttp.get('devices/metadata/grids');\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-airqo\\n\\n## 1.0.0 - 11 August 2026\\n\\n### Major Changes\\n\\n- Initial release of the AirQo adaptor\\n- Added `getRecentMeasurements` - retrieve recent air quality measurements by site, device, grid, or cohort\\n- Added `getHistoricalMeasurements` - retrieve historical measurements with optional date range filtering\\n- Added `http.get`, `http.post`, and `http.request` - generic authenticated operations for calling any AirQo endpoint\\n\\n\"","functions":["getHistoricalMeasurements","getRecentMeasurements"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","type":"object","additionalProperties":false,"required":["token"],"properties":{"token":{"type":"string","title":"Access Token","description":"AirQo API access token. Generate one via analytics.airqo.net under Account Settings > API."},"clientSecret":{"type":"string","title":"Client Secret","description":"Optional AirQo client secret sent as the X-Client-Secret header when client-secret protection is enabled."},"baseUrl":{"type":"string","title":"Base URL","description":"AirQo API base URL. Defaults to https://api.airqo.net/api/v2","default":"https://api.airqo.net/api/v2"}}}},
+[
+  {
+    "id": "get",
+    "longname": "get",
+    "name": "get",
+    "kind": "function",
+    "scope": "http",
+    "description": "Make a generic authenticated GET request to any AirQo endpoint.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "optional": true,
+        "description": "Additional options such as query parameters or headers.",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Get raw data from any AirQo path</caption>\nhttp.get('devices/measurements/sites/site123/recent');"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 15,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/src"
+    },
+    "order": 2,
+    "source": "@openfn/language-airqo",
+    "signature": [
+      "get(path, options)"
+    ],
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "getHistoricalMeasurements",
+    "longname": "getHistoricalMeasurements",
+    "name": "getHistoricalMeasurements",
+    "kind": "function",
+    "scope": "global",
+    "description": "Retrieve historical (past) air quality measurements for a monitoring entity.\n\nThe `entityType` determines which kind of entity is queried. Valid values are:\n- `'sites'`   — a single monitoring site\n- `'devices'` — a specific sensor device\n- `'grids'`   — a named geographic grid (e.g. a city or country)\n- `'cohorts'` — a user-defined group of devices",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Type of entity: `sites`, `devices`, `grids`, or `cohorts`.",
+        "name": "entityType"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "ID of the entity to retrieve measurements for.",
+        "name": "entityId"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "optional": true,
+        "description": "Request parameters documented in {@link https://platform.airqo.net/docs/api/for-partners/historical-data/#request-parameters Request parameters}.",
+        "name": "params"
+      }
+    ],
+    "examples": [
+      "<caption>Get historical measurements for a site</caption>\ngetHistoricalMeasurements('sites', 'site123', { limit: 100 });",
+      "<caption>Get historical measurements for a grid with date range</caption>\ngetHistoricalMeasurements('grids', 'grid123', {\n  startTime: '2024-01-01T00:00:00Z',\n  endTime: '2024-01-31T23:59:59Z',\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 124,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/src"
+    },
+    "order": 1,
+    "source": "@openfn/language-airqo",
+    "signature": [
+      "getHistoricalMeasurements(entityType, entityId, params)"
+    ],
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "getRecentMeasurements",
+    "longname": "getRecentMeasurements",
+    "name": "getRecentMeasurements",
+    "kind": "function",
+    "scope": "global",
+    "description": "Retrieve the most recent air quality measurements for a monitoring entity.\n\nThe `entityType` determines which kind of entity is queried. Valid values are:\n- `'sites'`   — a single monitoring site\n- `'devices'` — a specific sensor device\n- `'grids'`   — a named geographic grid (e.g. a city or country)\n- `'cohorts'` — a user-defined group of devices",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Type of entity: `sites`, `devices`, `grids`, or `cohorts`.",
+        "name": "entityType"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "ID of the entity to retrieve measurements for.",
+        "name": "entityId"
+      }
+    ],
+    "examples": [
+      "<caption>Get recent measurements for a site</caption>\ngetRecentMeasurements('sites', 'site123');",
+      "<caption>Get recent measurements for a grid</caption>\ngetRecentMeasurements('grids', 'grid123');",
+      "<caption>Get recent measurements for a device</caption>\ngetRecentMeasurements('devices', 'device123');"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 80,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/src"
+    },
+    "order": 0,
+    "source": "@openfn/language-airqo",
+    "signature": [
+      "getRecentMeasurements(entityType, entityId)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "post",
+    "longname": "post",
+    "name": "post",
+    "kind": "function",
+    "scope": "http",
+    "description": "Make a generic authenticated POST request to any AirQo endpoint.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "API path relative to the configured base URL.",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "optional": true,
+        "description": "JSON request body.",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "optional": true,
+        "description": "Additional request options.",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Post a body to any AirQo path</caption>\nhttp.post('devices/metadata/sites', { name: 'Kampala' });"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 44,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/src"
+    },
+    "order": 3,
+    "source": "@openfn/language-airqo",
+    "signature": [
+      "post(path, body, options)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "request",
+    "longname": "request",
+    "name": "request",
+    "kind": "function",
+    "scope": "http",
+    "description": "Make a generic authenticated request of any HTTP method to any AirQo endpoint.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "HTTP method.",
+        "name": "method"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "API path relative to the configured base URL.",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "optional": true,
+        "description": "Additional request options.",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Make an arbitrary request</caption>\nhttp.request('GET', 'devices/measurements/sites/site123/recent');"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 76,
+      "filename": "http.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/src"
+    },
+    "order": 4,
+    "source": "@openfn/language-airqo",
+    "signature": [
+      "request(method, path, options)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "as",
+    "longname": "as",
+    "name": "as()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Run an operation and save the result to a custom key in state instead of overwriting state.data.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The state key to assign the result of the operation to.",
+        "name": "key"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "An operation that returns a new state object with a `data` property",
+        "name": "operation"
+      }
+    ],
+    "examples": [
+      "<caption>Fetch cce-data from collections and store them under state.cceData</caption>\nas('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 987,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/node_modules/@openfn/language-common/src"
+    },
+    "order": 35,
+    "source": "@openfn/language-common",
+    "signature": [
+      "as(key, operation)"
+    ],
+    "common": true
+  },
+  {
+    "id": "combine",
+    "longname": "combine",
+    "name": "combine()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Combines two operations into one",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Operations"
+          ]
+        },
+        "description": "Operations to be performed.",
+        "name": "operations"
+      }
+    ],
+    "examples": [
+      "combine(\n  create('foo'),\n  delete('bar')\n)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 351,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/node_modules/@openfn/language-common/src"
+    },
+    "order": 15,
+    "source": "@openfn/language-common",
+    "signature": [
+      "combine(operations)"
+    ],
+    "common": true
+  },
+  {
+    "id": "cursor",
+    "longname": "cursor",
+    "name": "cursor()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Sets a cursor property on state.\nSupports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\nwhich will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones\nare not yet supported.\nYou can provide a formatter to customise the final cursor value, which is useful for normalising\ndifferent inputs. The custom formatter runs after natural language date conversion.\nSee the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "description": "the cursor value. Usually an ISO date, natural language date, or page number",
+        "name": "value"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "options to control the cursor.",
+        "name": "options"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "set the cursor key. Will persist through the whole run.",
+        "name": "options.key"
+      },
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "description": "the value to use if value is falsy",
+        "name": "options.defaultValue"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "custom formatter for the final cursor value",
+        "name": "options.format"
+      }
+    ],
+    "examples": [
+      "<caption>Use a cursor from state if present, or else use the default value</caption>\ncursor($.cursor, { defaultValue: 'today' })",
+      "<caption>Use a pagination cursor</caption>\ncursor(22)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 856,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/node_modules/@openfn/language-common/src"
+    },
+    "order": 31,
+    "source": "@openfn/language-common",
+    "signature": [
+      "cursor(value, options)"
+    ],
+    "common": true
+  },
+  {
+    "id": "dataPath",
+    "longname": "dataPath",
+    "name": "dataPath()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Ensures a path points at the data.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "JSONPath referencing a point in `data`.",
+        "name": "path"
+      }
+    ],
+    "examples": [
+      "dataPath('key')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 159,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/node_modules/@openfn/language-common/src"
+    },
+    "order": 8,
+    "source": "@openfn/language-common",
+    "signature": [
+      "dataPath(path)"
+    ],
+    "common": true
+  },
+  {
+    "id": "dataValue",
+    "longname": "dataValue",
+    "name": "dataValue()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Picks out a single value from the source data object—usually `state.data`.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "JSONPath referencing a point in `data`.",
+        "name": "path"
+      }
+    ],
+    "examples": [
+      "dataValue('key')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 177,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/node_modules/@openfn/language-common/src"
+    },
+    "order": 9,
+    "source": "@openfn/language-common",
+    "signature": [
+      "dataValue(path)"
+    ],
+    "common": true
+  },
+  {
+    "id": "dateFns",
+    "name": "dateFns",
+    "common": true,
+    "kind": "external",
+    "scope": "global",
+    "source": "@openfn/language-common"
+  },
+  {
+    "id": "each",
+    "longname": "each",
+    "name": "each()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Iterates over an array of items and invokes an operation upon each one, where the state\nobject is _scoped_ so that state.data is the item under iteration.\nThe rest of the state object is untouched and can be referenced as usual.\nYou can pass an array directly, or use lazy state or a JSONPath string to\nreference a slice of state.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "DataSource"
+          ]
+        },
+        "description": "JSONPath referencing a point in `state`.",
+        "name": "dataSource"
+      },
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        },
+        "description": "The operation needed to be repeated.",
+        "name": "operation"
+      }
+    ],
+    "examples": [
+      "<caption>Using lazy state ($) to iterate over items in state.data and pass each into an \"insert\" operation</caption>\neach(\n  $.data,\n  // Inside the callback operation, `$.data` is scoped to the item under iteration\n  insert(\"patient\", {\n    patient_name: $.data.properties.case_name,\n    patient_id: $.data.case_id,\n  })\n);",
+      "<caption>Iterate over items in state.data and pass each one into an \"insert\" operation</caption>\neach(\n  $.data,\n  insert(\"patient\", (state) => ({\n    patient_id: state.data.case_id,\n    ...state.data\n  }))\n);",
+      "<caption>Using JSON path to iterate over items in state.data and pass each one into an \"insert\" operation</caption>\neach(\n  \"$.data[*]\",\n  insert(\"patient\", (state) => ({\n    patient_name: state.data.properties.case_name,\n    patient_id: state.data.case_id,\n  }))\n);"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 321,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/node_modules/@openfn/language-common/src"
+    },
+    "order": 14,
+    "source": "@openfn/language-common",
+    "signature": [
+      "each(dataSource, operation)"
+    ],
+    "common": true
+  },
+  {
+    "id": "field",
+    "longname": "field",
+    "name": "field()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Returns a key, value pair in an array.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Name of the field",
+        "name": "key"
+      },
+      {
+        "type": {
+          "names": [
+            "Value"
+          ]
+        },
+        "description": "The value itself or a sourceable operation.",
+        "name": "value"
+      }
+    ],
+    "examples": [
+      "field('destination_field_name__c', 'value')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Field"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 392,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/node_modules/@openfn/language-common/src"
+    },
+    "order": 17,
+    "source": "@openfn/language-common",
+    "signature": [
+      "field(key, value)"
+    ],
+    "common": true
+  },
+  {
+    "id": "fields",
+    "longname": "fields",
+    "name": "fields()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Zips key value pairs into an object.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Fields"
+          ]
+        },
+        "description": "a list of fields",
+        "name": "fields"
+      }
+    ],
+    "examples": [
+      "fields(list_of_fields)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 405,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/node_modules/@openfn/language-common/src"
+    },
+    "order": 18,
+    "source": "@openfn/language-common",
+    "signature": [
+      "fields(fields)"
+    ],
+    "common": true
+  },
+  {
+    "id": "fn",
+    "longname": "fn",
+    "name": "fn()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Creates a custom step (or operation) for more flexible job writing.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "is the function",
+        "name": "func"
+      }
+    ],
+    "examples": [
+      "fn(state => {\n  // do some things to state\n  return state;\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 76,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/node_modules/@openfn/language-common/src"
+    },
+    "order": 3,
+    "source": "@openfn/language-common",
+    "signature": [
+      "fn(func)"
+    ],
+    "common": true
+  },
+  {
+    "id": "fnIf",
+    "longname": "fnIf",
+    "name": "fnIf()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Execute a function only when the condition returns true",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Boolean"
+          ]
+        },
+        "description": "The condition that returns true",
+        "name": "condition"
+      },
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        },
+        "description": "The operation needed to be executed.",
+        "name": "operation"
+      }
+    ],
+    "examples": [
+      "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 92,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/node_modules/@openfn/language-common/src"
+    },
+    "order": 4,
+    "source": "@openfn/language-common",
+    "signature": [
+      "fnIf(condition, operation)"
+    ],
+    "common": true
+  },
+  {
+    "id": "group",
+    "longname": "group",
+    "name": "group()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Groups an array of objects by a specified key path.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Array.<Object>"
+          ]
+        },
+        "description": "The array of objects to be grouped.",
+        "name": "arrayOfObjects"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The key path to group by.",
+        "name": "keyPath"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "(Optional) Callback function",
+        "name": "callback"
+      }
+    ],
+    "examples": [
+      "const users = [\n  { name: 'Alice', age: 25, city: 'New York' },\n  { name: 'Bob', age: 30, city: 'San Francisco' },\n  { name: 'Charlie', age: 25, city: 'New York' },\n  { name: 'David', age: 30, city: 'San Francisco' }\n];\ngroup(users, 'city');\n// state is { data: { 'New York': [/Alice, Charlie/], 'San Francisco': [ /Bob, David / ] }"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 455,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/node_modules/@openfn/language-common/src"
+    },
+    "order": 20,
+    "source": "@openfn/language-common",
+    "signature": [
+      "group(arrayOfObjects, keyPath, callback)"
+    ],
+    "common": true
+  },
+  {
+    "id": "lastReferenceValue",
+    "longname": "lastReferenceValue",
+    "name": "lastReferenceValue()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Picks out the last reference value from source data.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "JSONPath referencing a point in `references`.",
+        "name": "path"
+      }
+    ],
+    "examples": [
+      "lastReferenceValue('key')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 206,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/node_modules/@openfn/language-common/src"
+    },
+    "order": 11,
+    "source": "@openfn/language-common",
+    "signature": [
+      "lastReferenceValue(path)"
+    ],
+    "common": true
+  },
+  {
+    "id": "map",
+    "longname": "map",
+    "name": "map()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Iterates over a collection of items and returns a new array of mapped values,\nlike Javascript's `Array.map()` function.\n\nEach item in the source array will be passed into the callback function. The returned value\nwill be added to the new array. The callback is passed the original item, the current index\nin the source array (ie, the nth item number), and the state object.\n\nWrites a new array to `state.data` with transformed values.c array.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string",
+            "Array"
+          ]
+        },
+        "description": "An array of items or a a JSONPath string which points to an array of items.",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "The mapping function, invoked with `(data, index, state)` for each item in the array.",
+        "name": "callback"
+      }
+    ],
+    "examples": [
+      "<caption> Transform an array of items in state</caption>\nmap($.items', (data, index, state) => {\n  return {\n    id: index + 1,\n    name: data.name,\n    createdAt: state.cursor,\n  };\n});",
+      "<caption>Map items asynchronously (e.g. fetch extra info)</caption>\nmap($.items, async (data, index, state) => {\n  const userInfo = await fetchUserInfo(data.userId);\n  return {\n    id: index + 1,\n    name: data.name,\n    extra: userInfo,\n  };\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "State"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 244,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/node_modules/@openfn/language-common/src"
+    },
+    "order": 12,
+    "source": "@openfn/language-common",
+    "signature": [
+      "map(path, callback)"
+    ],
+    "common": true
+  },
+  {
+    "id": "merge",
+    "longname": "merge",
+    "name": "merge()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Merges fields into each item in an array.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "DataSource"
+          ]
+        },
+        "name": "dataSource"
+      },
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        },
+        "description": "Group of fields to merge in.",
+        "name": "fields"
+      }
+    ],
+    "examples": [
+      "merge(\n  \"$.books[*]\",\n  fields(\n    field( \"publisher\", sourceValue(\"$.publisher\") )\n  )\n)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "DataSource"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 425,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/node_modules/@openfn/language-common/src"
+    },
+    "order": 19,
+    "source": "@openfn/language-common",
+    "signature": [
+      "merge(dataSource, fields)"
+    ],
+    "common": true
+  },
+  {
+    "id": "scrubEmojis",
+    "longname": "scrubEmojis",
+    "name": "scrubEmojis()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Replaces emojis in a string.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "String that needs to be cleaned",
+        "name": "text"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Characters that replace the emojis",
+        "name": "replacementChars"
+      }
+    ],
+    "examples": [
+      "scrubEmojis('Dove🕊️⭐ 29')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 591,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/node_modules/@openfn/language-common/src"
+    },
+    "order": 27,
+    "source": "@openfn/language-common",
+    "signature": [
+      "scrubEmojis(text, replacementChars)"
+    ],
+    "common": true
+  },
+  {
+    "id": "sourceValue",
+    "longname": "sourceValue",
+    "name": "sourceValue()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Picks out a single value from source data.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "JSONPath referencing a point in `state`.",
+        "name": "path"
+      }
+    ],
+    "examples": [
+      "sourceValue('$.key')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 127,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/airqo/node_modules/@openfn/language-common/src"
+    },
+    "order": 6,
+    "source": "@openfn/language-common",
+    "signature": [
+      "sourceValue(path)"
+    ],
+    "common": true
+  }
+],
 {"name":"arcgis","adaptor":"@openfn/language-arcgis","version":"1.1.3","docs":"\"\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#as\\\">as()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#log\\\">log()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#map\\\">map()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#util\\\">util</a>\\n</dt></dl>\\n\\n\\n##  Interfaces\\n\\n### HttpState\\n\\nState object\\n\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-arcgis <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\narcgis API.\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/arcgis-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/arcgis-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-arcgis\\n\\n## 1.1.3 - 03 September 2026\\n\\n### Patch Changes\\n\\n- fd1b2be: Security update\\n- Updated dependencies \\\\[654026d]\\n- Updated dependencies \\\\[fd1b2be]\\n  - @openfn/language-common@3.3.5\\n\\n## 1.1.2 - 30 June 2026\\n\\n### Patch Changes\\n\\n- c5f8728: Update undici dependency\\n- Updated dependencies \\\\[c5f8728]\\n  - @openfn/language-common@3.3.4\\n\\n## 1.1.1 - 27 May 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[5276a86]\\n  - @openfn/language-common@3.3.3\\n\\n## 1.1.0 - 21 May 2026\\n\\n### Minor Changes\\n\\n- bf26881: export `log` function from common\\n\\n## 1.0.8 - 20 May 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[9d1e1ae]\\n  - @openfn/language-common@3.3.2\\n\\n## 1.0.7 - 07 April 2026\\n\\n### Patch Changes\\n\\n- add9748: Update dependencies (undici)\\n- Updated dependencies \\\\[add9748]\\n- Updated dependencies \\\\[a9b7597]\\n  - @openfn/language-common@3.3.1\\n\\n## 1.0.6 - 30 March 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[295655f]\\n  - @openfn/language-common@3.3.0\\n\\n## 1.0.5 - 24 February 2026\\n\\n### Patch Changes\\n\\n- 856f85c: Security updates\\n- Updated dependencies \\\\[856f85c]\\n  - @openfn/language-common@3.2.3\\n\\n## 1.0.4 - 09 February 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[8ad6b98]\\n- Updated dependencies \\\\[8ad6b98]\\n  - @openfn/language-common@3.2.2\\n\\n## 1.0.3 - 28 November 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[cfc66df]\\n  - @openfn/language-common@3.2.1\\n\\n## 1.0.2 - 12 November 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[4d7a833]\\n  - @openfn/language-common@3.2.0\\n\\n## 1.0.1 - 04 November 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@3.1.2\\n\\n## 1.0.0 - 16 October 2025\\n\\n### Major Changes\\n\\n- b35b8ef: New ARCGIS adaptor\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[408a3a2]\\n  - @openfn/language-common@3.1.1\\n\\n## 0.0.1 - 06 October 2025\\n\\nInitial release.\\n\"","functions":[],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{},"type":"object","additionalProperties":true,"required":[]}},
 [
   {
