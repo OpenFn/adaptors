@@ -33,8 +33,6 @@ communicate with external systems. These adaptors are used by
 - [asdf](https://github.com/asdf-vm/asdf) installed globally
 - `Node.js` and `pnpm` managed via asdf
 
-
-
 ### Setup
 
 ```bash
@@ -51,7 +49,8 @@ pnpm run setup
 
 ### Alternative: Using nvm instead of asdf
 
-If you prefer managing Node.js with [nvm](https://github.com/nvm-sh/nvm), this project includes a `.nvmrc` file for node version switching:
+If you prefer managing Node.js with [nvm](https://github.com/nvm-sh/nvm), this
+project includes a `.nvmrc` file for node version switching:
 
 ```bash
 # Use the Node.js version specified in .nvmrc
@@ -63,7 +62,6 @@ pnpm install
 pnpm build
 pnpm run setup
 ```
-
 
 ## Using Adaptors
 
@@ -142,7 +140,6 @@ for setup and usage instructions.
 ## Contributing
 
 1. **I want to contribute**: Choose your path:
-
    - To fix an existing issue: Browse
      [open issues](https://github.com/OpenFn/adaptors/issues)
    - To build a new adaptor: See [Build your adaptor](#build-your-adaptor)
@@ -170,7 +167,6 @@ to help you build your own adaptor.
    ```
 
 2. Add your logo images to `packages/<adaptor-name>/assets/`:
-
    - `rectangle.png` (512x190px)
    - `square.png` (256x256px)
 
@@ -248,6 +244,9 @@ pnpm changeset
 
 Releases are automated via GitHub Actions when merging to `main`.
 
+As of September 2026, releases as STAGED on npm and must be manually approved.
+See [docs.npmjs.com/staged-publishing](https://docs.npmjs.com/staged-publishing)
+
 Github Actions will:
 
 - Build and test (just in case)
@@ -255,6 +254,22 @@ Github Actions will:
 - Generate and push tags for all new versions
 - Send a notification to slack
 - Update `docs/docs.json` with new markdown and update docs.openfn.org
+
+Trusted users can approve a staged package with the CLI or from npmjs.com
+
+List staged packages:
+
+```
+npm stage list @openfn/language-<name>
+```
+
+This will give you a staging id.
+
+Approve staged packages:
+
+```
+npm stage approve <stage-id>
+```
 
 ## Pre-releases
 
