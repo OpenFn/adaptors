@@ -7,7 +7,7 @@
         "entityId"
       ],
       "docs": {
-        "description": "Retrieve the most recent air quality measurements for a monitoring entity.\r\n\r\nThe `entityType` determines which kind of entity is queried. Valid values are:\r\n- `'sites'`   — a single monitoring site\r\n- `'devices'` — a specific sensor device\r\n- `'grids'`   — a named geographic grid (e.g. a city or country)\r\n- `'cohorts'` — a user-defined group of devices",
+        "description": "Retrieve the most recent air quality measurements for a monitoring entity.\n\nThe `entityType` determines which kind of entity is queried. Valid values are:\n- `'sites'`   — a single monitoring site\n- `'devices'` — a specific sensor device\n- `'grids'`   — a named geographic grid (e.g. a city or country)\n- `'cohorts'` — a user-defined group of devices",
         "tags": [
           {
             "title": "example",
@@ -72,7 +72,7 @@
         "params"
       ],
       "docs": {
-        "description": "Retrieve historical (past) air quality measurements for a monitoring entity.\r\n\r\nThe `entityType` determines which kind of entity is queried. Valid values are:\r\n- `'sites'`   — a single monitoring site\r\n- `'devices'` — a specific sensor device\r\n- `'grids'`   — a named geographic grid (e.g. a city or country)\r\n- `'cohorts'` — a user-defined group of devices",
+        "description": "Retrieve historical (past) air quality measurements for a monitoring entity.\n\nThe `entityType` determines which kind of entity is queried. Valid values are:\n- `'sites'`   — a single monitoring site\n- `'devices'` — a specific sensor device\n- `'grids'`   — a named geographic grid (e.g. a city or country)\n- `'cohorts'` — a user-defined group of devices",
         "tags": [
           {
             "title": "example",
@@ -81,7 +81,7 @@
           },
           {
             "title": "example",
-            "description": "getHistoricalMeasurements('grids', 'grid123', {\r\n  startTime: '2024-01-01T00:00:00Z',\r\n  endTime: '2024-01-31T23:59:59Z',\r\n});",
+            "description": "getHistoricalMeasurements('grids', 'grid123', {\n  startTime: '2024-01-01T00:00:00Z',\n  endTime: '2024-01-31T23:59:59Z',\n});",
             "caption": "Get historical measurements for a grid with date range"
           },
           {

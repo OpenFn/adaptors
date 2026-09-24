@@ -1,7 +1,3 @@
-/**
- * Generic HTTP operations for calling any AirQo endpoint.
- * Docs: https://docs.airqo.net/airqo-rest-api-documentation
- */
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
 

@@ -91,7 +91,7 @@ importers:
         version: 3.0.2
       undici:
         specifier: ^7.24.7
-        version: 7.28.0
+        version: 7.29.0
 
   packages/arcgis:
     dependencies:

@@ -1,7 +1,3 @@
-/**
- * AirQo-specific operations. Generic HTTP helpers live in ./http.js.
- * Docs: https://docs.airqo.net/airqo-rest-api-documentation
- */
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
 
