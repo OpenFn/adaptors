@@ -1,10 +1,17 @@
-// Usage: pnpm trust:all
+// Usage: pnpm trust:all <otp>
 //
 // Runs scripts/trust.mjs for every published adaptor in the workspace.
 // See https://docs.npmjs.com/cli/v11/commands/npm-trust#bulk-usage
 import { spawnSync } from 'node:child_process';
 
 const DELAY_MS = 2000;
+
+const otp = process.argv.slice(2).pop();
+if (!otp) {
+  console.error('Usage: pnpm trust:all <otp>');
+  console.error('A one-time password from your authenticator is required.');
+  process.exit(1);
+}
 
 const list = spawnSync(
   'pnpm',
@@ -30,7 +37,7 @@ const failed = [];
 
 for (const [i, adaptor] of packages.entries()) {
   console.log(`\n[${i + 1}/${packages.length}] ${adaptor}`);
-  const { status } = spawnSync('node', ['scripts/trust.mjs', adaptor], {
+  const { status } = spawnSync('node', ['scripts/trust.mjs', adaptor, otp], {
     stdio: 'inherit',
   });
 

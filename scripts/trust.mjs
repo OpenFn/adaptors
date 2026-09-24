@@ -1,4 +1,4 @@
-// Usage: pnpm trust <adaptor>   e.g. pnpm trust common
+// Usage: pnpm trust <adaptor> <otp>   e.g. pnpm trust common 123456
 import { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
@@ -6,10 +6,17 @@ import path from 'node:path';
 const REPO = 'OpenFn/adaptors';
 const WORKFLOW = 'publish.yaml';
 
-const [adaptor, ...extraArgs] = process.argv.slice(2);
+const rawArgs = process.argv.slice(2);
+const otp = rawArgs.pop();
+const [adaptor, ...extraArgs] = rawArgs;
 
 if (!adaptor) {
-  console.error('Usage: pnpm trust <adaptor>   e.g. pnpm trust common');
+  console.error('Usage: pnpm trust <adaptor> <otp>');
+  process.exit(1);
+}
+if (!otp) {
+  console.error('Usage: pnpm trust <adaptor> <otp>');
+  console.error('A one-time password from your authenticator is required.');
   process.exit(1);
 }
 
@@ -22,8 +29,8 @@ if (!existsSync(pkgPath)) {
 const { name } = JSON.parse(readFileSync(pkgPath, 'utf8'));
 
 // npm trust requires the package to already be on the registry. Check first
-// (this is an unauthenticated read, unlike everything below it) so an
-// unpublished adaptor doesn't burn a 2FA prompt on a call that's bound to fail.
+// (this is an unauthenticated read) so an unpublished adaptor doesn't burn
+// the OTP on a call that's bound to fail.
 const published = spawnSync('npm', ['view', name, 'version'], {
   stdio: 'ignore',
 });
@@ -35,21 +42,41 @@ if (published.status !== 0) {
   process.exit(0);
 }
 
-const existing = spawnSync('npm', ['trust', 'list', name, '--json'], {
-  encoding: 'utf8',
-});
+function otpRejected(result) {
+  if (result.status === 0) return false;
+  try {
+    const parsed = JSON.parse(result.stdout?.trim() || 'null');
+    return parsed?.error?.code === 'EOTP';
+  } catch {
+    return false;
+  }
+}
+
+function failOtp(name) {
+  console.error();
+  console.error(`Your OTP was rejected running ${name} (wrong or expired).`);
+  console.error(`Get a fresh one from your authenticator and try again.`);
+  console.error();
+  process.exit(1);
+}
+
+// Read-only, so this needs structured output to give a friendly skip
+// message — the --otp is passed straight through, no interactive prompt.
+const existing = spawnSync(
+  'npm',
+  ['trust', 'list', name, '--json', `--otp=${otp}`],
+  { encoding: 'utf8' }
+);
+if (otpRejected(existing)) {
+  failOtp('trust list');
+}
 const existingOutput = existing.stdout?.trim();
 if (existingOutput) {
   const parsed = JSON.parse(existingOutput);
   if (parsed.error) {
-    // e.g. the 2FA/OTP session has expired — this is a real failure, not
-    // "no trust configured", so don't let it look like a clean skip.
     console.error();
     console.error(`Couldn't check trust status for ${name}:`);
     console.error(`  ${parsed.error.summary || parsed.error.code}`);
-    if (parsed.error.authUrl) {
-      console.error(`  ${parsed.error.authUrl}`);
-    }
     console.error();
     process.exit(1);
   }
@@ -68,7 +95,7 @@ console.log();
 console.log(`Configuring trusted publishing for ${name}`);
 console.log(`  repo: ${REPO}, workflow: .github/workflows/${WORKFLOW}\n`);
 
-const { status } = spawnSync(
+const trustResult = spawnSync(
   'npm',
   [
     'trust',
@@ -80,15 +107,20 @@ const { status } = spawnSync(
     WORKFLOW,
     '--allow-publish',
     '--yes',
+    '--json',
+    `--otp=${otp}`,
     ...extraArgs,
   ],
-  // inherited stdio so that  npm can prompt for the OTP itself
-  { stdio: 'inherit' },
+  { encoding: 'utf8' }
 );
-
-if (status !== 0) {
-  process.exit(status ?? 1);
+if (otpRejected(trustResult)) {
+  failOtp('trust github');
 }
+if (trustResult.status !== 0) {
+  console.error(trustResult.stderr || `Failed to configure trust for ${name}`);
+  process.exit(trustResult.status ?? 1);
+}
+console.log(`Trusted: ${REPO}/${WORKFLOW} can publish ${name}`);
 
 // Lock the package to "require 2FA, disallow tokens" so ad-hoc publishes
 // with a bypass-2FA token are no longer possible — only this trusted
@@ -96,10 +128,19 @@ if (status !== 0) {
 console.log();
 console.log(`Disallowing token publishes for ${name}`);
 
-const { status: mfaStatus } = spawnSync(
+const mfaResult = spawnSync(
   'npm',
-  ['access', 'set', 'mfa=publish', name],
-  { stdio: 'inherit' }
+  ['access', 'set', 'mfa=publish', name, '--json', `--otp=${otp}`],
+  { encoding: 'utf8' }
 );
+if (otpRejected(mfaResult)) {
+  failOtp('access set mfa=publish');
+}
+if (mfaResult.status !== 0) {
+  console.error(
+    mfaResult.stderr || `Failed to disallow token publishes for ${name}`
+  );
+  process.exit(mfaResult.status ?? 1);
+}
 
-process.exit(mfaStatus ?? 1);
+console.log(`Done.`);
