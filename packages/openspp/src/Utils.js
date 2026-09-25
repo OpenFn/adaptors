@@ -3,18 +3,18 @@
  * - Infrastructure/helpers ONLY
  * - NO operational functions
  * - To extend: wrap it (e.g., requestWithRetry)
- *
- * Structure follows the OpenFn adaptor template
- * (tools/generate/template/src/Utils.js) and the common `request` helper.
- * API reference: OpenSPP2 `spp_api_v2` REST API, mounted at /api/v2/spp.
  */
 import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
   assertRelativeUrl,
+  expandReferences,
 } from '@openfn/language-common/util';
 
 export const API_PATH = '/api/v2/spp';
+
+// Upper bound used when reading all memberships of one beneficiary.
+const MEMBERSHIP_PAGE_SIZE = 100;
 
 const FORBIDDEN_HINT =
   'OpenSPP returns 403 when a record does not exist, has no consent, or the API client lacks a scope';
@@ -245,6 +245,13 @@ const joinList = value => (Array.isArray(value) ? value.join(',') : value);
  * @returns {object}
  */
 export const buildQuery = (query = {}, options = {}) => {
+  // v3 paging options, which OpenSPP2 would silently ignore
+  if (options.limit !== undefined) {
+    throw new Error('Use count instead of limit to set the page size');
+  }
+  if (options.order !== undefined) {
+    throw new Error('Use sort instead of order, eg { sort: "-birthdate" }');
+  }
   const params = {
     ...query,
     _count: options.count,
@@ -270,4 +277,212 @@ export const unwrapSearch = body => {
     return (body.entry ?? []).map(entry => entry.resource);
   }
   return body?.data ?? [];
+};
+
+/**
+ * Throws unless `data` is a plain object.
+ * @private
+ */
+export const assertObject = (data, name = 'data') => {
+  if (typeof data !== 'object' || data === null || Array.isArray(data)) {
+    throw new Error(`${name} must be an object, got ${JSON.stringify(data)}`);
+  }
+};
+
+/**
+ * Throws unless `data` is an object with at least one identifier.
+ * @private
+ */
+export const assertHasIdentifier = data => {
+  assertObject(data);
+  if (!Array.isArray(data.identifier) || data.identifier.length === 0) {
+    throw new Error(
+      'data.identifier must be a non-empty array of { system, value }, eg [{ system: "urn:openspp:vocab:id-type#national_id", value: "PH-123" }]'
+    );
+  }
+};
+
+/**
+ * Returns an operation that reads one resource by `system|value` identifier.
+ * @private
+ */
+export const readResource = (type, id, options = {}) => {
+  return async state => {
+    const [resolvedId, resolvedOptions] = expandReferences(state, id, options);
+    const response = await request(
+      state.configuration,
+      'GET',
+      `/${type}/${encodeIdentifier(resolvedId)}`,
+      { query: buildQuery({}, resolvedOptions) }
+    );
+    return prepareNextState(state, response);
+  };
+};
+
+/**
+ * Returns an operation that searches a resource type.
+ * @private
+ */
+export const searchResource = (type, query = {}, options = {}) => {
+  return async state => {
+    const [resolvedQuery, resolvedOptions] = expandReferences(
+      state,
+      query,
+      options
+    );
+    if (Array.isArray(resolvedQuery)) {
+      // A v3 Odoo domain would be sent as `?0=…`, which OpenSPP ignores,
+      // returning every record
+      throw new Error(
+        `query must be an object of OpenSPP search parameters, eg { name: "Santos" }. Odoo domains like ${JSON.stringify(
+          resolvedQuery
+        )} are not supported`
+      );
+    }
+    assertObject(resolvedQuery, 'query');
+    for (const key of ['identifier', 'group']) {
+      if (resolvedQuery?.[key] !== undefined && resolvedQuery[key] !== 'none') {
+        // OpenSPP ignores a malformed filter and returns every record
+        encodeIdentifier(resolvedQuery[key]);
+      }
+    }
+    const groupFilter = resolvedQuery?.group;
+    if (type === 'Individual' && groupFilter !== undefined && groupFilter !== 'none') {
+      // OpenSPP also ignores a group filter for a group that doesn't exist,
+      // so check the group first: a missing group throws a 404 here
+      await request(
+        state.configuration,
+        'GET',
+        `/Group/${encodeIdentifier(groupFilter)}`,
+        { query: { _elements: 'identifier' } }
+      );
+    }
+    const response = await request(state.configuration, 'GET', `/${type}`, {
+      query: buildQuery(resolvedQuery, resolvedOptions),
+    });
+    return prepareSearchState(state, response);
+  };
+};
+
+/**
+ * Returns an operation that creates a resource with at least one identifier.
+ * @private
+ */
+export const createResource = (type, data) => {
+  return async state => {
+    const [resolvedData] = expandReferences(state, data);
+    assertHasIdentifier(resolvedData);
+    const response = await request(state.configuration, 'POST', `/${type}`, {
+      body: resolvedData,
+    });
+    return prepareNextState(state, response);
+  };
+};
+
+/**
+ * Returns an operation that partially updates a resource (JSON Merge Patch).
+ * @private
+ */
+export const patchResource = (type, id, data, options = {}) => {
+  return async state => {
+    const [resolvedId, resolvedData, resolvedOptions] = expandReferences(
+      state,
+      id,
+      data,
+      options
+    );
+    assertObject(resolvedData);
+    const response = await request(
+      state.configuration,
+      'PATCH',
+      `/${type}/${encodeIdentifier(resolvedId)}`,
+      { body: resolvedData, ifMatch: resolvedOptions.ifMatch }
+    );
+    return prepareNextState(state, response);
+  };
+};
+
+/**
+ * Reads the program memberships of a beneficiary.
+ * @private
+ */
+export const listMemberships = async (configuration, beneficiary, query = {}) => {
+  const response = await request(
+    configuration,
+    'GET',
+    '/ProgramMembership',
+    {
+      query: buildQuery(
+        { beneficiary, ...query },
+        { count: MEMBERSHIP_PAGE_SIZE }
+      ),
+    }
+  );
+  return response;
+};
+
+/**
+ * Reads all memberships of a beneficiary and finds the one for a program.
+ * @private
+ */
+export const findMembership = async (configuration, beneficiary, programId) => {
+  parseReference(beneficiary);
+  encodeIdentifier(programId);
+  const response = await listMemberships(configuration, beneficiary);
+  const memberships = unwrapSearch(response.body);
+  const programReference = `Program/${programId}`;
+  const membership = memberships.find(
+    m => m.program?.reference === programReference
+  );
+  const hasMorePages = Boolean(response.body?.links?.next);
+  return {
+    response,
+    membership,
+    programReference,
+    isAmbiguous: memberships.length > 1 || hasMorePages,
+  };
+};
+
+/**
+ * Updates a membership's status with a PUT, guarding against OpenSPP2 looking
+ * up memberships by beneficiary only (it updates the beneficiary's first
+ * membership, whichever program it is in).
+ * @private
+ */
+export const putMembership = async (
+  configuration,
+  beneficiary,
+  { membership, programReference, isAmbiguous },
+  changes
+) => {
+  if (isAmbiguous) {
+    throw new Error(
+      `Ambiguous membership: ${beneficiary} is in more than one program, and OpenSPP cannot safely update one of them through the API. Change the membership in OpenSPP instead.`
+    );
+  }
+  const { identifier } = parseReference(beneficiary);
+  const body = {
+    program: { reference: membership.program.reference },
+    beneficiary: { reference: membership.beneficiary.reference },
+    status: changes.status,
+    enrollmentDate: membership.enrollmentDate,
+  };
+  for (const key of ['exitDate', 'exitReason']) {
+    if (changes[key] !== undefined) {
+      body[key] = changes[key];
+    }
+  }
+
+  const response = await request(
+    configuration,
+    'PUT',
+    `/ProgramMembership/${encodeIdentifier(identifier)}`,
+    { body }
+  );
+  if (response.body?.program?.reference !== programReference) {
+    throw new Error(
+      `OpenSPP updated a membership in a different program (${response.body?.program?.reference}) instead of ${programReference}. Check this beneficiary's memberships in OpenSPP.`
+    );
+  }
+  return response;
 };

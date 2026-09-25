@@ -8,6 +8,9 @@ import {
   encodeIdentifier,
   parseReference,
   unwrapSearch,
+  buildQuery,
+  assertObject,
+  assertHasIdentifier,
 } from '../src/Utils.js';
 
 const baseUrl = 'http://openspp-utils.test';
@@ -378,6 +381,62 @@ describe('Utils', () => {
 
     it('returns an empty array for an empty Bundle', () => {
       expect(unwrapSearch({ resourceType: 'Bundle', entry: [] })).to.eql([]);
+    });
+  });
+
+  describe('buildQuery', () => {
+    it('maps adaptor options to OpenSPP parameters and drops undefined values', () => {
+      expect(
+        buildQuery(
+          { name: 'Santos', gender: undefined },
+          { count: 10, offset: 20, sort: '-birthdate', elements: ['name', 'identifier'] }
+        )
+      ).to.eql({
+        name: 'Santos',
+        _count: 10,
+        _offset: 20,
+        _sort: '-birthdate',
+        _elements: 'name,identifier',
+      });
+    });
+
+    it('throws on the v3 limit option', () => {
+      expect(() => buildQuery({}, { limit: 50 })).to.throw(
+        /Use count instead of limit/
+      );
+    });
+
+    it('throws on the v3 order option', () => {
+      expect(() => buildQuery({}, { order: 'id desc' })).to.throw(
+        /Use sort instead of order/
+      );
+    });
+  });
+
+  describe('assertObject', () => {
+    it('accepts a plain object', () => {
+      expect(() => assertObject({ a: 1 })).not.to.throw();
+    });
+
+    it('throws on arrays, null and primitives, naming the argument', () => {
+      expect(() => assertObject([1], 'query')).to.throw(/query must be an object/);
+      expect(() => assertObject(null)).to.throw(/data must be an object/);
+      expect(() => assertObject('x')).to.throw(/data must be an object/);
+    });
+  });
+
+  describe('assertHasIdentifier', () => {
+    it('accepts data with at least one identifier', () => {
+      expect(() =>
+        assertHasIdentifier({ identifier: [{ system: 's', value: 'v' }] })
+      ).not.to.throw();
+    });
+
+    it('throws when identifier is missing or empty', () => {
+      expect(() => assertHasIdentifier({})).to.throw(/data.identifier/);
+      expect(() => assertHasIdentifier({ identifier: [] })).to.throw(
+        /data.identifier/
+      );
     });
   });
 });

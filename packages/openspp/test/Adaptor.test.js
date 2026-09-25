@@ -208,6 +208,25 @@ describe('searchIndividual', () => {
       expect(error.message).to.match(/Invalid identifier "GRP_X"/);
     });
   });
+
+  it('throws on a v3 Odoo domain query (OpenSPP would ignore it and return everyone)', async () => {
+    await expectRejection(
+      run(searchIndividual([['spp_id', '=', 'X']])),
+      error => {
+        expect(error.message).to.match(/query must be an object/);
+        expect(error.message).to.match(/Odoo domains/);
+      }
+    );
+  });
+
+  it('throws on v3 limit and order options', async () => {
+    await expectRejection(run(searchIndividual({}, { limit: 50 })), error => {
+      expect(error.message).to.match(/Use count instead of limit/);
+    });
+    await expectRejection(run(searchIndividual({}, { order: 'name' })), error => {
+      expect(error.message).to.match(/Use sort instead of order/);
+    });
+  });
 });
 
 describe('createIndividual', () => {
@@ -466,10 +485,20 @@ describe('getPrograms', () => {
       .reply(200, searchResult([program]));
 
     const state = await run(
-      getPrograms({ targetType: 'individual' }, { count: 10, lastId: 42 })
+      getPrograms({ targetType: 'individual', count: 10, lastId: 42 })
     );
 
     expect(state.data).to.eql([program]);
+  });
+
+  it('throws on offset, limit and order (programs page with a cursor)', async () => {
+    for (const key of ['offset', 'limit', 'order']) {
+      await expectRejection(run(getPrograms({ [key]: 10 })), error => {
+        expect(error.message).to.match(
+          new RegExp(`getPrograms does not support ${key}`)
+        );
+      });
+    }
   });
 });
 

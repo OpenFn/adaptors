@@ -1,10 +1,6 @@
 /**
  * INVARIANT: Must export function named `request`
  * - ALL operational functions go here
- *
- * Operations for the OpenSPP2 REST API v2 (`spp_api_v2`, mounted at
- * /api/v2/spp). Structure follows the OpenFn adaptor template
- * (tools/generate/template/src/Adaptor.js) and wiki/best-practice.md.
  */
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
@@ -28,11 +24,6 @@ import * as util from './Utils.js';
  * @property {string|string[]} elements - Only return these fields. Sent as `_elements` (Individual and Group).
  * @property {string|string[]} extensions - Include these extensions. Sent as `_extensions` (Individual and Group).
  */
-
-const MEMBERSHIP_ROLE_SYSTEM = 'urn:openspp:vocab:group-membership-type';
-
-// Upper bound used when reading all memberships of one beneficiary.
-const MEMBERSHIP_PAGE_SIZE = 100;
 
 /**
  * Execute a sequence of operations.
@@ -92,95 +83,6 @@ export function request(method, path, body, options = {}) {
   };
 }
 
-const assertObject = (data, name = 'data') => {
-  if (typeof data !== 'object' || data === null || Array.isArray(data)) {
-    throw new Error(`${name} must be an object, got ${JSON.stringify(data)}`);
-  }
-};
-
-const assertHasIdentifier = data => {
-  assertObject(data);
-  if (!Array.isArray(data.identifier) || data.identifier.length === 0) {
-    throw new Error(
-      'data.identifier must be a non-empty array of { system, value }, eg [{ system: "urn:openspp:vocab:id-type#national_id", value: "PH-123" }]'
-    );
-  }
-};
-
-const readResource = (type, id, options = {}) => {
-  return async state => {
-    const [resolvedId, resolvedOptions] = expandReferences(state, id, options);
-    const response = await util.request(
-      state.configuration,
-      'GET',
-      `/${type}/${util.encodeIdentifier(resolvedId)}`,
-      { query: util.buildQuery({}, resolvedOptions) }
-    );
-    return util.prepareNextState(state, response);
-  };
-};
-
-const searchResource = (type, query = {}, options = {}) => {
-  return async state => {
-    const [resolvedQuery, resolvedOptions] = expandReferences(
-      state,
-      query,
-      options
-    );
-    for (const key of ['identifier', 'group']) {
-      if (resolvedQuery?.[key] !== undefined && resolvedQuery[key] !== 'none') {
-        // OpenSPP ignores a malformed filter and returns every record
-        util.encodeIdentifier(resolvedQuery[key]);
-      }
-    }
-    const groupFilter = resolvedQuery?.group;
-    if (type === 'Individual' && groupFilter !== undefined && groupFilter !== 'none') {
-      // OpenSPP also ignores a group filter for a group that doesn't exist,
-      // so check the group first: a missing group throws a 404 here
-      await util.request(
-        state.configuration,
-        'GET',
-        `/Group/${util.encodeIdentifier(groupFilter)}`,
-        { query: { _elements: 'identifier' } }
-      );
-    }
-    const response = await util.request(state.configuration, 'GET', `/${type}`, {
-      query: util.buildQuery(resolvedQuery, resolvedOptions),
-    });
-    return util.prepareSearchState(state, response);
-  };
-};
-
-const createResource = (type, data) => {
-  return async state => {
-    const [resolvedData] = expandReferences(state, data);
-    assertHasIdentifier(resolvedData);
-    const response = await util.request(state.configuration, 'POST', `/${type}`, {
-      body: resolvedData,
-    });
-    return util.prepareNextState(state, response);
-  };
-};
-
-const patchResource = (type, id, data, options = {}) => {
-  return async state => {
-    const [resolvedId, resolvedData, resolvedOptions] = expandReferences(
-      state,
-      id,
-      data,
-      options
-    );
-    assertObject(resolvedData);
-    const response = await util.request(
-      state.configuration,
-      'PATCH',
-      `/${type}/${util.encodeIdentifier(resolvedId)}`,
-      { body: resolvedData, ifMatch: resolvedOptions.ifMatch }
-    );
-    return util.prepareNextState(state, response);
-  };
-};
-
 /**
  * Get an individual by identifier.
  * @public
@@ -195,7 +97,7 @@ const patchResource = (type, id, data, options = {}) => {
  * @state {OpenSPPState}
  */
 export function getIndividual(id, options = {}) {
-  return readResource('Individual', id, options);
+  return util.readResource('Individual', id, options);
 }
 
 /**
@@ -217,7 +119,7 @@ export function getIndividual(id, options = {}) {
  * @state {OpenSPPState}
  */
 export function searchIndividual(query = {}, options = {}) {
-  return searchResource('Individual', query, options);
+  return util.searchResource('Individual', query, options);
 }
 
 /**
@@ -237,7 +139,7 @@ export function searchIndividual(query = {}, options = {}) {
  * @state {OpenSPPState}
  */
 export function createIndividual(data) {
-  return createResource('Individual', data);
+  return util.createResource('Individual', data);
 }
 
 /**
@@ -254,7 +156,7 @@ export function createIndividual(data) {
  * @state {OpenSPPState}
  */
 export function updateIndividual(id, data, options = {}) {
-  return patchResource('Individual', id, data, options);
+  return util.patchResource('Individual', id, data, options);
 }
 
 /**
@@ -270,7 +172,7 @@ export function updateIndividual(id, data, options = {}) {
  * @state {OpenSPPState}
  */
 export function getGroup(id, options = {}) {
-  return readResource('Group', id, options);
+  return util.readResource('Group', id, options);
 }
 
 /**
@@ -285,7 +187,7 @@ export function getGroup(id, options = {}) {
  * @state {OpenSPPState}
  */
 export function searchGroup(query = {}, options = {}) {
-  return searchResource('Group', query, options);
+  return util.searchResource('Group', query, options);
 }
 
 /**
@@ -304,7 +206,7 @@ export function searchGroup(query = {}, options = {}) {
  * @state {OpenSPPState}
  */
 export function createGroup(data) {
-  return createResource('Group', data);
+  return util.createResource('Group', data);
 }
 
 /**
@@ -320,7 +222,7 @@ export function createGroup(data) {
  * @state {OpenSPPState}
  */
 export function updateGroup(id, data, options = {}) {
-  return patchResource('Group', id, data, options);
+  return util.patchResource('Group', id, data, options);
 }
 
 /**
@@ -348,13 +250,13 @@ export function getGroupMembers(groupId, options = {}) {
     if (role !== undefined) {
       query['membership-role'] = role;
     }
-    return searchResource('Individual', query, searchOptions)(state);
+    return util.searchResource('Individual', query, searchOptions)(state);
   };
 }
 
 const toRole = role =>
   typeof role === 'string'
-    ? { coding: [{ system: MEMBERSHIP_ROLE_SYSTEM, code: role }] }
+    ? { coding: [{ system: 'urn:openspp:vocab:group-membership-type', code: role }] }
     : role;
 
 /**
@@ -466,41 +368,37 @@ export function removeFromGroup(groupId, individualId, options = {}) {
  * @state {OpenSPPState}
  */
 export function getProgram(id) {
-  return readResource('Program', id);
+  return util.readResource('Program', id);
 }
 
 /**
- * List programs. Programs page with a cursor: pass the `lastId` from the
- * previous page instead of an offset.
+ * List programs. Programs page with a cursor instead of an offset: for the
+ * next page, pass as `lastId` the `_lastId` value in `state.response.page.next`.
  * @public
  * @example
  * getPrograms();
  * @example <caption>Programs for groups, 10 per page</caption>
- * getPrograms({ targetType: "group" }, { count: 10 });
+ * getPrograms({ targetType: "group", count: 10 });
  * @function
- * @param {object} [query] - OpenSPP search parameters: `identifier`, `name`, `status`, `type`, `targetType`
- * @param {object} [options] - `count`, `lastId`
+ * @param {object} [options] - Filters `name`, `status` (`active` or `ended`) and `targetType` (`individual` or `group`), and paging `count` (1-100) and `lastId`
  * @returns {Operation}
  * @state {OpenSPPState}
  */
-export function getPrograms(query = {}, options = {}) {
-  return searchResource('Program', query, options);
-}
-
-const listMemberships = async (configuration, beneficiary, query = {}) => {
-  const response = await util.request(
-    configuration,
-    'GET',
-    '/ProgramMembership',
-    {
-      query: util.buildQuery(
-        { beneficiary, ...query },
-        { count: MEMBERSHIP_PAGE_SIZE }
-      ),
+export function getPrograms(options = {}) {
+  return async state => {
+    const [resolvedOptions] = expandReferences(state, options);
+    util.assertObject(resolvedOptions, 'options');
+    for (const key of ['offset', 'limit', 'order']) {
+      if (resolvedOptions[key] !== undefined) {
+        throw new Error(
+          `getPrograms does not support ${key}. OpenSPP pages programs with a cursor: use count for the page size and lastId to get the next page`
+        );
+      }
     }
-  );
-  return response;
-};
+    const { count, lastId, ...query } = resolvedOptions;
+    return util.searchResource('Program', query, { count, lastId })(state);
+  };
+}
 
 /**
  * List the programs a registrant is enrolled in, as ProgramMembership
@@ -517,7 +415,7 @@ export function getEnrolledPrograms(beneficiary) {
   return async state => {
     const [resolvedBeneficiary] = expandReferences(state, beneficiary);
     util.parseReference(resolvedBeneficiary);
-    const response = await listMemberships(
+    const response = await util.listMemberships(
       state.configuration,
       resolvedBeneficiary,
       { status: 'enrolled' }
@@ -525,72 +423,6 @@ export function getEnrolledPrograms(beneficiary) {
     return util.prepareSearchState(state, response);
   };
 }
-
-/**
- * Reads all memberships of a beneficiary and finds the one for a program.
- * @private
- */
-const findMembership = async (configuration, beneficiary, programId) => {
-  util.parseReference(beneficiary);
-  util.encodeIdentifier(programId);
-  const response = await listMemberships(configuration, beneficiary);
-  const memberships = util.unwrapSearch(response.body);
-  const programReference = `Program/${programId}`;
-  const membership = memberships.find(
-    m => m.program?.reference === programReference
-  );
-  const hasMorePages = Boolean(response.body?.links?.next);
-  return {
-    response,
-    membership,
-    programReference,
-    isAmbiguous: memberships.length > 1 || hasMorePages,
-  };
-};
-
-/**
- * Updates a membership's status with a PUT, guarding against OpenSPP2 looking
- * up memberships by beneficiary only (it updates the beneficiary's first
- * membership, whichever program it is in).
- * @private
- */
-const putMembership = async (
-  configuration,
-  beneficiary,
-  { membership, programReference, isAmbiguous },
-  changes
-) => {
-  if (isAmbiguous) {
-    throw new Error(
-      `Ambiguous membership: ${beneficiary} is in more than one program, and OpenSPP cannot safely update one of them through the API. Change the membership in OpenSPP instead.`
-    );
-  }
-  const { identifier } = util.parseReference(beneficiary);
-  const body = {
-    program: { reference: membership.program.reference },
-    beneficiary: { reference: membership.beneficiary.reference },
-    status: changes.status,
-    enrollmentDate: membership.enrollmentDate,
-  };
-  for (const key of ['exitDate', 'exitReason']) {
-    if (changes[key] !== undefined) {
-      body[key] = changes[key];
-    }
-  }
-
-  const response = await util.request(
-    configuration,
-    'PUT',
-    `/ProgramMembership/${util.encodeIdentifier(identifier)}`,
-    { body }
-  );
-  if (response.body?.program?.reference !== programReference) {
-    throw new Error(
-      `OpenSPP updated a membership in a different program (${response.body?.program?.reference}) instead of ${programReference}. Check this beneficiary's memberships in OpenSPP.`
-    );
-  }
-  return response;
-};
 
 /**
  * Enroll a registrant in a program. Does nothing if they are already enrolled.
@@ -613,7 +445,7 @@ export function enroll(beneficiary, programId, options = {}) {
     const [resolvedBeneficiary, resolvedProgramId, resolvedOptions] =
       expandReferences(state, beneficiary, programId, options);
 
-    const found = await findMembership(
+    const found = await util.findMembership(
       state.configuration,
       resolvedBeneficiary,
       resolvedProgramId
@@ -644,7 +476,7 @@ export function enroll(beneficiary, programId, options = {}) {
       });
     }
 
-    const response = await putMembership(
+    const response = await util.putMembership(
       state.configuration,
       resolvedBeneficiary,
       found,
@@ -676,7 +508,7 @@ export function unenroll(beneficiary, programId, options = {}) {
     const [resolvedBeneficiary, resolvedProgramId, resolvedOptions] =
       expandReferences(state, beneficiary, programId, options);
 
-    const found = await findMembership(
+    const found = await util.findMembership(
       state.configuration,
       resolvedBeneficiary,
       resolvedProgramId
@@ -695,7 +527,7 @@ export function unenroll(beneficiary, programId, options = {}) {
       });
     }
 
-    const response = await putMembership(
+    const response = await util.putMembership(
       state.configuration,
       resolvedBeneficiary,
       found,
@@ -746,7 +578,7 @@ export function getServicePoint(name) {
  * @state {OpenSPPState}
  */
 export function searchServicePoint(query = {}, options = {}) {
-  return searchResource('ServicePoint', query, options);
+  return util.searchResource('ServicePoint', query, options);
 }
 
 export {

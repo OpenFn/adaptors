@@ -6,6 +6,11 @@ An OpenFn **_adaptor_** for building integration jobs for use with the
 Version 4 and later target OpenSPP2 (Odoo 19) through its REST API v2
 (`/api/v2/spp`). For OpenSPP v1 servers (JSON-RPC), use version 3.x.
 
+OpenSPP2 REST API v2 reference:
+
+- [`spp_api_v2` module](https://github.com/OpenSPP/OpenSPP2/tree/19.0/spp_api_v2)
+- Interactive API docs on your server at `{baseUrl}/api/v2/spp/docs`
+
 ## Documentation
 
 View the [docs site](https://docs.openfn.org/adaptors/packages/openspp-docs)

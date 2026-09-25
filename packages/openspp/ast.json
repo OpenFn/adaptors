@@ -868,11 +868,10 @@
     {
       "name": "getPrograms",
       "params": [
-        "query",
         "options"
       ],
       "docs": {
-        "description": "List programs. Programs page with a cursor: pass the `lastId` from the\nprevious page instead of an offset.",
+        "description": "List programs. Programs page with a cursor instead of an offset: for the\nnext page, pass as `lastId` the `_lastId` value in `state.response.page.next`.",
         "tags": [
           {
             "title": "public",
@@ -885,7 +884,7 @@
           },
           {
             "title": "example",
-            "description": "getPrograms({ targetType: \"group\" }, { count: 10 });",
+            "description": "getPrograms({ targetType: \"group\", count: 10 });",
             "caption": "Programs for groups, 10 per page"
           },
           {
@@ -895,19 +894,7 @@
           },
           {
             "title": "param",
-            "description": "OpenSPP search parameters: `identifier`, `name`, `status`, `type`, `targetType`",
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "object"
-              }
-            },
-            "name": "query"
-          },
-          {
-            "title": "param",
-            "description": "`count`, `lastId`",
+            "description": "Filters `name`, `status` (`active` or `ended`) and `targetType` (`individual` or `group`), and paging `count` (1-100) and `lastId`",
             "type": {
               "type": "OptionalType",
               "expression": {
