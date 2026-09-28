@@ -227,6 +227,12 @@ describe('searchIndividual', () => {
       expect(error.message).to.match(/Use sort instead of order/);
     });
   });
+
+  it('throws on lastId (OpenSPP would ignore it and return the first page)', async () => {
+    await expectRejection(run(searchIndividual({}, { lastId: 42 })), error => {
+      expect(error.message).to.match(/searchIndividual does not support lastId/);
+    });
+  });
 });
 
 describe('createIndividual', () => {
@@ -306,6 +312,15 @@ describe('searchGroup', () => {
 
     expect(state.data).to.eql([group]);
   });
+
+  it('throws on sort and lastId (OpenSPP would ignore them)', async () => {
+    await expectRejection(run(searchGroup({}, { sort: 'name' })), error => {
+      expect(error.message).to.match(/searchGroup does not support sort/);
+    });
+    await expectRejection(run(searchGroup({}, { lastId: 42 })), error => {
+      expect(error.message).to.match(/searchGroup does not support lastId/);
+    });
+  });
 });
 
 describe('createGroup', () => {
@@ -377,6 +392,12 @@ describe('getGroupMembers', () => {
   it('throws on an invalid group id instead of returning every individual', async () => {
     await expectRejection(run(getGroupMembers('GRP_X')), error => {
       expect(error.message).to.match(/Invalid identifier "GRP_X"/);
+    });
+  });
+
+  it('throws on lastId (OpenSPP would ignore it and return the first page)', async () => {
+    await expectRejection(run(getGroupMembers(GRP_ID, { lastId: 42 })), error => {
+      expect(error.message).to.match(/getGroupMembers does not support lastId/);
     });
   });
 });

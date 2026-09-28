@@ -290,6 +290,21 @@ export const assertObject = (data, name = 'data') => {
 };
 
 /**
+ * Throws if `options` sets an option that OpenSPP would silently ignore.
+ * @private
+ * @param {string} name - adaptor function name, for the message
+ * @param {object} options - resolved options
+ * @param {object} unsupported - map of option name to the reason it isn't supported
+ */
+export const rejectOptions = (name, options, unsupported) => {
+  for (const [key, reason] of Object.entries(unsupported)) {
+    if (options?.[key] !== undefined) {
+      throw new Error(`${name} does not support ${key}: ${reason}`);
+    }
+  }
+};
+
+/**
  * Throws unless `data` is an object with at least one identifier.
  * @private
  */

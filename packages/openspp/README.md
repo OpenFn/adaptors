@@ -88,6 +88,10 @@ request('GET', '/Vocabulary', null, { query: { _count: 10 } });
   affected.
 - After `removeFromGroup`, OpenSPP2 may report the membership as `active` until
   its scheduled membership repair runs.
+- On OpenSPP2 releases up to 2026.09, `offset` is ignored by `searchGroup`:
+  every page returns the first page again. OpenSPP2 #555 fixes this.
+- The `type` filter of `searchGroup` is passed on but not yet applied by
+  OpenSPP2 (#565).
 
 ## Development
 

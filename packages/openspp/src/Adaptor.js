@@ -14,6 +14,10 @@ import * as util from './Utils.js';
  * @property references - an array of all previous data objects used in the Job
  **/
 
+// OpenSPP pages individuals and groups by offset: it ignores `_lastId`, so
+// the first page would be returned again
+const NO_CURSOR = 'OpenSPP pages individuals and groups with offset, not lastId';
+
 /**
  * Options for OpenSPP searches
  * @typedef {Object} SearchOptions
@@ -119,7 +123,13 @@ export function getIndividual(id, options = {}) {
  * @state {OpenSPPState}
  */
 export function searchIndividual(query = {}, options = {}) {
-  return util.searchResource('Individual', query, options);
+  return async state => {
+    const [resolvedOptions] = expandReferences(state, options);
+    util.rejectOptions('searchIndividual', resolvedOptions, {
+      lastId: NO_CURSOR,
+    });
+    return util.searchResource('Individual', query, resolvedOptions)(state);
+  };
 }
 
 /**
@@ -176,18 +186,27 @@ export function getGroup(id, options = {}) {
 }
 
 /**
- * Search groups.
+ * Search groups. `sort` is not supported: OpenSPP cannot sort groups.
+ * Note: on OpenSPP2 releases up to 2026.09, `offset` is ignored for groups and
+ * every page returns the first page again (fixed in OpenSPP2 #555).
  * @public
  * @example
- * searchGroup({ name: "Santos", type: "household" }, { count: 50 });
+ * searchGroup({ name: "Santos" }, { count: 50 });
  * @function
- * @param {object} [query] - OpenSPP search parameters: `identifier`, `name`, `type`, `member`
+ * @param {object} [query] - OpenSPP search parameters: `identifier`, `name`, `member`. `type` is passed on, but not yet applied by OpenSPP2 (#565)
  * @param {SearchOptions} [options] - Paging and field options
  * @returns {Operation}
  * @state {OpenSPPState}
  */
 export function searchGroup(query = {}, options = {}) {
-  return util.searchResource('Group', query, options);
+  return async state => {
+    const [resolvedOptions] = expandReferences(state, options);
+    util.rejectOptions('searchGroup', resolvedOptions, {
+      sort: 'OpenSPP cannot sort groups',
+      lastId: NO_CURSOR,
+    });
+    return util.searchResource('Group', query, resolvedOptions)(state);
+  };
 }
 
 /**
@@ -245,6 +264,9 @@ export function getGroupMembers(groupId, options = {}) {
       groupId,
       options
     );
+    util.rejectOptions('getGroupMembers', resolvedOptions, {
+      lastId: NO_CURSOR,
+    });
     const { role, ...searchOptions } = resolvedOptions;
     const query = { group: resolvedGroupId };
     if (role !== undefined) {

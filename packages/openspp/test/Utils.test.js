@@ -11,6 +11,7 @@ import {
   buildQuery,
   assertObject,
   assertHasIdentifier,
+  rejectOptions,
 } from '../src/Utils.js';
 
 const baseUrl = 'http://openspp-utils.test';
@@ -422,6 +423,23 @@ describe('Utils', () => {
       expect(() => assertObject([1], 'query')).to.throw(/query must be an object/);
       expect(() => assertObject(null)).to.throw(/data must be an object/);
       expect(() => assertObject('x')).to.throw(/data must be an object/);
+    });
+  });
+
+  describe('rejectOptions', () => {
+    it('accepts options without the unsupported keys', () => {
+      expect(() =>
+        rejectOptions('searchGroup', { count: 10 }, { sort: 'no sort' })
+      ).not.to.throw();
+      expect(() =>
+        rejectOptions('searchGroup', { sort: undefined }, { sort: 'no sort' })
+      ).not.to.throw();
+    });
+
+    it('throws naming the function, the option and the reason', () => {
+      expect(() =>
+        rejectOptions('searchGroup', { sort: 'name' }, { sort: 'OpenSPP cannot sort groups' })
+      ).to.throw('searchGroup does not support sort: OpenSPP cannot sort groups');
     });
   });
 
