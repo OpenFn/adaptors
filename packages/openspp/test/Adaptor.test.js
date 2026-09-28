@@ -127,6 +127,19 @@ describe('request', () => {
 });
 
 describe('getIndividual', () => {
+  it('resolves an id given as a function of state', async () => {
+    testServer
+      .intercept({ path: `${API}/Individual/${IND_PATH}`, method: 'GET' })
+      .reply(200, individual);
+
+    const state = await run(
+      fn(state => ({ ...state, input: { id: IND_ID } })),
+      getIndividual(state => state.input.id)
+    );
+
+    expect(state.data).to.eql(individual);
+  });
+
   it('reads an individual by system|value identifier', async () => {
     testServer
       .intercept({ path: `${API}/Individual/${IND_PATH}`, method: 'GET' })
@@ -262,6 +275,20 @@ describe('searchIndividual', () => {
 });
 
 describe('createIndividual', () => {
+  it('resolves data given as a function of state', async () => {
+    const data = { identifier: individual.identifier, name: { family: 'ABAD' } };
+    testServer
+      .intercept({ path: `${API}/Individual`, method: 'POST', body: jsonBody(data) })
+      .reply(201, individual);
+
+    const state = await run(
+      fn(state => ({ ...state, input: data })),
+      createIndividual(state => state.input)
+    );
+
+    expect(state.data).to.eql(individual);
+  });
+
   const data = {
     identifier: individual.identifier,
     name: { family: 'ABAD', given: 'CLARITA' },
@@ -290,6 +317,26 @@ describe('createIndividual', () => {
 });
 
 describe('updateIndividual', () => {
+  it('resolves the id and data given as functions of state', async () => {
+    testServer
+      .intercept({
+        path: `${API}/Individual/${IND_PATH}`,
+        method: 'PATCH',
+        body: jsonBody({ birthDate: '2016-05-04' }),
+      })
+      .reply(200, { ...individual, birthDate: '2016-05-04' });
+
+    const state = await run(
+      fn(state => ({ ...state, input: { id: IND_ID, birthDate: '2016-05-04' } })),
+      updateIndividual(
+        state => state.input.id,
+        state => ({ birthDate: state.input.birthDate })
+      )
+    );
+
+    expect(state.data.birthDate).to.equal('2016-05-04');
+  });
+
   it('patches only the given fields', async () => {
     testServer
       .intercept({

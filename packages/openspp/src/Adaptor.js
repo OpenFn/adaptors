@@ -116,7 +116,16 @@ export function request(method, path, body, options = {}) {
  * @state {OpenSPPState}
  */
 export function getIndividual(id, options = {}) {
-  return util.readResource('Individual', id, options);
+  return async state => {
+    const [resolvedId, resolvedOptions] = expandReferences(state, id, options);
+    const response = await util.readResource(
+      state.configuration,
+      'Individual',
+      resolvedId,
+      resolvedOptions
+    );
+    return util.prepareNextState(state, response);
+  };
 }
 
 /**
@@ -184,7 +193,15 @@ export function searchIndividual(query = {}, options = {}) {
  * @state {OpenSPPState}
  */
 export function createIndividual(data) {
-  return util.createResource('Individual', data);
+  return async state => {
+    const [resolvedData] = expandReferences(state, data);
+    const response = await util.createResource(
+      state.configuration,
+      'Individual',
+      resolvedData
+    );
+    return util.prepareNextState(state, response);
+  };
 }
 
 /**
@@ -203,7 +220,22 @@ export function createIndividual(data) {
  * @state {OpenSPPState}
  */
 export function updateIndividual(id, data, options = {}) {
-  return util.patchResource('Individual', id, data, options);
+  return async state => {
+    const [resolvedId, resolvedData, resolvedOptions] = expandReferences(
+      state,
+      id,
+      data,
+      options
+    );
+    const response = await util.patchResource(
+      state.configuration,
+      'Individual',
+      resolvedId,
+      resolvedData,
+      resolvedOptions
+    );
+    return util.prepareNextState(state, response);
+  };
 }
 
 /**
@@ -220,7 +252,16 @@ export function updateIndividual(id, data, options = {}) {
  * @state {OpenSPPState}
  */
 export function getGroup(id, options = {}) {
-  return util.readResource('Group', id, options);
+  return async state => {
+    const [resolvedId, resolvedOptions] = expandReferences(state, id, options);
+    const response = await util.readResource(
+      state.configuration,
+      'Group',
+      resolvedId,
+      resolvedOptions
+    );
+    return util.prepareNextState(state, response);
+  };
 }
 
 /**
@@ -273,7 +314,15 @@ export function searchGroup(query = {}, options = {}) {
  * @state {OpenSPPState}
  */
 export function createGroup(data) {
-  return util.createResource('Group', data);
+  return async state => {
+    const [resolvedData] = expandReferences(state, data);
+    const response = await util.createResource(
+      state.configuration,
+      'Group',
+      resolvedData
+    );
+    return util.prepareNextState(state, response);
+  };
 }
 
 /**
@@ -289,7 +338,22 @@ export function createGroup(data) {
  * @state {OpenSPPState}
  */
 export function updateGroup(id, data, options = {}) {
-  return util.patchResource('Group', id, data, options);
+  return async state => {
+    const [resolvedId, resolvedData, resolvedOptions] = expandReferences(
+      state,
+      id,
+      data,
+      options
+    );
+    const response = await util.patchResource(
+      state.configuration,
+      'Group',
+      resolvedId,
+      resolvedData,
+      resolvedOptions
+    );
+    return util.prepareNextState(state, response);
+  };
 }
 
 /**
@@ -460,7 +524,15 @@ export function removeFromGroup(groupId, individualId, options = {}) {
  * @state {OpenSPPState}
  */
 export function getProgram(id) {
-  return util.readResource('Program', id);
+  return async state => {
+    const [resolvedId] = expandReferences(state, id);
+    const response = await util.readResource(
+      state.configuration,
+      'Program',
+      resolvedId
+    );
+    return util.prepareNextState(state, response);
+  };
 }
 
 /**

@@ -8,7 +8,6 @@ import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
   assertRelativeUrl,
-  expandReferences,
 } from '@openfn/language-common/util';
 
 export const API_PATH = '/api/v2/spp';
@@ -347,21 +346,18 @@ export const assertHasIdentifier = data => {
 };
 
 /**
- * Returns an operation that reads one resource by `system|value` identifier.
+ * Reads one resource by `system|value` identifier and returns the response.
  * @private
+ * @param {object} configuration - `state.configuration`
+ * @param {string} type - resource type, eg `Individual`
+ * @param {string} id - resolved identifier as `system|value`
+ * @param {object} [options] - resolved `elements` and `extensions`
+ * @returns {Promise<object>} the common `request` response
  */
-export const readResource = (type, id, options = {}) => {
-  return async state => {
-    const [resolvedId, resolvedOptions] = expandReferences(state, id, options);
-    const response = await request(
-      state.configuration,
-      'GET',
-      `/${type}/${encodeIdentifier(resolvedId)}`,
-      { query: buildQuery({}, resolvedOptions) }
-    );
-    return prepareNextState(state, response);
-  };
-};
+export const readResource = (configuration, type, id, options = {}) =>
+  request(configuration, 'GET', `/${type}/${encodeIdentifier(id)}`, {
+    query: buildQuery({}, options),
+  });
 
 /**
  * Searches a resource type and returns the response.
@@ -410,41 +406,40 @@ export const searchResource = async (
 };
 
 /**
- * Returns an operation that creates a resource with at least one identifier.
+ * Creates a resource with at least one identifier and returns the response.
  * @private
+ * @param {object} configuration - `state.configuration`
+ * @param {string} type - resource type, eg `Individual`
+ * @param {object} data - resolved resource
+ * @returns {Promise<object>} the common `request` response
  */
-export const createResource = (type, data) => {
-  return async state => {
-    const [resolvedData] = expandReferences(state, data);
-    assertHasIdentifier(resolvedData);
-    const response = await request(state.configuration, 'POST', `/${type}`, {
-      body: resolvedData,
-    });
-    return prepareNextState(state, response);
-  };
+export const createResource = async (configuration, type, data) => {
+  assertHasIdentifier(data);
+  return request(configuration, 'POST', `/${type}`, { body: data });
 };
 
 /**
- * Returns an operation that partially updates a resource (JSON Merge Patch).
+ * Partially updates a resource (JSON Merge Patch) and returns the response.
  * @private
+ * @param {object} configuration - `state.configuration`
+ * @param {string} type - resource type, eg `Individual`
+ * @param {string} id - resolved identifier as `system|value`
+ * @param {object} data - resolved fields to change
+ * @param {object} [options] - resolved `ifMatch`
+ * @returns {Promise<object>} the common `request` response
  */
-export const patchResource = (type, id, data, options = {}) => {
-  return async state => {
-    const [resolvedId, resolvedData, resolvedOptions] = expandReferences(
-      state,
-      id,
-      data,
-      options
-    );
-    assertObject(resolvedData);
-    const response = await request(
-      state.configuration,
-      'PATCH',
-      `/${type}/${encodeIdentifier(resolvedId)}`,
-      { body: resolvedData, ifMatch: resolvedOptions.ifMatch }
-    );
-    return prepareNextState(state, response);
-  };
+export const patchResource = async (
+  configuration,
+  type,
+  id,
+  data,
+  options = {}
+) => {
+  assertObject(data);
+  return request(configuration, 'PATCH', `/${type}/${encodeIdentifier(id)}`, {
+    body: data,
+    ifMatch: options.ifMatch,
+  });
 };
 
 /**

@@ -14,6 +14,9 @@ import {
   rejectOptions,
   assertSortField,
   searchResource,
+  readResource,
+  createResource,
+  patchResource,
 } from '../src/Utils.js';
 
 const baseUrl = 'http://openspp-utils.test';
@@ -509,6 +512,65 @@ describe('Utils', () => {
         searchResource(authed, 'Individual', { group: 'GRP_X' }),
         error => expect(error.message).to.match(/Invalid identifier "GRP_X"/)
       );
+    });
+  });
+
+  describe('readResource', () => {
+    const authed = { ...configuration, access_token: 'abc' };
+    const ID = 'urn:openspp:vocab:id-type#national_id|PH-1';
+
+    it('returns the response for one resource, with field options', async () => {
+      testServer
+        .intercept({
+          path: `/api/v2/spp/Individual/${encodeURIComponent(ID)}?_elements=name`,
+          method: 'GET',
+        })
+        .reply(200, { name: { text: 'X' } });
+
+      const response = await readResource(authed, 'Individual', ID, { elements: ['name'] });
+
+      expect(response.body).to.eql({ name: { text: 'X' } });
+    });
+  });
+
+  describe('createResource', () => {
+    const authed = { ...configuration, access_token: 'abc' };
+
+    it('posts the resource and returns the response', async () => {
+      const data = { identifier: [{ system: 's', value: 'v' }] };
+      testServer
+        .intercept({ path: '/api/v2/spp/Group', method: 'POST', body: JSON.stringify(data) })
+        .reply(201, data);
+
+      const response = await createResource(authed, 'Group', data);
+
+      expect(response.statusCode).to.equal(201);
+    });
+
+    it('throws without an identifier, before sending a request', async () => {
+      await expectRejection(createResource(authed, 'Group', {}), error => {
+        expect(error.message).to.match(/data.identifier/);
+      });
+    });
+  });
+
+  describe('patchResource', () => {
+    const authed = { ...configuration, access_token: 'abc' };
+    const ID = 'urn:openspp:vocab:id-type#national_id|PH-1';
+
+    it('patches the resource with If-Match and returns the response', async () => {
+      testServer
+        .intercept({
+          path: `/api/v2/spp/Individual/${encodeURIComponent(ID)}`,
+          method: 'PATCH',
+          body: JSON.stringify({ birthDate: '2000-01-01' }),
+          headers: { 'if-match': '"7"' },
+        })
+        .reply(200, { birthDate: '2000-01-01' });
+
+      const response = await patchResource(authed, 'Individual', ID, { birthDate: '2000-01-01' }, { ifMatch: '"7"' });
+
+      expect(response.body).to.eql({ birthDate: '2000-01-01' });
     });
   });
 
