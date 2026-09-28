@@ -14,9 +14,9 @@ import * as util from './Utils.js';
  * @property references - an array of all previous data objects used in the Job
  **/
 
-// OpenSPP pages individuals and groups by offset: it ignores `_lastId`, so
-// the first page would be returned again
-const NO_CURSOR = 'OpenSPP pages individuals and groups with offset, not lastId';
+// OpenSPP ignores `_lastId` for individuals and groups, so the first page
+// would be returned again
+const NO_CURSOR = 'OpenSPP ignores lastId for individuals and groups; page with offset';
 
 // Programs page with a cursor instead of an offset
 const PROGRAM_CURSOR =
@@ -132,11 +132,13 @@ export function getIndividual(id, options = {}) {
  * Search individuals.
  * Records the API client may not see (for example without consent) are left
  * out, and `state.response.page.total` is then only the number of records on
- * the page. Use `state.response.page.next` to check for more pages. On
+ * the page (with open PR OpenSPP2 #555, on every page for API clients whose
+ * legal basis requires consent). Use `state.response.page.next` to check for more pages. On
  * OpenSPP2 up to 2026.09 it can be null before the last page when records are
- * hidden (with `count` above 50 OpenSPP reads only 100 records, so more than
- * 100 - `count` hidden records are enough; at 100, one is); open PR OpenSPP2
- * #555 fixes this.
+ * hidden (OpenSPP reads at most 3 × `count` records for a page, and never
+ * more than 100: with `count` of 50 or less the page ends early when more than
+ * 2 × `count` of them are hidden; above 50, when more than 100 - `count` are;
+ * at 100, one is); open PR OpenSPP2 #555 fixes this.
  * Note: on OpenSPP2 up to 2026.09, `group` can match a former member who is
  * still active in another group, `membership-role` can match a role held in a
  * different group, and an unknown `membership-role` code is ignored, so every
@@ -411,7 +413,14 @@ const toRole = role =>
  * (`startDate` only applies to new members). OpenSPP2 up to 2026.09 ignores a
  * role code it doesn't know: a new member is added without a role, and an
  * existing member keeps their current roles. Open PR OpenSPP2 #555 rejects an
- * unknown role code with 422.
+ * unknown role code with 422. A group can have only one `head`: adding a
+ * second fails with 422 (on OpenSPP2 up to 2026.09 the message is only
+ * "Failed to add member").
+ * A member removed with `removeFromGroup` can't be added back (OpenSPP2
+ * #570). With open PR OpenSPP2 #555 this fails with 422 "Duplication of Member
+ * is not allowed". On OpenSPP2 up to 2026.09 it doesn't fail: the removed
+ * membership, with its `endedDate`, is returned and the individual isn't added
+ * back.
  * @public
  * @example <caption>Add as head of household</caption>
  * addToGroup("urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:vocab:id-type#national_id|PH-123", "head");
@@ -452,8 +461,8 @@ export function addToGroup(groupId, individualId, role, options = {}) {
         { body }
       );
     } catch (error) {
-      // OpenSPP also returns 409 for other conflicts, eg an identifier that
-      // matches more than one registrant
+      // With open PR OpenSPP2 #555, OpenSPP also returns 409 for other
+      // conflicts, eg an identifier that matches more than one registrant
       const isAlreadyMember =
         error.statusCode === 409 &&
         /already a member/i.test(error.body?.detail ?? '');
@@ -597,7 +606,12 @@ export function getEnrolledPrograms(beneficiary) {
  * If they have a membership in this program that isn't enrolled (eg exited),
  * it is set back to enrolled. OpenSPP2 up to 2026.09 can't address a
  * membership per program (open PR OpenSPP2 #555 adds this, but the adaptor
- * doesn't use it yet), so that update is refused when the registrant has memberships in other programs too.
+ * doesn't use it yet), so that update is refused when the registrant has
+ * memberships in other programs too.
+ * If OpenSPP has a membership the API client can't see (eg the beneficiary has
+ * no consent), `enroll` tries to create one and fails: 422 on OpenSPP2 up to
+ * 2026.09, 409 "Beneficiary is already a member of this program" with open PR
+ * OpenSPP2 #555.
  * @public
  * @example
  * enroll("Individual/urn:openspp:vocab:id-type#national_id|PH-123", "urn:openspp:program|universal-child-grant");
@@ -658,8 +672,8 @@ export function enroll(beneficiary, programId, options = {}) {
  * Unenroll a registrant from a program by setting their membership to
  * `exited`. Does nothing if the membership isn't enrolled. OpenSPP2 up to
  * 2026.09 can't address a membership per program (open PR OpenSPP2 #555 adds
- * this, but the adaptor doesn't use it yet), so this is refused when the registrant has memberships in other
- * programs too.
+ * this, but the adaptor doesn't use it yet), so this is refused when the
+ * registrant has memberships in other programs too.
  * @public
  * @example
  * unenroll("Individual/urn:openspp:vocab:id-type#national_id|PH-123", "urn:openspp:program|universal-child-grant");

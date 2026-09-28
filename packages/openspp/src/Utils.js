@@ -178,12 +178,13 @@ export const prepareNextState = (state, response) => {
 /**
  * Writes the list of resources from a search response to `state.data`, and
  * paging info to `state.response.page` as `{ total, next }`.
- * Note: when OpenSPP applies consent filtering, `total` is the page size, not
- * the real total. Use `next` to decide whether more pages exist. On OpenSPP2
+ * Note: when OpenSPP applies consent filtering, `total` is the number of
+ * records on the page, not the real total. Use `next` to decide whether more pages exist. On OpenSPP2
  * up to 2026.09 it can be null before the last page when records are hidden
- * (with `count` above 50 OpenSPP reads only 100 records, so more than
- * 100 - `count` hidden records are enough; at 100, one is); open PR OpenSPP2
- * #555 fixes this.
+ * (OpenSPP reads at most 3 × `count` records for a page, and never more than
+ * 100: with `count` of 50 or less the page ends early when more than
+ * 2 × `count` of them are hidden; above 50, when more than 100 - `count` are;
+ * at 100, one is); open PR OpenSPP2 #555 fixes this.
  * @private
  */
 export const prepareSearchState = (state, response) => {
@@ -486,7 +487,8 @@ export const findMembership = async (configuration, beneficiary, programId) => {
 /**
  * Updates a membership's status with a PUT, guarding against OpenSPP2 up to
  * 2026.09 looking up memberships by beneficiary only: it updates the
- * beneficiary's first membership, whichever program it is in, and moves it to
+ * beneficiary's most recently created membership, whichever program it is in,
+ * and moves it to
  * the program in the body. The `isAmbiguous` refusal is what prevents this.
  * @private
  */

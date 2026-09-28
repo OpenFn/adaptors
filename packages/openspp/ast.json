@@ -161,7 +161,7 @@
         "options"
       ],
       "docs": {
-        "description": "Search individuals.\nRecords the API client may not see (for example without consent) are left\nout, and `state.response.page.total` is then only the number of records on\nthe page. Use `state.response.page.next` to check for more pages. On\nOpenSPP2 up to 2026.09 it can be null before the last page when records are\nhidden (with `count` above 50 OpenSPP reads only 100 records, so more than\n100 - `count` hidden records are enough; at 100, one is); open PR OpenSPP2\n#555 fixes this.\nNote: on OpenSPP2 up to 2026.09, `group` can match a former member who is\nstill active in another group, `membership-role` can match a role held in a\ndifferent group, and an unknown `membership-role` code is ignored, so every\nindividual matching the other parameters is returned. Open PR OpenSPP2 #555\nfixes all three (an unknown code matches nothing).",
+        "description": "Search individuals.\nRecords the API client may not see (for example without consent) are left\nout, and `state.response.page.total` is then only the number of records on\nthe page (with open PR OpenSPP2 #555, on every page for API clients whose\nlegal basis requires consent). Use `state.response.page.next` to check for more pages. On\nOpenSPP2 up to 2026.09 it can be null before the last page when records are\nhidden (OpenSPP reads at most 3 × `count` records for a page, and never\nmore than 100: with `count` of 50 or less the page ends early when more than\n2 × `count` of them are hidden; above 50, when more than 100 - `count` are;\nat 100, one is); open PR OpenSPP2 #555 fixes this.\nNote: on OpenSPP2 up to 2026.09, `group` can match a former member who is\nstill active in another group, `membership-role` can match a role held in a\ndifferent group, and an unknown `membership-role` code is ignored, so every\nindividual matching the other parameters is returned. Open PR OpenSPP2 #555\nfixes all three (an unknown code matches nothing).",
         "tags": [
           {
             "title": "public",
@@ -659,7 +659,7 @@
         "options"
       ],
       "docs": {
-        "description": "Add an individual to a group. If the individual is already a member, their\nroles are replaced by `role` when it is given, and left unchanged otherwise\n(`startDate` only applies to new members). OpenSPP2 up to 2026.09 ignores a\nrole code it doesn't know: a new member is added without a role, and an\nexisting member keeps their current roles. Open PR OpenSPP2 #555 rejects an\nunknown role code with 422.",
+        "description": "Add an individual to a group. If the individual is already a member, their\nroles are replaced by `role` when it is given, and left unchanged otherwise\n(`startDate` only applies to new members). OpenSPP2 up to 2026.09 ignores a\nrole code it doesn't know: a new member is added without a role, and an\nexisting member keeps their current roles. Open PR OpenSPP2 #555 rejects an\nunknown role code with 422. A group can have only one `head`: adding a\nsecond fails with 422 (on OpenSPP2 up to 2026.09 the message is only\n\"Failed to add member\").\nA member removed with `removeFromGroup` can't be added back (OpenSPP2\n#570). With open PR OpenSPP2 #555 this fails with 422 \"Duplication of Member\nis not allowed\". On OpenSPP2 up to 2026.09 it doesn't fail: the removed\nmembership, with its `endedDate`, is returned and the individual isn't added\nback.",
         "tags": [
           {
             "title": "public",
@@ -975,7 +975,7 @@
         "options"
       ],
       "docs": {
-        "description": "Enroll a registrant in a program. Does nothing if they are already enrolled.\nIf they have a membership in this program that isn't enrolled (eg exited),\nit is set back to enrolled. OpenSPP2 up to 2026.09 can't address a\nmembership per program (open PR OpenSPP2 #555 adds this, but the adaptor\ndoesn't use it yet), so that update is refused when the registrant has memberships in other programs too.",
+        "description": "Enroll a registrant in a program. Does nothing if they are already enrolled.\nIf they have a membership in this program that isn't enrolled (eg exited),\nit is set back to enrolled. OpenSPP2 up to 2026.09 can't address a\nmembership per program (open PR OpenSPP2 #555 adds this, but the adaptor\ndoesn't use it yet), so that update is refused when the registrant has\nmemberships in other programs too.\nIf OpenSPP has a membership the API client can't see (eg the beneficiary has\nno consent), `enroll` tries to create one and fails: 422 on OpenSPP2 up to\n2026.09, 409 \"Beneficiary is already a member of this program\" with open PR\nOpenSPP2 #555.",
         "tags": [
           {
             "title": "public",
@@ -1045,7 +1045,7 @@
         "options"
       ],
       "docs": {
-        "description": "Unenroll a registrant from a program by setting their membership to\n`exited`. Does nothing if the membership isn't enrolled. OpenSPP2 up to\n2026.09 can't address a membership per program (open PR OpenSPP2 #555 adds\nthis, but the adaptor doesn't use it yet), so this is refused when the registrant has memberships in other\nprograms too.",
+        "description": "Unenroll a registrant from a program by setting their membership to\n`exited`. Does nothing if the membership isn't enrolled. OpenSPP2 up to\n2026.09 can't address a membership per program (open PR OpenSPP2 #555 adds\nthis, but the adaptor doesn't use it yet), so this is refused when the\nregistrant has memberships in other programs too.",
         "tags": [
           {
             "title": "public",
