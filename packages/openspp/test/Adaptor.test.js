@@ -173,7 +173,7 @@ describe('searchIndividual', () => {
   it('searches with v2 query params and returns a list', async () => {
     testServer
       .intercept({
-        path: `${API}/Individual?name=ABAD&birthdate=ge2010-01-01&_count=10&_offset=20&_sort=-birthdate`,
+        path: `${API}/Individual?name=ABAD&birthdate=ge2010-01-01&_count=10&_offset=20&_sort=-birthDate`,
         method: 'GET',
       })
       .reply(200, searchResult([individual]));
@@ -181,7 +181,7 @@ describe('searchIndividual', () => {
     const state = await run(
       searchIndividual(
         { name: 'ABAD', birthdate: 'ge2010-01-01' },
-        { count: 10, offset: 20, sort: '-birthdate' }
+        { count: 10, offset: 20, sort: '-birthDate' }
       )
     );
 

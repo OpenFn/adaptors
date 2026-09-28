@@ -250,7 +250,7 @@ export const buildQuery = (query = {}, options = {}) => {
     throw new Error('Use count instead of limit to set the page size');
   }
   if (options.order !== undefined) {
-    throw new Error('Use sort instead of order, eg { sort: "-birthdate" }');
+    throw new Error('Use sort instead of order, eg { sort: "-birthDate" }');
   }
   const params = {
     ...query,

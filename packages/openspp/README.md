@@ -31,9 +31,33 @@ for required and optional `configuration` properties.
 ```
 
 Create an API client in OpenSPP (API clients menu) with the scopes your jobs
-need, for example `individual:read`, `group:search` or
-`program_membership:create`. The adaptor gets an OAuth token with the client
-credentials once per run.
+need (see below). The adaptor gets an OAuth token with the client credentials
+once per run.
+
+### OpenSPP2 modules and scopes
+
+Individuals and groups are served by the `spp_api_v2` module. The other
+functions need an extra OpenSPP2 module; without it they return 404.
+
+| Function | Scopes | Module |
+|---|---|---|
+| `getIndividual`, `searchIndividual` | `individual:read` | `spp_api_v2` |
+| `createIndividual` | `individual:create` | `spp_api_v2` |
+| `updateIndividual` | `individual:update` | `spp_api_v2` |
+| `getGroup`, `searchGroup` | `group:read` | `spp_api_v2` |
+| `createGroup` | `group:create` | `spp_api_v2` |
+| `updateGroup`, `addToGroup`, `removeFromGroup` | `group:update` | `spp_api_v2` |
+| `getGroupMembers` | `individual:read` and `group:read` | `spp_api_v2` |
+| `getProgram`, `getPrograms` | `program:read` | `spp_api_v2_programs` |
+| `getEnrolledPrograms` | `program_membership:read` | `spp_api_v2_programs` |
+| `enroll` | `program_membership:read`, `program_membership:create` and `program_membership:update` | `spp_api_v2_programs` |
+| `unenroll` | `program_membership:read` and `program_membership:update` | `spp_api_v2_programs` |
+| `getServicePoint`, `searchServicePoint` | `service_point:read` | `spp_api_v2_service_points` |
+
+`enroll` needs `program_membership:update` only to re-enroll an existing
+membership (eg an exited one). Other endpoints used through `request` have
+their own modules, eg `spp_api_v2_vocabulary` for `/Vocabulary` and
+`spp_api_v2_gis` for `/gis/…`.
 
 ### Identifiers
 
@@ -71,6 +95,73 @@ fn(state => {
 OpenSPP leaves out records the API client may not see (for example without
 consent). When that happens `state.response.page.total` is only the page size,
 so check `state.response.page.next` to see whether there are more pages.
+
+#### Paging and options
+
+- `searchIndividual`, `searchGroup`, `getGroupMembers` and
+  `searchServicePoint` page with `count` (1-100, default 20) and `offset`.
+- `getPrograms` pages with a cursor: `count` and `lastId`.
+- `sort` works for individuals only (`searchIndividual`, `getGroupMembers`),
+  on `name`, `birthDate` or `lastUpdated`. Prefix with `-` for descending, eg
+  `{ sort: '-birthDate' }`. OpenSPP sorts by `name` for any other value.
+- `elements` and `extensions` work for individuals and groups.
+- Options OpenSPP would silently ignore throw instead: `limit` and `order`
+  (v3 names) everywhere, `sort` and `lastId` on `searchGroup`, `lastId` on
+  `searchIndividual` and `getGroupMembers`, and `offset` on `getPrograms`.
+
+#### Reading every page
+
+Follow the `_offset` in `state.response.page.next` rather than adding `count`
+to the offset yourself: with consent filtering, OpenSPP may skip records
+between pages.
+
+```js
+fn(async state => {
+  const all = [];
+  let offset = 0;
+  while (offset !== null) {
+    state = await searchIndividual(
+      { name: 'Santos' },
+      { count: 100, offset }
+    )(state);
+    all.push(...state.data);
+    const next = state.response.page.next?.match(/[?&]_offset=(\d+)/);
+    offset = next ? Number(next[1]) : null;
+  }
+  return { ...state, data: all };
+});
+```
+
+Don't use this loop with `searchGroup` on OpenSPP2 releases up to 2026.09:
+they ignore `offset` for groups, so every page is the first page and the loop
+never ends (see Known OpenSPP2 limitations). For `getPrograms`, follow
+`_lastId` in the same way and pass it as `lastId`.
+
+### Errors
+
+Operations throw when OpenSPP returns an error, so a failed step fails the
+job. The error message includes the status, method, path and OpenSPP's
+`detail`, and the error has `statusCode`, `body` and `headers`:
+
+```js
+getIndividual('urn:openspp:vocab:id-type#national_id|PH-123').catch(
+  (error, state) => {
+    if (error.statusCode === 404) {
+      return { ...state, data: null };
+    }
+    throw error;
+  }
+);
+```
+
+- 403 can mean the record doesn't exist, has no consent, or the API client
+  lacks a scope. The message says so.
+- 429 means OpenSPP is rate limiting. The message includes the `Retry-After`
+  delay. The token endpoint allows 5 requests per minute per IP, which is why
+  the adaptor gets one token per run.
+- 409 on `createIndividual` or `createGroup` means another record already
+  has the identifier. On an update with `ifMatch`, it means the record changed
+  since you read it.
 
 ### Any other endpoint
 

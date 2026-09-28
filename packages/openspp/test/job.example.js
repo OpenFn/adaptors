@@ -10,7 +10,7 @@ updateIndividual('urn:openspp:vocab:id-type#national_id|PH-123456789', {
   birthDate: '1985-03-15',
 });
 getGroup('urn:openspp:vocab:id-type#household_id|HH-1');
-searchGroup({ name: 'Santos', type: 'household' });
+searchGroup({ name: 'Santos' });
 createGroup({
   identifier: [
     { system: 'urn:openspp:vocab:id-type#household_id', value: 'HH-1' },

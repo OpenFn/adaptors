@@ -24,7 +24,7 @@ const NO_CURSOR = 'OpenSPP pages individuals and groups with offset, not lastId'
  * @public
  * @property {number} count - Page size, 1-100 (OpenSPP default 20). Sent as `_count`.
  * @property {number} offset - Number of records to skip. Sent as `_offset`.
- * @property {string} sort - Field to sort by, prefix with `-` for descending. Sent as `_sort` (Individual only).
+ * @property {string} sort - `name`, `birthDate` or `lastUpdated`, prefix with `-` for descending. Sent as `_sort` (Individual only; OpenSPP sorts by `name` for any other value).
  * @property {string|string[]} elements - Only return these fields. Sent as `_elements` (Individual and Group).
  * @property {string|string[]} extensions - Include these extensions. Sent as `_extensions` (Individual and Group).
  */

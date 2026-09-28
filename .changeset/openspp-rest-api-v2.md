@@ -47,7 +47,7 @@ getGroupMembers('GRP_Q4VGGZPF', { limit: 10 });
 After (v4):
 
 ```js
-searchIndividual({ name: 'Santos' }, { count: 50, offset: 100, sort: '-birthdate' });
+searchIndividual({ name: 'Santos' }, { count: 50, offset: 100, sort: '-birthDate' });
 getGroupMembers('urn:openspp:vocab:id-type#household_id|HH-1', { count: 10 });
 ```
 

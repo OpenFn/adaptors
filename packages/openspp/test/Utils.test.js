@@ -390,13 +390,13 @@ describe('Utils', () => {
       expect(
         buildQuery(
           { name: 'Santos', gender: undefined },
-          { count: 10, offset: 20, sort: '-birthdate', elements: ['name', 'identifier'] }
+          { count: 10, offset: 20, sort: '-birthDate', elements: ['name', 'identifier'] }
         )
       ).to.eql({
         name: 'Santos',
         _count: 10,
         _offset: 20,
-        _sort: '-birthdate',
+        _sort: '-birthDate',
         _elements: 'name,identifier',
       });
     });
