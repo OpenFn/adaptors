@@ -148,12 +148,22 @@ export function getIndividual(id, options = {}) {
  */
 export function searchIndividual(query = {}, options = {}) {
   return async state => {
-    const [resolvedOptions] = expandReferences(state, options);
+    const [resolvedQuery, resolvedOptions] = expandReferences(
+      state,
+      query,
+      options
+    );
     util.rejectOptions('searchIndividual', resolvedOptions, {
       lastId: NO_CURSOR,
     });
     util.assertSortField('searchIndividual', resolvedOptions?.sort);
-    return util.searchResource('Individual', query, resolvedOptions)(state);
+    const response = await util.searchResource(
+      state.configuration,
+      'Individual',
+      resolvedQuery,
+      resolvedOptions
+    );
+    return util.prepareSearchState(state, response);
   };
 }
 
@@ -228,12 +238,22 @@ export function getGroup(id, options = {}) {
  */
 export function searchGroup(query = {}, options = {}) {
   return async state => {
-    const [resolvedOptions] = expandReferences(state, options);
+    const [resolvedQuery, resolvedOptions] = expandReferences(
+      state,
+      query,
+      options
+    );
     util.rejectOptions('searchGroup', resolvedOptions, {
       sort: 'OpenSPP cannot sort groups',
       lastId: NO_CURSOR,
     });
-    return util.searchResource('Group', query, resolvedOptions)(state);
+    const response = await util.searchResource(
+      state.configuration,
+      'Group',
+      resolvedQuery,
+      resolvedOptions
+    );
+    return util.prepareSearchState(state, response);
   };
 }
 
@@ -306,7 +326,13 @@ export function getGroupMembers(groupId, options = {}) {
     if (role !== undefined) {
       query['membership-role'] = role;
     }
-    return util.searchResource('Individual', query, searchOptions)(state);
+    const response = await util.searchResource(
+      state.configuration,
+      'Individual',
+      query,
+      searchOptions
+    );
+    return util.prepareSearchState(state, response);
   };
 }
 
@@ -460,7 +486,13 @@ export function getPrograms(options = {}) {
       order: 'OpenSPP cannot sort programs',
     });
     const { count, lastId, ...query } = resolvedOptions;
-    return util.searchResource('Program', query, { count, lastId })(state);
+    const response = await util.searchResource(
+      state.configuration,
+      'Program',
+      query,
+      { count, lastId }
+    );
+    return util.prepareSearchState(state, response);
   };
 }
 
@@ -645,14 +677,24 @@ export function getServicePoint(name) {
  */
 export function searchServicePoint(query = {}, options = {}) {
   return async state => {
-    const [resolvedOptions] = expandReferences(state, options);
+    const [resolvedQuery, resolvedOptions] = expandReferences(
+      state,
+      query,
+      options
+    );
     util.rejectOptions('searchServicePoint', resolvedOptions, {
       sort: 'OpenSPP cannot sort service points',
       lastId: 'OpenSPP pages service points with offset, not lastId',
       elements: 'OpenSPP always returns every service point field',
       extensions: 'OpenSPP has no extensions for service points',
     });
-    return util.searchResource('ServicePoint', query, resolvedOptions)(state);
+    const response = await util.searchResource(
+      state.configuration,
+      'ServicePoint',
+      resolvedQuery,
+      resolvedOptions
+    );
+    return util.prepareSearchState(state, response);
   };
 }
 

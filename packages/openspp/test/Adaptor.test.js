@@ -21,6 +21,7 @@ import {
   unenroll,
   getServicePoint,
   searchServicePoint,
+  fn,
 } from '../src/Adaptor.js';
 import {
   IND_ID,
@@ -187,6 +188,19 @@ describe('searchIndividual', () => {
 
     expect(state.data).to.eql([individual]);
     expect(state.response.page).to.eql({ total: 1, next: null });
+  });
+
+  it('resolves a query given as a function of state', async () => {
+    testServer
+      .intercept({ path: `${API}/Individual?identifier=${encodeURIComponent(IND_ID)}`, method: 'GET' })
+      .reply(200, searchResult([individual]));
+
+    const state = await run(
+      fn(state => ({ ...state, input: { id: IND_ID } })),
+      searchIndividual(state => ({ identifier: state.input.id }))
+    );
+
+    expect(state.data).to.eql([individual]);
   });
 
   it('checks that a group filter exists before searching', async () => {

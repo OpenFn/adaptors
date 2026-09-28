@@ -364,50 +364,49 @@ export const readResource = (type, id, options = {}) => {
 };
 
 /**
- * Returns an operation that searches a resource type.
+ * Searches a resource type and returns the response.
  * @private
+ * @param {object} configuration - `state.configuration`
+ * @param {string} type - resource type, eg `Individual`
+ * @param {object} [query] - resolved OpenSPP search parameters
+ * @param {object} [options] - resolved paging and field options
+ * @returns {Promise<object>} the common `request` response
  */
-export const searchResource = (type, query = {}, options = {}) => {
-  return async state => {
-    const [resolvedQuery, resolvedOptions] = expandReferences(
-      state,
-      query,
-      options
+export const searchResource = async (
+  configuration,
+  type,
+  query = {},
+  options = {}
+) => {
+  if (Array.isArray(query)) {
+    // A v3 Odoo domain would be sent as `?0=…`, which OpenSPP ignores,
+    // returning every record
+    throw new Error(
+      `query must be an object of OpenSPP search parameters, eg { name: "Santos" }. Odoo domains like ${JSON.stringify(
+        query
+      )} are not supported`
     );
-    if (Array.isArray(resolvedQuery)) {
-      // A v3 Odoo domain would be sent as `?0=…`, which OpenSPP ignores,
-      // returning every record
-      throw new Error(
-        `query must be an object of OpenSPP search parameters, eg { name: "Santos" }. Odoo domains like ${JSON.stringify(
-          resolvedQuery
-        )} are not supported`
-      );
+  }
+  assertObject(query, 'query');
+  for (const key of ['identifier', 'group']) {
+    if (query[key] !== undefined && query[key] !== 'none') {
+      // OpenSPP2 up to 2026.09 ignores a malformed filter and returns every
+      // record
+      encodeIdentifier(query[key]);
     }
-    assertObject(resolvedQuery, 'query');
-    for (const key of ['identifier', 'group']) {
-      if (resolvedQuery?.[key] !== undefined && resolvedQuery[key] !== 'none') {
-        // OpenSPP2 up to 2026.09 ignores a malformed filter and returns every
-        // record
-        encodeIdentifier(resolvedQuery[key]);
-      }
-    }
-    const groupFilter = resolvedQuery?.group;
-    if (type === 'Individual' && groupFilter !== undefined && groupFilter !== 'none') {
-      // OpenSPP2 up to 2026.09 also ignores a group filter for a group that
-      // doesn't exist, so check the group first: a missing group throws here
-      // (404, or 403 for API clients that require consent)
-      await request(
-        state.configuration,
-        'GET',
-        `/Group/${encodeIdentifier(groupFilter)}`,
-        { query: { _elements: 'identifier' } }
-      );
-    }
-    const response = await request(state.configuration, 'GET', `/${type}`, {
-      query: buildQuery(resolvedQuery, resolvedOptions),
+  }
+  const groupFilter = query.group;
+  if (type === 'Individual' && groupFilter !== undefined && groupFilter !== 'none') {
+    // OpenSPP2 up to 2026.09 also ignores a group filter for a group that
+    // doesn't exist, so check the group first: a missing group throws here
+    // (404, or 403 for API clients that require consent)
+    await request(configuration, 'GET', `/Group/${encodeIdentifier(groupFilter)}`, {
+      query: { _elements: 'identifier' },
     });
-    return prepareSearchState(state, response);
-  };
+  }
+  return request(configuration, 'GET', `/${type}`, {
+    query: buildQuery(query, options),
+  });
 };
 
 /**

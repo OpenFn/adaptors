@@ -13,6 +13,7 @@ import {
   assertHasIdentifier,
   rejectOptions,
   assertSortField,
+  searchResource,
 } from '../src/Utils.js';
 
 const baseUrl = 'http://openspp-utils.test';
@@ -465,6 +466,49 @@ describe('Utils', () => {
           `searchIndividual does not support sort ${JSON.stringify(sort)}`
         );
       }
+    });
+  });
+
+  describe('searchResource', () => {
+    const authed = { ...configuration, access_token: 'abc' };
+    const GROUP = 'urn:openspp:vocab:id-type#household_id|HH-1';
+
+    it('returns the raw search response for the query and paging options', async () => {
+      testServer
+        .intercept({ path: '/api/v2/spp/Individual?name=Santos&_count=5', method: 'GET' })
+        .reply(200, { data: [{ name: 'x' }], meta: { total: 1 } });
+
+      const response = await searchResource(authed, 'Individual', { name: 'Santos' }, { count: 5 });
+
+      expect(response.statusCode).to.equal(200);
+      expect(response.body).to.eql({ data: [{ name: 'x' }], meta: { total: 1 } });
+    });
+
+    it('checks that a group filter exists before searching individuals', async () => {
+      testServer
+        .intercept({
+          path: `/api/v2/spp/Group/${encodeURIComponent(GROUP)}?_elements=identifier`,
+          method: 'GET',
+        })
+        .reply(200, { identifier: [] });
+      testServer
+        .intercept({ path: `/api/v2/spp/Individual?group=${encodeURIComponent(GROUP)}`, method: 'GET' })
+        .reply(200, { data: [] });
+
+      const response = await searchResource(authed, 'Individual', { group: GROUP });
+
+      expect(response.body).to.eql({ data: [] });
+    });
+
+    it('throws on an Odoo domain or a malformed group without sending a request', async () => {
+      await expectRejection(
+        searchResource(authed, 'Individual', [['name', '=', 'X']]),
+        error => expect(error.message).to.match(/Odoo domains/)
+      );
+      await expectRejection(
+        searchResource(authed, 'Individual', { group: 'GRP_X' }),
+        error => expect(error.message).to.match(/Invalid identifier "GRP_X"/)
+      );
     });
   });
 
