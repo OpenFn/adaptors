@@ -126,8 +126,9 @@ export const request = async (configuration = {}, method, path, options = {}) =>
 /**
  * Gets an OAuth access token with the client credentials flow and stores it on
  * `state.configuration.access_token` for the rest of the run.
- * The OpenSPP token endpoint is rate limited (5 requests per minute per IP),
- * so the token is fetched once per run and reused.
+ * The OpenSPP token endpoint is rate limited (5 requests per minute and 50
+ * per day per IP), so the token is fetched once and reused until the OpenFn
+ * runtime removes `configuration` at the end of the step.
  * @private
  * @param {State} state
  * @returns {Promise<State>}
@@ -180,7 +181,8 @@ export const prepareNextState = (state, response) => {
  * paging info to `state.response.page` as `{ total, next }`.
  * Note: when OpenSPP applies consent filtering, `total` is the page size, not
  * the real total. Use `next` to decide whether more pages exist; it can be
- * null before the last page when many records are hidden.
+ * null before the last page when records are hidden (with `count` above 50, a
+ * few hidden records are enough; at 100, one is).
  * @private
  */
 export const prepareSearchState = (state, response) => {
@@ -382,15 +384,16 @@ export const searchResource = (type, query = {}, options = {}) => {
     assertObject(resolvedQuery, 'query');
     for (const key of ['identifier', 'group']) {
       if (resolvedQuery?.[key] !== undefined && resolvedQuery[key] !== 'none') {
-        // OpenSPP ignores a malformed filter and returns every record
+        // OpenSPP2 up to 2026.09 ignores a malformed filter and returns every
+        // record
         encodeIdentifier(resolvedQuery[key]);
       }
     }
     const groupFilter = resolvedQuery?.group;
     if (type === 'Individual' && groupFilter !== undefined && groupFilter !== 'none') {
-      // OpenSPP also ignores a group filter for a group that doesn't exist,
-      // so check the group first: a missing group throws here (404, or 403
-      // for API clients that require consent)
+      // OpenSPP2 up to 2026.09 also ignores a group filter for a group that
+      // doesn't exist, so check the group first: a missing group throws here
+      // (404, or 403 for API clients that require consent)
       await request(
         state.configuration,
         'GET',
@@ -485,9 +488,10 @@ export const findMembership = async (configuration, beneficiary, programId) => {
 };
 
 /**
- * Updates a membership's status with a PUT, guarding against OpenSPP2 looking
- * up memberships by beneficiary only (it updates the beneficiary's first
- * membership, whichever program it is in).
+ * Updates a membership's status with a PUT, guarding against OpenSPP2 up to
+ * 2026.09 looking up memberships by beneficiary only: it updates the
+ * beneficiary's first membership, whichever program it is in, and moves it to
+ * the program in the body. The `isAmbiguous` refusal is what prevents this.
  * @private
  */
 export const putMembership = async (

@@ -32,7 +32,8 @@ for required and optional `configuration` properties.
 
 Create an API client in OpenSPP (API clients menu) with the scopes your jobs
 need (see below). The adaptor gets an OAuth token with the client credentials
-once per run.
+once per workflow step (the OpenFn runtime removes `configuration`, and so the
+token, after each step).
 
 ### OpenSPP2 modules and scopes
 
@@ -40,7 +41,8 @@ Individuals and groups are served by the `spp_api_v2` module. The other
 functions need an extra OpenSPP2 module; without it they return 404. These
 modules are set to install automatically with `spp_api_v2` and the matching
 OpenSPP module (eg `spp_api_v2_programs` with `spp_programs`), but check they
-are installed: some setups need them installed by hand.
+are installed: some setups need them installed by hand. `spp_api_v2_gis` does
+not install automatically.
 
 | Function | Scopes | Module |
 |---|---|---|
@@ -69,7 +71,7 @@ their own modules, eg `spp_api_v2_vocabulary` for `/Vocabulary` and
 
 OpenSPP2 identifies records by external identifiers, not database ids (the
 one exception is the `_lastId` cursor used to page programs). Identifiers are
-written as `system|value`:
+written as `system|value`; service points are identified by their name instead:
 
 ```js
 getIndividual('urn:openspp:vocab:id-type#national_id|PH-123456789');
@@ -107,7 +109,8 @@ fn(state => {
 OpenSPP leaves out records the API client may not see (for example without
 consent). When that happens `state.response.page.total` is only the page size,
 so check `state.response.page.next` to see whether there are more pages. A
-full last page still has a `next` link; the page after it is empty.
+full last page still has a `next` link and the page after it is empty (except
+for `searchServicePoint`, whose `next` is null on the last page).
 
 #### Paging and options
 
@@ -126,9 +129,10 @@ full last page still has a `next` link; the page after it is empty.
   - `sort`, `lastId`, `elements` and `extensions` on `searchServicePoint`
   - `offset` on `getPrograms`
 
-  Other options are passed on unchecked. For example, `getPrograms` sends
-  unknown options as filters, and OpenSPP ignores ones it doesn't know, eg
-  `sort`.
+  Other options are not checked: `searchIndividual`, `searchGroup`,
+  `getGroupMembers` and `searchServicePoint` drop options they don't know, and
+  `getPrograms` sends them to OpenSPP as filters, which OpenSPP ignores if it
+  doesn't know them (eg `sort`).
 
 #### Reading every page
 
@@ -137,7 +141,7 @@ records you have already seen:
 
 ```js
 fn(async state => {
-  const count = 100;
+  const count = 50;
   const byId = new Map();
   let offset = 0;
   do {
@@ -152,13 +156,17 @@ fn(async state => {
 });
 ```
 
-Don't jump to the `_offset` in the `next` link instead. On OpenSPP2 up to
-2026.09, when consent filtering hides records, that offset can pass records
-the client may see, which are then never returned. Stepping by `count` can
-return a record twice instead, which the `Map` removes. Either way, when
-about half or more of the matching records are hidden, OpenSPP can return a
-short page with no `next` before the end of the results. Use the largest
-`count` (100) to make this less likely.
+Don't jump to the `_offset` in the `next` link instead. In OpenSPP2 (checked
+on 2026.09), when consent filtering hides records, that offset can pass
+records the client may see, which are then never returned. Stepping by
+`count` can return a record twice instead, which the `Map` removes.
+
+Either way, a page can come back short, with no `next`, before the end of the
+results. OpenSPP reads at most 100 records per query: with a `count` of 50 or
+less it reads up to 3 × `count` records for a page, and the page ends early
+when more than two thirds of them are hidden. With a larger `count` it reads
+only 100, so at `count: 100` a single hidden record ends the paging. Use
+`count: 50` when consent filtering applies.
 
 Don't use this loop with `searchGroup` on OpenSPP2 releases up to 2026.09:
 they ignore `offset` for groups, so every page is the first page, and when at
@@ -175,10 +183,10 @@ job. The error message includes the status, method, path and OpenSPP's
 ```js
 getIndividual('urn:openspp:vocab:id-type#national_id|PH-123').catch(
   (error, state) => {
-    const notFound =
+    const notAvailable =
       error.statusCode === 404 ||
       (error.statusCode === 403 && error.body?.detail === 'Access denied');
-    if (notFound) {
+    if (notAvailable) {
       return { ...state, data: null };
     }
     throw error;
@@ -186,24 +194,32 @@ getIndividual('urn:openspp:vocab:id-type#national_id|PH-123').catch(
 );
 ```
 
+For API clients that require consent, a 403 `Access denied` can also mean the
+record exists without consent, so don't create a record just because this
+returns `null`.
+
 - 403 with `Missing required scope '…'` (for service points, `Client does not
   have permission to …`) means the API client lacks a scope.
 - For individuals and groups, API clients that require consent (the default)
   get 403 `Access denied` both when the record doesn't exist and when it has
   no consent, so records can't be enumerated. API clients that don't require
   consent get 404 for a missing record. Programs, program memberships and
-  service points always return 404 when not found.
+  service points return 404 when not found; `enroll` with an unknown program
+  or beneficiary fails with 422.
 - 429 means OpenSPP is rate limiting, and the message includes the
   `Retry-After` delay. On OpenSPP2 up to 2026.09 only the token endpoint is
   limited: 5 requests per minute and 50 per day per IP. The adaptor gets one
-  token per run, but many runs a day from the same IP can still reach the
-  daily limit.
+  token per workflow step, so many steps a day (or more than 5 starting within
+  a minute) from the same IP can reach the limit.
 - 409 on an update with `ifMatch` means the record changed since you read it.
 - OpenSPP2 up to 2026.09 doesn't check identifiers on create: `createIndividual`
   or `createGroup` with an identifier another record already has creates a
-  duplicate, and later lookups by that identifier can pick either record (open
-  PR OpenSPP2 #555 makes both a 409). Search by `identifier` first if you need
-  to avoid duplicates.
+  duplicate, and later lookups by that identifier can pick either record. Open
+  PR OpenSPP2 #555 refuses the create with 409, and makes lookups by a shared
+  identifier return 409 (or 403 `Access denied` to consent-requiring clients
+  that can't read every match). Search by `identifier` first if you need to
+  avoid duplicates, but API clients that require consent can't see records
+  without consent, so the search can miss an existing record.
 
 ### Any other endpoint
 
@@ -218,23 +234,31 @@ request('GET', '/Vocabulary', null, { query: { _count: 10 } });
 - `enroll` and `unenroll` refuse to change an existing membership when the
   beneficiary is in more than one program, because OpenSPP2 can't yet address a
   membership per program through the API. Creating new memberships is not
-  affected.
+  affected. Open PR OpenSPP2 #555 adds a way to address one membership per
+  program.
 - After `removeFromGroup`, OpenSPP2 may report the membership as `active` until
-  its scheduled membership repair runs.
+  its scheduled membership repair runs. Open PR OpenSPP2 #555 fixes this.
 - On OpenSPP2 releases up to 2026.09, `offset` is ignored by `searchGroup`:
   every page returns the first page again. Open PR OpenSPP2 #555 fixes this.
 - The `type` filter of `searchGroup` is passed on but not yet applied by
   OpenSPP2 (#565).
-- On OpenSPP2 up to 2026.09, `searchIndividual`'s `group` and
-  `membership-role` filters (and so `getGroupMembers` and its `role`) are each
-  matched against any of the individual's memberships. Results can include
-  former members who are still active in another group, and a role held in a
-  different group. Open PR OpenSPP2 #555 fixes this.
-- OpenSPP ignores filters it can't resolve and returns every record instead:
-  an unknown `membership-role` or `role` code, or a `searchGroup` `member`
-  that isn't `Individual/system|value` or doesn't exist. `addToGroup` also
-  ignores an unknown role code. Open PR OpenSPP2 #555 makes unknown values
-  match nothing and malformed ones return 400.
+- On OpenSPP2 up to 2026.09, `searchIndividual`'s `group` filter (and so
+  `getGroupMembers`) matches any of the individual's memberships, so results
+  can include former members who are still active in another group. Open PR
+  OpenSPP2 #555 fixes this.
+- `membership-role` (and `getGroupMembers`' `role`) is matched separately from
+  `group`, so it can match a role the individual holds in a different group
+  (on 2026.09, also in a group they have left).
+- On OpenSPP2 up to 2026.09, `searchGroup`'s `member` also matches groups the
+  individual has left. Open PR OpenSPP2 #555 fixes this.
+- OpenSPP2 up to 2026.09 ignores filters it can't resolve and returns every
+  record matching the rest of the query: an unknown `membership-role` or
+  `role` code, a `searchGroup` `member` that isn't `Individual/system|value` or
+  doesn't exist, a malformed or unknown `gender`, or a malformed date. Open PR
+  OpenSPP2 #555 makes unknown values match nothing and malformed ones return
+  400.
+- `addToGroup` ignores a role code OpenSPP doesn't know: a new member is added
+  without a role, and an existing member keeps their current roles.
 
 ## Development
 

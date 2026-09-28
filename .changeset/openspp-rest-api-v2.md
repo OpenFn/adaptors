@@ -78,7 +78,7 @@ getPrograms({ count: 10, lastId: 42 }); // the _lastId value from state.response
 | `updateIndividual(spp_id, data)` | `updateIndividual(id, data, options)`: partial update |
 | `getGroup`, `searchGroup`, `createGroup`, `updateGroup` | same changes as the individual functions |
 | `getGroupMembers(spp_id, options, cb)` | `getGroupMembers(groupId, options)`: returns Individual records; `options.role` filters by role |
-| `addToGroup(group_id, individual_id, role)` | same arguments; `role` is a code such as `head`. Without `role`, an existing member's roles are left unchanged; with `role`, OpenSPP replaces them. Unknown role codes are ignored, not created |
+| `addToGroup(group_id, individual_id, role)` | same arguments; `role` is a code such as `head`. Without `role`, an existing member's roles are left unchanged; with `role`, OpenSPP replaces them. An unknown role code is ignored (not created): new members get no role and existing members keep theirs |
 | `removeFromGroup(group_id, individual_id)` | `removeFromGroup(groupId, individualId, options)`: `reason`, `endedDate` |
 | `getProgram(program_id, cb)` | `getProgram(id)` |
 | `getPrograms(options, cb)` | `getPrograms(options)`: filters and `count`/`lastId` paging in one object |

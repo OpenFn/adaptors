@@ -24,7 +24,7 @@ const NO_CURSOR = 'OpenSPP pages individuals and groups with offset, not lastId'
  * @public
  * @property {number} count - Page size, 1-100 (OpenSPP default 20). Sent as `_count`.
  * @property {number} offset - Number of records to skip. Sent as `_offset`.
- * @property {string} sort - `name`, `birthDate` or `lastUpdated`, prefix with `-` for descending. Sent as `_sort` (Individual only; OpenSPP sorts by `name` for any other value).
+ * @property {string} sort - `name`, `birthDate` or `lastUpdated`, prefix with `-` for descending. Sent as `_sort` (Individual only; other values throw, since OpenSPP would sort by `name`).
  * @property {string|string[]} elements - Only return these fields. Sent as `_elements` (Individual and Group).
  * @property {string|string[]} extensions - Include these extensions. Sent as `_extensions` (Individual and Group).
  */
@@ -109,14 +109,14 @@ export function getIndividual(id, options = {}) {
  * Records the API client may not see (for example without consent) are left
  * out, and `state.response.page.total` is then only the page size. Use
  * `state.response.page.next` to check for more pages; it can be null before
- * the last page when many records are hidden.
- * Note: on OpenSPP2 up to 2026.09, `group` and `membership-role` are each
- * matched against any of the individual's memberships. `group` can match a
- * former member who is still active in another group, and `membership-role`
- * matches the role in any group, not only in `group` (fixed by open PR
- * OpenSPP2 #555). An unknown `membership-role` code is ignored, so every
- * individual matching the other parameters is returned (#555 makes it match
- * nothing).
+ * the last page when records are hidden (with `count` above 50, a few hidden
+ * records are enough; at 100, one is).
+ * Note: on OpenSPP2 up to 2026.09, `group` can match a former member who is
+ * still active in another group (fixed by open PR OpenSPP2 #555).
+ * `membership-role` is matched separately from `group`, so it can match a role
+ * held in a different group. An unknown `membership-role` code is ignored, so
+ * every individual matching the other parameters is returned (#555 makes it
+ * match nothing).
  * @public
  * @example <caption>Search by name</caption>
  * searchIndividual({ name: "Santos" });
@@ -179,8 +179,9 @@ export function updateIndividual(id, data, options = {}) {
 }
 
 /**
- * Get a group by identifier. Note: `member[].entity.reference` values returned
- * by OpenSPP can't be used to read the members; use `getGroupMembers` instead.
+ * Get a group by identifier. Note: on OpenSPP2 up to 2026.09,
+ * `member[].entity.reference` values returned by OpenSPP can't be used to read
+ * the members (fixed by open PR OpenSPP2 #555); use `getGroupMembers` instead.
  * @public
  * @example
  * getGroup("urn:openspp:vocab:id-type#household_id|HH-1");
@@ -195,7 +196,7 @@ export function getGroup(id, options = {}) {
 }
 
 /**
- * Search groups. `sort` is not supported: OpenSPP cannot sort groups.
+ * Search groups. `sort` is not supported: OpenSPP always sorts groups by name.
  * Note: on OpenSPP2 releases up to 2026.09, `offset` is ignored for groups and
  * every page returns the first page again (fixed by open PR OpenSPP2 #555).
  * @public
@@ -256,10 +257,10 @@ export function updateGroup(id, data, options = {}) {
 /**
  * List the individuals who are members of a group.
  * Note: on OpenSPP2 up to 2026.09, the result can include former members who
- * are still active in another group, and `role` matches the role in any of an
- * individual's groups, not only this one (fixed by open PR OpenSPP2 #555). An
- * unknown `role` code is ignored, so every member is returned (#555 makes it
- * match nothing).
+ * are still active in another group (fixed by open PR OpenSPP2 #555). `role`
+ * is matched separately from the group, so it can match a role held in a
+ * different group. An unknown `role` code is ignored, so every member is
+ * returned (#555 makes it match nothing).
  * @public
  * @example
  * getGroupMembers("urn:openspp:vocab:id-type#household_id|HH-1");
@@ -298,13 +299,14 @@ const toRole = role =>
 
 /**
  * Add an individual to a group. If the individual is already a member, their
- * roles are replaced by `role` when it is given, and left unchanged otherwise.
- * OpenSPP ignores a role code it doesn't know: the individual is added (or
- * kept) without that role.
+ * roles are replaced by `role` when it is given, and left unchanged otherwise
+ * (`startDate` only applies to new members). OpenSPP ignores a role code it
+ * doesn't know: a new member is added without a role, and an existing member
+ * keeps their current roles.
  * @public
  * @example <caption>Add as head of household</caption>
  * addToGroup("urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:vocab:id-type#national_id|PH-123", "head");
- * @example <caption>Add with the default role</caption>
+ * @example <caption>Add without a role</caption>
  * addToGroup("urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:vocab:id-type#national_id|PH-123");
  * @function
  * @param {string} groupId - Group identifier as `system|value`
@@ -359,9 +361,10 @@ export function addToGroup(groupId, individualId, role, options = {}) {
 /**
  * End an individual's membership of a group. OpenSPP sets the end date to
  * now unless `endedDate` is given.
- * Note: current OpenSPP2 versions may still report the membership as
- * `active` (and list the individual in group searches) until OpenSPP's
- * scheduled membership repair runs. The end date is saved either way.
+ * Note: OpenSPP2 up to 2026.09 may still report the membership as `active`
+ * (and list the individual in group searches) until OpenSPP's scheduled
+ * membership repair runs (fixed by open PR OpenSPP2 #555). The end date is
+ * saved either way.
  * @public
  * @example
  * removeFromGroup("urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:vocab:id-type#national_id|PH-123", { reason: "Moved out" });
@@ -466,9 +469,9 @@ export function getEnrolledPrograms(beneficiary) {
 /**
  * Enroll a registrant in a program. Does nothing if they are already enrolled.
  * If they have a membership in this program that isn't enrolled (eg exited),
- * it is set back to enrolled. Until OpenSPP2 can address memberships per
- * program, that update is refused when the registrant has memberships in
- * other programs too.
+ * it is set back to enrolled. OpenSPP2 up to 2026.09 can't address a
+ * membership per program (open PR OpenSPP2 #555 adds this), so that update is
+ * refused when the registrant has memberships in other programs too.
  * @public
  * @example
  * enroll("Individual/urn:openspp:vocab:id-type#national_id|PH-123", "urn:openspp:program|universal-child-grant");
@@ -527,9 +530,10 @@ export function enroll(beneficiary, programId, options = {}) {
 
 /**
  * Unenroll a registrant from a program by setting their membership to
- * `exited`. Does nothing if the membership isn't enrolled. Until OpenSPP2 can
- * address memberships per program, this is refused when the registrant has
- * memberships in other programs too.
+ * `exited`. Does nothing if the membership isn't enrolled. OpenSPP2 up to
+ * 2026.09 can't address a membership per program (open PR OpenSPP2 #555 adds
+ * this), so this is refused when the registrant has memberships in other
+ * programs too.
  * @public
  * @example
  * unenroll("Individual/urn:openspp:vocab:id-type#national_id|PH-123", "urn:openspp:program|universal-child-grant");

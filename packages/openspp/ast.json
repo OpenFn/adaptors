@@ -161,7 +161,7 @@
         "options"
       ],
       "docs": {
-        "description": "Search individuals.\nRecords the API client may not see (for example without consent) are left\nout, and `state.response.page.total` is then only the page size. Use\n`state.response.page.next` to check for more pages; it can be null before\nthe last page when many records are hidden.\nNote: on OpenSPP2 up to 2026.09, `group` and `membership-role` are each\nmatched against any of the individual's memberships. `group` can match a\nformer member who is still active in another group, and `membership-role`\nmatches the role in any group, not only in `group` (fixed by open PR\nOpenSPP2 #555). An unknown `membership-role` code is ignored, so every\nindividual matching the other parameters is returned (#555 makes it match\nnothing).",
+        "description": "Search individuals.\nRecords the API client may not see (for example without consent) are left\nout, and `state.response.page.total` is then only the page size. Use\n`state.response.page.next` to check for more pages; it can be null before\nthe last page when records are hidden (with `count` above 50, a few hidden\nrecords are enough; at 100, one is).\nNote: on OpenSPP2 up to 2026.09, `group` can match a former member who is\nstill active in another group (fixed by open PR OpenSPP2 #555).\n`membership-role` is matched separately from `group`, so it can match a role\nheld in a different group. An unknown `membership-role` code is ignored, so\nevery individual matching the other parameters is returned (#555 makes it\nmatch nothing).",
         "tags": [
           {
             "title": "public",
@@ -352,7 +352,7 @@
         "options"
       ],
       "docs": {
-        "description": "Get a group by identifier. Note: `member[].entity.reference` values returned\nby OpenSPP can't be used to read the members; use `getGroupMembers` instead.",
+        "description": "Get a group by identifier. Note: on OpenSPP2 up to 2026.09,\n`member[].entity.reference` values returned by OpenSPP can't be used to read\nthe members (fixed by open PR OpenSPP2 #555); use `getGroupMembers` instead.",
         "tags": [
           {
             "title": "public",
@@ -412,7 +412,7 @@
         "options"
       ],
       "docs": {
-        "description": "Search groups. `sort` is not supported: OpenSPP cannot sort groups.\nNote: on OpenSPP2 releases up to 2026.09, `offset` is ignored for groups and\nevery page returns the first page again (fixed by open PR OpenSPP2 #555).",
+        "description": "Search groups. `sort` is not supported: OpenSPP always sorts groups by name.\nNote: on OpenSPP2 releases up to 2026.09, `offset` is ignored for groups and\nevery page returns the first page again (fixed by open PR OpenSPP2 #555).",
         "tags": [
           {
             "title": "public",
@@ -592,7 +592,7 @@
         "options"
       ],
       "docs": {
-        "description": "List the individuals who are members of a group.\nNote: on OpenSPP2 up to 2026.09, the result can include former members who\nare still active in another group, and `role` matches the role in any of an\nindividual's groups, not only this one (fixed by open PR OpenSPP2 #555). An\nunknown `role` code is ignored, so every member is returned (#555 makes it\nmatch nothing).",
+        "description": "List the individuals who are members of a group.\nNote: on OpenSPP2 up to 2026.09, the result can include former members who\nare still active in another group (fixed by open PR OpenSPP2 #555). `role`\nis matched separately from the group, so it can match a role held in a\ndifferent group. An unknown `role` code is ignored, so every member is\nreturned (#555 makes it match nothing).",
         "tags": [
           {
             "title": "public",
@@ -659,7 +659,7 @@
         "options"
       ],
       "docs": {
-        "description": "Add an individual to a group. If the individual is already a member, their\nroles are replaced by `role` when it is given, and left unchanged otherwise.\nOpenSPP ignores a role code it doesn't know: the individual is added (or\nkept) without that role.",
+        "description": "Add an individual to a group. If the individual is already a member, their\nroles are replaced by `role` when it is given, and left unchanged otherwise\n(`startDate` only applies to new members). OpenSPP ignores a role code it\ndoesn't know: a new member is added without a role, and an existing member\nkeeps their current roles.",
         "tags": [
           {
             "title": "public",
@@ -674,7 +674,7 @@
           {
             "title": "example",
             "description": "addToGroup(\"urn:openspp:vocab:id-type#household_id|HH-1\", \"urn:openspp:vocab:id-type#national_id|PH-123\");",
-            "caption": "Add with the default role"
+            "caption": "Add without a role"
           },
           {
             "title": "function",
@@ -756,7 +756,7 @@
         "options"
       ],
       "docs": {
-        "description": "End an individual's membership of a group. OpenSPP sets the end date to\nnow unless `endedDate` is given.\nNote: current OpenSPP2 versions may still report the membership as\n`active` (and list the individual in group searches) until OpenSPP's\nscheduled membership repair runs. The end date is saved either way.",
+        "description": "End an individual's membership of a group. OpenSPP sets the end date to\nnow unless `endedDate` is given.\nNote: OpenSPP2 up to 2026.09 may still report the membership as `active`\n(and list the individual in group searches) until OpenSPP's scheduled\nmembership repair runs (fixed by open PR OpenSPP2 #555). The end date is\nsaved either way.",
         "tags": [
           {
             "title": "public",
@@ -975,7 +975,7 @@
         "options"
       ],
       "docs": {
-        "description": "Enroll a registrant in a program. Does nothing if they are already enrolled.\nIf they have a membership in this program that isn't enrolled (eg exited),\nit is set back to enrolled. Until OpenSPP2 can address memberships per\nprogram, that update is refused when the registrant has memberships in\nother programs too.",
+        "description": "Enroll a registrant in a program. Does nothing if they are already enrolled.\nIf they have a membership in this program that isn't enrolled (eg exited),\nit is set back to enrolled. OpenSPP2 up to 2026.09 can't address a\nmembership per program (open PR OpenSPP2 #555 adds this), so that update is\nrefused when the registrant has memberships in other programs too.",
         "tags": [
           {
             "title": "public",
@@ -1045,7 +1045,7 @@
         "options"
       ],
       "docs": {
-        "description": "Unenroll a registrant from a program by setting their membership to\n`exited`. Does nothing if the membership isn't enrolled. Until OpenSPP2 can\naddress memberships per program, this is refused when the registrant has\nmemberships in other programs too.",
+        "description": "Unenroll a registrant from a program by setting their membership to\n`exited`. Does nothing if the membership isn't enrolled. OpenSPP2 up to\n2026.09 can't address a membership per program (open PR OpenSPP2 #555 adds\nthis), so this is refused when the registrant has memberships in other\nprograms too.",
         "tags": [
           {
             "title": "public",
