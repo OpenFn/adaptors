@@ -1166,7 +1166,7 @@
         "options"
       ],
       "docs": {
-        "description": "Search service points.",
+        "description": "Search service points. Only `count` and `offset` are supported: OpenSPP\ncannot sort service points or limit their fields.",
         "tags": [
           {
             "title": "public",

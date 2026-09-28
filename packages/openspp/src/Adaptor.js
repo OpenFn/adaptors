@@ -128,6 +128,7 @@ export function searchIndividual(query = {}, options = {}) {
     util.rejectOptions('searchIndividual', resolvedOptions, {
       lastId: NO_CURSOR,
     });
+    util.assertSortField('searchIndividual', resolvedOptions?.sort);
     return util.searchResource('Individual', query, resolvedOptions)(state);
   };
 }
@@ -267,6 +268,7 @@ export function getGroupMembers(groupId, options = {}) {
     util.rejectOptions('getGroupMembers', resolvedOptions, {
       lastId: NO_CURSOR,
     });
+    util.assertSortField('getGroupMembers', resolvedOptions?.sort);
     const { role, ...searchOptions } = resolvedOptions;
     const query = { group: resolvedGroupId };
     if (role !== undefined) {
@@ -589,7 +591,8 @@ export function getServicePoint(name) {
 }
 
 /**
- * Search service points.
+ * Search service points. Only `count` and `offset` are supported: OpenSPP
+ * cannot sort service points or limit their fields.
  * @public
  * @example
  * searchServicePoint({ country: "PH", contractActive: true });
@@ -600,7 +603,16 @@ export function getServicePoint(name) {
  * @state {OpenSPPState}
  */
 export function searchServicePoint(query = {}, options = {}) {
-  return util.searchResource('ServicePoint', query, options);
+  return async state => {
+    const [resolvedOptions] = expandReferences(state, options);
+    util.rejectOptions('searchServicePoint', resolvedOptions, {
+      sort: 'OpenSPP cannot sort service points',
+      lastId: 'OpenSPP pages service points with offset, not lastId',
+      elements: 'OpenSPP always returns every service point field',
+      extensions: 'OpenSPP has no extensions for service points',
+    });
+    return util.searchResource('ServicePoint', query, resolvedOptions)(state);
+  };
 }
 
 export {

@@ -233,6 +233,18 @@ describe('searchIndividual', () => {
       expect(error.message).to.match(/searchIndividual does not support lastId/);
     });
   });
+
+  it('throws on a sort field OpenSPP does not know (it would sort by name)', async () => {
+    await expectRejection(
+      run(searchIndividual({}, { sort: '-birthdate' })),
+      error => {
+        expect(error.message).to.match(
+          /searchIndividual does not support sort "-birthdate"/
+        );
+        expect(error.message).to.match(/name, birthDate or lastUpdated/);
+      }
+    );
+  });
 });
 
 describe('createIndividual', () => {
@@ -398,6 +410,12 @@ describe('getGroupMembers', () => {
   it('throws on lastId (OpenSPP would ignore it and return the first page)', async () => {
     await expectRejection(run(getGroupMembers(GRP_ID, { lastId: 42 })), error => {
       expect(error.message).to.match(/getGroupMembers does not support lastId/);
+    });
+  });
+
+  it('throws on a sort field OpenSPP does not know (it would sort by name)', async () => {
+    await expectRejection(run(getGroupMembers(GRP_ID, { sort: 'age' })), error => {
+      expect(error.message).to.match(/getGroupMembers does not support sort "age"/);
     });
   });
 });
@@ -719,5 +737,15 @@ describe('searchServicePoint', () => {
 
     expect(state.data).to.eql([servicePoint]);
     expect(state.response.page).to.eql({ total: 1, next: null });
+  });
+
+  it('throws on sort, lastId, elements and extensions (OpenSPP would ignore them)', async () => {
+    for (const key of ['sort', 'lastId', 'elements', 'extensions']) {
+      await expectRejection(run(searchServicePoint({}, { [key]: 'x' })), error => {
+        expect(error.message).to.match(
+          new RegExp(`searchServicePoint does not support ${key}`)
+        );
+      });
+    }
   });
 });

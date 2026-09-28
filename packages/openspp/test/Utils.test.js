@@ -12,6 +12,7 @@ import {
   assertObject,
   assertHasIdentifier,
   rejectOptions,
+  assertSortField,
 } from '../src/Utils.js';
 
 const baseUrl = 'http://openspp-utils.test';
@@ -440,6 +441,30 @@ describe('Utils', () => {
       expect(() =>
         rejectOptions('searchGroup', { sort: 'name' }, { sort: 'OpenSPP cannot sort groups' })
       ).to.throw('searchGroup does not support sort: OpenSPP cannot sort groups');
+    });
+  });
+
+  describe('assertSortField', () => {
+    it('accepts the fields OpenSPP sorts individuals by, ascending or descending', () => {
+      for (const sort of [
+        undefined,
+        'name',
+        '-name',
+        'birthDate',
+        '-birthDate',
+        'lastUpdated',
+        '-lastUpdated',
+      ]) {
+        expect(() => assertSortField('searchIndividual', sort)).not.to.throw();
+      }
+    });
+
+    it('throws on any other value, naming the function and the value', () => {
+      for (const sort of ['birthdate', '-birth_date', '--name', '', 'name,birthDate', 1]) {
+        expect(() => assertSortField('searchIndividual', sort)).to.throw(
+          `searchIndividual does not support sort ${JSON.stringify(sort)}`
+        );
+      }
     });
   });
 

@@ -304,6 +304,30 @@ export const rejectOptions = (name, options, unsupported) => {
   }
 };
 
+// Fields OpenSPP can sort individuals by. It sorts by name for any other value.
+const SORT_FIELDS = ['name', 'birthDate', 'lastUpdated'];
+
+/**
+ * Throws unless `sort` is a field OpenSPP sorts individuals by, optionally
+ * prefixed with `-` for descending.
+ * @private
+ * @param {string} name - adaptor function name, for the message
+ * @param {string} [sort]
+ */
+export const assertSortField = (name, sort) => {
+  if (sort === undefined) {
+    return;
+  }
+  const field = typeof sort === 'string' && sort.startsWith('-') ? sort.slice(1) : sort;
+  if (!SORT_FIELDS.includes(field)) {
+    throw new Error(
+      `${name} does not support sort ${JSON.stringify(
+        sort
+      )}: use name, birthDate or lastUpdated, with - for descending (OpenSPP sorts by name for any other value)`
+    );
+  }
+};
+
 /**
  * Throws unless `data` is an object with at least one identifier.
  * @private

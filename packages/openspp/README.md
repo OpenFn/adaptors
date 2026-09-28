@@ -107,14 +107,19 @@ full last page still has a `next` link; the page after it is empty.
 - `getPrograms` pages with a cursor: `count` and `lastId`.
 - `sort` works for individuals only (`searchIndividual`, `getGroupMembers`),
   on `name`, `birthDate` or `lastUpdated`. Prefix with `-` for descending, eg
-  `{ sort: '-birthDate' }`. OpenSPP sorts by `name` (in the given direction)
-  for any other value.
+  `{ sort: '-birthDate' }`. Any other value throws, since OpenSPP would sort
+  by `name` instead.
 - `elements` and `extensions` work for individuals and groups.
-- Options OpenSPP would silently ignore throw instead: `limit` and `order`
-  (v3 names) everywhere, `sort` and `lastId` on `searchGroup`, `lastId` on
-  `searchIndividual` and `getGroupMembers`, and `offset` on `getPrograms`.
-  Other options are passed on unchecked: for example OpenSPP ignores `sort`
-  and `elements` on `searchServicePoint`.
+- Options OpenSPP would silently ignore throw instead:
+  - `limit` and `order` (v3 names) on every search
+  - `sort` and `lastId` on `searchGroup`
+  - `lastId` on `searchIndividual` and `getGroupMembers`
+  - `sort`, `lastId`, `elements` and `extensions` on `searchServicePoint`
+  - `offset` on `getPrograms`
+
+  Other options are passed on unchecked. For example, `getPrograms` sends
+  unknown options as filters, and OpenSPP ignores ones it doesn't know, eg
+  `sort`.
 
 #### Reading every page
 
