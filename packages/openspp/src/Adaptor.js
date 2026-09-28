@@ -109,14 +109,15 @@ export function getIndividual(id, options = {}) {
  * Records the API client may not see (for example without consent) are left
  * out, and `state.response.page.total` is then only the page size. Use
  * `state.response.page.next` to check for more pages; it can be null before
- * the last page when records are hidden (with `count` above 50, a few hidden
- * records are enough; at 100, one is).
+ * the last page when records are hidden (with `count` above 50 OpenSPP reads
+ * only 100 records, so more than 100 - `count` hidden records are enough; at
+ * 100, one is).
  * Note: on OpenSPP2 up to 2026.09, `group` can match a former member who is
  * still active in another group (fixed by open PR OpenSPP2 #555).
  * `membership-role` is matched separately from `group`, so it can match a role
- * held in a different group. An unknown `membership-role` code is ignored, so
- * every individual matching the other parameters is returned (#555 makes it
- * match nothing).
+ * held in a different group. On OpenSPP2 up to 2026.09, an unknown
+ * `membership-role` code is ignored, so every individual matching the other
+ * parameters is returned (#555 makes it match nothing).
  * @public
  * @example <caption>Search by name</caption>
  * searchIndividual({ name: "Santos" });
@@ -203,7 +204,7 @@ export function getGroup(id, options = {}) {
  * @example
  * searchGroup({ name: "Santos" }, { count: 50 });
  * @function
- * @param {object} [query] - OpenSPP search parameters: `identifier`, `name`, `member` (`Individual/system|value`; any other value, or an individual that doesn't exist, is ignored and every group is returned). `type` is passed on, but not yet applied by OpenSPP2 (#565)
+ * @param {object} [query] - OpenSPP search parameters: `identifier`, `name`, `member` (`Individual/system|value`; on OpenSPP2 up to 2026.09, any other value, or an individual that doesn't exist, is ignored and every group matching the other parameters is returned, and `member` also matches groups the individual has left). `type` is passed on, but not yet applied by OpenSPP2 (#565)
  * @param {SearchOptions} [options] - Paging and field options
  * @returns {Operation}
  * @state {OpenSPPState}
@@ -259,8 +260,8 @@ export function updateGroup(id, data, options = {}) {
  * Note: on OpenSPP2 up to 2026.09, the result can include former members who
  * are still active in another group (fixed by open PR OpenSPP2 #555). `role`
  * is matched separately from the group, so it can match a role held in a
- * different group. An unknown `role` code is ignored, so every member is
- * returned (#555 makes it match nothing).
+ * different group. On OpenSPP2 up to 2026.09, an unknown `role` code is
+ * ignored, so every member is returned (#555 makes it match nothing).
  * @public
  * @example
  * getGroupMembers("urn:openspp:vocab:id-type#household_id|HH-1");
@@ -470,8 +471,8 @@ export function getEnrolledPrograms(beneficiary) {
  * Enroll a registrant in a program. Does nothing if they are already enrolled.
  * If they have a membership in this program that isn't enrolled (eg exited),
  * it is set back to enrolled. OpenSPP2 up to 2026.09 can't address a
- * membership per program (open PR OpenSPP2 #555 adds this), so that update is
- * refused when the registrant has memberships in other programs too.
+ * membership per program (open PR OpenSPP2 #555 adds this, but the adaptor
+ * doesn't use it yet), so that update is refused when the registrant has memberships in other programs too.
  * @public
  * @example
  * enroll("Individual/urn:openspp:vocab:id-type#national_id|PH-123", "urn:openspp:program|universal-child-grant");
@@ -532,7 +533,7 @@ export function enroll(beneficiary, programId, options = {}) {
  * Unenroll a registrant from a program by setting their membership to
  * `exited`. Does nothing if the membership isn't enrolled. OpenSPP2 up to
  * 2026.09 can't address a membership per program (open PR OpenSPP2 #555 adds
- * this), so this is refused when the registrant has memberships in other
+ * this, but the adaptor doesn't use it yet), so this is refused when the registrant has memberships in other
  * programs too.
  * @public
  * @example

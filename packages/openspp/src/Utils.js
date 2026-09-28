@@ -125,7 +125,7 @@ export const request = async (configuration = {}, method, path, options = {}) =>
 
 /**
  * Gets an OAuth access token with the client credentials flow and stores it on
- * `state.configuration.access_token` for the rest of the run.
+ * `state.configuration.access_token` for the rest of the step.
  * The OpenSPP token endpoint is rate limited (5 requests per minute and 50
  * per day per IP), so the token is fetched once and reused until the OpenFn
  * runtime removes `configuration` at the end of the step.
@@ -181,8 +181,9 @@ export const prepareNextState = (state, response) => {
  * paging info to `state.response.page` as `{ total, next }`.
  * Note: when OpenSPP applies consent filtering, `total` is the page size, not
  * the real total. Use `next` to decide whether more pages exist; it can be
- * null before the last page when records are hidden (with `count` above 50, a
- * few hidden records are enough; at 100, one is).
+ * null before the last page when records are hidden (with `count` above 50
+ * OpenSPP reads only 100 records, so more than 100 - `count` hidden records
+ * are enough; at 100, one is).
  * @private
  */
 export const prepareSearchState = (state, response) => {

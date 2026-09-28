@@ -41,8 +41,7 @@ Individuals and groups are served by the `spp_api_v2` module. The other
 functions need an extra OpenSPP2 module; without it they return 404. These
 modules are set to install automatically with `spp_api_v2` and the matching
 OpenSPP module (eg `spp_api_v2_programs` with `spp_programs`), but check they
-are installed: some setups need them installed by hand. `spp_api_v2_gis` does
-not install automatically.
+are installed: some setups need them installed by hand.
 
 | Function | Scopes | Module |
 |---|---|---|
@@ -65,7 +64,8 @@ An `…:all` scope, eg `group:all`, covers every action on that resource.
 `enroll` needs `program_membership:update` only to re-enroll an existing
 membership (eg an exited one). Other endpoints used through `request` have
 their own modules, eg `spp_api_v2_vocabulary` for `/Vocabulary` and
-`spp_api_v2_gis` for `/gis/…`.
+`spp_api_v2_gis` for `/gis/…`. `spp_api_v2_gis` does not install
+automatically.
 
 ### Identifiers
 
@@ -101,7 +101,7 @@ write the list of records to `state.data`:
 ```js
 searchIndividual({ name: 'Santos', birthdate: 'ge2010-01-01' }, { count: 50 });
 fn(state => {
-  console.log(state.response.page.next); // null when there are no more pages
+  console.log(state.response.page.next); // the next page's URL, or null (see below)
   return state;
 });
 ```
@@ -147,8 +147,10 @@ fn(async state => {
   do {
     state = await searchIndividual({ name: 'Santos' }, { count, offset })(state);
     for (const record of state.data) {
-      const [id] = record.identifier;
-      byId.set(`${id.system}|${id.value}`, record);
+      const [id] = record.identifier ?? [];
+      if (id) {
+        byId.set(`${id.system}|${id.value}`, record);
+      }
     }
     offset += count;
   } while (state.response.page.next);
@@ -169,8 +171,8 @@ only 100, so at `count: 100` a single hidden record ends the paging. Use
 `count: 50` when consent filtering applies.
 
 Don't use this loop with `searchGroup` on OpenSPP2 releases up to 2026.09:
-they ignore `offset` for groups, so every page is the first page, and when at
-least `count` groups match the loop never ends (see Known OpenSPP2
+they ignore `offset` for groups, so every page is the first page, and when that
+page has a `next` link the loop never ends (see Known OpenSPP2
 limitations). `getPrograms` pages with a cursor instead: pass the `_lastId`
 value from `state.response.page.next` as `lastId`.
 
@@ -209,15 +211,15 @@ returns `null`.
 - 429 means OpenSPP is rate limiting, and the message includes the
   `Retry-After` delay. On OpenSPP2 up to 2026.09 only the token endpoint is
   limited: 5 requests per minute and 50 per day per IP. The adaptor gets one
-  token per workflow step, so many steps a day (or more than 5 starting within
-  a minute) from the same IP can reach the limit.
+  token per workflow step, so more than 5 steps starting within a minute, or
+  more than 50 within 24 hours, from the same IP reach the limit.
 - 409 on an update with `ifMatch` means the record changed since you read it.
 - OpenSPP2 up to 2026.09 doesn't check identifiers on create: `createIndividual`
   or `createGroup` with an identifier another record already has creates a
   duplicate, and later lookups by that identifier can pick either record. Open
   PR OpenSPP2 #555 refuses the create with 409, and makes lookups by a shared
-  identifier return 409 (or 403 `Access denied` to consent-requiring clients
-  that can't read every match). Search by `identifier` first if you need to
+  identifier return 409 (or 403 `Access denied` to clients that may not read
+  every match). Search by `identifier` first if you need to
   avoid duplicates, but API clients that require consent can't see records
   without consent, so the search can miss an existing record.
 
@@ -235,7 +237,7 @@ request('GET', '/Vocabulary', null, { query: { _count: 10 } });
   beneficiary is in more than one program, because OpenSPP2 can't yet address a
   membership per program through the API. Creating new memberships is not
   affected. Open PR OpenSPP2 #555 adds a way to address one membership per
-  program.
+  program; the adaptor doesn't use it yet, so this refusal remains.
 - After `removeFromGroup`, OpenSPP2 may report the membership as `active` until
   its scheduled membership repair runs. Open PR OpenSPP2 #555 fixes this.
 - On OpenSPP2 releases up to 2026.09, `offset` is ignored by `searchGroup`:
