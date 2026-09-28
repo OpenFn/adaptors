@@ -344,7 +344,12 @@ export function addToGroup(groupId, individualId, role, options = {}) {
         { body }
       );
     } catch (error) {
-      if (error.statusCode !== 409) {
+      // OpenSPP also returns 409 for other conflicts, eg an identifier that
+      // matches more than one registrant
+      const isAlreadyMember =
+        error.statusCode === 409 &&
+        /already a member/i.test(error.body?.detail ?? '');
+      if (!isAlreadyMember) {
         throw error;
       }
       // Already a member: set the role if one was given. An empty patch

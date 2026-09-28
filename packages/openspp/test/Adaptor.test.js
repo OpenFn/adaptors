@@ -481,6 +481,17 @@ describe('addToGroup', () => {
 
     expect(state.data.role.coding[0].code).to.equal('child');
   });
+
+  it('throws a 409 that is not "already a member" instead of patching (eg an ambiguous identifier)', async () => {
+    testServer
+      .intercept({ path: `${API}/Group/${GRP_PATH}/$add-member`, method: 'POST' })
+      .reply(409, { detail: 'Identifier matches more than one registrant' });
+
+    await expectRejection(run(addToGroup(GRP_ID, IND_ID, 'head')), error => {
+      expect(error.statusCode).to.equal(409);
+      expect(error.message).to.match(/Identifier matches more than one registrant/);
+    });
+  });
 });
 
 describe('removeFromGroup', () => {
@@ -494,11 +505,11 @@ describe('removeFromGroup', () => {
           reason: 'Moved out',
         }),
       })
-      .reply(200, { ...groupMember('child'), status: 'ended' });
+      .reply(200, { ...groupMember('child'), status: 'inactive' });
 
     const state = await run(removeFromGroup(GRP_ID, IND_ID, { reason: 'Moved out' }));
 
-    expect(state.data.status).to.equal('ended');
+    expect(state.data.status).to.equal('inactive');
   });
 });
 

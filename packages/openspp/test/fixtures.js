@@ -96,7 +96,7 @@ export const membership = (
   meta: { versionId: '1790220616815078' },
 });
 
-export const groupMember = (roleCode = 'member') => ({
+export const groupMember = (roleCode = 'other') => ({
   type: 'GroupMember',
   group: { reference: `Group/${GRP_ID}` },
   entity: { reference: `Individual/${IND_ID}` },
@@ -105,7 +105,7 @@ export const groupMember = (roleCode = 'member') => ({
       { system: 'urn:openspp:vocab:group-membership-type', code: roleCode },
     ],
   },
-  start_date: '2026-09-24',
+  startDate: '2026-09-24',
   status: 'active',
 });
 
