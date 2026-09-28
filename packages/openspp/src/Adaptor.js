@@ -18,6 +18,10 @@ import * as util from './Utils.js';
 // the first page would be returned again
 const NO_CURSOR = 'OpenSPP pages individuals and groups with offset, not lastId';
 
+// Programs page with a cursor instead of an offset
+const PROGRAM_CURSOR =
+  'OpenSPP pages programs with a cursor: use count (page size, 1-100) and lastId (the _lastId value in state.response.page.next)';
+
 /**
  * Options for OpenSPP searches
  * @typedef {Object} SearchOptions
@@ -450,13 +454,11 @@ export function getPrograms(options = {}) {
   return async state => {
     const [resolvedOptions] = expandReferences(state, options);
     util.assertObject(resolvedOptions, 'options');
-    for (const key of ['offset', 'limit', 'order']) {
-      if (resolvedOptions[key] !== undefined) {
-        throw new Error(
-          `getPrograms does not support ${key}. OpenSPP pages programs with a cursor: use count for the page size and lastId to get the next page`
-        );
-      }
-    }
+    util.rejectOptions('getPrograms', resolvedOptions, {
+      offset: PROGRAM_CURSOR,
+      limit: PROGRAM_CURSOR,
+      order: 'OpenSPP cannot sort programs',
+    });
     const { count, lastId, ...query } = resolvedOptions;
     return util.searchResource('Program', query, { count, lastId })(state);
   };

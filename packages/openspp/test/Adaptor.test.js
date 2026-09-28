@@ -541,14 +541,22 @@ describe('getPrograms', () => {
     expect(state.data).to.eql([program]);
   });
 
-  it('throws on offset, limit and order (programs page with a cursor)', async () => {
-    for (const key of ['offset', 'limit', 'order']) {
+  it('throws on offset and limit, pointing to count and lastId (programs page with a cursor)', async () => {
+    for (const key of ['offset', 'limit']) {
       await expectRejection(run(getPrograms({ [key]: 10 })), error => {
         expect(error.message).to.match(
-          new RegExp(`getPrograms does not support ${key}`)
+          new RegExp(`getPrograms does not support ${key}: .*count.*lastId`)
         );
       });
     }
+  });
+
+  it('throws on order, saying programs cannot be sorted', async () => {
+    await expectRejection(run(getPrograms({ order: 'name' })), error => {
+      expect(error.message).to.equal(
+        'getPrograms does not support order: OpenSPP cannot sort programs'
+      );
+    });
   });
 });
 
