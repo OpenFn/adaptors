@@ -30,8 +30,8 @@ parameters instead of an Odoo domain array, and throw if given an array.
 **Paging options**: `limit` is now `count` and `order` is now `sort` (Individual
 only); `offset` is unchanged. Passing `limit` or `order` throws. This applies to
 `searchIndividual`, `searchGroup`, `searchServicePoint` and `getGroupMembers`.
-`searchGroup` also throws on `sort`, and `lastId` is only accepted by
-`getPrograms`, since OpenSPP would ignore them.
+`searchGroup` also throws on `sort`, and `searchIndividual`, `searchGroup` and
+`getGroupMembers` throw on `lastId`, since OpenSPP would ignore them.
 
 Before (v3):
 

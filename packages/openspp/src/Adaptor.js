@@ -188,7 +188,7 @@ export function getGroup(id, options = {}) {
 /**
  * Search groups. `sort` is not supported: OpenSPP cannot sort groups.
  * Note: on OpenSPP2 releases up to 2026.09, `offset` is ignored for groups and
- * every page returns the first page again (fixed in OpenSPP2 #555).
+ * every page returns the first page again (fixed by open PR OpenSPP2 #555).
  * @public
  * @example
  * searchGroup({ name: "Santos" }, { count: 50 });

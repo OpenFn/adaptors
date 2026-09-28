@@ -412,7 +412,7 @@
         "options"
       ],
       "docs": {
-        "description": "Search groups. `sort` is not supported: OpenSPP cannot sort groups.\nNote: on OpenSPP2 releases up to 2026.09, `offset` is ignored for groups and\nevery page returns the first page again (fixed in OpenSPP2 #555).",
+        "description": "Search groups. `sort` is not supported: OpenSPP cannot sort groups.\nNote: on OpenSPP2 releases up to 2026.09, `offset` is ignored for groups and\nevery page returns the first page again (fixed by open PR OpenSPP2 #555).",
         "tags": [
           {
             "title": "public",
