@@ -30,6 +30,17 @@ const NO_CURSOR = 'OpenSPP pages individuals and groups with offset, not lastId'
  */
 
 /**
+ * Options for getPrograms
+ * @typedef {Object} ProgramOptions
+ * @public
+ * @property {string} [name] - Filter by name
+ * @property {'active'|'ended'} [status] - Filter by status
+ * @property {'individual'|'group'} [targetType] - Filter by target type
+ * @property {number} [count] - Page size, 1-100 (OpenSPP default 20). Sent as `_count`.
+ * @property {number|string} [lastId] - Cursor for the next page: the `_lastId` value in `state.response.page.next`. Sent as `_lastId`.
+ */
+
+/**
  * Execute a sequence of operations.
  * Wraps `language-common/execute` to authenticate with OpenSPP first.
  * @example
@@ -431,7 +442,7 @@ export function getProgram(id) {
  * @example <caption>Programs for groups, 10 per page</caption>
  * getPrograms({ targetType: "group", count: 10 });
  * @function
- * @param {object} [options] - Filters `name`, `status` (`active` or `ended`) and `targetType` (`individual` or `group`), and paging `count` (1-100) and `lastId`
+ * @param {ProgramOptions} [options] - Filters and paging
  * @returns {Operation}
  * @state {OpenSPPState}
  */

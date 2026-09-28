@@ -894,12 +894,12 @@
           },
           {
             "title": "param",
-            "description": "Filters `name`, `status` (`active` or `ended`) and `targetType` (`individual` or `group`), and paging `count` (1-100) and `lastId`",
+            "description": "Filters and paging",
             "type": {
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "object"
+                "name": "ProgramOptions"
               }
             },
             "name": "options"
