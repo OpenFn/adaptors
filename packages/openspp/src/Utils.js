@@ -179,12 +179,13 @@ export const prepareNextState = (state, response) => {
  * Writes the list of resources from a search response to `state.data`, and
  * paging info to `state.response.page` as `{ total, next }`.
  * Note: when OpenSPP applies consent filtering, `total` is the number of
- * records on the page, not the real total. Use `next` to decide whether more pages exist. On OpenSPP2
- * up to 2026.09 it can be null before the last page when records are hidden
- * (OpenSPP reads at most 3 × `count` records for a page, and never more than
- * 100: with `count` of 50 or less the page ends early when more than
- * 2 × `count` of them are hidden; above 50, when more than 100 - `count` are;
- * at 100, one is); open PR OpenSPP2 #555 fixes this.
+ * records on the page, not the real total. Use `next` to decide whether more
+ * pages exist. On OpenSPP2 up to 2026.09 it can be null before the last page
+ * when records are hidden
+ * (OpenSPP reads up to 3 × `count` records for a page with `count` of 50 or
+ * less, and only 100 above that: with `count` of 50 or less the page ends
+ * early when more than 2 × `count` of them are hidden; above 50, when more
+ * than 100 - `count` are; at 100, one is); open PR OpenSPP2 #555 fixes this.
  * @private
  */
 export const prepareSearchState = (state, response) => {
@@ -361,7 +362,9 @@ export const readResource = (configuration, type, id, options = {}) =>
   });
 
 /**
- * Searches a resource type and returns the response.
+ * Searches a resource type and returns the response. For an Individual
+ * search with a `group` filter, the group is read first, so a missing group
+ * throws (404, or 403 for API clients that require consent).
  * @private
  * @param {object} configuration - `state.configuration`
  * @param {string} type - resource type, eg `Individual`

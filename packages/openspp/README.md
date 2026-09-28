@@ -160,7 +160,8 @@ fn(async state => {
 });
 ```
 
-Stepping by `count` never skips a record on any OpenSPP2 version, but
+Stepping by `count` never skips an individual on any OpenSPP2 version (for
+groups on OpenSPP2 up to 2026.09, see below), but
 OpenSPP2 up to 2026.09 has the caveats below. On OpenSPP2 up to 2026.09, don't
 jump to the `_offset` in the `next` link instead: when consent filtering
 hides records, that offset can pass records the client may see, which are
@@ -221,9 +222,10 @@ returns `null`.
   limited: 5 requests per minute and 50 per day per IP, counted in memory by
   each OpenSPP (Odoo) worker process. The adaptor gets one
   token per workflow step, so more than 5 steps starting within a minute, or
-  more than 50 within 24 hours, from the same IP reach the limit.
+  more than 50 within 24 hours, from the same IP can reach the limit.
 - 409 from `updateIndividual` or `updateGroup` with `ifMatch` means the record
-  changed since you read it.
+  changed since you read it (with open PR OpenSPP2 #555, 409 can also mean the
+  identifier is shared; see below).
 - `enroll` fails when OpenSPP has a membership the API client can't see (eg
   the beneficiary has no consent): 422 on OpenSPP2 up to 2026.09, 409
   "Beneficiary is already a member of this program" with open PR OpenSPP2
@@ -238,8 +240,9 @@ returns `null`.
   can still both succeed), and makes a read or update by a shared identifier
   return 409 (or 403 `Access denied` to clients that may not read every
   match). Where a shared identifier is a search filter (`searchGroup`'s
-  `member`, or the beneficiary in `getEnrolledPrograms`, `enroll` and
-  `unenroll`), those clients get no records instead of 403. A search by
+  `member`, or the beneficiary in `getEnrolledPrograms`), those clients get no
+  records instead of 403, so `enroll` then fails with 403 and `unenroll` with
+  "is not a member". A search by
   `identifier` still returns every record that has it. Search by `identifier`
   first if you need to avoid duplicates, but API clients that require consent
   can't see records without consent, so the search can miss an existing
@@ -292,10 +295,12 @@ request('GET', '/Vocabulary', null, { query: { _count: 10 } });
 - On OpenSPP2 up to 2026.09, `getPrograms` returns 500 instead of 403 when
   the API client lacks the program scope. Open PR OpenSPP2 #555 fixes this.
 - A member removed with `removeFromGroup` can't be added back with
-  `addToGroup` (OpenSPP2 #570). With open PR OpenSPP2 #555 this fails with 422
-  "Duplication of Member is not allowed". On OpenSPP2 up to 2026.09 it doesn't
-  fail: `addToGroup` returns the removed membership, with its `endedDate`, and
-  the individual isn't added back.
+  `addToGroup` (OpenSPP2 #570): it fails with 422, "Duplication of Member is
+  not allowed" with open PR OpenSPP2 #555 and only "Failed to add member" on
+  OpenSPP2 up to 2026.09. On OpenSPP2 up to 2026.09, until OpenSPP's scheduled
+  membership repair runs after a `removeFromGroup` without `endedDate`,
+  `addToGroup` doesn't fail: it returns the removed membership, with its
+  `endedDate`, and the individual isn't added back.
 - On OpenSPP2 up to 2026.09, references in `addToGroup` and `removeFromGroup`
   results, and in `getIndividual`'s `groupMembership[].group.reference`, can't
   be used to read the group or individual (as with `getGroup`'s members). Open

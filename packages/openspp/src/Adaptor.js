@@ -20,7 +20,7 @@ const NO_CURSOR = 'OpenSPP ignores lastId for individuals and groups; page with 
 
 // Programs page with a cursor instead of an offset
 const PROGRAM_CURSOR =
-  'OpenSPP pages programs with a cursor: use count (page size, 1-100) and lastId (the _lastId value in state.response.page.next)';
+  'OpenSPP pages programs with a cursor, so use count (page size, 1-100) and lastId (the _lastId value in state.response.page.next)';
 
 /**
  * Options for OpenSPP searches
@@ -133,12 +133,14 @@ export function getIndividual(id, options = {}) {
  * Records the API client may not see (for example without consent) are left
  * out, and `state.response.page.total` is then only the number of records on
  * the page (with open PR OpenSPP2 #555, on every page for API clients whose
- * legal basis requires consent). Use `state.response.page.next` to check for more pages. On
- * OpenSPP2 up to 2026.09 it can be null before the last page when records are
- * hidden (OpenSPP reads at most 3 × `count` records for a page, and never
- * more than 100: with `count` of 50 or less the page ends early when more than
- * 2 × `count` of them are hidden; above 50, when more than 100 - `count` are;
- * at 100, one is); open PR OpenSPP2 #555 fixes this.
+ * legal basis requires consent). Use `state.response.page.next` to check for
+ * more pages. On OpenSPP2 up to 2026.09 it can be null before the last page
+ * when records are
+ * hidden (OpenSPP reads up to 3 × `count` records for a page with `count` of
+ * 50 or less, and only 100 above that: with `count` of 50 or less the page
+ * ends early when more than 2 × `count` of them are hidden; above 50, when
+ * more than 100 - `count` are; at 100, one is); open PR OpenSPP2 #555 fixes
+ * this.
  * Note: on OpenSPP2 up to 2026.09, `group` can match a former member who is
  * still active in another group, `membership-role` can match a role held in a
  * different group, and an unknown `membership-role` code is ignored, so every
@@ -416,8 +418,10 @@ const toRole = role =>
  * unknown role code with 422. OpenSPP enforces one `head` per group only in
  * its own forms, so a second `head` is accepted through the API.
  * A member removed with `removeFromGroup` can't be added back (OpenSPP2
- * #570). With open PR OpenSPP2 #555 this fails with 422 "Duplication of Member
- * is not allowed". On OpenSPP2 up to 2026.09 it doesn't fail: the removed
+ * #570): it fails with 422, "Duplication of Member is not allowed" with open
+ * PR OpenSPP2 #555 and only "Failed to add member" on OpenSPP2 up to 2026.09.
+ * On OpenSPP2 up to 2026.09, until OpenSPP's scheduled membership repair runs
+ * after a `removeFromGroup` without `endedDate`, it doesn't fail: the removed
  * membership, with its `endedDate`, is returned and the individual isn't added
  * back.
  * @public
