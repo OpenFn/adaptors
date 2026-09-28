@@ -30,7 +30,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "stream-json": "^1.8.0",
+    "stream-json": "^3.5.0",
     "undici": "^7.29.0"
   },
   "devDependencies": {
