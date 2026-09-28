@@ -231,7 +231,7 @@ describe('Utils', () => {
         request(authed, 'GET', '/Individual/hidden'),
         error => {
           expect(error.message).to.equal(
-            'OpenSPP 403 GET /Individual/hidden: Access denied (OpenSPP returns 403 when a record does not exist, has no consent, or the API client lacks a scope)'
+            'OpenSPP 403 GET /Individual/hidden: Access denied (OpenSPP returns 403 when the API client lacks a scope, or, for API clients that require consent, when an individual or group does not exist or has no consent)'
           );
         }
       );

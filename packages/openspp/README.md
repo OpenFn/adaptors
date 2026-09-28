@@ -37,7 +37,10 @@ once per run.
 ### OpenSPP2 modules and scopes
 
 Individuals and groups are served by the `spp_api_v2` module. The other
-functions need an extra OpenSPP2 module; without it they return 404.
+functions need an extra OpenSPP2 module; without it they return 404. These
+modules are set to install automatically with `spp_api_v2` and the matching
+OpenSPP module (eg `spp_api_v2_programs` with `spp_programs`), but check they
+are installed: some setups need them installed by hand.
 
 | Function | Scopes | Module |
 |---|---|---|
@@ -64,13 +67,19 @@ their own modules, eg `spp_api_v2_vocabulary` for `/Vocabulary` and
 
 ### Identifiers
 
-OpenSPP2 never exposes database ids. Records are identified by an external
-identifier written as `system|value`:
+OpenSPP2 identifies records by external identifiers, not database ids (the
+one exception is the `_lastId` cursor used to page programs). Identifiers are
+written as `system|value`:
 
 ```js
 getIndividual('urn:openspp:vocab:id-type#national_id|PH-123456789');
 getProgram('urn:openspp:program|universal-child-grant');
 ```
+
+The `system` of an individual or group identifier is an ID type from
+OpenSPP's `urn:openspp:vocab:id-type` vocabulary. OpenSPP2's default ID types
+are `national_id`, `passport`, `tax_id` and `birth_certificate`; others, like
+the `household_id` used in these examples, must be configured on the server.
 
 Program membership functions take a typed reference to say whether the
 beneficiary is an individual or a group:
@@ -192,8 +201,9 @@ getIndividual('urn:openspp:vocab:id-type#national_id|PH-123').catch(
 - 409 on an update with `ifMatch` means the record changed since you read it.
 - OpenSPP2 up to 2026.09 doesn't check identifiers on create: `createIndividual`
   or `createGroup` with an identifier another record already has creates a
-  duplicate (open PR OpenSPP2 #555 makes this a 409). Search by `identifier`
-  first if you need to avoid duplicates.
+  duplicate, and later lookups by that identifier can pick either record (open
+  PR OpenSPP2 #555 makes both a 409). Search by `identifier` first if you need
+  to avoid duplicates.
 
 ### Any other endpoint
 
@@ -215,6 +225,16 @@ request('GET', '/Vocabulary', null, { query: { _count: 10 } });
   every page returns the first page again. Open PR OpenSPP2 #555 fixes this.
 - The `type` filter of `searchGroup` is passed on but not yet applied by
   OpenSPP2 (#565).
+- On OpenSPP2 up to 2026.09, `searchIndividual`'s `group` and
+  `membership-role` filters (and so `getGroupMembers` and its `role`) are each
+  matched against any of the individual's memberships. Results can include
+  former members who are still active in another group, and a role held in a
+  different group. Open PR OpenSPP2 #555 fixes this.
+- OpenSPP ignores filters it can't resolve and returns every record instead:
+  an unknown `membership-role` or `role` code, or a `searchGroup` `member`
+  that isn't `Individual/system|value` or doesn't exist. `addToGroup` also
+  ignores an unknown role code. Open PR OpenSPP2 #555 makes unknown values
+  match nothing and malformed ones return 400.
 
 ## Development
 

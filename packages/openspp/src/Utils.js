@@ -17,7 +17,7 @@ export const API_PATH = '/api/v2/spp';
 const MEMBERSHIP_PAGE_SIZE = 100;
 
 const FORBIDDEN_HINT =
-  'OpenSPP returns 403 when a record does not exist, has no consent, or the API client lacks a scope';
+  'OpenSPP returns 403 when the API client lacks a scope, or, for API clients that require consent, when an individual or group does not exist or has no consent';
 
 /**
  * Builds a readable message from an OpenSPP error body.
@@ -179,7 +179,8 @@ export const prepareNextState = (state, response) => {
  * Writes the list of resources from a search response to `state.data`, and
  * paging info to `state.response.page` as `{ total, next }`.
  * Note: when OpenSPP applies consent filtering, `total` is the page size, not
- * the real total. Use `next` to decide whether more pages exist.
+ * the real total. Use `next` to decide whether more pages exist; it can be
+ * null before the last page when many records are hidden.
  * @private
  */
 export const prepareSearchState = (state, response) => {
@@ -388,7 +389,8 @@ export const searchResource = (type, query = {}, options = {}) => {
     const groupFilter = resolvedQuery?.group;
     if (type === 'Individual' && groupFilter !== undefined && groupFilter !== 'none') {
       // OpenSPP also ignores a group filter for a group that doesn't exist,
-      // so check the group first: a missing group throws a 404 here
+      // so check the group first: a missing group throws here (404, or 403
+      // for API clients that require consent)
       await request(
         state.configuration,
         'GET',

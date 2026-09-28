@@ -161,7 +161,7 @@
         "options"
       ],
       "docs": {
-        "description": "Search individuals.\nRecords the API client may not see (for example without consent) are left\nout, and `state.response.page.total` is then only the page size. Use\n`state.response.page.next` to check for more pages.",
+        "description": "Search individuals.\nRecords the API client may not see (for example without consent) are left\nout, and `state.response.page.total` is then only the page size. Use\n`state.response.page.next` to check for more pages; it can be null before\nthe last page when many records are hidden.\nNote: on OpenSPP2 up to 2026.09, `group` and `membership-role` are each\nmatched against any of the individual's memberships. `group` can match a\nformer member who is still active in another group, and `membership-role`\nmatches the role in any group, not only in `group` (fixed by open PR\nOpenSPP2 #555). An unknown `membership-role` code is ignored, so every\nindividual matching the other parameters is returned (#555 makes it match\nnothing).",
         "tags": [
           {
             "title": "public",
@@ -181,7 +181,7 @@
           {
             "title": "example",
             "description": "searchIndividual({ group: \"urn:openspp:vocab:id-type#household_id|HH-1\", \"membership-role\": \"head\" });",
-            "caption": "Heads of household in a group"
+            "caption": "Heads of household in a group (see the note above)"
           },
           {
             "title": "function",
@@ -430,7 +430,7 @@
           },
           {
             "title": "param",
-            "description": "OpenSPP search parameters: `identifier`, `name`, `member`. `type` is passed on, but not yet applied by OpenSPP2 (#565)",
+            "description": "OpenSPP search parameters: `identifier`, `name`, `member` (`Individual/system|value`; any other value, or an individual that doesn't exist, is ignored and every group is returned). `type` is passed on, but not yet applied by OpenSPP2 (#565)",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -592,7 +592,7 @@
         "options"
       ],
       "docs": {
-        "description": "List the individuals who are members of a group.",
+        "description": "List the individuals who are members of a group.\nNote: on OpenSPP2 up to 2026.09, the result can include former members who\nare still active in another group, and `role` matches the role in any of an\nindividual's groups, not only this one (fixed by open PR OpenSPP2 #555). An\nunknown `role` code is ignored, so every member is returned (#555 makes it\nmatch nothing).",
         "tags": [
           {
             "title": "public",
@@ -606,7 +606,7 @@
           {
             "title": "example",
             "description": "getGroupMembers(\"urn:openspp:vocab:id-type#household_id|HH-1\", { role: \"head\" });",
-            "caption": "Only the head of household"
+            "caption": "Only the head of household (see the note above)"
           },
           {
             "title": "function",
@@ -659,7 +659,7 @@
         "options"
       ],
       "docs": {
-        "description": "Add an individual to a group. If the individual is already a member, their\nrole is updated when `role` is given, and left unchanged otherwise.",
+        "description": "Add an individual to a group. If the individual is already a member, their\nroles are replaced by `role` when it is given, and left unchanged otherwise.\nOpenSPP ignores a role code it doesn't know: the individual is added (or\nkept) without that role.",
         "tags": [
           {
             "title": "public",
@@ -792,7 +792,7 @@
           },
           {
             "title": "param",
-            "description": "`reason`, `endedDate` (YYYY-MM-DD)",
+            "description": "`reason` (logged by OpenSPP2 but not stored), `endedDate` (YYYY-MM-DD)",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -1058,7 +1058,7 @@
           },
           {
             "title": "example",
-            "description": "unenroll(\"Group/urn:openspp:vocab:id-type#household_id|HH-1\", \"urn:openspp:program|cash-transfer\", { exitDate: \"2026-09-30\", exitReason: { text: \"Graduated\" } });",
+            "description": "unenroll(\"Group/urn:openspp:vocab:id-type#household_id|HH-1\", \"urn:openspp:program|cash-transfer\", { exitDate: \"2026-09-30\" });",
             "caption": "With exit details"
           },
           {
@@ -1086,7 +1086,7 @@
           },
           {
             "title": "param",
-            "description": "`exitDate` (YYYY-MM-DD), `exitReason` (CodeableConcept)",
+            "description": "`exitDate` (YYYY-MM-DD), `exitReason` (CodeableConcept; accepted but not yet stored by OpenSPP2)",
             "type": {
               "type": "OptionalType",
               "expression": {
