@@ -228,8 +228,9 @@ returns `null`.
   the beneficiary has no consent): 422 on OpenSPP2 up to 2026.09, 409
   "Beneficiary is already a member of this program" with open PR OpenSPP2
   #555.
-- `addToGroup` fails with 422 when the group already has a `head` (on OpenSPP2
-  up to 2026.09 the message is only "Failed to add member").
+- OpenSPP enforces one `head` per group only in its own forms: through the
+  API, `addToGroup` accepts a second `head` (checked on 2026.09 and with open
+  PR OpenSPP2 #555).
 - OpenSPP2 up to 2026.09 doesn't check identifiers on create: `createIndividual`
   or `createGroup` with an identifier another record already has creates a
   duplicate, and later lookups by that identifier can pick either record. Open

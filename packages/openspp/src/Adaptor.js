@@ -413,9 +413,8 @@ const toRole = role =>
  * (`startDate` only applies to new members). OpenSPP2 up to 2026.09 ignores a
  * role code it doesn't know: a new member is added without a role, and an
  * existing member keeps their current roles. Open PR OpenSPP2 #555 rejects an
- * unknown role code with 422. A group can have only one `head`: adding a
- * second fails with 422 (on OpenSPP2 up to 2026.09 the message is only
- * "Failed to add member").
+ * unknown role code with 422. OpenSPP enforces one `head` per group only in
+ * its own forms, so a second `head` is accepted through the API.
  * A member removed with `removeFromGroup` can't be added back (OpenSPP2
  * #570). With open PR OpenSPP2 #555 this fails with 422 "Duplication of Member
  * is not allowed". On OpenSPP2 up to 2026.09 it doesn't fail: the removed
