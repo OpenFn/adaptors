@@ -33,7 +33,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/openfn/adaptors.git"
+    "url": "https://github.com/OpenFn/adaptors.git"
   },
   "type": "module",
   "exports": {

@@ -6,7 +6,7 @@
   "homepage": "https://docs.openfn.org",
   "repository": {
     "type": "git",
-    "url": "https://github.com/openfn/adaptors.git"
+    "url": "https://github.com/OpenFn/adaptors.git"
   },
   "main": "dist/index.cjs",
   "scripts": {
