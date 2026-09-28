@@ -107,17 +107,17 @@ export function getIndividual(id, options = {}) {
 /**
  * Search individuals.
  * Records the API client may not see (for example without consent) are left
- * out, and `state.response.page.total` is then only the page size. Use
- * `state.response.page.next` to check for more pages; it can be null before
- * the last page when records are hidden (with `count` above 50 OpenSPP reads
- * only 100 records, so more than 100 - `count` hidden records are enough; at
- * 100, one is).
+ * out, and `state.response.page.total` is then only the number of records on
+ * the page. Use `state.response.page.next` to check for more pages. On
+ * OpenSPP2 up to 2026.09 it can be null before the last page when records are
+ * hidden (with `count` above 50 OpenSPP reads only 100 records, so more than
+ * 100 - `count` hidden records are enough; at 100, one is); open PR OpenSPP2
+ * #555 fixes this.
  * Note: on OpenSPP2 up to 2026.09, `group` can match a former member who is
- * still active in another group (fixed by open PR OpenSPP2 #555).
- * `membership-role` is matched separately from `group`, so it can match a role
- * held in a different group. On OpenSPP2 up to 2026.09, an unknown
- * `membership-role` code is ignored, so every individual matching the other
- * parameters is returned (#555 makes it match nothing).
+ * still active in another group, `membership-role` can match a role held in a
+ * different group, and an unknown `membership-role` code is ignored, so every
+ * individual matching the other parameters is returned. Open PR OpenSPP2 #555
+ * fixes all three (an unknown code matches nothing).
  * @public
  * @example <caption>Search by name</caption>
  * searchIndividual({ name: "Santos" });
@@ -165,6 +165,8 @@ export function createIndividual(data) {
 /**
  * Update some fields of an individual (JSON Merge Patch). Omitted fields are
  * unchanged; `null` clears a field.
+ * Note: OpenSPP2 up to 2026.09 can't change `gender` this way and returns 422
+ * (fixed by open PR OpenSPP2 #555).
  * @public
  * @example
  * updateIndividual("urn:openspp:vocab:id-type#national_id|PH-123456789", { birthDate: "1985-03-16" });
@@ -258,10 +260,10 @@ export function updateGroup(id, data, options = {}) {
 /**
  * List the individuals who are members of a group.
  * Note: on OpenSPP2 up to 2026.09, the result can include former members who
- * are still active in another group (fixed by open PR OpenSPP2 #555). `role`
- * is matched separately from the group, so it can match a role held in a
- * different group. On OpenSPP2 up to 2026.09, an unknown `role` code is
- * ignored, so every member is returned (#555 makes it match nothing).
+ * are still active in another group, `role` can match a role held in a
+ * different group, and an unknown `role` code is ignored, so every member is
+ * returned. Open PR OpenSPP2 #555 fixes all three (an unknown code matches
+ * nothing).
  * @public
  * @example
  * getGroupMembers("urn:openspp:vocab:id-type#household_id|HH-1");
@@ -301,9 +303,10 @@ const toRole = role =>
 /**
  * Add an individual to a group. If the individual is already a member, their
  * roles are replaced by `role` when it is given, and left unchanged otherwise
- * (`startDate` only applies to new members). OpenSPP ignores a role code it
- * doesn't know: a new member is added without a role, and an existing member
- * keeps their current roles.
+ * (`startDate` only applies to new members). OpenSPP2 up to 2026.09 ignores a
+ * role code it doesn't know: a new member is added without a role, and an
+ * existing member keeps their current roles. Open PR OpenSPP2 #555 rejects an
+ * unknown role code with 422.
  * @public
  * @example <caption>Add as head of household</caption>
  * addToGroup("urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:vocab:id-type#national_id|PH-123", "head");

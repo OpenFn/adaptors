@@ -107,10 +107,12 @@ fn(state => {
 ```
 
 OpenSPP leaves out records the API client may not see (for example without
-consent). When that happens `state.response.page.total` is only the page size,
-so check `state.response.page.next` to see whether there are more pages. A
-full last page still has a `next` link and the page after it is empty (except
-for `searchServicePoint`, whose `next` is null on the last page).
+consent). When that happens `state.response.page.total` is only the number
+of records on the page (with open PR OpenSPP2 #555, on every page for API
+clients whose legal basis requires consent), so check
+`state.response.page.next` to see whether there are more pages. A full last
+page can still have a `next` link, and the page after it is then empty
+(`searchServicePoint`'s `next` is always null on the last page).
 
 #### Paging and options
 
@@ -158,17 +160,22 @@ fn(async state => {
 });
 ```
 
-Don't jump to the `_offset` in the `next` link instead. In OpenSPP2 (checked
-on 2026.09), when consent filtering hides records, that offset can pass
-records the client may see, which are then never returned. Stepping by
-`count` can return a record twice instead, which the `Map` removes.
+This loop works on every OpenSPP2 version. On OpenSPP2 up to 2026.09, don't
+jump to the `_offset` in the `next` link instead: when consent filtering
+hides records, that offset can pass records the client may see, which are
+then never returned. Stepping by `count` can return a record twice instead,
+which the `Map` removes.
 
-Either way, a page can come back short, with no `next`, before the end of the
-results. OpenSPP reads at most 100 records per query: with a `count` of 50 or
-less it reads up to 3 × `count` records for a page, and the page ends early
-when more than two thirds of them are hidden. With a larger `count` it reads
-only 100, so at `count: 100` a single hidden record ends the paging. Use
-`count: 50` when consent filtering applies.
+On OpenSPP2 up to 2026.09, a page can also come back short, with no `next`,
+before the end of the results. OpenSPP reads at most 100 records per query:
+with a `count` of 50 or less it reads up to 3 × `count` records for a page,
+and the page ends early when more than two thirds of them are hidden. With a
+larger `count` it reads only 100, so at `count: 100` a single hidden record
+ends the paging. Use `count: 50` when consent filtering applies.
+
+Open PR OpenSPP2 #555 fixes both: `next` no longer passes records, and a
+short (or empty) page keeps its `next` link while records remain. With it,
+following `next` until it is null is also safe.
 
 Don't use this loop with `searchGroup` on OpenSPP2 releases up to 2026.09:
 they ignore `offset` for groups, so every page is the first page, and when that
@@ -248,9 +255,10 @@ request('GET', '/Vocabulary', null, { query: { _count: 10 } });
   `getGroupMembers`) matches any of the individual's memberships, so results
   can include former members who are still active in another group. Open PR
   OpenSPP2 #555 fixes this.
-- `membership-role` (and `getGroupMembers`' `role`) is matched separately from
-  `group`, so it can match a role the individual holds in a different group
-  (on 2026.09, also in a group they have left).
+- On OpenSPP2 up to 2026.09, `membership-role` (and `getGroupMembers`'
+  `role`) is matched separately from `group`, so it can match a role the
+  individual holds in a different group, or in a group they have left. Open PR
+  OpenSPP2 #555 fixes this: the role must be on the membership of that group.
 - On OpenSPP2 up to 2026.09, `searchGroup`'s `member` also matches groups the
   individual has left. Open PR OpenSPP2 #555 fixes this.
 - OpenSPP2 up to 2026.09 ignores filters it can't resolve and returns every
@@ -259,8 +267,15 @@ request('GET', '/Vocabulary', null, { query: { _count: 10 } });
   doesn't exist, a malformed or unknown `gender`, or a malformed date. Open PR
   OpenSPP2 #555 makes unknown values match nothing and malformed ones return
   400.
-- `addToGroup` ignores a role code OpenSPP doesn't know: a new member is added
-  without a role, and an existing member keeps their current roles.
+- On OpenSPP2 up to 2026.09, `addToGroup` ignores a role code OpenSPP doesn't
+  know: a new member is added without a role, and an existing member keeps
+  their current roles. Open PR OpenSPP2 #555 rejects it with 422 instead.
+- On OpenSPP2 up to 2026.09, `updateIndividual` can't change `gender`: OpenSPP
+  returns 422 "Failed to patch individual". Open PR OpenSPP2 #555 fixes this,
+  and rejects gender codes outside ISO 5218 (`urn:iso:std:iso:5218`) with 422
+  on create and update.
+- On OpenSPP2 up to 2026.09, `getPrograms` returns 500 instead of 403 when
+  the API client lacks the program scope. Open PR OpenSPP2 #555 fixes this.
 
 ## Development
 

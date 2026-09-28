@@ -180,10 +180,11 @@ export const prepareNextState = (state, response) => {
  * Writes the list of resources from a search response to `state.data`, and
  * paging info to `state.response.page` as `{ total, next }`.
  * Note: when OpenSPP applies consent filtering, `total` is the page size, not
- * the real total. Use `next` to decide whether more pages exist; it can be
- * null before the last page when records are hidden (with `count` above 50
- * OpenSPP reads only 100 records, so more than 100 - `count` hidden records
- * are enough; at 100, one is).
+ * the real total. Use `next` to decide whether more pages exist. On OpenSPP2
+ * up to 2026.09 it can be null before the last page when records are hidden
+ * (with `count` above 50 OpenSPP reads only 100 records, so more than
+ * 100 - `count` hidden records are enough; at 100, one is); open PR OpenSPP2
+ * #555 fixes this.
  * @private
  */
 export const prepareSearchState = (state, response) => {
