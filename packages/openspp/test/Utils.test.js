@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import { enableMockClient } from '@openfn/language-common/util';
 import {
   authorize,
   request,
@@ -18,9 +17,15 @@ import {
   createResource,
   patchResource,
 } from '../src/Utils.js';
+import {
+  createMockServer,
+  assertAllMocksUsed,
+  expectRejection,
+  jsonBody,
+} from './helpers.js';
 
 const baseUrl = 'http://openspp-utils.test';
-const testServer = enableMockClient(baseUrl);
+const testServer = createMockServer(baseUrl);
 
 const configuration = {
   baseUrl,
@@ -28,25 +33,16 @@ const configuration = {
   clientSecret: 'test-secret',
 };
 
-const expectRejection = async (promise, check) => {
-  let error;
-  try {
-    await promise;
-  } catch (e) {
-    error = e;
-  }
-  expect(error, 'expected the promise to reject').to.exist;
-  check(error);
-};
-
 describe('Utils', () => {
+  afterEach(() => assertAllMocksUsed(testServer));
+
   describe('authorize', () => {
     it('exchanges client credentials for a token and stores it on configuration', async () => {
       testServer
         .intercept({
           path: '/api/v2/spp/oauth/token',
           method: 'POST',
-          body: JSON.stringify({
+          body: jsonBody({
             grant_type: 'client_credentials',
             client_id: 'test-client',
             client_secret: 'test-secret',
@@ -119,7 +115,7 @@ describe('Utils', () => {
         .intercept({
           path: '/api/v2/spp/Group?name=Santos&_count=5',
           method: 'POST',
-          body: JSON.stringify({ a: 1 }),
+          body: jsonBody({ a: 1 }),
           headers: { 'content-type': 'application/json' },
         })
         .reply(201, { ok: true });
@@ -539,7 +535,7 @@ describe('Utils', () => {
     it('posts the resource and returns the response', async () => {
       const data = { identifier: [{ system: 's', value: 'v' }] };
       testServer
-        .intercept({ path: '/api/v2/spp/Group', method: 'POST', body: JSON.stringify(data) })
+        .intercept({ path: '/api/v2/spp/Group', method: 'POST', body: jsonBody(data) })
         .reply(201, data);
 
       const response = await createResource(authed, 'Group', data);
@@ -563,7 +559,7 @@ describe('Utils', () => {
         .intercept({
           path: `/api/v2/spp/Individual/${encodeURIComponent(ID)}`,
           method: 'PATCH',
-          body: JSON.stringify({ birthDate: '2000-01-01' }),
+          body: jsonBody({ birthDate: '2000-01-01' }),
           headers: { 'if-match': '"7"' },
         })
         .reply(200, { birthDate: '2000-01-01' });

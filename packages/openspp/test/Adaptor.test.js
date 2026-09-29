@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import { enableMockClient } from '@openfn/language-common/util';
 import {
   execute,
   request,
@@ -21,7 +20,6 @@ import {
   unenroll,
   getServicePoint,
   searchServicePoint,
-  fn,
 } from '../src/Adaptor.js';
 import {
   IND_ID,
@@ -40,9 +38,15 @@ import {
   servicePoint,
   servicePointBundle,
 } from './fixtures.js';
+import {
+  createMockServer,
+  assertAllMocksUsed,
+  expectRejection,
+  jsonBody,
+} from './helpers.js';
 
 const baseUrl = 'http://openspp-adaptor.test';
-const testServer = enableMockClient(baseUrl);
+const testServer = createMockServer(baseUrl);
 const API = '/api/v2/spp';
 
 const configuration = {
@@ -51,26 +55,9 @@ const configuration = {
   clientSecret: 'test-secret',
 };
 
-const run = (...operations) =>
-  execute(...operations)({ configuration: { ...configuration } });
-
-const expectRejection = async (promise, check) => {
-  let error;
-  try {
-    await promise;
-  } catch (e) {
-    error = e;
-  }
-  expect(error, 'expected the operation to throw').to.exist;
-  check(error);
-};
-
-const jsonBody = expected => body => {
-  expect(JSON.parse(body)).to.eql(expected);
-  return true;
-};
-
-before(() => {
+// `execute` gets a token before the first operation. Only one token response
+// is mocked per run, so a second token request fails the test.
+const runWithState = (state, ...operations) => {
   testServer
     .intercept({ path: `${API}/oauth/token`, method: 'POST' })
     .reply(200, {
@@ -78,30 +65,38 @@ before(() => {
       token_type: 'Bearer',
       expires_in: 86400,
       scope: '',
+    });
+  return execute(...operations)({ ...state, configuration: { ...configuration } });
+};
+
+const run = (...operations) => runWithState({}, ...operations);
+
+const groupExists = () =>
+  testServer
+    .intercept({
+      path: `${API}/Group/${GRP_PATH}?_elements=identifier`,
+      method: 'GET',
     })
-    .persist();
-});
+    .reply(200, { type: 'Group', identifier: group.identifier });
+
+const membershipsPath = `${API}/ProgramMembership?beneficiary=${encodeURIComponent(
+  `Individual/${IND_ID}`
+)}&_count=100`;
+
+afterEach(() => assertAllMocksUsed(testServer));
 
 describe('execute', () => {
   it('fetches one token per run and reuses it across operations', async () => {
-    const onceUrl = 'http://openspp-token-once.test';
-    const onceServer = enableMockClient(onceUrl);
-    onceServer
-      .intercept({ path: `${API}/oauth/token`, method: 'POST' })
-      .reply(200, { access_token: 'only-once' });
-    onceServer
+    testServer
       .intercept({
         path: `${API}/Program/${PROGRAM_PATH}`,
         method: 'GET',
-        headers: { authorization: 'Bearer only-once' },
+        headers: { authorization: 'Bearer fake-token' },
       })
       .reply(200, program)
       .times(2);
 
-    const state = await execute(
-      getProgram(PROGRAM_ID),
-      getProgram(PROGRAM_ID)
-    )({ configuration: { ...configuration, baseUrl: onceUrl } });
+    const state = await run(getProgram(PROGRAM_ID), getProgram(PROGRAM_ID));
 
     expect(state.data).to.eql(program);
   });
@@ -132,8 +127,8 @@ describe('getIndividual', () => {
       .intercept({ path: `${API}/Individual/${IND_PATH}`, method: 'GET' })
       .reply(200, individual);
 
-    const state = await run(
-      fn(state => ({ ...state, input: { id: IND_ID } })),
+    const state = await runWithState(
+      { input: { id: IND_ID } },
       getIndividual(state => state.input.id)
     );
 
@@ -208,8 +203,8 @@ describe('searchIndividual', () => {
       .intercept({ path: `${API}/Individual?identifier=${encodeURIComponent(IND_ID)}`, method: 'GET' })
       .reply(200, searchResult([individual]));
 
-    const state = await run(
-      fn(state => ({ ...state, input: { id: IND_ID } })),
+    const state = await runWithState(
+      { input: { id: IND_ID } },
       searchIndividual(state => ({ identifier: state.input.id }))
     );
 
@@ -281,8 +276,8 @@ describe('createIndividual', () => {
       .intercept({ path: `${API}/Individual`, method: 'POST', body: jsonBody(data) })
       .reply(201, individual);
 
-    const state = await run(
-      fn(state => ({ ...state, input: data })),
+    const state = await runWithState(
+      { input: data },
       createIndividual(state => state.input)
     );
 
@@ -326,8 +321,8 @@ describe('updateIndividual', () => {
       })
       .reply(200, { ...individual, birthDate: '2016-05-04' });
 
-    const state = await run(
-      fn(state => ({ ...state, input: { id: IND_ID, birthDate: '2016-05-04' } })),
+    const state = await runWithState(
+      { input: { id: IND_ID, birthDate: '2016-05-04' } },
       updateIndividual(
         state => state.input.id,
         state => ({ birthDate: state.input.birthDate })
@@ -424,14 +419,6 @@ describe('updateGroup', () => {
     expect(state.data.name).to.equal('Abad-Santos');
   });
 });
-
-const groupExists = () =>
-  testServer
-    .intercept({
-      path: `${API}/Group/${GRP_PATH}?_elements=identifier`,
-      method: 'GET',
-    })
-    .reply(200, { type: 'Group', identifier: group.identifier });
 
 describe('getGroupMembers', () => {
   it('lists the individuals in a group, optionally by role', async () => {
@@ -641,10 +628,6 @@ describe('getEnrolledPrograms', () => {
     });
   });
 });
-
-const membershipsPath = `${API}/ProgramMembership?beneficiary=${encodeURIComponent(
-  `Individual/${IND_ID}`
-)}&_count=100`;
 
 describe('enroll', () => {
   it('creates a membership when the beneficiary is not in the program', async () => {
