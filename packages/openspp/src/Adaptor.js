@@ -24,7 +24,7 @@ const PROGRAM_CURSOR =
  * @public
  * @property {number} count - Page size, 1-100 (OpenSPP default 20)
  * @property {number} offset - Number of records to skip
- * @property {string} sort - Individuals only: `name`, `birthDate` or `lastUpdated`, with a `-` prefix for descending
+ * @property {string} sort - Individuals only: one of `name`, `birthDate` or `lastUpdated`, with a `-` prefix for descending
  * @property {string|string[]} elements - Only return these fields (individuals and groups)
  * @property {string|string[]} extensions - Include these extensions (individuals and groups)
  */
@@ -78,7 +78,7 @@ export function execute(...operations) {
  * @param {string} method - HTTP method
  * @param {string} path - Path relative to /api/v2/spp, eg `/Individual`
  * @param {object} [body] - Request body, sent as JSON
- * @param {object} [options] - `query` (query parameters) and `ifMatch` (ETag for optimistic locking)
+ * @param {object} [options] - `query` (query parameters), `ifMatch` (ETag for optimistic locking) and `headers`
  * @returns {Operation}
  * @state {OpenSPPState}
  */
@@ -135,7 +135,7 @@ export function getIndividual(id, options = {}) {
  * @example <caption>Heads of household in a group</caption>
  * searchIndividual({ group: "urn:openspp:vocab:id-type#household_id|HH-1", "membership-role": "head" });
  * @function
- * @param {object} [query] - OpenSPP search parameters, eg `{ name: "Santos" }`. See the [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search)
+ * @param {object} [query] - OpenSPP search parameters, eg `{ name: "Santos" }`. `identifier` and `group` must be `system|value`. See the [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search)
  * @param {SearchOptions} [options] - Paging and field options
  * @returns {Operation}
  * @state {OpenSPPState}
@@ -311,7 +311,7 @@ export function createGroup(data) {
  * @function
  * @param {string} id - Identifier as `system|value`
  * @param {object} data - Fields to change
- * @param {object} [options] - `ifMatch`: ETag from a previous read
+ * @param {object} [options] - `ifMatch`: ETag from a previous read, to fail if the record changed
  * @returns {Operation}
  * @state {OpenSPPState}
  */
@@ -380,9 +380,9 @@ const toRole = role =>
 
 /**
  * Add an individual to a group. Throws a 409 error if the individual is
- * already a member. To change an existing member's role, use `request`, eg
- * `request("PATCH", "/Group/<group>/member/<individual>", { role })` with both
- * identifiers URL-encoded.
+ * already a member. To change an existing member's role, use `request` with
+ * both identifiers URL-encoded, eg
+ * `request("PATCH", "/Group/<group>/member/<individual>", { role: { coding: [{ system: "urn:openspp:vocab:group-membership-type", code: "spouse" }] } })`.
  * @public
  * @example <caption>Add as head of household</caption>
  * addToGroup("urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:vocab:id-type#national_id|PH-123", "head");
@@ -430,7 +430,7 @@ export function addToGroup(groupId, individualId, role, options = {}) {
  * @function
  * @param {string} groupId - Group identifier as `system|value`
  * @param {string} individualId - Individual identifier as `system|value`
- * @param {object} [options] - `reason`, `endedDate` (YYYY-MM-DD)
+ * @param {object} [options] - `reason` (OpenSPP logs it but doesn't save it), `endedDate` (YYYY-MM-DD)
  * @returns {Operation}
  * @state {OpenSPPState}
  */
@@ -537,11 +537,11 @@ export function getEnrolledPrograms(beneficiary) {
 }
 
 /**
- * Enroll a registrant in a program. Does nothing if they are already enrolled.
- * If they have a membership in this program that isn't enrolled (eg exited),
- * it is set back to enrolled. That update throws if the registrant also has
- * memberships in other programs, because OpenSPP can't safely update one of
- * them through the API.
+ * Enroll a registrant in a program. If they are already enrolled, returns their
+ * membership unchanged. If they have a membership in this program that isn't
+ * enrolled (eg exited), it is set back to enrolled. That update throws if the
+ * registrant also has memberships in other programs, because the adaptor can't
+ * be sure OpenSPP would update the membership for this program.
  * @public
  * @example
  * enroll("Individual/urn:openspp:vocab:id-type#national_id|PH-123", "urn:openspp:program|universal-child-grant");
@@ -600,9 +600,10 @@ export function enroll(beneficiary, programId, options = {}) {
 
 /**
  * Unenroll a registrant from a program by setting their membership to
- * `exited`. Does nothing if the membership isn't enrolled. Throws if the
- * registrant also has memberships in other programs, because OpenSPP can't
- * safely update one of them through the API.
+ * `exited`. If the membership isn't enrolled, returns it unchanged. Throws if
+ * the registrant has no membership in this program, or also has memberships in
+ * other programs, because the adaptor can't be sure OpenSPP would update the
+ * membership for this program.
  * @public
  * @example
  * unenroll("Individual/urn:openspp:vocab:id-type#national_id|PH-123", "urn:openspp:program|universal-child-grant");
@@ -611,7 +612,7 @@ export function enroll(beneficiary, programId, options = {}) {
  * @function
  * @param {string} beneficiary - Typed reference: `Individual/system|value` or `Group/system|value`
  * @param {string} programId - Program identifier as `system|value`
- * @param {object} [options] - `exitDate` (YYYY-MM-DD), `exitReason` (CodeableConcept)
+ * @param {object} [options] - `exitDate` (YYYY-MM-DD), `exitReason` (CodeableConcept; OpenSPP doesn't save it)
  * @returns {Operation}
  * @state {OpenSPPState}
  */

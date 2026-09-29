@@ -103,15 +103,15 @@ write the list of records to `state.data`:
 searchIndividual({ name: 'Santos', birthdate: 'ge2010-01-01' }, { count: 50 });
 ```
 
-`state.response.page.next` is set when there are more results. OpenSPP leaves
-out records the API client may not see (for example without consent).
+`state.response.page.next` is set when OpenSPP reports another page. OpenSPP
+leaves out records the API client may not see (for example without consent).
 
 `searchIndividual`, `searchGroup`, `getGroupMembers` and `searchServicePoint`
 page with `count` (1-100) and `offset`; `getPrograms` pages with `count` and
 `lastId`. The adaptor logs a warning for options OpenSPP ignores, such as
 `sort` on groups. See the
 [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search)
-for every search parameter.
+for search parameters.
 
 ### Errors
 
@@ -135,14 +135,16 @@ getIndividual('urn:openspp:vocab:id-type#national_id|PH-123').catch(
 
 For API clients that require consent (the default), OpenSPP returns 403
 `Access denied` both when an individual or group doesn't exist and when it has
-no consent, so don't create a record just because a read returns 403. A 403
-with `Missing required scope` means the API client lacks a scope. See the
+no consent, so don't create a record just because this example returns
+`null`. A 403 with `Missing required scope` means the API client lacks a
+scope. See the
 [OpenSPP error docs](https://docs.openspp.org/developer_guide/api_v2/errors)
 and [consent docs](https://docs.openspp.org/developer_guide/api_v2/consent).
 
 `enroll` and `unenroll` throw rather than change an existing membership when
-the beneficiary is also in other programs, because OpenSPP can't safely update
-one of them through the API. Change those memberships in OpenSPP instead.
+the beneficiary is also in other programs, because the adaptor can't be sure
+OpenSPP would update the membership for that program. Change those memberships
+in OpenSPP instead.
 
 ### Any other endpoint
 

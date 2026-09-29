@@ -27,7 +27,7 @@ isn't found. In v3 errors were logged and the job carried on.
 **Search queries**: search functions take an object of OpenSPP search
 parameters instead of an Odoo domain array, and throw if given an array.
 
-**Paging options**: `limit` is now `count` and `order` is now `sort` (Individual
+**Paging options**: `limit` is now `count` and `order` is now `sort` (individuals
 only); `offset` is unchanged. Passing `limit` or `order` logs a warning and has
 no effect. This applies to `searchIndividual`, `searchGroup`,
 `searchServicePoint` and `getGroupMembers`. Other options OpenSPP ignores also
@@ -54,6 +54,7 @@ getGroupMembers('urn:openspp:vocab:id-type#household_id|HH-1', { count: 10 });
 `getPrograms` takes one `options` object with filters and paging together.
 Programs page with a cursor, so `offset` is not supported: use `count`, and for
 the next page pass as `lastId` the `_lastId` value in `state.response.page.next`.
+Passing `offset`, `limit` or `order` logs a warning and has no effect.
 
 Before (v3):
 

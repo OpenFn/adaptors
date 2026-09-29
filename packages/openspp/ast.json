@@ -63,7 +63,7 @@
           },
           {
             "title": "param",
-            "description": "`query` (query parameters) and `ifMatch` (ETag for optimistic locking)",
+            "description": "`query` (query parameters), `ifMatch` (ETag for optimistic locking) and `headers`",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -190,7 +190,7 @@
           },
           {
             "title": "param",
-            "description": "OpenSPP search parameters, eg `{ name: \"Santos\" }`. See the [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search)",
+            "description": "OpenSPP search parameters, eg `{ name: \"Santos\" }`. `identifier` and `group` must be `system|value`. See the [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search)",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -559,7 +559,7 @@
           },
           {
             "title": "param",
-            "description": "`ifMatch`: ETag from a previous read",
+            "description": "`ifMatch`: ETag from a previous read, to fail if the record changed",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -659,7 +659,7 @@
         "options"
       ],
       "docs": {
-        "description": "Add an individual to a group. Throws a 409 error if the individual is\nalready a member. To change an existing member's role, use `request`, eg\n`request(\"PATCH\", \"/Group/<group>/member/<individual>\", { role })` with both\nidentifiers URL-encoded.",
+        "description": "Add an individual to a group. Throws a 409 error if the individual is\nalready a member. To change an existing member's role, use `request` with\nboth identifiers URL-encoded, eg\n`request(\"PATCH\", \"/Group/<group>/member/<individual>\", { role: { coding: [{ system: \"urn:openspp:vocab:group-membership-type\", code: \"spouse\" }] } })`.",
         "tags": [
           {
             "title": "public",
@@ -792,7 +792,7 @@
           },
           {
             "title": "param",
-            "description": "`reason`, `endedDate` (YYYY-MM-DD)",
+            "description": "`reason` (OpenSPP logs it but doesn't save it), `endedDate` (YYYY-MM-DD)",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -975,7 +975,7 @@
         "options"
       ],
       "docs": {
-        "description": "Enroll a registrant in a program. Does nothing if they are already enrolled.\nIf they have a membership in this program that isn't enrolled (eg exited),\nit is set back to enrolled. That update throws if the registrant also has\nmemberships in other programs, because OpenSPP can't safely update one of\nthem through the API.",
+        "description": "Enroll a registrant in a program. If they are already enrolled, returns their\nmembership unchanged. If they have a membership in this program that isn't\nenrolled (eg exited), it is set back to enrolled. That update throws if the\nregistrant also has memberships in other programs, because the adaptor can't\nbe sure OpenSPP would update the membership for this program.",
         "tags": [
           {
             "title": "public",
@@ -1045,7 +1045,7 @@
         "options"
       ],
       "docs": {
-        "description": "Unenroll a registrant from a program by setting their membership to\n`exited`. Does nothing if the membership isn't enrolled. Throws if the\nregistrant also has memberships in other programs, because OpenSPP can't\nsafely update one of them through the API.",
+        "description": "Unenroll a registrant from a program by setting their membership to\n`exited`. If the membership isn't enrolled, returns it unchanged. Throws if\nthe registrant has no membership in this program, or also has memberships in\nother programs, because the adaptor can't be sure OpenSPP would update the\nmembership for this program.",
         "tags": [
           {
             "title": "public",
@@ -1086,7 +1086,7 @@
           },
           {
             "title": "param",
-            "description": "`exitDate` (YYYY-MM-DD), `exitReason` (CodeableConcept)",
+            "description": "`exitDate` (YYYY-MM-DD), `exitReason` (CodeableConcept; OpenSPP doesn't save it)",
             "type": {
               "type": "OptionalType",
               "expression": {

@@ -235,7 +235,7 @@ const joinList = value => (Array.isArray(value) ? value.join(',') : value);
  * @returns {object}
  */
 export const buildQuery = (query = {}, options = {}) => {
-  // v3 paging options, which are not sent
+  // v3 paging options: warn, and don't send them
   if (options.limit !== undefined) {
     console.warn('WARNING: limit is not supported: use count to set the page size');
   }
@@ -461,8 +461,8 @@ export const findMembership = async (configuration, beneficiary, programId) => {
 };
 
 /**
- * Updates a membership's status with a PUT. OpenSPP finds the membership by
- * beneficiary only, so with several memberships it could update one in
+ * Updates a membership's status with a PUT. The PUT endpoint used here finds
+ * the membership by beneficiary only, so with several memberships it could update one in
  * another program: the `isAmbiguous` refusal and the program check in the
  * response guard against this.
  * @private
