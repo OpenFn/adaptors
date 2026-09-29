@@ -106,7 +106,7 @@ export function request(method, path, body, options = {}) {
  * @example <caption>Only return some fields</caption>
  * getIndividual("urn:openspp:vocab:id-type#national_id|PH-123456789", { elements: ["identifier", "name"] });
  * @function
- * @param {string} id - Identifier as `system|value`
+ * @param {string} id - Identifier as `system\|value`
  * @param {object} [options] - `elements` and `extensions` (see SearchOptions)
  * @returns {Operation}
  * @state {OpenSPPState}
@@ -135,7 +135,7 @@ export function getIndividual(id, options = {}) {
  * @example <caption>Heads of household in a group</caption>
  * searchIndividual({ group: "urn:openspp:vocab:id-type#household_id|HH-1", "membership-role": "head" });
  * @function
- * @param {object} [query] - OpenSPP search parameters, eg `{ name: "Santos" }`. `identifier` and `group` must be `system|value`. See the [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search)
+ * @param {object} [query] - OpenSPP search parameters, eg `{ name: "Santos" }`. `identifier` and `group` must be `system\|value`. See the [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search)
  * @param {SearchOptions} [options] - Paging and field options
  * @returns {Operation}
  * @state {OpenSPPState}
@@ -195,7 +195,7 @@ export function createIndividual(data) {
  * @example
  * updateIndividual("urn:openspp:vocab:id-type#national_id|PH-123456789", { birthDate: "1985-03-16" });
  * @function
- * @param {string} id - Identifier as `system|value`
+ * @param {string} id - Identifier as `system\|value`
  * @param {object} data - Fields to change
  * @param {object} [options] - `ifMatch`: ETag from a previous read, to fail if the record changed
  * @returns {Operation}
@@ -226,7 +226,7 @@ export function updateIndividual(id, data, options = {}) {
  * @example
  * getGroup("urn:openspp:vocab:id-type#household_id|HH-1");
  * @function
- * @param {string} id - Identifier as `system|value`
+ * @param {string} id - Identifier as `system\|value`
  * @param {object} [options] - `elements` and `extensions` (see SearchOptions)
  * @returns {Operation}
  * @state {OpenSPPState}
@@ -309,7 +309,7 @@ export function createGroup(data) {
  * @example
  * updateGroup("urn:openspp:vocab:id-type#household_id|HH-1", { name: "Santos-Reyes Household" });
  * @function
- * @param {string} id - Identifier as `system|value`
+ * @param {string} id - Identifier as `system\|value`
  * @param {object} data - Fields to change
  * @param {object} [options] - `ifMatch`: ETag from a previous read, to fail if the record changed
  * @returns {Operation}
@@ -342,7 +342,7 @@ export function updateGroup(id, data, options = {}) {
  * @example <caption>Only the head of household</caption>
  * getGroupMembers("urn:openspp:vocab:id-type#household_id|HH-1", { role: "head" });
  * @function
- * @param {string} groupId - Group identifier as `system|value`
+ * @param {string} groupId - Group identifier as `system\|value`
  * @param {object} [options] - `role` (membership role code) plus SearchOptions
  * @returns {Operation}
  * @state {OpenSPPState}
@@ -389,8 +389,8 @@ const toRole = role =>
  * @example <caption>Add without a role</caption>
  * addToGroup("urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:vocab:id-type#national_id|PH-123");
  * @function
- * @param {string} groupId - Group identifier as `system|value`
- * @param {string} individualId - Individual identifier as `system|value`
+ * @param {string} groupId - Group identifier as `system\|value`
+ * @param {string} individualId - Individual identifier as `system\|value`
  * @param {string|object} [role] - Role code in `urn:openspp:vocab:group-membership-type` (eg "head", "spouse", "child"), or a CodeableConcept
  * @param {object} [options] - `startDate` (YYYY-MM-DD)
  * @returns {Operation}
@@ -428,8 +428,8 @@ export function addToGroup(groupId, individualId, role, options = {}) {
  * @example
  * removeFromGroup("urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:vocab:id-type#national_id|PH-123", { reason: "Moved out" });
  * @function
- * @param {string} groupId - Group identifier as `system|value`
- * @param {string} individualId - Individual identifier as `system|value`
+ * @param {string} groupId - Group identifier as `system\|value`
+ * @param {string} individualId - Individual identifier as `system\|value`
  * @param {object} [options] - `reason` (OpenSPP logs it but doesn't save it), `endedDate` (YYYY-MM-DD)
  * @returns {Operation}
  * @state {OpenSPPState}
@@ -464,7 +464,7 @@ export function removeFromGroup(groupId, individualId, options = {}) {
  * @example
  * getProgram("urn:openspp:program|universal-child-grant");
  * @function
- * @param {string} id - Program identifier as `system|value`
+ * @param {string} id - Program identifier as `system\|value`
  * @returns {Operation}
  * @state {OpenSPPState}
  */
@@ -519,7 +519,7 @@ export function getPrograms(options = {}) {
  * @example
  * getEnrolledPrograms("Group/urn:openspp:vocab:id-type#household_id|HH-1");
  * @function
- * @param {string} beneficiary - Typed reference: `Individual/system|value` or `Group/system|value`
+ * @param {string} beneficiary - Typed reference: `Individual/system\|value` or `Group/system\|value`
  * @returns {Operation}
  * @state {OpenSPPState}
  */
@@ -546,8 +546,8 @@ export function getEnrolledPrograms(beneficiary) {
  * @example
  * enroll("Individual/urn:openspp:vocab:id-type#national_id|PH-123", "urn:openspp:program|universal-child-grant");
  * @function
- * @param {string} beneficiary - Typed reference: `Individual/system|value` or `Group/system|value`
- * @param {string} programId - Program identifier as `system|value`
+ * @param {string} beneficiary - Typed reference: `Individual/system\|value` or `Group/system\|value`
+ * @param {string} programId - Program identifier as `system\|value`
  * @param {object} [options] - `enrollmentDate` (YYYY-MM-DD) for new memberships
  * @returns {Operation}
  * @state {OpenSPPState}
@@ -610,8 +610,8 @@ export function enroll(beneficiary, programId, options = {}) {
  * @example <caption>With exit details</caption>
  * unenroll("Group/urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:program|cash-transfer", { exitDate: "2026-09-30" });
  * @function
- * @param {string} beneficiary - Typed reference: `Individual/system|value` or `Group/system|value`
- * @param {string} programId - Program identifier as `system|value`
+ * @param {string} beneficiary - Typed reference: `Individual/system\|value` or `Group/system\|value`
+ * @param {string} programId - Program identifier as `system\|value`
  * @param {object} [options] - `exitDate` (YYYY-MM-DD), `exitReason` (CodeableConcept; OpenSPP doesn't save it)
  * @returns {Operation}
  * @state {OpenSPPState}

@@ -119,7 +119,7 @@
           },
           {
             "title": "param",
-            "description": "Identifier as `system|value`",
+            "description": "Identifier as `system\\|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -190,7 +190,7 @@
           },
           {
             "title": "param",
-            "description": "OpenSPP search parameters, eg `{ name: \"Santos\" }`. `identifier` and `group` must be `system|value`. See the [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search)",
+            "description": "OpenSPP search parameters, eg `{ name: \"Santos\" }`. `identifier` and `group` must be `system\\|value`. See the [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search)",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -301,7 +301,7 @@
           },
           {
             "title": "param",
-            "description": "Identifier as `system|value`",
+            "description": "Identifier as `system\\|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -370,7 +370,7 @@
           },
           {
             "title": "param",
-            "description": "Identifier as `system|value`",
+            "description": "Identifier as `system\\|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -541,7 +541,7 @@
           },
           {
             "title": "param",
-            "description": "Identifier as `system|value`",
+            "description": "Identifier as `system\\|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -615,7 +615,7 @@
           },
           {
             "title": "param",
-            "description": "Group identifier as `system|value`",
+            "description": "Group identifier as `system\\|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -683,7 +683,7 @@
           },
           {
             "title": "param",
-            "description": "Group identifier as `system|value`",
+            "description": "Group identifier as `system\\|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -692,7 +692,7 @@
           },
           {
             "title": "param",
-            "description": "Individual identifier as `system|value`",
+            "description": "Individual identifier as `system\\|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -774,7 +774,7 @@
           },
           {
             "title": "param",
-            "description": "Group identifier as `system|value`",
+            "description": "Group identifier as `system\\|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -783,7 +783,7 @@
           },
           {
             "title": "param",
-            "description": "Individual identifier as `system|value`",
+            "description": "Individual identifier as `system\\|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -842,7 +842,7 @@
           },
           {
             "title": "param",
-            "description": "Program identifier as `system|value`",
+            "description": "Program identifier as `system\\|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -944,7 +944,7 @@
           },
           {
             "title": "param",
-            "description": "Typed reference: `Individual/system|value` or `Group/system|value`",
+            "description": "Typed reference: `Individual/system\\|value` or `Group/system\\|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -993,7 +993,7 @@
           },
           {
             "title": "param",
-            "description": "Typed reference: `Individual/system|value` or `Group/system|value`",
+            "description": "Typed reference: `Individual/system\\|value` or `Group/system\\|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -1002,7 +1002,7 @@
           },
           {
             "title": "param",
-            "description": "Program identifier as `system|value`",
+            "description": "Program identifier as `system\\|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -1068,7 +1068,7 @@
           },
           {
             "title": "param",
-            "description": "Typed reference: `Individual/system|value` or `Group/system|value`",
+            "description": "Typed reference: `Individual/system\\|value` or `Group/system\\|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -1077,7 +1077,7 @@
           },
           {
             "title": "param",
-            "description": "Program identifier as `system|value`",
+            "description": "Program identifier as `system\\|value`",
             "type": {
               "type": "NameExpression",
               "name": "string"
