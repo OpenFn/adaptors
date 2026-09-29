@@ -87,4 +87,3 @@ getPrograms({ count: 10, lastId: 42 }); // the _lastId value from state.response
 | `getServicePoint(spp_id, cb)` | `getServicePoint(name)`: returns an object (was an array) |
 | `searchServicePoint(domain, options, cb)` | `searchServicePoint(query, options)` |
 | `getArea`, `searchArea` | removed: OpenSPP2 has no Area resource. Use `request('GET', '/gis/ogc/collections/…')` with the GIS module |
-| (new) | `request(method, path, body, options)` for any REST API v2 endpoint |
