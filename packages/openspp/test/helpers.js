@@ -67,3 +67,18 @@ export const jsonBody = expected => body => {
     return false;
   }
 };
+
+/**
+ * Runs `callback` with `console.warn` captured and returns the warnings.
+ */
+export const captureWarnings = async callback => {
+  const warnings = [];
+  const warn = console.warn;
+  console.warn = (...args) => warnings.push(args.join(' '));
+  try {
+    await callback();
+  } finally {
+    console.warn = warn;
+  }
+  return warnings;
+};

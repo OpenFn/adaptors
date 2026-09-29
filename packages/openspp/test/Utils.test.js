@@ -9,9 +9,8 @@ import {
   unwrapSearch,
   buildQuery,
   assertObject,
-  assertHasIdentifier,
-  rejectOptions,
-  assertSortField,
+  warnUnsupportedOptions,
+  warnUnsupportedSort,
   searchResource,
   readResource,
   createResource,
@@ -25,6 +24,7 @@ import {
   assertAllMocksUsed,
   expectRejection,
   jsonBody,
+  captureWarnings,
 } from './helpers.js';
 
 const baseUrl = 'http://openspp-utils.test';
@@ -431,16 +431,28 @@ describe('Utils', () => {
       });
     });
 
-    it('throws on the v3 limit option', () => {
-      expect(() => buildQuery({}, { limit: 50 })).to.throw(
-        /Use count instead of limit/
-      );
+    it('warns on the v3 limit option and leaves it out', async () => {
+      let query;
+      const warnings = await captureWarnings(() => {
+        query = buildQuery({}, { limit: 50 });
+      });
+
+      expect(query).to.eql({});
+      expect(warnings).to.eql([
+        'WARNING: limit is not supported: use count to set the page size',
+      ]);
     });
 
-    it('throws on the v3 order option', () => {
-      expect(() => buildQuery({}, { order: 'id desc' })).to.throw(
-        /Use sort instead of order/
-      );
+    it('warns on the v3 order option and leaves it out', async () => {
+      let query;
+      const warnings = await captureWarnings(() => {
+        query = buildQuery({}, { order: 'id desc' });
+      });
+
+      expect(query).to.eql({});
+      expect(warnings).to.eql([
+        'WARNING: order is not supported: use sort, eg { sort: "-birthDate" }',
+      ]);
     });
   });
 
@@ -450,50 +462,73 @@ describe('Utils', () => {
     });
 
     it('throws on arrays, null and primitives, naming the argument', () => {
-      expect(() => assertObject([1], 'query')).to.throw(/query must be an object/);
-      expect(() => assertObject(null)).to.throw(/data must be an object/);
-      expect(() => assertObject('x')).to.throw(/data must be an object/);
+      expect(() => assertObject([1], 'query')).to.throw('query must be an object, got [1]');
+      expect(() => assertObject(null)).to.throw('data must be an object, got null');
+      expect(() => assertObject('x')).to.throw('data must be an object, got "x"');
     });
   });
 
-  describe('rejectOptions', () => {
-    it('accepts options without the unsupported keys', () => {
-      expect(() =>
-        rejectOptions('searchGroup', { count: 10 }, { sort: 'no sort' })
-      ).not.to.throw();
-      expect(() =>
-        rejectOptions('searchGroup', { sort: undefined }, { sort: 'no sort' })
-      ).not.to.throw();
+  describe('warnUnsupportedOptions', () => {
+    it('does not warn on options without the unsupported keys', async () => {
+      const warnings = await captureWarnings(() => {
+        warnUnsupportedOptions('searchGroup', { count: 10 }, { sort: 'no sort' });
+        warnUnsupportedOptions('searchGroup', { sort: undefined }, { sort: 'no sort' });
+      });
+
+      expect(warnings).to.eql([]);
     });
 
-    it('throws naming the function, the option and the reason', () => {
-      expect(() =>
-        rejectOptions('searchGroup', { sort: 'name' }, { sort: 'OpenSPP cannot sort groups' })
-      ).to.throw('searchGroup does not support sort: OpenSPP cannot sort groups');
+    it('warns once per unsupported option, naming the function, the option and the reason', async () => {
+      const warnings = await captureWarnings(() =>
+        warnUnsupportedOptions(
+          'searchGroup',
+          { sort: 'name', lastId: 1, count: 5 },
+          { sort: 'OpenSPP cannot sort groups', lastId: 'no cursor' }
+        )
+      );
+
+      expect(warnings).to.eql([
+        'WARNING: searchGroup does not support sort: OpenSPP cannot sort groups',
+        'WARNING: searchGroup does not support lastId: no cursor',
+      ]);
     });
   });
 
-  describe('assertSortField', () => {
-    it('accepts the fields OpenSPP sorts individuals by, ascending or descending', () => {
-      for (const sort of [
-        undefined,
-        'name',
-        '-name',
-        'birthDate',
-        '-birthDate',
-        'lastUpdated',
-        '-lastUpdated',
-      ]) {
-        expect(() => assertSortField('searchIndividual', sort)).not.to.throw();
-      }
+  describe('warnUnsupportedSort', () => {
+    it('does not warn on the fields OpenSPP sorts individuals by, ascending or descending', async () => {
+      const warnings = await captureWarnings(() => {
+        for (const sort of [
+          undefined,
+          'name',
+          '-name',
+          'birthDate',
+          '-birthDate',
+          'lastUpdated',
+          '-lastUpdated',
+        ]) {
+          warnUnsupportedSort('searchIndividual', sort);
+        }
+      });
+
+      expect(warnings).to.eql([]);
     });
 
-    it('throws on any other value, naming the function and the value', () => {
-      for (const sort of ['birthdate', '-birth_date', '--name', '', 'name,birthDate', 1]) {
-        expect(() => assertSortField('searchIndividual', sort)).to.throw(
-          `searchIndividual does not support sort ${JSON.stringify(sort)}`
-        );
-      }
+    it('warns on any other value, naming the function and the value', async () => {
+      const values = ['birthdate', '-birth_date', '--name', '', 'name,birthDate', 1];
+      const warnings = await captureWarnings(() => {
+        for (const sort of values) {
+          warnUnsupportedSort('searchIndividual', sort);
+        }
+      });
+
+      expect(warnings).to.eql(
+        values.map(
+          sort =>
+            `WARNING: searchIndividual does not support sort ${JSON.stringify(
+              sort
+            )}: use name, birthDate or lastUpdated, with - for descending (OpenSPP sorts by name for any other value)`
+        )
+      );
     });
   });
 
@@ -616,9 +651,9 @@ describe('Utils', () => {
       expect(response.body).to.eql(data);
     });
 
-    it('throws without an identifier, before sending a request', async () => {
-      await expectRejection(createResource(authed, 'Group', {}), error => {
-        expect(error.message).to.match(/data.identifier/);
+    it('throws when data is not an object', async () => {
+      await expectRejection(createResource(authed, 'Group', 'nope'), error => {
+        expect(error.message).to.equal('data must be an object, got "nope"');
       });
     });
   });
@@ -780,21 +815,6 @@ describe('Utils', () => {
             )
         );
       });
-    });
-  });
-
-  describe('assertHasIdentifier', () => {
-    it('accepts data with at least one identifier', () => {
-      expect(() =>
-        assertHasIdentifier({ identifier: [{ system: 's', value: 'v' }] })
-      ).not.to.throw();
-    });
-
-    it('throws when identifier is missing or empty', () => {
-      expect(() => assertHasIdentifier({})).to.throw(/data.identifier/);
-      expect(() => assertHasIdentifier({ identifier: [] })).to.throw(
-        /data.identifier/
-      );
     });
   });
 });

@@ -43,6 +43,7 @@ import {
   assertAllMocksUsed,
   expectRejection,
   jsonBody,
+  captureWarnings,
 } from './helpers.js';
 
 const baseUrl = 'http://openspp-adaptor.test';
@@ -70,6 +71,14 @@ const runWithState = (state, ...operations) => {
 };
 
 const run = (...operations) => runWithState({}, ...operations);
+
+// Mocks a GET search, runs the operation and returns the warnings it logged
+const searchWarnings = async (path, operation) => {
+  testServer
+    .intercept({ path: `${API}${path}`, method: 'GET' })
+    .reply(200, searchResult([]));
+  return captureWarnings(() => run(operation));
+};
 
 const groupExists = () =>
   testServer
@@ -285,37 +294,64 @@ describe('searchIndividual', () => {
     await expectRejection(
       run(searchIndividual([['spp_id', '=', 'X']])),
       error => {
-        expect(error.message).to.match(/query must be an object/);
-        expect(error.message).to.match(/Odoo domains/);
-      }
-    );
-  });
-
-  it('throws on v3 limit and order options', async () => {
-    await expectRejection(run(searchIndividual({}, { limit: 50 })), error => {
-      expect(error.message).to.match(/Use count instead of limit/);
-    });
-    await expectRejection(run(searchIndividual({}, { order: 'name' })), error => {
-      expect(error.message).to.match(/Use sort instead of order/);
-    });
-  });
-
-  it('throws on lastId (OpenSPP would ignore it and return the first page)', async () => {
-    await expectRejection(run(searchIndividual({}, { lastId: 42 })), error => {
-      expect(error.message).to.match(/searchIndividual does not support lastId/);
-    });
-  });
-
-  it('throws on a sort field OpenSPP does not know (it would sort by name)', async () => {
-    await expectRejection(
-      run(searchIndividual({}, { sort: '-birthdate' })),
-      error => {
-        expect(error.message).to.match(
-          /searchIndividual does not support sort "-birthdate"/
+        expect(error.message).to.equal(
+          'query must be an object of OpenSPP search parameters, eg { name: "Santos" }. Odoo domains like [["spp_id","=","X"]] are not supported'
         );
-        expect(error.message).to.match(/name, birthDate or lastUpdated/);
       }
     );
+  });
+
+  it('warns on the v3 limit option and searches without it', async () => {
+    const warnings = await searchWarnings(
+      '/Individual',
+      searchIndividual({}, { limit: 50 })
+    );
+
+    expect(warnings).to.eql([
+      'WARNING: limit is not supported: use count to set the page size',
+    ]);
+  });
+
+  it('warns on the v3 order option and searches without it', async () => {
+    const warnings = await searchWarnings(
+      '/Individual',
+      searchIndividual({}, { order: 'name' })
+    );
+
+    expect(warnings).to.eql([
+      'WARNING: order is not supported: use sort, eg { sort: "-birthDate" }',
+    ]);
+  });
+
+  it('warns on lastId, which OpenSPP ignores', async () => {
+    const warnings = await searchWarnings(
+      '/Individual?_lastId=42',
+      searchIndividual({}, { lastId: 42 })
+    );
+
+    expect(warnings).to.eql([
+      'WARNING: searchIndividual does not support lastId: OpenSPP ignores lastId for individuals and groups; page with offset',
+    ]);
+  });
+
+  it('warns on a sort field OpenSPP does not know (it sorts by name instead)', async () => {
+    const warnings = await searchWarnings(
+      '/Individual?_sort=-birthdate',
+      searchIndividual({}, { sort: '-birthdate' })
+    );
+
+    expect(warnings).to.eql([
+      'WARNING: searchIndividual does not support sort "-birthdate": use name, birthDate or lastUpdated, with - for descending (OpenSPP sorts by name for any other value)',
+    ]);
+  });
+
+  it('does not warn on supported options', async () => {
+    const warnings = await searchWarnings(
+      '/Individual?_count=5&_offset=5&_sort=-lastUpdated',
+      searchIndividual({}, { count: 5, offset: 5, sort: '-lastUpdated' })
+    );
+
+    expect(warnings).to.eql([]);
   });
 });
 
@@ -352,9 +388,18 @@ describe('createIndividual', () => {
     expect(state.data).to.eql(individual);
   });
 
-  it('throws before calling OpenSPP when identifier is missing', async () => {
+  it('throws with OpenSPP\'s validation detail when identifier is missing', async () => {
+    testServer
+      .intercept({ path: `${API}/Individual`, method: 'POST' })
+      .reply(422, {
+        detail: [{ loc: ['body', 'identifier'], msg: 'Field required', type: 'missing' }],
+      });
+
     await expectRejection(run(createIndividual({ name: { given: 'X' } })), error => {
-      expect(error.message).to.match(/identifier/);
+      expect(error.message).to.equal(
+        'OpenSPP 422 POST /Individual: body.identifier: Field required'
+      );
+      expect(error.statusCode).to.equal(422);
     });
   });
 });
@@ -445,13 +490,26 @@ describe('searchGroup', () => {
     expect(state.data).to.eql([group]);
   });
 
-  it('throws on sort and lastId (OpenSPP would ignore them)', async () => {
-    await expectRejection(run(searchGroup({}, { sort: 'name' })), error => {
-      expect(error.message).to.match(/searchGroup does not support sort/);
-    });
-    await expectRejection(run(searchGroup({}, { lastId: 42 })), error => {
-      expect(error.message).to.match(/searchGroup does not support lastId/);
-    });
+  it('warns on sort, which OpenSPP ignores for groups', async () => {
+    const warnings = await searchWarnings(
+      '/Group?_sort=name',
+      searchGroup({}, { sort: 'name' })
+    );
+
+    expect(warnings).to.eql([
+      'WARNING: searchGroup does not support sort: OpenSPP cannot sort groups',
+    ]);
+  });
+
+  it('warns on lastId, which OpenSPP ignores for groups', async () => {
+    const warnings = await searchWarnings(
+      '/Group?_lastId=42',
+      searchGroup({}, { lastId: 42 })
+    );
+
+    expect(warnings).to.eql([
+      'WARNING: searchGroup does not support lastId: OpenSPP ignores lastId for individuals and groups; page with offset',
+    ]);
   });
 });
 
@@ -547,16 +605,28 @@ describe('getGroupMembers', () => {
     });
   });
 
-  it('throws on lastId (OpenSPP would ignore it and return the first page)', async () => {
-    await expectRejection(run(getGroupMembers(GRP_ID, { lastId: 42 })), error => {
-      expect(error.message).to.match(/getGroupMembers does not support lastId/);
-    });
+  it('warns on lastId, which OpenSPP ignores', async () => {
+    groupExists();
+    const warnings = await searchWarnings(
+      `/Individual?group=${encodeURIComponent(GRP_ID)}&_lastId=42`,
+      getGroupMembers(GRP_ID, { lastId: 42 })
+    );
+
+    expect(warnings).to.eql([
+      'WARNING: getGroupMembers does not support lastId: OpenSPP ignores lastId for individuals and groups; page with offset',
+    ]);
   });
 
-  it('throws on a sort field OpenSPP does not know (it would sort by name)', async () => {
-    await expectRejection(run(getGroupMembers(GRP_ID, { sort: 'age' })), error => {
-      expect(error.message).to.match(/getGroupMembers does not support sort "age"/);
-    });
+  it('warns on a sort field OpenSPP does not know (it sorts by name instead)', async () => {
+    groupExists();
+    const warnings = await searchWarnings(
+      `/Individual?group=${encodeURIComponent(GRP_ID)}&_sort=age`,
+      getGroupMembers(GRP_ID, { sort: 'age' })
+    );
+
+    expect(warnings).to.eql([
+      'WARNING: getGroupMembers does not support sort "age": use name, birthDate or lastUpdated, with - for descending (OpenSPP sorts by name for any other value)',
+    ]);
   });
 });
 
@@ -740,15 +810,18 @@ describe('getPrograms', () => {
     expect(state.data).to.eql([program]);
   });
 
-  it('throws on offset and limit, pointing to count and lastId (programs page with a cursor)', async () => {
-    for (const key of ['offset', 'limit']) {
-      await expectRejection(run(getPrograms({ [key]: 10 })), error => {
-        expect(error.message).to.match(
-          new RegExp(`getPrograms does not support ${key}: .*count.*lastId`)
-        );
-      });
-    }
-  });
+  for (const key of ['offset', 'limit']) {
+    it(`warns on ${key}, pointing to count and lastId (programs page with a cursor)`, async () => {
+      const warnings = await searchWarnings(
+        `/Program?${key}=10`,
+        getPrograms({ [key]: 10 })
+      );
+
+      expect(warnings).to.eql([
+        `WARNING: getPrograms does not support ${key}: OpenSPP pages programs with a cursor, so use count (page size, 1-100) and lastId (the _lastId value in state.response.page.next)`,
+      ]);
+    });
+  }
 
   it('throws when options is not an object', async () => {
     await expectRejection(run(getPrograms('individual')), error => {
@@ -756,12 +829,15 @@ describe('getPrograms', () => {
     });
   });
 
-  it('throws on order, saying programs cannot be sorted', async () => {
-    await expectRejection(run(getPrograms({ order: 'name' })), error => {
-      expect(error.message).to.equal(
-        'getPrograms does not support order: OpenSPP cannot sort programs'
-      );
-    });
+  it('warns on order, saying programs cannot be sorted', async () => {
+    const warnings = await searchWarnings(
+      '/Program?order=name',
+      getPrograms({ order: 'name' })
+    );
+
+    expect(warnings).to.eql([
+      'WARNING: getPrograms does not support order: OpenSPP cannot sort programs',
+    ]);
   });
 });
 
@@ -1059,13 +1135,25 @@ describe('searchServicePoint', () => {
     expect(state.response.page).to.eql({ total: 1, next: null });
   });
 
-  it('throws on sort, lastId, elements and extensions (OpenSPP would ignore them)', async () => {
-    for (const key of ['sort', 'lastId', 'elements', 'extensions']) {
-      await expectRejection(run(searchServicePoint({}, { [key]: 'x' })), error => {
-        expect(error.message).to.match(
-          new RegExp(`searchServicePoint does not support ${key}`)
-        );
-      });
-    }
-  });
+  const ignored = {
+    sort: 'OpenSPP cannot sort service points',
+    lastId: 'OpenSPP pages service points with offset, not lastId',
+    elements: 'OpenSPP always returns every service point field',
+    extensions: 'OpenSPP has no extensions for service points',
+  };
+  for (const [key, reason] of Object.entries(ignored)) {
+    it(`warns on ${key}, which OpenSPP ignores for service points`, async () => {
+      testServer
+        .intercept({ path: `${API}/ServicePoint?_${key}=x`, method: 'GET' })
+        .reply(200, servicePointBundle([]));
+
+      const warnings = await captureWarnings(() =>
+        run(searchServicePoint({}, { [key]: 'x' }))
+      );
+
+      expect(warnings).to.eql([
+        `WARNING: searchServicePoint does not support ${key}: ${reason}`,
+      ]);
+    });
+  }
 });

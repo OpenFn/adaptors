@@ -166,10 +166,10 @@ export function searchIndividual(query = {}, options = {}) {
       query,
       options
     );
-    util.rejectOptions('searchIndividual', resolvedOptions, {
+    util.warnUnsupportedOptions('searchIndividual', resolvedOptions, {
       lastId: NO_CURSOR,
     });
-    util.assertSortField('searchIndividual', resolvedOptions?.sort);
+    util.warnUnsupportedSort('searchIndividual', resolvedOptions?.sort);
     const response = await util.searchResource(
       state.configuration,
       'Individual',
@@ -288,7 +288,7 @@ export function searchGroup(query = {}, options = {}) {
       query,
       options
     );
-    util.rejectOptions('searchGroup', resolvedOptions, {
+    util.warnUnsupportedOptions('searchGroup', resolvedOptions, {
       sort: 'OpenSPP cannot sort groups',
       lastId: NO_CURSOR,
     });
@@ -385,10 +385,10 @@ export function getGroupMembers(groupId, options = {}) {
       groupId,
       options
     );
-    util.rejectOptions('getGroupMembers', resolvedOptions, {
+    util.warnUnsupportedOptions('getGroupMembers', resolvedOptions, {
       lastId: NO_CURSOR,
     });
-    util.assertSortField('getGroupMembers', resolvedOptions?.sort);
+    util.warnUnsupportedSort('getGroupMembers', resolvedOptions?.sort);
     const { role, ...searchOptions } = resolvedOptions;
     const query = { group: resolvedGroupId };
     if (role !== undefined) {
@@ -564,7 +564,7 @@ export function getPrograms(options = {}) {
   return async state => {
     const [resolvedOptions] = expandReferences(state, options);
     util.assertObject(resolvedOptions, 'options');
-    util.rejectOptions('getPrograms', resolvedOptions, {
+    util.warnUnsupportedOptions('getPrograms', resolvedOptions, {
       offset: PROGRAM_CURSOR,
       limit: PROGRAM_CURSOR,
       order: 'OpenSPP cannot sort programs',
@@ -771,7 +771,7 @@ export function searchServicePoint(query = {}, options = {}) {
       query,
       options
     );
-    util.rejectOptions('searchServicePoint', resolvedOptions, {
+    util.warnUnsupportedOptions('searchServicePoint', resolvedOptions, {
       sort: 'OpenSPP cannot sort service points',
       lastId: 'OpenSPP pages service points with offset, not lastId',
       elements: 'OpenSPP always returns every service point field',

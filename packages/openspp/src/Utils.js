@@ -251,12 +251,14 @@ const joinList = value => (Array.isArray(value) ? value.join(',') : value);
  * @returns {object}
  */
 export const buildQuery = (query = {}, options = {}) => {
-  // v3 paging options, which OpenSPP2 would silently ignore
+  // v3 paging options, which are not sent
   if (options.limit !== undefined) {
-    throw new Error('Use count instead of limit to set the page size');
+    console.warn('WARNING: limit is not supported: use count to set the page size');
   }
   if (options.order !== undefined) {
-    throw new Error('Use sort instead of order, eg { sort: "-birthDate" }');
+    console.warn(
+      'WARNING: order is not supported: use sort, eg { sort: "-birthDate" }'
+    );
   }
   const params = {
     ...query,
@@ -296,16 +298,16 @@ export const assertObject = (data, name = 'data') => {
 };
 
 /**
- * Throws if `options` sets an option that OpenSPP would silently ignore.
+ * Warns about each option in `options` that OpenSPP ignores.
  * @private
  * @param {string} name - adaptor function name, for the message
  * @param {object} options - resolved options
  * @param {object} unsupported - map of option name to the reason it isn't supported
  */
-export const rejectOptions = (name, options, unsupported) => {
+export const warnUnsupportedOptions = (name, options, unsupported) => {
   for (const [key, reason] of Object.entries(unsupported)) {
     if (options?.[key] !== undefined) {
-      throw new Error(`${name} does not support ${key}: ${reason}`);
+      console.warn(`WARNING: ${name} does not support ${key}: ${reason}`);
     }
   }
 };
@@ -314,35 +316,22 @@ export const rejectOptions = (name, options, unsupported) => {
 const SORT_FIELDS = ['name', 'birthDate', 'lastUpdated'];
 
 /**
- * Throws unless `sort` is a field OpenSPP sorts individuals by, optionally
+ * Warns unless `sort` is a field OpenSPP sorts individuals by, optionally
  * prefixed with `-` for descending.
  * @private
  * @param {string} name - adaptor function name, for the message
  * @param {string} [sort]
  */
-export const assertSortField = (name, sort) => {
+export const warnUnsupportedSort = (name, sort) => {
   if (sort === undefined) {
     return;
   }
   const field = typeof sort === 'string' && sort.startsWith('-') ? sort.slice(1) : sort;
   if (!SORT_FIELDS.includes(field)) {
-    throw new Error(
-      `${name} does not support sort ${JSON.stringify(
+    console.warn(
+      `WARNING: ${name} does not support sort ${JSON.stringify(
         sort
       )}: use name, birthDate or lastUpdated, with - for descending (OpenSPP sorts by name for any other value)`
-    );
-  }
-};
-
-/**
- * Throws unless `data` is an object with at least one identifier.
- * @private
- */
-export const assertHasIdentifier = data => {
-  assertObject(data);
-  if (!Array.isArray(data.identifier) || data.identifier.length === 0) {
-    throw new Error(
-      'data.identifier must be a non-empty array of { system, value }, eg [{ system: "urn:openspp:vocab:id-type#national_id", value: "PH-123" }]'
     );
   }
 };
@@ -410,7 +399,7 @@ export const searchResource = async (
 };
 
 /**
- * Creates a resource with at least one identifier and returns the response.
+ * Creates a resource and returns the response.
  * @private
  * @param {object} configuration - `state.configuration`
  * @param {string} type - resource type, eg `Individual`
@@ -418,7 +407,7 @@ export const searchResource = async (
  * @returns {Promise<object>} the common `request` response
  */
 export const createResource = async (configuration, type, data) => {
-  assertHasIdentifier(data);
+  assertObject(data);
   return request(configuration, 'POST', `/${type}`, { body: data });
 };
 
