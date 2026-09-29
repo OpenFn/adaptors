@@ -1,7 +1,3 @@
-/**
- * INVARIANT: Must export function named `request`
- * - ALL operational functions go here
- */
 import { execute as commonExecute } from '@openfn/language-common';
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
@@ -26,11 +22,11 @@ const PROGRAM_CURSOR =
  * Options for OpenSPP searches
  * @typedef {Object} SearchOptions
  * @public
- * @property {number} count - Page size, 1-100 (OpenSPP default 20). Sent as `_count`.
- * @property {number} offset - Number of records to skip. Sent as `_offset`.
- * @property {string} sort - `name`, `birthDate` or `lastUpdated`, prefix with `-` for descending. Sent as `_sort` (Individual only; other values throw, since OpenSPP would sort by `name`).
- * @property {string|string[]} elements - Only return these fields. Sent as `_elements` (Individual and Group).
- * @property {string|string[]} extensions - Include these extensions. Sent as `_extensions` (Individual and Group).
+ * @property {number} count - Page size, 1-100 (OpenSPP default 20)
+ * @property {number} offset - Number of records to skip
+ * @property {string} sort - Individuals only: `name`, `birthDate` or `lastUpdated`, with a `-` prefix for descending
+ * @property {string|string[]} elements - Only return these fields (individuals and groups)
+ * @property {string|string[]} extensions - Include these extensions (individuals and groups)
  */
 
 /**
@@ -40,8 +36,8 @@ const PROGRAM_CURSOR =
  * @property {string} [name] - Filter by name
  * @property {'active'|'ended'} [status] - Filter by status
  * @property {'individual'|'group'} [targetType] - Filter by target type
- * @property {number} [count] - Page size, 1-100 (OpenSPP default 20). Sent as `_count`.
- * @property {number|string} [lastId] - Cursor for the next page: the `_lastId` value in `state.response.page.next`. Sent as `_lastId`.
+ * @property {number} [count] - Page size, 1-100 (OpenSPP default 20)
+ * @property {number|string} [lastId] - Cursor for the next page: the `_lastId` value in `state.response.page.next`
  */
 
 /**
@@ -129,32 +125,17 @@ export function getIndividual(id, options = {}) {
 }
 
 /**
- * Search individuals.
- * Records the API client may not see (for example without consent) are left
- * out, and `state.response.page.total` is then only the number of records on
- * the page (with open PR OpenSPP2 #555, on every page for API clients whose
- * legal basis requires consent). Use `state.response.page.next` to check for
- * more pages. On OpenSPP2 up to 2026.09 it can be null before the last page
- * when records are
- * hidden (OpenSPP reads up to 3 × `count` records for a page with `count` of
- * 50 or less, and only 100 above that: with `count` of 50 or less the page
- * ends early when more than 2 × `count` of them are hidden; above 50, when
- * more than 100 - `count` are; at 100, one is); open PR OpenSPP2 #555 fixes
- * this.
- * Note: on OpenSPP2 up to 2026.09, `group` can match a former member who is
- * still active in another group, `membership-role` can match a role held in a
- * different group, and an unknown `membership-role` code is ignored, so every
- * individual matching the other parameters is returned. Open PR OpenSPP2 #555
- * fixes all three (an unknown code matches nothing).
+ * Search individuals. Records the API client may not see (eg without consent)
+ * are left out.
  * @public
  * @example <caption>Search by name</caption>
  * searchIndividual({ name: "Santos" });
  * @example <caption>Born on or after 2010, 50 per page, second page</caption>
  * searchIndividual({ birthdate: "ge2010-01-01" }, { count: 50, offset: 50 });
- * @example <caption>Heads of household in a group (see the note above)</caption>
+ * @example <caption>Heads of household in a group</caption>
  * searchIndividual({ group: "urn:openspp:vocab:id-type#household_id|HH-1", "membership-role": "head" });
  * @function
- * @param {object} [query] - OpenSPP search parameters: `identifier`, `name`, `birthdate`, `gender`, `address`, `group`, `membership-role`, `_lastUpdated`
+ * @param {object} [query] - OpenSPP search parameters, eg `{ name: "Santos" }`. See the [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search)
  * @param {SearchOptions} [options] - Paging and field options
  * @returns {Operation}
  * @state {OpenSPPState}
@@ -181,8 +162,7 @@ export function searchIndividual(query = {}, options = {}) {
 }
 
 /**
- * Create an individual. `data` follows the OpenSPP Individual resource and
- * must include at least one identifier.
+ * Create an individual.
  * @public
  * @example
  * createIndividual({
@@ -192,7 +172,7 @@ export function searchIndividual(query = {}, options = {}) {
  *   gender: { coding: [{ system: "urn:iso:std:iso:5218", code: "2" }] },
  * });
  * @function
- * @param {object} data - Individual resource
+ * @param {object} data - Individual resource, with at least one `identifier`. See the [OpenSPP resource docs](https://docs.openspp.org/developer_guide/api_v2/resources)
  * @returns {Operation}
  * @state {OpenSPPState}
  */
@@ -209,10 +189,8 @@ export function createIndividual(data) {
 }
 
 /**
- * Update some fields of an individual (JSON Merge Patch). Omitted fields are
- * unchanged; `null` clears a field.
- * Note: OpenSPP2 up to 2026.09 can't change `gender` this way and returns 422
- * (fixed by open PR OpenSPP2 #555).
+ * Update some fields of an individual. Fields you leave out are unchanged, and
+ * `null` clears a field.
  * @public
  * @example
  * updateIndividual("urn:openspp:vocab:id-type#national_id|PH-123456789", { birthDate: "1985-03-16" });
@@ -243,9 +221,7 @@ export function updateIndividual(id, data, options = {}) {
 }
 
 /**
- * Get a group by identifier. Note: on OpenSPP2 up to 2026.09,
- * `member[].entity.reference` values returned by OpenSPP can't be used to read
- * the members (fixed by open PR OpenSPP2 #555); use `getGroupMembers` instead.
+ * Get a group by identifier. To read the members, use `getGroupMembers`.
  * @public
  * @example
  * getGroup("urn:openspp:vocab:id-type#household_id|HH-1");
@@ -269,14 +245,12 @@ export function getGroup(id, options = {}) {
 }
 
 /**
- * Search groups. `sort` is not supported: OpenSPP always sorts groups by name.
- * Note: on OpenSPP2 releases up to 2026.09, `offset` is ignored for groups and
- * every page returns the first page again (fixed by open PR OpenSPP2 #555).
+ * Search groups.
  * @public
  * @example
  * searchGroup({ name: "Santos" }, { count: 50 });
  * @function
- * @param {object} [query] - OpenSPP search parameters: `identifier`, `name`, `member` (`Individual/system|value`; on OpenSPP2 up to 2026.09, any other value, or an individual that doesn't exist, is ignored and every group matching the other parameters is returned, and `member` also matches groups the individual has left). `type` is passed on, but not yet applied by OpenSPP2 (#565)
+ * @param {object} [query] - OpenSPP search parameters, eg `{ name: "Santos" }`. See the [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search)
  * @param {SearchOptions} [options] - Paging and field options
  * @returns {Operation}
  * @state {OpenSPPState}
@@ -303,8 +277,7 @@ export function searchGroup(query = {}, options = {}) {
 }
 
 /**
- * Create a group. `data` follows the OpenSPP Group resource and must include
- * at least one identifier.
+ * Create a group.
  * @public
  * @example
  * createGroup({
@@ -313,7 +286,7 @@ export function searchGroup(query = {}, options = {}) {
  *   groupType: "household",
  * });
  * @function
- * @param {object} data - Group resource
+ * @param {object} data - Group resource, with at least one `identifier`. See the [OpenSPP resource docs](https://docs.openspp.org/developer_guide/api_v2/resources)
  * @returns {Operation}
  * @state {OpenSPPState}
  */
@@ -330,7 +303,8 @@ export function createGroup(data) {
 }
 
 /**
- * Update some fields of a group (JSON Merge Patch).
+ * Update some fields of a group. Fields you leave out are unchanged, and
+ * `null` clears a field.
  * @public
  * @example
  * updateGroup("urn:openspp:vocab:id-type#household_id|HH-1", { name: "Santos-Reyes Household" });
@@ -362,15 +336,10 @@ export function updateGroup(id, data, options = {}) {
 
 /**
  * List the individuals who are members of a group.
- * Note: on OpenSPP2 up to 2026.09, the result can include former members who
- * are still active in another group, `role` can match a role held in a
- * different group, and an unknown `role` code is ignored, so every member is
- * returned. Open PR OpenSPP2 #555 fixes all three (an unknown code matches
- * nothing).
  * @public
  * @example
  * getGroupMembers("urn:openspp:vocab:id-type#household_id|HH-1");
- * @example <caption>Only the head of household (see the note above)</caption>
+ * @example <caption>Only the head of household</caption>
  * getGroupMembers("urn:openspp:vocab:id-type#household_id|HH-1", { role: "head" });
  * @function
  * @param {string} groupId - Group identifier as `system|value`
@@ -455,17 +424,13 @@ export function addToGroup(groupId, individualId, role, options = {}) {
 /**
  * End an individual's membership of a group. OpenSPP sets the end date to
  * now unless `endedDate` is given.
- * Note: OpenSPP2 up to 2026.09 may still report the membership as `active`
- * (and list the individual in group searches) until OpenSPP's scheduled
- * membership repair runs (fixed by open PR OpenSPP2 #555). The end date is
- * saved either way.
  * @public
  * @example
  * removeFromGroup("urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:vocab:id-type#national_id|PH-123", { reason: "Moved out" });
  * @function
  * @param {string} groupId - Group identifier as `system|value`
  * @param {string} individualId - Individual identifier as `system|value`
- * @param {object} [options] - `reason` (logged by OpenSPP2 but not stored), `endedDate` (YYYY-MM-DD)
+ * @param {object} [options] - `reason`, `endedDate` (YYYY-MM-DD)
  * @returns {Operation}
  * @state {OpenSPPState}
  */
@@ -516,8 +481,7 @@ export function getProgram(id) {
 }
 
 /**
- * List programs. Programs page with a cursor instead of an offset: for the
- * next page, pass as `lastId` the `_lastId` value in `state.response.page.next`.
+ * List programs.
  * @public
  * @example
  * getPrograms();
@@ -575,14 +539,9 @@ export function getEnrolledPrograms(beneficiary) {
 /**
  * Enroll a registrant in a program. Does nothing if they are already enrolled.
  * If they have a membership in this program that isn't enrolled (eg exited),
- * it is set back to enrolled. OpenSPP2 up to 2026.09 can't address a
- * membership per program (open PR OpenSPP2 #555 adds this, but the adaptor
- * doesn't use it yet), so that update is refused when the registrant has
- * memberships in other programs too.
- * If OpenSPP has a membership the API client can't see (eg the beneficiary has
- * no consent), `enroll` tries to create one and fails: 422 on OpenSPP2 up to
- * 2026.09, 409 "Beneficiary is already a member of this program" with open PR
- * OpenSPP2 #555.
+ * it is set back to enrolled. That update throws if the registrant also has
+ * memberships in other programs, because OpenSPP can't safely update one of
+ * them through the API.
  * @public
  * @example
  * enroll("Individual/urn:openspp:vocab:id-type#national_id|PH-123", "urn:openspp:program|universal-child-grant");
@@ -641,10 +600,9 @@ export function enroll(beneficiary, programId, options = {}) {
 
 /**
  * Unenroll a registrant from a program by setting their membership to
- * `exited`. Does nothing if the membership isn't enrolled. OpenSPP2 up to
- * 2026.09 can't address a membership per program (open PR OpenSPP2 #555 adds
- * this, but the adaptor doesn't use it yet), so this is refused when the
- * registrant has memberships in other programs too.
+ * `exited`. Does nothing if the membership isn't enrolled. Throws if the
+ * registrant also has memberships in other programs, because OpenSPP can't
+ * safely update one of them through the API.
  * @public
  * @example
  * unenroll("Individual/urn:openspp:vocab:id-type#national_id|PH-123", "urn:openspp:program|universal-child-grant");
@@ -653,7 +611,7 @@ export function enroll(beneficiary, programId, options = {}) {
  * @function
  * @param {string} beneficiary - Typed reference: `Individual/system|value` or `Group/system|value`
  * @param {string} programId - Program identifier as `system|value`
- * @param {object} [options] - `exitDate` (YYYY-MM-DD), `exitReason` (CodeableConcept; accepted but not yet stored by OpenSPP2)
+ * @param {object} [options] - `exitDate` (YYYY-MM-DD), `exitReason` (CodeableConcept)
  * @returns {Operation}
  * @state {OpenSPPState}
  */
@@ -721,13 +679,12 @@ export function getServicePoint(name) {
 }
 
 /**
- * Search service points. Only `count` and `offset` are supported: OpenSPP
- * cannot sort service points or limit their fields.
+ * Search service points.
  * @public
  * @example
  * searchServicePoint({ country: "PH", contractActive: true });
  * @function
- * @param {object} [query] - OpenSPP search parameters: `name`, `area`, `country`, `contractActive`, `_lastUpdated`
+ * @param {object} [query] - OpenSPP search parameters, eg `{ country: "PH" }`. See the [OpenSPP service point docs](https://docs.openspp.org/developer_guide/api_v2/products_service_points)
  * @param {object} [options] - `count`, `offset`
  * @returns {Operation}
  * @state {OpenSPPState}

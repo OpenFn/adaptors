@@ -28,12 +28,10 @@ isn't found. In v3 errors were logged and the job carried on.
 parameters instead of an Odoo domain array, and throw if given an array.
 
 **Paging options**: `limit` is now `count` and `order` is now `sort` (Individual
-only); `offset` is unchanged. Passing `limit` or `order` throws. This applies to
-`searchIndividual`, `searchGroup`, `searchServicePoint` and `getGroupMembers`.
-These options, which OpenSPP would ignore, also throw: `sort` on `searchGroup` and
-`searchServicePoint`, `lastId` on every search except `getPrograms`, `elements`
-and `extensions` on `searchServicePoint`, and a `sort` field other than
-`name`, `birthDate` or `lastUpdated`.
+only); `offset` is unchanged. Passing `limit` or `order` logs a warning and has
+no effect. This applies to `searchIndividual`, `searchGroup`,
+`searchServicePoint` and `getGroupMembers`. Other options OpenSPP ignores also
+log a warning, eg `sort` on `searchGroup`.
 
 Before (v3):
 
@@ -55,7 +53,7 @@ getGroupMembers('urn:openspp:vocab:id-type#household_id|HH-1', { count: 10 });
 
 `getPrograms` takes one `options` object with filters and paging together.
 Programs page with a cursor, so `offset` is not supported: use `count`, and for
-the next page pass as `lastId` the `_lastId` value in `state.response.page.next`. Passing `offset`, `limit` or `order` throws.
+the next page pass as `lastId` the `_lastId` value in `state.response.page.next`.
 
 Before (v3):
 
@@ -78,7 +76,7 @@ getPrograms({ count: 10, lastId: 42 }); // the _lastId value from state.response
 | `updateIndividual(spp_id, data)` | `updateIndividual(id, data, options)`: partial update |
 | `getGroup`, `searchGroup`, `createGroup`, `updateGroup` | same changes as the individual functions |
 | `getGroupMembers(spp_id, options, cb)` | `getGroupMembers(groupId, options)`: returns Individual records; `options.role` filters by role |
-| `addToGroup(group_id, individual_id, role)` | same arguments; `role` is a code such as `head`. Without `role`, an existing member's roles are left unchanged; with `role`, OpenSPP replaces them. An unknown role code is not created: OpenSPP2 up to 2026.09 ignores it (new members get no role and existing members keep theirs), and open PR OpenSPP2 #555 rejects it with 422 |
+| `addToGroup(group_id, individual_id, role)` | `addToGroup(groupId, individualId, role, options)`: `role` is a code such as `head` and is no longer created if unknown. Throws 409 if the individual is already a member (v3 updated their role): use `request('PATCH', …)` to change a role |
 | `removeFromGroup(group_id, individual_id)` | `removeFromGroup(groupId, individualId, options)`: `reason`, `endedDate` |
 | `getProgram(program_id, cb)` | `getProgram(id)` |
 | `getPrograms(options, cb)` | `getPrograms(options)`: filters and `count`/`lastId` paging in one object |

@@ -1,9 +1,3 @@
-/**
- * INVARIANT: Must export function named `request`
- * - Infrastructure/helpers ONLY
- * - NO operational functions
- * - To extend: wrap it (e.g., requestWithRetry)
- */
 import { composeNextState } from '@openfn/language-common';
 import {
   request as commonRequest,
@@ -19,10 +13,8 @@ const FORBIDDEN_HINT =
   'OpenSPP returns 403 when the API client lacks a scope, or, for API clients that require consent, when an individual or group does not exist or has no consent';
 
 /**
- * Builds a readable message from an OpenSPP error body.
- * OpenSPP2 returns FastAPI `{ detail }` bodies, where `detail` is a string or,
- * for 422 validation errors, an array of `{ loc, msg }`. RFC 9457 `title` is
- * supported as a fallback.
+ * Builds a readable message from an OpenSPP error body: a `detail` string, a
+ * list of validation errors, or a `title`.
  * @private
  */
 const describeErrorBody = (body, statusMessage) => {
@@ -125,9 +117,9 @@ export const request = async (configuration = {}, method, path, options = {}) =>
 /**
  * Gets an OAuth access token with the client credentials flow and stores it on
  * `state.configuration.access_token` for the rest of the step.
- * The OpenSPP token endpoint is rate limited (5 requests per minute and 50
- * per day per IP), so the token is fetched once and reused until the OpenFn
- * runtime removes `configuration` at the end of the step.
+ * OpenSPP rate limits the token endpoint, so the token is fetched once and
+ * reused until the OpenFn runtime removes `configuration` at the end of the
+ * step.
  * @private
  * @param {State} state
  * @returns {Promise<State>}
@@ -178,14 +170,6 @@ export const prepareNextState = (state, response) => {
 /**
  * Writes the list of resources from a search response to `state.data`, and
  * paging info to `state.response.page` as `{ total, next }`.
- * Note: when OpenSPP applies consent filtering, `total` is the number of
- * records on the page, not the real total. Use `next` to decide whether more
- * pages exist. On OpenSPP2 up to 2026.09 it can be null before the last page
- * when records are hidden
- * (OpenSPP reads up to 3 × `count` records for a page with `count` of 50 or
- * less, and only 100 above that: with `count` of 50 or less the page ends
- * early when more than 2 × `count` of them are hidden; above 50, when more
- * than 100 - `count` are; at 100, one is); open PR OpenSPP2 #555 fixes this.
  * @private
  */
 export const prepareSearchState = (state, response) => {
@@ -379,14 +363,14 @@ export const searchResource = async (
   assertObject(query, 'query');
   for (const key of ['identifier', 'group']) {
     if (query[key] !== undefined && query[key] !== 'none') {
-      // OpenSPP2 up to 2026.09 ignores a malformed filter and returns every
+      // Some OpenSPP versions ignore a malformed filter and return every
       // record
       encodeIdentifier(query[key]);
     }
   }
   const groupFilter = query.group;
   if (type === 'Individual' && groupFilter !== undefined && groupFilter !== 'none') {
-    // OpenSPP2 up to 2026.09 also ignores a group filter for a group that
+    // Some OpenSPP versions also ignore a group filter for a group that
     // doesn't exist, so check the group first: a missing group throws here
     // (404, or 403 for API clients that require consent)
     await request(configuration, 'GET', `/Group/${encodeIdentifier(groupFilter)}`, {
@@ -412,7 +396,7 @@ export const createResource = async (configuration, type, data) => {
 };
 
 /**
- * Partially updates a resource (JSON Merge Patch) and returns the response.
+ * Updates some fields of a resource and returns the response.
  * @private
  * @param {object} configuration - `state.configuration`
  * @param {string} type - resource type, eg `Individual`
@@ -477,11 +461,10 @@ export const findMembership = async (configuration, beneficiary, programId) => {
 };
 
 /**
- * Updates a membership's status with a PUT, guarding against OpenSPP2 up to
- * 2026.09 looking up memberships by beneficiary only: it updates the
- * beneficiary's most recently created membership, whichever program it is in,
- * and moves it to
- * the program in the body. The `isAmbiguous` refusal is what prevents this.
+ * Updates a membership's status with a PUT. OpenSPP finds the membership by
+ * beneficiary only, so with several memberships it could update one in
+ * another program: the `isAmbiguous` refusal and the program check in the
+ * response guard against this.
  * @private
  */
 export const putMembership = async (

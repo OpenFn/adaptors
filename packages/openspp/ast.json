@@ -161,7 +161,7 @@
         "options"
       ],
       "docs": {
-        "description": "Search individuals.\nRecords the API client may not see (for example without consent) are left\nout, and `state.response.page.total` is then only the number of records on\nthe page (with open PR OpenSPP2 #555, on every page for API clients whose\nlegal basis requires consent). Use `state.response.page.next` to check for\nmore pages. On OpenSPP2 up to 2026.09 it can be null before the last page\nwhen records are\nhidden (OpenSPP reads up to 3 × `count` records for a page with `count` of\n50 or less, and only 100 above that: with `count` of 50 or less the page\nends early when more than 2 × `count` of them are hidden; above 50, when\nmore than 100 - `count` are; at 100, one is); open PR OpenSPP2 #555 fixes\nthis.\nNote: on OpenSPP2 up to 2026.09, `group` can match a former member who is\nstill active in another group, `membership-role` can match a role held in a\ndifferent group, and an unknown `membership-role` code is ignored, so every\nindividual matching the other parameters is returned. Open PR OpenSPP2 #555\nfixes all three (an unknown code matches nothing).",
+        "description": "Search individuals. Records the API client may not see (eg without consent)\nare left out.",
         "tags": [
           {
             "title": "public",
@@ -181,7 +181,7 @@
           {
             "title": "example",
             "description": "searchIndividual({ group: \"urn:openspp:vocab:id-type#household_id|HH-1\", \"membership-role\": \"head\" });",
-            "caption": "Heads of household in a group (see the note above)"
+            "caption": "Heads of household in a group"
           },
           {
             "title": "function",
@@ -190,7 +190,7 @@
           },
           {
             "title": "param",
-            "description": "OpenSPP search parameters: `identifier`, `name`, `birthdate`, `gender`, `address`, `group`, `membership-role`, `_lastUpdated`",
+            "description": "OpenSPP search parameters, eg `{ name: \"Santos\" }`. See the [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search)",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -234,7 +234,7 @@
         "data"
       ],
       "docs": {
-        "description": "Create an individual. `data` follows the OpenSPP Individual resource and\nmust include at least one identifier.",
+        "description": "Create an individual.",
         "tags": [
           {
             "title": "public",
@@ -252,7 +252,7 @@
           },
           {
             "title": "param",
-            "description": "Individual resource",
+            "description": "Individual resource, with at least one `identifier`. See the [OpenSPP resource docs](https://docs.openspp.org/developer_guide/api_v2/resources)",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -283,7 +283,7 @@
         "options"
       ],
       "docs": {
-        "description": "Update some fields of an individual (JSON Merge Patch). Omitted fields are\nunchanged; `null` clears a field.\nNote: OpenSPP2 up to 2026.09 can't change `gender` this way and returns 422\n(fixed by open PR OpenSPP2 #555).",
+        "description": "Update some fields of an individual. Fields you leave out are unchanged, and\n`null` clears a field.",
         "tags": [
           {
             "title": "public",
@@ -352,7 +352,7 @@
         "options"
       ],
       "docs": {
-        "description": "Get a group by identifier. Note: on OpenSPP2 up to 2026.09,\n`member[].entity.reference` values returned by OpenSPP can't be used to read\nthe members (fixed by open PR OpenSPP2 #555); use `getGroupMembers` instead.",
+        "description": "Get a group by identifier. To read the members, use `getGroupMembers`.",
         "tags": [
           {
             "title": "public",
@@ -412,7 +412,7 @@
         "options"
       ],
       "docs": {
-        "description": "Search groups. `sort` is not supported: OpenSPP always sorts groups by name.\nNote: on OpenSPP2 releases up to 2026.09, `offset` is ignored for groups and\nevery page returns the first page again (fixed by open PR OpenSPP2 #555).",
+        "description": "Search groups.",
         "tags": [
           {
             "title": "public",
@@ -430,7 +430,7 @@
           },
           {
             "title": "param",
-            "description": "OpenSPP search parameters: `identifier`, `name`, `member` (`Individual/system|value`; on OpenSPP2 up to 2026.09, any other value, or an individual that doesn't exist, is ignored and every group matching the other parameters is returned, and `member` also matches groups the individual has left). `type` is passed on, but not yet applied by OpenSPP2 (#565)",
+            "description": "OpenSPP search parameters, eg `{ name: \"Santos\" }`. See the [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search)",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -474,7 +474,7 @@
         "data"
       ],
       "docs": {
-        "description": "Create a group. `data` follows the OpenSPP Group resource and must include\nat least one identifier.",
+        "description": "Create a group.",
         "tags": [
           {
             "title": "public",
@@ -492,7 +492,7 @@
           },
           {
             "title": "param",
-            "description": "Group resource",
+            "description": "Group resource, with at least one `identifier`. See the [OpenSPP resource docs](https://docs.openspp.org/developer_guide/api_v2/resources)",
             "type": {
               "type": "NameExpression",
               "name": "object"
@@ -523,7 +523,7 @@
         "options"
       ],
       "docs": {
-        "description": "Update some fields of a group (JSON Merge Patch).",
+        "description": "Update some fields of a group. Fields you leave out are unchanged, and\n`null` clears a field.",
         "tags": [
           {
             "title": "public",
@@ -592,7 +592,7 @@
         "options"
       ],
       "docs": {
-        "description": "List the individuals who are members of a group.\nNote: on OpenSPP2 up to 2026.09, the result can include former members who\nare still active in another group, `role` can match a role held in a\ndifferent group, and an unknown `role` code is ignored, so every member is\nreturned. Open PR OpenSPP2 #555 fixes all three (an unknown code matches\nnothing).",
+        "description": "List the individuals who are members of a group.",
         "tags": [
           {
             "title": "public",
@@ -606,7 +606,7 @@
           {
             "title": "example",
             "description": "getGroupMembers(\"urn:openspp:vocab:id-type#household_id|HH-1\", { role: \"head\" });",
-            "caption": "Only the head of household (see the note above)"
+            "caption": "Only the head of household"
           },
           {
             "title": "function",
@@ -659,7 +659,7 @@
         "options"
       ],
       "docs": {
-        "description": "Add an individual to a group. If the individual is already a member, their\nroles are replaced by `role` when it is given, and left unchanged otherwise\n(`startDate` only applies to new members). OpenSPP2 up to 2026.09 ignores a\nrole code it doesn't know: a new member is added without a role, and an\nexisting member keeps their current roles. Open PR OpenSPP2 #555 rejects an\nunknown role code with 422. OpenSPP enforces one `head` per group only in\nits own forms, so a second `head` is accepted through the API.\nA member removed with `removeFromGroup` can't be added back (OpenSPP2\n#570): it fails with 422, \"Duplication of Member is not allowed\" with open\nPR OpenSPP2 #555 and only \"Failed to add member\" on OpenSPP2 up to 2026.09.\nOn OpenSPP2 up to 2026.09, until OpenSPP's scheduled membership repair runs\nafter a `removeFromGroup` without `endedDate`, it doesn't fail: the removed\nmembership, with its `endedDate`, is returned and the individual isn't added\nback.",
+        "description": "Add an individual to a group. Throws a 409 error if the individual is\nalready a member. To change an existing member's role, use `request`, eg\n`request(\"PATCH\", \"/Group/<group>/member/<individual>\", { role })` with both\nidentifiers URL-encoded.",
         "tags": [
           {
             "title": "public",
@@ -756,7 +756,7 @@
         "options"
       ],
       "docs": {
-        "description": "End an individual's membership of a group. OpenSPP sets the end date to\nnow unless `endedDate` is given.\nNote: OpenSPP2 up to 2026.09 may still report the membership as `active`\n(and list the individual in group searches) until OpenSPP's scheduled\nmembership repair runs (fixed by open PR OpenSPP2 #555). The end date is\nsaved either way.",
+        "description": "End an individual's membership of a group. OpenSPP sets the end date to\nnow unless `endedDate` is given.",
         "tags": [
           {
             "title": "public",
@@ -792,7 +792,7 @@
           },
           {
             "title": "param",
-            "description": "`reason` (logged by OpenSPP2 but not stored), `endedDate` (YYYY-MM-DD)",
+            "description": "`reason`, `endedDate` (YYYY-MM-DD)",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -871,7 +871,7 @@
         "options"
       ],
       "docs": {
-        "description": "List programs. Programs page with a cursor instead of an offset: for the\nnext page, pass as `lastId` the `_lastId` value in `state.response.page.next`.",
+        "description": "List programs.",
         "tags": [
           {
             "title": "public",
@@ -975,7 +975,7 @@
         "options"
       ],
       "docs": {
-        "description": "Enroll a registrant in a program. Does nothing if they are already enrolled.\nIf they have a membership in this program that isn't enrolled (eg exited),\nit is set back to enrolled. OpenSPP2 up to 2026.09 can't address a\nmembership per program (open PR OpenSPP2 #555 adds this, but the adaptor\ndoesn't use it yet), so that update is refused when the registrant has\nmemberships in other programs too.\nIf OpenSPP has a membership the API client can't see (eg the beneficiary has\nno consent), `enroll` tries to create one and fails: 422 on OpenSPP2 up to\n2026.09, 409 \"Beneficiary is already a member of this program\" with open PR\nOpenSPP2 #555.",
+        "description": "Enroll a registrant in a program. Does nothing if they are already enrolled.\nIf they have a membership in this program that isn't enrolled (eg exited),\nit is set back to enrolled. That update throws if the registrant also has\nmemberships in other programs, because OpenSPP can't safely update one of\nthem through the API.",
         "tags": [
           {
             "title": "public",
@@ -1045,7 +1045,7 @@
         "options"
       ],
       "docs": {
-        "description": "Unenroll a registrant from a program by setting their membership to\n`exited`. Does nothing if the membership isn't enrolled. OpenSPP2 up to\n2026.09 can't address a membership per program (open PR OpenSPP2 #555 adds\nthis, but the adaptor doesn't use it yet), so this is refused when the\nregistrant has memberships in other programs too.",
+        "description": "Unenroll a registrant from a program by setting their membership to\n`exited`. Does nothing if the membership isn't enrolled. Throws if the\nregistrant also has memberships in other programs, because OpenSPP can't\nsafely update one of them through the API.",
         "tags": [
           {
             "title": "public",
@@ -1086,7 +1086,7 @@
           },
           {
             "title": "param",
-            "description": "`exitDate` (YYYY-MM-DD), `exitReason` (CodeableConcept; accepted but not yet stored by OpenSPP2)",
+            "description": "`exitDate` (YYYY-MM-DD), `exitReason` (CodeableConcept)",
             "type": {
               "type": "OptionalType",
               "expression": {
@@ -1166,7 +1166,7 @@
         "options"
       ],
       "docs": {
-        "description": "Search service points. Only `count` and `offset` are supported: OpenSPP\ncannot sort service points or limit their fields.",
+        "description": "Search service points.",
         "tags": [
           {
             "title": "public",
@@ -1184,7 +1184,7 @@
           },
           {
             "title": "param",
-            "description": "OpenSPP search parameters: `name`, `area`, `country`, `contractActive`, `_lastUpdated`",
+            "description": "OpenSPP search parameters, eg `{ country: \"PH\" }`. See the [OpenSPP service point docs](https://docs.openspp.org/developer_guide/api_v2/products_service_points)",
             "type": {
               "type": "OptionalType",
               "expression": {
