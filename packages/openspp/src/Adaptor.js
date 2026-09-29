@@ -1,17 +1,48 @@
-import {
-  execute as commonExecute,
-  composeNextState,
-  dateFns,
-} from '@openfn/language-common';
+import { execute as commonExecute } from '@openfn/language-common';
+import { expandReferences } from '@openfn/language-common/util';
+import * as util from './Utils.js';
 
-import pkg from 'odoo-await';
-const Odoo = pkg;
+/**
+ * State object
+ * @typedef {Object} OpenSPPState
+ * @property data - the parsed response body. For searches, the list of resources.
+ * @property response - the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`.
+ * @property references - an array of all previous data objects used in the Job
+ **/
 
-let sppConnector = null;
+// OpenSPP ignores `_lastId` for individuals and groups, so the first page
+// would be returned again
+const NO_CURSOR = 'OpenSPP ignores lastId for individuals and groups; page with offset';
+
+// Programs page with a cursor instead of an offset
+const PROGRAM_CURSOR =
+  'OpenSPP pages programs with a cursor, so use count (page size, 1-100) and lastId (the _lastId value in state.response.page.next)';
+
+/**
+ * Options for OpenSPP searches
+ * @typedef {Object} SearchOptions
+ * @public
+ * @property {number} count - Page size, 1-100 (OpenSPP default 20)
+ * @property {number} offset - Number of records to skip
+ * @property {string} sort - Individuals only: one of `name`, `birthDate` or `lastUpdated`, with a `-` prefix for descending
+ * @property {string|string[]} elements - Only return these fields (individuals and groups)
+ * @property {string|string[]} extensions - Include these extensions (individuals and groups)
+ */
+
+/**
+ * Options for getPrograms
+ * @typedef {Object} ProgramOptions
+ * @public
+ * @property {string} [name] - Filter by name
+ * @property {'active'|'ended'} [status] - Filter by status
+ * @property {'individual'|'group'} [targetType] - Filter by target type
+ * @property {number} [count] - Page size, 1-100 (OpenSPP default 20)
+ * @property {number|string} [lastId] - Cursor for the next page: the `_lastId` value in `state.response.page.next`
+ */
 
 /**
  * Execute a sequence of operations.
- * Wraps `language-common/execute` to make working with this API easier.
+ * Wraps `language-common/execute` to authenticate with OpenSPP first.
  * @example
  * execute(
  *   create("foo"),
@@ -28,1001 +59,657 @@ export function execute(...operations) {
   };
 
   return state => {
-    return commonExecute(login, ...operations)({ ...initialState, ...state });
+    return commonExecute(
+      util.authorize,
+      ...operations
+    )({ ...initialState, ...state });
   };
 }
 
 /**
- * Logs in to OpenSpp, gets a session token.
- * @example
- *  login(state)
- * @private
- * @param {State} state - Runtime state.
- * @returns {State}
+ * Make a request to any OpenSPP REST API v2 endpoint.
+ * Paths are relative to `/api/v2/spp`.
+ * @public
+ * @example <caption>List vocabularies</caption>
+ * request("GET", "/Vocabulary", null, { query: { _count: 10 } });
+ * @example <caption>Read GIS layers</caption>
+ * request("GET", "/gis/ogc/collections");
+ * @function
+ * @param {string} method - HTTP method
+ * @param {string} path - Path relative to /api/v2/spp, eg `/Individual`
+ * @param {object} [body] - Request body, sent as JSON
+ * @param {object} [options] - `query` (query parameters), `ifMatch` (ETag for optimistic locking) and `headers`
+ * @returns {Operation}
+ * @state {OpenSPPState}
  */
-async function login(state) {
-  const { baseUrl, username, password, database } = state.configuration;
-  sppConnector = new Odoo({
-    baseUrl: baseUrl,
-    db: database,
-    username: username,
-    password: password,
-  });
-  try {
-    await sppConnector.connect();
-  } catch (err) {
-    console.log(`✗ Error: ${err}`);
-    sppConnector = null;
-  }
-  return state;
+export function request(method, path, body, options = {}) {
+  return async state => {
+    const [resolvedMethod, resolvedPath, resolvedBody, resolvedOptions] =
+      expandReferences(state, method, path, body, options);
+
+    const response = await util.request(
+      state.configuration,
+      resolvedMethod,
+      resolvedPath,
+      { body: resolvedBody, ...resolvedOptions }
+    );
+
+    return util.prepareNextState(state, response);
+  };
 }
 
 /**
- * resolve input domain
+ * Get an individual by identifier.
+ * @public
  * @example
- * resolveDomain([['name', 'like', 'test']])
- * @private
- * @param {Array} domain - input domain
+ * getIndividual("urn:openspp:vocab:id-type#national_id|PH-123456789");
+ * @example <caption>Only return some fields</caption>
+ * getIndividual("urn:openspp:vocab:id-type#national_id|PH-123456789", { elements: ["identifier", "name"] });
+ * @function
+ * @param {string} id - Identifier as `system\|value`
+ * @param {object} [options] - `elements` and `extensions` (see SearchOptions)
+ * @returns {Operation}
+ * @state {OpenSPPState}
  */
-const resolveDomain = domain => {
-  for (const element of domain) {
-    if (!Array.isArray(element) && !['|', '&', '!'].includes(element)) {
-      return [domain];
-    }
-  }
-  return domain;
-};
-
-const resolveOptions = options => {
-  let res = {
-    limit: 100,
-    offset: 0,
-    order: 'id desc',
+export function getIndividual(id, options = {}) {
+  return async state => {
+    const [resolvedId, resolvedOptions] = expandReferences(state, id, options);
+    const response = await util.readResource(
+      state.configuration,
+      'Individual',
+      resolvedId,
+      resolvedOptions
+    );
+    return util.prepareNextState(state, response);
   };
-  for (const key of Object.keys(options)) {
-    if (['limit', 'offset', 'order'].includes(key)) {
-      res[key] = options[key];
-    }
-  }
-  return res;
-};
+}
 
 /**
- * Create a brand new program membership for registrant.
- * @example
- * createProgramMembership("IND_Q4VGGZPF", "PROG_2023_00000001")
- * @private
- * @param {string} spp_id - spp_id of group / individual wanted to unenroll
- * @param {string} program_id - program_id of program
+ * Search individuals. Records the API client may not see (eg without consent)
+ * are left out.
+ * @public
+ * @example <caption>Search by name</caption>
+ * searchIndividual({ name: "Santos" });
+ * @example <caption>Born on or after 2010, 50 per page, second page</caption>
+ * searchIndividual({ birthdate: "ge2010-01-01" }, { count: 50, offset: 50 });
+ * @example <caption>Heads of household in a group</caption>
+ * searchIndividual({ group: "urn:openspp:vocab:id-type#household_id|HH-1", "membership-role": "head" });
+ * @function
+ * @param {object} [query] - OpenSPP search parameters, eg `{ name: "Santos" }`. `identifier` and `group` must be `system\|value`. See the [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search)
+ * @param {SearchOptions} [options] - Paging and field options
+ * @returns {Operation}
+ * @state {OpenSPPState}
  */
-async function createProgramMembership(spp_id, program_id) {
-  try {
-    let registrant = await sppConnector.searchRead(
-      'res.partner',
-      [
-        ['is_registrant', '=', true],
-        ['spp_id', '=', spp_id],
-      ],
-      ['id'],
-      { limit: 1 }
+export function searchIndividual(query = {}, options = {}) {
+  return async state => {
+    const [resolvedQuery, resolvedOptions] = expandReferences(
+      state,
+      query,
+      options
     );
-    if (registrant.length === 0) {
-      throw new Error(`Registrant ${spp_id} not exists!`);
-    }
-    registrant = registrant[0].id;
-    let program = await sppConnector.searchRead(
-      'g2p.program',
-      [['program_id', '=', program_id]],
-      ['id'],
-      { limit: 1 }
-    );
-    if (program.length === 0) {
-      throw new Error(`Program ${program_id} not exists!`);
-    }
-    program = program[0].id;
-    await sppConnector.create('g2p.program_membership', {
-      program_id: program,
-      partner_id: registrant,
-      state: 'enrolled',
+    util.warnUnsupportedOptions('searchIndividual', resolvedOptions, {
+      lastId: NO_CURSOR,
     });
-  } catch (err) {
-    console.log(`✗ Error: ${err}`);
-  }
+    util.warnUnsupportedSort('searchIndividual', resolvedOptions?.sort);
+    const response = await util.searchResource(
+      state.configuration,
+      'Individual',
+      resolvedQuery,
+      resolvedOptions
+    );
+    return util.prepareSearchState(state, response);
+  };
 }
 
 /**
- * get group information from OpenSPP
+ * Create an individual.
  * @public
  * @example
- * getGroup("GRP_Q4VGGZPF")
+ * createIndividual({
+ *   identifier: [{ system: "urn:openspp:vocab:id-type#national_id", value: "PH-123456789" }],
+ *   name: { family: "Santos", given: "Maria" },
+ *   birthDate: "1985-03-15",
+ *   gender: { coding: [{ system: "urn:iso:std:iso:5218", code: "2" }] },
+ * });
  * @function
- * @param {string} spp_id - The spp_id of the group
- * @param {function} callback - An optional callback function
+ * @param {object} data - Individual resource, with at least one `identifier`. See the [OpenSPP resource docs](https://docs.openspp.org/developer_guide/api_v2/resources)
  * @returns {Operation}
+ * @state {OpenSPPState}
  */
-export function getGroup(spp_id, callback = s => s) {
+export function createIndividual(data) {
   return async state => {
-    const defaultDomain = [
-      ['is_registrant', '=', true],
-      ['is_group', '=', true],
-      ['spp_id', '=', spp_id],
-    ];
-    const defaultFields = [
-      'name',
-      'address',
-      'phone',
-      'kind',
-      'registration_date',
-      'spp_id',
-    ];
-    try {
-      const group = await sppConnector.searchRead(
-        'res.partner',
-        defaultDomain,
-        defaultFields,
-        { limit: 1, order: 'id desc' }
-      );
-      if (group.length === 0) {
-        console.log(`✗ Error: Group ${spp_id} not found!`);
-        return state;
-      }
-      console.log(`ℹ Group ${spp_id} found!`);
-      const nextState = composeNextState(state, group[0]);
-      return callback(nextState);
-    } catch (err) {
-      console.log(`✗ Error: ${err}`);
-      return state;
-    }
+    const [resolvedData] = expandReferences(state, data);
+    const response = await util.createResource(
+      state.configuration,
+      'Individual',
+      resolvedData
+    );
+    return util.prepareNextState(state, response);
   };
 }
 
 /**
- * get individual information from OpenSPP
+ * Update some fields of an individual. Fields you leave out are unchanged, and
+ * `null` clears a field.
  * @public
  * @example
- * getIndividual("IND_Q4VGGZPF")
+ * updateIndividual("urn:openspp:vocab:id-type#national_id|PH-123456789", { birthDate: "1985-03-16" });
  * @function
- * @param {string} spp_id - The spp_id of the individual
- * @param {function} callback - An optional callback function
+ * @param {string} id - Identifier as `system\|value`
+ * @param {object} data - Fields to change
+ * @param {object} [options] - `ifMatch`: ETag from a previous read, to fail if the record changed
  * @returns {Operation}
+ * @state {OpenSPPState}
  */
-export function getIndividual(spp_id, callback = s => s) {
+export function updateIndividual(id, data, options = {}) {
   return async state => {
-    const defaultDomain = [
-      ['is_registrant', '=', true],
-      ['is_group', '=', false],
-      ['spp_id', '=', spp_id],
-    ];
-    const defaultFields = [
-      'name',
-      'address',
-      'phone',
-      'spp_id',
-      'gender',
-      'email',
-      'category_id',
-      'birthdate',
-    ];
-    try {
-      const individual = await sppConnector.searchRead(
-        'res.partner',
-        defaultDomain,
-        defaultFields,
-        { limit: 1, order: 'id desc' }
-      );
-      if (individual.length === 0) {
-        console.log(`✗ Error: Individual with id=${spp_id} not found!`);
-        return state;
-      }
-      console.log(`ℹ Individual with id=${spp_id} found!`);
-      const nextState = composeNextState(state, individual[0]);
-      return callback(nextState);
-    } catch (err) {
-      console.log(`✗ Error: ${err}`);
-      return state;
-    }
+    const [resolvedId, resolvedData, resolvedOptions] = expandReferences(
+      state,
+      id,
+      data,
+      options
+    );
+    const response = await util.patchResource(
+      state.configuration,
+      'Individual',
+      resolvedId,
+      resolvedData,
+      resolvedOptions
+    );
+    return util.prepareNextState(state, response);
   };
 }
 
 /**
- * get group members information from OpenSPP
+ * Get a group by identifier. To read the members, use `getGroupMembers`.
  * @public
  * @example
- * getGroupMembers("GRP_Q4VGGZPF")
+ * getGroup("urn:openspp:vocab:id-type#household_id|HH-1");
  * @function
- * @param {string} spp_id - The name of the group
- * @param {object} [options={}] - Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records
- * @param {function} callback - An optional callback function
+ * @param {string} id - Identifier as `system\|value`
+ * @param {object} [options] - `elements` and `extensions` (see SearchOptions)
  * @returns {Operation}
+ * @state {OpenSPPState}
  */
-export function getGroupMembers(spp_id, options = {}, callback = s => s) {
+export function getGroup(id, options = {}) {
   return async state => {
-    try {
-      const group_id = await sppConnector.search('res.partner', [
-        ['is_group', '=', true],
-        ['is_registrant', '=', true],
-        ['spp_id', '=', spp_id],
-      ]);
-      if (group_id.length === 0) {
-        console.log(`✗ Error: Group id=${spp_id} not found!`);
-        return state;
-      }
-      const defaultDomain = [
-        ['is_ended', '=', false],
-        ['group', '=', group_id[0]],
-      ];
-      const defaultFields = [
-        'individual',
-        'kind',
-        'start_date',
-        'ended_date',
-        'individual_birthdate',
-        'individual_gender',
-      ];
-      options = resolveOptions(options);
-      const members = await sppConnector.searchRead(
-        'g2p.group.membership',
-        defaultDomain,
-        defaultFields,
-        options
-      );
-      if (!members) {
-        console.log(`⚠ Warning: Household ${spp_id} not having members!`);
-        return state;
-      }
-      console.log(`ℹ Household ${spp_id} members found!`);
-      const nextState = composeNextState(state, members);
-      return callback(nextState);
-    } catch (err) {
-      console.log(`✗ Error: ${err}`);
-      return state;
-    }
+    const [resolvedId, resolvedOptions] = expandReferences(state, id, options);
+    const response = await util.readResource(
+      state.configuration,
+      'Group',
+      resolvedId,
+      resolvedOptions
+    );
+    return util.prepareNextState(state, response);
   };
 }
 
 /**
- * get service points information from OpenSPP
+ * Search groups.
  * @public
  * @example
- * getServicePoint("SVP_8P4KP4RT")
+ * searchGroup({ name: "Santos" }, { count: 50 });
  * @function
- * @param {string} spp_id - The spp_id of the agent
- * @param {function} callback - An optional callback function
+ * @param {object} [query] - OpenSPP search parameters, eg `{ name: "Santos" }`. See the [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search)
+ * @param {SearchOptions} [options] - Paging and field options
  * @returns {Operation}
+ * @state {OpenSPPState}
  */
-export function getServicePoint(spp_id, callback = s => s) {
+export function searchGroup(query = {}, options = {}) {
   return async state => {
-    const defaultFields = [
-      'name',
-      'area_id',
-      'service_type_ids',
-      'phone_sanitized',
-      'shop_address',
-      'is_contract_active',
-      'is_disabled',
-    ];
-    try {
-      const agents = await sppConnector.searchRead(
-        'spp.service.point',
-        [['spp_id', '=', spp_id]],
-        defaultFields
-      );
-      if (agents.length === 0) {
-        console.log(`⚠ Warning: Agent ${spp_id} not found!`);
-        return state;
-      }
-      console.log(`ℹ Agent ${spp_id} found!`);
-      const nextState = composeNextState(state, agents);
-      return callback(nextState);
-    } catch (err) {
-      console.log(`✗ Error: ${err}`);
-      return state;
-    }
+    const [resolvedQuery, resolvedOptions] = expandReferences(
+      state,
+      query,
+      options
+    );
+    util.warnUnsupportedOptions('searchGroup', resolvedOptions, {
+      sort: 'OpenSPP cannot sort groups',
+      lastId: NO_CURSOR,
+    });
+    const response = await util.searchResource(
+      state.configuration,
+      'Group',
+      resolvedQuery,
+      resolvedOptions
+    );
+    return util.prepareSearchState(state, response);
   };
 }
 
 /**
- * get groups from OpenSPP
- * @public
- * @example <caption>search group by domain</caption>
- * searchGroup([["spp_id", "=", "GRP_Q4VGGZPF"]])
- * @example <caption>search group by domain with offset</caption>
- * searchGroup([["spp_id", "ilike", "GRP"]], { offset: 100 }})
- * @example <caption>search group by complex domain for more accuracy</caption>
- * searchGroup([["address", "!=", false], ["phone", "!=", false]])
- * @function
- * @param {Array} domain - searching domain
- * @param {object} [options={}] - Searching options, eg: limit for limiting number of records returning, order for ordering search, offset for skipping records
- * @param {function} callback - An optional callback function
- * @returns {Operation}
- */
-export function searchGroup(domain, options = {}, callback = s => s) {
-  return async state => {
-    const defaultDomain = [
-      ['is_registrant', '=', true],
-      ['is_group', '=', true],
-    ];
-    const defaultFields = ['name', 'spp_id'];
-    domain = resolveDomain(domain);
-    const finalDomain = [...domain, ...defaultDomain];
-    options = resolveOptions(options);
-    try {
-      const groups = await sppConnector.searchRead(
-        'res.partner',
-        finalDomain,
-        defaultFields,
-        options
-      );
-      if (groups.length === 0) {
-        console.log(`⚠ Warning: Group with domain=${domain} not found!`);
-        return state;
-      }
-      console.log(`ℹ Group with domain=${domain} found!`);
-      const nextState = composeNextState(state, groups);
-      return callback(nextState);
-    } catch (err) {
-      console.log(`✗ Error: ${err}`);
-      return state;
-    }
-  };
-}
-
-/**
- * get individuals from OpenSPP
- * @public
- * @example <caption>search individual by domain</caption>
- * searchIndividual([["spp_id", "=", "IND_Q4VGGZPF"]])
- * @example <caption>search individual by domain with offset</caption>
- * searchIndividual([["spp_id", "ilike", "IND"]], { offset: 100 })
- * @example <caption>search individual by complex domain for more accuracy</caption>
- * searchIndividual([["address", "!=", false], ["birthdate", "=", false]])
- * @function
- * @param {Array} domain - searching domain
- * @param {object} [options={}] - Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records
- * @param {function} callback - An optional callback function
- * @returns {Operation}
- */
-export function searchIndividual(domain, options = {}, callback = s => s) {
-  return async state => {
-    const defaultDomain = [
-      ['is_registrant', '=', true],
-      ['is_group', '=', false],
-    ];
-    const defaultFields = ['name', 'spp_id'];
-    domain = resolveDomain(domain);
-    const finalDomain = [...domain, ...defaultDomain];
-    options = resolveOptions(options);
-    try {
-      const individuals = await sppConnector.searchRead(
-        'res.partner',
-        finalDomain,
-        defaultFields,
-        options
-      );
-      if (individuals.length === 0) {
-        console.log(`⚠ Warning: Individual with domain=${domain} not found!`);
-        return state;
-      }
-      console.log(`ℹ Individual with domain=${domain} found!`);
-      const nextState = composeNextState(state, individuals);
-      return callback(nextState);
-    } catch (err) {
-      console.log(`✗ Error: ${err}`);
-      return state;
-    }
-  };
-}
-
-/**
- * get program information from OpenSPP
+ * Create a group.
  * @public
  * @example
- * getProgram("PROG_2023_00000001")
+ * createGroup({
+ *   identifier: [{ system: "urn:openspp:vocab:id-type#household_id", value: "HH-1" }],
+ *   name: "Santos Household",
+ *   groupType: "household",
+ * });
  * @function
- * @param {string} program_id - searching domain
- * @param {function} callback - An optional callback function
+ * @param {object} data - Group resource, with at least one `identifier`. See the [OpenSPP resource docs](https://docs.openspp.org/developer_guide/api_v2/resources)
  * @returns {Operation}
+ * @state {OpenSPPState}
  */
-export function getProgram(program_id, callback = s => s) {
+export function createGroup(data) {
   return async state => {
-    const defaultDomain = [['program_id', '=', program_id]];
-    const defaultFields = [
-      'name',
-      'program_id',
-      'eligible_beneficiaries_count',
-      'cycles_count',
-      'state',
-      'target_type',
-    ];
-    const options = { limit: 1 };
-    try {
-      const program = await sppConnector.searchRead(
-        'g2p.program',
-        defaultDomain,
-        defaultFields,
-        options
-      );
-      if (program.length === 0) {
-        console.log(`⚠ Warning: Program ${program_id} not found!`);
-        return state;
-      }
-      console.log(`ℹ Program ${program_id} found!`);
-      const nextState = composeNextState(state, program[0]);
-      return callback(nextState);
-    } catch (err) {
-      console.log(`✗ Error: ${err}`);
-      return state;
-    }
+    const [resolvedData] = expandReferences(state, data);
+    const response = await util.createResource(
+      state.configuration,
+      'Group',
+      resolvedData
+    );
+    return util.prepareNextState(state, response);
   };
 }
 
 /**
- * get programs list from OpenSPP
+ * Update some fields of a group. Fields you leave out are unchanged, and
+ * `null` clears a field.
  * @public
  * @example
- * getPrograms(100)
+ * updateGroup("urn:openspp:vocab:id-type#household_id|HH-1", { name: "Santos-Reyes Household" });
  * @function
- * @param {number} [options={}] - offset from start
- * @param {function} callback - An optional callback function
+ * @param {string} id - Identifier as `system\|value`
+ * @param {object} data - Fields to change
+ * @param {object} [options] - `ifMatch`: ETag from a previous read, to fail if the record changed
  * @returns {Operation}
+ * @state {OpenSPPState}
  */
-export function getPrograms(options = {}, callback = s => s) {
+export function updateGroup(id, data, options = {}) {
   return async state => {
-    const defaultDomain = [];
-    const defaultFields = ['name', 'program_id'];
-    options = resolveOptions(options);
-    try {
-      const programs = await sppConnector.searchRead(
-        'g2p.program',
-        defaultDomain,
-        defaultFields,
-        options
-      );
-      if (programs.length === 0) {
-        console.log(`⚠ Warning: No program found!`);
-        return state;
-      }
-      console.log(`ℹ Program(s) found!`);
-      const nextState = composeNextState(state, programs);
-      return callback(nextState);
-    } catch (err) {
-      console.log(`✗ Error: ${err}`);
-      return state;
-    }
+    const [resolvedId, resolvedData, resolvedOptions] = expandReferences(
+      state,
+      id,
+      data,
+      options
+    );
+    const response = await util.patchResource(
+      state.configuration,
+      'Group',
+      resolvedId,
+      resolvedData,
+      resolvedOptions
+    );
+    return util.prepareNextState(state, response);
   };
 }
 
 /**
- * get programs list for specific registrant from OpenSPP
+ * List the individuals who are members of a group.
  * @public
  * @example
- * getEnrolledPrograms("IND_Q4VGGZPF")
+ * getGroupMembers("urn:openspp:vocab:id-type#household_id|HH-1");
+ * @example <caption>Only the head of household</caption>
+ * getGroupMembers("urn:openspp:vocab:id-type#household_id|HH-1", { role: "head" });
  * @function
- * @param {string} spp_id - spp_id of group / individual wanted to search
- * @param {function} callback - An optional callback function
+ * @param {string} groupId - Group identifier as `system\|value`
+ * @param {object} [options] - `role` (membership role code) plus SearchOptions
  * @returns {Operation}
+ * @state {OpenSPPState}
  */
-export function getEnrolledPrograms(spp_id, callback = s => s) {
+export function getGroupMembers(groupId, options = {}) {
   return async state => {
-    const defaultDomain = [['partner_id.spp_id', '=', spp_id]];
-    const defaultFields = ['program_id'];
-    try {
-      let program_ids = await sppConnector.searchRead(
-        'g2p.program_membership',
-        defaultDomain,
-        defaultFields
-      );
-      if (program_ids.length === 0) {
-        console.log(`⚠ Warning: No enrolled program(s) found!`);
-        return state;
-      }
-      console.log(`ℹ Enrolled program(s) found!`);
-      program_ids = program_ids.map(i => i.program_id[0]);
-      const programs = await sppConnector.searchRead(
-        'g2p.program',
-        [['id', 'in', program_ids]],
-        defaultFields,
-        { limit: program_ids.length }
-      );
-      const nextState = composeNextState(state, programs);
-      return callback(nextState);
-    } catch (err) {
-      console.log(`✗ Error: ${err}`);
-      return state;
+    const [resolvedGroupId, resolvedOptions] = expandReferences(
+      state,
+      groupId,
+      options
+    );
+    util.warnUnsupportedOptions('getGroupMembers', resolvedOptions, {
+      lastId: NO_CURSOR,
+    });
+    util.warnUnsupportedSort('getGroupMembers', resolvedOptions?.sort);
+    const { role, ...searchOptions } = resolvedOptions;
+    const query = { group: resolvedGroupId };
+    if (role !== undefined) {
+      query['membership-role'] = role;
     }
+    const response = await util.searchResource(
+      state.configuration,
+      'Individual',
+      query,
+      searchOptions
+    );
+    return util.prepareSearchState(state, response);
+  };
+}
+
+const toRole = role =>
+  typeof role === 'string'
+    ? { coding: [{ system: 'urn:openspp:vocab:group-membership-type', code: role }] }
+    : role;
+
+/**
+ * Add an individual to a group. Throws a 409 error if the individual is
+ * already a member. To change an existing member's role, use `request` with
+ * both identifiers URL-encoded, eg
+ * `request("PATCH", "/Group/<group>/member/<individual>", { role: { coding: [{ system: "urn:openspp:vocab:group-membership-type", code: "spouse" }] } })`.
+ * @public
+ * @example <caption>Add as head of household</caption>
+ * addToGroup("urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:vocab:id-type#national_id|PH-123", "head");
+ * @example <caption>Add without a role</caption>
+ * addToGroup("urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:vocab:id-type#national_id|PH-123");
+ * @function
+ * @param {string} groupId - Group identifier as `system\|value`
+ * @param {string} individualId - Individual identifier as `system\|value`
+ * @param {string|object} [role] - Role code in `urn:openspp:vocab:group-membership-type` (eg "head", "spouse", "child"), or a CodeableConcept
+ * @param {object} [options] - `startDate` (YYYY-MM-DD)
+ * @returns {Operation}
+ * @state {OpenSPPState}
+ */
+export function addToGroup(groupId, individualId, role, options = {}) {
+  return async state => {
+    const [resolvedGroupId, resolvedIndividualId, resolvedRole, resolvedOptions] =
+      expandReferences(state, groupId, individualId, role, options);
+
+    util.encodeIdentifier(resolvedIndividualId);
+
+    const body = { entity: { reference: `Individual/${resolvedIndividualId}` } };
+    if (resolvedRole) {
+      body.role = toRole(resolvedRole);
+    }
+    if (resolvedOptions.startDate) {
+      body.startDate = resolvedOptions.startDate;
+    }
+
+    const response = await util.request(
+      state.configuration,
+      'POST',
+      `/Group/${util.encodeIdentifier(resolvedGroupId)}/$add-member`,
+      { body }
+    );
+    return util.prepareNextState(state, response);
   };
 }
 
 /**
- * enroll registrant to program in OpenSPP
+ * End an individual's membership of a group. OpenSPP sets the end date to
+ * now unless `endedDate` is given.
  * @public
  * @example
- * enroll("IND_Q4VGGZPF", "PROG_2023_00000001")
+ * removeFromGroup("urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:vocab:id-type#national_id|PH-123", { reason: "Moved out" });
  * @function
- * @param {string} spp_id - spp_id of group / individual wanted to enroll
- * @param {string} program_id - program_id of program
+ * @param {string} groupId - Group identifier as `system\|value`
+ * @param {string} individualId - Individual identifier as `system\|value`
+ * @param {object} [options] - `reason` (OpenSPP logs it but doesn't save it), `endedDate` (YYYY-MM-DD)
+ * @returns {Operation}
+ * @state {OpenSPPState}
  */
-export function enroll(spp_id, program_id) {
+export function removeFromGroup(groupId, individualId, options = {}) {
   return async state => {
-    const domain = [
-      ['partner_id.spp_id', '=', spp_id],
-      ['program_id.program_id', '=', program_id],
-    ];
-    const fields = ['partner_id', 'program_id', 'state'];
-    try {
-      const programMember = await sppConnector.searchRead(
-        'g2p.program_membership',
-        domain,
-        fields,
-        { limit: 1 }
-      );
-      if (programMember.length > 0) {
-        const membership = programMember[0];
-        if (membership.state !== 'enrolled') {
-          await sppConnector.update('g2p.program_membership', membership.id, {
-            state: 'enrolled',
-          });
-        }
-        console.log(
-          `ℹ Registrant ${spp_id} enrolled into Program ${program_id}`
-        );
-      } else {
-        await createProgramMembership(spp_id, program_id);
-      }
-    } catch (err) {
-      console.log(`✗ Error: ${err}`);
-    } finally {
-      return state;
+    const [resolvedGroupId, resolvedIndividualId, resolvedOptions] =
+      expandReferences(state, groupId, individualId, options);
+
+    util.encodeIdentifier(resolvedIndividualId);
+    const body = { entity: { reference: `Individual/${resolvedIndividualId}` } };
+    if (resolvedOptions.reason) {
+      body.reason = resolvedOptions.reason;
     }
+    if (resolvedOptions.endedDate) {
+      body.endedDate = resolvedOptions.endedDate;
+    }
+
+    const response = await util.request(
+      state.configuration,
+      'POST',
+      `/Group/${util.encodeIdentifier(resolvedGroupId)}/$remove-member`,
+      { body }
+    );
+    return util.prepareNextState(state, response);
   };
 }
 
 /**
- * unenroll registrant from program in OpenSPP
+ * Get a program by identifier.
  * @public
  * @example
- * unenroll("IND_Q4VGGZPF", "PROG_2023_00000001")
+ * getProgram("urn:openspp:program|universal-child-grant");
  * @function
- * @param {string} spp_id - spp_id of group / individual wanted to unenroll
- * @param {string} program_id - program_id of program
+ * @param {string} id - Program identifier as `system\|value`
+ * @returns {Operation}
+ * @state {OpenSPPState}
  */
-export function unenroll(spp_id, program_id) {
+export function getProgram(id) {
   return async state => {
-    const domain = [
-      ['partner_id.spp_id', '=', spp_id],
-      ['program_id.program_id', '=', program_id],
-    ];
-    const fields = ['partner_id', 'program_id', 'state'];
-    try {
-      const programMember = await sppConnector.searchRead(
-        'g2p.program_membership',
-        domain,
-        fields,
-        { limit: 1 }
-      );
-      if (programMember.length > 0 && programMember[0].state === 'enrolled') {
-        const membership = programMember[0];
-        await sppConnector.update('g2p.program_membership', membership.id, {
-          state: 'not_eligible',
-        });
-      }
-      console.log(
-        `ℹ Registrant ${spp_id} not enroll into Program ${program_id}`
-      );
-      return state;
-    } catch (err) {
-      console.log(`✗ Error: ${err}`);
-      return state;
-    }
+    const [resolvedId] = expandReferences(state, id);
+    const response = await util.readResource(
+      state.configuration,
+      'Program',
+      resolvedId
+    );
+    return util.prepareNextState(state, response);
   };
 }
 
 /**
- * create new individual for OpenSPP
+ * List programs.
  * @public
  * @example
- * createIndividual({ name: "Individual 1" })
+ * getPrograms();
+ * @example <caption>Programs for groups, 10 per page</caption>
+ * getPrograms({ targetType: "group", count: 10 });
  * @function
- * @param {object} data - registrant create data
- * @param {function} callback - An optional callback function
+ * @param {ProgramOptions} [options] - Filters and paging
  * @returns {Operation}
+ * @state {OpenSPPState}
  */
-export function createIndividual(data, callback = s => s) {
+export function getPrograms(options = {}) {
   return async state => {
-    try {
-      if (!data.name) {
-        throw new Error(`"name" is a required parameter!`);
-      }
-      data.is_registrant = true;
-      data.is_group = false;
-      const individualId = await sppConnector.create('res.partner', data);
-      const res = await sppConnector.searchRead(
-        'res.partner',
-        [['id', '=', individualId]],
-        ['spp_id'],
-        { limit: 1 }
-      );
-      const individualRegistrantId = res[0].spp_id;
-      console.log(
-        `ℹ Individual created with registrant ID: ${individualRegistrantId}`
-      );
-      const nextState = composeNextState(state, individualRegistrantId);
-      return callback(nextState);
-    } catch (err) {
-      console.log(`✗ Error: ${err}`);
-      return state;
-    }
+    const [resolvedOptions] = expandReferences(state, options);
+    util.assertObject(resolvedOptions, 'options');
+    util.warnUnsupportedOptions('getPrograms', resolvedOptions, {
+      offset: PROGRAM_CURSOR,
+      limit: PROGRAM_CURSOR,
+      order: 'OpenSPP cannot sort programs',
+    });
+    const { count, lastId, ...query } = resolvedOptions;
+    const response = await util.searchResource(
+      state.configuration,
+      'Program',
+      query,
+      { count, lastId }
+    );
+    return util.prepareSearchState(state, response);
   };
 }
 
 /**
- * create new group for OpenSPP
+ * List the programs a registrant is enrolled in, as ProgramMembership
+ * resources (each has a `program` reference).
  * @public
  * @example
- * createGroup({ name: "Group 1" })
+ * getEnrolledPrograms("Group/urn:openspp:vocab:id-type#household_id|HH-1");
  * @function
- * @param {object} data - registrant create data
- * @param {function} callback - An optional callback function
+ * @param {string} beneficiary - Typed reference: `Individual/system\|value` or `Group/system\|value`
  * @returns {Operation}
+ * @state {OpenSPPState}
  */
-export function createGroup(data, callback = s => s) {
+export function getEnrolledPrograms(beneficiary) {
   return async state => {
-    try {
-      if (!data.name) {
-        throw new Error(`"name" is a required parameter!`);
-      }
-      data.is_registrant = true;
-      data.is_group = true;
-      const groupId = await sppConnector.create('res.partner', data);
-      const res = await sppConnector.searchRead(
-        'res.partner',
-        [['id', '=', groupId]],
-        ['spp_id'],
-        { limit: 1 }
-      );
-      const groupRegistrantId = res[0].spp_id;
-      console.log(`ℹ Group created with registrant ID: ${groupRegistrantId}`);
-      const nextState = composeNextState(state, groupRegistrantId);
-      return callback(nextState);
-    } catch (err) {
-      console.log(`✗ Error: ${err}`);
-      return state;
-    }
+    const [resolvedBeneficiary] = expandReferences(state, beneficiary);
+    util.parseReference(resolvedBeneficiary);
+    const response = await util.listMemberships(
+      state.configuration,
+      resolvedBeneficiary,
+      { status: 'enrolled' }
+    );
+    return util.prepareSearchState(state, response);
   };
 }
 
 /**
- * update group for OpenSPP
+ * Enroll a registrant in a program. If they are already enrolled, returns their
+ * membership unchanged. If they have a membership in this program that isn't
+ * enrolled (eg exited), it is set back to enrolled. That update throws if the
+ * registrant also has memberships in other programs, because the adaptor can't
+ * be sure OpenSPP would update the membership for this program.
  * @public
  * @example
- * updateGroup("GRP_B2BRHJN2", { name: "Group 1" })
+ * enroll("Individual/urn:openspp:vocab:id-type#national_id|PH-123", "urn:openspp:program|universal-child-grant");
  * @function
- * @param {string} group_id - group registrant id
- * @param {object} data - registrant update data
+ * @param {string} beneficiary - Typed reference: `Individual/system\|value` or `Group/system\|value`
+ * @param {string} programId - Program identifier as `system\|value`
+ * @param {object} [options] - `enrollmentDate` (YYYY-MM-DD) for new memberships
  * @returns {Operation}
+ * @state {OpenSPPState}
  */
-export function updateGroup(group_id, data) {
+export function enroll(beneficiary, programId, options = {}) {
   return async state => {
-    try {
-      const res = await sppConnector.searchRead(
-        'res.partner',
-        [
-          ['spp_id', '=', group_id],
-          ['is_registrant', '=', true],
-          ['is_group', '=', true],
-        ],
-        ['id'],
-        { limit: 1, order: 'id desc' }
-      );
-      if (res.length === 0) {
-        throw new Error(
-          `Group with registrant id: ${group_id} does not exists!`
-        );
+    const [resolvedBeneficiary, resolvedProgramId, resolvedOptions] =
+      expandReferences(state, beneficiary, programId, options);
+
+    const found = await util.findMembership(
+      state.configuration,
+      resolvedBeneficiary,
+      resolvedProgramId
+    );
+
+    if (!found.membership) {
+      const body = {
+        program: { reference: found.programReference },
+        beneficiary: { reference: resolvedBeneficiary },
+        status: 'enrolled',
+      };
+      if (resolvedOptions.enrollmentDate) {
+        body.enrollmentDate = resolvedOptions.enrollmentDate;
       }
-      const groupId = res[0].id;
-      await sppConnector.update('res.partner', groupId, data);
-      console.log(`ℹ Group ${group_id} updated!`);
-    } catch (err) {
-      console.log(`✗ Error: ${err}`);
-    } finally {
-      return state;
+      const response = await util.request(
+        state.configuration,
+        'POST',
+        '/ProgramMembership',
+        { body }
+      );
+      return util.prepareNextState(state, response);
     }
+
+    if (found.membership.status === 'enrolled') {
+      return util.prepareNextState(state, {
+        ...found.response,
+        body: found.membership,
+      });
+    }
+
+    const response = await util.putMembership(
+      state.configuration,
+      resolvedBeneficiary,
+      found,
+      { status: 'enrolled' }
+    );
+    return util.prepareNextState(state, response);
   };
 }
 
 /**
- * update individual for OpenSPP
+ * Unenroll a registrant from a program by setting their membership to
+ * `exited`. If the membership isn't enrolled, returns it unchanged. Throws if
+ * the registrant has no membership in this program, or also has memberships in
+ * other programs, because the adaptor can't be sure OpenSPP would update the
+ * membership for this program.
  * @public
  * @example
- * updateIndividual("IND_8DUQL4M4", { name: "Individual 1" })
+ * unenroll("Individual/urn:openspp:vocab:id-type#national_id|PH-123", "urn:openspp:program|universal-child-grant");
+ * @example <caption>With exit details</caption>
+ * unenroll("Group/urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:program|cash-transfer", { exitDate: "2026-09-30" });
  * @function
- * @param {string} individual_id - individual registrant id
- * @param {object} data - registrant update data
+ * @param {string} beneficiary - Typed reference: `Individual/system\|value` or `Group/system\|value`
+ * @param {string} programId - Program identifier as `system\|value`
+ * @param {object} [options] - `exitDate` (YYYY-MM-DD), `exitReason` (CodeableConcept; OpenSPP doesn't save it)
  * @returns {Operation}
+ * @state {OpenSPPState}
  */
-export function updateIndividual(individual_id, data) {
+export function unenroll(beneficiary, programId, options = {}) {
   return async state => {
-    try {
-      if (typeof data !== 'object' || Array.isArray(data) || data === null) {
-        throw new Error(`${data} is not an update object!`);
-      }
-      const res = await sppConnector.searchRead(
-        'res.partner',
-        [
-          ['spp_id', '=', individual_id],
-          ['is_registrant', '=', true],
-          ['is_group', '=', false],
-        ],
-        ['id'],
-        { limit: 1, order: 'id desc' }
+    const [resolvedBeneficiary, resolvedProgramId, resolvedOptions] =
+      expandReferences(state, beneficiary, programId, options);
+
+    const found = await util.findMembership(
+      state.configuration,
+      resolvedBeneficiary,
+      resolvedProgramId
+    );
+
+    if (!found.membership) {
+      throw new Error(
+        `${resolvedBeneficiary} is not a member of ${found.programReference}`
       );
-      if (res.length === 0) {
-        throw new Error(
-          `Individual with registrant id: ${individual_id} does not exists!`
-        );
-      }
-      const individualId = res[0].id;
-      await sppConnector.update('res.partner', individualId, data);
-      console.log(`ℹ Individual ${individual_id} updated!`);
-    } catch (err) {
-      console.log(`✗ Error: ${err}`);
-    } finally {
-      return state;
     }
+
+    if (found.membership.status !== 'enrolled') {
+      return util.prepareNextState(state, {
+        ...found.response,
+        body: found.membership,
+      });
+    }
+
+    const response = await util.putMembership(
+      state.configuration,
+      resolvedBeneficiary,
+      found,
+      {
+        status: 'exited',
+        exitDate: resolvedOptions.exitDate,
+        exitReason: resolvedOptions.exitReason,
+      }
+    );
+    return util.prepareNextState(state, response);
   };
 }
 
 /**
- * add individual to group in OpenSPP
- * @public
- * @example <caption>create a new head for group</caption>
- * addToGroup("GRP_B2BRHJN2", "IND_8DUQL4M4", "Head")
- * @example <caption>create a new ordinary member for group</caption>
- * addToGroup("GRP_B2BRHJN2", "IND_8DUQL4M4")
- * @example <caption>create a new member with new role for group</caption>
- * addToGroup("GRP_B2BRHJN2", "IND_8DUQL4M4", "new-role-name")
- * @function
- * @param {string} group_id - group registrant id
- * @param {string} individual_id - individual registrant id
- * @param {string} role - individual role in group
- * @returns {Operation}
- */
-export function addToGroup(group_id, individual_id, role = '') {
-  return async state => {
-    try {
-      let roleId = [];
-      if (role.length > 0) {
-        roleId = await sppConnector.search('g2p.group.membership.kind', [
-          ['name', '=', role],
-        ]);
-        if (roleId.length === 0) {
-          roleId = [
-            await sppConnector.create('g2p.group.membership.kind', {
-              name: role,
-            }),
-          ];
-        }
-      }
-      const res = await sppConnector.searchRead(
-        'g2p.group.membership',
-        [
-          ['group.spp_id', '=', group_id],
-          ['individual.spp_id', '=', individual_id],
-          ['is_ended', '=', false],
-        ],
-        ['id', 'kind'],
-        { limit: 1 }
-      );
-      if (res.length === 0) {
-        const individual = await sppConnector.searchRead(
-          'res.partner',
-          [
-            ['spp_id', '=', individual_id],
-            ['is_registrant', '=', true],
-            ['is_group', '=', false],
-          ],
-          ['id'],
-          { limit: 1 }
-        );
-        const group = await sppConnector.searchRead(
-          'res.partner',
-          [
-            ['spp_id', '=', group_id],
-            ['is_registrant', '=', true],
-            ['is_group', '=', true],
-          ],
-          ['id'],
-          { limit: 1 }
-        );
-        if (individual.length === 0 || group.length === 0) {
-          throw new Error(`Individual or Group does not exist!`);
-        }
-        await sppConnector.create('g2p.group.membership', {
-          individual: individual[0].id,
-          group: group[0].id,
-          kind: [[6, 0, roleId]],
-        });
-      } else {
-        const groupMembershipIds = res.map(i => i.id);
-        await sppConnector.update('g2p.group.membership', groupMembershipIds, {
-          kind: [[6, 0, roleId]],
-        });
-      }
-      if (role.length > 0) {
-        console.log(
-          `ℹ Individual ${individual_id} added to group ${group_id} with role ${role}!`
-        );
-      } else {
-        console.log(
-          `ℹ Individual ${individual_id} added to group ${group_id}!`
-        );
-      }
-    } catch (err) {
-      console.log(`✗ Error: ${err}`);
-    } finally {
-      return state;
-    }
-  };
-}
-
-/**
- * remove individual from group in OpenSPP
+ * Get a service point by its identifier (the service point name).
  * @public
  * @example
- * removeFromGroup("GRP_B2BRHJN2", "IND_8DUQL4M4")
+ * getServicePoint("Agoncillo Payment Center");
  * @function
- * @param {string} group_id - group registrant id
- * @param {string} individual_id - individual registrant id
+ * @param {string} name - Service point identifier (its name)
  * @returns {Operation}
+ * @state {OpenSPPState}
  */
-export function removeFromGroup(group_id, individual_id) {
+export function getServicePoint(name) {
   return async state => {
-    try {
-      const res = await sppConnector.searchRead(
-        'g2p.group.membership',
-        [
-          ['group.spp_id', '=', group_id],
-          ['individual.spp_id', '=', individual_id],
-          ['is_ended', '=', false],
-        ],
-        ['id']
-      );
-      if (res.length > 0) {
-        const groupMembershipIds = res.map(i => i.id);
-        const now = new Date();
-        const sppDateTimeNowString = dateFns.format(now, 'y-M-d HH:mm:ss');
-        await sppConnector.update('g2p.group.membership', groupMembershipIds, {
-          ended_date: sppDateTimeNowString,
-        });
-      }
-      console.log(
-        `ℹ Individual ${individual_id} membership to group ${group_id} is ended!`
-      );
-    } catch (err) {
-      console.log(`✗ Error: ${err}`);
-    } finally {
-      return state;
+    const [resolvedName] = expandReferences(state, name);
+    if (typeof resolvedName !== 'string' || !resolvedName) {
+      throw new Error(`Invalid service point name "${resolvedName}"`);
     }
+    const response = await util.request(
+      state.configuration,
+      'GET',
+      `/ServicePoint/${encodeURIComponent(resolvedName)}`
+    );
+    return util.prepareNextState(state, response);
   };
 }
 
 /**
- * searching for service point in OpenSPP
- * @public
- * @example <caption>search without offset</caption>
- * searchServicePoint([["name", "ilike", "agent 1"]])
- * @example <caption>search with offset</caption>
- * searchServicePoint([["name", "ilike", "agent 1"]], { offset: 100 })
- * @function
- * @param {Array} domain - searching domain
- * @param {object} [options={}] - Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records
- * @param {function} callback - An optional callback function
- * @returns {Operation}
- */
-export function searchServicePoint(domain, options = {}, callback = s => s) {
-  return async state => {
-    try {
-      domain = resolveDomain(domain);
-      let servicePoints = await sppConnector.searchRead(
-        'spp.service.point',
-        domain,
-        [
-          'name',
-          'area_id',
-          'service_type_ids',
-          'program_id',
-          'phone_sanitized',
-          'is_contract_active',
-          'is_disabled',
-        ],
-        resolveOptions(options)
-      );
-      for (let servicePoint of servicePoints) {
-        servicePoint.program_ids = servicePoint.program_id;
-        delete servicePoint.program_id;
-      }
-      if (servicePoints.length === 0) {
-        console.log(
-          `⚠ Warning: Service point with domain=${domain} not found!`
-        );
-        return state;
-      }
-      console.log(`ℹ Service point with domain=${domain} found!`);
-      const nextState = composeNextState(state, servicePoints);
-      return callback(nextState);
-    } catch (err) {
-      console.log(`✗ Error: ${err}`);
-      return state;
-    }
-  };
-}
-
-/**
- * get area by id in OpenSPP
+ * Search service points.
  * @public
  * @example
- * getArea("LOC_7M92NLDH")
+ * searchServicePoint({ country: "PH", contractActive: true });
  * @function
- * @param {string} spp_id - spp_id of area
- * @param {function} callback - An optional callback function
+ * @param {object} [query] - OpenSPP search parameters, eg `{ country: "PH" }`. See the [OpenSPP service point docs](https://docs.openspp.org/developer_guide/api_v2/products_service_points)
+ * @param {object} [options] - `count`, `offset`
  * @returns {Operation}
+ * @state {OpenSPPState}
  */
-export function getArea(spp_id, callback = s => s) {
+export function searchServicePoint(query = {}, options = {}) {
   return async state => {
-    try {
-      const area = await sppConnector.searchRead(
-        'spp.area',
-        [['spp_id', '=', spp_id]],
-        ['parent_id', 'name', 'code', 'altnames', 'area_level', 'kind']
-      );
-      if (area.length === 0) {
-        console.log(`⚠ Warning: Area ${spp_id} not found!`);
-        return state;
-      }
-      console.log(`ℹ Area ${spp_id} found!`);
-      const nextState = composeNextState(state, area);
-      return callback(nextState);
-    } catch (err) {
-      console.log(`✗ Error: ${err}`);
-      return state;
-    }
-  };
-}
-
-/**
- * searching for service point in OpenSPP
- * @public
- * @example <caption>search without offset</caption>
- * searchArea([["code", "=", "10732"]])
- * @example <caption>search with offset</caption>
- * searchArea([["kind", "=", 1]], { offset: 10 }})
- * @function
- * @param {Array} domain - searching domain
- * @param {object} [options={}] - Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records
- * @param {function} callback - An optional callback function
- * @returns {Operation}
- */
-export function searchArea(domain, options = {}, callback = s => s) {
-  return async state => {
-    try {
-      domain = resolveDomain(domain);
-      const areas = await sppConnector.searchRead(
-        'spp.area',
-        domain,
-        ['parent_id', 'name', 'code', 'altnames', 'area_level', 'kind'],
-        resolveOptions(options)
-      );
-      if (areas.length === 0) {
-        console.log(`⚠ Warning: Area with domain=${domain} not found!`);
-        return state;
-      }
-      console.log(`ℹ Area with domain=${domain} found!`);
-      const nextState = composeNextState(state, areas);
-      return callback(nextState);
-    } catch (err) {
-      console.log(`✗ Error: ${err}`);
-      return state;
-    }
+    const [resolvedQuery, resolvedOptions] = expandReferences(
+      state,
+      query,
+      options
+    );
+    util.warnUnsupportedOptions('searchServicePoint', resolvedOptions, {
+      sort: 'OpenSPP cannot sort service points',
+      lastId: 'OpenSPP pages service points with offset, not lastId',
+      elements: 'OpenSPP always returns every service point field',
+      extensions: 'OpenSPP has no extensions for service points',
+    });
+    const response = await util.searchResource(
+      state.configuration,
+      'ServicePoint',
+      resolvedQuery,
+      resolvedOptions
+    );
+    return util.prepareSearchState(state, response);
   };
 }
 
