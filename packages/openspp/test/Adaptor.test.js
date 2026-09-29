@@ -652,54 +652,22 @@ describe('addToGroup', () => {
     expect(state.data).to.eql(groupMember('head'));
   });
 
-  it('updates the role when the individual is already a member', async () => {
+  it('throws OpenSPP\'s 409 when the individual is already a member', async () => {
     testServer
       .intercept({ path: `${API}/Group/${GRP_PATH}/$add-member`, method: 'POST' })
       .reply(409, { detail: 'Individual is already a member of this group' });
-    testServer
-      .intercept({
-        path: `${API}/Group/${GRP_PATH}/member/${IND_PATH}`,
-        method: 'PATCH',
-        body: jsonBody({
-          role: {
-            coding: [
-              { system: 'urn:openspp:vocab:group-membership-type', code: 'head' },
-            ],
-          },
-        }),
-      })
-      .reply(200, groupMember('head'));
-
-    const state = await run(addToGroup(GRP_ID, IND_ID, 'head'));
-
-    expect(state.data).to.eql(groupMember('head'));
-  });
-
-  it('keeps existing roles when an existing member is added without a role', async () => {
-    testServer
-      .intercept({ path: `${API}/Group/${GRP_PATH}/$add-member`, method: 'POST' })
-      .reply(409, { detail: 'Individual is already a member of this group' });
-    testServer
-      .intercept({
-        path: `${API}/Group/${GRP_PATH}/member/${IND_PATH}`,
-        method: 'PATCH',
-        body: jsonBody({}),
-      })
-      .reply(200, groupMember('child'));
-
-    const state = await run(addToGroup(GRP_ID, IND_ID));
-
-    expect(state.data.role.coding[0].code).to.equal('child');
-  });
-
-  it('throws a 409 that is not "already a member" instead of patching (eg an ambiguous identifier)', async () => {
-    testServer
-      .intercept({ path: `${API}/Group/${GRP_PATH}/$add-member`, method: 'POST' })
-      .reply(409, { detail: 'Identifier matches more than one registrant' });
 
     await expectRejection(run(addToGroup(GRP_ID, IND_ID, 'head')), error => {
+      expect(error.message).to.equal(
+        `OpenSPP 409 POST /Group/${GRP_ID}/$add-member: Individual is already a member of this group`
+      );
       expect(error.statusCode).to.equal(409);
-      expect(error.message).to.match(/Identifier matches more than one registrant/);
+    });
+  });
+
+  it('throws on an individual id that is not system|value', async () => {
+    await expectRejection(run(addToGroup(GRP_ID, 'IND_X', 'head')), error => {
+      expect(error.message).to.match(/^Invalid identifier "IND_X"\. Expected "system\|value"/);
     });
   });
 

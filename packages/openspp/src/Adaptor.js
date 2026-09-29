@@ -410,20 +410,10 @@ const toRole = role =>
     : role;
 
 /**
- * Add an individual to a group. If the individual is already a member, their
- * roles are replaced by `role` when it is given, and left unchanged otherwise
- * (`startDate` only applies to new members). OpenSPP2 up to 2026.09 ignores a
- * role code it doesn't know: a new member is added without a role, and an
- * existing member keeps their current roles. Open PR OpenSPP2 #555 rejects an
- * unknown role code with 422. OpenSPP enforces one `head` per group only in
- * its own forms, so a second `head` is accepted through the API.
- * A member removed with `removeFromGroup` can't be added back (OpenSPP2
- * #570): it fails with 422, "Duplication of Member is not allowed" with open
- * PR OpenSPP2 #555 and only "Failed to add member" on OpenSPP2 up to 2026.09.
- * On OpenSPP2 up to 2026.09, until OpenSPP's scheduled membership repair runs
- * after a `removeFromGroup` without `endedDate`, it doesn't fail: the removed
- * membership, with its `endedDate`, is returned and the individual isn't added
- * back.
+ * Add an individual to a group. Throws a 409 error if the individual is
+ * already a member. To change an existing member's role, use `request`, eg
+ * `request("PATCH", "/Group/<group>/member/<individual>", { role })` with both
+ * identifiers URL-encoded.
  * @public
  * @example <caption>Add as head of household</caption>
  * addToGroup("urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:vocab:id-type#national_id|PH-123", "head");
@@ -442,10 +432,7 @@ export function addToGroup(groupId, individualId, role, options = {}) {
     const [resolvedGroupId, resolvedIndividualId, resolvedRole, resolvedOptions] =
       expandReferences(state, groupId, individualId, role, options);
 
-    const groupPath = `/Group/${util.encodeIdentifier(resolvedGroupId)}`;
-    const memberPath = `${groupPath}/member/${util.encodeIdentifier(
-      resolvedIndividualId
-    )}`;
+    util.encodeIdentifier(resolvedIndividualId);
 
     const body = { entity: { reference: `Individual/${resolvedIndividualId}` } };
     if (resolvedRole) {
@@ -455,31 +442,12 @@ export function addToGroup(groupId, individualId, role, options = {}) {
       body.startDate = resolvedOptions.startDate;
     }
 
-    let response;
-    try {
-      response = await util.request(
-        state.configuration,
-        'POST',
-        `${groupPath}/$add-member`,
-        { body }
-      );
-    } catch (error) {
-      // With open PR OpenSPP2 #555, OpenSPP also returns 409 for other
-      // conflicts, eg an identifier that matches more than one registrant
-      const isAlreadyMember =
-        error.statusCode === 409 &&
-        /already a member/i.test(error.body?.detail ?? '');
-      if (!isAlreadyMember) {
-        throw error;
-      }
-      // Already a member: set the role if one was given. An empty patch
-      // changes nothing and returns the current membership.
-      const patch = resolvedRole ? { role: toRole(resolvedRole) } : {};
-      response = await util.request(state.configuration, 'PATCH', memberPath, {
-        body: patch,
-      });
-    }
-
+    const response = await util.request(
+      state.configuration,
+      'POST',
+      `/Group/${util.encodeIdentifier(resolvedGroupId)}/$add-member`,
+      { body }
+    );
     return util.prepareNextState(state, response);
   };
 }
