@@ -111789,7 +111789,7 @@
     "source": "@openfn/language-common"
   }
 ],
-{"name":"openspp","adaptor":"@openfn/language-openspp","version":"3.1.3","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#addtogroup\\\">addToGroup(group_id, individual_id, role)</a></dt>\\n<dt>\\n    <a href=\\\"#creategroup\\\">createGroup(data, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#createindividual\\\">createIndividual(data, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#enroll\\\">enroll(spp_id, program_id)</a></dt>\\n<dt>\\n    <a href=\\\"#getarea\\\">getArea(spp_id, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getenrolledprograms\\\">getEnrolledPrograms(spp_id, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getgroup\\\">getGroup(spp_id, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getgroupmembers\\\">getGroupMembers(spp_id, [options], callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getindividual\\\">getIndividual(spp_id, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getprogram\\\">getProgram(program_id, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getprograms\\\">getPrograms([options], callback)</a></dt>\\n<dt>\\n    <a href=\\\"#getservicepoint\\\">getServicePoint(spp_id, callback)</a></dt>\\n<dt>\\n    <a href=\\\"#removefromgroup\\\">removeFromGroup(group_id, individual_id)</a></dt>\\n<dt>\\n    <a href=\\\"#searcharea\\\">searchArea(domain, [options], callback)</a></dt>\\n<dt>\\n    <a href=\\\"#searchgroup\\\">searchGroup(domain, [options], callback)</a></dt>\\n<dt>\\n    <a href=\\\"#searchindividual\\\">searchIndividual(domain, [options], callback)</a></dt>\\n<dt>\\n    <a href=\\\"#searchservicepoint\\\">searchServicePoint(domain, [options], callback)</a></dt>\\n<dt>\\n    <a href=\\\"#unenroll\\\">unenroll(spp_id, program_id)</a></dt>\\n<dt>\\n    <a href=\\\"#updategroup\\\">updateGroup(group_id, data)</a></dt>\\n<dt>\\n    <a href=\\\"#updateindividual\\\">updateIndividual(individual_id, data)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#log\\\">log()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### addToGroup\\n\\n<p><code>addToGroup(group_id, individual_id, role) ⇒ Operation</code></p>\\n\\nadd individual to group in OpenSPP\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| group_id | <code>string</code> | group registrant id |\\n| individual_id | <code>string</code> | individual registrant id |\\n| role | <code>string</code> | individual role in group |\\n\\n\\n**Example:** create a new head for group\\n```js\\naddToGroup(\\\"GRP_B2BRHJN2\\\", \\\"IND_8DUQL4M4\\\", \\\"Head\\\")\\n```\\n**Example:** create a new ordinary member for group\\n```js\\naddToGroup(\\\"GRP_B2BRHJN2\\\", \\\"IND_8DUQL4M4\\\")\\n```\\n**Example:** create a new member with new role for group\\n```js\\naddToGroup(\\\"GRP_B2BRHJN2\\\", \\\"IND_8DUQL4M4\\\", \\\"new-role-name\\\")\\n```\\n\\n* * *\\n\\n### createGroup\\n\\n<p><code>createGroup(data, callback) ⇒ Operation</code></p>\\n\\ncreate new group for OpenSPP\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | <code>object</code> | registrant create data |\\n| callback | <code>function</code> | An optional callback function |\\n\\n\\n**Example**\\n```js\\ncreateGroup({ name: \\\"Group 1\\\" })\\n```\\n\\n* * *\\n\\n### createIndividual\\n\\n<p><code>createIndividual(data, callback) ⇒ Operation</code></p>\\n\\ncreate new individual for OpenSPP\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | <code>object</code> | registrant create data |\\n| callback | <code>function</code> | An optional callback function |\\n\\n\\n**Example**\\n```js\\ncreateIndividual({ name: \\\"Individual 1\\\" })\\n```\\n\\n* * *\\n\\n### enroll\\n\\n<p><code>enroll(spp_id, program_id)</code></p>\\n\\nenroll registrant to program in OpenSPP\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| spp_id | <code>string</code> | spp_id of group / individual wanted to enroll |\\n| program_id | <code>string</code> | program_id of program |\\n\\n\\n**Example**\\n```js\\nenroll(\\\"IND_Q4VGGZPF\\\", \\\"PROG_2023_00000001\\\")\\n```\\n\\n* * *\\n\\n### getArea\\n\\n<p><code>getArea(spp_id, callback) ⇒ Operation</code></p>\\n\\nget area by id in OpenSPP\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| spp_id | <code>string</code> | spp_id of area |\\n| callback | <code>function</code> | An optional callback function |\\n\\n\\n**Example**\\n```js\\ngetArea(\\\"LOC_7M92NLDH\\\")\\n```\\n\\n* * *\\n\\n### getEnrolledPrograms\\n\\n<p><code>getEnrolledPrograms(spp_id, callback) ⇒ Operation</code></p>\\n\\nget programs list for specific registrant from OpenSPP\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| spp_id | <code>string</code> | spp_id of group / individual wanted to search |\\n| callback | <code>function</code> | An optional callback function |\\n\\n\\n**Example**\\n```js\\ngetEnrolledPrograms(\\\"IND_Q4VGGZPF\\\")\\n```\\n\\n* * *\\n\\n### getGroup\\n\\n<p><code>getGroup(spp_id, callback) ⇒ Operation</code></p>\\n\\nget group information from OpenSPP\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| spp_id | <code>string</code> | The spp_id of the group |\\n| callback | <code>function</code> | An optional callback function |\\n\\n\\n**Example**\\n```js\\ngetGroup(\\\"GRP_Q4VGGZPF\\\")\\n```\\n\\n* * *\\n\\n### getGroupMembers\\n\\n<p><code>getGroupMembers(spp_id, [options], callback) ⇒ Operation</code></p>\\n\\nget group members information from OpenSPP\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| spp_id | <code>string</code> |  | The name of the group |\\n| [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records |\\n| callback | <code>function</code> |  | An optional callback function |\\n\\n\\n**Example**\\n```js\\ngetGroupMembers(\\\"GRP_Q4VGGZPF\\\")\\n```\\n\\n* * *\\n\\n### getIndividual\\n\\n<p><code>getIndividual(spp_id, callback) ⇒ Operation</code></p>\\n\\nget individual information from OpenSPP\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| spp_id | <code>string</code> | The spp_id of the individual |\\n| callback | <code>function</code> | An optional callback function |\\n\\n\\n**Example**\\n```js\\ngetIndividual(\\\"IND_Q4VGGZPF\\\")\\n```\\n\\n* * *\\n\\n### getProgram\\n\\n<p><code>getProgram(program_id, callback) ⇒ Operation</code></p>\\n\\nget program information from OpenSPP\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| program_id | <code>string</code> | searching domain |\\n| callback | <code>function</code> | An optional callback function |\\n\\n\\n**Example**\\n```js\\ngetProgram(\\\"PROG_2023_00000001\\\")\\n```\\n\\n* * *\\n\\n### getPrograms\\n\\n<p><code>getPrograms([options], callback) ⇒ Operation</code></p>\\n\\nget programs list from OpenSPP\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| [options] | <code>number</code> | <code>{}</code> | offset from start |\\n| callback | <code>function</code> |  | An optional callback function |\\n\\n\\n**Example**\\n```js\\ngetPrograms(100)\\n```\\n\\n* * *\\n\\n### getServicePoint\\n\\n<p><code>getServicePoint(spp_id, callback) ⇒ Operation</code></p>\\n\\nget service points information from OpenSPP\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| spp_id | <code>string</code> | The spp_id of the agent |\\n| callback | <code>function</code> | An optional callback function |\\n\\n\\n**Example**\\n```js\\ngetServicePoint(\\\"SVP_8P4KP4RT\\\")\\n```\\n\\n* * *\\n\\n### removeFromGroup\\n\\n<p><code>removeFromGroup(group_id, individual_id) ⇒ Operation</code></p>\\n\\nremove individual from group in OpenSPP\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| group_id | <code>string</code> | group registrant id |\\n| individual_id | <code>string</code> | individual registrant id |\\n\\n\\n**Example**\\n```js\\nremoveFromGroup(\\\"GRP_B2BRHJN2\\\", \\\"IND_8DUQL4M4\\\")\\n```\\n\\n* * *\\n\\n### searchArea\\n\\n<p><code>searchArea(domain, [options], callback) ⇒ Operation</code></p>\\n\\nsearching for service point in OpenSPP\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| domain | <code>Array</code> |  | searching domain |\\n| [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records |\\n| callback | <code>function</code> |  | An optional callback function |\\n\\n\\n**Example:** search without offset\\n```js\\nsearchArea([[\\\"code\\\", \\\"=\\\", \\\"10732\\\"]])\\n```\\n**Example:** search with offset\\n```js\\nsearchArea([[\\\"kind\\\", \\\"=\\\", 1]], { offset: 10 }})\\n```\\n\\n* * *\\n\\n### searchGroup\\n\\n<p><code>searchGroup(domain, [options], callback) ⇒ Operation</code></p>\\n\\nget groups from OpenSPP\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| domain | <code>Array</code> |  | searching domain |\\n| [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for ordering search, offset for skipping records |\\n| callback | <code>function</code> |  | An optional callback function |\\n\\n\\n**Example:** search group by domain\\n```js\\nsearchGroup([[\\\"spp_id\\\", \\\"=\\\", \\\"GRP_Q4VGGZPF\\\"]])\\n```\\n**Example:** search group by domain with offset\\n```js\\nsearchGroup([[\\\"spp_id\\\", \\\"ilike\\\", \\\"GRP\\\"]], { offset: 100 }})\\n```\\n**Example:** search group by complex domain for more accuracy\\n```js\\nsearchGroup([[\\\"address\\\", \\\"!=\\\", false], [\\\"phone\\\", \\\"!=\\\", false]])\\n```\\n\\n* * *\\n\\n### searchIndividual\\n\\n<p><code>searchIndividual(domain, [options], callback) ⇒ Operation</code></p>\\n\\nget individuals from OpenSPP\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| domain | <code>Array</code> |  | searching domain |\\n| [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records |\\n| callback | <code>function</code> |  | An optional callback function |\\n\\n\\n**Example:** search individual by domain\\n```js\\nsearchIndividual([[\\\"spp_id\\\", \\\"=\\\", \\\"IND_Q4VGGZPF\\\"]])\\n```\\n**Example:** search individual by domain with offset\\n```js\\nsearchIndividual([[\\\"spp_id\\\", \\\"ilike\\\", \\\"IND\\\"]], { offset: 100 })\\n```\\n**Example:** search individual by complex domain for more accuracy\\n```js\\nsearchIndividual([[\\\"address\\\", \\\"!=\\\", false], [\\\"birthdate\\\", \\\"=\\\", false]])\\n```\\n\\n* * *\\n\\n### searchServicePoint\\n\\n<p><code>searchServicePoint(domain, [options], callback) ⇒ Operation</code></p>\\n\\nsearching for service point in OpenSPP\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| domain | <code>Array</code> |  | searching domain |\\n| [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records |\\n| callback | <code>function</code> |  | An optional callback function |\\n\\n\\n**Example:** search without offset\\n```js\\nsearchServicePoint([[\\\"name\\\", \\\"ilike\\\", \\\"agent 1\\\"]])\\n```\\n**Example:** search with offset\\n```js\\nsearchServicePoint([[\\\"name\\\", \\\"ilike\\\", \\\"agent 1\\\"]], { offset: 100 })\\n```\\n\\n* * *\\n\\n### unenroll\\n\\n<p><code>unenroll(spp_id, program_id)</code></p>\\n\\nunenroll registrant from program in OpenSPP\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| spp_id | <code>string</code> | spp_id of group / individual wanted to unenroll |\\n| program_id | <code>string</code> | program_id of program |\\n\\n\\n**Example**\\n```js\\nunenroll(\\\"IND_Q4VGGZPF\\\", \\\"PROG_2023_00000001\\\")\\n```\\n\\n* * *\\n\\n### updateGroup\\n\\n<p><code>updateGroup(group_id, data) ⇒ Operation</code></p>\\n\\nupdate group for OpenSPP\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| group_id | <code>string</code> | group registrant id |\\n| data | <code>object</code> | registrant update data |\\n\\n\\n**Example**\\n```js\\nupdateGroup(\\\"GRP_B2BRHJN2\\\", { name: \\\"Group 1\\\" })\\n```\\n\\n* * *\\n\\n### updateIndividual\\n\\n<p><code>updateIndividual(individual_id, data) ⇒ Operation</code></p>\\n\\nupdate individual for OpenSPP\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| individual_id | <code>string</code> | individual registrant id |\\n| data | <code>object</code> | registrant update data |\\n\\n\\n**Example**\\n```js\\nupdateIndividual(\\\"IND_8DUQL4M4\\\", { name: \\\"Individual 1\\\" })\\n```\\n\\n* * *\\n\\n\\n\"","readme":"\"# language-openspp <img src='assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with OpenSPP\\nAPI.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/openspp-docs)\\nfor full technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/openspp-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `getServicePoint` function\\n\\n```js\\ngetServicePoint(\\\"newagentflour\\\");\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-openspp\\n\\n## 3.1.3 - 03 September 2026\\n\\n### Patch Changes\\n\\n- fd1b2be: Security update\\n- Updated dependencies \\\\[654026d]\\n- Updated dependencies \\\\[fd1b2be]\\n  - @openfn/language-common@3.3.5\\n\\n## 3.1.2 - 30 June 2026\\n\\n### Patch Changes\\n\\n- c5f8728: Update undici dependency\\n- Updated dependencies \\\\[c5f8728]\\n  - @openfn/language-common@3.3.4\\n\\n## 3.1.1 - 27 May 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[5276a86]\\n  - @openfn/language-common@3.3.3\\n\\n## 3.1.0 - 21 May 2026\\n\\n### Minor Changes\\n\\n- 71115af: export `combine` function from common\\n- bf26881: export `log` function from common\\n\\n## 3.0.11 - 20 May 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[9d1e1ae]\\n  - @openfn/language-common@3.3.2\\n\\n## 3.0.10 - 07 April 2026\\n\\n### Patch Changes\\n\\n- add9748: Update dependencies (undici)\\n- Updated dependencies \\\\[add9748]\\n- Updated dependencies \\\\[a9b7597]\\n  - @openfn/language-common@3.3.1\\n\\n## 3.0.9 - 30 March 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[295655f]\\n  - @openfn/language-common@3.3.0\\n\\n## 3.0.8 - 24 February 2026\\n\\n### Patch Changes\\n\\n- 856f85c: Security updates\\n- Updated dependencies \\\\[856f85c]\\n  - @openfn/language-common@3.2.3\\n\\n## 3.0.7 - 09 February 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[8ad6b98]\\n- Updated dependencies \\\\[8ad6b98]\\n  - @openfn/language-common@3.2.2\\n\\n## 3.0.6 - 28 November 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[cfc66df]\\n  - @openfn/language-common@3.2.1\\n\\n## 3.0.5 - 12 November 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[4d7a833]\\n  - @openfn/language-common@3.2.0\\n\\n## 3.0.4 - 04 November 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@3.1.2\\n\\n## 3.0.3 - 16 October 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[408a3a2]\\n  - @openfn/language-common@3.1.1\\n\\n## 3.0.2 - 18 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[e2bc436]\\n  - @openfn/language-common@3.1.0\\n\\n## 3.0.1 - 01 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[1d60531]\\n  - @openfn/language-common@3.0.3\\n\\n## 3.0.0 - 11 August 2025\\n\\n### Major Changes\\n\\n- a5cea4e: removed `http` export from `@openfn/language-common`\\n\\n  ### Migration Guide\\n\\n  The `http` export has been removed from `@openfn/language-common`. If you were\\n  using it, you should remove it from your code and create a new step that uses\\n  `http` adaptor. See example below.\\n\\n  **Before**\\n\\n  **Step 1: Fetch and post data using postgresql adaptor**\\n\\n  ```js\\n  sql('select * from foo');\\n  http.post('/example', { body: $.data }),\\n  ```\\n\\n  **Now**\\n\\n  **Step 1: Fetch data using postgresql adaptor**\\n\\n  ```js\\n  sql('select * from foo');\\n  ```\\n\\n  **Step 2: Post data using http adaptor**\\n\\n  ```js\\n  post('/example', { body: $.data });\\n  ```\\n\\n## 2.0.16 - 14 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[9b5a4f8]\\n  - @openfn/language-common@3.0.2\\n\\n## 2.0.15 - 10 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[cf9c09f]\\n  - @openfn/language-common@3.0.1\\n\\n## 2.0.14 - 10 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[ea85695]\\n- Updated dependencies \\\\[3fce58f]\\n- Updated dependencies \\\\[19f2d7e]\\n- Updated dependencies \\\\[f26bd2b]\\n- Updated dependencies \\\\[19f2d7e]\\n  - @openfn/language-common@3.0.0\\n\\n## 2.0.13 - 20 June 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[28c2e8b]\\n  - @openfn/language-common@2.5.0\\n\\n## 2.0.12 - 22 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[99e4b48]\\n- Updated dependencies \\\\[13bf08f]\\n  - @openfn/language-common@2.4.0\\n\\n## 2.0.11 - 16 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b089c56]\\n  - @openfn/language-common@2.3.3\\n\\n## 2.0.10 - 11 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[d7105c0]\\n  - @openfn/language-common@2.3.2\\n\\n## 2.0.9 - 14 March 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[23ccb01]\\n  - @openfn/language-common@2.3.1\\n\\n## 2.0.8 - 16 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b3d7f59]\\n- Updated dependencies \\\\[2d709ff]\\n- Updated dependencies \\\\[41e8cc3]\\n  - @openfn/language-common@2.3.0\\n\\n## 2.0.7 - 16 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[6dffdbd]\\n  - @openfn/language-common@2.2.1\\n\\n## 2.0.6 - 09 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[a47d8d5]\\n- Updated dependencies \\\\[9240428]\\n  - @openfn/language-common@2.2.0\\n\\n## 2.0.5 - 28 October 2024\\n\\n### Patch Changes\\n\\n- Updated docs for each()\\n- Updated dependencies\\n  - @openfn/language-common@2.1.1\\n\\n## 2.0.4 - 18 October 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[03a1a74]\\n  - @openfn/language-common@2.1.0\\n\\n## 2.0.3 - 15 October 2024\\n\\n### Patch Changes\\n\\n- Fixed security vulnerability in jsonpath-plus \\\\[33973a2]\\n  - @openfn/language-common@2.0.3\\n\\n## 2.0.2 - 24 September 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[77a690f]\\n  - @openfn/language-common@2.0.2\\n\\n## 2.0.1 - 16 August 2024\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies \\\\[8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 2.0.0 - 01 August 2024\\n\\n### Major Changes\\n\\n- Export new common http helpers (http namespace)\\n\\n## 1.3.1\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 1.3.0 - 13 June 2024\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 1.2.1 - 08 May 2024\\n\\n### Patch Changes\\n\\n- Security updates (lodash,undici)\\n- Updated dependencies\\n  - @openfn/language-common@1.13.2\\n\\n## 1.2.0 - 30 November 2023\\n\\n### Changes\\n\\n- 05defd2: add new functions, correcting docstring and add more examples\\n  - correcting docstring input parameters type\\n  - changing getServicePoint() from get by name into get by unique id\\n  - add more examples in docstring\\n  - getArea(): get existing area by id\\n  - searchArea(): search existing area by domain\\n  - searchServicePoint(): search existing service point by domain\\n\\n## 1.1.1 - 17 November 2023\\n\\n### Patch Changes\\n\\n- 48b4e97: update `spp date time now string` format\\n\\n## 1.1.0 - 17 November 2023\\n\\n- Create OpenSPP adaptor with these functions:\\n  - getGroup(): get existing group information\\n  - getIndividual(): get existing individual information\\n  - searchGroup(): search existing group by domain\\n  - searchIndividual(): search existing individual by domain\\n  - getGroupMembers(): get members from group\\n  - getServicePoint(): get service points by name\\n  - getPrograms(): get single program\\n  - getPrograms(): get program list\\n  - getEnrolledPrograms(): get list of enrolled program for each beneficiary\\n  - enroll(): enroll beneficiary to a program\\n  - unenroll(): unenroll beneficiary from program\\n  - createIndividual(): create new individual\\n  - updateIndividual(): update existing individual\\n  - createGroup(): create new group\\n  - updateGroup(): update existing group\\n  - addToGroup(): add individual to group with(out) role\\n  - removeFromGroup(): end membership of individual to group\\n\"","functions":["addToGroup","createGroup","createIndividual","enroll","getArea","getEnrolledPrograms","getGroup","getGroupMembers","getIndividual","getProgram","getPrograms","getServicePoint","removeFromGroup","searchArea","searchGroup","searchIndividual","searchServicePoint","unenroll","updateGroup","updateIndividual"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","anyOf":[{"type":"string"},{"type":"null"}],"description":"The base URL (http://www.example.com)","format":"uri","minLength":1,"default":"http://localhost","examples":["https://dev.newlogic-demo.com"]},"username":{"title":"Username","type":"string","description":"Username","default":"admin","examples":["test@openfn.org"]},"password":{"title":"Password","type":"string","description":"Password","default":"admin","writeOnly":true,"examples":["@some(!)Str0ngp4ss0w0rd"]},"database":{"title":"Database Name","type":"string","default":"devel","description":"Database Name","examples":["devel"]}},"type":"object","additionalProperties":true,"required":["password","username","database","baseUrl"]}},
+{"name":"openspp","adaptor":"@openfn/language-openspp","version":"4.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#addtogroup\\\">addToGroup(groupId, individualId, [role], [options])</a></dt>\\n<dt>\\n    <a href=\\\"#creategroup\\\">createGroup(data)</a></dt>\\n<dt>\\n    <a href=\\\"#createindividual\\\">createIndividual(data)</a></dt>\\n<dt>\\n    <a href=\\\"#enroll\\\">enroll(beneficiary, programId, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#getenrolledprograms\\\">getEnrolledPrograms(beneficiary)</a></dt>\\n<dt>\\n    <a href=\\\"#getgroup\\\">getGroup(id, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#getgroupmembers\\\">getGroupMembers(groupId, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#getindividual\\\">getIndividual(id, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#getprogram\\\">getProgram(id)</a></dt>\\n<dt>\\n    <a href=\\\"#getprograms\\\">getPrograms([options])</a></dt>\\n<dt>\\n    <a href=\\\"#getservicepoint\\\">getServicePoint(name)</a></dt>\\n<dt>\\n    <a href=\\\"#removefromgroup\\\">removeFromGroup(groupId, individualId, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, [body], [options])</a></dt>\\n<dt>\\n    <a href=\\\"#searchgroup\\\">searchGroup([query], [options])</a></dt>\\n<dt>\\n    <a href=\\\"#searchindividual\\\">searchIndividual([query], [options])</a></dt>\\n<dt>\\n    <a href=\\\"#searchservicepoint\\\">searchServicePoint([query], [options])</a></dt>\\n<dt>\\n    <a href=\\\"#unenroll\\\">unenroll(beneficiary, programId, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#updategroup\\\">updateGroup(id, data, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#updateindividual\\\">updateIndividual(id, data, [options])</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#log\\\">log()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n## Functions\\n### addToGroup\\n\\n<p><code>addToGroup(groupId, individualId, [role], [options]) ⇒ Operation</code></p>\\n\\nAdd an individual to a group. Throws a 409 error if the individual is\\nalready a member. To change an existing member's role, use `request` with\\nboth identifiers URL-encoded, eg\\n`request(\\\"PATCH\\\", \\\"/Group/<group>/member/<individual>\\\", { role: { coding: [{ system: \\\"urn:openspp:vocab:group-membership-type\\\", code: \\\"spouse\\\" }] } })`.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| groupId | <code>string</code> | Group identifier as `system\\\\|value` |\\n| individualId | <code>string</code> | Individual identifier as `system\\\\|value` |\\n| [role] | <code>string</code> \\\\| <code>object</code> | Role code in `urn:openspp:vocab:group-membership-type` (eg \\\"head\\\", \\\"spouse\\\", \\\"child\\\"), or a CodeableConcept |\\n| [options] | <code>object</code> | `startDate` (YYYY-MM-DD) |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body. For searches, the list of resources. |\\n| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Add as head of household\\n```js\\naddToGroup(\\\"urn:openspp:vocab:id-type#household_id|HH-1\\\", \\\"urn:openspp:vocab:id-type#national_id|PH-123\\\", \\\"head\\\");\\n```\\n**Example:** Add without a role\\n```js\\naddToGroup(\\\"urn:openspp:vocab:id-type#household_id|HH-1\\\", \\\"urn:openspp:vocab:id-type#national_id|PH-123\\\");\\n```\\n\\n* * *\\n\\n### createGroup\\n\\n<p><code>createGroup(data) ⇒ Operation</code></p>\\n\\nCreate a group.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | <code>object</code> | Group resource, with at least one `identifier`. See the [OpenSPP resource docs](https://docs.openspp.org/developer_guide/api_v2/resources) |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body. For searches, the list of resources. |\\n| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\ncreateGroup({\\n  identifier: [{ system: \\\"urn:openspp:vocab:id-type#household_id\\\", value: \\\"HH-1\\\" }],\\n  name: \\\"Santos Household\\\",\\n  groupType: \\\"household\\\",\\n});\\n```\\n\\n* * *\\n\\n### createIndividual\\n\\n<p><code>createIndividual(data) ⇒ Operation</code></p>\\n\\nCreate an individual.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| data | <code>object</code> | Individual resource, with at least one `identifier`. See the [OpenSPP resource docs](https://docs.openspp.org/developer_guide/api_v2/resources) |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body. For searches, the list of resources. |\\n| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\ncreateIndividual({\\n  identifier: [{ system: \\\"urn:openspp:vocab:id-type#national_id\\\", value: \\\"PH-123456789\\\" }],\\n  name: { family: \\\"Santos\\\", given: \\\"Maria\\\" },\\n  birthDate: \\\"1985-03-15\\\",\\n  gender: { coding: [{ system: \\\"urn:iso:std:iso:5218\\\", code: \\\"2\\\" }] },\\n});\\n```\\n\\n* * *\\n\\n### enroll\\n\\n<p><code>enroll(beneficiary, programId, [options]) ⇒ Operation</code></p>\\n\\nEnroll a registrant in a program. If they are already enrolled, returns their\\nmembership unchanged. If they have a membership in this program that isn't\\nenrolled (eg exited), it is set back to enrolled. That update throws if the\\nregistrant also has memberships in other programs, because the adaptor can't\\nbe sure OpenSPP would update the membership for this program.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| beneficiary | <code>string</code> | Typed reference: `Individual/system\\\\|value` or `Group/system\\\\|value` |\\n| programId | <code>string</code> | Program identifier as `system\\\\|value` |\\n| [options] | <code>object</code> | `enrollmentDate` (YYYY-MM-DD) for new memberships |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body. For searches, the list of resources. |\\n| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\nenroll(\\\"Individual/urn:openspp:vocab:id-type#national_id|PH-123\\\", \\\"urn:openspp:program|universal-child-grant\\\");\\n```\\n\\n* * *\\n\\n### getEnrolledPrograms\\n\\n<p><code>getEnrolledPrograms(beneficiary) ⇒ Operation</code></p>\\n\\nList the programs a registrant is enrolled in, as ProgramMembership\\nresources (each has a `program` reference).\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| beneficiary | <code>string</code> | Typed reference: `Individual/system\\\\|value` or `Group/system\\\\|value` |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body. For searches, the list of resources. |\\n| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\ngetEnrolledPrograms(\\\"Group/urn:openspp:vocab:id-type#household_id|HH-1\\\");\\n```\\n\\n* * *\\n\\n### getGroup\\n\\n<p><code>getGroup(id, [options]) ⇒ Operation</code></p>\\n\\nGet a group by identifier. To read the members, use `getGroupMembers`.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| id | <code>string</code> | Identifier as `system\\\\|value` |\\n| [options] | <code>object</code> | `elements` and `extensions` (see SearchOptions) |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body. For searches, the list of resources. |\\n| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\ngetGroup(\\\"urn:openspp:vocab:id-type#household_id|HH-1\\\");\\n```\\n\\n* * *\\n\\n### getGroupMembers\\n\\n<p><code>getGroupMembers(groupId, [options]) ⇒ Operation</code></p>\\n\\nList the individuals who are members of a group.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| groupId | <code>string</code> | Group identifier as `system\\\\|value` |\\n| [options] | <code>object</code> | `role` (membership role code) plus SearchOptions |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body. For searches, the list of resources. |\\n| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\ngetGroupMembers(\\\"urn:openspp:vocab:id-type#household_id|HH-1\\\");\\n```\\n**Example:** Only the head of household\\n```js\\ngetGroupMembers(\\\"urn:openspp:vocab:id-type#household_id|HH-1\\\", { role: \\\"head\\\" });\\n```\\n\\n* * *\\n\\n### getIndividual\\n\\n<p><code>getIndividual(id, [options]) ⇒ Operation</code></p>\\n\\nGet an individual by identifier.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| id | <code>string</code> | Identifier as `system\\\\|value` |\\n| [options] | <code>object</code> | `elements` and `extensions` (see SearchOptions) |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body. For searches, the list of resources. |\\n| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\ngetIndividual(\\\"urn:openspp:vocab:id-type#national_id|PH-123456789\\\");\\n```\\n**Example:** Only return some fields\\n```js\\ngetIndividual(\\\"urn:openspp:vocab:id-type#national_id|PH-123456789\\\", { elements: [\\\"identifier\\\", \\\"name\\\"] });\\n```\\n\\n* * *\\n\\n### getProgram\\n\\n<p><code>getProgram(id) ⇒ Operation</code></p>\\n\\nGet a program by identifier.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| id | <code>string</code> | Program identifier as `system\\\\|value` |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body. For searches, the list of resources. |\\n| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\ngetProgram(\\\"urn:openspp:program|universal-child-grant\\\");\\n```\\n\\n* * *\\n\\n### getPrograms\\n\\n<p><code>getPrograms([options]) ⇒ Operation</code></p>\\n\\nList programs.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| [options] | [<code>ProgramOptions</code>](#programoptions) | Filters and paging |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body. For searches, the list of resources. |\\n| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\ngetPrograms();\\n```\\n**Example:** Programs for groups, 10 per page\\n```js\\ngetPrograms({ targetType: \\\"group\\\", count: 10 });\\n```\\n\\n* * *\\n\\n### getServicePoint\\n\\n<p><code>getServicePoint(name) ⇒ Operation</code></p>\\n\\nGet a service point by its identifier (the service point name).\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| name | <code>string</code> | Service point identifier (its name) |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body. For searches, the list of resources. |\\n| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\ngetServicePoint(\\\"Agoncillo Payment Center\\\");\\n```\\n\\n* * *\\n\\n### removeFromGroup\\n\\n<p><code>removeFromGroup(groupId, individualId, [options]) ⇒ Operation</code></p>\\n\\nEnd an individual's membership of a group. OpenSPP sets the end date to\\nnow unless `endedDate` is given.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| groupId | <code>string</code> | Group identifier as `system\\\\|value` |\\n| individualId | <code>string</code> | Individual identifier as `system\\\\|value` |\\n| [options] | <code>object</code> | `reason` (OpenSPP logs it but doesn't save it), `endedDate` (YYYY-MM-DD) |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body. For searches, the list of resources. |\\n| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\nremoveFromGroup(\\\"urn:openspp:vocab:id-type#household_id|HH-1\\\", \\\"urn:openspp:vocab:id-type#national_id|PH-123\\\", { reason: \\\"Moved out\\\" });\\n```\\n\\n* * *\\n\\n### request\\n\\n<p><code>request(method, path, [body], [options]) ⇒ Operation</code></p>\\n\\nMake a request to any OpenSPP REST API v2 endpoint.\\nPaths are relative to `/api/v2/spp`.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method |\\n| path | <code>string</code> | Path relative to /api/v2/spp, eg `/Individual` |\\n| [body] | <code>object</code> | Request body, sent as JSON |\\n| [options] | <code>object</code> | `query` (query parameters), `ifMatch` (ETag for optimistic locking) and `headers` |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body. For searches, the list of resources. |\\n| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** List vocabularies\\n```js\\nrequest(\\\"GET\\\", \\\"/Vocabulary\\\", null, { query: { _count: 10 } });\\n```\\n**Example:** Read GIS layers\\n```js\\nrequest(\\\"GET\\\", \\\"/gis/ogc/collections\\\");\\n```\\n\\n* * *\\n\\n### searchGroup\\n\\n<p><code>searchGroup([query], [options]) ⇒ Operation</code></p>\\n\\nSearch groups.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| [query] | <code>object</code> | OpenSPP search parameters, eg `{ name: \\\"Santos\\\" }`. See the [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search) |\\n| [options] | [<code>SearchOptions</code>](#searchoptions) | Paging and field options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body. For searches, the list of resources. |\\n| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\nsearchGroup({ name: \\\"Santos\\\" }, { count: 50 });\\n```\\n\\n* * *\\n\\n### searchIndividual\\n\\n<p><code>searchIndividual([query], [options]) ⇒ Operation</code></p>\\n\\nSearch individuals. Records the API client may not see (eg without consent)\\nare left out.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| [query] | <code>object</code> | OpenSPP search parameters, eg `{ name: \\\"Santos\\\" }`. `identifier` and `group` must be `system\\\\|value`. See the [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search) |\\n| [options] | [<code>SearchOptions</code>](#searchoptions) | Paging and field options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body. For searches, the list of resources. |\\n| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Search by name\\n```js\\nsearchIndividual({ name: \\\"Santos\\\" });\\n```\\n**Example:** Born on or after 2010, 50 per page, second page\\n```js\\nsearchIndividual({ birthdate: \\\"ge2010-01-01\\\" }, { count: 50, offset: 50 });\\n```\\n**Example:** Heads of household in a group\\n```js\\nsearchIndividual({ group: \\\"urn:openspp:vocab:id-type#household_id|HH-1\\\", \\\"membership-role\\\": \\\"head\\\" });\\n```\\n\\n* * *\\n\\n### searchServicePoint\\n\\n<p><code>searchServicePoint([query], [options]) ⇒ Operation</code></p>\\n\\nSearch service points.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| [query] | <code>object</code> | OpenSPP search parameters, eg `{ country: \\\"PH\\\" }`. See the [OpenSPP service point docs](https://docs.openspp.org/developer_guide/api_v2/products_service_points) |\\n| [options] | <code>object</code> | `count`, `offset` |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body. For searches, the list of resources. |\\n| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\nsearchServicePoint({ country: \\\"PH\\\", contractActive: true });\\n```\\n\\n* * *\\n\\n### unenroll\\n\\n<p><code>unenroll(beneficiary, programId, [options]) ⇒ Operation</code></p>\\n\\nUnenroll a registrant from a program by setting their membership to\\n`exited`. If the membership isn't enrolled, returns it unchanged. Throws if\\nthe registrant has no membership in this program, or also has memberships in\\nother programs, because the adaptor can't be sure OpenSPP would update the\\nmembership for this program.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| beneficiary | <code>string</code> | Typed reference: `Individual/system\\\\|value` or `Group/system\\\\|value` |\\n| programId | <code>string</code> | Program identifier as `system\\\\|value` |\\n| [options] | <code>object</code> | `exitDate` (YYYY-MM-DD), `exitReason` (CodeableConcept; OpenSPP doesn't save it) |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body. For searches, the list of resources. |\\n| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\nunenroll(\\\"Individual/urn:openspp:vocab:id-type#national_id|PH-123\\\", \\\"urn:openspp:program|universal-child-grant\\\");\\n```\\n**Example:** With exit details\\n```js\\nunenroll(\\\"Group/urn:openspp:vocab:id-type#household_id|HH-1\\\", \\\"urn:openspp:program|cash-transfer\\\", { exitDate: \\\"2026-09-30\\\" });\\n```\\n\\n* * *\\n\\n### updateGroup\\n\\n<p><code>updateGroup(id, data, [options]) ⇒ Operation</code></p>\\n\\nUpdate some fields of a group. Fields you leave out are unchanged, and\\n`null` clears a field.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| id | <code>string</code> | Identifier as `system\\\\|value` |\\n| data | <code>object</code> | Fields to change |\\n| [options] | <code>object</code> | `ifMatch`: ETag from a previous read, to fail if the record changed |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body. For searches, the list of resources. |\\n| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\nupdateGroup(\\\"urn:openspp:vocab:id-type#household_id|HH-1\\\", { name: \\\"Santos-Reyes Household\\\" });\\n```\\n\\n* * *\\n\\n### updateIndividual\\n\\n<p><code>updateIndividual(id, data, [options]) ⇒ Operation</code></p>\\n\\nUpdate some fields of an individual. Fields you leave out are unchanged, and\\n`null` clears a field.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| id | <code>string</code> | Identifier as `system\\\\|value` |\\n| data | <code>object</code> | Fields to change |\\n| [options] | <code>object</code> | `ifMatch`: ETag from a previous read, to fail if the record changed |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body. For searches, the list of resources. |\\n| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\nupdateIndividual(\\\"urn:openspp:vocab:id-type#national_id|PH-123456789\\\", { birthDate: \\\"1985-03-16\\\" });\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### OpenSPPState\\n\\nState object\\n\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body. For searches, the list of resources. |\\n| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |\\n| references | an array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n### ProgramOptions\\n\\nOptions for getPrograms\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| [name] | <code>string</code> | Filter by name |\\n| [status] | <code>&#x27;active&#x27;</code> \\\\| <code>&#x27;ended&#x27;</code> | Filter by status |\\n| [targetType] | <code>&#x27;individual&#x27;</code> \\\\| <code>&#x27;group&#x27;</code> | Filter by target type |\\n| [count] | <code>number</code> | Page size, 1-100 (OpenSPP default 20) |\\n| [lastId] | <code>number</code> \\\\| <code>string</code> | Cursor for the next page: the `_lastId` value in `state.response.page.next` |\\n\\n\\n* * *\\n\\n### SearchOptions\\n\\nOptions for OpenSPP searches\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| count | <code>number</code> | Page size, 1-100 (OpenSPP default 20) |\\n| offset | <code>number</code> | Number of records to skip |\\n| sort | <code>string</code> | Individuals only: one of `name`, `birthDate` or `lastUpdated`, with a `-` prefix for descending |\\n| elements | <code>string</code> \\\\| <code>Array.&lt;string&gt;</code> | Only return these fields (individuals and groups) |\\n| extensions | <code>string</code> \\\\| <code>Array.&lt;string&gt;</code> | Include these extensions (individuals and groups) |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-openspp <img src='assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\n[OpenSPP2](https://github.com/OpenSPP/OpenSPP2) REST API v2.\\n\\nVersion 4 and later target OpenSPP2 (Odoo 19) through its REST API v2\\n(`/api/v2/spp`). For OpenSPP v1 servers (JSON-RPC), use version 3.x.\\n\\nOpenSPP2 REST API v2 reference:\\n\\n- [OpenSPP API V2 developer guide](https://docs.openspp.org/developer_guide/api_v2/overview)\\n- [`spp_api_v2` module](https://github.com/OpenSPP/OpenSPP2/tree/19.0/spp_api_v2)\\n- Interactive API docs on your server at `{baseUrl}/api/v2/spp/docs`\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/openspp-docs)\\nfor full technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/openspp-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n```json\\n{\\n  \\\"baseUrl\\\": \\\"https://openspp.example.org\\\",\\n  \\\"clientId\\\": \\\"client_AbC123dEf456\\\",\\n  \\\"clientSecret\\\": \\\"...\\\"\\n}\\n```\\n\\nCreate an API client in OpenSPP (API clients menu) with the scopes your jobs\\nneed (see below). The adaptor gets an OAuth token with the client credentials\\nonce per workflow step (the OpenFn runtime removes `configuration`, and so the\\ntoken, after each step).\\n\\n### OpenSPP2 modules and scopes\\n\\nIndividuals and groups are served by the `spp_api_v2` module. The other\\nfunctions need an extra OpenSPP2 module; without it they return 404. These\\nmodules are set to install automatically with `spp_api_v2` and the matching\\nOpenSPP module (eg `spp_api_v2_programs` with `spp_programs`), but check they\\nare installed: some setups need them installed by hand.\\n\\n| Function | Scopes | Module |\\n|---|---|---|\\n| `getIndividual` | `individual:read` | `spp_api_v2` |\\n| `searchIndividual` | `individual:read`, plus `group:read` when filtering by `group` | `spp_api_v2` |\\n| `createIndividual` | `individual:create` | `spp_api_v2` |\\n| `updateIndividual` | `individual:update` | `spp_api_v2` |\\n| `getGroup`, `searchGroup` | `group:read` | `spp_api_v2` |\\n| `createGroup` | `group:create` | `spp_api_v2` |\\n| `updateGroup`, `addToGroup`, `removeFromGroup` | `group:update` | `spp_api_v2` |\\n| `getGroupMembers` | `individual:read` and `group:read` | `spp_api_v2` |\\n| `getProgram` | `program:read` | `spp_api_v2_programs` |\\n| `getPrograms` | `program:read` or `program:search` | `spp_api_v2_programs` |\\n| `getEnrolledPrograms` | `program_membership:read` or `program_membership:search` | `spp_api_v2_programs` |\\n| `enroll` | `program_membership:read` (or `:search`), `program_membership:create` and `program_membership:update` | `spp_api_v2_programs` |\\n| `unenroll` | `program_membership:read` (or `:search`) and `program_membership:update` | `spp_api_v2_programs` |\\n| `getServicePoint`, `searchServicePoint` | `service_point:read` | `spp_api_v2_service_points` |\\n\\nAn `…:all` scope, eg `group:all`, covers every action on that resource.\\n`enroll` needs `program_membership:update` only to re-enroll an existing\\nmembership (eg an exited one). Other endpoints used through `request` have\\ntheir own modules, eg `spp_api_v2_vocabulary` for `/Vocabulary` and\\n`spp_api_v2_gis` for `/gis/…`. `spp_api_v2_gis` does not install\\nautomatically.\\n\\n### Identifiers\\n\\nOpenSPP2 identifies records by external identifiers, not database ids (the\\none exception is the `_lastId` cursor used to page programs). Identifiers are\\nwritten as `system|value`; service points are identified by their name instead:\\n\\n```js\\ngetIndividual('urn:openspp:vocab:id-type#national_id|PH-123456789');\\ngetProgram('urn:openspp:program|universal-child-grant');\\n```\\n\\nThe `system` of an individual or group identifier is an ID type from\\nOpenSPP's `urn:openspp:vocab:id-type` vocabulary. OpenSPP2's default ID types\\nare `national_id`, `passport`, `tax_id` and `birth_certificate`; others, like\\nthe `household_id` used in these examples, must be configured on the server.\\n\\nProgram membership functions take a typed reference to say whether the\\nbeneficiary is an individual or a group:\\n\\n```js\\nenroll(\\n  'Group/urn:openspp:vocab:id-type#household_id|HH-1',\\n  'urn:openspp:program|cash-transfer-program'\\n);\\n```\\n\\n### Searching\\n\\nSearch functions take OpenSPP's search parameters and paging options, and\\nwrite the list of records to `state.data`:\\n\\n```js\\nsearchIndividual({ name: 'Santos', birthdate: 'ge2010-01-01' }, { count: 50 });\\n```\\n\\n`state.response.page.next` is set when OpenSPP reports another page. OpenSPP\\nleaves out records the API client may not see (for example without consent).\\n\\n`searchIndividual`, `searchGroup`, `getGroupMembers` and `searchServicePoint`\\npage with `count` (1-100) and `offset`; `getPrograms` pages with `count` and\\n`lastId`. The adaptor logs a warning for options OpenSPP ignores, such as\\n`sort` on groups. See the\\n[OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search)\\nfor search parameters.\\n\\n### Errors\\n\\nOperations throw when OpenSPP returns an error, so a failed step fails the\\njob. The error message includes the status, method, path and OpenSPP's\\n`detail`, and the error has `statusCode`, `body` and `headers`:\\n\\n```js\\ngetIndividual('urn:openspp:vocab:id-type#national_id|PH-123').catch(\\n  (error, state) => {\\n    const notAvailable =\\n      error.statusCode === 404 ||\\n      (error.statusCode === 403 && error.body?.detail === 'Access denied');\\n    if (notAvailable) {\\n      return { ...state, data: null };\\n    }\\n    throw error;\\n  }\\n);\\n```\\n\\nFor API clients that require consent (the default), OpenSPP returns 403\\n`Access denied` both when an individual or group doesn't exist and when it has\\nno consent, so don't create a record just because this example returns\\n`null`. A 403 with `Missing required scope` means the API client lacks a\\nscope. See the\\n[OpenSPP error docs](https://docs.openspp.org/developer_guide/api_v2/errors)\\nand [consent docs](https://docs.openspp.org/developer_guide/api_v2/consent).\\n\\n`enroll` and `unenroll` throw rather than change an existing membership when\\nthe beneficiary is also in other programs, because the adaptor can't be sure\\nOpenSPP would update the membership for that program. Change those memberships\\nin OpenSPP instead.\\n\\n### Any other endpoint\\n\\nUse `request` for endpoints without a dedicated function:\\n\\n```js\\nrequest('GET', '/Vocabulary', null, { query: { _count: 10 } });\\n```\\n\\nFor known server issues, see the\\n[OpenSPP2 issue tracker](https://github.com/OpenSPP/OpenSPP2/issues).\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-openspp\\n\\n## 4.0.0 - 29 September 2026\\n\\n### Major Changes\\n\\n- 91103ea: Rebuild the adaptor on the OpenSPP2 REST API v2 (`/api/v2/spp`) with\\n  OAuth2 client credentials. Odoo JSON-RPC and the `odoo-await` dependency are\\n  removed.\\n\\n  ### Migration Guide\\n\\n  Version 4 only works with OpenSPP2 (Odoo 19). Keep using `3.x` for OpenSPP v1\\n  servers.\\n\\n  **Configuration**: replace `username`, `password` and `database` with\\n  `clientId` and `clientSecret` from an OpenSPP API client. `baseUrl` is\\n  unchanged (the server root, without `/api/v2/spp`).\\n\\n  **Identifiers**: v1 `spp_id` values (`IND_…`, `GRP_…`) and program ids\\n  (`PROG_…`) no longer exist. Use external identifiers as `system|value`, eg\\n  `urn:openspp:vocab:id-type#national_id|PH-123`. Program membership functions\\n  take a typed beneficiary, eg `Group/urn:…|HH-1`.\\n\\n  **Errors**: operations now throw when OpenSPP returns an error or a record\\n  isn't found. In v3 errors were logged and the job carried on.\\n\\n  **Callbacks**: operations no longer take a callback. Use `.then()` or `fn()`.\\n\\n  **Search queries**: search functions take an object of OpenSPP search\\n  parameters instead of an Odoo domain array, and throw if given an array.\\n\\n  **Paging options**: `limit` is now `count` and `order` is now `sort`\\n  (individuals only); `offset` is unchanged. Passing `limit` or `order` logs a\\n  warning and has no effect. This applies to `searchIndividual`, `searchGroup`,\\n  `searchServicePoint` and `getGroupMembers`. Other options OpenSPP ignores also\\n  log a warning, eg `sort` on `searchGroup`.\\n\\n  Before (v3):\\n\\n  ```js\\n  searchIndividual([['name', 'ilike', 'Santos']], {\\n    limit: 50,\\n    offset: 100,\\n    order: 'birthdate desc',\\n  });\\n  getGroupMembers('GRP_Q4VGGZPF', { limit: 10 });\\n  ```\\n\\n  After (v4):\\n\\n  ```js\\n  searchIndividual(\\n    { name: 'Santos' },\\n    { count: 50, offset: 100, sort: '-birthDate' }\\n  );\\n  getGroupMembers('urn:openspp:vocab:id-type#household_id|HH-1', { count: 10 });\\n  ```\\n\\n  `getPrograms` takes one `options` object with filters and paging together.\\n  Programs page with a cursor, so `offset` is not supported: use `count`, and\\n  for the next page pass as `lastId` the `_lastId` value in\\n  `state.response.page.next`. Passing `offset`, `limit` or `order` logs a\\n  warning and has no effect.\\n\\n  Before (v3):\\n\\n  ```js\\n  getPrograms({ limit: 10, offset: 10 });\\n  ```\\n\\n  After (v4):\\n\\n  ```js\\n  getPrograms({ targetType: 'group', count: 10 });\\n  getPrograms({ count: 10, lastId: 42 }); // the _lastId value from state.response.page.next\\n  ```\\n\\n  | v3                                                      | v4                                                                                                                                                                                                                                            |\\n  | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\\n  | `getIndividual(spp_id, cb)`                             | `getIndividual(id, options)`                                                                                                                                                                                                                  |\\n  | `searchIndividual(domain, options, cb)`                 | `searchIndividual(query, options)`: OpenSPP search parameters instead of Odoo domains                                                                                                                                                         |\\n  | `createIndividual(data, cb)`                            | `createIndividual(data)`: OpenSPP Individual resource, `identifier` required; returns the created record                                                                                                                                      |\\n  | `updateIndividual(spp_id, data)`                        | `updateIndividual(id, data, options)`: partial update                                                                                                                                                                                         |\\n  | `getGroup`, `searchGroup`, `createGroup`, `updateGroup` | same changes as the individual functions                                                                                                                                                                                                      |\\n  | `getGroupMembers(spp_id, options, cb)`                  | `getGroupMembers(groupId, options)`: returns Individual records; `options.role` filters by role                                                                                                                                               |\\n  | `addToGroup(group_id, individual_id, role)`             | `addToGroup(groupId, individualId, role, options)`: `role` is a code such as `head` and is no longer created if unknown. Throws 409 if the individual is already a member (v3 updated their role): use `request('PATCH', …)` to change a role |\\n  | `removeFromGroup(group_id, individual_id)`              | `removeFromGroup(groupId, individualId, options)`: `reason`, `endedDate`                                                                                                                                                                      |\\n  | `getProgram(program_id, cb)`                            | `getProgram(id)`                                                                                                                                                                                                                              |\\n  | `getPrograms(options, cb)`                              | `getPrograms(options)`: filters and `count`/`lastId` paging in one object                                                                                                                                                                     |\\n  | `getEnrolledPrograms(spp_id, cb)`                       | `getEnrolledPrograms(beneficiary)`: enrolled memberships only                                                                                                                                                                                 |\\n  | `enroll(spp_id, program_id)`                            | `enroll(beneficiary, programId, options)`                                                                                                                                                                                                     |\\n  | `unenroll(spp_id, program_id)`                          | `unenroll(beneficiary, programId, options)`: sets `exited` (was `not_eligible`)                                                                                                                                                               |\\n  | `getServicePoint(spp_id, cb)`                           | `getServicePoint(name)`: returns an object (was an array)                                                                                                                                                                                     |\\n  | `searchServicePoint(domain, options, cb)`               | `searchServicePoint(query, options)`                                                                                                                                                                                                          |\\n  | `getArea`, `searchArea`                                 | removed: OpenSPP2 has no Area resource. Use `request('GET', '/gis/ogc/collections/…')` with the GIS module                                                                                                                                    |\\n\\n## 3.1.3 - 03 September 2026\\n\\n### Patch Changes\\n\\n- fd1b2be: Security update\\n- Updated dependencies \\\\[654026d]\\n- Updated dependencies \\\\[fd1b2be]\\n  - @openfn/language-common@3.3.5\\n\\n## 3.1.2 - 30 June 2026\\n\\n### Patch Changes\\n\\n- c5f8728: Update undici dependency\\n- Updated dependencies \\\\[c5f8728]\\n  - @openfn/language-common@3.3.4\\n\\n## 3.1.1 - 27 May 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[5276a86]\\n  - @openfn/language-common@3.3.3\\n\\n## 3.1.0 - 21 May 2026\\n\\n### Minor Changes\\n\\n- 71115af: export `combine` function from common\\n- bf26881: export `log` function from common\\n\\n## 3.0.11 - 20 May 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[9d1e1ae]\\n  - @openfn/language-common@3.3.2\\n\\n## 3.0.10 - 07 April 2026\\n\\n### Patch Changes\\n\\n- add9748: Update dependencies (undici)\\n- Updated dependencies \\\\[add9748]\\n- Updated dependencies \\\\[a9b7597]\\n  - @openfn/language-common@3.3.1\\n\\n## 3.0.9 - 30 March 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[295655f]\\n  - @openfn/language-common@3.3.0\\n\\n## 3.0.8 - 24 February 2026\\n\\n### Patch Changes\\n\\n- 856f85c: Security updates\\n- Updated dependencies \\\\[856f85c]\\n  - @openfn/language-common@3.2.3\\n\\n## 3.0.7 - 09 February 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[8ad6b98]\\n- Updated dependencies \\\\[8ad6b98]\\n  - @openfn/language-common@3.2.2\\n\\n## 3.0.6 - 28 November 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[cfc66df]\\n  - @openfn/language-common@3.2.1\\n\\n## 3.0.5 - 12 November 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[4d7a833]\\n  - @openfn/language-common@3.2.0\\n\\n## 3.0.4 - 04 November 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@3.1.2\\n\\n## 3.0.3 - 16 October 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[408a3a2]\\n  - @openfn/language-common@3.1.1\\n\\n## 3.0.2 - 18 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[e2bc436]\\n  - @openfn/language-common@3.1.0\\n\\n## 3.0.1 - 01 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[1d60531]\\n  - @openfn/language-common@3.0.3\\n\\n## 3.0.0 - 11 August 2025\\n\\n### Major Changes\\n\\n- a5cea4e: removed `http` export from `@openfn/language-common`\\n\\n  ### Migration Guide\\n\\n  The `http` export has been removed from `@openfn/language-common`. If you were\\n  using it, you should remove it from your code and create a new step that uses\\n  `http` adaptor. See example below.\\n\\n  **Before**\\n\\n  **Step 1: Fetch and post data using postgresql adaptor**\\n\\n  ```js\\n  sql('select * from foo');\\n  http.post('/example', { body: $.data }),\\n  ```\\n\\n  **Now**\\n\\n  **Step 1: Fetch data using postgresql adaptor**\\n\\n  ```js\\n  sql('select * from foo');\\n  ```\\n\\n  **Step 2: Post data using http adaptor**\\n\\n  ```js\\n  post('/example', { body: $.data });\\n  ```\\n\\n## 2.0.16 - 14 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[9b5a4f8]\\n  - @openfn/language-common@3.0.2\\n\\n## 2.0.15 - 10 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[cf9c09f]\\n  - @openfn/language-common@3.0.1\\n\\n## 2.0.14 - 10 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[ea85695]\\n- Updated dependencies \\\\[3fce58f]\\n- Updated dependencies \\\\[19f2d7e]\\n- Updated dependencies \\\\[f26bd2b]\\n- Updated dependencies \\\\[19f2d7e]\\n  - @openfn/language-common@3.0.0\\n\\n## 2.0.13 - 20 June 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[28c2e8b]\\n  - @openfn/language-common@2.5.0\\n\\n## 2.0.12 - 22 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[99e4b48]\\n- Updated dependencies \\\\[13bf08f]\\n  - @openfn/language-common@2.4.0\\n\\n## 2.0.11 - 16 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b089c56]\\n  - @openfn/language-common@2.3.3\\n\\n## 2.0.10 - 11 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[d7105c0]\\n  - @openfn/language-common@2.3.2\\n\\n## 2.0.9 - 14 March 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[23ccb01]\\n  - @openfn/language-common@2.3.1\\n\\n## 2.0.8 - 16 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b3d7f59]\\n- Updated dependencies \\\\[2d709ff]\\n- Updated dependencies \\\\[41e8cc3]\\n  - @openfn/language-common@2.3.0\\n\\n## 2.0.7 - 16 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[6dffdbd]\\n  - @openfn/language-common@2.2.1\\n\\n## 2.0.6 - 09 January 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[a47d8d5]\\n- Updated dependencies \\\\[9240428]\\n  - @openfn/language-common@2.2.0\\n\\n## 2.0.5 - 28 October 2024\\n\\n### Patch Changes\\n\\n- Updated docs for each()\\n- Updated dependencies\\n  - @openfn/language-common@2.1.1\\n\\n## 2.0.4 - 18 October 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[03a1a74]\\n  - @openfn/language-common@2.1.0\\n\\n## 2.0.3 - 15 October 2024\\n\\n### Patch Changes\\n\\n- Fixed security vulnerability in jsonpath-plus \\\\[33973a2]\\n  - @openfn/language-common@2.0.3\\n\\n## 2.0.2 - 24 September 2024\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[77a690f]\\n  - @openfn/language-common@2.0.2\\n\\n## 2.0.1 - 16 August 2024\\n\\n### Patch Changes\\n\\n- 8146c23: Fix typings in package.json\\n- Updated dependencies \\\\[8146c23]\\n  - @openfn/language-common@2.0.1\\n\\n## 2.0.0 - 01 August 2024\\n\\n### Major Changes\\n\\n- Export new common http helpers (http namespace)\\n\\n## 1.3.1\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[4fe527c]\\n  - @openfn/language-common@2.0.0\\n\\n## 1.3.0 - 13 June 2024\\n\\n### Minor Changes\\n\\n- 73433c20: Add `fnIf` operation\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[106ecf6d]\\n  - @openfn/language-common@1.14.0\\n\\n## 1.2.1 - 08 May 2024\\n\\n### Patch Changes\\n\\n- Security updates (lodash,undici)\\n- Updated dependencies\\n  - @openfn/language-common@1.13.2\\n\\n## 1.2.0 - 30 November 2023\\n\\n### Changes\\n\\n- 05defd2: add new functions, correcting docstring and add more examples\\n  - correcting docstring input parameters type\\n  - changing getServicePoint() from get by name into get by unique id\\n  - add more examples in docstring\\n  - getArea(): get existing area by id\\n  - searchArea(): search existing area by domain\\n  - searchServicePoint(): search existing service point by domain\\n\\n## 1.1.1 - 17 November 2023\\n\\n### Patch Changes\\n\\n- 48b4e97: update `spp date time now string` format\\n\\n## 1.1.0 - 17 November 2023\\n\\n- Create OpenSPP adaptor with these functions:\\n  - getGroup(): get existing group information\\n  - getIndividual(): get existing individual information\\n  - searchGroup(): search existing group by domain\\n  - searchIndividual(): search existing individual by domain\\n  - getGroupMembers(): get members from group\\n  - getServicePoint(): get service points by name\\n  - getPrograms(): get single program\\n  - getPrograms(): get program list\\n  - getEnrolledPrograms(): get list of enrolled program for each beneficiary\\n  - enroll(): enroll beneficiary to a program\\n  - unenroll(): unenroll beneficiary from program\\n  - createIndividual(): create new individual\\n  - updateIndividual(): update existing individual\\n  - createGroup(): create new group\\n  - updateGroup(): update existing group\\n  - addToGroup(): add individual to group with(out) role\\n  - removeFromGroup(): end membership of individual to group\\n\"","functions":["addToGroup","createGroup","createIndividual","enroll","getEnrolledPrograms","getGroup","getGroupMembers","getIndividual","getProgram","getPrograms","getServicePoint","removeFromGroup","request","searchGroup","searchIndividual","searchServicePoint","unenroll","updateGroup","updateIndividual"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","type":"string","description":"The base URL of the OpenSPP instance, without the API path","format":"uri","minLength":1,"examples":["https://openspp.example.org"]},"clientId":{"title":"Client ID","type":"string","description":"OAuth client ID of an OpenSPP API client","minLength":1,"examples":["client_AbC123dEf456"]},"clientSecret":{"title":"Client Secret","type":"string","description":"OAuth client secret of an OpenSPP API client","writeOnly":true,"minLength":1,"examples":["@some(!)Str0ngp4ss0w0rd"]}},"type":"object","additionalProperties":true,"required":["baseUrl","clientId","clientSecret"]}},
 [
   {
     "id": "addToGroup",
@@ -111797,7 +111797,7 @@
     "name": "addToGroup",
     "kind": "function",
     "scope": "global",
-    "description": "add individual to group in OpenSPP",
+    "description": "Add an individual to a group. Throws a 409 error if the individual is\nalready a member. To change an existing member's role, use `request` with\nboth identifiers URL-encoded, eg\n`request(\"PATCH\", \"/Group/<group>/member/<individual>\", { role: { coding: [{ system: \"urn:openspp:vocab:group-membership-type\", code: \"spouse\" }] } })`.",
     "params": [
       {
         "type": {
@@ -111805,8 +111805,8 @@
             "string"
           ]
         },
-        "description": "group registrant id",
-        "name": "group_id"
+        "description": "Group identifier as `system\\|value`",
+        "name": "groupId"
       },
       {
         "type": {
@@ -111814,23 +111814,34 @@
             "string"
           ]
         },
-        "description": "individual registrant id",
-        "name": "individual_id"
+        "description": "Individual identifier as `system\\|value`",
+        "name": "individualId"
       },
       {
         "type": {
           "names": [
-            "string"
+            "string",
+            "object"
           ]
         },
-        "description": "individual role in group",
+        "optional": true,
+        "description": "Role code in `urn:openspp:vocab:group-membership-type` (eg \"head\", \"spouse\", \"child\"), or a CodeableConcept",
         "name": "role"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "optional": true,
+        "description": "`startDate` (YYYY-MM-DD)",
+        "name": "options"
       }
     ],
     "examples": [
-      "<caption>create a new head for group</caption>\naddToGroup(\"GRP_B2BRHJN2\", \"IND_8DUQL4M4\", \"Head\")",
-      "<caption>create a new ordinary member for group</caption>\naddToGroup(\"GRP_B2BRHJN2\", \"IND_8DUQL4M4\")",
-      "<caption>create a new member with new role for group</caption>\naddToGroup(\"GRP_B2BRHJN2\", \"IND_8DUQL4M4\", \"new-role-name\")"
+      "<caption>Add as head of household</caption>\naddToGroup(\"urn:openspp:vocab:id-type#household_id|HH-1\", \"urn:openspp:vocab:id-type#national_id|PH-123\", \"head\");",
+      "<caption>Add without a role</caption>\naddToGroup(\"urn:openspp:vocab:id-type#household_id|HH-1\", \"urn:openspp:vocab:id-type#national_id|PH-123\");"
     ],
     "returns": [
       {
@@ -111843,14 +111854,21 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 790,
+      "lineno": 399,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
     },
-    "order": 19,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenSPPState"
+      }
+    ],
+    "order": 14,
     "source": "@openfn/language-openspp",
     "signature": [
-      "addToGroup(group_id, individual_id, role)"
+      "addToGroup(groupId, individualId, role, options)"
     ],
     "newscope": true,
     "level": 0
@@ -111861,7 +111879,7 @@
     "name": "createGroup",
     "kind": "function",
     "scope": "global",
-    "description": "create new group for OpenSPP",
+    "description": "Create a group.",
     "params": [
       {
         "type": {
@@ -111869,545 +111887,12 @@
             "object"
           ]
         },
-        "description": "registrant create data",
+        "description": "Group resource, with at least one `identifier`. See the [OpenSPP resource docs](https://docs.openspp.org/developer_guide/api_v2/resources)",
         "name": "data"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "An optional callback function",
-        "name": "callback"
       }
     ],
     "examples": [
-      "createGroup({ name: \"Group 1\" })"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 668,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
-    },
-    "order": 16,
-    "source": "@openfn/language-openspp",
-    "signature": [
-      "createGroup(data, callback)"
-    ],
-    "level": 0
-  },
-  {
-    "id": "createIndividual",
-    "longname": "createIndividual",
-    "name": "createIndividual",
-    "kind": "function",
-    "scope": "global",
-    "description": "create new individual for OpenSPP",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "object"
-          ]
-        },
-        "description": "registrant create data",
-        "name": "data"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "An optional callback function",
-        "name": "callback"
-      }
-    ],
-    "examples": [
-      "createIndividual({ name: \"Individual 1\" })"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 630,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
-    },
-    "order": 15,
-    "source": "@openfn/language-openspp",
-    "signature": [
-      "createIndividual(data, callback)"
-    ],
-    "level": 0
-  },
-  {
-    "id": "enroll",
-    "longname": "enroll",
-    "name": "enroll",
-    "kind": "function",
-    "scope": "global",
-    "description": "enroll registrant to program in OpenSPP",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "spp_id of group / individual wanted to enroll",
-        "name": "spp_id"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "program_id of program",
-        "name": "program_id"
-      }
-    ],
-    "examples": [
-      "enroll(\"IND_Q4VGGZPF\", \"PROG_2023_00000001\")"
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 545,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
-    },
-    "order": 13,
-    "source": "@openfn/language-openspp",
-    "signature": [
-      "enroll(spp_id, program_id)"
-    ],
-    "level": 0
-  },
-  {
-    "id": "getArea",
-    "longname": "getArea",
-    "name": "getArea",
-    "kind": "function",
-    "scope": "global",
-    "description": "get area by id in OpenSPP",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "spp_id of area",
-        "name": "spp_id"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "An optional callback function",
-        "name": "callback"
-      }
-    ],
-    "examples": [
-      "getArea(\"LOC_7M92NLDH\")"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 970,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
-    },
-    "order": 22,
-    "source": "@openfn/language-openspp",
-    "signature": [
-      "getArea(spp_id, callback)"
-    ],
-    "level": 0
-  },
-  {
-    "id": "getEnrolledPrograms",
-    "longname": "getEnrolledPrograms",
-    "name": "getEnrolledPrograms",
-    "kind": "function",
-    "scope": "global",
-    "description": "get programs list for specific registrant from OpenSPP",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "spp_id of group / individual wanted to search",
-        "name": "spp_id"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "An optional callback function",
-        "name": "callback"
-      }
-    ],
-    "examples": [
-      "getEnrolledPrograms(\"IND_Q4VGGZPF\")"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 505,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
-    },
-    "order": 12,
-    "source": "@openfn/language-openspp",
-    "signature": [
-      "getEnrolledPrograms(spp_id, callback)"
-    ],
-    "level": 0
-  },
-  {
-    "id": "getGroup",
-    "longname": "getGroup",
-    "name": "getGroup",
-    "kind": "function",
-    "scope": "global",
-    "description": "get group information from OpenSPP",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "The spp_id of the group",
-        "name": "spp_id"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "An optional callback function",
-        "name": "callback"
-      }
-    ],
-    "examples": [
-      "getGroup(\"GRP_Q4VGGZPF\")"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 143,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
-    },
-    "order": 4,
-    "source": "@openfn/language-openspp",
-    "signature": [
-      "getGroup(spp_id, callback)"
-    ],
-    "level": 0
-  },
-  {
-    "id": "getGroupMembers",
-    "longname": "getGroupMembers",
-    "name": "getGroupMembers",
-    "kind": "function",
-    "scope": "global",
-    "description": "get group members information from OpenSPP",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "The name of the group",
-        "name": "spp_id"
-      },
-      {
-        "type": {
-          "names": [
-            "object"
-          ]
-        },
-        "optional": true,
-        "defaultvalue": "{}",
-        "description": "Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records",
-        "name": "options"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "An optional callback function",
-        "name": "callback"
-      }
-    ],
-    "examples": [
-      "getGroupMembers(\"GRP_Q4VGGZPF\")"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 238,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
-    },
-    "order": 6,
-    "source": "@openfn/language-openspp",
-    "signature": [
-      "getGroupMembers(spp_id, options, callback)"
-    ],
-    "level": 0
-  },
-  {
-    "id": "getIndividual",
-    "longname": "getIndividual",
-    "name": "getIndividual",
-    "kind": "function",
-    "scope": "global",
-    "description": "get individual information from OpenSPP",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "The spp_id of the individual",
-        "name": "spp_id"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "An optional callback function",
-        "name": "callback"
-      }
-    ],
-    "examples": [
-      "getIndividual(\"IND_Q4VGGZPF\")"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 189,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
-    },
-    "order": 5,
-    "source": "@openfn/language-openspp",
-    "signature": [
-      "getIndividual(spp_id, callback)"
-    ],
-    "level": 0
-  },
-  {
-    "id": "getProgram",
-    "longname": "getProgram",
-    "name": "getProgram",
-    "kind": "function",
-    "scope": "global",
-    "description": "get program information from OpenSPP",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "searching domain",
-        "name": "program_id"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "An optional callback function",
-        "name": "callback"
-      }
-    ],
-    "examples": [
-      "getProgram(\"PROG_2023_00000001\")"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 426,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
-    },
-    "order": 10,
-    "source": "@openfn/language-openspp",
-    "signature": [
-      "getProgram(program_id, callback)"
-    ],
-    "level": 0
-  },
-  {
-    "id": "getPrograms",
-    "longname": "getPrograms",
-    "name": "getPrograms",
-    "kind": "function",
-    "scope": "global",
-    "description": "get programs list from OpenSPP",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "number"
-          ]
-        },
-        "optional": true,
-        "defaultvalue": "{}",
-        "description": "offset from start",
-        "name": "options"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "An optional callback function",
-        "name": "callback"
-      }
-    ],
-    "examples": [
-      "getPrograms(100)"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 469,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
-    },
-    "order": 11,
-    "source": "@openfn/language-openspp",
-    "signature": [
-      "getPrograms(options, callback)"
-    ],
-    "level": 0
-  },
-  {
-    "id": "getServicePoint",
-    "longname": "getServicePoint",
-    "name": "getServicePoint",
-    "kind": "function",
-    "scope": "global",
-    "description": "get service points information from OpenSPP",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "The spp_id of the agent",
-        "name": "spp_id"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "An optional callback function",
-        "name": "callback"
-      }
-    ],
-    "examples": [
-      "getServicePoint(\"SVP_8P4KP4RT\")"
+      "createGroup({\n  identifier: [{ system: \"urn:openspp:vocab:id-type#household_id\", value: \"HH-1\" }],\n  name: \"Santos Household\",\n  groupType: \"household\",\n});"
     ],
     "returns": [
       {
@@ -112424,42 +111909,40 @@
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
     },
-    "order": 7,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenSPPState"
+      }
+    ],
+    "order": 11,
     "source": "@openfn/language-openspp",
     "signature": [
-      "getServicePoint(spp_id, callback)"
+      "createGroup(data)"
     ],
     "level": 0
   },
   {
-    "id": "removeFromGroup",
-    "longname": "removeFromGroup",
-    "name": "removeFromGroup",
+    "id": "createIndividual",
+    "longname": "createIndividual",
+    "name": "createIndividual",
     "kind": "function",
     "scope": "global",
-    "description": "remove individual from group in OpenSPP",
+    "description": "Create an individual.",
     "params": [
       {
         "type": {
           "names": [
-            "string"
+            "object"
           ]
         },
-        "description": "group registrant id",
-        "name": "group_id"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "individual registrant id",
-        "name": "individual_id"
+        "description": "Individual resource, with at least one `identifier`. See the [OpenSPP resource docs](https://docs.openspp.org/developer_guide/api_v2/resources)",
+        "name": "data"
       }
     ],
     "examples": [
-      "removeFromGroup(\"GRP_B2BRHJN2\", \"IND_8DUQL4M4\")"
+      "createIndividual({\n  identifier: [{ system: \"urn:openspp:vocab:id-type#national_id\", value: \"PH-123456789\" }],\n  name: { family: \"Santos\", given: \"Maria\" },\n  birthDate: \"1985-03-15\",\n  gender: { coding: [{ system: \"urn:iso:std:iso:5218\", code: \"2\" }] },\n});"
     ],
     "returns": [
       {
@@ -112472,33 +111955,49 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 878,
+      "lineno": 179,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
     },
-    "order": 20,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenSPPState"
+      }
+    ],
+    "order": 7,
     "source": "@openfn/language-openspp",
     "signature": [
-      "removeFromGroup(group_id, individual_id)"
+      "createIndividual(data)"
     ],
     "level": 0
   },
   {
-    "id": "searchArea",
-    "longname": "searchArea",
-    "name": "searchArea",
+    "id": "enroll",
+    "longname": "enroll",
+    "name": "enroll",
     "kind": "function",
     "scope": "global",
-    "description": "searching for service point in OpenSPP",
+    "description": "Enroll a registrant in a program. If they are already enrolled, returns their\nmembership unchanged. If they have a membership in this program that isn't\nenrolled (eg exited), it is set back to enrolled. That update throws if the\nregistrant also has memberships in other programs, because the adaptor can't\nbe sure OpenSPP would update the membership for this program.",
     "params": [
       {
         "type": {
           "names": [
-            "Array"
+            "string"
           ]
         },
-        "description": "searching domain",
-        "name": "domain"
+        "description": "Typed reference: `Individual/system\\|value` or `Group/system\\|value`",
+        "name": "beneficiary"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Program identifier as `system\\|value`",
+        "name": "programId"
       },
       {
         "type": {
@@ -112507,23 +112006,12 @@
           ]
         },
         "optional": true,
-        "defaultvalue": "{}",
-        "description": "Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records",
+        "description": "`enrollmentDate` (YYYY-MM-DD) for new memberships",
         "name": "options"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "An optional callback function",
-        "name": "callback"
       }
     ],
     "examples": [
-      "<caption>search without offset</caption>\nsearchArea([[\"code\", \"=\", \"10732\"]])",
-      "<caption>search with offset</caption>\nsearchArea([[\"kind\", \"=\", 1]], { offset: 10 }})"
+      "enroll(\"Individual/urn:openspp:vocab:id-type#national_id|PH-123\", \"urn:openspp:program|universal-child-grant\");"
     ],
     "returns": [
       {
@@ -112536,14 +112024,666 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 1005,
+      "lineno": 555,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
     },
-    "order": 23,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenSPPState"
+      }
+    ],
+    "order": 19,
     "source": "@openfn/language-openspp",
     "signature": [
-      "searchArea(domain, options, callback)"
+      "enroll(beneficiary, programId, options)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "getEnrolledPrograms",
+    "longname": "getEnrolledPrograms",
+    "name": "getEnrolledPrograms",
+    "kind": "function",
+    "scope": "global",
+    "description": "List the programs a registrant is enrolled in, as ProgramMembership\nresources (each has a `program` reference).",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Typed reference: `Individual/system\\|value` or `Group/system\\|value`",
+        "name": "beneficiary"
+      }
+    ],
+    "examples": [
+      "getEnrolledPrograms(\"Group/urn:openspp:vocab:id-type#household_id|HH-1\");"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 526,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenSPPState"
+      }
+    ],
+    "order": 18,
+    "source": "@openfn/language-openspp",
+    "signature": [
+      "getEnrolledPrograms(beneficiary)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "getGroup",
+    "longname": "getGroup",
+    "name": "getGroup",
+    "kind": "function",
+    "scope": "global",
+    "description": "Get a group by identifier. To read the members, use `getGroupMembers`.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Identifier as `system\\|value`",
+        "name": "id"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "optional": true,
+        "description": "`elements` and `extensions` (see SearchOptions)",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "getGroup(\"urn:openspp:vocab:id-type#household_id|HH-1\");"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 234,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenSPPState"
+      }
+    ],
+    "order": 9,
+    "source": "@openfn/language-openspp",
+    "signature": [
+      "getGroup(id, options)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "getGroupMembers",
+    "longname": "getGroupMembers",
+    "name": "getGroupMembers",
+    "kind": "function",
+    "scope": "global",
+    "description": "List the individuals who are members of a group.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Group identifier as `system\\|value`",
+        "name": "groupId"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "optional": true,
+        "description": "`role` (membership role code) plus SearchOptions",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "getGroupMembers(\"urn:openspp:vocab:id-type#household_id|HH-1\");",
+      "<caption>Only the head of household</caption>\ngetGroupMembers(\"urn:openspp:vocab:id-type#household_id|HH-1\", { role: \"head\" });"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 350,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenSPPState"
+      }
+    ],
+    "order": 13,
+    "source": "@openfn/language-openspp",
+    "signature": [
+      "getGroupMembers(groupId, options)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "getIndividual",
+    "longname": "getIndividual",
+    "name": "getIndividual",
+    "kind": "function",
+    "scope": "global",
+    "description": "Get an individual by identifier.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Identifier as `system\\|value`",
+        "name": "id"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "optional": true,
+        "description": "`elements` and `extensions` (see SearchOptions)",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "getIndividual(\"urn:openspp:vocab:id-type#national_id|PH-123456789\");",
+      "<caption>Only return some fields</caption>\ngetIndividual(\"urn:openspp:vocab:id-type#national_id|PH-123456789\", { elements: [\"identifier\", \"name\"] });"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 114,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenSPPState"
+      }
+    ],
+    "order": 5,
+    "source": "@openfn/language-openspp",
+    "signature": [
+      "getIndividual(id, options)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "getProgram",
+    "longname": "getProgram",
+    "name": "getProgram",
+    "kind": "function",
+    "scope": "global",
+    "description": "Get a program by identifier.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Program identifier as `system\\|value`",
+        "name": "id"
+      }
+    ],
+    "examples": [
+      "getProgram(\"urn:openspp:program|universal-child-grant\");"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 471,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenSPPState"
+      }
+    ],
+    "order": 16,
+    "source": "@openfn/language-openspp",
+    "signature": [
+      "getProgram(id)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "getPrograms",
+    "longname": "getPrograms",
+    "name": "getPrograms",
+    "kind": "function",
+    "scope": "global",
+    "description": "List programs.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "ProgramOptions"
+          ]
+        },
+        "optional": true,
+        "description": "Filters and paging",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "getPrograms();",
+      "<caption>Programs for groups, 10 per page</caption>\ngetPrograms({ targetType: \"group\", count: 10 });"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 495,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenSPPState"
+      }
+    ],
+    "order": 17,
+    "source": "@openfn/language-openspp",
+    "signature": [
+      "getPrograms(options)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "getServicePoint",
+    "longname": "getServicePoint",
+    "name": "getServicePoint",
+    "kind": "function",
+    "scope": "global",
+    "description": "Get a service point by its identifier (the service point name).",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Service point identifier (its name)",
+        "name": "name"
+      }
+    ],
+    "examples": [
+      "getServicePoint(\"Agoncillo Payment Center\");"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 667,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenSPPState"
+      }
+    ],
+    "order": 21,
+    "source": "@openfn/language-openspp",
+    "signature": [
+      "getServicePoint(name)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "OpenSPPState",
+    "longname": "OpenSPPState",
+    "name": "OpenSPPState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body. For searches, the list of resources.",
+        "name": "data"
+      },
+      {
+        "description": "the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`.",
+        "name": "response"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 5,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
+    },
+    "order": 0,
+    "source": "@openfn/language-openspp",
+    "level": 0
+  },
+  {
+    "id": "ProgramOptions",
+    "longname": "ProgramOptions",
+    "name": "ProgramOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options for getPrograms",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "optional": true,
+        "description": "Filter by name",
+        "name": "name"
+      },
+      {
+        "type": {
+          "names": [
+            "'active'",
+            "'ended'"
+          ]
+        },
+        "optional": true,
+        "description": "Filter by status",
+        "name": "status"
+      },
+      {
+        "type": {
+          "names": [
+            "'individual'",
+            "'group'"
+          ]
+        },
+        "optional": true,
+        "description": "Filter by target type",
+        "name": "targetType"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "optional": true,
+        "description": "Page size, 1-100 (OpenSPP default 20)",
+        "name": "count"
+      },
+      {
+        "type": {
+          "names": [
+            "number",
+            "string"
+          ]
+        },
+        "optional": true,
+        "description": "Cursor for the next page: the `_lastId` value in `state.response.page.next`",
+        "name": "lastId"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 32,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
+    },
+    "order": 2,
+    "source": "@openfn/language-openspp",
+    "level": 0
+  },
+  {
+    "id": "removeFromGroup",
+    "longname": "removeFromGroup",
+    "name": "removeFromGroup",
+    "kind": "function",
+    "scope": "global",
+    "description": "End an individual's membership of a group. OpenSPP sets the end date to\nnow unless `endedDate` is given.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Group identifier as `system\\|value`",
+        "name": "groupId"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Individual identifier as `system\\|value`",
+        "name": "individualId"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "optional": true,
+        "description": "`reason` (OpenSPP logs it but doesn't save it), `endedDate` (YYYY-MM-DD)",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "removeFromGroup(\"urn:openspp:vocab:id-type#household_id|HH-1\", \"urn:openspp:vocab:id-type#national_id|PH-123\", { reason: \"Moved out\" });"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 437,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenSPPState"
+      }
+    ],
+    "order": 15,
+    "source": "@openfn/language-openspp",
+    "signature": [
+      "removeFromGroup(groupId, individualId, options)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "request",
+    "longname": "request",
+    "name": "request",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a request to any OpenSPP REST API v2 endpoint.\nPaths are relative to `/api/v2/spp`.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "HTTP method",
+        "name": "method"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path relative to /api/v2/spp, eg `/Individual`",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "optional": true,
+        "description": "Request body, sent as JSON",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "optional": true,
+        "description": "`query` (query parameters), `ifMatch` (ETag for optimistic locking) and `headers`",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>List vocabularies</caption>\nrequest(\"GET\", \"/Vocabulary\", null, { query: { _count: 10 } });",
+      "<caption>Read GIS layers</caption>\nrequest(\"GET\", \"/gis/ogc/collections\");"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 85,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenSPPState"
+      }
+    ],
+    "order": 4,
+    "source": "@openfn/language-openspp",
+    "signature": [
+      "request(method, path, body, options)"
     ],
     "level": 0
   },
@@ -112553,17 +112693,8 @@
     "name": "searchGroup",
     "kind": "function",
     "scope": "global",
-    "description": "get groups from OpenSPP",
+    "description": "Search groups.",
     "params": [
-      {
-        "type": {
-          "names": [
-            "Array"
-          ]
-        },
-        "description": "searching domain",
-        "name": "domain"
-      },
       {
         "type": {
           "names": [
@@ -112571,24 +112702,22 @@
           ]
         },
         "optional": true,
-        "defaultvalue": "{}",
-        "description": "Searching options, eg: limit for limiting number of records returning, order for ordering search, offset for skipping records",
-        "name": "options"
+        "description": "OpenSPP search parameters, eg `{ name: \"Santos\" }`. See the [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search)",
+        "name": "query"
       },
       {
         "type": {
           "names": [
-            "function"
+            "SearchOptions"
           ]
         },
-        "description": "An optional callback function",
-        "name": "callback"
+        "optional": true,
+        "description": "Paging and field options",
+        "name": "options"
       }
     ],
     "examples": [
-      "<caption>search group by domain</caption>\nsearchGroup([[\"spp_id\", \"=\", \"GRP_Q4VGGZPF\"]])",
-      "<caption>search group by domain with offset</caption>\nsearchGroup([[\"spp_id\", \"ilike\", \"GRP\"]], { offset: 100 }})",
-      "<caption>search group by complex domain for more accuracy</caption>\nsearchGroup([[\"address\", \"!=\", false], [\"phone\", \"!=\", false]])"
+      "searchGroup({ name: \"Santos\" }, { count: 50 });"
     ],
     "returns": [
       {
@@ -112601,14 +112730,21 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 339,
+      "lineno": 258,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
     },
-    "order": 8,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenSPPState"
+      }
+    ],
+    "order": 10,
     "source": "@openfn/language-openspp",
     "signature": [
-      "searchGroup(domain, options, callback)"
+      "searchGroup(query, options)"
     ],
     "level": 0
   },
@@ -112618,17 +112754,8 @@
     "name": "searchIndividual",
     "kind": "function",
     "scope": "global",
-    "description": "get individuals from OpenSPP",
+    "description": "Search individuals. Records the API client may not see (eg without consent)\nare left out.",
     "params": [
-      {
-        "type": {
-          "names": [
-            "Array"
-          ]
-        },
-        "description": "searching domain",
-        "name": "domain"
-      },
       {
         "type": {
           "names": [
@@ -112636,24 +112763,24 @@
           ]
         },
         "optional": true,
-        "defaultvalue": "{}",
-        "description": "Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records",
-        "name": "options"
+        "description": "OpenSPP search parameters, eg `{ name: \"Santos\" }`. `identifier` and `group` must be `system\\|value`. See the [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search)",
+        "name": "query"
       },
       {
         "type": {
           "names": [
-            "function"
+            "SearchOptions"
           ]
         },
-        "description": "An optional callback function",
-        "name": "callback"
+        "optional": true,
+        "description": "Paging and field options",
+        "name": "options"
       }
     ],
     "examples": [
-      "<caption>search individual by domain</caption>\nsearchIndividual([[\"spp_id\", \"=\", \"IND_Q4VGGZPF\"]])",
-      "<caption>search individual by domain with offset</caption>\nsearchIndividual([[\"spp_id\", \"ilike\", \"IND\"]], { offset: 100 })",
-      "<caption>search individual by complex domain for more accuracy</caption>\nsearchIndividual([[\"address\", \"!=\", false], [\"birthdate\", \"=\", false]])"
+      "<caption>Search by name</caption>\nsearchIndividual({ name: \"Santos\" });",
+      "<caption>Born on or after 2010, 50 per page, second page</caption>\nsearchIndividual({ birthdate: \"ge2010-01-01\" }, { count: 50, offset: 50 });",
+      "<caption>Heads of household in a group</caption>\nsearchIndividual({ group: \"urn:openspp:vocab:id-type#household_id|HH-1\", \"membership-role\": \"head\" });"
     ],
     "returns": [
       {
@@ -112666,15 +112793,93 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 385,
+      "lineno": 143,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
     },
-    "order": 9,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenSPPState"
+      }
+    ],
+    "order": 6,
     "source": "@openfn/language-openspp",
     "signature": [
-      "searchIndividual(domain, options, callback)"
+      "searchIndividual(query, options)"
     ],
+    "level": 0
+  },
+  {
+    "id": "SearchOptions",
+    "longname": "SearchOptions",
+    "name": "SearchOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options for OpenSPP searches",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "Page size, 1-100 (OpenSPP default 20)",
+        "name": "count"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "Number of records to skip",
+        "name": "offset"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Individuals only: one of `name`, `birthDate` or `lastUpdated`, with a `-` prefix for descending",
+        "name": "sort"
+      },
+      {
+        "type": {
+          "names": [
+            "string",
+            "Array.<string>"
+          ]
+        },
+        "description": "Only return these fields (individuals and groups)",
+        "name": "elements"
+      },
+      {
+        "type": {
+          "names": [
+            "string",
+            "Array.<string>"
+          ]
+        },
+        "description": "Include these extensions (individuals and groups)",
+        "name": "extensions"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 21,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
+    },
+    "order": 1,
+    "source": "@openfn/language-openspp",
     "level": 0
   },
   {
@@ -112683,16 +112888,17 @@
     "name": "searchServicePoint",
     "kind": "function",
     "scope": "global",
-    "description": "searching for service point in OpenSPP",
+    "description": "Search service points.",
     "params": [
       {
         "type": {
           "names": [
-            "Array"
+            "object"
           ]
         },
-        "description": "searching domain",
-        "name": "domain"
+        "optional": true,
+        "description": "OpenSPP search parameters, eg `{ country: \"PH\" }`. See the [OpenSPP service point docs](https://docs.openspp.org/developer_guide/api_v2/products_service_points)",
+        "name": "query"
       },
       {
         "type": {
@@ -112701,23 +112907,12 @@
           ]
         },
         "optional": true,
-        "defaultvalue": "{}",
-        "description": "Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records",
+        "description": "`count`, `offset`",
         "name": "options"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "An optional callback function",
-        "name": "callback"
       }
     ],
     "examples": [
-      "<caption>search without offset</caption>\nsearchServicePoint([[\"name\", \"ilike\", \"agent 1\"]])",
-      "<caption>search with offset</caption>\nsearchServicePoint([[\"name\", \"ilike\", \"agent 1\"]], { offset: 100 })"
+      "searchServicePoint({ country: \"PH\", contractActive: true });"
     ],
     "returns": [
       {
@@ -112730,14 +112925,21 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 922,
+      "lineno": 693,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
     },
-    "order": 21,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenSPPState"
+      }
+    ],
+    "order": 22,
     "source": "@openfn/language-openspp",
     "signature": [
-      "searchServicePoint(domain, options, callback)"
+      "searchServicePoint(query, options)"
     ],
     "level": 0
   },
@@ -112747,7 +112949,7 @@
     "name": "unenroll",
     "kind": "function",
     "scope": "global",
-    "description": "unenroll registrant from program in OpenSPP",
+    "description": "Unenroll a registrant from a program by setting their membership to\n`exited`. If the membership isn't enrolled, returns it unchanged. Throws if\nthe registrant has no membership in this program, or also has memberships in\nother programs, because the adaptor can't be sure OpenSPP would update the\nmembership for this program.",
     "params": [
       {
         "type": {
@@ -112755,8 +112957,8 @@
             "string"
           ]
         },
-        "description": "spp_id of group / individual wanted to unenroll",
-        "name": "spp_id"
+        "description": "Typed reference: `Individual/system\\|value` or `Group/system\\|value`",
+        "name": "beneficiary"
       },
       {
         "type": {
@@ -112764,23 +112966,50 @@
             "string"
           ]
         },
-        "description": "program_id of program",
-        "name": "program_id"
+        "description": "Program identifier as `system\\|value`",
+        "name": "programId"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "optional": true,
+        "description": "`exitDate` (YYYY-MM-DD), `exitReason` (CodeableConcept; OpenSPP doesn't save it)",
+        "name": "options"
       }
     ],
     "examples": [
-      "unenroll(\"IND_Q4VGGZPF\", \"PROG_2023_00000001\")"
+      "unenroll(\"Individual/urn:openspp:vocab:id-type#national_id|PH-123\", \"urn:openspp:program|universal-child-grant\");",
+      "<caption>With exit details</caption>\nunenroll(\"Group/urn:openspp:vocab:id-type#household_id|HH-1\", \"urn:openspp:program|cash-transfer\", { exitDate: \"2026-09-30\" });"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
     ],
     "access": "public",
     "meta": {
-      "lineno": 589,
+      "lineno": 619,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
     },
-    "order": 14,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenSPPState"
+      }
+    ],
+    "order": 20,
     "source": "@openfn/language-openspp",
     "signature": [
-      "unenroll(spp_id, program_id)"
+      "unenroll(beneficiary, programId, options)"
     ],
     "level": 0
   },
@@ -112790,7 +113019,7 @@
     "name": "updateGroup",
     "kind": "function",
     "scope": "global",
-    "description": "update group for OpenSPP",
+    "description": "Update some fields of a group. Fields you leave out are unchanged, and\n`null` clears a field.",
     "params": [
       {
         "type": {
@@ -112798,8 +113027,8 @@
             "string"
           ]
         },
-        "description": "group registrant id",
-        "name": "group_id"
+        "description": "Identifier as `system\\|value`",
+        "name": "id"
       },
       {
         "type": {
@@ -112807,12 +113036,22 @@
             "object"
           ]
         },
-        "description": "registrant update data",
+        "description": "Fields to change",
         "name": "data"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "optional": true,
+        "description": "`ifMatch`: ETag from a previous read, to fail if the record changed",
+        "name": "options"
       }
     ],
     "examples": [
-      "updateGroup(\"GRP_B2BRHJN2\", { name: \"Group 1\" })"
+      "updateGroup(\"urn:openspp:vocab:id-type#household_id|HH-1\", { name: \"Santos-Reyes Household\" });"
     ],
     "returns": [
       {
@@ -112825,14 +113064,21 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 704,
+      "lineno": 318,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
     },
-    "order": 17,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenSPPState"
+      }
+    ],
+    "order": 12,
     "source": "@openfn/language-openspp",
     "signature": [
-      "updateGroup(group_id, data)"
+      "updateGroup(id, data, options)"
     ],
     "level": 0
   },
@@ -112842,7 +113088,7 @@
     "name": "updateIndividual",
     "kind": "function",
     "scope": "global",
-    "description": "update individual for OpenSPP",
+    "description": "Update some fields of an individual. Fields you leave out are unchanged, and\n`null` clears a field.",
     "params": [
       {
         "type": {
@@ -112850,8 +113096,8 @@
             "string"
           ]
         },
-        "description": "individual registrant id",
-        "name": "individual_id"
+        "description": "Identifier as `system\\|value`",
+        "name": "id"
       },
       {
         "type": {
@@ -112859,12 +113105,22 @@
             "object"
           ]
         },
-        "description": "registrant update data",
+        "description": "Fields to change",
         "name": "data"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "optional": true,
+        "description": "`ifMatch`: ETag from a previous read, to fail if the record changed",
+        "name": "options"
       }
     ],
     "examples": [
-      "updateIndividual(\"IND_8DUQL4M4\", { name: \"Individual 1\" })"
+      "updateIndividual(\"urn:openspp:vocab:id-type#national_id|PH-123456789\", { birthDate: \"1985-03-16\" });"
     ],
     "returns": [
       {
@@ -112877,14 +113133,21 @@
     ],
     "access": "public",
     "meta": {
-      "lineno": 743,
+      "lineno": 204,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/openspp/src"
     },
-    "order": 18,
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "OpenSPPState"
+      }
+    ],
+    "order": 8,
     "source": "@openfn/language-openspp",
     "signature": [
-      "updateIndividual(individual_id, data)"
+      "updateIndividual(id, data, options)"
     ],
     "level": 0
   },

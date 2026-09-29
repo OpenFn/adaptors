@@ -1,44 +1,42 @@
 <dl>
 <dt>
-    <a href="#addtogroup">addToGroup(group_id, individual_id, role)</a></dt>
+    <a href="#addtogroup">addToGroup(groupId, individualId, [role], [options])</a></dt>
 <dt>
-    <a href="#creategroup">createGroup(data, callback)</a></dt>
+    <a href="#creategroup">createGroup(data)</a></dt>
 <dt>
-    <a href="#createindividual">createIndividual(data, callback)</a></dt>
+    <a href="#createindividual">createIndividual(data)</a></dt>
 <dt>
-    <a href="#enroll">enroll(spp_id, program_id)</a></dt>
+    <a href="#enroll">enroll(beneficiary, programId, [options])</a></dt>
 <dt>
-    <a href="#getarea">getArea(spp_id, callback)</a></dt>
+    <a href="#getenrolledprograms">getEnrolledPrograms(beneficiary)</a></dt>
 <dt>
-    <a href="#getenrolledprograms">getEnrolledPrograms(spp_id, callback)</a></dt>
+    <a href="#getgroup">getGroup(id, [options])</a></dt>
 <dt>
-    <a href="#getgroup">getGroup(spp_id, callback)</a></dt>
+    <a href="#getgroupmembers">getGroupMembers(groupId, [options])</a></dt>
 <dt>
-    <a href="#getgroupmembers">getGroupMembers(spp_id, [options], callback)</a></dt>
+    <a href="#getindividual">getIndividual(id, [options])</a></dt>
 <dt>
-    <a href="#getindividual">getIndividual(spp_id, callback)</a></dt>
+    <a href="#getprogram">getProgram(id)</a></dt>
 <dt>
-    <a href="#getprogram">getProgram(program_id, callback)</a></dt>
+    <a href="#getprograms">getPrograms([options])</a></dt>
 <dt>
-    <a href="#getprograms">getPrograms([options], callback)</a></dt>
+    <a href="#getservicepoint">getServicePoint(name)</a></dt>
 <dt>
-    <a href="#getservicepoint">getServicePoint(spp_id, callback)</a></dt>
+    <a href="#removefromgroup">removeFromGroup(groupId, individualId, [options])</a></dt>
 <dt>
-    <a href="#removefromgroup">removeFromGroup(group_id, individual_id)</a></dt>
+    <a href="#request">request(method, path, [body], [options])</a></dt>
 <dt>
-    <a href="#searcharea">searchArea(domain, [options], callback)</a></dt>
+    <a href="#searchgroup">searchGroup([query], [options])</a></dt>
 <dt>
-    <a href="#searchgroup">searchGroup(domain, [options], callback)</a></dt>
+    <a href="#searchindividual">searchIndividual([query], [options])</a></dt>
 <dt>
-    <a href="#searchindividual">searchIndividual(domain, [options], callback)</a></dt>
+    <a href="#searchservicepoint">searchServicePoint([query], [options])</a></dt>
 <dt>
-    <a href="#searchservicepoint">searchServicePoint(domain, [options], callback)</a></dt>
+    <a href="#unenroll">unenroll(beneficiary, programId, [options])</a></dt>
 <dt>
-    <a href="#unenroll">unenroll(spp_id, program_id)</a></dt>
+    <a href="#updategroup">updateGroup(id, data, [options])</a></dt>
 <dt>
-    <a href="#updategroup">updateGroup(group_id, data)</a></dt>
-<dt>
-    <a href="#updateindividual">updateIndividual(individual_id, data)</a></dt>
+    <a href="#updateindividual">updateIndividual(id, data, [options])</a></dt>
 </dl>
 
 
@@ -87,440 +85,630 @@ This adaptor exports the following from common:
 ## Functions
 ### addToGroup
 
-<p><code>addToGroup(group_id, individual_id, role) ⇒ Operation</code></p>
+<p><code>addToGroup(groupId, individualId, [role], [options]) ⇒ Operation</code></p>
 
-add individual to group in OpenSPP
+Add an individual to a group. Throws a 409 error if the individual is
+already a member. To change an existing member's role, use `request` with
+both identifiers URL-encoded, eg
+`request("PATCH", "/Group/<group>/member/<individual>", { role: { coding: [{ system: "urn:openspp:vocab:group-membership-type", code: "spouse" }] } })`.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| group_id | <code>string</code> | group registrant id |
-| individual_id | <code>string</code> | individual registrant id |
-| role | <code>string</code> | individual role in group |
+| groupId | <code>string</code> | Group identifier as `system\|value` |
+| individualId | <code>string</code> | Individual identifier as `system\|value` |
+| [role] | <code>string</code> \| <code>object</code> | Role code in `urn:openspp:vocab:group-membership-type` (eg "head", "spouse", "child"), or a CodeableConcept |
+| [options] | <code>object</code> | `startDate` (YYYY-MM-DD) |
 
+This operation writes the following keys to state:
 
-**Example:** create a new head for group
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body. For searches, the list of resources. |
+| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** Add as head of household
 ```js
-addToGroup("GRP_B2BRHJN2", "IND_8DUQL4M4", "Head")
+addToGroup("urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:vocab:id-type#national_id|PH-123", "head");
 ```
-**Example:** create a new ordinary member for group
+**Example:** Add without a role
 ```js
-addToGroup("GRP_B2BRHJN2", "IND_8DUQL4M4")
-```
-**Example:** create a new member with new role for group
-```js
-addToGroup("GRP_B2BRHJN2", "IND_8DUQL4M4", "new-role-name")
+addToGroup("urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:vocab:id-type#national_id|PH-123");
 ```
 
 * * *
 
 ### createGroup
 
-<p><code>createGroup(data, callback) ⇒ Operation</code></p>
+<p><code>createGroup(data) ⇒ Operation</code></p>
 
-create new group for OpenSPP
+Create a group.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| data | <code>object</code> | registrant create data |
-| callback | <code>function</code> | An optional callback function |
+| data | <code>object</code> | Group resource, with at least one `identifier`. See the [OpenSPP resource docs](https://docs.openspp.org/developer_guide/api_v2/resources) |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body. For searches, the list of resources. |
+| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |
+| references | an array of all previous data objects used in the Job |
 
 **Example**
 ```js
-createGroup({ name: "Group 1" })
+createGroup({
+  identifier: [{ system: "urn:openspp:vocab:id-type#household_id", value: "HH-1" }],
+  name: "Santos Household",
+  groupType: "household",
+});
 ```
 
 * * *
 
 ### createIndividual
 
-<p><code>createIndividual(data, callback) ⇒ Operation</code></p>
+<p><code>createIndividual(data) ⇒ Operation</code></p>
 
-create new individual for OpenSPP
+Create an individual.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| data | <code>object</code> | registrant create data |
-| callback | <code>function</code> | An optional callback function |
+| data | <code>object</code> | Individual resource, with at least one `identifier`. See the [OpenSPP resource docs](https://docs.openspp.org/developer_guide/api_v2/resources) |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body. For searches, the list of resources. |
+| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |
+| references | an array of all previous data objects used in the Job |
 
 **Example**
 ```js
-createIndividual({ name: "Individual 1" })
+createIndividual({
+  identifier: [{ system: "urn:openspp:vocab:id-type#national_id", value: "PH-123456789" }],
+  name: { family: "Santos", given: "Maria" },
+  birthDate: "1985-03-15",
+  gender: { coding: [{ system: "urn:iso:std:iso:5218", code: "2" }] },
+});
 ```
 
 * * *
 
 ### enroll
 
-<p><code>enroll(spp_id, program_id)</code></p>
+<p><code>enroll(beneficiary, programId, [options]) ⇒ Operation</code></p>
 
-enroll registrant to program in OpenSPP
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| spp_id | <code>string</code> | spp_id of group / individual wanted to enroll |
-| program_id | <code>string</code> | program_id of program |
-
-
-**Example**
-```js
-enroll("IND_Q4VGGZPF", "PROG_2023_00000001")
-```
-
-* * *
-
-### getArea
-
-<p><code>getArea(spp_id, callback) ⇒ Operation</code></p>
-
-get area by id in OpenSPP
+Enroll a registrant in a program. If they are already enrolled, returns their
+membership unchanged. If they have a membership in this program that isn't
+enrolled (eg exited), it is set back to enrolled. That update throws if the
+registrant also has memberships in other programs, because the adaptor can't
+be sure OpenSPP would update the membership for this program.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| spp_id | <code>string</code> | spp_id of area |
-| callback | <code>function</code> | An optional callback function |
+| beneficiary | <code>string</code> | Typed reference: `Individual/system\|value` or `Group/system\|value` |
+| programId | <code>string</code> | Program identifier as `system\|value` |
+| [options] | <code>object</code> | `enrollmentDate` (YYYY-MM-DD) for new memberships |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body. For searches, the list of resources. |
+| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |
+| references | an array of all previous data objects used in the Job |
 
 **Example**
 ```js
-getArea("LOC_7M92NLDH")
+enroll("Individual/urn:openspp:vocab:id-type#national_id|PH-123", "urn:openspp:program|universal-child-grant");
 ```
 
 * * *
 
 ### getEnrolledPrograms
 
-<p><code>getEnrolledPrograms(spp_id, callback) ⇒ Operation</code></p>
+<p><code>getEnrolledPrograms(beneficiary) ⇒ Operation</code></p>
 
-get programs list for specific registrant from OpenSPP
+List the programs a registrant is enrolled in, as ProgramMembership
+resources (each has a `program` reference).
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| spp_id | <code>string</code> | spp_id of group / individual wanted to search |
-| callback | <code>function</code> | An optional callback function |
+| beneficiary | <code>string</code> | Typed reference: `Individual/system\|value` or `Group/system\|value` |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body. For searches, the list of resources. |
+| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |
+| references | an array of all previous data objects used in the Job |
 
 **Example**
 ```js
-getEnrolledPrograms("IND_Q4VGGZPF")
+getEnrolledPrograms("Group/urn:openspp:vocab:id-type#household_id|HH-1");
 ```
 
 * * *
 
 ### getGroup
 
-<p><code>getGroup(spp_id, callback) ⇒ Operation</code></p>
+<p><code>getGroup(id, [options]) ⇒ Operation</code></p>
 
-get group information from OpenSPP
+Get a group by identifier. To read the members, use `getGroupMembers`.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| spp_id | <code>string</code> | The spp_id of the group |
-| callback | <code>function</code> | An optional callback function |
+| id | <code>string</code> | Identifier as `system\|value` |
+| [options] | <code>object</code> | `elements` and `extensions` (see SearchOptions) |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body. For searches, the list of resources. |
+| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |
+| references | an array of all previous data objects used in the Job |
 
 **Example**
 ```js
-getGroup("GRP_Q4VGGZPF")
+getGroup("urn:openspp:vocab:id-type#household_id|HH-1");
 ```
 
 * * *
 
 ### getGroupMembers
 
-<p><code>getGroupMembers(spp_id, [options], callback) ⇒ Operation</code></p>
+<p><code>getGroupMembers(groupId, [options]) ⇒ Operation</code></p>
 
-get group members information from OpenSPP
+List the individuals who are members of a group.
 
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| spp_id | <code>string</code> |  | The name of the group |
-| [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records |
-| callback | <code>function</code> |  | An optional callback function |
+| Param | Type | Description |
+| --- | --- | --- |
+| groupId | <code>string</code> | Group identifier as `system\|value` |
+| [options] | <code>object</code> | `role` (membership role code) plus SearchOptions |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body. For searches, the list of resources. |
+| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |
+| references | an array of all previous data objects used in the Job |
 
 **Example**
 ```js
-getGroupMembers("GRP_Q4VGGZPF")
+getGroupMembers("urn:openspp:vocab:id-type#household_id|HH-1");
+```
+**Example:** Only the head of household
+```js
+getGroupMembers("urn:openspp:vocab:id-type#household_id|HH-1", { role: "head" });
 ```
 
 * * *
 
 ### getIndividual
 
-<p><code>getIndividual(spp_id, callback) ⇒ Operation</code></p>
+<p><code>getIndividual(id, [options]) ⇒ Operation</code></p>
 
-get individual information from OpenSPP
+Get an individual by identifier.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| spp_id | <code>string</code> | The spp_id of the individual |
-| callback | <code>function</code> | An optional callback function |
+| id | <code>string</code> | Identifier as `system\|value` |
+| [options] | <code>object</code> | `elements` and `extensions` (see SearchOptions) |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body. For searches, the list of resources. |
+| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |
+| references | an array of all previous data objects used in the Job |
 
 **Example**
 ```js
-getIndividual("IND_Q4VGGZPF")
+getIndividual("urn:openspp:vocab:id-type#national_id|PH-123456789");
+```
+**Example:** Only return some fields
+```js
+getIndividual("urn:openspp:vocab:id-type#national_id|PH-123456789", { elements: ["identifier", "name"] });
 ```
 
 * * *
 
 ### getProgram
 
-<p><code>getProgram(program_id, callback) ⇒ Operation</code></p>
+<p><code>getProgram(id) ⇒ Operation</code></p>
 
-get program information from OpenSPP
+Get a program by identifier.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| program_id | <code>string</code> | searching domain |
-| callback | <code>function</code> | An optional callback function |
+| id | <code>string</code> | Program identifier as `system\|value` |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body. For searches, the list of resources. |
+| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |
+| references | an array of all previous data objects used in the Job |
 
 **Example**
 ```js
-getProgram("PROG_2023_00000001")
+getProgram("urn:openspp:program|universal-child-grant");
 ```
 
 * * *
 
 ### getPrograms
 
-<p><code>getPrograms([options], callback) ⇒ Operation</code></p>
+<p><code>getPrograms([options]) ⇒ Operation</code></p>
 
-get programs list from OpenSPP
+List programs.
 
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| [options] | <code>number</code> | <code>{}</code> | offset from start |
-| callback | <code>function</code> |  | An optional callback function |
+| Param | Type | Description |
+| --- | --- | --- |
+| [options] | [<code>ProgramOptions</code>](#programoptions) | Filters and paging |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body. For searches, the list of resources. |
+| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |
+| references | an array of all previous data objects used in the Job |
 
 **Example**
 ```js
-getPrograms(100)
+getPrograms();
+```
+**Example:** Programs for groups, 10 per page
+```js
+getPrograms({ targetType: "group", count: 10 });
 ```
 
 * * *
 
 ### getServicePoint
 
-<p><code>getServicePoint(spp_id, callback) ⇒ Operation</code></p>
+<p><code>getServicePoint(name) ⇒ Operation</code></p>
 
-get service points information from OpenSPP
+Get a service point by its identifier (the service point name).
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| spp_id | <code>string</code> | The spp_id of the agent |
-| callback | <code>function</code> | An optional callback function |
+| name | <code>string</code> | Service point identifier (its name) |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body. For searches, the list of resources. |
+| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |
+| references | an array of all previous data objects used in the Job |
 
 **Example**
 ```js
-getServicePoint("SVP_8P4KP4RT")
+getServicePoint("Agoncillo Payment Center");
 ```
 
 * * *
 
 ### removeFromGroup
 
-<p><code>removeFromGroup(group_id, individual_id) ⇒ Operation</code></p>
+<p><code>removeFromGroup(groupId, individualId, [options]) ⇒ Operation</code></p>
 
-remove individual from group in OpenSPP
+End an individual's membership of a group. OpenSPP sets the end date to
+now unless `endedDate` is given.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| group_id | <code>string</code> | group registrant id |
-| individual_id | <code>string</code> | individual registrant id |
+| groupId | <code>string</code> | Group identifier as `system\|value` |
+| individualId | <code>string</code> | Individual identifier as `system\|value` |
+| [options] | <code>object</code> | `reason` (OpenSPP logs it but doesn't save it), `endedDate` (YYYY-MM-DD) |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body. For searches, the list of resources. |
+| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |
+| references | an array of all previous data objects used in the Job |
 
 **Example**
 ```js
-removeFromGroup("GRP_B2BRHJN2", "IND_8DUQL4M4")
+removeFromGroup("urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:vocab:id-type#national_id|PH-123", { reason: "Moved out" });
 ```
 
 * * *
 
-### searchArea
+### request
 
-<p><code>searchArea(domain, [options], callback) ⇒ Operation</code></p>
+<p><code>request(method, path, [body], [options]) ⇒ Operation</code></p>
 
-searching for service point in OpenSPP
-
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| domain | <code>Array</code> |  | searching domain |
-| [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records |
-| callback | <code>function</code> |  | An optional callback function |
+Make a request to any OpenSPP REST API v2 endpoint.
+Paths are relative to `/api/v2/spp`.
 
 
-**Example:** search without offset
+| Param | Type | Description |
+| --- | --- | --- |
+| method | <code>string</code> | HTTP method |
+| path | <code>string</code> | Path relative to /api/v2/spp, eg `/Individual` |
+| [body] | <code>object</code> | Request body, sent as JSON |
+| [options] | <code>object</code> | `query` (query parameters), `ifMatch` (ETag for optimistic locking) and `headers` |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body. For searches, the list of resources. |
+| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** List vocabularies
 ```js
-searchArea([["code", "=", "10732"]])
+request("GET", "/Vocabulary", null, { query: { _count: 10 } });
 ```
-**Example:** search with offset
+**Example:** Read GIS layers
 ```js
-searchArea([["kind", "=", 1]], { offset: 10 }})
+request("GET", "/gis/ogc/collections");
 ```
 
 * * *
 
 ### searchGroup
 
-<p><code>searchGroup(domain, [options], callback) ⇒ Operation</code></p>
+<p><code>searchGroup([query], [options]) ⇒ Operation</code></p>
 
-get groups from OpenSPP
-
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| domain | <code>Array</code> |  | searching domain |
-| [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for ordering search, offset for skipping records |
-| callback | <code>function</code> |  | An optional callback function |
+Search groups.
 
 
-**Example:** search group by domain
+| Param | Type | Description |
+| --- | --- | --- |
+| [query] | <code>object</code> | OpenSPP search parameters, eg `{ name: "Santos" }`. See the [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search) |
+| [options] | [<code>SearchOptions</code>](#searchoptions) | Paging and field options |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body. For searches, the list of resources. |
+| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |
+| references | an array of all previous data objects used in the Job |
+
+**Example**
 ```js
-searchGroup([["spp_id", "=", "GRP_Q4VGGZPF"]])
-```
-**Example:** search group by domain with offset
-```js
-searchGroup([["spp_id", "ilike", "GRP"]], { offset: 100 }})
-```
-**Example:** search group by complex domain for more accuracy
-```js
-searchGroup([["address", "!=", false], ["phone", "!=", false]])
+searchGroup({ name: "Santos" }, { count: 50 });
 ```
 
 * * *
 
 ### searchIndividual
 
-<p><code>searchIndividual(domain, [options], callback) ⇒ Operation</code></p>
+<p><code>searchIndividual([query], [options]) ⇒ Operation</code></p>
 
-get individuals from OpenSPP
-
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| domain | <code>Array</code> |  | searching domain |
-| [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records |
-| callback | <code>function</code> |  | An optional callback function |
+Search individuals. Records the API client may not see (eg without consent)
+are left out.
 
 
-**Example:** search individual by domain
+| Param | Type | Description |
+| --- | --- | --- |
+| [query] | <code>object</code> | OpenSPP search parameters, eg `{ name: "Santos" }`. `identifier` and `group` must be `system\|value`. See the [OpenSPP search docs](https://docs.openspp.org/developer_guide/api_v2/search) |
+| [options] | [<code>SearchOptions</code>](#searchoptions) | Paging and field options |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body. For searches, the list of resources. |
+| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |
+| references | an array of all previous data objects used in the Job |
+
+**Example:** Search by name
 ```js
-searchIndividual([["spp_id", "=", "IND_Q4VGGZPF"]])
+searchIndividual({ name: "Santos" });
 ```
-**Example:** search individual by domain with offset
+**Example:** Born on or after 2010, 50 per page, second page
 ```js
-searchIndividual([["spp_id", "ilike", "IND"]], { offset: 100 })
+searchIndividual({ birthdate: "ge2010-01-01" }, { count: 50, offset: 50 });
 ```
-**Example:** search individual by complex domain for more accuracy
+**Example:** Heads of household in a group
 ```js
-searchIndividual([["address", "!=", false], ["birthdate", "=", false]])
+searchIndividual({ group: "urn:openspp:vocab:id-type#household_id|HH-1", "membership-role": "head" });
 ```
 
 * * *
 
 ### searchServicePoint
 
-<p><code>searchServicePoint(domain, [options], callback) ⇒ Operation</code></p>
+<p><code>searchServicePoint([query], [options]) ⇒ Operation</code></p>
 
-searching for service point in OpenSPP
-
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| domain | <code>Array</code> |  | searching domain |
-| [options] | <code>object</code> | <code>{}</code> | Searching options, eg: limit for limiting number of records returning, order for searching order, offset for skipping records |
-| callback | <code>function</code> |  | An optional callback function |
+Search service points.
 
 
-**Example:** search without offset
+| Param | Type | Description |
+| --- | --- | --- |
+| [query] | <code>object</code> | OpenSPP search parameters, eg `{ country: "PH" }`. See the [OpenSPP service point docs](https://docs.openspp.org/developer_guide/api_v2/products_service_points) |
+| [options] | <code>object</code> | `count`, `offset` |
+
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body. For searches, the list of resources. |
+| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |
+| references | an array of all previous data objects used in the Job |
+
+**Example**
 ```js
-searchServicePoint([["name", "ilike", "agent 1"]])
-```
-**Example:** search with offset
-```js
-searchServicePoint([["name", "ilike", "agent 1"]], { offset: 100 })
+searchServicePoint({ country: "PH", contractActive: true });
 ```
 
 * * *
 
 ### unenroll
 
-<p><code>unenroll(spp_id, program_id)</code></p>
+<p><code>unenroll(beneficiary, programId, [options]) ⇒ Operation</code></p>
 
-unenroll registrant from program in OpenSPP
+Unenroll a registrant from a program by setting their membership to
+`exited`. If the membership isn't enrolled, returns it unchanged. Throws if
+the registrant has no membership in this program, or also has memberships in
+other programs, because the adaptor can't be sure OpenSPP would update the
+membership for this program.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| spp_id | <code>string</code> | spp_id of group / individual wanted to unenroll |
-| program_id | <code>string</code> | program_id of program |
+| beneficiary | <code>string</code> | Typed reference: `Individual/system\|value` or `Group/system\|value` |
+| programId | <code>string</code> | Program identifier as `system\|value` |
+| [options] | <code>object</code> | `exitDate` (YYYY-MM-DD), `exitReason` (CodeableConcept; OpenSPP doesn't save it) |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body. For searches, the list of resources. |
+| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |
+| references | an array of all previous data objects used in the Job |
 
 **Example**
 ```js
-unenroll("IND_Q4VGGZPF", "PROG_2023_00000001")
+unenroll("Individual/urn:openspp:vocab:id-type#national_id|PH-123", "urn:openspp:program|universal-child-grant");
+```
+**Example:** With exit details
+```js
+unenroll("Group/urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:program|cash-transfer", { exitDate: "2026-09-30" });
 ```
 
 * * *
 
 ### updateGroup
 
-<p><code>updateGroup(group_id, data) ⇒ Operation</code></p>
+<p><code>updateGroup(id, data, [options]) ⇒ Operation</code></p>
 
-update group for OpenSPP
+Update some fields of a group. Fields you leave out are unchanged, and
+`null` clears a field.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| group_id | <code>string</code> | group registrant id |
-| data | <code>object</code> | registrant update data |
+| id | <code>string</code> | Identifier as `system\|value` |
+| data | <code>object</code> | Fields to change |
+| [options] | <code>object</code> | `ifMatch`: ETag from a previous read, to fail if the record changed |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body. For searches, the list of resources. |
+| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |
+| references | an array of all previous data objects used in the Job |
 
 **Example**
 ```js
-updateGroup("GRP_B2BRHJN2", { name: "Group 1" })
+updateGroup("urn:openspp:vocab:id-type#household_id|HH-1", { name: "Santos-Reyes Household" });
 ```
 
 * * *
 
 ### updateIndividual
 
-<p><code>updateIndividual(individual_id, data) ⇒ Operation</code></p>
+<p><code>updateIndividual(id, data, [options]) ⇒ Operation</code></p>
 
-update individual for OpenSPP
+Update some fields of an individual. Fields you leave out are unchanged, and
+`null` clears a field.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| individual_id | <code>string</code> | individual registrant id |
-| data | <code>object</code> | registrant update data |
+| id | <code>string</code> | Identifier as `system\|value` |
+| data | <code>object</code> | Fields to change |
+| [options] | <code>object</code> | `ifMatch`: ETag from a previous read, to fail if the record changed |
 
+This operation writes the following keys to state:
+
+| State Key | Description |
+| --- | --- |
+| data | the parsed response body. For searches, the list of resources. |
+| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |
+| references | an array of all previous data objects used in the Job |
 
 **Example**
 ```js
-updateIndividual("IND_8DUQL4M4", { name: "Individual 1" })
+updateIndividual("urn:openspp:vocab:id-type#national_id|PH-123456789", { birthDate: "1985-03-16" });
 ```
 
 * * *
 
+
+##  Interfaces
+
+### OpenSPPState
+
+State object
+
+
+**Properties**
+
+| Name | Description |
+| --- | --- |
+| data | the parsed response body. For searches, the list of resources. |
+| response | the response from the HTTP server, including headers and statusCode. Searches add `page`, with `total` and `next`. |
+| references | an array of all previous data objects used in the Job |
+
+
+* * *
+
+### ProgramOptions
+
+Options for getPrograms
+
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| [name] | <code>string</code> | Filter by name |
+| [status] | <code>&#x27;active&#x27;</code> \| <code>&#x27;ended&#x27;</code> | Filter by status |
+| [targetType] | <code>&#x27;individual&#x27;</code> \| <code>&#x27;group&#x27;</code> | Filter by target type |
+| [count] | <code>number</code> | Page size, 1-100 (OpenSPP default 20) |
+| [lastId] | <code>number</code> \| <code>string</code> | Cursor for the next page: the `_lastId` value in `state.response.page.next` |
+
+
+* * *
+
+### SearchOptions
+
+Options for OpenSPP searches
+
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| count | <code>number</code> | Page size, 1-100 (OpenSPP default 20) |
+| offset | <code>number</code> | Number of records to skip |
+| sort | <code>string</code> | Individuals only: one of `name`, `birthDate` or `lastUpdated`, with a `-` prefix for descending |
+| elements | <code>string</code> \| <code>Array.&lt;string&gt;</code> | Only return these fields (individuals and groups) |
+| extensions | <code>string</code> \| <code>Array.&lt;string&gt;</code> | Include these extensions (individuals and groups) |
+
+
+* * *
 
