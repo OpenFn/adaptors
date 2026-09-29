@@ -25,6 +25,8 @@ export const createMockServer = baseUrl => {
  * test can't pass when an expected request was never sent.
  * `enableMockClient` returns the MockPool, and undici keeps the MockAgent
  * that tracks interceptors under an internal symbol.
+ * Called from `afterEach`: a failure stops the remaining tests in the file,
+ * which is intended, since unused interceptors would leak into later tests.
  */
 export const assertAllMocksUsed = mockServer => {
   const agentSymbol = Object.getOwnPropertySymbols(mockServer).find(

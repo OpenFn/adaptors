@@ -100,6 +100,13 @@ describe('execute', () => {
 
     expect(state.data).to.eql(program);
   });
+
+  it('starts with null data and no references', async () => {
+    const state = await run();
+
+    expect(state.data).to.be.null;
+    expect(state.references).to.eql([]);
+  });
 });
 
 describe('request', () => {
@@ -118,6 +125,21 @@ describe('request', () => {
 
     expect(state.data).to.eql({ data: [{ code: 'x' }] });
     expect(state.response.statusCode).to.equal(200);
+  });
+
+  it('sends the body argument as JSON', async () => {
+    testServer
+      .intercept({
+        path: `${API}/Vocabulary`,
+        method: 'POST',
+        body: jsonBody({ code: 'x' }),
+      })
+      .reply(201, { code: 'x' });
+
+    const state = await run(request('POST', '/Vocabulary', { code: 'x' }));
+
+    expect(state.data).to.eql({ code: 'x' });
+    expect(state.response.statusCode).to.equal(201);
   });
 });
 
@@ -160,20 +182,26 @@ describe('getIndividual', () => {
     expect(state.data).to.eql(individual);
   });
 
-  it('throws on a v1-style id without calling OpenSPP', async () => {
+  it('throws on a v1-style id that is not system|value', async () => {
     await expectRejection(run(getIndividual('IND_Q4VGGZPF')), error => {
-      expect(error.message).to.match(/Invalid identifier "IND_Q4VGGZPF"/);
+      expect(error.message).to.equal(
+        'Invalid identifier "IND_Q4VGGZPF". Expected "system|value", eg "urn:openspp:vocab:id-type#national_id|PH-123"'
+      );
+      expect(error.statusCode).to.be.undefined;
     });
   });
 
-  it('throws and does not keep stale data when the individual is not found', async () => {
+  it('throws with the status and detail when the individual is not found', async () => {
     testServer
       .intercept({ path: `${API}/Individual/${IND_PATH}`, method: 'GET' })
       .reply(404, { detail: 'Individual not found' });
 
     await expectRejection(run(getIndividual(IND_ID)), error => {
+      expect(error.message).to.equal(
+        `OpenSPP 404 GET /Individual/${IND_ID}: Individual not found`
+      );
       expect(error.statusCode).to.equal(404);
-      expect(error.message).to.match(/Individual not found/);
+      expect(error.body).to.eql({ detail: 'Individual not found' });
     });
   });
 });
@@ -225,9 +253,31 @@ describe('searchIndividual', () => {
     expect(state.data).to.eql([individual]);
   });
 
+  it('throws when the group filter is for a group that does not exist (OpenSPP would ignore it and return everyone)', async () => {
+    testServer
+      .intercept({
+        path: `${API}/Group/${GRP_PATH}?_elements=identifier`,
+        method: 'GET',
+      })
+      .reply(404, { detail: 'Group not found' });
+
+    await expectRejection(run(searchIndividual({ group: GRP_ID })), error => {
+      expect(error.message).to.equal(
+        `OpenSPP 404 GET /Group/${GRP_ID}: Group not found`
+      );
+      expect(error.statusCode).to.equal(404);
+    });
+  });
+
   it('throws when the group filter is not system|value (OpenSPP would ignore it and return everyone)', async () => {
     await expectRejection(run(searchIndividual({ group: 'GRP_X' })), error => {
-      expect(error.message).to.match(/Invalid identifier "GRP_X"/);
+      expect(error.message).to.match(/^Invalid identifier "GRP_X"\. Expected "system\|value"/);
+    });
+  });
+
+  it('throws when the identifier filter is not system|value (OpenSPP would ignore it and return everyone)', async () => {
+    await expectRejection(run(searchIndividual({ identifier: 'IND_X' })), error => {
+      expect(error.message).to.match(/^Invalid identifier "IND_X"\. Expected "system\|value"/);
     });
   });
 
@@ -270,8 +320,12 @@ describe('searchIndividual', () => {
 });
 
 describe('createIndividual', () => {
+  const data = {
+    identifier: individual.identifier,
+    name: { family: 'ABAD', given: 'CLARITA' },
+  };
+
   it('resolves data given as a function of state', async () => {
-    const data = { identifier: individual.identifier, name: { family: 'ABAD' } };
     testServer
       .intercept({ path: `${API}/Individual`, method: 'POST', body: jsonBody(data) })
       .reply(201, individual);
@@ -284,11 +338,6 @@ describe('createIndividual', () => {
     expect(state.data).to.eql(individual);
   });
 
-  const data = {
-    identifier: individual.identifier,
-    name: { family: 'ABAD', given: 'CLARITA' },
-  };
-
   it('creates an individual and returns it', async () => {
     testServer
       .intercept({
@@ -298,10 +347,9 @@ describe('createIndividual', () => {
       })
       .reply(201, individual);
 
-    const state = await run(createIndividual(data));
+    const state = await run(createIndividual(Object.freeze({ ...data })));
 
     expect(state.data).to.eql(individual);
-    expect(data).to.not.have.property('is_registrant');
   });
 
   it('throws before calling OpenSPP when identifier is missing', async () => {
@@ -346,9 +394,25 @@ describe('updateIndividual', () => {
     expect(state.data.birthDate).to.equal('2016-05-03');
   });
 
+  it('sends ifMatch as an If-Match header', async () => {
+    testServer
+      .intercept({
+        path: `${API}/Individual/${IND_PATH}`,
+        method: 'PATCH',
+        headers: { 'if-match': '"1790220616815078"' },
+      })
+      .reply(200, individual);
+
+    const state = await run(
+      updateIndividual(IND_ID, { active: true }, { ifMatch: '"1790220616815078"' })
+    );
+
+    expect(state.data).to.eql(individual);
+  });
+
   it('throws when data is not an object', async () => {
     await expectRejection(run(updateIndividual(IND_ID, 'nope')), error => {
-      expect(error.message).to.match(/must be an object/);
+      expect(error.message).to.equal('data must be an object, got "nope"');
     });
   });
 });
@@ -418,10 +482,38 @@ describe('updateGroup', () => {
 
     expect(state.data.name).to.equal('Abad-Santos');
   });
+
+  it('sends ifMatch as an If-Match header', async () => {
+    testServer
+      .intercept({
+        path: `${API}/Group/${GRP_PATH}`,
+        method: 'PATCH',
+        headers: { 'if-match': '"7"' },
+      })
+      .reply(200, group);
+
+    const state = await run(updateGroup(GRP_ID, { name: 'Abad' }, { ifMatch: '"7"' }));
+
+    expect(state.data).to.eql(group);
+  });
 });
 
 describe('getGroupMembers', () => {
-  it('lists the individuals in a group, optionally by role', async () => {
+  it('lists the individuals in a group', async () => {
+    groupExists();
+    testServer
+      .intercept({
+        path: `${API}/Individual?group=${encodeURIComponent(GRP_ID)}`,
+        method: 'GET',
+      })
+      .reply(200, searchResult([individual]));
+
+    const state = await run(getGroupMembers(GRP_ID));
+
+    expect(state.data).to.eql([individual]);
+  });
+
+  it('filters members by role', async () => {
     groupExists();
     testServer
       .intercept({
@@ -445,7 +537,7 @@ describe('getGroupMembers', () => {
 
     await expectRejection(run(getGroupMembers(GRP_ID)), error => {
       expect(error.statusCode).to.equal(404);
-      expect(error.message).to.match(/Group not found/);
+      expect(error.message).to.equal(`OpenSPP 404 GET /Group/${GRP_ID}: Group not found`);
     });
   });
 
@@ -540,6 +632,40 @@ describe('addToGroup', () => {
       expect(error.message).to.match(/Identifier matches more than one registrant/);
     });
   });
+
+  it('sends startDate for the new membership', async () => {
+    testServer
+      .intercept({
+        path: `${API}/Group/${GRP_PATH}/$add-member`,
+        method: 'POST',
+        body: jsonBody({
+          entity: { reference: `Individual/${IND_ID}` },
+          startDate: '2026-09-01',
+        }),
+      })
+      .reply(201, groupMember('other'));
+
+    const state = await run(
+      addToGroup(GRP_ID, IND_ID, undefined, { startDate: '2026-09-01' })
+    );
+
+    expect(state.data).to.eql(groupMember('other'));
+  });
+
+  it('sends a role given as a CodeableConcept unchanged', async () => {
+    const role = { coding: [{ system: 'urn:example:roles', code: 'caregiver' }] };
+    testServer
+      .intercept({
+        path: `${API}/Group/${GRP_PATH}/$add-member`,
+        method: 'POST',
+        body: jsonBody({ entity: { reference: `Individual/${IND_ID}` }, role }),
+      })
+      .reply(201, groupMember('caregiver'));
+
+    const state = await run(addToGroup(GRP_ID, IND_ID, role));
+
+    expect(state.data).to.eql(groupMember('caregiver'));
+  });
 });
 
 describe('removeFromGroup', () => {
@@ -558,6 +684,31 @@ describe('removeFromGroup', () => {
     const state = await run(removeFromGroup(GRP_ID, IND_ID, { reason: 'Moved out' }));
 
     expect(state.data.status).to.equal('inactive');
+  });
+
+  it('sends endedDate', async () => {
+    testServer
+      .intercept({
+        path: `${API}/Group/${GRP_PATH}/$remove-member`,
+        method: 'POST',
+        body: jsonBody({
+          entity: { reference: `Individual/${IND_ID}` },
+          endedDate: '2026-09-15',
+        }),
+      })
+      .reply(200, { ...groupMember('child'), endedDate: '2026-09-15' });
+
+    const state = await run(
+      removeFromGroup(GRP_ID, IND_ID, { endedDate: '2026-09-15' })
+    );
+
+    expect(state.data.endedDate).to.equal('2026-09-15');
+  });
+
+  it('throws on an individual id that is not system|value', async () => {
+    await expectRejection(run(removeFromGroup(GRP_ID, 'IND_X')), error => {
+      expect(error.message).to.match(/^Invalid identifier "IND_X"\. Expected "system\|value"/);
+    });
   });
 });
 
@@ -599,6 +750,12 @@ describe('getPrograms', () => {
     }
   });
 
+  it('throws when options is not an object', async () => {
+    await expectRejection(run(getPrograms('individual')), error => {
+      expect(error.message).to.equal('options must be an object, got "individual"');
+    });
+  });
+
   it('throws on order, saying programs cannot be sorted', async () => {
     await expectRejection(run(getPrograms({ order: 'name' })), error => {
       expect(error.message).to.equal(
@@ -624,7 +781,9 @@ describe('getEnrolledPrograms', () => {
 
   it('throws on an untyped beneficiary', async () => {
     await expectRejection(run(getEnrolledPrograms(IND_ID)), error => {
-      expect(error.message).to.match(/Invalid reference/);
+      expect(error.message).to.equal(
+        `Invalid reference "${IND_ID}". Expected "Individual/system|value" or "Group/system|value"`
+      );
     });
   });
 });
@@ -649,6 +808,55 @@ describe('enroll', () => {
     const state = await run(enroll(`Individual/${IND_ID}`, PROGRAM_ID));
 
     expect(state.data.status).to.equal('enrolled');
+  });
+
+  it('sends enrollmentDate for a new membership', async () => {
+    testServer
+      .intercept({ path: membershipsPath, method: 'GET' })
+      .reply(200, searchResult([]));
+    testServer
+      .intercept({
+        path: `${API}/ProgramMembership`,
+        method: 'POST',
+        body: jsonBody({
+          program: { reference: `Program/${PROGRAM_ID}` },
+          beneficiary: { reference: `Individual/${IND_ID}` },
+          status: 'enrolled',
+          enrollmentDate: '2026-09-01',
+        }),
+      })
+      .reply(201, membership('enrolled'));
+
+    const state = await run(
+      enroll(`Individual/${IND_ID}`, PROGRAM_ID, { enrollmentDate: '2026-09-01' })
+    );
+
+    expect(state.data.status).to.equal('enrolled');
+  });
+
+  it('enrolls a group', async () => {
+    const beneficiary = `Group/${GRP_ID}`;
+    testServer
+      .intercept({
+        path: `${API}/ProgramMembership?beneficiary=${encodeURIComponent(beneficiary)}&_count=100`,
+        method: 'GET',
+      })
+      .reply(200, searchResult([]));
+    testServer
+      .intercept({
+        path: `${API}/ProgramMembership`,
+        method: 'POST',
+        body: jsonBody({
+          program: { reference: `Program/${PROGRAM_ID}` },
+          beneficiary: { reference: beneficiary },
+          status: 'enrolled',
+        }),
+      })
+      .reply(201, membership('enrolled', PROGRAM_ID, beneficiary));
+
+    const state = await run(enroll(beneficiary, PROGRAM_ID));
+
+    expect(state.data.beneficiary.reference).to.equal(beneficiary);
   });
 
   it('does nothing when the beneficiary is already enrolled', async () => {
@@ -692,7 +900,22 @@ describe('enroll', () => {
       );
 
     await expectRejection(run(enroll(`Individual/${IND_ID}`, PROGRAM_ID)), error => {
-      expect(error.message).to.match(/Ambiguous membership/);
+      expect(error.message).to.equal(
+        `Ambiguous membership: Individual/${IND_ID} is in more than one program, and OpenSPP cannot safely update one of them through the API. Change the membership in OpenSPP instead.`
+      );
+    });
+  });
+
+  it('refuses to update when the memberships have more than one page', async () => {
+    testServer
+      .intercept({ path: membershipsPath, method: 'GET' })
+      .reply(200, {
+        ...searchResult([membership('exited')]),
+        links: { next: `${membershipsPath}&_offset=100` },
+      });
+
+    await expectRejection(run(enroll(`Individual/${IND_ID}`, PROGRAM_ID)), error => {
+      expect(error.message).to.match(/^Ambiguous membership: /);
     });
   });
 });
@@ -723,6 +946,32 @@ describe('unenroll', () => {
     expect(state.data.status).to.equal('exited');
   });
 
+  it('sends exitReason', async () => {
+    const exitReason = { text: 'Moved away' };
+    testServer
+      .intercept({ path: membershipsPath, method: 'GET' })
+      .reply(200, searchResult([membership('enrolled')]));
+    testServer
+      .intercept({
+        path: `${API}/ProgramMembership/${IND_PATH}`,
+        method: 'PUT',
+        body: jsonBody({
+          program: { reference: `Program/${PROGRAM_ID}` },
+          beneficiary: { reference: `Individual/${IND_ID}` },
+          status: 'exited',
+          enrollmentDate: '2024-12-16',
+          exitReason,
+        }),
+      })
+      .reply(200, membership('exited'));
+
+    const state = await run(
+      unenroll(`Individual/${IND_ID}`, PROGRAM_ID, { exitReason })
+    );
+
+    expect(state.data.status).to.equal('exited');
+  });
+
   it('does nothing when the membership is not enrolled', async () => {
     testServer
       .intercept({ path: membershipsPath, method: 'GET' })
@@ -739,7 +988,9 @@ describe('unenroll', () => {
       .reply(200, searchResult([]));
 
     await expectRejection(run(unenroll(`Individual/${IND_ID}`, PROGRAM_ID)), error => {
-      expect(error.message).to.match(/not a member of/);
+      expect(error.message).to.equal(
+        `Individual/${IND_ID} is not a member of Program/${PROGRAM_ID}`
+      );
     });
   });
 
@@ -782,6 +1033,12 @@ describe('getServicePoint', () => {
     const state = await run(getServicePoint('OpenFn Test Service Point 1'));
 
     expect(state.data).to.eql(servicePoint);
+  });
+
+  it('throws on an empty name', async () => {
+    await expectRejection(run(getServicePoint('')), error => {
+      expect(error.message).to.equal('Invalid service point name ""');
+    });
   });
 });
 

@@ -16,6 +16,9 @@ import {
   readResource,
   createResource,
   patchResource,
+  listMemberships,
+  findMembership,
+  putMembership,
 } from '../src/Utils.js';
 import {
   createMockServer,
@@ -66,14 +69,16 @@ describe('Utils', () => {
 
       const next = await authorize(state);
 
-      expect(next.configuration.access_token).to.equal('kept');
+      expect(next).to.equal(state);
     });
 
     it('throws a clear error when client credentials are missing', async () => {
       await expectRejection(
         authorize({ configuration: { baseUrl } }),
         error => {
-          expect(error.message).to.match(/clientId and clientSecret/);
+          expect(error.message).to.equal(
+            'Invalid credentials: include clientId and clientSecret in state.configuration'
+          );
         }
       );
     });
@@ -128,7 +133,7 @@ describe('Utils', () => {
       expect(response.statusCode).to.equal(201);
     });
 
-    it('sends If-Match only when ifMatch is given', async () => {
+    it('sends If-Match when ifMatch is given', async () => {
       testServer
         .intercept({
           path: '/api/v2/spp/Individual/x',
@@ -141,6 +146,20 @@ describe('Utils', () => {
         body: {},
         ifMatch: '"123"',
       });
+
+      expect(response.statusCode).to.equal(200);
+    });
+
+    it('sends no If-Match header without ifMatch', async () => {
+      testServer
+        .intercept({
+          path: '/api/v2/spp/Individual/x',
+          method: 'PATCH',
+          headers: headers => !('if-match' in headers),
+        })
+        .reply(200, {});
+
+      const response = await request(authed, 'PATCH', '/Individual/x', { body: {} });
 
       expect(response.statusCode).to.equal(200);
     });
@@ -256,6 +275,7 @@ describe('Utils', () => {
         request(authed, 'GET', 'https://evil.example.com/x'),
         error => {
           expect(error.code).to.equal('UNEXPECTED_ABSOLUTE_URL');
+          expect(error.url).to.equal('https://evil.example.com/x');
         }
       );
     });
@@ -338,7 +358,9 @@ describe('Utils', () => {
     });
 
     it('throws when the identifier is not a string', () => {
-      expect(() => encodeIdentifier(undefined)).to.throw(/Invalid identifier/);
+      expect(() => encodeIdentifier(undefined)).to.throw(
+        /^Invalid identifier "undefined"\. Expected "system\|value"/
+      );
     });
   });
 
@@ -360,7 +382,7 @@ describe('Utils', () => {
 
     it('throws when the reference has no type prefix', () => {
       expect(() => parseReference('urn:x|1', ['Individual'])).to.throw(
-        /Invalid reference/
+        'Invalid reference "urn:x|1". Expected "Individual/system|value"'
       );
     });
   });
@@ -387,6 +409,13 @@ describe('Utils', () => {
   });
 
   describe('buildQuery', () => {
+    it('maps lastId and a list of extensions', () => {
+      expect(buildQuery({}, { lastId: 42, extensions: ['a', 'b'] })).to.eql({
+        _lastId: 42,
+        _extensions: 'a,b',
+      });
+    });
+
     it('maps adaptor options to OpenSPP parameters and drops undefined values', () => {
       expect(
         buildQuery(
@@ -499,15 +528,58 @@ describe('Utils', () => {
       expect(response.body).to.eql({ data: [] });
     });
 
-    it('throws on an Odoo domain or a malformed group without sending a request', async () => {
+    it('throws when a group filter is for a group that does not exist', async () => {
+      testServer
+        .intercept({
+          path: `/api/v2/spp/Group/${encodeURIComponent(GROUP)}?_elements=identifier`,
+          method: 'GET',
+        })
+        .reply(404, { detail: 'Group not found' });
+
+      await expectRejection(
+        searchResource(authed, 'Individual', { group: GROUP }),
+        error => expect(error.statusCode).to.equal(404)
+      );
+    });
+
+    it('does not look up the group for group: "none"', async () => {
+      testServer
+        .intercept({ path: '/api/v2/spp/Individual?group=none', method: 'GET' })
+        .reply(200, { data: [] });
+
+      const response = await searchResource(authed, 'Individual', { group: 'none' });
+
+      expect(response.body).to.eql({ data: [] });
+    });
+
+    it('only looks up the group when searching individuals', async () => {
+      testServer
+        .intercept({ path: `/api/v2/spp/Group?group=${encodeURIComponent(GROUP)}`, method: 'GET' })
+        .reply(200, { data: [] });
+
+      const response = await searchResource(authed, 'Group', { group: GROUP });
+
+      expect(response.body).to.eql({ data: [] });
+    });
+
+    it('throws on an Odoo domain', async () => {
       await expectRejection(
         searchResource(authed, 'Individual', [['name', '=', 'X']]),
-        error => expect(error.message).to.match(/Odoo domains/)
+        error =>
+          expect(error.message).to.equal(
+            'query must be an object of OpenSPP search parameters, eg { name: "Santos" }. Odoo domains like [["name","=","X"]] are not supported'
+          )
       );
-      await expectRejection(
-        searchResource(authed, 'Individual', { group: 'GRP_X' }),
-        error => expect(error.message).to.match(/Invalid identifier "GRP_X"/)
-      );
+    });
+
+    it('throws on a malformed identifier or group filter', async () => {
+      for (const key of ['identifier', 'group']) {
+        await expectRejection(
+          searchResource(authed, 'Individual', { [key]: 'X_1' }),
+          error =>
+            expect(error.message).to.match(/^Invalid identifier "X_1"\. Expected "system\|value"/)
+        );
+      }
     });
   });
 
@@ -541,6 +613,7 @@ describe('Utils', () => {
       const response = await createResource(authed, 'Group', data);
 
       expect(response.statusCode).to.equal(201);
+      expect(response.body).to.eql(data);
     });
 
     it('throws without an identifier, before sending a request', async () => {
@@ -567,6 +640,146 @@ describe('Utils', () => {
       const response = await patchResource(authed, 'Individual', ID, { birthDate: '2000-01-01' }, { ifMatch: '"7"' });
 
       expect(response.body).to.eql({ birthDate: '2000-01-01' });
+    });
+  });
+
+  describe('program memberships', () => {
+    const authed = { ...configuration, access_token: 'abc' };
+    const BENEFICIARY = 'Individual/urn:openspp:vocab:id-type#national_id|PH-1';
+    const BENEFICIARY_PATH = encodeURIComponent('urn:openspp:vocab:id-type#national_id|PH-1');
+    const PROGRAM = 'urn:openspp:program|cash';
+    const OTHER_PROGRAM = 'urn:openspp:program|food';
+    const membershipsPath = `/api/v2/spp/ProgramMembership?beneficiary=${encodeURIComponent(BENEFICIARY)}&_count=100`;
+    const membershipIn = (program, status = 'enrolled') => ({
+      program: { reference: `Program/${program}` },
+      beneficiary: { reference: BENEFICIARY },
+      status,
+      enrollmentDate: '2024-12-16',
+    });
+    const page = (memberships, next = null) => ({
+      data: memberships,
+      meta: { total: memberships.length },
+      links: { next },
+    });
+
+    describe('listMemberships', () => {
+      it('reads up to 100 memberships of a beneficiary with extra filters', async () => {
+        testServer
+          .intercept({ path: `${membershipsPath.replace('&_count', '&status=enrolled&_count')}`, method: 'GET' })
+          .reply(200, page([membershipIn(PROGRAM)]));
+
+        const response = await listMemberships(authed, BENEFICIARY, { status: 'enrolled' });
+
+        expect(response.body.data).to.eql([membershipIn(PROGRAM)]);
+      });
+    });
+
+    describe('findMembership', () => {
+      it('finds the membership for the program', async () => {
+        testServer
+          .intercept({ path: membershipsPath, method: 'GET' })
+          .reply(200, page([membershipIn(PROGRAM)]));
+
+        const found = await findMembership(authed, BENEFICIARY, PROGRAM);
+
+        expect(found.membership).to.eql(membershipIn(PROGRAM));
+        expect(found.programReference).to.equal(`Program/${PROGRAM}`);
+        expect(found.isAmbiguous).to.equal(false);
+      });
+
+      it('returns no membership when the beneficiary is not in the program', async () => {
+        testServer
+          .intercept({ path: membershipsPath, method: 'GET' })
+          .reply(200, page([membershipIn(OTHER_PROGRAM)]));
+
+        const found = await findMembership(authed, BENEFICIARY, PROGRAM);
+
+        expect(found.membership).to.be.undefined;
+        expect(found.isAmbiguous).to.equal(false);
+      });
+
+      it('is ambiguous with more than one membership', async () => {
+        testServer
+          .intercept({ path: membershipsPath, method: 'GET' })
+          .reply(200, page([membershipIn(PROGRAM), membershipIn(OTHER_PROGRAM)]));
+
+        const found = await findMembership(authed, BENEFICIARY, PROGRAM);
+
+        expect(found.isAmbiguous).to.equal(true);
+      });
+
+      it('is ambiguous when there is another page of memberships', async () => {
+        testServer
+          .intercept({ path: membershipsPath, method: 'GET' })
+          .reply(200, page([membershipIn(PROGRAM)], `${membershipsPath}&_offset=100`));
+
+        const found = await findMembership(authed, BENEFICIARY, PROGRAM);
+
+        expect(found.isAmbiguous).to.equal(true);
+      });
+
+      it('throws on an untyped beneficiary', async () => {
+        await expectRejection(findMembership(authed, 'urn:x|1', PROGRAM), error =>
+          expect(error.message).to.match(/^Invalid reference "urn:x\|1"/)
+        );
+      });
+
+      it('throws on a program id that is not system|value', async () => {
+        await expectRejection(findMembership(authed, BENEFICIARY, 'cash'), error =>
+          expect(error.message).to.match(/^Invalid identifier "cash"/)
+        );
+      });
+    });
+
+    describe('putMembership', () => {
+      const found = {
+        membership: membershipIn(PROGRAM),
+        programReference: `Program/${PROGRAM}`,
+        isAmbiguous: false,
+      };
+
+      it('puts the membership with the new status and the given exit details', async () => {
+        testServer
+          .intercept({
+            path: `/api/v2/spp/ProgramMembership/${BENEFICIARY_PATH}`,
+            method: 'PUT',
+            body: jsonBody({
+              ...membershipIn(PROGRAM, 'exited'),
+              exitDate: '2026-09-30',
+              exitReason: { text: 'Moved' },
+            }),
+          })
+          .reply(200, membershipIn(PROGRAM, 'exited'));
+
+        const response = await putMembership(authed, BENEFICIARY, found, {
+          status: 'exited',
+          exitDate: '2026-09-30',
+          exitReason: { text: 'Moved' },
+        });
+
+        expect(response.body.status).to.equal('exited');
+      });
+
+      it('refuses an ambiguous membership', async () => {
+        await expectRejection(
+          putMembership(authed, BENEFICIARY, { ...found, isAmbiguous: true }, { status: 'exited' }),
+          error => expect(error.message).to.match(/^Ambiguous membership: /)
+        );
+      });
+
+      it('throws when OpenSPP updated a membership in another program', async () => {
+        testServer
+          .intercept({ path: `/api/v2/spp/ProgramMembership/${BENEFICIARY_PATH}`, method: 'PUT' })
+          .reply(200, membershipIn(OTHER_PROGRAM, 'exited'));
+
+        await expectRejection(
+          putMembership(authed, BENEFICIARY, found, { status: 'exited' }),
+          error =>
+            expect(error.message).to.equal(
+              `OpenSPP updated a membership in a different program (Program/${OTHER_PROGRAM}) instead of Program/${PROGRAM}. Check this beneficiary's memberships in OpenSPP.`
+            )
+        );
+      });
     });
   });
 
