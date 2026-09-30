@@ -837,25 +837,6 @@ describe('list', () => {
     expect(data.length).to.equal(2);
     expect(data[0]).to.haveOwnProperty('form_id');
   });
-
-  it('should use an explicit resultsKey when provided', async () => {
-    testServer
-      .intercept({
-        path: new RegExp(`/a/${domain}/api/case/v2`),
-        method: 'GET',
-      })
-      .reply(200, () => ({
-        cases: [{ case_id: '1' }],
-        related: [{ case_id: 'related-1' }],
-        next: null,
-      }));
-
-    const state = { configuration };
-    const { data } = await execute(list('case', { resultsKey: 'cases' }))(state);
-
-    expect(data.length).to.equal(1);
-    expect(data[0].case_id).to.equal('1');
-  });
 });
 
 describe('getResource', () => {
@@ -875,52 +856,18 @@ describe('getResource', () => {
   });
 
   it('should fetch multiple resources by array of IDs', async () => {
-    ['abc', 'def', 'ghi'].forEach(id => {
-      testServer
-        .intercept({
-          path: `/a/${domain}/api/case/v2/${id}`,
-          method: 'GET',
-        })
-        .reply(200, () => ({ case_id: id }));
-    });
-
-    const state = { configuration };
-    const { data } = await execute(getResource('case', ['abc', 'def', 'ghi']))(state);
-
-    expect(Array.isArray(data)).to.be.true;
-    expect(data.length).to.equal(3);
-    expect(data.map(d => d.case_id)).to.eql(['abc', 'def', 'ghi']);
-  });
-
-  it('should deduplicate IDs before fetching', async () => {
-    let callCount = 0;
     testServer
       .intercept({
-        path: `/a/${domain}/api/case/v2/abc`,
+        path: `/a/${domain}/api/case/v2/abc,def`,
         method: 'GET',
       })
-      .reply(200, () => {
-        callCount++;
-        return { case_id: 'abc' };
-      })
-      .times(1);
-
-    testServer
-      .intercept({
-        path: `/a/${domain}/api/case/v2/def`,
-        method: 'GET',
-      })
-      .reply(200, () => {
-        callCount++;
-        return { case_id: 'def' };
-      })
-      .times(1);
+      .reply(200, () => ({ cases: [{ case_id: 'abc' }, { case_id: 'def' }] }));
 
     const state = { configuration };
-    const { data } = await execute(getResource('case', ['abc', 'abc', 'def', 'abc']))(state);
+    const { data } = await execute(getResource('case', ['abc', 'def']))(state);
 
-    expect(callCount).to.equal(2);
-    expect(data.length).to.equal(2);
+    expect(Array.isArray(data.cases)).to.be.true;
+    expect(data.cases.length).to.equal(2);
   });
 
   it('should filter out falsy IDs', async () => {
@@ -929,26 +876,11 @@ describe('getResource', () => {
         path: `/a/${domain}/api/case/v2/abc`,
         method: 'GET',
       })
-      .reply(200, () => ({ case_id: 'abc' }));
+      .reply(200, () => ({ cases: [{ case_id: 'abc' }] }));
 
     const state = { configuration };
     const { data } = await execute(getResource('case', ['abc', null, '', undefined]))(state);
 
-    expect(data.length).to.equal(1);
-    expect(data[0].case_id).to.equal('abc');
-  });
-
-  it('should throw when no valid IDs remain', async () => {
-    const state = { configuration };
-
-    let thrown;
-    try {
-      await execute(getResource('case', [null, '', undefined]))(state);
-    } catch (e) {
-      thrown = e;
-    }
-
-    expect(thrown).to.exist;
-    expect(thrown.message).to.match(/at least one ID/i);
+    expect(data.cases.length).to.equal(1);
   });
 });

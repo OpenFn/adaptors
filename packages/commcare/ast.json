@@ -115,8 +115,8 @@
           },
           {
             "title": "example",
-            "description": "getResource('case', ['abc123', 'def456', 'ghi789']);",
-            "caption": "Fetch multiple cases"
+            "description": "getResource('case', ['abc', 'def', 'ghi', 'jkl']);",
+            "caption": "Fetch an array of case IDs"
           },
           {
             "title": "param",
@@ -168,7 +168,7 @@
           },
           {
             "title": "state",
-            "description": "{CommcareState}"
+            "description": "{CommcareHttpState}"
           },
           {
             "title": "returns",

@@ -6,6 +6,7 @@ import xlsx from 'xlsx';
 
 import * as util from './Utils.js';
 
+
 let hasWarnedDeprecated = false;
 function warnDeprecated(message) {
   if (!hasWarnedDeprecated) {
@@ -26,8 +27,9 @@ function warnDeprecated(message) {
 /**
  * List Operation Options
  * @typedef {Object} ListOptions
- * @property {string} [resultsKey] - The property where the results are stored e.g. `cases` for fetching case data
  * @property {Object} [params] - HTTP query parameters passed through to CommCare
+ * @property {string} [apiVersion] - REST API version to use for the request. Falls back to v2 if not declared
+ * @property {string|string[]} [resourceIds] - Resource IDs
  * @property {Object} [headers] - Additional HTTP request headers
  */
 
@@ -98,7 +100,10 @@ export function list(resourceType, options = {}) {
   return async state => {
     const [resolvedResourceType, resolvedOptions] = expandReferences(state, resourceType, options);
     try {
-      const data = await util.requestWithPagination(state.configuration, resolvedResourceType, resolvedOptions);
+      const data = await util.requestWithPagination(state.configuration, resolvedResourceType, {
+        ...resolvedOptions,
+        parseAs: 'json'
+      });
       const nextState = util.prepareNextState(state, data);
 
       return {
@@ -106,9 +111,6 @@ export function list(resourceType, options = {}) {
         data
       };
     } catch (e) {
-      if (e.statusCode === 404) {
-        e.body = { error: `Resource ${resolvedResourceType} not found` };
-      }
       throw e;
     }
   }
@@ -122,58 +124,50 @@ export function list(resourceType, options = {}) {
  * @function
  * @example <caption>Fetch a single case by ID</caption>
  * getResource('case', '30517b8d62db4e37ab62c08ad94df10f');
- * 
- * @example <caption>Fetch multiple cases</caption>
- * getResource('case', ['abc123', 'def456', 'ghi789']);
- *  
+ * @example <caption>Fetch an array of case IDs</caption>
+ * getResource('case', ['abc', 'def', 'ghi', 'jkl']);
  * @param {string} resourceType - The CommCare resource to fetch (e.g. `case`, `location`).
  * @param {string|string[]} id - Resource ID, or array of IDs to fetch in parallel.
  * @param {GetResourceOptions} [options] - Configuration options for the request.
- * @state {CommcareState}
+ * @state {CommcareHttpState}
  * @returns {Operation}
  */
 export function getResource(resourceType, id, options = {}) {
   return async state => {
-    const [resolvedResourceType, resolvedIds, resolvedOptions] = expandReferences(
+    let [resolvedResourceType, resolvedId, resolvedOptions] = expandReferences(
       state,
       resourceType,
       id,
       options
     );
 
-    let ids = Array.isArray(resolvedIds) ? resolvedIds : [resolvedIds];
-    ids = [...new Set(ids.filter(Boolean))];
-
-    if (ids.length === 0) {
+    if (!resolvedId) {
       throw new Error(
-        "Please include at least one ID, e.g. getResource('case', 'abcd1245')"
+        "Please include at least a resource ID, e.g. getResource('case', 'abcd1245')"
       );
     }
 
+    if (Array.isArray(resolvedId)) {
+      resolvedId = resolvedId.filter(Boolean);
+    }
+
     const { domain, apiVersion = 'v2' } = state.configuration;
-    const basePath = `/a/${domain}/api/${resolvedResourceType}/${apiVersion}`;
+    const url = util.buildUrl(resolvedResourceType, domain, apiVersion, resolvedId);
+
 
     try {
-      const responses = await Promise.all(
-        ids.map(id =>
-          util.request(state.configuration, `${basePath}/${id}`, {
-            ...resolvedOptions,
-            method: 'GET'
-          })
-        )
-      );
+      const response = await util.request(state.configuration, url, {
+        ...resolvedOptions,
+        method: 'GET',
+        parseAs: 'json'
+      });
 
-      const bodies = responses.map(r => r.body);
-      const data = Array.isArray(resolvedIds) ? bodies : bodies[0];
-      const nextState = util.prepareNextState(state, data);
+      const nextState = util.prepareNextState(state, response.body ?? {});
       return {
         ...nextState,
-        data
+        data: response?.body
       };
     } catch (e) {
-      if (e.statusCode === 404) {
-        e.body = { error: `Resource ${resolvedResourceType} not found` };
-      }
       throw e;
     }
   }
@@ -207,8 +201,8 @@ export function getResource(resourceType, id, options = {}) {
 export function get(path, params = {}, callback = s => s) {
   warnDeprecated(
     "DEPRECATION WARNING: get() only works with CommCare's legacy v0.5 API " +
-      '(/a/domain/api/v0.5/...). Use http.get() for current CommCare APIs. ' +
-      'get() will be removed in a future major version.',
+    '(/a/domain/api/v0.5/...). Use http.get() for current CommCare APIs. ' +
+    'get() will be removed in a future major version.',
   );
   return async state => {
     const { domain } = state.configuration;
@@ -302,8 +296,8 @@ export function get(path, params = {}, callback = s => s) {
 export function post(path, data, params = {}, callback = s => s) {
   warnDeprecated(
     "DEPRECATION WARNING: post() only works with CommCare's legacy v0.5 API " +
-      '(/a/domain/api/v0.5/...). Use http.post() for current CommCare APIs. ' +
-      'post() will be removed in a future major version.',
+    '(/a/domain/api/v0.5/...). Use http.post() for current CommCare APIs. ' +
+    'post() will be removed in a future major version.',
   );
   return async state => {
     const { domain } = state.configuration;
@@ -489,8 +483,8 @@ export function fetchReportData(reportId, params, postUrl) {
 export function request(method, path, body, params = {}) {
   warnDeprecated(
     'DEPRECATION WARNING: request() is designed around the legacy v0.5 API. ' +
-      'Use http.request() instead. ' +
-      'request() will be removed in a future major version.',
+    'Use http.request() instead. ' +
+    'request() will be removed in a future major version.',
   );
   return async state => {
     const [resolvedMethod, resolvedPath, resolvedBody, resolvedParams] =
