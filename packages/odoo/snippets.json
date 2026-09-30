@@ -1,0 +1,26 @@
+{
+  "CREATE": {
+    "Create Lead": {
+      "description": "Creates a lead.",
+      "code": "// Create a CRM lead in Odoo.\ncreate(\n  // Odoo model name.\n  'crm.lead',\n  // Field values.\n  {\n    name:        $.data.opportunityName,\n    contact_name: $.data.contactName,\n    email_from:  $.data.email,\n    phone:       $.data.phone,\n  }\n);"
+    },
+    "Create/Update Module Entry": {
+      "description": "Creates or updates a module entry.",
+      "code": "// Create (or update) a record in any Odoo model.\n// To create:\ncreate('res.partner', {\n  name:  $.data.name,\n  email: $.data.email,\n});\n\n// To update an existing record:\n// update('res.partner', $.data.partnerId, { email: $.data.email });"
+    },
+    "Relate Module Entry": {
+      "description": "Relates an entry in this module with an entry in another module.",
+      "code": "// Set a many2one relation field by writing the related id.\nupdate(\n  // Model owning the relation field.\n  'crm.lead',\n  // Record id on that model.\n  $.data.leadId,\n  // Many2one fields take just the related id.\n  { partner_id: $.data.partnerId }\n);"
+    }
+  },
+  "SEARCH": {
+    "Find Module Entry": {
+      "description": "Finds an entry in a module.",
+      "code": "// Search a model with an Odoo domain filter and pull a single record back.\nsearchReadRecord(\n  'res.partner',\n  // Odoo domain: array of triples or logical operators.\n  [['email', '=', $.data.email]],\n  // Fields to return.\n  ['id', 'name', 'email']\n);"
+    },
+    "Find Multiple Module Entries": {
+      "description": "Finds multiple entries in a module (with line item support).",
+      "code": "// Search a model and return many records.\nsearchReadRecord(\n  'crm.lead',\n  // Domain — leads created in the last 30 days.\n  [['create_date', '>=', '2026-04-01']],\n  ['id', 'name', 'email_from', 'stage_id']\n);"
+    }
+  }
+}
