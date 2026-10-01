@@ -6,6 +6,7 @@ import {
   sheetToJson,
   sheetToCsv,
   jsonToSheet,
+  xlsx as exportedXlsx,
 } from '../src/Adaptor.js';
 import { toBuf, toBase64, toText, localDateParts } from './helpers.js';
 
@@ -95,11 +96,22 @@ describe('parse', () => {
     expect(finalState.data).to.eql([{ abcd: 'efgh' }]);
   });
 
+  it('rejects a Uint8Array and suggests Buffer.from()', async () => {
+    try {
+      await parse(new Uint8Array(toBuf('sample.xlsx')))(state);
+    } catch (e) {
+      expect(e.message).to.match(/must be a Buffer or string/);
+      expect(e.message).to.match(/Buffer\.from\(\)/);
+      return;
+    }
+    expect.fail('should have thrown');
+  });
+
   it('throws if the content is not a buffer or string', async () => {
     try {
       await parse(42)(state);
     } catch (e) {
-      expect(e.message).to.match(/must be a Buffer, Uint8Array or string/);
+      expect(e.message).to.match(/must be a Buffer or string/);
       return;
     }
     expect.fail('should have thrown');
@@ -219,7 +231,7 @@ describe('sheetToJson', () => {
     try {
       await sheetToJson(null, { sheetName: 'Orders' })(state);
     } catch (e) {
-      expect(e.message).to.match(/must be a Buffer, Uint8Array or string/);
+      expect(e.message).to.match(/must be a Buffer or string/);
       return;
     }
     expect.fail('should have thrown');
@@ -368,6 +380,23 @@ describe('jsonToSheet', () => {
       return;
     }
     expect.fail('should have thrown');
+  });
+});
+
+describe('xlsx', () => {
+  it('exports the full SheetJS library', () => {
+    expect(exportedXlsx.utils).to.equal(xlsx.utils);
+    expect(exportedXlsx.read).to.equal(xlsx.read);
+    expect(exportedXlsx.utils.sheet_to_json).to.be.a('function');
+  });
+
+  it('can read a workbook directly', () => {
+    const workbook = exportedXlsx.read(toBase64('sample.xlsx'), {
+      type: 'base64',
+    });
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const rows = exportedXlsx.utils.sheet_to_json(sheet, { header: 1 });
+    expect(rows).to.be.an('array').that.is.not.empty;
   });
 });
 

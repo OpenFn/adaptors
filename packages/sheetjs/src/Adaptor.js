@@ -19,9 +19,9 @@ import {
  **/
 
 /**
- * File content to read. Accepts a Buffer, a Uint8Array, a base64 string, a
- * base64 data URL, or the raw text of a CSV file.
- * @typedef {Buffer|Uint8Array|string} FileContent
+ * File content to read. Accepts a Buffer, a base64 string, a base64 data
+ * URL, or the raw text of a CSV file.
+ * @typedef {Buffer|string} FileContent
  * @private
  **/
 
@@ -294,6 +294,22 @@ export function jsonToSheet(data, options = {}) {
     });
   };
 }
+
+/**
+ * The full SheetJS library, for anything the convenience operations above
+ * don't cover. See the {@link https://docs.sheetjs.com/docs/api SheetJS API docs}.
+ * @public
+ * @example <caption>Read a workbook and convert a named sheet yourself</caption>
+ * fn(state => {
+ *   const workbook = xlsx.read(state.data.fileContent, { type: 'base64' });
+ *   state.rows = xlsx.utils.sheet_to_json(workbook.Sheets['Sheet1'], {
+ *     header: 1,
+ *     raw: false,
+ *   });
+ *   return state;
+ * });
+ */
+export * as xlsx from 'xlsx';
 
 export {
   as,

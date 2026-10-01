@@ -102,6 +102,25 @@ jsonToSheet($.data.records, {
 Note that SheetJS prefixes `csv` output with a UTF-8 BOM so that Excel opens it
 with the right encoding.
 
+### Using SheetJS directly
+
+The operations above cover the common steps. For anything else, the full
+SheetJS library is available in job code as `xlsx`:
+
+```js
+fn(state => {
+  const workbook = xlsx.read(state.data.fileContent, { type: 'base64' });
+  state.rows = xlsx.utils.sheet_to_json(workbook.Sheets['Sheet1'], {
+    header: 1,
+    raw: false,
+  });
+  return state;
+});
+```
+
+See the [SheetJS API docs](https://docs.sheetjs.com/docs/api) for everything
+it can do.
+
 ## Notes
 
 ### Working with untrusted files

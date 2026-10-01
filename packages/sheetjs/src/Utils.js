@@ -23,12 +23,9 @@ export function decodeContent(content, type) {
   if (Buffer.isBuffer(content)) {
     return { data: content, type: 'buffer' };
   }
-  if (content instanceof Uint8Array || content instanceof ArrayBuffer) {
-    return { data: Buffer.from(content), type: 'buffer' };
-  }
   if (typeof content !== 'string') {
     throw new Error(
-      'sheetjs: file content must be a Buffer, Uint8Array or string'
+      'sheetjs: file content must be a Buffer or string. Wrap binary data in Buffer.from() first'
     );
   }
 
