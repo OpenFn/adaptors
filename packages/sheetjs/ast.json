@@ -25,11 +25,6 @@
             "caption": "Declare the content type explicitly"
           },
           {
-            "title": "example",
-            "description": "parse($.data.fileContent, { cellDates: false });",
-            "caption": "Keep Excel date serial numbers instead of Date objects"
-          },
-          {
             "title": "function",
             "description": null,
             "name": null
@@ -101,6 +96,11 @@
             "title": "example",
             "description": "sheetToJson($.data.fileContent, { range: 'A2:D40', defval: null });",
             "caption": "Only read a fixed range, and fill empty cells"
+          },
+          {
+            "title": "example",
+            "description": "sheetToJson($.data.fileContent, { cellDates: false });",
+            "caption": "Keep Excel date serial numbers instead of Date objects"
           },
           {
             "title": "function",
