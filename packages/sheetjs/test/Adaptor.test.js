@@ -12,6 +12,12 @@ import { toBuf, toBase64, toText, localDateParts } from './helpers.js';
 
 const state = { configuration: {}, data: {} };
 
+const toWorkbookBuffer = aoa => {
+  const workbook = xlsx.utils.book_new();
+  xlsx.utils.book_append_sheet(workbook, xlsx.utils.aoa_to_sheet(aoa), 'S');
+  return xlsx.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+};
+
 describe('parse', () => {
   it('exposes the sheet names of an xlsx buffer', async () => {
     const finalState = await parse(toBuf('sample.xlsx'))(state);
@@ -96,6 +102,16 @@ describe('parse', () => {
     expect(finalState.data).to.eql([{ abcd: 'efgh' }]);
   });
 
+  it('accepts cellDates: false', async () => {
+    // parse only exposes sheet names, so all we can check is that the option
+    // reaches SheetJS without breaking the read
+    const finalState = await parse(toBuf('sample.xlsx'), { cellDates: false })(
+      state
+    );
+
+    expect(finalState.data.sheetNames).to.eql(['People', 'Orders']);
+  });
+
   it('rejects a Uint8Array and suggests Buffer.from()', async () => {
     try {
       await parse(new Uint8Array(toBuf('sample.xlsx')))(state);
@@ -145,6 +161,30 @@ describe('sheetToJson', () => {
 
     expect(finalState.data[0].age).to.equal('34');
     expect(finalState.data[0].dateOfBirth).to.equal('5/12/91');
+  });
+
+  it('returns Excel serial numbers for dates when cellDates is false', async () => {
+    const finalState = await sheetToJson(toBuf('sample.xlsx'), {
+      cellDates: false,
+    })(state);
+
+    const { dateOfBirth } = finalState.data[0];
+    expect(dateOfBirth).to.be.a('number');
+    // 33370 is 1991-05-12; the fraction depends on the fixture's timezone
+    expect(Math.floor(dateOfBirth)).to.equal(33370);
+  });
+
+  it('formats dates with dateNF when raw is false', async () => {
+    const finalState = await sheetToJson(toBuf('sample.xlsx'), {
+      sheetName: 'Orders',
+      raw: false,
+      dateNF: 'yyyy-mm-dd',
+    })(state);
+
+    expect(finalState.data.map(row => row.orderedAt)).to.eql([
+      '2024-01-15',
+      '2024-02-02',
+    ]);
   });
 
   it('selects a sheet by name', async () => {
@@ -299,6 +339,61 @@ describe('sheetToCsv', () => {
 
     expect(finalState.data).to.include('ORD-2,99');
   });
+
+  describe('options', () => {
+    // A formatted number, a trailing empty cell and a blank row between records
+    const buffer = toWorkbookBuffer([
+      ['id', 'amount', 'note'],
+      [1, { t: 'n', v: 1250.5, z: '#,##0.00' }, ''],
+      [],
+      [2, 99],
+    ]);
+
+    it('writes formatted numbers, blank rows and trailing separators by default', async () => {
+      const finalState = await sheetToCsv(buffer)(state);
+
+      expect(finalState.data).to.equal(
+        'id,amount,note\n1,"1,250.50",\n,,\n2,99,'
+      );
+    });
+
+    it('uses a custom row separator', async () => {
+      const finalState = await sheetToCsv(buffer, { RS: '\r\n' })(state);
+
+      expect(finalState.data).to.equal(
+        'id,amount,note\r\n1,"1,250.50",\r\n,,\r\n2,99,'
+      );
+    });
+
+    it('strips trailing field separators', async () => {
+      const finalState = await sheetToCsv(buffer, { strip: true })(state);
+
+      expect(finalState.data).to.equal('id,amount,note\n1,"1,250.50"\n\n2,99');
+    });
+
+    it('omits blank rows when blankrows is false', async () => {
+      const finalState = await sheetToCsv(buffer, { blankrows: false })(state);
+
+      expect(finalState.data).to.equal('id,amount,note\n1,"1,250.50",\n2,99,');
+    });
+
+    it('writes raw numbers rather than formatted text', async () => {
+      const finalState = await sheetToCsv(buffer, { rawNumbers: true })(state);
+
+      expect(finalState.data).to.equal('id,amount,note\n1,1250.5,\n,,\n2,99,');
+    });
+
+    it('formats dates with dateNF', async () => {
+      const finalState = await sheetToCsv(toBuf('sample.xlsx'), {
+        sheetName: 'Orders',
+        dateNF: 'yyyy-mm-dd',
+      })(state);
+
+      expect(finalState.data).to.equal(
+        'orderId,amount,orderedAt\nORD-1,1250.5,2024-01-15\nORD-2,99,2024-02-02'
+      );
+    });
+  });
 });
 
 describe('jsonToSheet', () => {
@@ -362,6 +457,19 @@ describe('jsonToSheet', () => {
     );
   });
 
+  it('returns a base64 csv file when output is base64 and bookType is csv', async () => {
+    const finalState = await jsonToSheet(records, {
+      output: 'base64',
+      bookType: 'csv',
+    })(state);
+
+    expect(finalState.data).to.not.have.property('buffer');
+    expect(finalState.data.bookType).to.equal('csv');
+    expect(Buffer.from(finalState.data.base64, 'base64').toString('utf8')).to.equal(
+      '\uFEFFid,name\n1,Amara\n2,Bukayo'
+    );
+  });
+
   it('throws if the data is not an array', async () => {
     try {
       await jsonToSheet({ id: 1 })(state);
@@ -401,12 +509,6 @@ describe('xlsx', () => {
 });
 
 describe('security and edge cases', () => {
-  const toWorkbookBuffer = aoa => {
-    const workbook = xlsx.utils.book_new();
-    xlsx.utils.book_append_sheet(workbook, xlsx.utils.aoa_to_sheet(aoa), 'S');
-    return xlsx.write(workbook, { type: 'buffer', bookType: 'xlsx' });
-  };
-
   it('does not pollute Object.prototype via a __proto__ header', async () => {
     const buffer = toWorkbookBuffer([
       ['__proto__', 'constructor', 'polluted'],

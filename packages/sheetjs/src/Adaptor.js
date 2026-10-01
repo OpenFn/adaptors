@@ -48,7 +48,8 @@ import {
  * @property {string|number} range - Range to read, eg `'A2:D40'`, or a row number to start from.
  * @property {boolean} raw - Return raw cell values (numbers as numbers, dates as `Date`). Set `false` to get each cell's formatted text instead. Default: `true`.
  * @property {*} defval - Value to use for empty cells. Omitted from the row by default.
- * @property {string} dateNF - Date format to use when stringifying dates.
+ * @property {boolean} cellDates - Return dates as JS `Date` objects rather than Excel serial numbers. Default: `true`.
+ * @property {string} dateNF - Date format to use for dates when `raw` is `false`, eg `'yyyy-mm-dd'`. Applies to cells with the default date format.
  * @property {boolean} blankrows - Include blank rows in the output.
  * @property {'buffer'|'base64'|'string'|'binary'|'array'} type - Content type, when passing raw file content.
  */
@@ -64,7 +65,7 @@ import {
  * @property {string} RS - Row separator. Default: `'\n'`.
  * @property {boolean} blankrows - Include blank rows in the output. Default: `true`.
  * @property {boolean} rawNumbers - Use raw numbers rather than formatted text.
- * @property {string} dateNF - Date format to use when stringifying dates.
+ * @property {string} dateNF - Date format to use for dates, eg `'yyyy-mm-dd'`. Applies to cells with the default date format.
  * @property {boolean} strip - Strip trailing field separators from each record.
  * @property {'buffer'|'base64'|'string'|'binary'|'array'} type - Content type, when passing raw file content.
  */
@@ -97,8 +98,6 @@ import {
  * parse($.data.fileContent);
  * @example <caption>Declare the content type explicitly</caption>
  * parse($.data.fileContent, { type: 'base64' });
- * @example <caption>Keep Excel date serial numbers instead of Date objects</caption>
- * parse($.data.fileContent, { cellDates: false });
  * @function
  * @param {FileContent} content - The file content to parse
  * @param {ParseOptions} options - Optional parse options
@@ -133,6 +132,8 @@ export function parse(content, options = {}) {
  * sheetToJson($.data.fileContent, { header: 1 });
  * @example <caption>Only read a fixed range, and fill empty cells</caption>
  * sheetToJson($.data.fileContent, { range: 'A2:D40', defval: null });
+ * @example <caption>Keep Excel date serial numbers instead of Date objects</caption>
+ * sheetToJson($.data.fileContent, { cellDates: false });
  * @function
  * @param {FileContent} content - The file content to convert
  * @param {SheetToJsonOptions} options - Optional conversion options
@@ -162,7 +163,11 @@ export function sheetToJson(content, options = {}) {
     } = resolvedOptions;
 
     const { worksheet } = getWorksheet(
-      parseWorkbook(resolvedContent, compact({ type, cellDates, sheetRows })),
+      parseWorkbook(
+        resolvedContent,
+        // dateNF only takes effect at read time, when cell text is formatted
+        compact({ type, cellDates, sheetRows, dateNF })
+      ),
       { sheetName, sheetIndex }
     );
 
@@ -214,7 +219,11 @@ export function sheetToCsv(content, options = {}) {
       strip,
     } = resolvedOptions;
     const { worksheet } = getWorksheet(
-      parseWorkbook(resolvedContent, compact({ type, cellDates, sheetRows })),
+      parseWorkbook(
+        resolvedContent,
+        // dateNF only takes effect at read time, when cell text is formatted
+        compact({ type, cellDates, sheetRows, dateNF })
+      ),
       { sheetName, sheetIndex }
     );
 

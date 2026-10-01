@@ -32,22 +32,29 @@ export function decodeContent(content, type) {
   // Split a data URL, eg "data:application/vnd.ms-excel;base64,0M8R4..."
   const isDataUrl = content.startsWith('data:');
   const comma = content.indexOf(',');
+  if (isDataUrl && comma === -1) {
+    throw new Error('sheetjs: malformed data URL; expected a comma separator');
+  }
   const prefix = isDataUrl ? content.slice(0, comma) : '';
   const raw = isDataUrl ? content.slice(comma + 1) : content;
 
-  // Decode base64 ourselves rather than let SheetJS do it - see decodeBase64
   if (type === 'base64') {
-    return { data: Buffer.from(raw.replace(/\s/g, ''), 'base64'), type: 'buffer' };
+    const decoded = decodeBase64(raw);
+    return { data: decoded || Buffer.from(raw.replace(/\s/g, ''), 'base64'), type: 'buffer' };
   }
   if (type) return { data: raw, type };
 
   // A data URL declares its own encoding; anything else is percent-encoded text
   if (isDataUrl) {
-    return prefix.includes(';base64')
-      ? { data: Buffer.from(raw.replace(/\s/g, ''), 'base64'), type: 'buffer' }
-      : { data: decodeURIComponent(raw), type: 'string' };
+    if (prefix.includes(';base64')) {
+      const decoded = decodeBase64(raw);
+      return {
+        data: decoded || Buffer.from(raw.replace(/\s/g, ''), 'base64'),
+        type: 'buffer',
+      };
+    }
+    return { data: decodeURIComponent(raw), type: 'string' };
   }
-
   const decoded = decodeBase64(raw);
   return decoded
     ? { data: decoded, type: 'buffer' }
@@ -63,8 +70,6 @@ export function parseWorkbook(content, options = {}) {
   const { data, type: resolvedType } = decodeContent(content, type);
 
   return xlsx.read(data, {
-    // Return real Date objects rather than Excel serial numbers. Users who
-    // want the serials can override with `cellDates: false`.
     cellDates: true,
     ...compact(readOptions),
     type: resolvedType,
