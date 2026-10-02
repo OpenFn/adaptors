@@ -99,20 +99,16 @@ export function execute(...operations) {
 export function list(resourceType, options = {}) {
   return async state => {
     const [resolvedResourceType, resolvedOptions] = expandReferences(state, resourceType, options);
-    try {
-      const data = await util.requestWithPagination(state.configuration, resolvedResourceType, {
-        ...resolvedOptions,
-        parseAs: 'json'
-      });
-      const nextState = util.prepareNextState(state, data);
+    const data = await util.requestWithPagination(state.configuration, resolvedResourceType, {
+      ...resolvedOptions,
+      parseAs: 'json'
+    });
+    const nextState = util.prepareNextState(state, data);
 
-      return {
-        ...nextState,
-        data
-      };
-    } catch (e) {
-      throw e;
-    }
+    return {
+      ...nextState,
+      data
+    };
   }
 };
 /**
@@ -154,22 +150,17 @@ export function getResource(resourceType, id, options = {}) {
     const { domain, apiVersion = 'v2' } = state.configuration;
     const url = util.buildUrl(resolvedResourceType, domain, apiVersion, resolvedId);
 
+    const response = await util.request(state.configuration, url, {
+      ...resolvedOptions,
+      method: 'GET',
+      parseAs: 'json'
+    });
 
-    try {
-      const response = await util.request(state.configuration, url, {
-        ...resolvedOptions,
-        method: 'GET',
-        parseAs: 'json'
-      });
-
-      const nextState = util.prepareNextState(state, response.body ?? {});
-      return {
-        ...nextState,
-        data: response?.body
-      };
-    } catch (e) {
-      throw e;
-    }
+    const nextState = util.prepareNextState(state, response.body ?? {});
+    return {
+      ...nextState,
+      data: response?.body
+    };
   }
 };
 
