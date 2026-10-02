@@ -6,6 +6,7 @@ import xlsx from 'xlsx';
 
 import * as util from './Utils.js';
 
+
 let hasWarnedDeprecated = false;
 function warnDeprecated(message) {
   if (!hasWarnedDeprecated) {
@@ -21,6 +22,22 @@ function warnDeprecated(message) {
  * @property response - The HTTP response from the CommCare server (excluding the body)
  * @property references - An array of all previous data objects used in the Job
  * @private
+ */
+
+/**
+ * List Operation Options
+ * @typedef {Object} ListOptions
+ * @property {Object} [params] - HTTP query parameters passed through to CommCare
+ * @property {string} [apiVersion] - REST API version to use for the request. Falls back to v2 if not declared
+ * @property {string|string[]} [resourceIds] - Resource IDs
+ * @property {Object} [headers] - Additional HTTP request headers
+ */
+
+/**
+ * Options provided to the `getResource()` operation.
+ * @typedef {Object} GetResourceOptions
+ * @property {Object} [params] - HTTP query parameters passed through to CommCare.
+ * @property {Object} [headers] - Additional HTTP request headers.
  */
 
 /**
@@ -45,6 +62,107 @@ export function execute(...operations) {
     return commonExecute(...operations)({ ...initialState, ...state });
   };
 }
+/**
+ * List resources from CommCare, automatically paginating through the cursor
+ * until all results are fetched or the `limit` in `params` is reached.
+ * 
+ * Uses the CommCare v2 API regardless of the `apiVersion` set in configuration,
+ * as cursor-based pagination is only supported on v2.
+ * @public
+ * @function
+ * @example <caption>List all locations in the project</caption>
+ * list('location');
+ * 
+ * @example <caption>List all cases in the project</caption>
+ * list('case');
+ * 
+ * @example <caption>Get the first 1578 cases</caption>
+ * list('case', { params: { limit: 1578 } });
+ * 
+ * @example <caption>Filter cases by type</caption>
+ * list('case', { params: { case_type: 'household' } });
+ * 
+ * @example <caption>Fetch cases modified after a given timestamp</caption>
+ * list('case', { params: { indexed_on_start: '2025-01-01T00:00:00' } });
+ * 
+ * @example <caption>List forms submitted by a specific user</caption>
+ * list('form', { params: { user_id: '30517b8d62db4e37ab62c08ad94df10f' } });
+ * 
+ * @example <caption>Explicitly set the results key</caption>
+ * list('case', { resultsKey: 'cases', params: { limit: 100 } });
+ * 
+ * @param {string} resourceType - The CommCare resource to list (e.g. `case`, `location`).
+ * @param {ListOptions} options  - Configuration options for the request
+ * @state {CommcareHttpState}
+ * @returns {Operation}
+ */
+export function list(resourceType, options = {}) {
+  return async state => {
+    const [resolvedResourceType, resolvedOptions] = expandReferences(state, resourceType, options);
+    const data = await util.requestWithPagination(state.configuration, resolvedResourceType, {
+      ...resolvedOptions,
+      parseAs: 'json'
+    });
+    const nextState = util.prepareNextState(state, data);
+
+    return {
+      ...nextState,
+      data
+    };
+  }
+};
+/**
+ * Fetch one or more resources from CommCare by ID. Accepts a single ID string
+ * or an array of IDs; when an array is provided, requests are issued in
+ * parallel and results are returned in the same order as the input.
+ * 
+ * @public
+ * @function
+ * @example <caption>Fetch a single case by ID</caption>
+ * getResource('case', '30517b8d62db4e37ab62c08ad94df10f');
+ * @example <caption>Fetch an array of case IDs</caption>
+ * getResource('case', ['abc', 'def', 'ghi', 'jkl']);
+ * @param {string} resourceType - The CommCare resource to fetch (e.g. `case`, `location`).
+ * @param {string|string[]} id - Resource ID, or array of IDs to fetch in parallel.
+ * @param {GetResourceOptions} [options] - Configuration options for the request.
+ * @state {CommcareHttpState}
+ * @returns {Operation}
+ */
+export function getResource(resourceType, id, options = {}) {
+  return async state => {
+    let [resolvedResourceType, resolvedId, resolvedOptions] = expandReferences(
+      state,
+      resourceType,
+      id,
+      options
+    );
+
+    if (!resolvedId) {
+      throw new Error(
+        "Please include at least a resource ID, e.g. getResource('case', 'abcd1245')"
+      );
+    }
+
+    if (Array.isArray(resolvedId)) {
+      resolvedId = resolvedId.filter(Boolean);
+    }
+
+    const { domain, apiVersion = 'v2' } = state.configuration;
+    const url = util.buildUrl(resolvedResourceType, domain, apiVersion, resolvedId);
+
+    const response = await util.request(state.configuration, url, {
+      ...resolvedOptions,
+      method: 'GET',
+      parseAs: 'json'
+    });
+
+    const nextState = util.prepareNextState(state, response.body ?? {});
+    return {
+      ...nextState,
+      data: response?.body
+    };
+  }
+};
 
 /**
  * Make a GET request to CommCare's legacy v0.5 API.
@@ -74,8 +192,8 @@ export function execute(...operations) {
 export function get(path, params = {}, callback = s => s) {
   warnDeprecated(
     "DEPRECATION WARNING: get() only works with CommCare's legacy v0.5 API " +
-      '(/a/domain/api/v0.5/...). Use http.get() for current CommCare APIs. ' +
-      'get() will be removed in a future major version.',
+    '(/a/domain/api/v0.5/...). Use http.get() for current CommCare APIs. ' +
+    'get() will be removed in a future major version.',
   );
   return async state => {
     const { domain } = state.configuration;
@@ -169,8 +287,8 @@ export function get(path, params = {}, callback = s => s) {
 export function post(path, data, params = {}, callback = s => s) {
   warnDeprecated(
     "DEPRECATION WARNING: post() only works with CommCare's legacy v0.5 API " +
-      '(/a/domain/api/v0.5/...). Use http.post() for current CommCare APIs. ' +
-      'post() will be removed in a future major version.',
+    '(/a/domain/api/v0.5/...). Use http.post() for current CommCare APIs. ' +
+    'post() will be removed in a future major version.',
   );
   return async state => {
     const { domain } = state.configuration;
@@ -356,8 +474,8 @@ export function fetchReportData(reportId, params, postUrl) {
 export function request(method, path, body, params = {}) {
   warnDeprecated(
     'DEPRECATION WARNING: request() is designed around the legacy v0.5 API. ' +
-      'Use http.request() instead. ' +
-      'request() will be removed in a future major version.',
+    'Use http.request() instead. ' +
+    'request() will be removed in a future major version.',
   );
   return async state => {
     const [resolvedMethod, resolvedPath, resolvedBody, resolvedParams] =
