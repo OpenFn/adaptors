@@ -1,7 +1,7 @@
 {
   "operations": [
     {
-      "name": "verifyCredential",
+      "name": "verify",
       "params": [
         "credential",
         "options"
@@ -11,7 +11,7 @@
         "tags": [
           {
             "title": "example",
-            "description": "verifyCredential($.data, {\n  skipStatusChecks: false,\n  statusCheckFilters: ['revocation'],\n  includeClaims: false,\n});",
+            "description": "verify($.data, {\n  skipStatusChecks: false,\n  statusCheckFilters: ['revocation'],\n  includeClaims: false,\n});",
             "caption": "Verify a credential from state"
           },
           {
@@ -49,7 +49,7 @@
               "type": "OptionalType",
               "expression": {
                 "type": "NameExpression",
-                "name": "VerifyCredentialOptions"
+                "name": "VerifyOptions"
               }
             },
             "name": "options",
@@ -80,7 +80,7 @@
         "options"
       ],
       "docs": {
-        "description": "Make a general HTTP request to Inji Verify.\nPrefer {@link verifyCredential} for VC verification.",
+        "description": "Make a general HTTP request to Inji Verify.\nPrefer {@link verify} for VC verification.",
         "tags": [
           {
             "title": "example",

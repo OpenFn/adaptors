@@ -4,6 +4,6 @@
 
 ### New Features
 
-- Initial release with `verifyCredential` for Inji Verify
+- Initial release with `verify` for Inji Verify
   `POST /v2/vc-verification` (JSON-LD, SD-JWT, CWT)
 - Low-level `request` helper for other Inji Verify paths

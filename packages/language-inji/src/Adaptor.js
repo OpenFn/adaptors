@@ -1,10 +1,3 @@
-/**
- * INVARIANT: Must export function named `request`
- * - ALL operational functions go here
- *
- * Docs: ./wiki/build-a-new-adaptor.md, ./wiki/best-practice.md
- * API: Inji Verify POST /v2/vc-verification (context path /v1/verify)
- */
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
 
@@ -17,8 +10,8 @@ import * as util from './Utils.js';
  **/
 
 /**
- * Options for verifyCredential
- * @typedef {Object} VerifyCredentialOptions
+ * Options for verify
+ * @typedef {Object} VerifyOptions
  * @public
  * @property {boolean} [skipStatusChecks=false] - Skip credential status (e.g. revocation) checks
  * @property {string[]} [statusCheckFilters=[]] - Status check purposes to run (e.g. `['revocation']`)
@@ -44,7 +37,7 @@ import * as util from './Utils.js';
  * service context path, e.g. `https://verify.example.org/v1/verify`.
  *
  * @example <caption>Verify a credential from state</caption>
- * verifyCredential($.data, {
+ * verify($.data, {
  *   skipStatusChecks: false,
  *   statusCheckFilters: ['revocation'],
  *   includeClaims: false,
@@ -52,11 +45,11 @@ import * as util from './Utils.js';
  * @function
  * @public
  * @param {object|string} credential - JSON-LD object, SD-JWT string, or CWT hex string
- * @param {VerifyCredentialOptions} [options={}] - Verification options
+ * @param {VerifyOptions} [options={}] - Verification options
  * @returns {Operation}
  * @state {HttpState}
  */
-export function verifyCredential(credential, options = {}) {
+export function verify(credential, options = {}) {
   return async state => {
     const [resolvedCredential, resolvedOptions] = expandReferences(
       state,
@@ -90,7 +83,7 @@ export function verifyCredential(credential, options = {}) {
 
 /**
  * Make a general HTTP request to Inji Verify.
- * Prefer {@link verifyCredential} for VC verification.
+ * Prefer {@link verify} for VC verification.
  * @example
  * request('POST', 'v2/vc-verification', {
  *   verifiableCredential: JSON.stringify($.data),

@@ -1,11 +1,3 @@
-/**
- * INVARIANT: Must export function named `request`
- * - Infrastructure/helpers ONLY
- * - NO operational functions
- * - To extend: wrap it (e.g., requestWithRetry)
- *
- * Docs: ./wiki/build-a-new-adaptor.md, ./wiki/best-practice.md
- */
 import { composeNextState } from '@openfn/language-common';
 import { request as commonRequest } from '@openfn/language-common/util';
 
