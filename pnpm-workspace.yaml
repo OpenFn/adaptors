@@ -14,6 +14,7 @@ allowBuilds:
   core-js: true
   cpu-features: true
   esbuild: true
+  fsevents: false
   protobufjs: true
   ssh2: true
 
