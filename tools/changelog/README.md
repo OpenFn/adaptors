@@ -13,6 +13,9 @@ This package supports two key use cases:
 
 Run the changelog regression tests with `pnpm --filter @openfn/changelog test`.
 Already-dated changelogs are preserved byte-for-byte unless a release date changes.
+Tests copy package fixtures into a temporary directory, leaving repository files
+unchanged. `updateChangelog(adaptor, versions, packagesDir)` accepts an optional
+packages directory; existing callers default to `../../packages` as before.
 
 ## 📅 Commands
 

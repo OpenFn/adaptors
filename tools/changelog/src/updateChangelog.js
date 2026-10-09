@@ -6,10 +6,13 @@ import path from 'path';
 import { format } from 'date-fns';
 import { writeFile } from 'fs/promises';
 
-const packagesDir = '../../packages';
 const versionOnlyRegex = /^\d+\.\d+\.\d+$/;
 
-export async function updateChangelog(adaptorName, adaptorVersionList = null) {
+export async function updateChangelog(
+  adaptorName,
+  adaptorVersionList = null,
+  packagesDir = '../../packages'
+) {
   const pkgPath = path.join(packagesDir, adaptorName);
   const changelogPath = path.join(pkgPath, 'CHANGELOG.md');
 
