@@ -9,6 +9,11 @@ This package supports two key use cases:
 
 ---
 
+## Tests
+
+Run the changelog regression tests with `pnpm --filter @openfn/changelog test`.
+Already-dated changelogs are preserved byte-for-byte unless a release date changes.
+
 ## 📅 Commands
 
 ### 1. `update-latest-versions`

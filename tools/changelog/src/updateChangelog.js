@@ -19,6 +19,7 @@ export async function updateChangelog(adaptorName, adaptorVersionList = null) {
 
   const ast = await remark().use(remarkParse).parse(markdownContent);
   const updatedAstChildren = [];
+  let hasDateChanges = false;
 
   for (let i = 0; i < ast.children.length; i++) {
     const item = ast.children[i];
@@ -28,6 +29,7 @@ export async function updateChangelog(adaptorName, adaptorVersionList = null) {
       if (i === 1 && versionOnlyRegex.test(astVersion.trim()) && !adaptorVersionList) {
         const convertedDate = format(new Date(), 'dd MMMM yyyy');
         item.children[0].value = `${astVersion} - ${convertedDate}`;
+        hasDateChanges = true;
         console.log(`✔ New release date added for ${adaptorName}`);
 
         updatedAstChildren.push(item);
@@ -47,13 +49,20 @@ export async function updateChangelog(adaptorName, adaptorVersionList = null) {
             new Date(releasedDate.date),
             'dd MMMM yyyy'
           );
-          item.children[0].value = `${version} - ${convertedDate}`;
-          console.log(`✔ Release date updated for ${adaptorName}`);
+          const datedVersion = `${version} - ${convertedDate}`;
+          if (item.children[0].value !== datedVersion) {
+            item.children[0].value = datedVersion;
+            hasDateChanges = true;
+            console.log(`✔ Release date updated for ${adaptorName}`);
+          }
         }
       }
     }
     updatedAstChildren.push(item);
   }
+
+  // Preserve existing formatting when there are no release dates to update.
+  if (!hasDateChanges) return;
 
   const updatedAst = {
     type: 'root',
