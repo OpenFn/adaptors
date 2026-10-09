@@ -1,9 +1,8 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import { verifyCredential } from '../src/Adaptor.js';
+import { verify } from '../src/Adaptor.js';
 
-// Docs: ./wiki/unit-test-guide.md
 const testServer = enableMockClient('https://fake.server.com');
 
 const configuration = {
@@ -18,7 +17,7 @@ const successBody = {
   claims: {},
 };
 
-describe('verifyCredential', () => {
+describe('verify', () => {
   it('posts a JSON-LD object as a string and writes the result to state.data', async () => {
     const credential = {
       '@context': ['https://www.w3.org/2018/credentials/v1'],
@@ -49,7 +48,7 @@ describe('verifyCredential', () => {
       data: credential,
     };
 
-    const finalState = await verifyCredential(state.data)(state);
+    const finalState = await verify(state.data)(state);
 
     expect(finalState.data).to.eql(successBody);
     expect(finalState.response.statusCode).to.eql(200);
@@ -72,7 +71,7 @@ describe('verifyCredential', () => {
 
     const state = { configuration };
 
-    const finalState = await verifyCredential(sdJwt)(state);
+    const finalState = await verify(sdJwt)(state);
 
     expect(finalState.data.allChecksSuccessful).to.eql(true);
   });
@@ -101,7 +100,7 @@ describe('verifyCredential', () => {
 
     const state = { configuration };
 
-    const finalState = await verifyCredential(credential, {
+    const finalState = await verify(credential, {
       skipStatusChecks: true,
       statusCheckFilters: ['revocation'],
       includeClaims: true,
@@ -120,7 +119,7 @@ describe('verifyCredential', () => {
 
     const state = { configuration };
 
-    const error = await verifyCredential('not-a-valid-vc')(state).catch(e => e);
+    const error = await verify('not-a-valid-vc')(state).catch(e => e);
 
     expect(error.statusCode).to.eql(400);
   });

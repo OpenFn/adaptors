@@ -7,7 +7,7 @@ Use it as **step 3** of a typical verification workflow:
 
 1. Receive an issued credential over HTTP (another step / adaptor).
 2. Validate the request body in job code.
-3. Call Inji Verify with `verifyCredential` (this adaptor).
+3. Call Inji Verify with `verify` (this adaptor).
 4. Process the result (e.g. log `allChecksSuccessful`).
 
 ## Documentation
@@ -38,7 +38,7 @@ Run `pnpm validate:schemas` from the adaptors repo root after editing it.
 
 ```javascript
 // Steps 1–2: credential already received and validated into state.data
-verifyCredential($.data, {
+verify($.data, {
   skipStatusChecks: false,
   statusCheckFilters: ['revocation'],
   includeClaims: false,
@@ -51,7 +51,7 @@ fn(state => {
 });
 ```
 
-`verifyCredential` posts to `{baseUrl}/v2/vc-verification` and writes the
+`verify` posts to `{baseUrl}/v2/vc-verification` and writes the
 detailed V2 result to `state.data` (`allChecksSuccessful`,
 `schemaAndSignatureCheck`, `expiryCheck`, `statusCheck`, `claims`).
 
