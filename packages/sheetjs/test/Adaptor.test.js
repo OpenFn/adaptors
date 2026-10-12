@@ -583,7 +583,9 @@ describe('jsonToSheet', () => {
     try {
       await jsonToSheet([['id', 'name']])(state);
     } catch (e) {
-      expect(e.message).to.match(/item 0 is an array/);
+      expect(e.message).to.equal(
+        'sheetjs: jsonToSheet expects an array of objects, but item 0 is an array'
+      );
       return;
     }
     expect.fail('should have thrown');

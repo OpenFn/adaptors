@@ -19,17 +19,15 @@ const decodeBase64 = str => {
 const MIN_WRAP_WIDTH = 60;
 
 /**
- * Multi-line content is only base64 if it has the shape a wrapping encoder
- * produces: every line but the last the same width, a multiple of 4 and at
- * least MIN_WRAP_WIDTH, with the last line no longer. Without this, a short
- * single-column CSV like "name\nJohn\nJane" passes the base64 round-trip and
- * is silently decoded into garbage.
+ * Multi-line content is only treated as base64 if it is wrapped the way an
+ * encoder wraps it. Otherwise a single-column CSV like "name\nJohn\nJane"
+ * passes the round-trip check and is decoded into garbage.
  */
 const isWrappedLikeBase64 = str => {
   const lines = str.trim().split(/\r?\n/);
   if (lines.length === 1) return true;
 
-  const [width] = lines.map(line => line.length);
+  const width = lines[0].length;
   if (width < MIN_WRAP_WIDTH || width % 4 !== 0) return false;
 
   const last = lines.pop();
@@ -59,7 +57,7 @@ export function decodeContent(content, type) {
   const prefix = isDataUrl ? content.slice(0, comma) : '';
   const raw = isDataUrl ? content.slice(comma + 1) : content;
 
-  // A declared encoding, whether from `type` or the data URL, must be honoured
+  // An explicit `type` takes precedence over the data URL's declared encoding
   const declaredBase64 = type
     ? type === 'base64'
     : isDataUrl && prefix.includes(';base64');
@@ -74,7 +72,7 @@ export function decodeContent(content, type) {
   if (isDataUrl) {
     try {
       return { data: decodeURIComponent(raw), type: 'string' };
-    } catch (e) {
+    } catch {
       throw new Error(
         'sheetjs: malformed data URL; content is not valid percent-encoded text'
       );
@@ -140,8 +138,8 @@ export function getWorksheet(workbook, { sheetName, sheetIndex } = {}) {
   return { name, worksheet: Sheets[name] };
 }
 
-const describe = value => {
-  if (value === null) return 'null';
+const describeType = value => {
+  if (value === null || value === undefined) return String(value);
   if (Array.isArray(value)) return 'an array';
   return `a ${typeof value}`;
 };
@@ -167,7 +165,7 @@ export function buildWorkbook(rows, options = {}) {
   );
   if (badIndex !== -1) {
     throw new Error(
-      `sheetjs: jsonToSheet expects an array of objects, but item ${badIndex} is ${describe(
+      `sheetjs: jsonToSheet expects an array of objects, but item ${badIndex} is ${describeType(
         rows[badIndex]
       )}`
     );
