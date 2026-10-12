@@ -15,6 +15,27 @@ const decodeBase64 = str => {
   return decoded.toString('base64') === normalized ? decoded : null;
 };
 
+// Encoders wrap base64 at 64 (PEM) or 76 (MIME) columns
+const MIN_WRAP_WIDTH = 60;
+
+/**
+ * Multi-line content is only base64 if it has the shape a wrapping encoder
+ * produces: every line but the last the same width, a multiple of 4 and at
+ * least MIN_WRAP_WIDTH, with the last line no longer. Without this, a short
+ * single-column CSV like "name\nJohn\nJane" passes the base64 round-trip and
+ * is silently decoded into garbage.
+ */
+const isWrappedLikeBase64 = str => {
+  const lines = str.trim().split(/\r?\n/);
+  if (lines.length === 1) return true;
+
+  const [width] = lines.map(line => line.length);
+  if (width < MIN_WRAP_WIDTH || width % 4 !== 0) return false;
+
+  const last = lines.pop();
+  return lines.every(line => line.length === width) && last.length <= width;
+};
+
 /**
  * Normalise file content into something xlsx.read() accepts, working out the
  * SheetJS `type` if the caller didn't declare one.
@@ -38,24 +59,28 @@ export function decodeContent(content, type) {
   const prefix = isDataUrl ? content.slice(0, comma) : '';
   const raw = isDataUrl ? content.slice(comma + 1) : content;
 
-  if (type === 'base64') {
+  // A declared encoding, whether from `type` or the data URL, must be honoured
+  const declaredBase64 = type
+    ? type === 'base64'
+    : isDataUrl && prefix.includes(';base64');
+  if (declaredBase64) {
     const decoded = decodeBase64(raw);
-    return { data: decoded || Buffer.from(raw.replace(/\s/g, ''), 'base64'), type: 'buffer' };
+    if (!decoded) throw new Error('sheetjs: invalid base64 content');
+    return { data: decoded, type: 'buffer' };
   }
   if (type) return { data: raw, type };
 
-  // A data URL declares its own encoding; anything else is percent-encoded text
+  // A data URL without ;base64 is percent-encoded text
   if (isDataUrl) {
-    if (prefix.includes(';base64')) {
-      const decoded = decodeBase64(raw);
-      return {
-        data: decoded || Buffer.from(raw.replace(/\s/g, ''), 'base64'),
-        type: 'buffer',
-      };
+    try {
+      return { data: decodeURIComponent(raw), type: 'string' };
+    } catch (e) {
+      throw new Error(
+        'sheetjs: malformed data URL; content is not valid percent-encoded text'
+      );
     }
-    return { data: decodeURIComponent(raw), type: 'string' };
   }
-  const decoded = decodeBase64(raw);
+  const decoded = isWrappedLikeBase64(raw) && decodeBase64(raw);
   return decoded
     ? { data: decoded, type: 'buffer' }
     : { data: raw, type: 'string' };
@@ -115,6 +140,12 @@ export function getWorksheet(workbook, { sheetName, sheetIndex } = {}) {
   return { name, worksheet: Sheets[name] };
 }
 
+const describe = value => {
+  if (value === null) return 'null';
+  if (Array.isArray(value)) return 'an array';
+  return `a ${typeof value}`;
+};
+
 /**
  * Build a single-sheet workbook from an array of objects.
  * https://docs.sheetjs.com/docs/api/utilities/array#array-of-objects-input
@@ -130,6 +161,16 @@ export function buildWorkbook(rows, options = {}) {
 
   if (!Array.isArray(rows)) {
     throw new Error('sheetjs: jsonToSheet expects an array of objects');
+  }
+  const badIndex = rows.findIndex(
+    row => row === null || typeof row !== 'object' || Array.isArray(row)
+  );
+  if (badIndex !== -1) {
+    throw new Error(
+      `sheetjs: jsonToSheet expects an array of objects, but item ${badIndex} is ${describe(
+        rows[badIndex]
+      )}`
+    );
   }
 
   const worksheet = xlsx.utils.json_to_sheet(

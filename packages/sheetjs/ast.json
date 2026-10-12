@@ -7,7 +7,7 @@
         "options"
       ],
       "docs": {
-        "description": "Parse spreadsheet file content into a workbook.\n\nWrites `{ sheetNames }` to `state.data`, so a later step can check which\nsheets a file contains before pulling one out.\n\nHandles `.xlsx`, `.xls`, `.csv` and every other format SheetJS supports.\nBuffers, base64 strings and data URLs are detected automatically - pass\n`type` to override, eg for a single-column CSV that is also valid base64.",
+        "description": "Parse spreadsheet file content into a workbook.\n\nWrites `{ sheetNames }` to `state.data`, so a later step can check which\nsheets a file contains before pulling one out.\n\nHandles `.xlsx`, `.xls`, `.csv` and every other format SheetJS supports.\nBuffers, base64 strings and data URLs are detected automatically - pass\n`type` to override, eg for a single-line CSV that is also valid base64.",
         "tags": [
           {
             "title": "public",

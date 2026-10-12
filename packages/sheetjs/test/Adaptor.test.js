@@ -77,12 +77,53 @@ describe('parse', () => {
     expect(finalState.data).to.eql([{ name: 'Amara', age: 34 }]);
   });
 
+  it('reads a single-column csv as text, even when it is valid base64', async () => {
+    // "nameJohnJane" passes the base64 round-trip once newlines are stripped
+    const finalState = await sheetToJson('name\nJohn\nJane')(state);
+
+    expect(finalState.data).to.eql([{ name: 'John' }, { name: 'Jane' }]);
+  });
+
+  it('reads a single-column csv with CRLF line endings as text', async () => {
+    const finalState = await sheetToJson('name\r\nJohn\r\nJane\r\n')(state);
+
+    expect(finalState.data).to.eql([{ name: 'John' }, { name: 'Jane' }]);
+  });
+
+  it('decodes base64 wrapped at 64 columns with CRLF line endings', async () => {
+    const wrapped = toBase64('sample.xlsx').replace(/(.{64})/g, '$1\r\n');
+
+    const finalState = await parse(wrapped)(state);
+
+    expect(finalState.data.sheetNames).to.eql(['People', 'Orders']);
+  });
+
   it('decodes base64 when the type is declared explicitly', async () => {
     const finalState = await parse(toBase64('sample.xlsx'), {
       type: 'base64',
     })(state);
 
     expect(finalState.data.sheetNames).to.eql(['People', 'Orders']);
+  });
+
+  it('throws for invalid content when base64 is declared explicitly', async () => {
+    try {
+      await parse('!!!not base64!!!', { type: 'base64' })(state);
+    } catch (e) {
+      expect(e.message).to.equal('sheetjs: invalid base64 content');
+      return;
+    }
+    expect.fail('should have thrown');
+  });
+
+  it('throws for invalid content in a base64 data URL', async () => {
+    try {
+      await parse('data:text/csv;base64,!!!not base64!!!')(state);
+    } catch (e) {
+      expect(e.message).to.equal('sheetjs: invalid base64 content');
+      return;
+    }
+    expect.fail('should have thrown');
   });
 
   it('reads a non-base64 data URL as percent-encoded text', async () => {
@@ -118,6 +159,40 @@ describe('parse', () => {
     } catch (e) {
       expect(e.message).to.match(/must be a Buffer or string/);
       expect(e.message).to.match(/Buffer\.from\(\)/);
+      return;
+    }
+    expect.fail('should have thrown');
+  });
+
+  it('rejects an ArrayBuffer and suggests Buffer.from()', async () => {
+    const { buffer, byteOffset, byteLength } = toBuf('sample.xlsx');
+    try {
+      await parse(buffer.slice(byteOffset, byteOffset + byteLength))(state);
+    } catch (e) {
+      expect(e.message).to.match(/must be a Buffer or string/);
+      expect(e.message).to.match(/Buffer\.from\(\)/);
+      return;
+    }
+    expect.fail('should have thrown');
+  });
+
+  it('throws for a data URL with no comma separator', async () => {
+    try {
+      await parse('data:text/csv')(state);
+    } catch (e) {
+      expect(e.message).to.equal(
+        'sheetjs: malformed data URL; expected a comma separator'
+      );
+      return;
+    }
+    expect.fail('should have thrown');
+  });
+
+  it('throws an adaptor error for malformed percent-encoding in a data URL', async () => {
+    try {
+      await parse('data:text/csv,bad%ZZ')(state);
+    } catch (e) {
+      expect(e.message).to.match(/^sheetjs: malformed data URL/);
       return;
     }
     expect.fail('should have thrown');
@@ -475,6 +550,40 @@ describe('jsonToSheet', () => {
       await jsonToSheet({ id: 1 })(state);
     } catch (e) {
       expect(e.message).to.match(/expects an array of objects/);
+      return;
+    }
+    expect.fail('should have thrown');
+  });
+
+  it('throws if an item is a primitive', async () => {
+    try {
+      await jsonToSheet(['a', 'b', 'c'])(state);
+    } catch (e) {
+      expect(e.message).to.equal(
+        'sheetjs: jsonToSheet expects an array of objects, but item 0 is a string'
+      );
+      return;
+    }
+    expect.fail('should have thrown');
+  });
+
+  it('throws if an item is null', async () => {
+    try {
+      await jsonToSheet([{ a: 1 }, null])(state);
+    } catch (e) {
+      expect(e.message).to.equal(
+        'sheetjs: jsonToSheet expects an array of objects, but item 1 is null'
+      );
+      return;
+    }
+    expect.fail('should have thrown');
+  });
+
+  it('throws if an item is an array', async () => {
+    try {
+      await jsonToSheet([['id', 'name']])(state);
+    } catch (e) {
+      expect(e.message).to.match(/item 0 is an array/);
       return;
     }
     expect.fail('should have thrown');

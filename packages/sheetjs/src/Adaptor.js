@@ -92,7 +92,7 @@ import {
  *
  * Handles `.xlsx`, `.xls`, `.csv` and every other format SheetJS supports.
  * Buffers, base64 strings and data URLs are detected automatically - pass
- * `type` to override, eg for a single-column CSV that is also valid base64.
+ * `type` to override, eg for a single-line CSV that is also valid base64.
  * @public
  * @example <caption>Parse a base64 file fetched by a previous step</caption>
  * parse($.data.fileContent);
