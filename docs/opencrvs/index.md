@@ -86,8 +86,8 @@ This adaptor exports the following from common:
 ### createBirthNotification
 
 ~~<p><code>createBirthNotification(body) ⇒ Operation</code></p>
-~~***for OpenCRVS v2 deployments — use [submitBirthNotification](#submitBirthNotification)
-  (or [createEvent](#createEvent) + [notifyEvent](#notifyEvent)) instead. Retained for v1
+~~***for OpenCRVS v2 deployments — use [submitBirthNotification](#submitbirthnotification)
+  (or [createEvent](#createevent) + [notifyEvent](#notifyevent)) instead. Retained for v1
   gateway-based deployments that still consume FHIR bundles.***
 
 
@@ -242,7 +242,7 @@ Posts to `register.<domain>/api/events/events/{eventId}/notify`.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| eventId | <code>string</code> | The event id returned by [createEvent](#createEvent). |
+| eventId | <code>string</code> | The event id returned by [createEvent](#createevent). |
 | declaration | <code>object</code> | Flat dotted-key declaration (e.g. `'child.name'`, `'child.dob'`). |
 | options | <code>object</code> | Optional fields: `createdAtLocation` (string),   `transactionId` (string, defaults to a random UUID) and `annotation` (object). |
 
@@ -332,7 +332,7 @@ The notify response is left on `state.data`.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| declaration | <code>object</code> | Flat dotted-key declaration passed through to [notifyEvent](#notifyEvent). |
+| declaration | <code>object</code> | Flat dotted-key declaration passed through to [notifyEvent](#notifyevent). |
 | options | <code>object</code> | Optional fields: `createdAtLocation` (string),   `transactionId` (string, applied to the create call only — notify always   generates its own UUID) and `annotation` (object, passed to notify). |
 
 This operation writes the following keys to state:

@@ -71,7 +71,7 @@ Access the langfuse client API. Accepts a callback which receives state and the 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| func | <code>function</code> | Callback `(state, api) => state` receiving the [LangfuseApiClient](#LangfuseApiClient) as `api` |
+| func | <code>function</code> | Callback `(state, api) => state` receiving the [LangfuseApiClient](#langfuseapiclient) as `api` |
 
 This operation writes the following keys to state:
 
