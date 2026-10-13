@@ -51,8 +51,14 @@ async function login(state) {
  **/
 
 /**
- * Access the langfuse client API. Accepts a callback which receives state and the client API object. See the full API reference at {@link https://js.reference.langfuse.com/}.
+ * The Langfuse client API object (`client.api` from `@langfuse/client`), passed as the
+ * second argument to the {@link langfuse} callback. See the full API reference at
+ * {@link https://js.reference.langfuse.com/}.
  * @typedef {Object} LangfuseApiClient
+ **/
+
+/**
+ * Access the langfuse client API. Accepts a callback which receives state and the client API object. See the full API reference at {@link https://js.reference.langfuse.com/}.
  * @example <caption>Fetch recent observations</caption>
  * langfuse(async (state, api) => {
  *   const { data } = await api.observations.getMany({ limit: 10 });
