@@ -4,6 +4,27 @@ exports.toLowerCase = function (str) {
   return str ? str.toLowerCase() : str;
 };
 
+// Override dmd's inlineLinks to lowercase in-page anchors, matching the
+// lowercased heading ids that Docusaurus generates (see partials/link.hbs)
+exports.inlineLinks = function (text, options) {
+  if (text) {
+    const dmdOptions = options.data.root.options;
+    const links = handlebars.helpers.parseLink(text, dmdOptions);
+    links.forEach(link => {
+      const captionFmt = link.format === 'code' ? '`' : '';
+      const linked = handlebars.helpers._link(link.url, options);
+      if (link.caption === link.url) link.caption = linked.name;
+      if (linked.url) link.url = linked.url;
+      if (link.url.startsWith('#')) link.url = link.url.toLowerCase();
+      text = text.replace(
+        link.original,
+        `[${captionFmt}${link.caption}${captionFmt}](${link.url})`
+      );
+    });
+  }
+  return text;
+};
+
 exports.namespacedHeader = function (namespace, name) {
   return `### ${namespace}.${name} \{\#${namespace}_${name}\}`;
 };
