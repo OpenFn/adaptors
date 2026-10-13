@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "apiKey": {
+      "title": "API key",
+      "type": "string",
+      "minLength": 1,
+      "writeOnly": true,
+      "description": "Arcmira account API key from https://arcmira.com. Store this in an OpenFn credential, not job code.",
+      "examples": ["YOUR_ARCMIRA_API_KEY"]
+    }
+  },
+  "required": ["apiKey"],
+  "additionalProperties": false
+}
