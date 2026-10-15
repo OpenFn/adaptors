@@ -92,6 +92,7 @@ These functions belong to the fhir namespace.
 
 <p><code>get(path, query) ⇒ Operation</code></p>
 
+
 Make a get request to any FHIR endpoint in iHRIS
 
 
@@ -131,6 +132,7 @@ These functions belong to the http namespace.
 ### http.get {#http_get}
 
 <p><code>get(resource, options) ⇒ Operation</code></p>
+
 
 Get a FHIR resource by ID or list all resources of a type
 
@@ -172,6 +174,7 @@ http.get('/fhir/Practitioner', {
 ### http.post {#http_post}
 
 <p><code>post(resource, body, options) ⇒ Operation</code></p>
+
 
 Create a new FHIR resource
 
@@ -240,6 +243,7 @@ This operation writes the following keys to state:
 ### http.put {#http_put}
 
 <p><code>put(resource, body, options) ⇒ Operation</code></p>
+
 
 Update an existing FHIR resource
 
@@ -324,6 +328,7 @@ http.put('/fhir/Practitioner/6462', {
 ### http.request {#http_request}
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
+
 
 Make a general HTTP request to iHRIS
 

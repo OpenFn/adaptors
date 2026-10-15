@@ -72,6 +72,7 @@ This adaptor exports the following from common:
 
 <p><code>insert(table, fields) ⇒ Operation</code></p>
 
+
 Insert a record
 
 
@@ -100,6 +101,7 @@ insert("users", { name: "one", email: "one@openfn.org" });
 ### sql
 
 <p><code>sql(sqlQuery, [options]) ⇒ Operation</code></p>
+
 
 Execute a SQL statement. Take care when inserting values from state directly into a query,
 as this can be a vector for injection attacks. See [OWASP SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)
@@ -138,6 +140,7 @@ sql(state => `select * from ?? where id = ?;`, {
 
 <p><code>upsert(table, fields) ⇒ Operation</code></p>
 
+
 Insert or Update a record if matched
 
 
@@ -166,6 +169,7 @@ upsert("users", { name: "Tuchi Dev" });
 ### upsertMany
 
 <p><code>upsertMany(table, data) ⇒ Operation</code></p>
+
 
 Insert or update multiple records using ON DUPLICATE KEY
 

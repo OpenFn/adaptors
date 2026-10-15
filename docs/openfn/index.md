@@ -64,6 +64,7 @@ This adaptor exports the following from common:
 
 <p><code>get(path, options) ⇒ Operation</code></p>
 
+
 Make a GET request to OpenFn API. Requires authentication first.
 
 
@@ -92,6 +93,7 @@ get('jobs', {
 ### post
 
 <p><code>post(path, data, options) ⇒ operation</code></p>
+
 
 Make a POST request to OpenFn API. Requires authentication first.
 
@@ -132,6 +134,7 @@ post('jobs', {
 ### request
 
 <p><code>request(method, path, options) ⇒ Operation</code></p>
+
 
 Make a HTTP request to OpenFn API. Requires authentication first.
 

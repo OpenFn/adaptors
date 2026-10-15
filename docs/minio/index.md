@@ -82,6 +82,7 @@ This adaptor exports the following from common:
 
 <p><code>createBucket(bucketName, [region], [options]) ⇒ Operation</code></p>
 
+
 Create a new bucket
 
 
@@ -114,6 +115,7 @@ createBucket("my-new-bucket", "us-east-1", { ObjectLocking: true });
 ### getObject
 
 <p><code>getObject(bucketName, objectName, [options]) ⇒ Operation</code></p>
+
 
 Get an object from a bucket
 
@@ -149,6 +151,7 @@ getObject("dlite",'f0dd6f01-a60c-5558-b53e-188eaf62a8de', { format: 'json' });
 
 <p><code>getObjectTags(bucketName, objectName) ⇒ Operation</code></p>
 
+
 Get tags on an existing object in a MinIO bucket
 
 
@@ -175,6 +178,7 @@ getObjectTags("my-bucket", "records/patient-001.json");
 ### listObjects
 
 <p><code>listObjects(bucketName, [options]) ⇒ Operation</code></p>
+
 
 List objects in a bucket
 
@@ -204,6 +208,7 @@ listObjects("my-bucket", { prefix: "openmrs/2025-04/", recursive: true });
 ### putObject
 
 <p><code>putObject(bucketName, objectName, data, [options]) ⇒ Operation</code></p>
+
 
 Upload an object to a MinIO bucket
 
@@ -240,6 +245,7 @@ putObject("my-bucket", "exports/report.csv", state.rows, { format: "csv", metada
 ### setObjectTags
 
 <p><code>setObjectTags(bucketName, objectName, tags, [putOpts]) ⇒ Operation</code></p>
+
 
 Set tags on an existing object in a MinIO bucket
 

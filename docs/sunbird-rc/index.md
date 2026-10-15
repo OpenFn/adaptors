@@ -83,6 +83,7 @@ This adaptor exports the following from common:
 
 <p><code>del(path, options) ⇒ Operation</code></p>
 
+
 Make a DELETE request
 
 
@@ -109,6 +110,7 @@ del("credentials/did:rcw:123abc");
 ### downloadCredential
 
 <p><code>downloadCredential(id, options) ⇒ Operation</code></p>
+
 
 Download a Verifiable Credential as PDF (base64 encoded)
 
@@ -141,6 +143,7 @@ downloadCredential('did:rcw:123abc', { templateId: 'template-001' });
 
 <p><code>get(path, options) ⇒ Operation</code></p>
 
+
 Make a GET request
 
 
@@ -167,6 +170,7 @@ get("patients");
 ### getCredential
 
 <p><code>getCredential(id, options) ⇒ Operation</code></p>
+
 
 Get a Verifiable Credential by ID
 
@@ -198,6 +202,7 @@ getCredential('did:rcw:123abc', { templateId: 'template-001' });
 ### issueCredential
 
 <p><code>issueCredential(body, options) ⇒ Operation</code></p>
+
 
 Issue a Verifiable Credential
 
@@ -241,6 +246,7 @@ issueCredential({
 
 <p><code>post(path, body, options) ⇒ Operation</code></p>
 
+
 Make a POST request
 
 
@@ -268,6 +274,7 @@ post("patient", { "name": "Bukayo" });
 ### put
 
 <p><code>put(path, body, options) ⇒ Operation</code></p>
+
 
 Make a PUT request
 
@@ -298,6 +305,7 @@ put("template/cmhbkgjqo000ems0jvbeayn1h", {
 ### request
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
+
 
 Make a general HTTP request
 

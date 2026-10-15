@@ -77,6 +77,7 @@ This adaptor exports the following from common:
 
 <p><code>compress(base64ImgOrBuffer, [options]) ⇒ Operation</code></p>
 
+
 Compress an image by reducing image quality until it reaches the criteria.
 Writes `{ buffer, size, quality }` to `state.data`.
 
@@ -107,6 +108,7 @@ compress(state.data.buffer, { maxBytes: 700 * 1024, minQuality: 20 })
 
 <p><code>embedMetadata(base64ImgOrBuffer, exifObj, [options]) ⇒ Operation</code></p>
 
+
 Embed EXIF metadata into a JPEG image.
 Writes `{ buffer }` to `state.data`.
 
@@ -136,6 +138,7 @@ embedMetadata($.data.buffer, { UserComment: 'patient-id=42', Make: 'OpenFn' }, {
 ### metadata
 
 <p><code>metadata(base64ImgOrBuffer) ⇒ Operation</code></p>
+
 
 Read image metadata without modifying the image.
 Writes `{ width, height, orientation, size, exif }` to `state.data`.
@@ -169,6 +172,7 @@ fn(state => {
 
 <p><code>resize(base64ImgOrBuffer, [options]) ⇒ Operation</code></p>
 
+
 Resize an image to the given dimensions.
 Writes `{ buffer, width, height }` to `state.data`.
 
@@ -198,6 +202,7 @@ resize($.data.photoBase64, { width: 1200, height: 1600 })
 ### stripMetadata
 
 <p><code>stripMetadata(base64ImgOrBuffer, [options]) ⇒ Operation</code></p>
+
 
 Strip all EXIF metadata from an image. Output is always a JPEG buffer.
 Writes `{ buffer }` to `state.data`.

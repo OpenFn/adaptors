@@ -90,6 +90,7 @@ This adaptor exports the following from common:
 
 <p><code>get(resource, id) ⇒ Operation</code></p>
 
+
 Get a single resource using its ID
 
 
@@ -118,6 +119,7 @@ get('customers','cus_SthTl85l20LRJj');
 ### list
 
 <p><code>list(resource, options) ⇒ Operation</code></p>
+
 
 List items from Stripe
 
@@ -152,6 +154,7 @@ These functions belong to the http namespace.
 
 <p><code>get(path, options) ⇒ Operation</code></p>
 
+
 Make a GET request to Stripe
 
 
@@ -179,6 +182,7 @@ http.get('/invoices')
 ### http.post {#http_post}
 
 <p><code>post(path, body, options) ⇒ Operation</code></p>
+
 
 Make a POST request to Stripe
 
@@ -217,6 +221,7 @@ http.post(
 ### http.request {#http_request}
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
+
 
 Make a general HTTP request to Stripe
 

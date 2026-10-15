@@ -49,6 +49,7 @@ This adaptor exports the following from common:
 
 <p><code>createCollectionRequest(data) ⇒ Operation</code></p>
 
+
 Create a collection request
 
 
@@ -68,6 +69,7 @@ createCollectionRequest(data)
 
 <p><code>createContact(data) ⇒ Operation</code></p>
 
+
 Create a contact
 
 
@@ -86,6 +88,7 @@ createContact(data)
 ### createPayment
 
 <p><code>createPayment(data) ⇒ Operation</code></p>
+
 
 Create a payment
 

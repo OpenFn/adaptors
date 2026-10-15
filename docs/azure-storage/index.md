@@ -55,6 +55,7 @@ This adaptor exports the following from common:
 
 <p><code>downloadBlob(blobName, [options]) ⇒ Operation</code></p>
 
+
 Download a blob from Azure Blob Storage.
 
 
@@ -75,6 +76,7 @@ downloadBlob('mycontainer', 'myblob.txt', { downloadAs: 'string' })
 
 <p><code>getBlobProperties(blobName, options) ⇒ Operation</code></p>
 
+
 Get properties of a blob in Azure Blob Storage.
 
 
@@ -94,6 +96,7 @@ getBlobProperties('mycontainer', 'myblob.txt')
 ### uploadBlob
 
 <p><code>uploadBlob(blobName, content, uploadOptions, [options]) ⇒ Operation</code></p>
+
 
 Upload content to Azure Blob Storage.
 

@@ -72,6 +72,7 @@ This adaptor exports the following from common:
 
 <p><code>get(key) ⇒ Operation</code></p>
 
+
 Get the string value of a key.
 If the key does not exist, null is returned.
 An error is thrown if the value stored at key is not a string, because `get()` only handles string values.
@@ -99,6 +100,7 @@ get("patient");
 
 <p><code>hget(key, field) ⇒ Operation</code></p>
 
+
 Get the value associated with a specific field in a hash stored at a specified key.
 
 
@@ -125,6 +127,7 @@ hget("patient", "name");
 
 <p><code>hGetAll(key) ⇒ Operation</code></p>
 
+
 Get all fields and values of a hash, as an object, for a specified key.
 
 
@@ -149,6 +152,7 @@ hGetAll("noderedis:animals:1");
 ### hset
 
 <p><code>hset(key, value) ⇒ Operation</code></p>
+
 
 Sets the specified fields to their respective values in the hash stored at key.
 This function overwrites the values of specified fields that exist in the hash.
@@ -181,6 +185,7 @@ hset('patient', { name: 'victor', ihs_number: 12345  });
 
 <p><code>jGet(key) ⇒ Operation</code></p>
 
+
 Get the value at a specified path in a JSON document stored in a key
 
 
@@ -205,6 +210,7 @@ jGet("patient");
 ### jSet
 
 <p><code>jSet(key, value) ⇒ Operation</code></p>
+
 
 Creates a JSON object at the specified key. If the key already exists, the
 existing value will be replaced by the new value.
@@ -232,6 +238,7 @@ jSet('patient', { name: 'victor', ihs_number: 12345  });
 
 <p><code>mGet(keys) ⇒ Operation</code></p>
 
+
 Get the values at specified paths in JSON documents stored at multiple keys.
 
 
@@ -256,6 +263,7 @@ mGet(["patient", "doctor"]);
 ### mSet
 
 <p><code>mSet(entries) ⇒ Operation</code></p>
+
 
 Set values at the root path ('$') in JSON documents stored at multiple keys.
 This function allows setting multiple key-value pairs in Redis JSON documents in a single operation.
@@ -283,6 +291,7 @@ mSet([{ key: 'patient', value: { name: 'victor', ihs_number: 12345 } },
 ### scan
 
 <p><code>scan(pattern, options) ⇒ Operation</code></p>
+
 
 Returns all keys which match the provided pattern.
 scan iterates the whole database to find the matching keys
@@ -319,6 +328,7 @@ each($.data, get($.data).then((state) => {
 ### set
 
 <p><code>set(key, value) ⇒ Operation</code></p>
+
 
 Set the string value of a key.
 If the key already exists, its value is updated. Otherwise, a new key-value pair is created.

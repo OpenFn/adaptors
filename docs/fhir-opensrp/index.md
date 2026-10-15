@@ -74,6 +74,7 @@ This adaptor exports the following from common:
 
 <p><code>create(path, body, options) ⇒ Operation</code></p>
 
+
 Create a resource
 
 
@@ -129,6 +130,7 @@ create('Patient', {
 
 <p><code>delete(path, options) ⇒ Operation</code></p>
 
+
 Delete a resource
 
 
@@ -155,6 +157,7 @@ delete('Patient/97597');
 ### read
 
 <p><code>read(path, options) ⇒ Operation</code></p>
+
 
 Read a resource
 The response body will be returned to `state.data` as JSON.
@@ -204,6 +207,7 @@ read('Patient', {
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
 
+
 Make a general HTTP request
 
 
@@ -245,6 +249,7 @@ request('PUT', 'Patient/0181038e-682b-4c7c-a946-e3757d2fa2f7', {
 ### update
 
 <p><code>update(path, body, options) ⇒ Operation</code></p>
+
 
 Update a resource
 

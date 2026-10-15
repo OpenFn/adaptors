@@ -54,6 +54,7 @@ This adaptor exports the following from common:
 
 <p><code>query(qs, options, callback) ⇒ Operation</code></p>
 
+
 Execute an SQL statement
 
 

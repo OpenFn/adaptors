@@ -87,6 +87,7 @@ This adaptor exports the following from common:
 
 <p><code>getDeploymentInfo(formId) ⇒ Operation</code></p>
 
+
 Get deployment information for a specific form. Calls `/api/v2/assets/<id>/deployment/`.
 
 
@@ -111,6 +112,7 @@ getDeploymentInfo('aXecHjmbATuF6iGFmvBLBX');
 
 <p><code>getForms() ⇒ Operation</code></p>
 
+
 Make a request to fetch all survey forms accessible to the authorized user. Calls `/api/v2/assets/?asset_type=survey`.
 
 This operation writes the following keys to state:
@@ -129,6 +131,7 @@ getForms();
 ### getSubmissions
 
 <p><code>getSubmissions(formId, [options]) ⇒ Operation</code></p>
+
 
 Get submissions for a specific form. Calls `/api/v2/assets/<formId>/data/`
 
@@ -180,6 +183,7 @@ These functions belong to the http namespace.
 
 <p><code>get(path, [options]) ⇒ operation</code></p>
 
+
 Make a GET request to any KoboToolbox endpoint.
 
 
@@ -207,6 +211,7 @@ http.get('assets')
 ### http.post {#http_post}
 
 <p><code>post(path, data, [options]) ⇒ operation</code></p>
+
 
 Make a POST request to a KoboToolbox endpoint
 
@@ -243,6 +248,7 @@ http.post(
 
 <p><code>put(path, data, [options]) ⇒ operation</code></p>
 
+
 Make a PUT request to a KoboToolbox endpoint
 
 
@@ -277,6 +283,7 @@ http.put(
 ### http.request {#http_request}
 
 <p><code>request(method, path, [options]) ⇒ Operation</code></p>
+
 
 Make a HTTP request to any KoboToolbox endpoint
 

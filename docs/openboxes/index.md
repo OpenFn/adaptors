@@ -55,6 +55,7 @@ This adaptor exports the following from common:
 
 <p><code>get(path, options) ⇒ Operation</code></p>
 
+
 Make a GET request
 
 
@@ -81,6 +82,7 @@ get("products", { query: { max: 10 }});
 ### post
 
 <p><code>post(path, body, options) ⇒ Operation</code></p>
+
 
 Make a POST request
 
@@ -121,6 +123,7 @@ post("products",
 ### request
 
 <p><code>request(method, path, options) ⇒ Operation</code></p>
+
 
 Make a general HTTP request
 

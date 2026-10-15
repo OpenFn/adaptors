@@ -507,6 +507,7 @@ This adaptor exports the following namespaced functions:
 
 <p><code>addToBundle(resources, [name]) ⇒</code></p>
 
+
 Add a resource to a bundle on state, using the `name` as the key (or `bundle` by default).
 The resource will be upserted (via PUT).
 A new bundle will be generated if one does not already exist.
@@ -534,6 +535,7 @@ addToBundle(b.patient($.patientDetails))
 ### create
 
 <p><code>create(resource) ⇒</code></p>
+
 
 Create a new resource. The resource does not need to include an id.
 The created resource will be returned to state.data.
@@ -563,6 +565,7 @@ create(b.patient({
 ### createBundle
 
 <p><code>createBundle([props]) ⇒</code></p>
+
 
 Generate a new bundle on state. Any existing bundle with the same name will be overwritten.
 
@@ -603,6 +606,7 @@ addToBundle($.patient, 'upload')
 
 <p><code>delete(reference) ⇒</code></p>
 
+
 Delete a single FHIR resource.
 
 **Returns**: Operation  
@@ -627,6 +631,7 @@ delete('Patient/12345')
 ### read
 
 <p><code>read(reference) ⇒</code></p>
+
 
 Fetch a single FHIR resource.
 
@@ -653,6 +658,7 @@ read('Patient/12345')
 ### search
 
 <p><code>search(resourceType, options) ⇒</code></p>
+
 
 Search for matching FHIR resources. Exclude _ from search parameters, and pass query terms on options.query.
 
@@ -693,6 +699,7 @@ search('Patient', {
 
 <p><code>update(reference, resource) ⇒</code></p>
 
+
 Update a resource. If the resource does not already exist, it will be created and `state.response.statusCode` will be 201.
 Otherwise, the existing resource will be replaced.
 To partially update a resource, use `patch()`.
@@ -724,6 +731,7 @@ update('Patient/123', b.patient({
 ### uploadBundle
 
 <p><code>uploadBundle(bundle) ⇒</code></p>
+
 
 Upload a bundle from state (created by addToBundle) as a transaction.
 
@@ -758,6 +766,7 @@ These functions belong to the builders namespace.
 
 <p><code>account(props)</code></p>
 
+
 Create a Account resource.
 
 
@@ -784,6 +793,7 @@ Create a Account resource.
 ### builders.activityDefinition {#builders_activityDefinition}
 
 <p><code>activityDefinition(props)</code></p>
+
 
 Create a ActivityDefinition resource.
 
@@ -847,6 +857,7 @@ Create a ActivityDefinition resource.
 
 <p><code>administrableProductDefinition(props)</code></p>
 
+
 Create a AdministrableProductDefinition resource.
 
 
@@ -872,6 +883,7 @@ Create a AdministrableProductDefinition resource.
 ### builders.adverseEvent {#builders_adverseEvent}
 
 <p><code>adverseEvent(props)</code></p>
+
 
 Create a AdverseEvent resource.
 
@@ -909,6 +921,7 @@ Create a AdverseEvent resource.
 
 <p><code>allergyIntolerance(props)</code></p>
 
+
 Create a AllergyIntolerance resource.
 
 
@@ -940,6 +953,7 @@ Create a AllergyIntolerance resource.
 ### builders.appointment {#builders_appointment}
 
 <p><code>appointment(props)</code></p>
+
 
 Create a Appointment resource.
 
@@ -979,6 +993,7 @@ Create a Appointment resource.
 
 <p><code>appointmentResponse(props)</code></p>
 
+
 Create a AppointmentResponse resource.
 
 
@@ -1002,6 +1017,7 @@ Create a AppointmentResponse resource.
 ### builders.biologicallyDerivedProduct {#builders_biologicallyDerivedProduct}
 
 <p><code>biologicallyDerivedProduct(props)</code></p>
+
 
 Create a BiologicallyDerivedProduct resource.
 
@@ -1030,6 +1046,7 @@ Create a BiologicallyDerivedProduct resource.
 
 <p><code>bodyStructure(props)</code></p>
 
+
 Create a BodyStructure resource.
 
 
@@ -1053,6 +1070,7 @@ Create a BodyStructure resource.
 ### builders.carePlan {#builders_carePlan}
 
 <p><code>carePlan(props)</code></p>
+
 
 Create a CarePlan resource.
 
@@ -1093,6 +1111,7 @@ Create a CarePlan resource.
 
 <p><code>careTeam(props)</code></p>
 
+
 Create a CareTeam resource.
 
 
@@ -1121,6 +1140,7 @@ Create a CareTeam resource.
 ### builders.chargeItem {#builders_chargeItem}
 
 <p><code>chargeItem(props)</code></p>
+
 
 Create a ChargeItem resource.
 
@@ -1164,6 +1184,7 @@ Create a ChargeItem resource.
 
 <p><code>chargeItemDefinition(props)</code></p>
 
+
 Create a ChargeItemDefinition resource.
 
 
@@ -1202,6 +1223,7 @@ Create a ChargeItemDefinition resource.
 ### builders.citation {#builders_citation}
 
 <p><code>citation(props)</code></p>
+
 
 Create a Citation resource.
 
@@ -1248,6 +1270,7 @@ Create a Citation resource.
 
 <p><code>claim(props)</code></p>
 
+
 Create a Claim resource.
 
 
@@ -1290,6 +1313,7 @@ Create a Claim resource.
 ### builders.claimResponse {#builders_claimResponse}
 
 <p><code>claimResponse(props)</code></p>
+
 
 Create a ClaimResponse resource.
 
@@ -1334,6 +1358,7 @@ Create a ClaimResponse resource.
 
 <p><code>clinicalImpression(props)</code></p>
 
+
 Create a ClinicalImpression resource.
 
 
@@ -1370,6 +1395,7 @@ Create a ClinicalImpression resource.
 
 <p><code>clinicalUseDefinition(props)</code></p>
 
+
 Create a ClinicalUseDefinition resource.
 
 
@@ -1396,6 +1422,7 @@ Create a ClinicalUseDefinition resource.
 ### builders.communication {#builders_communication}
 
 <p><code>communication(props)</code></p>
+
 
 Create a Communication resource.
 
@@ -1436,6 +1463,7 @@ Create a Communication resource.
 
 <p><code>communicationRequest(props)</code></p>
 
+
 Create a CommunicationRequest resource.
 
 
@@ -1473,6 +1501,7 @@ Create a CommunicationRequest resource.
 ### builders.contract {#builders_contract}
 
 <p><code>contract(props)</code></p>
+
 
 Create a Contract resource.
 
@@ -1523,6 +1552,7 @@ Create a Contract resource.
 
 <p><code>coverage(props)</code></p>
 
+
 Create a Coverage resource.
 
 
@@ -1556,6 +1586,7 @@ Create a Coverage resource.
 
 <p><code>coverageEligibilityRequest(props)</code></p>
 
+
 Create a CoverageEligibilityRequest resource.
 
 
@@ -1585,6 +1616,7 @@ Create a CoverageEligibilityRequest resource.
 ### builders.coverageEligibilityResponse {#builders_coverageEligibilityResponse}
 
 <p><code>coverageEligibilityResponse(props)</code></p>
+
 
 Create a CoverageEligibilityResponse resource.
 
@@ -1617,6 +1649,7 @@ Create a CoverageEligibilityResponse resource.
 
 <p><code>detectedIssue(props)</code></p>
 
+
 Create a DetectedIssue resource.
 
 
@@ -1644,6 +1677,7 @@ Create a DetectedIssue resource.
 ### builders.device {#builders_device}
 
 <p><code>device(props)</code></p>
+
 
 Create a Device resource.
 
@@ -1687,6 +1721,7 @@ Create a Device resource.
 
 <p><code>deviceDefinition(props)</code></p>
 
+
 Create a DeviceDefinition resource.
 
 
@@ -1725,6 +1760,7 @@ Create a DeviceDefinition resource.
 
 <p><code>deviceMetric(props)</code></p>
 
+
 Create a DeviceMetric resource.
 
 
@@ -1750,6 +1786,7 @@ Create a DeviceMetric resource.
 ### builders.deviceRequest {#builders_deviceRequest}
 
 <p><code>deviceRequest(props)</code></p>
+
 
 Create a DeviceRequest resource.
 
@@ -1791,6 +1828,7 @@ Create a DeviceRequest resource.
 
 <p><code>deviceUseStatement(props)</code></p>
 
+
 Create a DeviceUseStatement resource.
 
 
@@ -1819,6 +1857,7 @@ Create a DeviceUseStatement resource.
 ### builders.diagnosticReport {#builders_diagnosticReport}
 
 <p><code>diagnosticReport(props)</code></p>
+
 
 Create a DiagnosticReport resource.
 
@@ -1854,6 +1893,7 @@ Create a DiagnosticReport resource.
 
 <p><code>domainResource(props)</code></p>
 
+
 Create a DomainResource resource.
 
 
@@ -1869,6 +1909,7 @@ Create a DomainResource resource.
 ### builders.encounter {#builders_encounter}
 
 <p><code>encounter(props)</code></p>
+
 
 Create a Encounter resource.
 
@@ -1909,6 +1950,7 @@ Create a Encounter resource.
 
 <p><code>enrollmentRequest(props)</code></p>
 
+
 Create a EnrollmentRequest resource.
 
 
@@ -1931,6 +1973,7 @@ Create a EnrollmentRequest resource.
 ### builders.enrollmentResponse {#builders_enrollmentResponse}
 
 <p><code>enrollmentResponse(props)</code></p>
+
 
 Create a EnrollmentResponse resource.
 
@@ -1955,6 +1998,7 @@ Create a EnrollmentResponse resource.
 ### builders.episodeOfCare {#builders_episodeOfCare}
 
 <p><code>episodeOfCare(props)</code></p>
+
 
 Create a EpisodeOfCare resource.
 
@@ -1983,6 +2027,7 @@ Create a EpisodeOfCare resource.
 ### builders.eventDefinition {#builders_eventDefinition}
 
 <p><code>eventDefinition(props)</code></p>
+
 
 Create a EventDefinition resource.
 
@@ -2028,6 +2073,7 @@ Create a EventDefinition resource.
 
 <p><code>evidence(props)</code></p>
 
+
 Create a Evidence resource.
 
 
@@ -2069,6 +2115,7 @@ Create a Evidence resource.
 
 <p><code>evidenceReport(props)</code></p>
 
+
 Create a EvidenceReport resource.
 
 
@@ -2102,6 +2149,7 @@ Create a EvidenceReport resource.
 ### builders.evidenceVariable {#builders_evidenceVariable}
 
 <p><code>evidenceVariable(props)</code></p>
+
 
 Create a EvidenceVariable resource.
 
@@ -2142,6 +2190,7 @@ Create a EvidenceVariable resource.
 ### builders.explanationOfBenefit {#builders_explanationOfBenefit}
 
 <p><code>explanationOfBenefit(props)</code></p>
+
 
 Create a ExplanationOfBenefit resource.
 
@@ -2202,6 +2251,7 @@ Create a ExplanationOfBenefit resource.
 
 <p><code>familyMemberHistory(props)</code></p>
 
+
 Create a FamilyMemberHistory resource.
 
 
@@ -2236,6 +2286,7 @@ Create a FamilyMemberHistory resource.
 
 <p><code>flag(props)</code></p>
 
+
 Create a Flag resource.
 
 
@@ -2259,6 +2310,7 @@ Create a Flag resource.
 ### builders.goal {#builders_goal}
 
 <p><code>goal(props)</code></p>
+
 
 Create a Goal resource.
 
@@ -2292,6 +2344,7 @@ Create a Goal resource.
 
 <p><code>group(props)</code></p>
 
+
 Create a Group resource.
 
 
@@ -2317,6 +2370,7 @@ Create a Group resource.
 ### builders.guidanceResponse {#builders_guidanceResponse}
 
 <p><code>guidanceResponse(props)</code></p>
+
 
 Create a GuidanceResponse resource.
 
@@ -2348,6 +2402,7 @@ Create a GuidanceResponse resource.
 ### builders.healthcareService {#builders_healthcareService}
 
 <p><code>healthcareService(props)</code></p>
+
 
 Create a HealthcareService resource.
 
@@ -2389,6 +2444,7 @@ Create a HealthcareService resource.
 
 <p><code>imagingStudy(props)</code></p>
 
+
 Create a ImagingStudy resource.
 
 
@@ -2424,6 +2480,7 @@ Create a ImagingStudy resource.
 ### builders.immunization {#builders_immunization}
 
 <p><code>immunization(props)</code></p>
+
 
 Create a Immunization resource.
 
@@ -2469,6 +2526,7 @@ Create a Immunization resource.
 
 <p><code>immunizationEvaluation(props)</code></p>
 
+
 Create a ImmunizationEvaluation resource.
 
 
@@ -2498,6 +2556,7 @@ Create a ImmunizationEvaluation resource.
 
 <p><code>immunizationRecommendation(props)</code></p>
 
+
 Create a ImmunizationRecommendation resource.
 
 
@@ -2518,6 +2577,7 @@ Create a ImmunizationRecommendation resource.
 ### builders.ingredient {#builders_ingredient}
 
 <p><code>ingredient(props)</code></p>
+
 
 Create a Ingredient resource.
 
@@ -2542,6 +2602,7 @@ Create a Ingredient resource.
 ### builders.insurancePlan {#builders_insurancePlan}
 
 <p><code>insurancePlan(props)</code></p>
+
 
 Create a InsurancePlan resource.
 
@@ -2572,6 +2633,7 @@ Create a InsurancePlan resource.
 ### builders.invoice {#builders_invoice}
 
 <p><code>invoice(props)</code></p>
+
 
 Create a Invoice resource.
 
@@ -2604,6 +2666,7 @@ Create a Invoice resource.
 ### builders.library {#builders_library}
 
 <p><code>library(props)</code></p>
+
 
 Create a Library resource.
 
@@ -2652,6 +2715,7 @@ Create a Library resource.
 
 <p><code>list(props)</code></p>
 
+
 Create a List resource.
 
 
@@ -2680,6 +2744,7 @@ Create a List resource.
 ### builders.location {#builders_location}
 
 <p><code>location(props)</code></p>
+
 
 Create a Location resource.
 
@@ -2714,6 +2779,7 @@ Create a Location resource.
 
 <p><code>manufacturedItemDefinition(props)</code></p>
 
+
 Create a ManufacturedItemDefinition resource.
 
 
@@ -2736,6 +2802,7 @@ Create a ManufacturedItemDefinition resource.
 ### builders.measure {#builders_measure}
 
 <p><code>measure(props)</code></p>
+
 
 Create a Measure resource.
 
@@ -2794,6 +2861,7 @@ Create a Measure resource.
 
 <p><code>measureReport(props)</code></p>
 
+
 Create a MeasureReport resource.
 
 
@@ -2820,6 +2888,7 @@ Create a MeasureReport resource.
 ### builders.media {#builders_media}
 
 <p><code>media(props)</code></p>
+
 
 Create a Media resource.
 
@@ -2859,6 +2928,7 @@ Create a Media resource.
 
 <p><code>medication(props)</code></p>
 
+
 Create a Medication resource.
 
 
@@ -2882,6 +2952,7 @@ Create a Medication resource.
 ### builders.medicationAdministration {#builders_medicationAdministration}
 
 <p><code>medicationAdministration(props)</code></p>
+
 
 Create a MedicationAdministration resource.
 
@@ -2917,6 +2988,7 @@ Create a MedicationAdministration resource.
 ### builders.medicationDispense {#builders_medicationDispense}
 
 <p><code>medicationDispense(props)</code></p>
+
 
 Create a MedicationDispense resource.
 
@@ -2958,6 +3030,7 @@ Create a MedicationDispense resource.
 
 <p><code>medicationKnowledge(props)</code></p>
 
+
 Create a MedicationKnowledge resource.
 
 
@@ -2995,6 +3068,7 @@ Create a MedicationKnowledge resource.
 ### builders.medicationRequest {#builders_medicationRequest}
 
 <p><code>medicationRequest(props)</code></p>
+
 
 Create a MedicationRequest resource.
 
@@ -3044,6 +3118,7 @@ Create a MedicationRequest resource.
 
 <p><code>medicationStatement(props)</code></p>
 
+
 Create a MedicationStatement resource.
 
 
@@ -3076,6 +3151,7 @@ Create a MedicationStatement resource.
 ### builders.medicinalProductDefinition {#builders_medicinalProductDefinition}
 
 <p><code>medicinalProductDefinition(props)</code></p>
+
 
 Create a MedicinalProductDefinition resource.
 
@@ -3121,6 +3197,7 @@ Create a MedicinalProductDefinition resource.
 
 <p><code>molecularSequence(props)</code></p>
 
+
 Create a MolecularSequence resource.
 
 
@@ -3152,6 +3229,7 @@ Create a MolecularSequence resource.
 ### builders.nutritionOrder {#builders_nutritionOrder}
 
 <p><code>nutritionOrder(props)</code></p>
+
 
 Create a NutritionOrder resource.
 
@@ -3186,6 +3264,7 @@ Create a NutritionOrder resource.
 
 <p><code>nutritionProduct(props)</code></p>
 
+
 Create a NutritionProduct resource.
 
 
@@ -3211,6 +3290,7 @@ Create a NutritionProduct resource.
 ### builders.observation {#builders_observation}
 
 <p><code>observation(props)</code></p>
+
 
 Create a Observation resource.
 
@@ -3252,6 +3332,7 @@ Create a Observation resource.
 
 <p><code>observationDefinition(props)</code></p>
 
+
 Create a ObservationDefinition resource.
 
 
@@ -3281,6 +3362,7 @@ Create a ObservationDefinition resource.
 
 <p><code>organization(props)</code></p>
 
+
 Create a Organization resource.
 
 
@@ -3306,6 +3388,7 @@ Create a Organization resource.
 ### builders.organizationAffiliation {#builders_organizationAffiliation}
 
 <p><code>organizationAffiliation(props)</code></p>
+
 
 Create a OrganizationAffiliation resource.
 
@@ -3334,6 +3417,7 @@ Create a OrganizationAffiliation resource.
 ### builders.packagedProductDefinition {#builders_packagedProductDefinition}
 
 <p><code>packagedProductDefinition(props)</code></p>
+
 
 Create a PackagedProductDefinition resource.
 
@@ -3364,6 +3448,7 @@ Create a PackagedProductDefinition resource.
 ### builders.patient {#builders_patient}
 
 <p><code>patient(props)</code></p>
+
 
 Create a Patient resource.
 
@@ -3397,6 +3482,7 @@ Create a Patient resource.
 
 <p><code>paymentNotice(props)</code></p>
 
+
 Create a PaymentNotice resource.
 
 
@@ -3424,6 +3510,7 @@ Create a PaymentNotice resource.
 ### builders.paymentReconciliation {#builders_paymentReconciliation}
 
 <p><code>paymentReconciliation(props)</code></p>
+
 
 Create a PaymentReconciliation resource.
 
@@ -3456,6 +3543,7 @@ Create a PaymentReconciliation resource.
 
 <p><code>person(props)</code></p>
 
+
 Create a Person resource.
 
 
@@ -3481,6 +3569,7 @@ Create a Person resource.
 ### builders.planDefinition {#builders_planDefinition}
 
 <p><code>planDefinition(props)</code></p>
+
 
 Create a PlanDefinition resource.
 
@@ -3529,6 +3618,7 @@ Create a PlanDefinition resource.
 
 <p><code>practitioner(props)</code></p>
 
+
 Create a Practitioner resource.
 
 
@@ -3554,6 +3644,7 @@ Create a Practitioner resource.
 ### builders.practitionerRole {#builders_practitionerRole}
 
 <p><code>practitionerRole(props)</code></p>
+
 
 Create a PractitionerRole resource.
 
@@ -3584,6 +3675,7 @@ Create a PractitionerRole resource.
 ### builders.procedure {#builders_procedure}
 
 <p><code>procedure(props)</code></p>
+
 
 Create a Procedure resource.
 
@@ -3629,6 +3721,7 @@ Create a Procedure resource.
 
 <p><code>questionnaire(props)</code></p>
 
+
 Create a Questionnaire resource.
 
 
@@ -3667,6 +3760,7 @@ Create a Questionnaire resource.
 
 <p><code>questionnaireResponse(props)</code></p>
 
+
 Create a QuestionnaireResponse resource.
 
 
@@ -3693,6 +3787,7 @@ Create a QuestionnaireResponse resource.
 ### builders.regulatedAuthorization {#builders_regulatedAuthorization}
 
 <p><code>regulatedAuthorization(props)</code></p>
+
 
 Create a RegulatedAuthorization resource.
 
@@ -3724,6 +3819,7 @@ Create a RegulatedAuthorization resource.
 
 <p><code>relatedPerson(props)</code></p>
 
+
 Create a RelatedPerson resource.
 
 
@@ -3751,6 +3847,7 @@ Create a RelatedPerson resource.
 ### builders.requestGroup {#builders_requestGroup}
 
 <p><code>requestGroup(props)</code></p>
+
 
 Create a RequestGroup resource.
 
@@ -3785,6 +3882,7 @@ Create a RequestGroup resource.
 ### builders.researchDefinition {#builders_researchDefinition}
 
 <p><code>researchDefinition(props)</code></p>
+
 
 Create a ResearchDefinition resource.
 
@@ -3836,6 +3934,7 @@ Create a ResearchDefinition resource.
 
 <p><code>researchElementDefinition(props)</code></p>
 
+
 Create a ResearchElementDefinition resource.
 
 
@@ -3885,6 +3984,7 @@ Create a ResearchElementDefinition resource.
 
 <p><code>researchStudy(props)</code></p>
 
+
 Create a ResearchStudy resource.
 
 
@@ -3925,6 +4025,7 @@ Create a ResearchStudy resource.
 
 <p><code>researchSubject(props)</code></p>
 
+
 Create a ResearchSubject resource.
 
 
@@ -3948,6 +4049,7 @@ Create a ResearchSubject resource.
 ### builders.riskAssessment {#builders_riskAssessment}
 
 <p><code>riskAssessment(props)</code></p>
+
 
 Create a RiskAssessment resource.
 
@@ -3982,6 +4084,7 @@ Create a RiskAssessment resource.
 
 <p><code>schedule(props)</code></p>
 
+
 Create a Schedule resource.
 
 
@@ -4005,6 +4108,7 @@ Create a Schedule resource.
 ### builders.serviceRequest {#builders_serviceRequest}
 
 <p><code>serviceRequest(props)</code></p>
+
 
 Create a ServiceRequest resource.
 
@@ -4055,6 +4159,7 @@ Create a ServiceRequest resource.
 
 <p><code>slot(props)</code></p>
 
+
 Create a Slot resource.
 
 
@@ -4081,6 +4186,7 @@ Create a Slot resource.
 ### builders.specimen {#builders_specimen}
 
 <p><code>specimen(props)</code></p>
+
 
 Create a Specimen resource.
 
@@ -4111,6 +4217,7 @@ Create a Specimen resource.
 
 <p><code>specimenDefinition(props)</code></p>
 
+
 Create a SpecimenDefinition resource.
 
 
@@ -4132,6 +4239,7 @@ Create a SpecimenDefinition resource.
 ### builders.substance {#builders_substance}
 
 <p><code>substance(props)</code></p>
+
 
 Create a Substance resource.
 
@@ -4155,6 +4263,7 @@ Create a Substance resource.
 ### builders.substanceDefinition {#builders_substanceDefinition}
 
 <p><code>substanceDefinition(props)</code></p>
+
 
 Create a SubstanceDefinition resource.
 
@@ -4191,6 +4300,7 @@ Create a SubstanceDefinition resource.
 
 <p><code>supplyDelivery(props)</code></p>
 
+
 Create a SupplyDelivery resource.
 
 
@@ -4217,6 +4327,7 @@ Create a SupplyDelivery resource.
 ### builders.supplyRequest {#builders_supplyRequest}
 
 <p><code>supplyRequest(props)</code></p>
+
 
 Create a SupplyRequest resource.
 
@@ -4248,6 +4359,7 @@ Create a SupplyRequest resource.
 ### builders.task {#builders_task}
 
 <p><code>task(props)</code></p>
+
 
 Create a Task resource.
 
@@ -4296,6 +4408,7 @@ Create a Task resource.
 
 <p><code>testReport(props)</code></p>
 
+
 Create a TestReport resource.
 
 
@@ -4323,6 +4436,7 @@ Create a TestReport resource.
 ### builders.verificationResult {#builders_verificationResult}
 
 <p><code>verificationResult(props)</code></p>
+
 
 Create a VerificationResult resource.
 
@@ -4354,6 +4468,7 @@ Create a VerificationResult resource.
 
 <p><code>visionPrescription(props)</code></p>
 
+
 Create a VisionPrescription resource.
 
 
@@ -4381,6 +4496,7 @@ These functions belong to the datatypes namespace.
 
 <p><code>addExtension(resource, url, value)</code></p>
 
+
 Add an extension to a resource (or object).
 An object will be created and added to an `extension` array on the provided resource.
 The extension array will be set if it does not exist on the resource.
@@ -4402,6 +4518,7 @@ The value will be smartly written to the object, ie, valueDateTime or valueRefer
 
 <p><code>cc()</code></p>
 
+
 Alias for b.concept()
 
 
@@ -4412,6 +4529,7 @@ Alias for b.concept()
 ### datatypes.coding {#datatypes_coding}
 
 <p><code>coding(code, system)</code></p>
+
 
 Create a coding object { code, system }. Systems will be mapped using the system map.
 
@@ -4429,6 +4547,7 @@ Create a coding object { code, system }. Systems will be mapped using the system
 ### datatypes.composite {#datatypes_composite}
 
 <p><code>composite(object, key, value)</code></p>
+
 
 Write a value to the target object using a typed key
 Ie, if key is `value` and the value is a date time string,
@@ -4451,6 +4570,7 @@ This function is poorly named.
 ### datatypes.concept {#datatypes_concept}
 
 <p><code>concept(value, extra)</code></p>
+
 
 Create a CodeableConcept. Codings can be coding objects or
 [code, system, extra] tuples (such as passed to b.coding())
@@ -4479,6 +4599,7 @@ const myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/
 
 <p><code>ext()</code></p>
 
+
 Alias for b.extension()
 
 
@@ -4489,6 +4610,7 @@ Alias for b.extension()
 ### datatypes.extension {#datatypes_extension}
 
 <p><code>extension(url, value, props)</code></p>
+
 
 Create an extension with a system and value
 Values will be typemapped (ie, `value` -> `valueString`)
@@ -4510,6 +4632,7 @@ Optionally pass extra keys on the third argument
 
 <p><code>findExtension(obj, targetUrl, [path])</code></p>
 
+
 Find an extension with a given url in some array
 
 
@@ -4528,6 +4651,7 @@ Find an extension with a given url in some array
 
 <p><code>id()</code></p>
 
+
 Alias for b.identifier()
 
 
@@ -4538,6 +4662,7 @@ Alias for b.identifier()
 ### datatypes.identifier {#datatypes_identifier}
 
 <p><code>identifier(id, ext)</code></p>
+
 
 Create an Identifier. Systems will be mapped against the system map. Pass extensions as extra arguments.
 
@@ -4556,6 +4681,7 @@ Create an Identifier. Systems will be mapped against the system map. Pass extens
 
 <p><code>ref()</code></p>
 
+
 Alias for b.reference()
 
 
@@ -4566,6 +4692,7 @@ Alias for b.reference()
 ### datatypes.reference {#datatypes_reference}
 
 <p><code>reference(ref)</code></p>
+
 
 Create a reference object of the form { reference }
 If ref is an array, each item will be mapped and an array returned.
@@ -4586,6 +4713,7 @@ If ref is a valid FHIR reference, it'll just be returned.
 ### datatypes.setSystemMap {#datatypes_setSystemMap}
 
 <p><code>setSystemMap()</code></p>
+
 
 Define a set of mapped system values.
 

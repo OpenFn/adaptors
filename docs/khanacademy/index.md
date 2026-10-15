@@ -48,6 +48,7 @@ This adaptor exports the following from common:
 
 <p><code>fetch(params) ⇒ Operation</code></p>
 
+
 Fetch data from the Khan Academy API
 
 

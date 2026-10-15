@@ -13,6 +13,7 @@
 
 <p><code>createCustomer(customerData, [options]) ⇒ function</code></p>
 
+
 Create a new customer in Flutterwave.
 
 
@@ -28,6 +29,7 @@ Create a new customer in Flutterwave.
 ### createPaymentMethod
 
 <p><code>createPaymentMethod(paymentMethodData, [options]) ⇒ function</code></p>
+
 
 Create a new payment method in Flutterwave.
 
@@ -45,6 +47,7 @@ Create a new payment method in Flutterwave.
 ### initiatePayment
 
 <p><code>initiatePayment(paymentData, [options]) ⇒ function</code></p>
+
 
 Initiate a payment request to the Flutterwave API.
 

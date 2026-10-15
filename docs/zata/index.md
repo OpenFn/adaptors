@@ -75,6 +75,7 @@ This adaptor exports the following from common:
 
 <p><code>get(path, options) ⇒ Operation</code></p>
 
+
 Make a GET request to the Zata API
 
 
@@ -105,6 +106,7 @@ get('test')
 ### post
 
 <p><code>post(path, options) ⇒ Operation</code></p>
+
 
 Make a POST request to the Zata API
 
@@ -169,6 +171,7 @@ post('company', {
 
 <p><code>put(path, options) ⇒ Operation</code></p>
 
+
 Make a PUT request to the Zata API
 
 
@@ -205,6 +208,7 @@ put('product/reduce-quantity/{productId}', {
 ### request
 
 <p><code>request(method, path, options) ⇒ Operation</code></p>
+
 
 Make a general HTTP request
 

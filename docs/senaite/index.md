@@ -63,6 +63,7 @@ This adaptor exports the following from common:
 
 <p><code>request(method, path, options) ⇒ Operation</code></p>
 
+
 Make a general HTTP request
 
 

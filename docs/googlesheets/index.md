@@ -58,6 +58,7 @@ This adaptor exports the following from common:
 
 <p><code>appendValues(spreadsheetId, range, values, [options]) ⇒ Operation</code></p>
 
+
 Append one or more rows to a spreadsheet range.
 https://developers.google.com/sheets/api/samples/writing#append_values
 
@@ -85,6 +86,7 @@ appendValues(
 ### batchUpdateValues
 
 <p><code>batchUpdateValues(spreadsheetId, data, [options]) ⇒ Operation</code></p>
+
 
 Batch update values in a Spreadsheet.
 
@@ -116,6 +118,7 @@ batchUpdateValues(
 ### getValues
 
 <p><code>getValues(spreadsheetId, range) ⇒ Operation</code></p>
+
 
 Gets cell values from a Spreadsheet.
 

@@ -75,6 +75,7 @@ This adaptor exports the following namespaced functions:
 
 <p><code>addToBundle(resources, [name]) ⇒</code></p>
 
+
 Add a resource to a bundle on state, using the `name` as the key (or `bundle` by default).
 The resource will be upserted (via PUT).
 A new bundle will be generated if one does not already exist.
@@ -102,6 +103,7 @@ addToBundle(b.patient($.patientDetails))
 ### mapValues
 
 <p><code>mapValues(url, [mappings]) ⇒</code></p>
+
 
 Set value mappings against a value-set.
 Pass the URL of the valueset you want to provide mappings for.
@@ -133,6 +135,7 @@ These functions belong to the builders namespace.
 ### builders.appointment {#builders_appointment}
 
 <p><code>appointment(props)</code></p>
+
 
 Create a Appointment resource.
 
@@ -180,6 +183,7 @@ Create a Appointment resource.
 
 <p><code>condition(props)</code></p>
 
+
 Create a Condition resource.
 
 
@@ -220,6 +224,7 @@ Create a Condition resource.
 ### builders.encounter {#builders_encounter}
 
 <p><code>encounter(props)</code></p>
+
 
 Create a Encounter resource.
 
@@ -268,6 +273,7 @@ Create a Encounter resource.
 
 <p><code>episodeOfCare(props)</code></p>
 
+
 Create a EpisodeOfCare resource.
 
 
@@ -303,6 +309,7 @@ Create a EpisodeOfCare resource.
 ### builders.location {#builders_location}
 
 <p><code>location(props)</code></p>
+
 
 Create a Location resource.
 
@@ -345,6 +352,7 @@ Create a Location resource.
 
 <p><code>medication(props)</code></p>
 
+
 Create a Medication resource.
 
 
@@ -376,6 +384,7 @@ Create a Medication resource.
 ### builders.medicationDispense {#builders_medicationDispense}
 
 <p><code>medicationDispense(props)</code></p>
+
 
 Create a MedicationDispense resource.
 
@@ -424,6 +433,7 @@ Create a MedicationDispense resource.
 ### builders.medicationRequest {#builders_medicationRequest}
 
 <p><code>medicationRequest(props)</code></p>
+
 
 Create a MedicationRequest resource.
 
@@ -481,6 +491,7 @@ Create a MedicationRequest resource.
 
 <p><code>observation(type, props)</code></p>
 
+
 Create a Observation resource.
 
 
@@ -530,6 +541,7 @@ Create a Observation resource.
 
 <p><code>organization(props)</code></p>
 
+
 Create a Organization resource.
 
 
@@ -563,6 +575,7 @@ Create a Organization resource.
 ### builders.patient {#builders_patient}
 
 <p><code>patient(props)</code></p>
+
 
 Create a Patient resource.
 
@@ -609,6 +622,7 @@ Create a Patient resource.
 
 <p><code>practitioner(props)</code></p>
 
+
 Create a Practitioner resource.
 
 
@@ -642,6 +656,7 @@ Create a Practitioner resource.
 ### builders.procedure {#builders_procedure}
 
 <p><code>procedure(props)</code></p>
+
 
 Create a Procedure resource.
 
@@ -694,6 +709,7 @@ Create a Procedure resource.
 ### builders.serviceRequest {#builders_serviceRequest}
 
 <p><code>serviceRequest(type, props)</code></p>
+
 
 Create a ServiceRequest resource.
 
@@ -752,6 +768,7 @@ Create a ServiceRequest resource.
 ### builders.specimen {#builders_specimen}
 
 <p><code>specimen(props)</code></p>
+
 
 Create a Specimen resource.
 

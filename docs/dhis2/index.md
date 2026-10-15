@@ -122,6 +122,7 @@ This adaptor exports the following from common:
 
 <p><code>create(path, data, params) ⇒ Operation</code></p>
 
+
 Create a record
 
 
@@ -259,6 +260,7 @@ create('enrollments', {
 
 <p><code>destroy(resourceType, path, [data], [options]) ⇒ Operation</code></p>
 
+
 Delete record.
 
 
@@ -286,6 +288,7 @@ destroy('trackedEntities', 'LcRd6Nyaq7T');
 ### get
 
 <p><code>get(path, params) ⇒ Operation</code></p>
+
 
 Get any resource, as JSON, from DHIS2. Pass in any valid DHIS2 REST path, excluding /api and the version.
 For the new tracker API, see `tracker.export()`
@@ -325,6 +328,7 @@ get('tracker/trackedEntities/F8yKM85NbxW');
 ### update
 
 <p><code>update(resourceType, path, data, [options]) ⇒ Operation</code></p>
+
 
 Update a resource object of any type. Updating an object requires all fields of the object you are updating, even if they have not been modified
 
@@ -489,6 +493,7 @@ update('enrollments', 'CmsHzercTBa' {
 
 <p><code>upsert(resourceType, query, data, [options]) ⇒ Operation</code></p>
 
+
 Upsert a record. This will atomically update a record if it already exists, or otherwise create it.
 This function does not work with the absolute tracker path `api/tracker` but rather the new tracker paths and deprecated tracker endpoints.
 
@@ -555,6 +560,7 @@ These functions belong to the util namespace.
 
 <p><code>attr(attribute, value) ⇒ object</code></p>
 
+
 Converts an attribute ID and value into a DHIS2 attribute object
 
 
@@ -579,6 +585,7 @@ fn(state => {
 ### util.deriveUid {#util_deriveUid}
 
 <p><code>deriveUid(seed) ⇒ string</code></p>
+
 
 Derives a stable DHIS2 UID from a string. The same string always returns
 the same UID.
@@ -619,6 +626,7 @@ create('tracker', state => ({
 
 <p><code>dv(dataElement, value) ⇒ object</code></p>
 
+
 Converts a dataElement and value into a DHIS2 dataValue object
 
 
@@ -644,6 +652,7 @@ fn(state => {
 
 <p><code>findAttributeValue(trackedEntity, attributeDisplayName) ⇒ string</code></p>
 
+
 Gets an attribute value by its case-insensitive display name
 
 
@@ -668,6 +677,7 @@ fn(state => {
 ### util.findAttributeValueById {#util_findAttributeValueById}
 
 <p><code>findAttributeValueById(trackedEntity, attributeUid) ⇒ string</code></p>
+
 
 Gets an attribute value by its uid
 
@@ -696,6 +706,7 @@ These functions belong to the tracker namespace.
 ### tracker.export {#tracker_export}
 
 <p><code>export(path, query, [options]) ⇒ Operation</code></p>
+
 
 Export data from DHIS2.
 
@@ -736,6 +747,7 @@ tracker.export('events', { totalPages: true, pageSize: 1000, page: 1 })
 ### tracker.import {#tracker_import}
 
 <p><code>import(strategy, payload, [options]) ⇒ Operation</code></p>
+
 
 Import data into DHIS2 using the tracker endpoint.
 
@@ -792,6 +804,7 @@ These functions belong to the http namespace.
 
 <p><code>get(path, [options]) ⇒ Operation</code></p>
 
+
 Make a GET request to any DHIS2 endpoint.
 
 
@@ -836,6 +849,7 @@ http.get('trackedEntityInstances/qHVDKszQmdx/BqaEWTBG3RB/image', {
 
 <p><code>patch(resourceType, path, data, [options]) ⇒ Operation</code></p>
 
+
 Make a PATCH request to any DHIS2 endpoint.
 
 
@@ -865,6 +879,7 @@ patch('dataElements', 'FTRrcoaog83', { name: 'New Name' });
 ### http.post {#http_post}
 
 <p><code>post(path, data, [options]) ⇒ Operation</code></p>
+
 
 Make a POST request to any DHIS2 endpoint.
 
@@ -902,6 +917,7 @@ http.post("tracker", {
 ### http.request {#http_request}
 
 <p><code>request(method, path, [options]) ⇒ Operation</code></p>
+
 
 Make a HTTP request to any DHIS2 endpoint
 

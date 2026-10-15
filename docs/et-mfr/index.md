@@ -79,6 +79,7 @@ This adaptor exports the following from common:
 
 <p><code>get(path, options) ⇒ Operation</code></p>
 
+
 Make a GET request to Ethiopia MFR
 
 
@@ -122,6 +123,7 @@ get('Facility/All', {
 
 <p><code>post(path, body, options) ⇒ Operation</code></p>
 
+
 Make a POST request to Ethiopia MFR
 
 
@@ -160,6 +162,7 @@ post(
 ### request
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
+
 
 Make a general HTTP request to Ethiopia MFR
 

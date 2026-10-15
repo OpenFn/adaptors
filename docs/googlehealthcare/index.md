@@ -51,6 +51,7 @@ This adaptor exports the following from common:
 
 <p><code>createFhirResource([fhirStore], resource, callback) ⇒ Operation</code></p>
 
+
 Create some resource in Google Cloud Healthcare
 
 

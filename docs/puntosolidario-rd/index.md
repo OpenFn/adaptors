@@ -84,6 +84,7 @@ These functions belong to the http namespace.
 
 <p><code>get(path, options) ⇒ Operation</code></p>
 
+
 Make a GET request
 
 
@@ -111,6 +112,7 @@ http.get("consulta");
 ### http.post {#http_post}
 
 <p><code>post(path, body, options) ⇒ Operation</code></p>
+
 
 Make a POST request
 
@@ -140,6 +142,7 @@ http.post("registros", { "nombre": "Juan" });
 ### http.request {#http_request}
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
+
 
 Make a general HTTP request
 

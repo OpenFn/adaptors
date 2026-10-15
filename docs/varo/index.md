@@ -62,6 +62,7 @@ This adaptor exports the following from common:
 
 <p><code>convertItemsToReports(items, [reportType]) ⇒ Operation</code></p>
 
+
 Read a collection of EMS-like data records and convert them to a standard EMS report/record format.
 Systematically separates report properties from record properties.
 
@@ -102,6 +103,7 @@ state.data becomes:
 
 <p><code>convertReportsToMessageContents(reports, [reportType]) ⇒ function</code></p>
 
+
 Converts an EMS-compliant report into Varo-compatible message components.
 
 **Returns**: <code>function</code> - An operation function that receives `state` and returns updated message content.  
@@ -123,6 +125,7 @@ convertReportsToMessageContents(emsReports, "ems");
 ### convertToEms
 
 <p><code>convertToEms(messageContents) ⇒ Operation</code></p>
+
 
 Processes EMS data from the provided list of message contents.
 
@@ -155,6 +158,7 @@ convertToEms(
 
 <p><code>isKeyInRange(key, start, end) ⇒ boolean</code></p>
 
+
 Checks whether the timestamp embedded in a key falls within a UTC datetime range.
 
 **Returns**: <code>boolean</code> - True if the parsed UTC timestamp is within the range, false otherwise.  
@@ -172,6 +176,7 @@ Checks whether the timestamp embedded in a key falls within a UTC datetime range
 ### parseUtcForDataRange
 
 <p><code>parseUtcForDataRange(timeZone, startIso, endIso) ⇒ UtcRange</code></p>
+
 
 Computes the UTC datetime range that corresponds to a given IANA timezone.
 

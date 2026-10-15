@@ -166,6 +166,7 @@ These functions belong to the utils namespace.
 
 <p><code>addExtension(resource, url, value)</code></p>
 
+
 Add an extension to a resource (or object).
 An object will be created and added to an `extension` array on the provided resource.
 The extension array will be set if it does not exist on the resource.
@@ -187,6 +188,7 @@ The value will be smartly written to the object, ie, valueDateTime or valueRefer
 
 <p><code>cc()</code></p>
 
+
 Alias for util.concept()
 
 
@@ -197,6 +199,7 @@ Alias for util.concept()
 ### utils.coding {#utils_coding}
 
 <p><code>coding(code, system)</code></p>
+
 
 Create a coding object { code, system }. Systems will be mapped using the system map.
 
@@ -214,6 +217,7 @@ Create a coding object { code, system }. Systems will be mapped using the system
 ### utils.composite {#utils_composite}
 
 <p><code>composite(object, key, value)</code></p>
+
 
 Write a value to the target object using a typed key
 Ie, if key is `value` and the value is a date time string,
@@ -237,6 +241,7 @@ This function is poorly named.
 
 <p><code>concept()</code></p>
 
+
 Create a codeableConcept. Codings can be coding objects or
 [code, system] tuples
 if the first argument is a string, it will be set as the text.
@@ -259,6 +264,7 @@ const myConcept = util.concept('smart care id', ['abc', 'http://moh.gov.et/fhir/
 
 <p><code>findExtension(obj, targetUrl, [path])</code></p>
 
+
 Find an extension with a given url in some array
 
 
@@ -277,6 +283,7 @@ Find an extension with a given url in some array
 
 <p><code>id()</code></p>
 
+
 Alias for util.identifier()
 
 
@@ -287,6 +294,7 @@ Alias for util.identifier()
 ### utils.identifier {#utils_identifier}
 
 <p><code>identifier(input, [system])</code></p>
+
 
 Create an identifier resource. Systems will be mapped against the system map.
 The input can be a string value, or an identifier object.
@@ -307,6 +315,7 @@ If input is an array of identifiers, an array of mapped/parsed values will be re
 
 <p><code>ref()</code></p>
 
+
 Alias for util.reference()
 
 
@@ -317,6 +326,7 @@ Alias for util.reference()
 ### utils.reference {#utils_reference}
 
 <p><code>reference(ref)</code></p>
+
 
 Create a reference object of the form { reference }
 If ref is an array, each item will be mapped and an array returned.
@@ -337,6 +347,7 @@ If ref is a valid FHIR reference, it'll just be returned.
 ### utils.setSystemMap {#utils_setSystemMap}
 
 <p><code>setSystemMap()</code></p>
+
 
 Define a set of mapped system values.
 
@@ -362,6 +373,7 @@ These functions belong to the builders namespace.
 
 <p><code>address(type, props)</code></p>
 
+
 Create a FHIR Address resource.
 
 
@@ -378,6 +390,7 @@ Create a FHIR Address resource.
 ### builders.appointment {#builders_appointment}
 
 <p><code>appointment(type, props)</code></p>
+
 
 Create a FHIR Appointment resource.
 
@@ -396,6 +409,7 @@ Create a FHIR Appointment resource.
 
 <p><code>contactPoint(type, props)</code></p>
 
+
 Create a FHIR ContactPoint resource.
 
 
@@ -412,6 +426,7 @@ Create a FHIR ContactPoint resource.
 ### builders.encounter {#builders_encounter}
 
 <p><code>encounter(type, props)</code></p>
+
 
 Create a FHIR Encounter resource.
 
@@ -430,6 +445,7 @@ Create a FHIR Encounter resource.
 
 <p><code>extension(type, props)</code></p>
 
+
 Create a FHIR Extension resource.
 
 
@@ -446,6 +462,7 @@ Create a FHIR Extension resource.
 ### builders.healthcareService {#builders_healthcareService}
 
 <p><code>healthcareService(type, props)</code></p>
+
 
 Create a FHIR HealthcareService resource.
 
@@ -464,6 +481,7 @@ Create a FHIR HealthcareService resource.
 
 <p><code>humanName(type, props)</code></p>
 
+
 Create a FHIR HumanName resource.
 
 
@@ -480,6 +498,7 @@ Create a FHIR HumanName resource.
 ### builders.location {#builders_location}
 
 <p><code>location(type, props)</code></p>
+
 
 Create a FHIR Location resource.
 
@@ -498,6 +517,7 @@ Create a FHIR Location resource.
 
 <p><code>medicationAdministration(type, props)</code></p>
 
+
 Create a FHIR MedicationAdministration resource.
 
 
@@ -514,6 +534,7 @@ Create a FHIR MedicationAdministration resource.
 ### builders.observation {#builders_observation}
 
 <p><code>observation(type, props)</code></p>
+
 
 Create a FHIR Observation resource.
 
@@ -532,6 +553,7 @@ Create a FHIR Observation resource.
 
 <p><code>organization(type, props)</code></p>
 
+
 Create a FHIR Organization resource.
 
 
@@ -548,6 +570,7 @@ Create a FHIR Organization resource.
 ### builders.patient {#builders_patient}
 
 <p><code>patient(type, props)</code></p>
+
 
 Create a FHIR Patient resource.
 
@@ -566,6 +589,7 @@ Create a FHIR Patient resource.
 
 <p><code>practitioner(type, props)</code></p>
 
+
 Create a FHIR Practitioner resource.
 
 
@@ -582,6 +606,7 @@ Create a FHIR Practitioner resource.
 ### builders.practitionerRole {#builders_practitionerRole}
 
 <p><code>practitionerRole(type, props)</code></p>
+
 
 Create a FHIR PractitionerRole resource.
 
@@ -600,6 +625,7 @@ Create a FHIR PractitionerRole resource.
 
 <p><code>relatedPerson(type, props)</code></p>
 
+
 Create a FHIR RelatedPerson resource.
 
 
@@ -617,6 +643,7 @@ Create a FHIR RelatedPerson resource.
 
 <p><code>schedule(type, props)</code></p>
 
+
 Create a FHIR Schedule resource.
 
 
@@ -633,6 +660,7 @@ Create a FHIR Schedule resource.
 ### builders.slot {#builders_slot}
 
 <p><code>slot(type, props)</code></p>
+
 
 Create a FHIR Slot resource.
 

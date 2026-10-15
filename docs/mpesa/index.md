@@ -64,6 +64,7 @@ This adaptor exports the following from common:
 
 <p><code>buyGoods(data, options) ⇒ Operation</code></p>
 
+
 Pay for goods and services directly from your business account to a till number, merchant store number or Merchant HO
 
 
@@ -102,6 +103,7 @@ buyGoods({
 
 <p><code>checkTransactionStatus(data, options) ⇒ Operation</code></p>
 
+
 Check the status of the transaction
 
 
@@ -139,6 +141,7 @@ checkTransactionStatus({
 
 <p><code>registerUrl(data, options) ⇒ Operation</code></p>
 
+
 Register a URL that allows receiving payment notifications to your paybill.
 
 
@@ -170,6 +173,7 @@ registerUrl({
 ### remitTax
 
 <p><code>remitTax(data, options) ⇒ Operation</code></p>
+
 
 Remit tax to the Kenya Revenue Authority (KRA).
 
@@ -207,6 +211,7 @@ remitTax({
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
 
+
 Make a general HTTP request
 
 
@@ -241,6 +246,7 @@ request("POST", "/mpesa/c2b/v1/registerurl",
 ### stkPush
 
 <p><code>stkPush(data, options) ⇒ Operation</code></p>
+
 
 Initiate a STK pin prompt to a Safaricom mobile number.
 

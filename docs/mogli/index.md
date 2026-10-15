@@ -83,6 +83,7 @@ These functions belong to the sourceHelpers namespace.
 
 <p><code>lookup(relationshipName, externalID, path) ⇒ object</code></p>
 
+
 Adds a lookup or 'dome insert' to a record.
 
 
@@ -104,6 +105,7 @@ lookup("relationship_name__r", "externalID on related object", "$.path")
 ### sourceHelpers.relationship {#sourceHelpers_relationship}
 
 <p><code>relationship(relationshipName, externalID, dataSource) ⇒ object</code></p>
+
 
 Adds a lookup or 'dome insert' to a record.
 

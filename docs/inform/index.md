@@ -88,6 +88,7 @@ This adaptor exports the following from common:
 
 <p><code>downloadAttachment(attachmentId, options) ⇒ Operation</code></p>
 
+
 Download an attachment in binary or base64 format
 
 
@@ -125,6 +126,7 @@ downloadAttachment('622038', {
 
 <p><code>getAttachmentMetadata(attachmentId) ⇒ Operation</code></p>
 
+
 Fetch a single attachment's metadata
 
 
@@ -149,6 +151,7 @@ getAttachmentMetadata('621985');
 ### getForm
 
 <p><code>getForm(formId, options) ⇒ Operation</code></p>
+
 
 Get metadata or structural data for a single form
 
@@ -183,6 +186,7 @@ getForm('6225', {
 
 <p><code>getForms(options) ⇒ Operation</code></p>
 
+
 Fetch all forms
 
 
@@ -216,6 +220,7 @@ getForms({
 
 <p><code>getSubmission(formId, submissionId) ⇒ Operation</code></p>
 
+
 Get a single data submission for a single form
 
 
@@ -241,6 +246,7 @@ getSubmission('6225', '7783155');
 ### getSubmissions
 
 <p><code>getSubmissions(formId, options) ⇒ Operation</code></p>
+
 
 Get submission data of a single form
 
@@ -279,6 +285,7 @@ These functions belong to the http namespace.
 
 <p><code>get(path, options) ⇒ Operation</code></p>
 
+
 Make a GET request to Inform
 
 
@@ -305,6 +312,7 @@ http.get('forms')
 ### http.request {#http_request}
 
 <p><code>request(method, path, options) ⇒ Operation</code></p>
+
 
 Make a general HTTP request to Inform
 

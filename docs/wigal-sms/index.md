@@ -54,6 +54,7 @@ This adaptor exports the following from common:
 
 <p><code>sendSms(data) ⇒ Operation</code></p>
 
+
 Send SMS using Wigal SMS Gateway API
 
 

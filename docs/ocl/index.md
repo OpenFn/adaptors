@@ -53,6 +53,7 @@ This adaptor exports the following from common:
 
 <p><code>get(path, query, callback) ⇒ Operation</code></p>
 
+
 Get a resource in OCL
 
 
@@ -87,6 +88,7 @@ get(
 ### getMappings
 
 <p><code>getMappings(ownerId, repositoryId, [options], callback) ⇒ Operation</code></p>
+
 
 Get a source repository in OCL
 

@@ -62,6 +62,7 @@ This adaptor exports the following from common:
 
 <p><code>get(path, options) ⇒ Operation</code></p>
 
+
 Make a GET request against the ODK server.
 
 
@@ -95,6 +96,7 @@ get("v1/projects", {
 
 <p><code>getForms(projectId) ⇒ Operation</code></p>
 
+
 Fetch all forms for a project.
 
 
@@ -120,6 +122,7 @@ getForms(22);
 ### getSubmissions
 
 <p><code>getSubmissions(projectId, xmlFormId, query) ⇒ Operation</code></p>
+
 
 Fetch all submissions to a given form.
 
@@ -153,6 +156,7 @@ getSubmissions(22, 'patient-follow-up', { $filter: "$root/Submissions/__system/s
 
 <p><code>post(path, body, options) ⇒ Operation</code></p>
 
+
 Make a POST request against the ODK server.
 
 
@@ -180,6 +184,7 @@ post('v1/projects', { name: 'Project Name' });
 ### request
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
+
 
 Make a general HTTP request against the ODK server.
 

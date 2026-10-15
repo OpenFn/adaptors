@@ -28,6 +28,7 @@ These functions belong to the collections namespace.
 
 <p><code>each(name, query, callback)</code></p>
 
+
 Iterate over all values in a collection which match the provided query.
 each() maintains a low memory footprint by streaming items individually.
 You can pass a string key-pattern as a query, or pass a query object.
@@ -69,6 +70,7 @@ collections.each('my-collection', { createdBefore: new Date().toString() }, (sta
 
 <p><code>get(name, query)</code></p>
 
+
 Fetch one or more values from a collection.
 For large datasets, we recommend using each(), which streams data.
 You can pass a specific key as a string to only fetch one item, or pass a query
@@ -107,6 +109,7 @@ collections.get('my-collection', { createdAfter: '202401'})
 
 <p><code>remove(name, query)</code></p>
 
+
 Remove one or more values from a collection.
 You can pass a specific key as a string to only fetch one item, or pass a query
 with a key-pattern or a date filter.
@@ -137,6 +140,7 @@ collections.remove('my-collection', { createdAfter: '202401'})
 ### collections.set {#collections_set}
 
 <p><code>set(name, keygen, values)</code></p>
+
 
 Adds one or more values to a collection. If a key already exists, its value will
 be replaced by the new value.

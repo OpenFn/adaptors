@@ -84,6 +84,7 @@ These functions belong to the http namespace.
 
 <p><code>get(path, options) ⇒ Operation</code></p>
 
+
 Make a GET request to an OpenELIS instance
 
 
@@ -119,6 +120,7 @@ http.get('referral-reasons');
 ### http.post {#http_post}
 
 <p><code>post(path, body, options) ⇒ Operation</code></p>
+
 
 Make a POST request to an OpenELIS instance
 
@@ -229,6 +231,7 @@ http.post('LogbookResults', {
 ### http.request {#http_request}
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
+
 
 Make a general HTTP request
 

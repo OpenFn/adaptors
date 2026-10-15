@@ -80,6 +80,7 @@ This adaptor exports the following from common:
 
 <p><code>create(resource, data, callback) ⇒ Operation</code></p>
 
+
 Create some resource in msgraph
 
 
@@ -101,6 +102,7 @@ create("applications", {"displayName": "My App"})
 
 <p><code>get(path, query, callback) ⇒ Operation</code></p>
 
+
 Make a GET request to msgraph resource
 
 
@@ -121,6 +123,7 @@ get('sites/root/lists')
 ### getDrive
 
 <p><code>getDrive(specifier, name, [callback]) ⇒ Operation</code></p>
+
 
 Get a Drive or SharePoint document library. The drive metadata will be written
 to state.drives, where it can be used by other adaptor functions.
@@ -150,6 +153,7 @@ getDrive({ id: "openfn.sharepoint.com", owner: "sites" })
 
 <p><code>getFile(pathOrId, options, [callback]) ⇒ Operation</code></p>
 
+
 Get file metadata or file content.
 
 
@@ -175,6 +179,7 @@ getFile("01LUM6XOGRONYNTZ26DBBJPTN5IFTQPBIW",{ driveName: "mydrive"})
 
 <p><code>getFolder(pathOrId, options, [callback]) ⇒ Operation</code></p>
 
+
 Get the contents or metadata of a folder.
 
 
@@ -199,6 +204,7 @@ getFolder("01LUM6XOCKDTZKQC7AVZF2VMHE2I3O6OY3",{ driveName: "mydrive"})
 ### uploadFile
 
 <p><code>uploadFile(resource, data, callback) ⇒ Operation</code></p>
+
 
 Upload a file to a drive
 
@@ -244,6 +250,7 @@ uploadFile(
 
 <p><code>zip(files) ⇒ Operation</code></p>
 
+
 Add a set of files to a zip archive. Each file is an object of the form `{ name, content }`.
 `content` may be a Buffer, a string, or a JSON-serializable value. Writes the generated zip
 to state.zip.
@@ -280,6 +287,7 @@ These functions belong to the Utils namespace.
 ### Utils.sheetToBuffer {#Utils_sheetToBuffer}
 
 <p><code>sheetToBuffer(rows, options) ⇒</code></p>
+
 
 The function `sheetToBuffer` takes in rows, options and optional callback, It creates a workbook
 and worksheet using the rows, appends the worksheet to the workbook, and returns the workbook as a

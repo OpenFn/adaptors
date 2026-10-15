@@ -58,6 +58,7 @@ This adaptor exports the following from common:
 
 <p><code>getContentsFromMessages(options) ⇒ Operation</code></p>
 
+
 Downloads contents from messages of a Gmail account.
 
 
@@ -112,6 +113,7 @@ getContentsFromMessages(
 
 <p><code>getMessageById(messageId, [options]) ⇒ Operation</code></p>
 
+
 Downloads contents from a single message of a Gmail account, identified by
 its Gmail API message id.
 
@@ -144,6 +146,7 @@ getMessageById(
 ### sendMessage
 
 <p><code>sendMessage(message) ⇒ Operation</code></p>
+
 
 Sends a Gmail message using the provided configuration.
 Supports attachments and standard email fields like subject, body, and recipients.

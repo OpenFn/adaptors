@@ -96,6 +96,7 @@ This adaptor exports the following from common:
 
 <p><code>createCase(params, callback) ⇒ Operation</code></p>
 
+
 Create a new case in Primero
 
 Use this function to create a new case in Primero based on a set of Data.
@@ -123,6 +124,7 @@ createCase({
 ### createReferrals
 
 <p><code>createReferrals(params, callback) ⇒ Operation</code></p>
+
 
 Create referrals in Primero
 
@@ -155,6 +157,7 @@ createReferrals({
 
 <p><code>get(path, query) ⇒ Operation</code></p>
 
+
 Get resources from Primero. Automatically paginates through all pages.
 
 
@@ -186,6 +189,7 @@ get('registry_records/fc686dff-b1ee-4206-9be6-066dbf4e3a54');
 ### getCases
 
 <p><code>getCases(query, options, callback) ⇒ Operation</code></p>
+
 
 Use this function to get cases from Primero based on a set of query parameters.
 Note that in many implementations, the `remote` attribute should be set to `true` to ensure that only cases marked for remote access will be retrieved.
@@ -233,6 +237,7 @@ getCases(
 
 <p><code>getForms(query, callback) ⇒ Operation</code></p>
 
+
 Get forms from Primero
 
 Use this function to get forms from Primero that are accessible to this user based on a set of query parameters.
@@ -262,6 +267,7 @@ getForms({
 
 <p><code>getLocations(query, callback) ⇒ Operation</code></p>
 
+
 Get locations from Primero
 
 Use this function to get a paginated list of all locations that are accessible to this user from Primero.
@@ -290,6 +296,7 @@ getLocations({
 
 <p><code>getLookups(query, callback) ⇒ Operation</code></p>
 
+
 Get lookups from Primero
 
 Use this function to get a paginated list of all lookups that are accessible to this user from Primero.
@@ -316,6 +323,7 @@ getLookups({
 ### getReferrals
 
 <p><code>getReferrals(params, callback) ⇒ Operation</code></p>
+
 
 Get referrals for a specific case in Primero
 
@@ -348,6 +356,7 @@ getReferrals({
 ### updateCase
 
 <p><code>updateCase(id, params, callback) ⇒ Operation</code></p>
+
 
 Update an existing case in Primero
 
@@ -383,6 +392,7 @@ updateCase("6aeaa66a-5a92-4ff5-bf7a-e59cde07eaaz", {
 
 <p><code>updateReferral(params, callback) ⇒ Operation</code></p>
 
+
 Update a single referral for a specific case in Primero
 
 
@@ -407,6 +417,7 @@ updateReferral({
 ### upsertCase
 
 <p><code>upsertCase(params, callback) ⇒ Operation</code></p>
+
 
 Upsert case to Primero
 
@@ -445,6 +456,7 @@ These functions belong to the http namespace.
 
 <p><code>get(path, [options]) ⇒ Operation</code></p>
 
+
 Make a GET request to any Primero endpoint.
 
 
@@ -472,6 +484,7 @@ http.get('/cases');
 ### http.patch {#http_patch}
 
 <p><code>patch(path, data, [options]) ⇒ Operation</code></p>
+
 
 Make a PATCH request to Primero
 
@@ -505,6 +518,7 @@ http.patch('cases/344f3c08-affc-4d8a-b4d3-925b9f4d2867', {
 ### http.post {#http_post}
 
 <p><code>post(path, data, [options]) ⇒ Operation</code></p>
+
 
 Make a POST request to any Primero endpoint.
 

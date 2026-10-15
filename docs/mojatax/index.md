@@ -53,6 +53,7 @@ This adaptor exports the following from common:
 
 <p><code>post(path, data, options, [callback]) ⇒ Operation</code></p>
 
+
 Make a POST request to any Mojatax endpoint.
 
 
@@ -85,6 +86,7 @@ items: [],
 ### request
 
 <p><code>request(method, path, data, options, [callback]) ⇒ Operation</code></p>
+
 
 Make a general HTTP request against the Mojatax server.
 

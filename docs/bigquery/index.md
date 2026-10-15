@@ -54,6 +54,7 @@ This adaptor exports the following from common:
 
 <p><code>load(dirPath, projectId, datasetId, tableId, loadOptions, callback) ⇒ Operation</code></p>
 
+
 Load files to BigQuery
 
 

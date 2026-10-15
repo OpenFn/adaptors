@@ -58,6 +58,7 @@ This adaptor exports the following from common:
 
 <p><code>get(path, options) ⇒ Operation</code></p>
 
+
 Make a GET request to Pesapal
 
 
@@ -84,6 +85,7 @@ get('URLSetup/GetIpnList')
 ### post
 
 <p><code>post(path, body, options) ⇒ Operation</code></p>
+
 
 Make a POST request to Pesapal
 
@@ -133,6 +135,7 @@ post("Transactions/SubmitOrderRequest", {
 ### request
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
+
 
 Make a general HTTP request to Pesapal
 

@@ -115,6 +115,7 @@ This adaptor exports the following from common:
 
 <p><code>del(path, options) ⇒ Operation</code></p>
 
+
 Make a DELETE request. If `configuration.baseUrl` is set, paths must be relative.
 
 
@@ -141,6 +142,7 @@ del(`/myendpoint/${$.data.id}`);
 ### get
 
 <p><code>get(path, options) ⇒ Operation</code></p>
+
 
 Make a GET request. If `configuration.baseUrl` is set, paths must be relative.
 
@@ -170,6 +172,7 @@ get('/patient', {
 ### parseXML
 
 <p><code>parseXML(data, script) ⇒ Operation</code></p>
+
 
 Parse XML with the Cheerio parser
 
@@ -209,6 +212,7 @@ parseXML(
 
 <p><code>patch(path, data, options) ⇒ Operation</code></p>
 
+
 Make a PATCH request. If `configuration.baseUrl` is set, paths must be relative.
 
 
@@ -242,6 +246,7 @@ patch('/patient', $.data, {
 ### post
 
 <p><code>post(path, data, options) ⇒ operation</code></p>
+
 
 Make a POST request. If `configuration.baseUrl` is set, paths must be relative.
 
@@ -277,6 +282,7 @@ post('/patient', $.data, {
 
 <p><code>put(path, data, options) ⇒ Operation</code></p>
 
+
 Make a PUT request. If `configuration.baseUrl` is set, paths must be relative.
 
 
@@ -310,6 +316,7 @@ put('/patient', $.data, {
 ### request
 
 <p><code>request(method, path, options) ⇒ Operation</code></p>
+
 
 Make a HTTP request. If `configuration.baseUrl` is set, paths must be relative.
 
@@ -355,6 +362,7 @@ These functions belong to the util namespace.
 
 <p><code>decode(base64Data) ⇒ string</code></p>
 
+
 Decodes a Base64 encoded string back to its original format.
 
 **Returns**: <code>string</code> - - The decoded string.  
@@ -377,6 +385,7 @@ console.log(decoded); // Output: Hello World
 
 <p><code>encode(data) ⇒ string</code></p>
 
+
 Encodes a given string into Base64 format.
 
 **Returns**: <code>string</code> - - The Base64 encoded string.  
@@ -398,6 +407,7 @@ console.log(encoded); // Output: SGVsbG8gV29ybGQ=
 ### util.uuid {#util_uuid}
 
 <p><code>uuid() ⇒ string</code></p>
+
 
 Generates a UUID (Universally Unique Identifier).
 

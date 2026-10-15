@@ -102,6 +102,7 @@ This adaptor exports the following from common:
 
 <p><code>createEntry(libraryId, body) ⇒ Operation</code></p>
 
+
 Create an entry
 
 
@@ -138,6 +139,7 @@ createEntry("HyZV7AYk0", {
 
 <p><code>getEntry(libraryId, entryId) ⇒ Operation</code></p>
 
+
 Get an entry
 
 
@@ -163,6 +165,7 @@ getEntry('HyZV7AYk0', 'T0xIYmE-V2QoMmRTWF1sVVJUKnU');
 
 <p><code>getFields(libraryId) ⇒ Operation</code></p>
 
+
 Get fields for a library
 
 
@@ -186,6 +189,7 @@ getFields('HyZV7AYk0');
 ### listEntries
 
 <p><code>listEntries(libraryId, [options]) ⇒ Operation</code></p>
+
 
 List all entries in a library.
 This function handles rate limits and automatically paginates to fetch all entries.
@@ -213,6 +217,7 @@ listEntries('HyZV7AYk0');
 
 <p><code>listLibraries() ⇒ Operation</code></p>
 
+
 List all libraries
 
 This operation writes the following keys to state:
@@ -231,6 +236,7 @@ listLibraries();
 ### updateEntry
 
 <p><code>updateEntry(libraryId, entryId, body) ⇒ Operation</code></p>
+
 
 Update an entry
 
@@ -273,6 +279,7 @@ These functions belong to the http namespace.
 
 <p><code>get(path, options) ⇒ Operation</code></p>
 
+
 Make a GET request
 
 
@@ -305,6 +312,7 @@ get('libraries/HyZV7AYk0');
 
 <p><code>post(path, body, options) ⇒ Operation</code></p>
 
+
 Make a POST request
 
 
@@ -334,6 +342,7 @@ post("libraries/HyZV7AYk0/entries", { "name": "Bukayo" });
 
 <p><code>put(path, body, options) ⇒ Operation</code></p>
 
+
 Make a PUT request
 
 
@@ -362,6 +371,7 @@ put("libraries/HyZV7AYk0/entries/T0xIYmE-V2QoMmRTWF1sVVJUKnU", { "name": "Bukayo
 ### http.request {#http_request}
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
+
 
 Make a general HTTP request
 

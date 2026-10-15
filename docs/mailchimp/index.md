@@ -82,6 +82,7 @@ This adaptor exports the following from common:
 
 <p><code>addMember(params, [callback]) ⇒ Operation</code></p>
 
+
 addMember to a list
 
 
@@ -97,6 +98,7 @@ addMember to a list
 ### archiveMember
 
 <p><code>archiveMember(params, [callback]) ⇒ Operation</code></p>
+
 
 archiveMember in a list
 
@@ -114,6 +116,7 @@ archiveMember in a list
 
 <p><code>deleteMember(params, [callback]) ⇒ Operation</code></p>
 
+
 Permanently delete a member from a list
 
 
@@ -129,6 +132,7 @@ Permanently delete a member from a list
 ### get
 
 <p><code>get(path, query, [callback]) ⇒ Operation</code></p>
+
 
 The get function is used to make a GET request to the Mailchimp API.
 
@@ -151,6 +155,7 @@ get('/account-exports');
 
 <p><code>listAudienceInfo(query, [callback]) ⇒ Operation</code></p>
 
+
 Get information about a specific list in your Mailchimp account.
 Results include list members who have signed up but haven't confirmed their subscription yet and unsubscribed or cleaned.
 
@@ -168,6 +173,7 @@ Results include list members who have signed up but haven't confirmed their subs
 
 <p><code>listAudiences(query, [callback]) ⇒ Operation</code></p>
 
+
 Get information about all lists in the account.
 
 
@@ -183,6 +189,7 @@ Get information about all lists in the account.
 ### listBatches
 
 <p><code>listBatches(params, [callback]) ⇒ Operation</code></p>
+
 
 listBatches
 
@@ -200,6 +207,7 @@ listBatches
 
 <p><code>listMembers(params, [callback]) ⇒ Operation</code></p>
 
+
 listMembers
 
 
@@ -215,6 +223,7 @@ listMembers
 ### post
 
 <p><code>post(path, body, query, [callback]) ⇒ Operation</code></p>
+
 
 The post function is used to make a POST request to the Mailchimp API.
 
@@ -237,6 +246,7 @@ post('/accounts-export', {include_stages:[]});
 ### request
 
 <p><code>request(method, path, options, [callback]) ⇒ Operation</code></p>
+
 
 Make an HTTP request to Mailchimp API
 
@@ -264,6 +274,7 @@ request('POST','/accounts-export', {include_stages:[]});
 
 <p><code>startBatch(params, [callback]) ⇒ Operation</code></p>
 
+
 Start a batch with a list of operations.
 
 
@@ -283,6 +294,7 @@ startBatch(params)
 ### tagMembers
 
 <p><code>tagMembers(params, [callback]) ⇒ Operation</code></p>
+
 
 Tag members with a particular tag
 
@@ -318,6 +330,7 @@ tagMembers((state) => ({
 
 <p><code>updateMember(params, [callback]) ⇒ Operation</code></p>
 
+
 updateMember
 
 
@@ -334,6 +347,7 @@ updateMember
 
 <p><code>updateMemberTags(params, [callback]) ⇒ Operation</code></p>
 
+
 updateMemberTags
 
 
@@ -349,6 +363,7 @@ updateMemberTags
 ### upsertMembers
 
 <p><code>upsertMembers(params, [callback]) ⇒ Operation</code></p>
+
 
 Add or update a list members
 

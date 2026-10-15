@@ -119,6 +119,7 @@ This adaptor exports the following namespaced functions:
 
 <p><code>arrayToString(arr, separator) ⇒ string</code></p>
 
+
 Turns an array into a string, separated by X.
 
 
@@ -141,6 +142,7 @@ field("destination_string__c", function(state) {
 
 <p><code>as(key, operation) ⇒ Operation</code></p>
 
+
 Run an operation and save the result to a custom key in state instead of overwriting state.data.
 
 
@@ -160,6 +162,7 @@ as('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));
 ### asData
 
 <p><code>asData(data, state) ⇒ array</code></p>
+
 
 Simple switcher allowing other expressions to use either a JSONPath or
 object literals as a data source.
@@ -185,6 +188,7 @@ asData('$.key'| key | callback)
 
 <p><code>assert(expression, errorMessage) ⇒ operation</code></p>
 
+
 Asserts the given expression or function resolves to `true`, or else throws an exception. Optionally accepts and error message.
 
 
@@ -205,6 +209,7 @@ assert('a' === 'b', '"a" is not equal to "b"')
 
 <p><code>chunk(array, chunkSize) ⇒ Object</code></p>
 
+
 Chunks an array into an array of arrays, each with no more than a certain size.
 
 
@@ -224,6 +229,7 @@ chunk([1,2,3,4,5], 2)
 ### combine
 
 <p><code>combine(operations) ⇒ Operation</code></p>
+
 
 Combines two operations into one
 
@@ -247,6 +253,7 @@ combine(
 
 <p><code>composeNextState(state, response) ⇒ State</code></p>
 
+
 Prepares next state
 
 
@@ -266,6 +273,7 @@ composeNextState(state, response)
 ### cursor
 
 <p><code>cursor(value, options) ⇒ Operation</code></p>
+
 
 Sets a cursor property on state.
 Supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,
@@ -300,6 +308,7 @@ cursor(22)
 
 <p><code>dataPath(path) ⇒ string</code></p>
 
+
 Ensures a path points at the data.
 
 
@@ -318,6 +327,7 @@ dataPath('key')
 ### dataValue
 
 <p><code>dataValue(path) ⇒ Operation</code></p>
+
 
 Picks out a single value from the source data object—usually `state.data`.
 If a JSONPath returns more than one value for the reference, the first
@@ -339,6 +349,7 @@ dataValue('key')
 ### debug
 
 <p><code>debug(args) ⇒ Operation</code></p>
+
 
 Outputs a message to the console with the debug log level. This is usually filtered out by default. Use this at the top level of your job code, but not inside callbacks.
 
@@ -365,6 +376,7 @@ fn((state) => {
 ### each
 
 <p><code>each(dataSource, operation) ⇒ Operation</code></p>
+
 
 Iterates over an array of items and invokes an operation upon each one, where the state
 object is _scoped_ so that state.data is the item under iteration.
@@ -417,6 +429,7 @@ each(
 
 <p><code>field(key, value) ⇒ Field</code></p>
 
+
 Returns a key, value pair in an array.
 
 
@@ -437,6 +450,7 @@ field('destination_field_name__c', 'value')
 
 <p><code>fields(fields) ⇒ Object</code></p>
 
+
 Zips key value pairs into an object.
 
 
@@ -455,6 +469,7 @@ fields(list_of_fields)
 ### fn
 
 <p><code>fn(func) ⇒ Operation</code></p>
+
 
 Creates a custom step (or operation) for more flexible job writing.
 
@@ -478,6 +493,7 @@ fn(state => {
 
 <p><code>fnIf(condition, operation) ⇒ Operation</code></p>
 
+
 Execute a function only when the condition returns true
 
 
@@ -497,6 +513,7 @@ fnIf((state) => state?.data?.name, get("https://example.com"));
 ### group
 
 <p><code>group(arrayOfObjects, keyPath, callback) ⇒ Operation</code></p>
+
 
 Groups an array of objects by a specified key path.
 
@@ -526,6 +543,7 @@ group(users, 'city');
 
 <p><code>humanProper(str) ⇒ string</code></p>
 
+
 Substitutes underscores for spaces and proper-cases a string
 
 
@@ -545,6 +563,7 @@ field("destination_string__c", humanProper(state.data.path_to_string))
 
 <p><code>index() ⇒ DataSource</code></p>
 
+
 Returns the index of the current array being iterated.
 To be used with `each` as a data source.
 
@@ -559,6 +578,7 @@ index()
 ### join
 
 <p><code>join(targetPath, sourcePath, targetKey) ⇒ Operation</code></p>
+
 
 Adds data from a target object
 
@@ -580,6 +600,7 @@ join('$.key','$.data','newKey')
 ### jsonValue
 
 <p><code>jsonValue(obj, path) ⇒ Operation</code></p>
+
 
 Picks out a single value from a JSON object.
 If a JSONPath returns more than one value for the reference, the first
@@ -603,6 +624,7 @@ jsonValue({ a:1 }, 'a')
 
 <p><code>lastReferenceValue(path) ⇒ Operation</code></p>
 
+
 Picks out the last reference value from source data.
 
 
@@ -621,6 +643,7 @@ lastReferenceValue('key')
 ### lodash
 
 <p><code>lodash()</code></p>
+
 
 Lodash utility library.
 All lodash v4.17 functions are available on the `_` namespace, eg,
@@ -642,6 +665,7 @@ fn(state => {
 ### log
 
 <p><code>log(args) ⇒ Operation</code></p>
+
 
 Outputs a message, like calling `console.log`. Use this at the top level of your job code, but not inside callbacks.
 
@@ -668,6 +692,7 @@ fn((state) => {
 ### map
 
 <p><code>map(path, callback) ⇒ State</code></p>
+
 
 Iterates over a collection of items and returns a new array of mapped values,
 like Javascript's `Array.map()` function.
@@ -713,6 +738,7 @@ map($.items, async (data, index, state) => {
 
 <p><code>merge(dataSource, fields) ⇒ DataSource</code></p>
 
+
 Merges fields into each item in an array.
 
 
@@ -737,6 +763,7 @@ merge(
 ### parseCsv
 
 <p><code>parseCsv(csvData, [parsingOptions], [callback]) ⇒ Operation</code></p>
+
 
 Takes a CSV file string or stream and parsing options as input, and returns a promise that
 resolves to the parsed CSV data as an array of objects.
@@ -768,6 +795,7 @@ Options for `parsingOptions` include:
 
 <p><code>referencePath(path) ⇒ string</code></p>
 
+
 Ensures a path points at references.
 
 
@@ -786,6 +814,7 @@ referencePath('key')
 ### scrubEmojis
 
 <p><code>scrubEmojis(text, replacementChars) ⇒ string</code></p>
+
 
 Replaces emojis in a string.
 
@@ -806,6 +835,7 @@ scrubEmojis('Dove🕊️⭐ 29')
 ### source
 
 <p><code>source(path) ⇒ Array.&lt;(String|Object)&gt;</code></p>
+
 
 Picks out a value from source data.
 Will return whatever JSONPath returns, which will always be an array.
@@ -828,6 +858,7 @@ source('$.key')
 
 <p><code>sourceValue(path) ⇒ Operation</code></p>
 
+
 Picks out a single value from source data.
 If a JSONPath returns more than one value for the reference, the first
 item will be returned.
@@ -849,6 +880,7 @@ sourceValue('$.key')
 
 <p><code>splitKeys(obj, keys) ⇒ Array.&lt;Object&gt;</code></p>
 
+
 Splits an object into two objects based on a list of keys.
 The first object contains the keys that are not in the list,
 and the second contains the keys that are.
@@ -867,6 +899,7 @@ and the second contains the keys that are.
 ### toArray
 
 <p><code>toArray(arg) ⇒ array</code></p>
+
 
 Ensures primitive data types are wrapped in an array.
 Does not affect array objects.
@@ -889,6 +922,7 @@ each(function(state) {
 ### validate
 
 <p><code>validate(schema, data) ⇒ Operation</code></p>
+
 
 Validate against a JSON schema. Any errors are written to an array at `state.validationErrors`.
 Schema can be passed directly, loaded as a JSON path from state, or loaded from a URL
@@ -925,6 +959,7 @@ These functions belong to the util namespace.
 
 <p><code>decode(base64Data, options) ⇒ string | object</code></p>
 
+
 Decodes a Base64 encoded string back to its original format.
 
 **Returns**: <code>string</code> \| <code>object</code> - - The decoded string or JavaScript Object.  
@@ -956,6 +991,7 @@ const decodedString = util.decode('Hello World', { parseJson: false })
 ### util.encode {#util_encode}
 
 <p><code>encode(data, options) ⇒ string</code></p>
+
 
 Encodes a given string or Javascript object into Base64 format.
 
@@ -990,6 +1026,7 @@ const encodedObject = util.encode('Hello World', { parseJson: false })
 
 <p><code>uuid() ⇒ string</code></p>
 
+
 Generates a UUID (Universally Unique Identifier)
 
 **Returns**: <code>string</code> - - A newly generated UUID  
@@ -1009,6 +1046,7 @@ These functions belong to the beta namespace.
 ### beta.each {#beta_each}
 
 <p><code>each(dataSource, operation) ⇒ Operation</code></p>
+
 
 Scopes an array of data based on a JSONPath.
 Useful when the source data has `n` items you would like to map to
@@ -1044,6 +1082,7 @@ These functions belong to the dateFns namespace.
 
 <p><code>format()</code></p>
 
+
 The format function from the date-fns library. See [https://date-fns.org/v3.6.0/docs/parse](https://date-fns.org/v3.6.0/docs/parse)
 
 
@@ -1054,6 +1093,7 @@ The format function from the date-fns library. See [https://date-fns.org/v3.6.0/
 ### dateFns.parse {#dateFns_parse}
 
 <p><code>parse()</code></p>
+
 
 The parse function from the date-fns library. See [https://date-fns.org/v3.6.0/docs/parse](https://date-fns.org/v3.6.0/docs/parse)
 
@@ -1068,6 +1108,7 @@ These functions belong to the http namespace.
 ### http.get {#http_get}
 
 <p><code>get(url, options) ⇒ Operation</code></p>
+
 
 Make a GET request.
 
@@ -1111,6 +1152,7 @@ http.get(
 
 <p><code>options(opts) ⇒ OptionsHelpers</code></p>
 
+
 Builder function to create request options. Returns an object with helpers to
 easily add commonly used options. The return object is chainable so you can set
 as many options as you want.
@@ -1133,6 +1175,7 @@ http.get($.data.url, http.options({ query: $.query }).oauth($.configuration.acce
 ### http.post {#http_post}
 
 <p><code>post(url, data, options) ⇒ Operation</code></p>
+
 
 Make a POST request.
 
@@ -1166,6 +1209,7 @@ http.post(
 ### http.request {#http_request}
 
 <p><code>request(method, url, options) ⇒ Operation</code></p>
+
 
 Make a HTTP request.
 

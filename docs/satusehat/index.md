@@ -69,6 +69,7 @@ This adaptor exports the following from common:
 
 <p><code>get(path, params, callback) ⇒ Operation</code></p>
 
+
 Make a GET request to Satusehat. Use this to fetch resources directly from the Satusehat REST API.
 You can pass Satusehat query parameters as an object of key value pairs, which will map to parameters
 in the URL.
@@ -104,6 +105,7 @@ get('/Patient', {
 ### patch
 
 <p><code>patch(path, data, params, [callback]) ⇒ Operation</code></p>
+
 
 Make a PATCH request to Satusehat. Use this to directly update resources on Satusehat REST API.
 You can pass Satusehat an array of objects which contains `op`, `path`, and `value` as the body. You can also pass Satusehat query parameters as an object of key value pairs, which will map to parameters
@@ -142,6 +144,7 @@ patch('Organization/abcde', [
 
 <p><code>post(path, data, params, [callback]) ⇒ Operation</code></p>
 
+
 Make a POST request to Satusehat. Use this to send resources directly to Satusehat REST API.
 You can pass Satusehat body data as a JSON FHIR object.
 
@@ -171,6 +174,7 @@ post('Encounter', { resourceType: 'Encounter', ...state.data });
 ### put
 
 <p><code>put(path, data, params, [callback]) ⇒ Operation</code></p>
+
 
 Make a PUT request to Satusehat. Use this to directly update resources on Satusehat REST API.
 You can pass Satusehat body data as a JSON FHIR object. You can also pass Satusehat query parameters as an object of key value pairs, which will map to parameters

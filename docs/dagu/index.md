@@ -73,6 +73,7 @@ This adaptor exports the following from common:
 
 <p><code>get(path, options) ⇒ Operation</code></p>
 
+
 Make a GET request
 
 
@@ -99,6 +100,7 @@ get("DispensingUnit/Dashboard/StockOutReport");
 ### post
 
 <p><code>post(path, body, options) ⇒ Operation</code></p>
+
 
 Make a POST request
 
@@ -131,6 +133,7 @@ post("Patient/Prescription/History", { start: 0, length: 10, draw: 1, additional
 ### request
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
+
 
 Make a general HTTP requests
 

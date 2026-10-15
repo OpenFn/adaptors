@@ -13,6 +13,7 @@
 
 <p><code>deepResearch(message, options) ⇒ operation</code></p>
 
+
 Prompt Gemini deep research (using Google Search grounding)
 
 
@@ -33,6 +34,7 @@ deepResearch(`Find recent news about OpenFn`);
 
 <p><code>generateImage(promptText, options) ⇒ operation</code></p>
 
+
 Generate an image using Gemini/Imagen
 
 
@@ -52,6 +54,7 @@ generateImage("A futuristic city skyline");
 ### prompt
 
 <p><code>prompt(message, options) ⇒ operation</code></p>
+
 
 Prompt the Gemini interface to respond
 

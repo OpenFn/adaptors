@@ -57,6 +57,7 @@ This adaptor exports the following from common:
 
 <p><code>addContact(params, callback) ⇒ Operation</code></p>
 
+
 Adds a new contact to RapidPro
 
 
@@ -80,6 +81,7 @@ addContact({
 ### sendBroadcast
 
 <p><code>sendBroadcast(params, callback) ⇒ Operation</code></p>
+
 
 Sends a message to a list of contacts and/or URNs
 
@@ -105,6 +107,7 @@ sendBroadcast({
 
 <p><code>startFlow(params, callback) ⇒ Operation</code></p>
 
+
 Start a RapidPro flow for a number of contacts
 
 
@@ -128,6 +131,7 @@ startFlow({
 ### upsertContact
 
 <p><code>upsertContact(params, callback) ⇒ Operation</code></p>
+
 
 Upserts a contact to RapidPro by URN
 

@@ -89,6 +89,7 @@ This adaptor exports the following from common:
 
 <p><code>execute(...operations) ⇒ Operation</code></p>
 
+
 Execute a sequence of operations against MotherDuck cloud database.
 Wraps `@openfn/language-common/execute`, and prepends initial state for MotherDuck.
 
@@ -117,6 +118,7 @@ execute(
 ### insert
 
 <p><code>insert(table, records, [options]) ⇒ Operation</code></p>
+
 
 Insert one or more records into a MotherDuck table with automatic batching.
 Large datasets are automatically split into batches for optimal performance.
@@ -157,6 +159,7 @@ insert('users', records, { batchSize: 500 })
 
 <p><code>query(sqlQuery, [options]) ⇒ Operation</code></p>
 
+
 Execute a SQL query against the MotherDuck database.
 
 
@@ -192,6 +195,7 @@ These functions belong to the util namespace.
 
 <p><code>escapeSqlString(value) ⇒ string</code></p>
 
+
 Escape SQL string values to prevent SQL injection
 
 **Returns**: <code>string</code> - - Escaped string value  
@@ -209,6 +213,7 @@ Escape SQL string values to prevent SQL injection
 
 <p><code>formatSqlValue(value) ⇒ string</code></p>
 
+
 Format a value for SQL insertion
 
 **Returns**: <code>string</code> - - Formatted SQL value  
@@ -225,6 +230,7 @@ Format a value for SQL insertion
 ### util.validateSqlIdentifier {#util_validateSqlIdentifier}
 
 <p><code>validateSqlIdentifier(identifier) ⇒ string</code></p>
+
 
 Validate SQL identifier (table names, column names, etc.)
 

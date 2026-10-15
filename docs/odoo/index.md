@@ -58,6 +58,7 @@ This adaptor exports the following from common:
 
 <p><code>create(model, data, options) ⇒ Operation</code></p>
 
+
 Create a record in Odoo.
 You can pass an external ID to the options object to create a record with a specific ID.
 You can also pass a downloadNewRecord option to download the whole created resource in the response.
@@ -92,6 +93,7 @@ create('res.partner', { name: 'Kool Keith' }, { downloadNewRecord: true });
 
 <p><code>deleteRecord(model, recordId) ⇒ Operation</code></p>
 
+
 Delete a record from Odoo
 
 
@@ -118,6 +120,7 @@ deleteRecord("res.partner", 54 );
 ### read
 
 <p><code>read(model, recordId, fields) ⇒ Operation</code></p>
+
 
 Get a record from Odoo. Returns all fields unless a field list is provided as a third argument
 
@@ -150,6 +153,7 @@ read("res.partner", $.recordIds);
 ### searchReadRecord
 
 <p><code>searchReadRecord(model, domain, fields, [options]) ⇒ Operation</code></p>
+
 
 Search and a read record from Odoo. It returns the records that match the search criteria, with the specified fields or full records if no fields are given.
 
@@ -201,6 +205,7 @@ searchReadRecord('res.partner', {}, [], {
 
 <p><code>searchRecord(model, domain) ⇒ Operation</code></p>
 
+
 Search a record from Odoo. Only returns record IDs. Use `searchReadRecord` to download full
 records which match the criteria.
 
@@ -230,6 +235,7 @@ searchRecord('res.partner', {
 ### update
 
 <p><code>update(model, recordId, data) ⇒ Operation</code></p>
+
 
 Update a record in Odoo
 

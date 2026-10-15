@@ -78,6 +78,7 @@ This adaptor exports the following from common:
 
 <p><code>describeTable(tableName, options) ⇒ Operation</code></p>
 
+
 List the columns of a table in a database.
 
 
@@ -97,6 +98,7 @@ describeTable('clinic_visits')
 ### findValue
 
 <p><code>findValue(filter) ⇒ Operation</code></p>
+
 
 Fetch a uuid key given a condition
 
@@ -126,6 +128,7 @@ findValue({
 
 <p><code>insert(table, record, options) ⇒ Operation</code></p>
 
+
 Insert a record
 
 
@@ -147,6 +150,7 @@ insert(table, record, {setNull: ["'undefined'", "''"], logValues: false})
 
 <p><code>insertMany(table, records, options) ⇒ Operation</code></p>
 
+
 Insert many records, using the keys of the first as the column template
 
 
@@ -167,6 +171,7 @@ insertMany(table, records, { setNull: false, writeSql: true, logValues: false })
 ### insertTable
 
 <p><code>insertTable(tableName, columns, options) ⇒ Operation</code></p>
+
 
 Create a table in database when given an array of columns and a table_name.
 
@@ -196,6 +201,7 @@ insertTable('table_name', state => state.data.map(
 
 <p><code>modifyTable(tableName, columns, options) ⇒ Operation</code></p>
 
+
 Alter an existing table in the database.
 
 
@@ -224,6 +230,7 @@ modifyTable('table_name', state => state.data.map(
 
 <p><code>sql(params) ⇒ Operation</code></p>
 
+
 Execute a raw SQL statement
 
 
@@ -248,6 +255,7 @@ sql({
 
 <p><code>upsert(table, uuid, record, options) ⇒ Operation</code></p>
 
+
 Insert or update a record using SQL MERGE
 
 
@@ -270,6 +278,7 @@ upsert(table, [uuid1, uuid2], record, { setNull: "'undefined'", logValues: false
 ### upsertIf
 
 <p><code>upsertIf(logical, table, uuid, record, options) ⇒ Operation</code></p>
+
 
 Insert or update a record based on a logical condition using ON CONFLICT UPDATE
 
@@ -299,6 +308,7 @@ upsertIf(
 ### upsertMany
 
 <p><code>upsertMany(table, uuid, records, options) ⇒ Operation</code></p>
+
 
 Insert or update multiple records using ON CONFLICT UPDATE and excluded
 

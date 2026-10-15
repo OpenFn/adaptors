@@ -60,6 +60,7 @@ This adaptor exports the following from common:
 
 <p><code>createBirthRecord(data) ⇒ Operation</code></p>
 
+
 Create a birth record. `child_file_birth_evidence_data` takes an array of
 base64-encoded data URIs (truncated in the example below).
 
@@ -155,6 +156,7 @@ createBirthRecord({
 
 <p><code>get(path, query) ⇒ Operation</code></p>
 
+
 Make a GET request
 
 
@@ -182,6 +184,7 @@ get("patient");
 
 <p><code>post(path, data) ⇒ Operation</code></p>
 
+
 Make a POST request
 
 
@@ -208,6 +211,7 @@ post("patient", { "name":"Bukayo" });
 ### request
 
 <p><code>request(method, path, [body], [options]) ⇒ Operation</code></p>
+
 
 Make a general HTTP request to the BDR API
 

@@ -51,6 +51,7 @@ This adaptor exports the following from common:
 
 <p><code>sendSMS(params) ⇒ Operation</code></p>
 
+
 Sends an SMS message to a specific phone number
 
 

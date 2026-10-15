@@ -85,8 +85,9 @@ This adaptor exports the following from common:
 ## Functions
 ### createBirthNotification
 
-~~<p><code>createBirthNotification(body) ⇒ Operation</code></p>
-~~***for OpenCRVS v2 deployments — use [submitBirthNotification](#submitbirthnotification)
+<p><del><code>createBirthNotification(body) ⇒ Operation</code></del></p>
+
+***for OpenCRVS v2 deployments — use [submitBirthNotification](#submitbirthnotification)
   (or [createEvent](#createevent) + [notifyEvent](#notifyevent)) instead. Retained for v1
   gateway-based deployments that still consume FHIR bundles.***
 
@@ -159,6 +160,7 @@ createBirthNotification([
 
 <p><code>createDocumentEntry(resource, [fullUrl]) ⇒ Object</code></p>
 
+
 Create a document bundle entry with automatic UUID generation
 
 **Returns**: <code>Object</code> - Bundle entry with fullUrl and resource  
@@ -179,6 +181,7 @@ createDocumentEntry(builders.patient({ name: [{ given: ['John'] }] }))
 ### createEvent
 
 <p><code>createEvent(type, options) ⇒ Operation</code></p>
+
 
 Create an OpenCRVS v2 event (e.g. a birth or death registration).
 Posts to the `register.<domain>` host. The returned event id is
@@ -209,6 +212,7 @@ createEvent('birth', { createdAtLocation: 'a1b2-...' });
 
 <p><code>getLocations(options) ⇒ Operation</code></p>
 
+
 Fetch the list of locations from the `countryconfig.<domain>` host.
 Useful for picking `createdAtLocation` or `child.birthLocation`.
 
@@ -235,6 +239,7 @@ getLocations();
 ### notifyEvent
 
 <p><code>notifyEvent(eventId, declaration, options) ⇒ Operation</code></p>
+
 
 Notify an existing OpenCRVS v2 event with declaration data.
 Posts to `register.<domain>/api/events/events/{eventId}/notify`.
@@ -268,6 +273,7 @@ notifyEvent($.id, {
 ### queryEvents
 
 <p><code>queryEvents(variables, options) ⇒ Operation</code></p>
+
 
 Make an events search query against the OpenCRVS GraphQL API.
 
@@ -325,6 +331,7 @@ queryEvents(
 
 <p><code>submitBirthNotification(declaration, options) ⇒ Operation</code></p>
 
+
 Convenience helper: create a v2 birth event and notify it in one step.
 Mirrors the reference integration script's create-then-notify chain.
 The notify response is left on `state.data`.
@@ -364,6 +371,7 @@ These functions belong to the http namespace.
 ### http.post {#http_post}
 
 <p><code>post(path, body, options) ⇒ Operation</code></p>
+
 
 Make a POST request
 
@@ -409,6 +417,7 @@ http.post("/location", {
 ### http.request {#http_request}
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
+
 
 Make a general HTTP request
 

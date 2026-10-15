@@ -55,6 +55,7 @@ This adaptor exports the following from common:
 
 <p><code>changesApi(params, callback) ⇒ Operation</code></p>
 
+
 Access the CouchDB Changes API
 
 
@@ -74,6 +75,7 @@ changesApi(params, callback)
 ### fetchSubmissions
 
 <p><code>fetchSubmissions(formId, params, postUrl) ⇒ Operation</code></p>
+
 
 Access form submissions and post them as JSON.
 
@@ -99,6 +101,7 @@ fetchSubmissions(
 ### pickFormData
 
 <p><code>pickFormData(formId) ⇒ Operation</code></p>
+
 
 Select submissions for a specific form
 

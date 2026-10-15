@@ -57,6 +57,7 @@ This adaptor exports the following from common:
 
 <p><code>getFHIR(path, params, callback) ⇒ Operation</code></p>
 
+
 Get FHIR resources from OpenIMIS
 
 

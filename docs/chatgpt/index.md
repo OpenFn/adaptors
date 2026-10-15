@@ -53,6 +53,7 @@ This adaptor exports the following from common:
 
 <p><code>deepResearch(message, options) ⇒ operation</code></p>
 
+
 Prompt GPT deep research interface
 
 
@@ -86,6 +87,7 @@ deepResearch(
 ### prompt
 
 <p><code>prompt(message, options) ⇒ operation</code></p>
+
 
 Prompt the GPT chat interface to respond
 

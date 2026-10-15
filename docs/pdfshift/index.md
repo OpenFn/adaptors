@@ -74,6 +74,7 @@ This adaptor exports the following from common:
 
 <p><code>generatePDF(htmlTemplateString, [options]) ⇒ Operation</code></p>
 
+
 Generate a PDF from an HTML string.
 
 
@@ -133,6 +134,7 @@ generatePDF('https://www.example.com/', {
 ### request
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
+
 
 Make a general HTTP request to PDFShift
 

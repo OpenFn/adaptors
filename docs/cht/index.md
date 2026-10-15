@@ -60,6 +60,7 @@ This adaptor exports the following from common:
 
 <p><code>get(path, options, [callback]) ⇒ Operation</code></p>
 
+
 Make a GET request against the base URL.
 
 
@@ -96,6 +97,7 @@ get("/api/v2/export/contacts", {
 
 <p><code>post(path, body, options, [callback]) ⇒ Operation</code></p>
 
+
 Make a POST request against the base url
 
 
@@ -129,6 +131,7 @@ post("/api/v1/people", {
 
 <p><code>put(path, options, [callback]) ⇒ Operation</code></p>
 
+
 Make a PUT request against the base url
 
 
@@ -156,6 +159,7 @@ put("/api/v1/settings",{query:{overwrite:true}});
 ### request
 
 <p><code>request(method, path, data, options, [callback]) ⇒ Operation</code></p>
+
 
 Make a general HTTP request to CHT
 

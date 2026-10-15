@@ -74,6 +74,7 @@ This adaptor exports the following from common:
 
 <p><code>createTask(params, callback) ⇒ Operation</code></p>
 
+
 Create a task.
 
 
@@ -98,6 +99,7 @@ createTask({
 ### createTaskStory
 
 <p><code>createTaskStory(taskGid, params, callback) ⇒ Operation</code></p>
+
 
 Create a story to a specific task.
 
@@ -128,6 +130,7 @@ createTaskStory("1206933955023739", {
 
 <p><code>getTask(taskGid, params, callback) ⇒ Operation</code></p>
 
+
 Get a single task of a given project.
 
 
@@ -151,6 +154,7 @@ getTask("1206933955023739", {
 ### getTasks
 
 <p><code>getTasks(projectGid, params, callback) ⇒ Operation</code></p>
+
 
 Get the list of tasks for a given project.
 
@@ -183,6 +187,7 @@ getTasks("1206933955023739", {
 ### request
 
 <p><code>request(path, params, callback) ⇒ Operation</code></p>
+
 
 Make a HTTP request against the Asana API.
 
@@ -220,6 +225,7 @@ request("/tasks", {
 ### searchTask
 
 <p><code>searchTask(task, [query], [options]) ⇒ Operation</code></p>
+
 
 Search for tasks in a workspace by task name.
 
@@ -265,6 +271,7 @@ searchTask("Test Search Task", {
 
 <p><code>updateTask(taskGid, data, callback) ⇒ Operation</code></p>
 
+
 Update a specific task.
 
 
@@ -289,6 +296,7 @@ updateTask("1206933955023739", {
 ### upsertTask
 
 <p><code>upsertTask(projectGid, params, callback) ⇒ Operation</code></p>
+
 
 Update or create a task.
 

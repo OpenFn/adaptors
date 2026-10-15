@@ -66,6 +66,7 @@ This adaptor exports the following from common:
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
 
+
 Make a HTTP request to the [MTN MoMo API ](https://momodeveloper.mtn.com/API-collections#api=collection&operation=bc-authorize)
 
 

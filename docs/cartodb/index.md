@@ -50,6 +50,7 @@ This adaptor exports the following from common:
 
 <p><code>addRow(table, rowData) ⇒ Operation</code></p>
 
+
 Add rows to a table
 
 
@@ -69,6 +70,7 @@ addRow('users', { name: 'Alice', age: 25, city: 'New York' })
 ### sql
 
 <p><code>sql(sqlQuery) ⇒ Operation</code></p>
+
 
 Execute an SQL statement
 

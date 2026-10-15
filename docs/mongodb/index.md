@@ -55,6 +55,7 @@ This adaptor exports the following from common:
 
 <p><code>findDocuments(params) ⇒ State</code></p>
 
+
 Find documents in a mongoDb collection
 
 
@@ -78,6 +79,7 @@ findDocuments({
 
 <p><code>insertDocuments(params) ⇒ State</code></p>
 
+
 Inserts documents into a mongoDb collection
 
 
@@ -100,6 +102,7 @@ insertDocuments({
 ### updateDocument
 
 <p><code>updateDocument(params) ⇒ State</code></p>
+
 
 Updates document (optionally upserting) into a mongoDb collection
 

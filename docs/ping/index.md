@@ -76,6 +76,7 @@ These functions belong to the http namespace.
 
 <p><code>post(path, body, options) ⇒ Operation</code></p>
 
+
 Make a POST request
 
 

@@ -75,6 +75,7 @@ This adaptor exports the following from common:
 
 <p><code>get(path, options) ⇒ Operation</code></p>
 
+
 Make a GET request
 
 
@@ -101,6 +102,7 @@ get('/api/v1/transactions/search');
 ### list
 
 <p><code>list(path, query) ⇒ Operation</code></p>
+
 
 Fetch a list of items.
 
@@ -141,6 +143,7 @@ list('/api/v2/disbursements/search-transactions', {
 
 <p><code>post(path, body, options) ⇒ Operation</code></p>
 
+
 Make a POST request
 
 
@@ -171,6 +174,7 @@ post("/api/v1/transaction-notification/resend-failed-notifications", {
 ### request
 
 <p><code>request(method, path, options) ⇒ Operation</code></p>
+
 
 Make a generic request
 

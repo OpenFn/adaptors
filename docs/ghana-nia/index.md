@@ -58,6 +58,7 @@ This adaptor exports the following from common:
 
 <p><code>get(path, query) ⇒ Operation</code></p>
 
+
 Make a GET request
 
 
@@ -85,6 +86,7 @@ get("patient");
 
 <p><code>post(path, data) ⇒ Operation</code></p>
 
+
 Make a POST request
 
 
@@ -111,6 +113,7 @@ post("patient", { "name":"Bukayo" });
 ### registerChild
 
 <p><code>registerChild(data) ⇒ Operation</code></p>
+
 
 Generate a national ID
 

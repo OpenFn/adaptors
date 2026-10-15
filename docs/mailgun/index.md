@@ -54,6 +54,7 @@ This adaptor exports the following from common:
 
 <p><code>send(params)</code></p>
 
+
 Create an event
 
 

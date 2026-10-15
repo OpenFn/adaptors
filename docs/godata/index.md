@@ -79,6 +79,7 @@ This adaptor exports the following from common:
 
 <p><code>getCase(id, query, callback) ⇒ Operation</code></p>
 
+
 Get one or multiple cases within an outbreak from a query filter
 
 
@@ -107,6 +108,7 @@ getCase(
 
 <p><code>getContact(id, query, callback) ⇒ Operation</code></p>
 
+
 Get one or multiple contacts within an outbreak from a query filter
 
 
@@ -131,6 +133,7 @@ getContact("343d-dc3e", {"where":{"firstName": "Luca"}}, state => {
 
 <p><code>getLocation(query, callback) ⇒ Operation</code></p>
 
+
 Get one or multiple locations from a query filter
 
 
@@ -153,6 +156,7 @@ getLocation({"where":{"name": "30 DE OCTUBRE"}}, state => {
 ### getOutbreak
 
 <p><code>getOutbreak(query, callback) ⇒ Operation</code></p>
+
 
 Get one or multiple outbreaks from a query filter
 
@@ -177,6 +181,7 @@ getOutbreak({"where":{"name": "Outbreak demo"}}, state => {
 
 <p><code>getReferenceData(query, callback) ⇒ Operation</code></p>
 
+
 Get one or multiple reference data from a query filter
 
 
@@ -200,6 +205,7 @@ getReferenceData({"where":{"categoryId": "LNG_REFERENCE_DATA_CATEGORY_CENTRE_NAM
 
 <p><code>listCases(id, callback) ⇒ Operation</code></p>
 
+
 Fetch the list of cases within a particular outbreak using its ID.
 
 
@@ -222,6 +228,7 @@ listCases("343d-dc3e", state => {
 ### listContacts
 
 <p><code>listContacts(id, callback) ⇒ Operation</code></p>
+
 
 Fetch the list of contacts within a particular outbreak using its ID.
 
@@ -247,6 +254,7 @@ listContacts("343d-dc3e", // Outbreak Id
 
 <p><code>listLocations(callback) ⇒ Operation</code></p>
 
+
 Fetch the list of locations
 
 
@@ -268,6 +276,7 @@ listLocations(state => {
 ### listOutbreaks
 
 <p><code>listOutbreaks(callback) ⇒ Operation</code></p>
+
 
 Fetch the list of outbreaks
 
@@ -291,6 +300,7 @@ listOutbreaks(state => {
 
 <p><code>listReferenceData(callback) ⇒ Operation</code></p>
 
+
 Fetch the list of reference data
 
 
@@ -312,6 +322,7 @@ listReferenceData(state => {
 ### upsertCase
 
 <p><code>upsertCase(id, externalId, goDataCase, callback) ⇒ Operation</code></p>
+
 
 Upsert case to godata using an external id to mach a specific record
 
@@ -345,6 +356,7 @@ upsertCase("4dce-3eedce3-rd33", 'visualId',
 
 <p><code>upsertContact(id, externalId, goDataContact, callback) ⇒ Operation</code></p>
 
+
 Upsert contact to godata using an external id to match a specific record.
 
 
@@ -374,6 +386,7 @@ upsertContact("4dce-3eedce3-rd33", 'visualId',
 
 <p><code>upsertLocation(externalId, goDataLocation, callback) ⇒ Operation</code></p>
 
+
 Upsert location to godata
 
 
@@ -395,6 +408,7 @@ upsertLocation('name', {...})
 
 <p><code>upsertOutbreak(outbreak, callback) ⇒ Operation</code></p>
 
+
 Upsert outbreak to godata
 
 
@@ -414,6 +428,7 @@ upsertOutbreak({externalId: "3dec33-ede3", data: {...}})
 ### upsertReferenceData
 
 <p><code>upsertReferenceData(externalId, goDataReferenceData, callback) ⇒ Operation</code></p>
+
 
 Upsert reference data to godata
 

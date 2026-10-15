@@ -80,6 +80,7 @@ This adaptor exports the following from common:
 
 <p><code>createPDF(input, options) ⇒ Operation</code></p>
 
+
 Create a PDF from HTML or URL.
 
 **Returns**: <code>Operation</code> - Returns state with base64 string directly  
@@ -100,6 +101,7 @@ These functions belong to the http namespace.
 ### http.request {#http_request}
 
 <p><code>request(method, path, options) ⇒ Operation</code></p>
+
 
 Make a Browserless-authenticated HTTP request operation.
 This operation always sends requests to the configured Browserless 'baseUrl'.

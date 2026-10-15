@@ -62,6 +62,7 @@ This adaptor exports the following from common:
 
 <p><code>create(resourceType, resource, params, callback) ⇒ Operation</code></p>
 
+
 Creates a new resource with a server assigned resourceType.
 The resource object doesn't need resourceType or id
 
@@ -99,6 +100,7 @@ create('Patient', {
 ### createTransactionBundle
 
 <p><code>createTransactionBundle(entries, callback) ⇒ Operation</code></p>
+
 
 Create a transaction bundle to process multiple requests at once
 
@@ -140,6 +142,7 @@ createTransactionBundle([
 
 <p><code>get(path, params, options, callback) ⇒ Operation</code></p>
 
+
 Send a HTTP GET request to the baseURL defined in config
 
 
@@ -173,6 +176,7 @@ get("Claim", { _include: "Claim:patient", _sort: "-_lastUpdated", _count: 200 })
 
 <p><code>getClaim(claimId, params, callback) ⇒ Operation</code></p>
 
+
 Get Claim in a FHIR system
 
 
@@ -200,6 +204,7 @@ getClaim('',{ _include: "Claim:patient", _sort: "-_lastUpdated", _count: 200 });
 ### post
 
 <p><code>post(path, data, options, callback) ⇒ Operation</code></p>
+
 
 Send a HTTP POST request to the baseURL defined in config
 

@@ -13,6 +13,7 @@
 
 <p><code>decryptSubmission(submissionData, options) ⇒ Operation</code></p>
 
+
 Decrypt a FormSG submission
 
 
@@ -47,6 +48,7 @@ decryptSubmission($.data, {
 
 <p><code>processWebhook(submissionData, signatureHeader) ⇒ Operation</code></p>
 
+
 Process a FormSG webhook (verify and decrypt in one step)
 
 
@@ -73,6 +75,7 @@ processWebhook($.data, $.request.headers['x-formsg-signature'])
 ### verifyWebhook
 
 <p><code>verifyWebhook(signatureHeader) ⇒ Operation</code></p>
+
 
 Verify a FormSG webhook signature
 

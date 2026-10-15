@@ -51,6 +51,7 @@ This adaptor exports the following from common:
 
 <p><code>prompt(message, opts) ⇒ operation</code></p>
 
+
 Prompt the Claude chat interface to respond
 
 

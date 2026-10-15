@@ -89,6 +89,7 @@ This adaptor exports the following from common:
 
 <p><code>cursor(value, options) ⇒ Operation</code></p>
 
+
 Sets `state.cursor` to a SurveyCTO timestamp string (`MMM dd, yyy h:mm:ss a`).
 This supports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,
 which will be converted into timestamp strings.
@@ -115,6 +116,7 @@ fetchSubmissions('test', { date: $.cursor });
 ### fetchSubmissions
 
 <p><code>fetchSubmissions(formId, options) ⇒ Operation</code></p>
+
 
 Fetch form submissions.
 
@@ -163,6 +165,7 @@ fetchSubmissions('test', { status: 'approved|rejected' });
 
 <p><code>jsonToCSVBuffer(rows) ⇒ Operation</code></p>
 
+
 Converts an array of objects to a CSV buffer.
 
 
@@ -192,6 +195,7 @@ jsonToCSVBuffer([
 ### list
 
 <p><code>list(resource, options) ⇒ Operation</code></p>
+
 
 List resources from SurveyCTO
 
@@ -242,6 +246,7 @@ list('datasets',{
 ### uploadCsvRecords
 
 <p><code>uploadCsvRecords(datasetId, rows, metadata) ⇒ Operation</code></p>
+
 
 Upload CSV dataset records
 
@@ -311,6 +316,7 @@ uploadCsvRecords(
 
 <p><code>upsertDataset(data) ⇒ Operation</code></p>
 
+
 Update (if exist) or create a dataset in SurveyCTO
 
 
@@ -355,6 +361,7 @@ upsertDataset({
 
 <p><code>upsertRecord(datasetId, data) ⇒ Operation</code></p>
 
+
 Update (if exist) or create a dataset record in SurveyCTO
 
 
@@ -389,6 +396,7 @@ These functions belong to the http namespace.
 ### http.delete {#http_delete}
 
 <p><code>delete(path, params) ⇒ Operation</code></p>
+
 
 Delete resources from SurveyCTO
 
@@ -425,6 +433,7 @@ http.delete('/datasets/enumerators_dataset/record', {
 ### http.get {#http_get}
 
 <p><code>get(path, params) ⇒ Operation</code></p>
+
 
 Get resources from SurveyCTO
 
@@ -470,6 +479,7 @@ http.get('/datasets/data/csv/enumerators_dataset', {
 
 <p><code>post(path, params) ⇒ Operation</code></p>
 
+
 Send a HTTP POST request to SurveyCTO
 
 
@@ -497,6 +507,7 @@ http.post('/datasets/enumeratorse_dataset/purge');
 ### http.request {#http_request}
 
 <p><code>request(path, params) ⇒ Operation</code></p>
+
 
 Make a HTTP request to SurveyCTO
 

@@ -53,6 +53,7 @@ This adaptor exports the following from common:
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
 
+
 Make a general HTTP request
 
 
@@ -81,6 +82,7 @@ request("POST", "patient", { "name": "Bukayo" });
 ### sendSMS
 
 <p><code>sendSMS(data, options) ⇒ Operation</code></p>
+
 
 Send an SMS
 

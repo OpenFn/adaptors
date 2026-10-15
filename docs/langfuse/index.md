@@ -1,6 +1,6 @@
 <dl>
 <dt>
-    <a href="#langfuseapiclient">LangfuseApiClient(func)</a></dt>
+    <a href="#langfuse">langfuse(func)</a></dt>
 </dl>
 
 
@@ -62,9 +62,10 @@ This adaptor exports the following from common:
 </dt></dl>
 
 ## Functions
-### LangfuseApiClient
+### langfuse
 
-<p><code>LangfuseApiClient(func) ⇒ Operation</code></p>
+<p><code>langfuse(func) ⇒ Operation</code></p>
+
 
 Access the langfuse client API. Accepts a callback which receives state and the client API object. See the full API reference at [https://js.reference.langfuse.com/](https://js.reference.langfuse.com/).
 
@@ -112,6 +113,16 @@ langfuse(async (state, api) => {
 
 
 ##  Interfaces
+
+### LangfuseApiClient
+
+The Langfuse client API object (`client.api` from `@langfuse/client`), passed as the
+second argument to the [langfuse](#langfuse) callback. See the full API reference at
+[https://js.reference.langfuse.com/](https://js.reference.langfuse.com/).
+
+
+
+* * *
 
 ### LangfuseState
 

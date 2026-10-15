@@ -51,6 +51,7 @@ This adaptor exports the following from common:
 
 <p><code>certifyVaccination(data) ⇒ Operation</code></p>
 
+
 Certify a vaccination
 
 

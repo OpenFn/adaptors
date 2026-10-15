@@ -53,6 +53,7 @@ This adaptor exports the following from common:
 
 <p><code>fetchSurveyData(params) ⇒ Operation</code></p>
 
+
 Make a POST request to fetch Magpi data and POST it somewhere else
 
 
@@ -75,6 +76,7 @@ fetchSurveyData({
 ### submitRecord
 
 <p><code>submitRecord(jsonData) ⇒ Operation</code></p>
+
 
 Submit a record for a form/survey which already exists in a Magpi user account
 

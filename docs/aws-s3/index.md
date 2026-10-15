@@ -73,6 +73,7 @@ This adaptor exports the following from common:
 
 <p><code>get(params) ⇒ Operation</code></p>
 
+
 Get an object from S3.
 
 Attempts to parse JSON objects automatically into `state.data`. For binary
@@ -101,6 +102,7 @@ get({ bucket: 'my-bucket', key: 'path/to/file.txt' });
 
 <p><code>list(params) ⇒ Operation</code></p>
 
+
 List objects in a bucket (by prefix).
 
 **Returns**: <code>Operation</code> - - A function that takes the state and performs the list operation.  
@@ -125,6 +127,7 @@ list({ bucket: 'my-bucket', prefix: 'path/to/' });
 ### put
 
 <p><code>put(params) ⇒ Operation</code></p>
+
 
 Put an object into S3.
 

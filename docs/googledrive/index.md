@@ -78,6 +78,7 @@ This adaptor exports the following from common:
 
 <p><code>create(content, fileName, options) ⇒ Operation</code></p>
 
+
 Uploads a file to Google Drive.
 
 
@@ -112,6 +113,7 @@ create("SGVsbG8gV29ybGQ=", "hello-world.txt", {
 
 <p><code>get(fileIdOrName) ⇒ Operation</code></p>
 
+
 Downloads a file from Google Drive.
 
 **Returns**: <code>Operation</code> - An operation that retrieves the file as a base64 string.  
@@ -141,6 +143,7 @@ get('hello-world.txt')
 ### list
 
 <p><code>list(folderId, [options]) ⇒ Operation</code></p>
+
 
 Lists files from a directory or root.
 
@@ -177,6 +180,7 @@ list('<id-of-folder-here>',
 ### update
 
 <p><code>update(fileId, content) ⇒ Operation</code></p>
+
 
 Updates an existing file in Google Drive.
 

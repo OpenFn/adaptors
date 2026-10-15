@@ -62,6 +62,7 @@ These functions belong to the http namespace.
 
 <p><code>get(path, [options]) ⇒ Operation</code></p>
 
+
 Make a GET request to any intuit endpoint
 
 
@@ -89,6 +90,7 @@ http.get("/v3/company/9341453908059456/companyinfo/9341453908059456");
 ### http.post {#http_post}
 
 <p><code>post(path, data, [options]) ⇒ Operation</code></p>
+
 
 Make a POST request to any Intuit endpoint
 

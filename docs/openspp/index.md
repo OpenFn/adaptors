@@ -87,6 +87,7 @@ This adaptor exports the following from common:
 
 <p><code>addToGroup(groupId, individualId, [role], [options]) ⇒ Operation</code></p>
 
+
 Add an individual to a group. Throws a 409 error if the individual is
 already a member. To change an existing member's role, use `request` with
 both identifiers URL-encoded, eg
@@ -123,6 +124,7 @@ addToGroup("urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:vocab:id-
 
 <p><code>createGroup(data) ⇒ Operation</code></p>
 
+
 Create a group.
 
 
@@ -152,6 +154,7 @@ createGroup({
 ### createIndividual
 
 <p><code>createIndividual(data) ⇒ Operation</code></p>
+
 
 Create an individual.
 
@@ -183,6 +186,7 @@ createIndividual({
 ### enroll
 
 <p><code>enroll(beneficiary, programId, [options]) ⇒ Operation</code></p>
+
 
 Enroll a registrant in a program. If they are already enrolled, returns their
 membership unchanged. If they have a membership in this program that isn't
@@ -216,6 +220,7 @@ enroll("Individual/urn:openspp:vocab:id-type#national_id|PH-123", "urn:openspp:p
 
 <p><code>getEnrolledPrograms(beneficiary) ⇒ Operation</code></p>
 
+
 List the programs a registrant is enrolled in, as ProgramMembership
 resources (each has a `program` reference).
 
@@ -243,6 +248,7 @@ getEnrolledPrograms("Group/urn:openspp:vocab:id-type#household_id|HH-1");
 
 <p><code>getGroup(id, [options]) ⇒ Operation</code></p>
 
+
 Get a group by identifier. To read the members, use `getGroupMembers`.
 
 
@@ -269,6 +275,7 @@ getGroup("urn:openspp:vocab:id-type#household_id|HH-1");
 ### getGroupMembers
 
 <p><code>getGroupMembers(groupId, [options]) ⇒ Operation</code></p>
+
 
 List the individuals who are members of a group.
 
@@ -301,6 +308,7 @@ getGroupMembers("urn:openspp:vocab:id-type#household_id|HH-1", { role: "head" })
 
 <p><code>getIndividual(id, [options]) ⇒ Operation</code></p>
 
+
 Get an individual by identifier.
 
 
@@ -332,6 +340,7 @@ getIndividual("urn:openspp:vocab:id-type#national_id|PH-123456789", { elements: 
 
 <p><code>getProgram(id) ⇒ Operation</code></p>
 
+
 Get a program by identifier.
 
 
@@ -357,6 +366,7 @@ getProgram("urn:openspp:program|universal-child-grant");
 ### getPrograms
 
 <p><code>getPrograms([options]) ⇒ Operation</code></p>
+
 
 List programs.
 
@@ -388,6 +398,7 @@ getPrograms({ targetType: "group", count: 10 });
 
 <p><code>getServicePoint(name) ⇒ Operation</code></p>
 
+
 Get a service point by its identifier (the service point name).
 
 
@@ -413,6 +424,7 @@ getServicePoint("Agoncillo Payment Center");
 ### removeFromGroup
 
 <p><code>removeFromGroup(groupId, individualId, [options]) ⇒ Operation</code></p>
+
 
 End an individual's membership of a group. OpenSPP sets the end date to
 now unless `endedDate` is given.
@@ -442,6 +454,7 @@ removeFromGroup("urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:voca
 ### request
 
 <p><code>request(method, path, [body], [options]) ⇒ Operation</code></p>
+
 
 Make a request to any OpenSPP REST API v2 endpoint.
 Paths are relative to `/api/v2/spp`.
@@ -477,6 +490,7 @@ request("GET", "/gis/ogc/collections");
 
 <p><code>searchGroup([query], [options]) ⇒ Operation</code></p>
 
+
 Search groups.
 
 
@@ -503,6 +517,7 @@ searchGroup({ name: "Santos" }, { count: 50 });
 ### searchIndividual
 
 <p><code>searchIndividual([query], [options]) ⇒ Operation</code></p>
+
 
 Search individuals. Records the API client may not see (eg without consent)
 are left out.
@@ -540,6 +555,7 @@ searchIndividual({ group: "urn:openspp:vocab:id-type#household_id|HH-1", "member
 
 <p><code>searchServicePoint([query], [options]) ⇒ Operation</code></p>
 
+
 Search service points.
 
 
@@ -566,6 +582,7 @@ searchServicePoint({ country: "PH", contractActive: true });
 ### unenroll
 
 <p><code>unenroll(beneficiary, programId, [options]) ⇒ Operation</code></p>
+
 
 Unenroll a registrant from a program by setting their membership to
 `exited`. If the membership isn't enrolled, returns it unchanged. Throws if
@@ -603,6 +620,7 @@ unenroll("Group/urn:openspp:vocab:id-type#household_id|HH-1", "urn:openspp:progr
 
 <p><code>updateGroup(id, data, [options]) ⇒ Operation</code></p>
 
+
 Update some fields of a group. Fields you leave out are unchanged, and
 `null` clears a field.
 
@@ -631,6 +649,7 @@ updateGroup("urn:openspp:vocab:id-type#household_id|HH-1", { name: "Santos-Reyes
 ### updateIndividual
 
 <p><code>updateIndividual(id, data, [options]) ⇒ Operation</code></p>
+
 
 Update some fields of an individual. Fields you leave out are unchanged, and
 `null` clears a field.

@@ -69,6 +69,7 @@ This adaptor exports the following from common:
 
 <p><code>getItemsWithStats(variables) ⇒ Operation</code></p>
 
+
 Get the list of items in the catalogue
 
 
@@ -98,6 +99,7 @@ getItemsWithStats({
 
 <p><code>insertOutboundShipment(variables) ⇒ Operation</code></p>
 
+
 Create an outbound shipment.
 
 
@@ -126,6 +128,7 @@ insertOutboundShipment({
 ### query
 
 <p><code>query(query, variables) ⇒ Operation</code></p>
+
 
 Make a generic GraphQL request
 
@@ -157,6 +160,7 @@ query(`
 ### upsertOutboundShipment
 
 <p><code>upsertOutboundShipment(variables) ⇒ Operation</code></p>
+
 
 Update an outbound shipment
 

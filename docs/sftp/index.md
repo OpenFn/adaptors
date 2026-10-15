@@ -65,6 +65,7 @@ This adaptor exports the following from common:
 
 <p><code>getCSV(filePath, [parsingOptions]) ⇒ Operation</code></p>
 
+
 Get a CSV and return a JSON array of strings for each item separated by the delimiter
 
 
@@ -88,6 +89,7 @@ getCSV(
 
 <p><code>getJSON(filePath, encoding) ⇒ Operation</code></p>
 
+
 Fetch a json file from an FTP server
 
 
@@ -110,6 +112,7 @@ getJSON(
 ### list
 
 <p><code>list(dirPath, filter, [callback]) ⇒ Operation</code></p>
+
 
 List files present in a directory
 
@@ -151,6 +154,7 @@ list(
 
 <p><code>normalizeCSVarray(options, callback) ⇒ Operation</code></p>
 
+
 Convert JSON array of strings into a normalized object
 
 
@@ -170,6 +174,7 @@ normalizeCSVarray({ delimiter: ';', noheader: true });
 ### putCSV
 
 <p><code>putCSV(localFilePath, remoteFilePath, parsingOptions) ⇒ Operation</code></p>
+
 
 Convert JSON to CSV and upload to an FTP server
 

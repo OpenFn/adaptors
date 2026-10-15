@@ -96,6 +96,7 @@ This adaptor exports the following from common:
 
 <p><code>createChannel(body) ⇒ Operation</code></p>
 
+
 Make a request to OpenHIM to create a new channel. See [OpenHIM Channels docs](https://openhim.org/docs/api/channels/create#create-channel)
 
 
@@ -143,6 +144,7 @@ createChannel({
 
 <p><code>createClient(body) ⇒ Operation</code></p>
 
+
 Make a request to OpenHIM to create a new client record
 
 
@@ -176,6 +178,7 @@ createClient({
 ### createTask
 
 <p><code>createTask(body) ⇒ Operation</code></p>
+
 
 Make a request to OpenHIM to create a new task
 
@@ -211,6 +214,7 @@ createTask({
 
 <p><code>getChannels(channelId) ⇒ Operation</code></p>
 
+
 Make a request to OpenHIM to get all channel records
 
 
@@ -241,6 +245,7 @@ getChannels('67dac5fd70b851d7a26d1274');
 
 <p><code>getClients(clientId) ⇒ Operation</code></p>
 
+
 Make a request to OpenHIM to get all registered client records
 
 
@@ -270,6 +275,7 @@ getClients('6823172670b851d7a222075a');
 ### getTasks
 
 <p><code>getTasks(options) ⇒ Operation</code></p>
+
 
 Make a request to OpenHIM to get all tasks
 
@@ -314,6 +320,7 @@ getTasks({
 
 <p><code>getTransactions(options) ⇒ Operation</code></p>
 
+
 Make a request to OpenHIM to get transactions
 
 
@@ -357,6 +364,7 @@ These functions belong to the http namespace.
 
 <p><code>delete(path, options) ⇒ Operation</code></p>
 
+
 Make a DELETE request to OpenHIM
 
 
@@ -387,6 +395,7 @@ http.delete('/clients/686fb65870b851d7a21d9ca0', {
 
 <p><code>get(path, options) ⇒ Operation</code></p>
 
+
 Make a GET request to OpenHIM
 
 
@@ -414,6 +423,7 @@ http.get('/transactions')
 ### http.post {#http_post}
 
 <p><code>post(path, body, options) ⇒ Operation</code></p>
+
 
 Make a POST request to OpenHIM
 
@@ -458,6 +468,7 @@ http.post(
 
 <p><code>put(path, body, options) ⇒ Operation</code></p>
 
+
 Make a PUT request to OpenHIM
 
 
@@ -501,6 +512,7 @@ http.put(
 ### http.request {#http_request}
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
+
 
 Make a general HTTP request to OpenHIM
 

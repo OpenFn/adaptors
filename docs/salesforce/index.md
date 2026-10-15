@@ -167,6 +167,7 @@ This adaptor exports the following from common:
 
 <p><code>create(sObjectName, records) ⇒ Operation</code></p>
 
+
 Create one or more new sObject records. Relationships in the record should be nested and not use dot-notation syntax
 
 
@@ -217,6 +218,7 @@ create("Account", {
 
 <p><code>describe(sObjectName) ⇒ Operation</code></p>
 
+
 Fetches and logs metadata for an sObject and pushes the result to `state.data`.
 If `sObjectName` is not specified, it will print the total number of all available sObjects and push the result to `state.data`.
 
@@ -246,6 +248,7 @@ describe('Account')
 ### destroy
 
 <p><code>destroy(sObjectName, ids, [options]) ⇒ Operation</code></p>
+
 
 Delete records of an sObject.
 
@@ -292,6 +295,7 @@ destroy("Account", $.data);
 
 <p><code>insert(sObjectName, records) ⇒ Operation</code></p>
 
+
 Alias for "create(sObjectName, records)".
 
 
@@ -329,6 +333,7 @@ insert("Account", $.data);
 ### query
 
 <p><code>query(query, [options]) ⇒ Operation</code></p>
+
 
 Executes an SOQL (Salesforce Object Query Language) query to retrieve records from Salesforce.
 Note that in an event of a query error, error logs will be printed but the operation will not throw the error.
@@ -373,6 +378,7 @@ query(`SELECT Id FROM Patient__c WHERE Health_ID__c = '${$.data.healthId}'`);
 
 <p><code>retrieve(sObjectName, id) ⇒ Operation</code></p>
 
+
 Retrieves a Salesforce sObject(s).
 
 
@@ -398,6 +404,7 @@ retrieve('ContentVersion', '0684K0000020Au7QAE/VersionData');
 ### update
 
 <p><code>update(sObjectName, records) ⇒ Operation</code></p>
+
 
 Update an sObject record or records. Relationships in the record should be nested and not use dot-notation syntax
 
@@ -447,6 +454,7 @@ update("Account", {
 
 <p><code>upsert(sObjectName, externalId, records) ⇒ Operation</code></p>
 
+
 Create a new sObject record, or updates it if it already exists. Relationships in the record should be nested and not use dot-notation syntax
 
 
@@ -494,6 +502,7 @@ These functions belong to the bulk1 namespace.
 
 <p><code>destroy(sObject, records, [options]) ⇒ Operation</code></p>
 
+
 Bulk deletes records using Salesforce Bulk API 1.0
 
 
@@ -531,6 +540,7 @@ bulk1.delete('Account', [{ Id: '001xx' }], {
 ### bulk1.insert {#bulk1_insert}
 
 <p><code>insert(sObject, records, [options]) ⇒ Operation</code></p>
+
 
 Bulk inserts records using Salesforce Bulk API 1.0
 
@@ -570,6 +580,7 @@ bulk1.insert('Account', [{ Name: 'Coco' }, { Name: 'Melon' }], {
 
 <p><code>query(query) ⇒ Operation</code></p>
 
+
 Executes a bulk query using Salesforce Bulk API 1.0
 
 
@@ -602,6 +613,7 @@ bulk1.query('SELECT Id, Name FROM Account', {
 ### bulk1.update {#bulk1_update}
 
 <p><code>update(sObject, records, [options]) ⇒ Operation</code></p>
+
 
 Bulk updates records using Salesforce Bulk API 1.0
 
@@ -640,6 +652,7 @@ bulk1.update('Account', [{ Id: '001xx', Name: 'Updated Name' }], {
 ### bulk1.upsert {#bulk1_upsert}
 
 <p><code>upsert(sObject, externalIdFieldName, records, options) ⇒ Operation</code></p>
+
 
 Bulk upserts records using Salesforce Bulk API 1.0
 
@@ -683,6 +696,7 @@ These functions belong to the bulk2 namespace.
 ### bulk2.destroy {#bulk2_destroy}
 
 <p><code>destroy(sObject, records, [options]) ⇒ Operation</code></p>
+
 
 Bulk deletes records using Salesforce Bulk API 2.0
 
@@ -745,6 +759,7 @@ bulk2.destroy(
 
 <p><code>insert(sObject, records, [options]) ⇒ Operation</code></p>
 
+
 Bulk inserts records using Salesforce Bulk API 2.0
 
 
@@ -784,6 +799,7 @@ bulk2.insert('Account', [{ Name: 'Coco' }, { Name: 'Melon' }], {
 ### bulk2.query {#bulk2_query}
 
 <p><code>query(query, options) ⇒ Operation</code></p>
+
 
 Executes a bulk query using Salesforce Bulk API 2.0
 
@@ -826,6 +842,7 @@ bulk2.query(
 ### bulk2.update {#bulk2_update}
 
 <p><code>update(sObject, records, [options]) ⇒ Operation</code></p>
+
 
 Bulk updates records using Salesforce Bulk API 2.0
 
@@ -873,6 +890,7 @@ bulk2.update(
 ### bulk2.upsert {#bulk2_upsert}
 
 <p><code>upsert(sObject, externalIdFieldName, records, [options]) ⇒ Operation</code></p>
+
 
 Bulk upserts records using Salesforce Bulk API 2.0
 
@@ -941,6 +959,7 @@ These functions belong to the http namespace.
 
 <p><code>get(path, [options]) ⇒ Operation</code></p>
 
+
 Send a GET request on salesforce server configured in `state.configuration`.
 
 
@@ -979,6 +998,7 @@ http.get("/jobs/query/v1/jobs/001XXXXXXXXXXXXXXX/results").then((state) => {
 
 <p><code>post(path, body, [options]) ⇒ Operation</code></p>
 
+
 Send a POST request to salesforce server configured in `state.configuration`.
 
 
@@ -1009,6 +1029,7 @@ http.post("/jobs/query", {
 ### http.request {#http_request}
 
 <p><code>request(path, [options]) ⇒ Operation</code></p>
+
 
 Send a request to salesforce server configured in `state.configuration`.
 
@@ -1042,6 +1063,7 @@ These functions belong to the util namespace.
 ### util.toUTF8 {#util_toUTF8}
 
 <p><code>toUTF8(input) ⇒ string</code></p>
+
 
 Transliterates unicode characters to their best ASCII representation
 

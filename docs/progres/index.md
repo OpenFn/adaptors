@@ -51,6 +51,7 @@ This adaptor exports the following from common:
 
 <p><code>postData(params, callback) ⇒ Operation</code></p>
 
+
 Make a POST request with a certificate
 
 

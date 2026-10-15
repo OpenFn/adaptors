@@ -81,6 +81,7 @@ This adaptor exports the following from common:
 
 <p><code>getHistoricalMeasurements(entityType, entityId, [params]) ⇒ Operation</code></p>
 
+
 Retrieve historical (past) air quality measurements for a monitoring entity.
 
 The `entityType` determines which kind of entity is queried. Valid values are:
@@ -114,6 +115,7 @@ getHistoricalMeasurements('grids', 'grid123', {
 ### getRecentMeasurements
 
 <p><code>getRecentMeasurements(entityType, entityId) ⇒ Operation</code></p>
+
 
 Retrieve the most recent air quality measurements for a monitoring entity.
 
@@ -153,6 +155,7 @@ These functions belong to the http namespace.
 
 <p><code>get(path, [options]) ⇒ Operation</code></p>
 
+
 Make a generic authenticated GET request to any AirQo endpoint.
 
 
@@ -173,6 +176,7 @@ http.get('devices/measurements/sites/site123/recent');
 ### http.post {#http_post}
 
 <p><code>post(path, [body], [options]) ⇒ Operation</code></p>
+
 
 Make a generic authenticated POST request to any AirQo endpoint.
 
@@ -195,6 +199,7 @@ http.post('devices/metadata/sites', { name: 'Kampala' });
 ### http.request {#http_request}
 
 <p><code>request(method, path, [options]) ⇒ Operation</code></p>
+
 
 Make a generic authenticated request of any HTTP method to any AirQo endpoint.
 

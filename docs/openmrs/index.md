@@ -105,6 +105,7 @@ This adaptor exports the following from common:
 
 <p><code>create(path, data) ⇒ Operation</code></p>
 
+
 Create a resource. For a list of valid resources, see [OpenMRS Docs](https://rest.openmrs.org/)
 
 
@@ -198,6 +199,7 @@ create("patient/b52ec6f9-0e26-424c-a4a1-c64f9d571eb3/identifier", {
 
 <p><code>destroy(path, [options]) ⇒ Operation</code></p>
 
+
 Delete a resource. Must include a UUID in the path.
 Throws an error if the resource does not exist.
 
@@ -230,6 +232,7 @@ destroy("patient/12346", {
 ### get
 
 <p><code>get(path, [options]) ⇒ Operation</code></p>
+
 
 Fetch resources from OpenMRS. Use this to fetch a single resource,
 or to search a list.
@@ -296,6 +299,7 @@ get("patient/abc", { language: "fr" })
 
 <p><code>update(path, data) ⇒ Operation</code></p>
 
+
 Update a resource. Only properties included in the data will be affected.
 For a list of valid resources and for update rules, see the Update sections
 of the [OpenMRS Docs](https://rest.openmrs.org/)
@@ -325,6 +329,7 @@ update('person/3cad37ad-984d-4c65-a019-3eb120c9c373', {
 ### upsert
 
 <p><code>upsert(path, data, params) ⇒ Operation</code></p>
+
 
 Update a resource if it already exists, or otherwise create a new one.
 
@@ -386,6 +391,7 @@ These functions belong to the http namespace.
 
 <p><code>delete(path, [options]) ⇒ operation</code></p>
 
+
 Make a DELETE request to an OpenMRS endpoint
 
 
@@ -415,6 +421,7 @@ http.delete(
 ### http.get {#http_get}
 
 <p><code>get(path, [options]) ⇒ operation</code></p>
+
 
 Make a GET request to any OpenMRS endpoint.
 Unlike the main `get()`, this does not append anything to the path you provide.
@@ -461,6 +468,7 @@ http.get(
 
 <p><code>post(path, data, [options]) ⇒ operation</code></p>
 
+
 Make a POST request to an OpenMRS endpoint
 
 
@@ -504,6 +512,7 @@ http.post(
 ### http.put {#http_put}
 
 <p><code>put(path, data, [options]) ⇒ operation</code></p>
+
 
 Make a PUT request to an OpenMRS endpoint
 
@@ -549,6 +558,7 @@ http.put(
 
 <p><code>request(method, path, [options]) ⇒ Operation</code></p>
 
+
 Make a HTTP request to any OpenMRS endpoint
 
 
@@ -593,6 +603,7 @@ These functions belong to the fhir namespace.
 ### fhir.get {#fhir_get}
 
 <p><code>get(path, query, [callback]) ⇒ Operation</code></p>
+
 
 Make a get request to any FHIR endpoint in OpenMRS
 

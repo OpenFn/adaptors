@@ -81,6 +81,7 @@ This adaptor exports the following from common:
 
 <p><code>get(path, options) ⇒ Operation</code></p>
 
+
 Make a GET request
 
 
@@ -104,6 +105,7 @@ get("/api/v1/sites", { query: { active: true } });
 ### getViralLoadResults
 
 <p><code>getViralLoadResults(data, options) ⇒ Operation</code></p>
+
 
 Get viral load test results from IBIPIMO
 
@@ -135,6 +137,7 @@ getViralLoadResults({
 
 <p><code>post(path, body, options) ⇒ Operation</code></p>
 
+
 Make a POST request
 
 
@@ -155,6 +158,7 @@ post("/api/v1/ask-for-vl-results", { siteid: "77889900", sample_uids: ["20260104
 ### postViralLoadRequest
 
 <p><code>postViralLoadRequest(data, options) ⇒ Operation</code></p>
+
 
 Post viral load test requests to IBIPIMO
 
@@ -193,6 +197,7 @@ postViralLoadRequest({
 ### processViralLoadResults
 
 <p><code>processViralLoadResults(processor) ⇒ Operation</code></p>
+
 
 The processResults function returns an object with:
 - totalRequested: Number of samples requested
@@ -246,6 +251,7 @@ processViralLoadResults((state, processResults) => {
 
 <p><code>processViralLoadSubmission(processor) ⇒ Operation</code></p>
 
+
 The processSubmission function returns: savedSamples, savedCount, errors, errorCount, hasErrors, sampleIds
 
 
@@ -282,6 +288,7 @@ processViralLoadSubmission((state, processSubmission) => {
 ### request
 
 <p><code>request(method, path, options) ⇒ Operation</code></p>
+
 
 Make a general HTTP request
 

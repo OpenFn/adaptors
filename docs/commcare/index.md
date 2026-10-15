@@ -94,6 +94,7 @@ This adaptor exports the following from common:
 
 <p><code>bulk(type, data, params) ⇒ Operation</code></p>
 
+
 Bulk upload data to CommCare for case-data or lookup-table. Accepts an array of objects, converts them into
 an XLS representation, and uploads.
 
@@ -153,6 +154,7 @@ bulk(
 
 <p><code>fetchReportData(reportId, params, postUrl) ⇒ Operation</code></p>
 
+
 Make a GET request to CommCare's Reports API (v0.5) and POST the response somewhere else.
 
 
@@ -183,8 +185,9 @@ fetchReportData(
 
 ### get
 
-~~<p><code>get(path, [params], [callback]) ⇒ Operation</code></p>
-~~***This function only works against CommCare's legacy v0.5 API (path: `/a/domain/api/v0.5/...`).
+<p><del><code>get(path, [params], [callback]) ⇒ Operation</code></del></p>
+
+***This function only works against CommCare's legacy v0.5 API (path: `/a/domain/api/v0.5/...`).
 For current CommCare APIs, use [#http_get](#http_get) instead.***
 
 
@@ -229,8 +232,9 @@ get("/case", {}, (state) => {
 
 ### post
 
-~~<p><code>post(path, data, [params], [callback]) ⇒ Operation</code></p>
-~~***This function only works against CommCare's legacy v0.5 API (path: `/a/domain/api/v0.5/...`).
+<p><del><code>post(path, data, [params], [callback]) ⇒ Operation</code></del></p>
+
+***This function only works against CommCare's legacy v0.5 API (path: `/a/domain/api/v0.5/...`).
 For current CommCare APIs, use [#http_post](#http_post) instead.***
 
 
@@ -262,8 +266,9 @@ post("/user", { "username":"test", "password":"somepassword" })
 
 ### request
 
-~~<p><code>request(method, path, body, params) ⇒ Operation</code></p>
-~~***Use [#http_request](#http_request) instead.***
+<p><del><code>request(method, path, body, params) ⇒ Operation</code></del></p>
+
+***Use [#http_request](#http_request) instead.***
 
 
 Make a general HTTP request against the CommCare server.
@@ -298,6 +303,7 @@ request("GET", "/a/asri/api/v0.5/case", {}, { offset:0, limit: 20 })
 ### submit
 
 <p><code>submit(data) ⇒ Operation</code></p>
+
 
 Submit forms to CommCare. Use this to send forms directly to Commcare REST API. Accepts an array of JSON
 objects, converts them into XML, and submits to CommCare as an x-form.
@@ -334,6 +340,7 @@ submit(
 
 <p><code>submitXls(data, params) ⇒ Operation</code></p>
 
+
 Bulk upload data to CommCare. Use this to send multiple items for a single resource at once to Commcare. It accepts an array of objects, converts them into
 an XLS representation, and uploads.
 
@@ -369,6 +376,7 @@ These functions belong to the http namespace.
 ### http.get {#http_get}
 
 <p><code>get(path, [params], [callback]) ⇒ Operation</code></p>
+
 
 Make a GET request to CommCare. Use this to retrieve resources directly from the CommCare REST API.
 
@@ -414,6 +422,7 @@ http.get('case/v2', { paginate: true }, state => {
 
 <p><code>post(path, data, [params]) ⇒ Operation</code></p>
 
+
 Make a POST request to CommCare. Use this to send resources directly to Commcare REST API.
 You can pass CommCare body data as a JSON object.
 
@@ -448,6 +457,7 @@ http.post('case/v2', {
 ### http.request {#http_request}
 
 <p><code>request(method, path, body, params) ⇒ Operation</code></p>
+
 
 Make a general HTTP request against the CommCare server. Use this to make any request to CommCare REST API.
 

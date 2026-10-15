@@ -61,6 +61,7 @@ This adaptor exports the following from common:
 
 <p><code>create(doctype, data) ⇒ Operation</code></p>
 
+
 Create a document in ERPNext. Returns the complete created document with all fields.
 
 
@@ -104,6 +105,7 @@ create('Item', {
 
 <p><code>deleteRecord(doctype, name) ⇒ Operation</code></p>
 
+
 Delete a document from ERPNext
 
 
@@ -139,6 +141,7 @@ deleteRecord('Quotation', 'QTN-00001');
 
 <p><code>getCount(doctype, filters) ⇒ Operation</code></p>
 
+
 Get count of documents matching filters
 
 
@@ -173,6 +176,7 @@ getCount('Item', { item_group: $.data.group_name });
 ### getList
 
 <p><code>getList(doctype, options) ⇒ Operation</code></p>
+
 
 Get a list of documents from ERPNext with filtering, field selection, and pagination
 
@@ -225,6 +229,7 @@ getList('Item', {
 
 <p><code>read(doctype, name) ⇒ Operation</code></p>
 
+
 Read a document from ERPNext by name/ID. Returns the complete document with all fields.
 Note: For field selection, use getList() with filters instead.
 
@@ -260,6 +265,7 @@ read('Sales Order', $.orderId);
 ### update
 
 <p><code>update(doctype, name, data) ⇒ Operation</code></p>
+
 
 Update a document in ERPNext
 

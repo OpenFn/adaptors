@@ -51,6 +51,7 @@ This adaptor exports the following from common:
 
 <p><code>postMessage(params) ⇒ Operation</code></p>
 
+
 Post a message
 
 

@@ -55,6 +55,7 @@ This adaptor exports the following from common:
 
 <p><code>fetch(params) ⇒ Operation</code></p>
 
+
 Make a GET request and POST it somewhere else
 
 
@@ -81,6 +82,7 @@ fetch({
 
 <p><code>update(params) ⇒ Operation</code></p>
 
+
 Make an update in Maximo 7.6 and beyond
 
 
@@ -102,6 +104,7 @@ update({
 ### update75
 
 <p><code>update75(params) ⇒ Operation</code></p>
+
 
 Make an upadte in Maximo 7.5
 

@@ -81,6 +81,7 @@ This adaptor exports the following from common:
 
 <p><code>getPatients(query) ⇒ Operation</code></p>
 
+
 Get Patient resources from LAMISPlus
 
 
@@ -109,6 +110,7 @@ These functions belong to the http namespace.
 ### http.post {#http_post}
 
 <p><code>post(path, data, [options]) ⇒ operation</code></p>
+
 
 Make a POST request to a LAMISPlus endpoint
 
@@ -143,6 +145,7 @@ http.post(
 ### http.request {#http_request}
 
 <p><code>request(method, path, body, options) ⇒ Operation</code></p>
+
 
 Make a general HTTP request
 
