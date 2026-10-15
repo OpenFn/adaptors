@@ -30,6 +30,7 @@ export const request = (configuration = {}, method, path, options) => {
 
     headers: {
       'content-type': 'application/json',
+      ...options?.headers,
       ...headers,
     },
   };

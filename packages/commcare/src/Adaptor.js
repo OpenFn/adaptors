@@ -321,12 +321,12 @@ export function fetchReportData(reportId, params, postUrl) {
 
     const { body: reportData } = await util.request(state.configuration, path, {
       method: 'GET',
+      params,
       contentType: 'application/json',
     });
 
     await util.request(state.configuration, postUrl, {
       method: 'POST',
-      params,
       data: reportData,
       contentType: 'application/json',
     });
