@@ -1,5 +1,11 @@
 # @openfn/language-langfuse
 
+## 1.0.2 - 15 October 2026
+
+### Patch Changes
+
+- Fix docs
+
 ## 1.0.1 - 03 September 2026
 
 ### Patch Changes
