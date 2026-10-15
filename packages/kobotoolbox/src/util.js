@@ -25,6 +25,13 @@ export async function request(state, method, path, opts = {}) {
     maxRedirections,
   } = opts;
 
+  const isAbsoluteUrl = /^(https?:|\/\/)/i.test(path);
+  if (isAbsoluteUrl) {
+    throw new Error(
+      `Invalid path argument: "${path}" appears to be an absolute URL. Please provide a relative path`
+    );
+  }
+
   const requestPath = `/api/${apiVersion}/${path}/`;
   const authHeaders = makeBasicAuthHeader(username, password);
 
