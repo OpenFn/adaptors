@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "type": "string",
+      "description": "Inji Verify service base URL, including the context path /v1/verify",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://verify.example.org/v1/verify"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["baseUrl"]
+}
