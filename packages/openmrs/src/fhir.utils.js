@@ -45,8 +45,9 @@ export async function request(state, method, path, data, params) {
     if (nextUrl) {
       console.log(`Fetched ${response.body.entry.length} results`);
       console.log(`Fetching next page from ${nextUrl}`);
-      const urlObj = new URL(nextUrl);
-      const params = new URLSearchParams(urlObj.search);
+      // Only the query string matters, and the host part can be malformed (e.g.
+      // behind a proxy that duplicates the Host header), so don't parse the URL
+      const params = new URLSearchParams(nextUrl.replace(/^[^?]*/, ''));
       const paramsObject = Object.fromEntries(params.entries());
       query = { ...query, ...paramsObject };
     } else {
