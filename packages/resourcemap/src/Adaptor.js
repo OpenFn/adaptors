@@ -30,8 +30,8 @@ export function execute(...operations) {
  */
 export function submitSite(collection_id, submissionData) {
   function assembleError({ response, error }) {
-    if ([200, 201, 202].indexOf(response.statusCode) > -1) return false;
     if (error) return error;
+    if ([200, 201, 202].indexOf(response.statusCode) > -1) return false;
     return new Error(
       `Server responded with ${response.statusCode} \n ${response.body}`,
     );
@@ -80,13 +80,6 @@ export function submitSite(collection_id, submissionData) {
           }
         },
       );
-    });
-
-    return request.post({
-      username,
-      password,
-      body,
-      url,
     });
   };
 }

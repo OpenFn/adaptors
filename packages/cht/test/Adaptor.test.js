@@ -159,6 +159,12 @@ describe('post()', () => {
         headers: {
           Authorization: 'Basic aGVsbG86dGhlcmU=',
         },
+        body: JSON.stringify({
+          name: 'Samuel',
+          place: '1d83f2b4a27eceb40df9e9f9ad06d137',
+          type: 'contact',
+          contact_type: 'chp',
+        }),
       })
       .reply(
         201,
@@ -239,5 +245,34 @@ describe('put()', () => {
       success: true,
       upgraded: false,
     });
+  });
+});
+
+describe('headers', () => {
+  it('should send custom headers along with the auth header', async () => {
+    testServer
+      .intercept({
+        path: '/api/v2/export/contacts',
+        method: 'GET',
+        headers: {
+          Authorization: 'Basic aGVsbG86dGhlcmU=',
+          'x-custom': 'yes',
+        },
+      })
+      .reply(200, [], { headers: { 'content-type': 'application/json' } });
+
+    const state = {
+      configuration: {
+        baseUrl: 'https://example.cht.com',
+        username: 'hello',
+        password: 'there',
+      },
+    };
+
+    const finalState = await get('/api/v2/export/contacts', {
+      headers: { 'x-custom': 'yes' },
+    })(state);
+
+    expect(finalState.data).to.eql([]);
   });
 });

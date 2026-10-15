@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import net from 'node:net';
 
 import Adaptor from '../src/index.js';
 const { execute, submitSite } = Adaptor;
@@ -40,6 +41,32 @@ describe('execute', () => {
         data: null,
       });
     });
+  });
+});
+
+describe('submitSite', () => {
+  it('rejects when the server cannot be reached', async () => {
+    // Grab a free port, then close it so the connection is refused
+    const server = net.createServer();
+    await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+    const { port } = server.address();
+    await new Promise(resolve => server.close(resolve));
+
+    const state = {
+      configuration: {
+        baseUrl: `http://127.0.0.1:${port}`,
+        username: 'hello',
+        password: 'there',
+      },
+    };
+
+    let error;
+    try {
+      await submitSite('1', { name: 'My Site' })(state);
+    } catch (e) {
+      error = e;
+    }
+    expect(error).to.have.property('code', 'ECONNREFUSED');
   });
 });
 
