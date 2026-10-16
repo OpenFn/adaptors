@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "accessToken": {
+      "title": "Access Token",
+      "type": "string",
+      "description": "Copper API key (Settings > Integrations > API Keys)",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": ["a1b2c3d4e5f6"]
+    },
+    "userEmail": {
+      "title": "User Email",
+      "type": "string",
+      "description": "Email of the Copper user who generated the API key",
+      "format": "email",
+      "examples": ["user@example.com"]
+    },
+    "baseUrl": {
+      "title": "Base URL",
+      "type": "string",
+      "description": "Override the Copper API base URL. Defaults to https://api.copper.com/developer_api/v1",
+      "format": "uri",
+      "examples": ["https://api.copper.com/developer_api/v1"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["accessToken", "userEmail"]
+}
