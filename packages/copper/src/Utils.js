@@ -24,7 +24,7 @@ export const prepareNextState = (state, response) => {
 export const request = (configuration = {}, method, path, options = {}) => {
   assertRelativeUrl(path);
 
-  const { baseUrl = DEFAULT_BASE_URL, accessToken, userEmail } = configuration;
+  const { baseUrl, accessToken, userEmail } = configuration;
 
   const errors = {
     401: 'Unauthorized: check your Copper access token and user email',
@@ -35,7 +35,7 @@ export const request = (configuration = {}, method, path, options = {}) => {
   const opts = {
     parseAs: 'json',
     errors,
-    baseUrl,
+    baseUrl: baseUrl || DEFAULT_BASE_URL,
     ...options,
     headers: {
       'content-type': 'application/json',

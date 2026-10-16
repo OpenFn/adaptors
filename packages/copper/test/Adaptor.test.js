@@ -45,4 +45,17 @@ describe('upsertLead', () => {
     });
     expect(finalState.data).to.eql({ id: 123, ...properties });
   });
+
+  it('falls back to the default base url when baseUrl is empty', async () => {
+    testServer
+      .intercept({ path: '/developer_api/v1/leads/upsert', method: 'PUT' })
+      .reply(200, { id: 456 }, { headers: { 'content-type': 'application/json' } });
+
+    const finalState = await upsertLead({
+      name: 'Grace Hopper',
+      email: { email: 'grace@example.com', category: 'work' },
+    })({ configuration: { ...configuration, baseUrl: '' } });
+
+    expect(finalState.data).to.eql({ id: 456 });
+  });
 });

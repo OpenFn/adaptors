@@ -25,7 +25,7 @@ export const prepareNextState = (state, response) => {
 export const request = (configuration = {}, method, path, options = {}) => {
   assertRelativeUrl(path);
 
-  const { baseUrl = DEFAULT_BASE_URL, apiKey } = configuration;
+  const { baseUrl, apiKey } = configuration;
 
   const errors = {
     400: 'Bad request',
@@ -36,7 +36,7 @@ export const request = (configuration = {}, method, path, options = {}) => {
   const opts = {
     parseAs: 'json',
     errors,
-    baseUrl,
+    baseUrl: baseUrl || DEFAULT_BASE_URL,
     ...options,
     headers: {
       'content-type': 'application/json',

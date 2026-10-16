@@ -1,6 +1,8 @@
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
 
+const PAGE_SIZE = 100;
+
 /**
  * State object
  * @typedef {Object} HttpState
@@ -31,13 +33,15 @@ import * as util from './Utils.js';
  * @property {boolean} isFirst - Only return the first activity of each type
  * @property {string} minDate - Only return activities created at or after this date (ISO 8601 or unix seconds)
  * @property {string} maxDate - Only return activities created at or before this date (ISO 8601 or unix seconds)
- * @property {number} offset - Number of records to skip
- * @property {number} limit - Number of records to return (max 100)
+ * @property {number} offset - Number of records to skip. Setting `offset` or `limit` fetches a single page.
+ * @property {number} limit - Number of records to return (max 100). Setting `offset` or `limit` fetches a single page.
  */
 
 /**
  * List lemlist activities (emails sent, opened, replied, bounced, etc).
  * Returns an array of activities to `state.data`.
+ * Fetches every page by default; pass `limit` or `offset` to fetch a single page.
+ * Filters which resolve to `undefined`, `null` or `''` are ignored.
  * @example <caption>List all replies since a given date</caption>
  * listActivities({ type: 'emailsReplied', minDate: '2026-10-01T00:00:00Z' });
  * @example <caption>List activities for a campaign</caption>
@@ -52,16 +56,38 @@ export function listActivities(options = {}) {
   return async state => {
     const [resolvedOptions] = expandReferences(state, options);
 
-    const response = await util.request(
-      state.configuration,
-      'GET',
-      'activities',
-      { query: { version: 'v2', ...resolvedOptions } }
-    );
+    const query = { version: 'v2' };
+    for (const [key, value] of Object.entries(resolvedOptions ?? {})) {
+      if (value !== undefined && value !== null && value !== '') {
+        query[key] = value;
+      }
+    }
 
-    console.log(`Fetched ${response.body?.length ?? 0} lemlist activities`);
+    if ('limit' in query || 'offset' in query) {
+      const response = await util.request(
+        state.configuration,
+        'GET',
+        'activities',
+        { query }
+      );
+      console.log(`Fetched ${response.body?.length ?? 0} lemlist activities`);
+      return util.prepareNextState(state, response);
+    }
 
-    return util.prepareNextState(state, response);
+    const activities = [];
+    let offset = 0;
+    let response;
+    do {
+      response = await util.request(state.configuration, 'GET', 'activities', {
+        query: { ...query, limit: PAGE_SIZE, offset },
+      });
+      activities.push(...(response.body ?? []));
+      offset += PAGE_SIZE;
+    } while (response.body?.length === PAGE_SIZE);
+
+    console.log(`Fetched ${activities.length} lemlist activities`);
+
+    return util.prepareNextState(state, { ...response, body: activities });
   };
 }
 
