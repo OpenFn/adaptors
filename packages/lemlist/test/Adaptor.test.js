@@ -82,20 +82,63 @@ describe('listActivities', () => {
     expect(finalState.data[129]._id).to.equal('act_129');
   });
 
-  it('fetches a single page when limit is set', async () => {
-    const page = makeActivities(10);
-
+  it('caps the page size at 100', async () => {
     testServer
       .intercept({
         path: '/api/activities',
         method: 'GET',
-        query: { version: 'v2', limit: 10 },
+        query: { version: 'v2', limit: 100, offset: 0 },
       })
-      .reply(200, page, jsonHeaders);
+      .reply(200, makeActivities(100, 0), jsonHeaders);
+    testServer
+      .intercept({
+        path: '/api/activities',
+        method: 'GET',
+        query: { version: 'v2', limit: 100, offset: 100 },
+      })
+      .reply(200, makeActivities(50, 100), jsonHeaders);
 
-    const finalState = await listActivities({ limit: 10 })({ configuration });
+    const finalState = await listActivities({ pageSize: 200 })({
+      configuration,
+    });
 
-    expect(finalState.data).to.eql(page);
+    expect(finalState.data).to.have.lengthOf(150);
+  });
+
+  it('pages until limit total records are fetched', async () => {
+    testServer
+      .intercept({
+        path: '/api/activities',
+        method: 'GET',
+        query: { version: 'v2', limit: 100, offset: 0 },
+      })
+      .reply(200, makeActivities(100, 0), jsonHeaders);
+    testServer
+      .intercept({
+        path: '/api/activities',
+        method: 'GET',
+        query: { version: 'v2', limit: 50, offset: 100 },
+      })
+      .reply(200, makeActivities(50, 100), jsonHeaders);
+
+    const finalState = await listActivities({ limit: 150 })({ configuration });
+
+    expect(finalState.data).to.have.lengthOf(150);
+    expect(finalState.data[149]._id).to.equal('act_149');
+  });
+
+  it('starts paging from offset', async () => {
+    testServer
+      .intercept({
+        path: '/api/activities',
+        method: 'GET',
+        query: { version: 'v2', limit: 100, offset: 20 },
+      })
+      .reply(200, makeActivities(5, 20), jsonHeaders);
+
+    const finalState = await listActivities({ offset: 20 })({ configuration });
+
+    expect(finalState.data[0]._id).to.equal('act_20');
   });
 
   it('drops filters which resolve to undefined, null or empty string', async () => {
@@ -122,7 +165,7 @@ describe('listActivities', () => {
       .intercept({
         path: '/api/activities',
         method: 'GET',
-        query: { version: 'v2', limit: 5 },
+        query: { version: 'v2', limit: 5, offset: 0 },
       })
       .reply(200, [], jsonHeaders);
 
@@ -161,7 +204,7 @@ describe('listActivities', () => {
       .intercept({
         path: '/api/activities',
         method: 'GET',
-        query: { version: 'v3', limit: 5 },
+        query: { version: 'v3', limit: 5, offset: 0 },
       })
       .reply(200, [], jsonHeaders);
 

@@ -30,21 +30,23 @@ import * as util from './Utils.js';
  * @property {boolean} isFirst - Only return the first activity of each type
  * @property {string} minDate - Only return activities created at or after this date (ISO 8601 or unix seconds)
  * @property {string} maxDate - Only return activities created at or before this date (ISO 8601 or unix seconds)
- * @property {number} offset - Number of records to skip. Setting `offset` or `limit` fetches a single page.
- * @property {number} limit - Number of records to return (max 100). Setting `offset` or `limit` fetches a single page.
- * @property {number} pageSize - Number of records to request per page when fetching every page (max 100). Default: 100.
+ * @property {number} offset - Number of records to skip before fetching. Default: 0.
+ * @property {number} limit - Maximum total number of records to return, across all pages. Default: `Infinity`.
+ * @property {number} pageSize - Number of records to request per page (max 100). Default: 100.
  * @property {string} version - lemlist API version. Default: `v2`.
  */
 
 /**
  * List lemlist activities (emails sent, opened, replied, bounced, etc).
  * Returns an array of activities to `state.data`.
- * Fetches every page by default; pass `limit` or `offset` to fetch a single page.
+ * Fetches every page until no records remain or `limit` is reached.
  * Filters which resolve to `undefined`, `null` or `''` are ignored.
  * @example <caption>List all replies since a given date</caption>
  * listActivities({ type: 'emailsReplied', minDate: '2026-10-01T00:00:00Z' });
  * @example <caption>List activities for a campaign</caption>
- * listActivities({ campaignId: 'cam_abc123', limit: 50 });
+ * listActivities({ campaignId: 'cam_abc123' });
+ * @example <caption>Fetch at most 500 activities</caption>
+ * listActivities({ type: 'emailsSent', limit: 500 });
  * @example <caption>Fetch every activity, 50 at a time</caption>
  * listActivities({ type: 'emailsOpened', pageSize: 50 });
  * @function
@@ -56,7 +58,13 @@ import * as util from './Utils.js';
 export function listActivities(options = {}) {
   return async state => {
     const [resolvedOptions] = expandReferences(state, options);
-    const { version = 'v2', pageSize, ...filters } = resolvedOptions ?? {};
+    const {
+      version = 'v2',
+      pageSize,
+      limit,
+      offset,
+      ...filters
+    } = resolvedOptions ?? {};
 
     const query = { version };
     for (const [key, value] of Object.entries(filters)) {
@@ -65,15 +73,11 @@ export function listActivities(options = {}) {
       }
     }
 
-    const response =
-      'limit' in query || 'offset' in query
-        ? await util.request(state.configuration, 'GET', 'activities', {
-            query,
-          })
-        : await util.requestWithPagination(state.configuration, 'activities', {
-            query,
-            pageSize,
-          });
+    const response = await util.requestWithPagination(
+      state.configuration,
+      'activities',
+      { query, offset, limit, pageSize }
+    );
 
     console.log(`Fetched ${response.body?.length ?? 0} lemlist activities`);
 

@@ -6,7 +6,7 @@
         "options"
       ],
       "docs": {
-        "description": "List lemlist activities (emails sent, opened, replied, bounced, etc).\nReturns an array of activities to `state.data`.\nFetches every page by default; pass `limit` or `offset` to fetch a single page.\nFilters which resolve to `undefined`, `null` or `''` are ignored.",
+        "description": "List lemlist activities (emails sent, opened, replied, bounced, etc).\nReturns an array of activities to `state.data`.\nFetches every page until no records remain or `limit` is reached.\nFilters which resolve to `undefined`, `null` or `''` are ignored.",
         "tags": [
           {
             "title": "example",
@@ -15,8 +15,13 @@
           },
           {
             "title": "example",
-            "description": "listActivities({ campaignId: 'cam_abc123', limit: 50 });",
+            "description": "listActivities({ campaignId: 'cam_abc123' });",
             "caption": "List activities for a campaign"
+          },
+          {
+            "title": "example",
+            "description": "listActivities({ type: 'emailsSent', limit: 500 });",
+            "caption": "Fetch at most 500 activities"
           },
           {
             "title": "example",

@@ -6,7 +6,7 @@ import {
 } from '@openfn/language-common/util';
 
 export const DEFAULT_BASE_URL = 'https://api.lemlist.com/api';
-export const DEFAULT_PAGE_SIZE = 100;
+export const MAX_PAGE_SIZE = 100;
 
 export const prepareNextState = (state, response) => {
   const { body, ...responseWithoutBody } = response;
@@ -43,18 +43,20 @@ export const request = (configuration = {}, method, path, options = {}) => {
 export const requestWithPagination = async (
   configuration,
   path,
-  { query = {}, pageSize = DEFAULT_PAGE_SIZE } = {}
+  { query = {}, offset = 0, limit = Infinity, pageSize = MAX_PAGE_SIZE } = {}
 ) => {
+  const size = Math.min(pageSize, MAX_PAGE_SIZE);
   const items = [];
-  let offset = 0;
   let response;
-  do {
+  while (items.length < limit) {
+    const pageLimit = Math.min(size, limit - items.length);
     response = await request(configuration, 'GET', path, {
-      query: { ...query, limit: pageSize, offset },
+      query: { ...query, limit: pageLimit, offset: offset + items.length },
     });
-    items.push(...(response.body ?? []));
-    offset += pageSize;
-  } while (response.body?.length === pageSize);
+    const page = response.body ?? [];
+    items.push(...page);
+    if (page.length < pageLimit) break;
+  }
 
-  return { ...response, body: items };
+  return { ...response, body: items.slice(0, limit) };
 };
