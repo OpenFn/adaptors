@@ -41,6 +41,16 @@ wins — update this document to match.
   observation.
 - If the PR is small or purely internal (e.g. a dev-only change), scale the
   review down accordingly — not every section applies to every PR.
+- Focus where it matters. In order: does it break existing user code
+  (Section 9)? Do the tests actually test anything (Section 8)? Are the public
+  docs and changeset short and accurate (Sections 7 and 9)? Most PRs only need
+  these three.
+- Prefer a question that leads to the problem ("If you comment out X, does
+  this test still pass?") plus a concrete snippet of the fix. Explain why from
+  the job writer's point of view.
+- For a repeated issue, flag it once and say "check this pattern across the
+  file" rather than commenting on every instance.
+- Out-of-scope ideas belong in a follow-up issue, not this PR.
 
 ---
 
@@ -87,11 +97,32 @@ wins — update this document to match.
       domain language (e.g. `getUser` should not expose `method`/`url`).
 - [ ] New public operations are consistent with existing operations in the same
       adaptor (and, where reasonable, across adaptors).
+- [ ] Pagination follows [best-practice.md](best-practice.md#pagination):
+      `limit` is the total number of records, not the page size; offsets
+      advance by what actually came back; paging stops on an empty page.
+      Treating `limit` as page size, or stopping on a "short" page, is
+      **Blocking** because it silently drops records.
+- [ ] Options which control the adaptor (`limit`, `pageSize`) are kept apart
+      from values passed through to the API. One option per concept.
+- [ ] No internal knobs are exposed as options (API version, throttling, parse
+      modes). Once public, we maintain them.
+- [ ] `request`/`http.*` helpers do exactly what they're told: paths relative
+      to `baseUrl`, no absolute URLs, no URL magic, raw response returned.
+- [ ] The API stays small. Question new functions that `request`/`get` already
+      cover, a function per endpoint, or mirroring the vendor SDK.
+- [ ] Defaults follow the upstream API unless there's a reason. Question
+      unusually low limits and `required` config fields that aren't needed.
+- [ ] The adaptor stays generic: it doesn't read hard-coded bits of state,
+      encode one workflow's business logic, or patch around upstream bugs.
+- [ ] No callbacks in new APIs.
 
 ## 3. State handling
 
 - [ ] Results the user may want are returned to `state.data` (not returned
       directly from the operation).
+- [ ] Only HTTP helpers write `state.response`. Domain operations write a
+      clean result to `state.data` (no `data.data` nesting, no fake HTTP
+      shapes).
 - [ ] Established state conventions are respected where used: `state.references`,
       `state.response` (HTTP metadata), `state.cursor`.
 - [ ] Any mutation of the state object is documented with the `@state` JSDoc
@@ -126,6 +157,11 @@ wins — update this document to match.
 - [ ] Error messages are meaningful and help the user understand what went
       wrong.
 - [ ] Errors do not leak sensitive data (credentials, tokens, PII).
+- [ ] No catch-log-rethrow and no `return err`. Let the error propagate, or
+      enrich `e.message` rather than replacing the error.
+- [ ] No debug `console.log`s left in. Logs report results ("Fetched 27
+      records"), not process ("Attempting…"), and don't duplicate what
+      common's `request` already logs.
 
 ## 7. Documentation & JSDoc
 
@@ -134,6 +170,20 @@ wins — update this document to match.
 - [ ] Every public operation has at least one example. Examples are concise,
       realistic, tell a single story, and generally read data from state rather
       than defining it inline.
+- [ ] Docs are short. Red flags: notes about vendor point releases, upstream
+      PR links, workaround notes, "under the hood" explanations, second person
+      ("your"). Overlong docs are **Blocking** on a new adaptor.
+- [ ] Examples: one operation each, simplest first, matching the actual
+      signature. Namespaced calls show the namespace (`http.get`). Examples are
+      generic, never the client workflow that prompted the adaptor, and an
+      example caption must not hide behaviour (e.g. a `limit` that quietly
+      truncates results).
+- [ ] Higher-level operations use domain language ("Create a patient"), not
+      HTTP language ("Make a POST request").
+- [ ] `@state` says what lands in `state.data`. Defaults are only documented if
+      the code sets them.
+- [ ] No AI directives, banner comments, comments that restate code, or
+      commented-out code.
 - [ ] Docs link out to the API's own documentation rather than re-explaining
       how it works.
 - [ ] `options` (control adaptor behaviour) vs `params`/`parameters` (passed to
@@ -160,12 +210,28 @@ wins — update this document to match.
 - [ ] **Names describe behaviour**, not implementation trivia.
 - [ ] **Important branches are covered** — the paths that matter, not raw line
       coverage.
+- [ ] **Would the test fail if the feature were removed?** Mocks must check
+      what was sent (path, query, body, headers), not just return a canned
+      reply. A test that still passes with the feature commented out is
+      **Blocking**.
+- [ ] **Tests go through the public export** (`http.get`, `listThings`), not
+      internal helpers in `Utils.js`.
+- [ ] **Whole results are asserted** with `deep.equal`, not just `data[0]` or a
+      length.
+- [ ] **No `.only`, no newly skipped tests, and no tests edited to work around a
+      code bug.** These are **Blocking**.
 
 ## 9. Changeset & release hygiene
 
 - [ ] A changeset exists when there is a user-facing change (new adaptor, API or
       behavioural change). Dev-only/internal changes don't need one.
 - [ ] The changeset bump level is correct — **breaking changes are `major`**.
+      Removing or renaming an export, changing a signature, changing a default
+      value, or changing the shape written to `state.data` are all breaking.
+      Prefer deprecation (warn once per job) plus a minor release over a major.
+      Fixing already-broken behaviour can be a patch.
+- [ ] One changeset per change, covering every affected package and no others.
+- [ ] No changeset for a new adaptor's first release.
 - [ ] The changeset is written for **users**, not developers, and is short —
       usually a single sentence describing the delta. Flag changesets that read
       like a full feature write-up or explanation. It should be factual, focused
@@ -184,6 +250,27 @@ worth a human/AI eye here:
 
 - [ ] No credentials, tokens, or real config/secrets committed in the diff
       (e.g. a live key pasted into a fixture).
+- [ ] `pnpm-lock.yaml` only changes for the packages in the PR. Widespread
+      churn usually means the wrong pnpm version was used.
+
+## 11. PR hygiene
+
+- [ ] Every diff relates to the PR title. Unrelated changes go in another PR.
+- [ ] The title and description match the diff, including behaviour changes
+      in a "docs" PR. AI use is disclosed.
+- [ ] AI-generated code that is verbose or "comprehensive" gets a closer look,
+      not less.
+
+## Don't flag
+
+- Anything CI already checks (see Section 10).
+- Missing tests where there's nothing meaningful to test (thin SDK wrappers,
+  DB adaptors).
+- Pre-existing problems outside the diff. Suggest a follow-up issue instead.
+- Spelling variants, full stops in sentences, rigid type rules.
+- Mixing public and private functions in one file.
+- Polish on a first release. It doesn't have to be perfect.
+- Vulnerabilities in devDependencies.
 
 ---
 

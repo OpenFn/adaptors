@@ -9,7 +9,9 @@ review only—no automatic commits or PRs.
 
 1. **Read `./wiki/` first**
 2. **Output PLAN** → wait for `APPROVED:`
-3. **Generate code** with doc references in comments
+3. **Generate code**
+4. **Self-review** the diff against `./wiki/code-review.md` and fix what it
+   finds before handing back
 
 ---
 
@@ -28,11 +30,30 @@ These are rules for you to follow when generating code. They are constant across
 
 - `Utils.js`
   - Must export a function named `request`
-  - Infrastructure/helpers ONLY; NO operational functions
+  - Infrastructure/helpers ONLY (`request`, `prepareNextState`, pagination
+    helpers); NO operational functions
   - To extend: wrap it (e.g., `requestWithRetry`)
-- `Adaptors.js`
+- `Adaptor.js`
   - Must export a function named `request`
   - ALL operational functions go here
+
+---
+
+## Design Rules
+
+These come up in almost every review of a generated adaptor. Details are in
+`./wiki/best-practice.md`.
+
+- Required arguments are positional; everything optional goes in a trailing
+  `options` object
+- Only `request` (and `http.*` helpers) write `state.response`. Domain
+  operations like `upsertLead` or `listActivities` write a clean result to
+  `state.data` and nothing else
+- List operations follow the pagination rules in `./wiki/best-practice.md`:
+  `limit` is the total, `pageSize` is per request
+- Don't expose internal knobs (API version, throttling, parse modes) as options
+- Examples are generic and read from `$.data`. Never copy the workflow, Zap or
+  client use case from the prompt into public docs
 
 ---
 
@@ -41,6 +62,8 @@ These are rules for you to follow when generating code. They are constant across
 - Every function needs a unit test using **Undici MockAgent**
 - No live network calls
 - Follow patterns in `./wiki/unit-test-guide.md`
+- Test through the public export (`../src/index.js`), not internal helpers in
+  `Utils.js`
 
 ---
 
@@ -56,15 +79,17 @@ Functions: <N>
 Tests: <N>
 
 Invariants:
-✓ Utils.js: request only
-✓ Adaptors.js: request + operational functions
+✓ Utils.js: request + helpers only
+✓ Adaptor.js: request + operational functions
 
 Assumptions:
 - <bullets>
 
 Docs consulted:
-- ./docs/build-a-new-adaptor.md
-- ./docs/unit-testing-guide.md
+- ./wiki/build-a-new-adaptor.md
+- ./wiki/best-practice.md
+- ./wiki/docs.md
+- ./wiki/unit-test-guide.md
 
 Questions: <bullets or "None">
 <<<END PLAN>>>
@@ -84,7 +109,7 @@ Generate in order:
 packages/<name>/
 ├── src/Adaptor.js    [NEW]
 ├── src/Utils.js      [NEW]
-└── test/index.test.js [NEW]
+└── test/Adaptor.test.js [NEW]
 ```
 
 2. **Full file contents** with:
@@ -102,7 +127,12 @@ pnpm test     # Runs test suite with Mocha
 
 4. **TODOs** referencing specific doc sections
 
-5. **Reminder:** Review locally, commit manually
+5. **Lockfile check:** `git diff pnpm-lock.yaml` should only add the new
+   package. If other entries changed, your pnpm version differs from the repo's
+   (see `packageManager` in `package.json`); revert and reinstall with the right
+   version
+
+6. **Reminder:** Review locally, commit manually
 
 ---
 
@@ -120,16 +150,18 @@ Functions: 1 (getJoke)
 Tests: 1
 
 Invariants:
-✓ Utils.js: request only
-✓ Adaptors.js: request + getJoke
+✓ Utils.js: request + helpers only
+✓ Adaptor.js: request + getJoke
 
 Assumptions:
 - No auth
 - Response: {joke: string}
 
 Docs consulted:
-- ./docs/build-a-new-adaptor.md
-- ./docs/unit-testing-guide.md
+- ./wiki/build-a-new-adaptor.md
+- ./wiki/best-practice.md
+- ./wiki/docs.md
+- ./wiki/unit-test-guide.md
 
 Questions: None
 <<<END PLAN>>>
@@ -163,12 +195,12 @@ Output file: qa-example-api.js (root directory)
 
 ## Critical Reminders
 
-- Always read `./docs/*.md` before generating adaptor code
+- Always read `./wiki/*.md` before generating adaptor code
 - Always read `.github/prompts/qa-job-generation.md` before generating QA code
 - Wait for APPROVED: before generating any code
 - Unit tests use MockAgent (no live network)
 - QA tests run on app.openfn.org (live system)
 - QA files use promise chaining syntax: `.then().catch()`
 - QA files saved to root directory: `qa-<adaptor-name>.js`
-- Never rename `request` functions in Utils.js or Adaptors.js
+- Never rename `request` functions in Utils.js or Adaptor.js
 - One function + one test is default unless operations specified
