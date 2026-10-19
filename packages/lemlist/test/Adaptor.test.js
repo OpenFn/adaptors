@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import { listActivities } from '../src/Adaptor.js';
+import { listActivities, request } from '../src/index.js';
+import { requestWithPagination } from '../src/Utils.js';
 
 const testServer = enableMockClient('https://api.lemlist.com');
 
 const configuration = { apiKey: 'test-key' };
 
-// base64(':test-key')
 const authHeader = 'Basic OnRlc3Qta2V5';
 
 const jsonHeaders = { headers: { 'content-type': 'application/json' } };
@@ -131,5 +131,104 @@ describe('listActivities', () => {
     });
 
     expect(finalState.data).to.eql([]);
+  });
+
+  it('uses a custom page size when pageSize is set', async () => {
+    testServer
+      .intercept({
+        path: '/api/activities',
+        method: 'GET',
+        query: { version: 'v2', limit: 2, offset: 0 },
+      })
+      .reply(200, makeActivities(2, 0), jsonHeaders);
+    testServer
+      .intercept({
+        path: '/api/activities',
+        method: 'GET',
+        query: { version: 'v2', limit: 2, offset: 2 },
+      })
+      .reply(200, makeActivities(1, 2), jsonHeaders);
+
+    const finalState = await listActivities({ pageSize: 2 })({
+      configuration,
+    });
+
+    expect(finalState.data).to.have.lengthOf(3);
+  });
+
+  it('passes a custom api version', async () => {
+    testServer
+      .intercept({
+        path: '/api/activities',
+        method: 'GET',
+        query: { version: 'v3', limit: 5 },
+      })
+      .reply(200, [], jsonHeaders);
+
+    const finalState = await listActivities({ version: 'v3', limit: 5 })({
+      configuration,
+    });
+
+    expect(finalState.data).to.eql([]);
+  });
+});
+
+describe('request', () => {
+  it('makes an authenticated request and writes the body to state.data', async () => {
+    const campaigns = [{ _id: 'cam_1', name: 'Outreach' }];
+
+    testServer
+      .intercept({
+        path: '/api/campaigns',
+        method: 'GET',
+        headers: { Authorization: authHeader },
+      })
+      .reply(200, campaigns, jsonHeaders);
+
+    const finalState = await request('GET', 'campaigns')({ configuration });
+
+    expect(finalState.data).to.eql(campaigns);
+    expect(finalState.response.statusCode).to.equal(200);
+  });
+});
+
+describe('requestWithPagination', () => {
+  it('requests pages until a short page is returned', async () => {
+    testServer
+      .intercept({
+        path: '/api/items',
+        method: 'GET',
+        query: { foo: 'bar', limit: 2, offset: 0 },
+      })
+      .reply(200, [{ id: 1 }, { id: 2 }], jsonHeaders);
+    testServer
+      .intercept({
+        path: '/api/items',
+        method: 'GET',
+        query: { foo: 'bar', limit: 2, offset: 2 },
+      })
+      .reply(200, [{ id: 3 }], jsonHeaders);
+
+    const response = await requestWithPagination(configuration, 'items', {
+      query: { foo: 'bar' },
+      pageSize: 2,
+    });
+
+    expect(response.body).to.eql([{ id: 1 }, { id: 2 }, { id: 3 }]);
+    expect(response.statusCode).to.equal(200);
+  });
+
+  it('makes one request when the first page is empty', async () => {
+    testServer
+      .intercept({
+        path: '/api/items',
+        method: 'GET',
+        query: { limit: 100, offset: 0 },
+      })
+      .reply(200, [], jsonHeaders);
+
+    const response = await requestWithPagination(configuration, 'items');
+
+    expect(response.body).to.eql([]);
   });
 });

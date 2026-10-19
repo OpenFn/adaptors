@@ -19,6 +19,11 @@
             "caption": "List activities for a campaign"
           },
           {
+            "title": "example",
+            "description": "listActivities({ type: 'emailsOpened', pageSize: 50 });",
+            "caption": "Fetch every activity, 50 at a time"
+          },
+          {
             "title": "function",
             "description": null,
             "name": null

@@ -1,8 +1,6 @@
 import { expandReferences } from '@openfn/language-common/util';
 import * as util from './Utils.js';
 
-const PAGE_SIZE = 100;
-
 /**
  * State object
  * @typedef {Object} HttpState
@@ -15,7 +13,6 @@ const PAGE_SIZE = 100;
  * Options provided to the HTTP request
  * @typedef {Object} RequestOptions
  * @public
- * @property {object|string} body - body data to append to the request. JSON will be converted to a string.
  * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
  * @property {object} query - An object of query parameters to be encoded into the URL.
  * @property {object} headers - An object of headers to append to the request.
@@ -35,6 +32,8 @@ const PAGE_SIZE = 100;
  * @property {string} maxDate - Only return activities created at or before this date (ISO 8601 or unix seconds)
  * @property {number} offset - Number of records to skip. Setting `offset` or `limit` fetches a single page.
  * @property {number} limit - Number of records to return (max 100). Setting `offset` or `limit` fetches a single page.
+ * @property {number} pageSize - Number of records to request per page when fetching every page (max 100). Default: 100.
+ * @property {string} version - lemlist API version. Default: `v2`.
  */
 
 /**
@@ -46,6 +45,8 @@ const PAGE_SIZE = 100;
  * listActivities({ type: 'emailsReplied', minDate: '2026-10-01T00:00:00Z' });
  * @example <caption>List activities for a campaign</caption>
  * listActivities({ campaignId: 'cam_abc123', limit: 50 });
+ * @example <caption>Fetch every activity, 50 at a time</caption>
+ * listActivities({ type: 'emailsOpened', pageSize: 50 });
  * @function
  * @public
  * @param {ListActivitiesOptions} [options] - Filters and pagination options
@@ -55,39 +56,28 @@ const PAGE_SIZE = 100;
 export function listActivities(options = {}) {
   return async state => {
     const [resolvedOptions] = expandReferences(state, options);
+    const { version = 'v2', pageSize, ...filters } = resolvedOptions ?? {};
 
-    const query = { version: 'v2' };
-    for (const [key, value] of Object.entries(resolvedOptions ?? {})) {
+    const query = { version };
+    for (const [key, value] of Object.entries(filters)) {
       if (value !== undefined && value !== null && value !== '') {
         query[key] = value;
       }
     }
 
-    if ('limit' in query || 'offset' in query) {
-      const response = await util.request(
-        state.configuration,
-        'GET',
-        'activities',
-        { query }
-      );
-      console.log(`Fetched ${response.body?.length ?? 0} lemlist activities`);
-      return util.prepareNextState(state, response);
-    }
+    const response =
+      'limit' in query || 'offset' in query
+        ? await util.request(state.configuration, 'GET', 'activities', {
+            query,
+          })
+        : await util.requestWithPagination(state.configuration, 'activities', {
+            query,
+            pageSize,
+          });
 
-    const activities = [];
-    let offset = 0;
-    let response;
-    do {
-      response = await util.request(state.configuration, 'GET', 'activities', {
-        query: { ...query, limit: PAGE_SIZE, offset },
-      });
-      activities.push(...(response.body ?? []));
-      offset += PAGE_SIZE;
-    } while (response.body?.length === PAGE_SIZE);
+    console.log(`Fetched ${response.body?.length ?? 0} lemlist activities`);
 
-    console.log(`Fetched ${activities.length} lemlist activities`);
-
-    return util.prepareNextState(state, { ...response, body: activities });
+    return util.prepareNextState(state, response);
   };
 }
 

@@ -11,6 +11,11 @@ full technical documentation.
 
 ### Configuration
 
+Copper API key auth requires the access token plus the email of the user who
+generated it. See the
+[Copper authentication docs](https://developer.copper.com/introduction/authentication.html)
+for details.
+
 View the
 [configuration-schema](https://docs.openfn.org/adaptors/packages/copper-configuration-schema/)
 for required and optional `configuration` properties.

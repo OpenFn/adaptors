@@ -13,7 +13,6 @@ import * as util from './Utils.js';
  * Options provided to the HTTP request
  * @typedef {Object} RequestOptions
  * @public
- * @property {object|string} body - body data to append to the request. JSON will be converted to a string.
  * @property {object} errors - Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.
  * @property {object} query - An object of query parameters to be encoded into the URL.
  * @property {object} headers - An object of headers to append to the request.

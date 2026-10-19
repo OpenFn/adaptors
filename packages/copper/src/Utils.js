@@ -19,22 +19,13 @@ export const prepareNextState = (state, response) => {
   };
 };
 
-// Copper API key auth requires the token plus the email of the user who generated it
-// See https://developer.copper.com/introduction/authentication.html
 export const request = (configuration = {}, method, path, options = {}) => {
   assertRelativeUrl(path);
 
   const { baseUrl, accessToken, userEmail } = configuration;
 
-  const errors = {
-    401: 'Unauthorized: check your Copper access token and user email',
-    404: 'Not found',
-    422: 'Unprocessable entity: the request matched multiple records or was invalid',
-  };
-
   const opts = {
     parseAs: 'json',
-    errors,
     baseUrl: baseUrl || DEFAULT_BASE_URL,
     ...options,
     headers: {

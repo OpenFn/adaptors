@@ -11,6 +11,11 @@ full technical documentation.
 
 ### Configuration
 
+lemlist uses basic auth with an empty username and your API key as the
+password. See the
+[lemlist authentication docs](https://developer.lemlist.com/api-reference/getting-started/authentication)
+for how to generate an API key.
+
 View the
 [configuration-schema](https://docs.openfn.org/adaptors/packages/lemlist-configuration-schema/)
 for required and optional `configuration` properties.

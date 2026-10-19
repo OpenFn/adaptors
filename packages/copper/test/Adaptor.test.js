@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import { upsertLead } from '../src/Adaptor.js';
+import { upsertLead } from '../src/index.js';
 
 const testServer = enableMockClient('https://api.copper.com');
 
@@ -57,5 +57,21 @@ describe('upsertLead', () => {
     })({ configuration: { ...configuration, baseUrl: '' } });
 
     expect(finalState.data).to.eql({ id: 456 });
+  });
+
+  it('throws with the response body from Copper on error', async () => {
+    const copperError = { success: false, status: 422, message: 'Multiple leads matched' };
+
+    testServer
+      .intercept({ path: '/developer_api/v1/leads/upsert', method: 'PUT' })
+      .reply(422, copperError, { headers: { 'content-type': 'application/json' } });
+
+    const error = await upsertLead({
+      name: 'Ada Lovelace',
+      email: { email: 'ada@example.com', category: 'work' },
+    })({ configuration }).catch(e => e);
+
+    expect(error.statusCode).to.equal(422);
+    expect(error.body).to.eql(copperError);
   });
 });
