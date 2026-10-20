@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/setup@v6
+      - uses: pnpm/setup@v3
         with:
           runtime: node@${{ matrix.node-version }}
           cache: true
@@ -43,7 +43,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/setup@v6
+      - uses: pnpm/setup@v3
         with:
           cache: true
       - name: Install node modules
