@@ -8,10 +8,10 @@ import { hideBin } from 'yargs/helpers';
 const REPO = 'OpenFn/adaptors';
 const WORKFLOW = 'publish.yaml';
 
-const { adaptor, otp, dryRun } = yargs(hideBin(process.argv))
+const { adaptor, otp, dryRun, renew } = yargs(hideBin(process.argv))
   .command(
     '$0 <adaptor> <otp>',
-    'Configure npm trusted publishing for an adaptor, and disallow token publishes for it.'
+    'Configure npm trusted publishing for an adaptor, and disallow token publishes for it.',
   )
   .positional('adaptor', {
     type: 'string',
@@ -26,7 +26,14 @@ const { adaptor, otp, dryRun } = yargs(hideBin(process.argv))
     default: false,
     description: "show what would happen, don't configure anything",
   })
+  .option('renew', {
+    type: 'boolean',
+    default: false,
+    description:
+      'If the adaptor is already trusted, revoke the existing trust and ad it again',
+  })
   .example('$0 common 123456', 'trust @openfn/language-common')
+  .example('$0 common 123456 --renew', 'revoke and re-add trust for common')
   .demandCommand(0, 0)
   .strict()
   .parse();
@@ -80,7 +87,7 @@ function failOtp(step) {
 const existing = spawnSync(
   'npm',
   ['trust', 'list', name, '--json', `--otp=${otp}`],
-  { encoding: 'utf8' }
+  { encoding: 'utf8' },
 );
 if (otpRejected(existing)) {
   failOtp('trust list');
@@ -99,11 +106,42 @@ if (existingOutput) {
   console.log();
   console.log(`${name} is already trusted (id ${id}, ${repository}/${file})`);
   console.log();
-  console.log(`You can revoke it with:`);
-  console.log();
-  console.log(`  npm trust revoke ${name} --id ${id}`);
-  console.log();
-  process.exit(0);
+
+  if (!renew) {
+    console.log(`You can revoke it with:`);
+    console.log();
+    console.log(`  npm trust revoke ${name} --id ${id}`);
+    console.log();
+    console.log(`Or pass --renew to revoke it and add it again`);
+    console.log();
+    process.exit(0);
+  }
+
+  console.log(`Revoking existing trust (id ${id})`);
+  const revokeResult = spawnSync(
+    'npm',
+    [
+      'trust',
+      'revoke',
+      name,
+      '--id',
+      id,
+      '--json',
+      `--otp=${otp}`,
+      ...(dryRun ? ['--dry-run'] : []),
+    ],
+    { encoding: 'utf8' },
+  );
+  if (otpRejected(revokeResult)) {
+    failOtp('trust revoke');
+  }
+  if (revokeResult.status !== 0) {
+    console.error(
+      revokeResult.stderr || `Failed to revoke existing trust for ${name}`,
+    );
+    process.exit(revokeResult.status ?? 1);
+  }
+  console.log(dryRun ? 'Dry run: not revoked.' : 'Revoked.');
 }
 
 console.log();
@@ -126,15 +164,13 @@ const trustResult = spawnSync(
     `--otp=${otp}`,
     ...(dryRun ? ['--dry-run'] : []),
   ],
-  { encoding: 'utf8' }
+  { encoding: 'utf8' },
 );
 if (otpRejected(trustResult)) {
   failOtp('trust github');
 }
 if (trustResult.status !== 0) {
-  console.error(
-    trustResult.stderr || `Failed to configure trust for ${name}`
-  );
+  console.error(trustResult.stderr || `Failed to configure trust for ${name}`);
   process.exit(trustResult.status ?? 1);
 }
 console.log(`Trusted: ${REPO}/${WORKFLOW} can publish ${name}`);
@@ -154,14 +190,14 @@ console.log(`Disallowing token publishes for ${name}`);
 const mfaResult = spawnSync(
   'npm',
   ['access', 'set', 'mfa=publish', name, '--json', `--otp=${otp}`],
-  { encoding: 'utf8' }
+  { encoding: 'utf8' },
 );
 if (otpRejected(mfaResult)) {
   failOtp('access set mfa=publish');
 }
 if (mfaResult.status !== 0) {
   console.error(
-    mfaResult.stderr || `Failed to disallow token publishes for ${name}`
+    mfaResult.stderr || `Failed to disallow token publishes for ${name}`,
   );
   process.exit(mfaResult.status ?? 1);
 }
