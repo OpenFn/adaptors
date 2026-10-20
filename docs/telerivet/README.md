@@ -1,4 +1,4 @@
-# Language Telerivet
+# language-telerivet <img src='./assets/square.png' width="30" height="30"/>
 
 Language Pack for sending messages using the
 [telerivet API](https://telerivet.com/api/rest/curl).

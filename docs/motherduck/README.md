@@ -1,4 +1,4 @@
-# Language MotherDuck <img src='./assets/square.png' width="30" height="30"/>
+# language-motherduck <img src='./assets/square.png' width="30" height="30"/>
 
 OpenFn Adaptor for building expressions and operations to interact with
 MotherDuck, the serverless cloud analytics platform powered by DuckDB.

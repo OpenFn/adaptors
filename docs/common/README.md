@@ -1,4 +1,4 @@
-# Language Common [![CircleCI](https://circleci.com/gh/OpenFn/language-common.svg?style=svg)](https://circleci.com/gh/OpenFn/language-common)
+# language-common <img src='./assets/square.png' width="30" height="30"/>
 
 Common and generic expressions and operations for [OpenFn](http://openfn.org).
 

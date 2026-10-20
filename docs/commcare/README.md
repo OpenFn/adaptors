@@ -1,4 +1,4 @@
-# Language CommCare
+# language-commcare <img src='./assets/square.png' width="30" height="30"/>
 
 Language Pack for interacting with the CommCare API.
 

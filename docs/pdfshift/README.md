@@ -1,4 +1,4 @@
-# language-pdf <img src='./assets/square.png' width="30" height="30"/>
+# language-pdfshift <img src='./assets/square.png' width="30" height="30"/>
 
 An OpenFn **_adaptor_** for building integration jobs for use with the
 pdfshift API.

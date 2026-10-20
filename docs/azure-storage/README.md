@@ -1,4 +1,4 @@
-# language-azure-storage <img src='assets/square.png' width="30" height="30"/>
+# language-azure-storage <img src='./assets/square.png' width="30" height="30"/>
 
 An OpenFn **_adaptor_** for building integration jobs for use with the Azure
 Storage APIs. At present, this adaptor only supports the Azure Blob Storage,

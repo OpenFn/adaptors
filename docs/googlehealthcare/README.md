@@ -1,4 +1,4 @@
-# language-googlehealthcare <img src='assets/sq-256x256.png' width="30" height="30"/>
+# language-googlehealthcare <img src='./assets/square.png' width="30" height="30"/>
 
 An OpenFn **_adaptor_** for building integration jobs for use with the
 [Google Cloud Healthcare API](https://cloud.google.com/healthcare-api/docs/how-tos/fhir-resources#healthcare-create-patient-nodejs).

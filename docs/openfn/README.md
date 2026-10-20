@@ -1,4 +1,4 @@
-# Language OpenFn
+# language-openfn <img src='./assets/square.png' width="30" height="30"/>
 
 Adaptor for building expressions and operations to interact with the OpenFn v1
 API.

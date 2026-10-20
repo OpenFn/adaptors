@@ -1,4 +1,4 @@
-# Language OCL
+# language-ocl <img src='./assets/square.png' width="30" height="30"/>
 
 Language Pack for building expressions and operations for working with the
 [OCL API](http://ocl.github.io/ocl-docs/master/en/developer/html/ocl_developer_manual.html).
