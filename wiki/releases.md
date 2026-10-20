@@ -17,21 +17,21 @@ Adaptor releases are mostly automated. Day to day, you should never need to run
 `npm publish` yourself. Merge a PR with a changeset and CI does the rest.
 
 In some cases, a maintainer with admin access to the `@openfn` organisation on
-npmjs.org will need to take a manual step to authorise a release. This is a
-result of Trusted Publishing with OIDC and important for security purposes. A
-manual intervention is required once per adaptor.
+npmjs.com will need to take a manual step to authorise a release. This is a
+result of Trusted Publishing with OIDC, and is important for security. Manual
+intervention is required once per adaptor.
 
 ## Trusted publishing
 
 npm supports [Trusted Publishing](https://docs.npmjs.com/trusted-publishers),
-which basically means that the npm repository is told that a specific GitHub
-repo and workflow is allowed to publish a package by the `@openfn` organisation.
+which means that npm is told that a specific GitHub repo and workflow is allowed
+to publish a package on behalf of the `@openfn` organisation.
 
 When that workflow runs, GitHub issues it a short-lived identity token (OIDC),
 and npm accepts it in place of a login. No npm secret is stored in the repo.
 
-Since September 2025, every adaptor package is configured to trust with the
-following settings:
+Since September 2026, every adaptor package is configured to trust the following
+publisher:
 
 - Repository: `OpenFn/adaptors`
 - Workflow: `.github/workflows/publish.yaml`
@@ -41,11 +41,11 @@ authentication and disallow tokens" (`npm access set mfa=publish`). That means
 the only ways to publish an adaptor are the trusted workflow, or a human at a
 terminal with 2FA. A leaked token can't be used to push a malicious release.
 
-Note that Trust is configured **per package**, and a package must already exist
+Note that trust is configured **per package**, and a package must already exist
 on npm before it can be trusted.
 
-You can see the Trust settings for a published adaptor on its npmjs page, under
-settings (visible only to collaborators)
+You can see the trust settings for a published adaptor on its npmjs.com page,
+under Settings (visible only to collaborators).
 
 This is what it looks like on npm (Settings tab of a package):
 
@@ -153,19 +153,21 @@ This will:
 Options:
 
 - `--dry-run` shows what would happen without changing anything
-- `--renew` revokes the existing trust and adds it again (see below)
+- `--renew` revokes the existing trust and adds it again (see
+  [Renewing trust](#renewing-trust))
 
-Note that after trusting, the adaptor is granted temporary "pending" trusted
-status. To have Trust permanently applied, a new version must be released within
-48 hours. This is why trust must be renewed sometimes for older adaptors - see
-Renewing Trust.
+Note that after trusting, the adaptor is granted a temporary "pending" trusted
+status. For trust to be applied permanently, a new version must be released
+within 48 hours. This is why trust sometimes needs to be renewed for older
+adaptors; see [Renewing trust](#renewing-trust).
 
 ## When publishing fails
 
 If the Publish workflow fails at the `pnpm publish` step, the most likely cause
 is that a package's trust is missing or no longer valid. For example:
 
-- The package was never trusted (a new adaptor that skipped the trust step)
+- The package was never trusted (for example, a new adaptor that skipped the
+  trust step)
 - The trusted publisher config on npm was removed or changed
 - The repository or workflow file was renamed, so it no longer matches what npm
   has on record
