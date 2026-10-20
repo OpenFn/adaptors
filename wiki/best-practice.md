@@ -140,6 +140,12 @@ the common `cursor` operation).
 If your adaptor mutates the state object, you should document this with the
 `@state` JSdoc annotation (search the repo for `@state` for examples).
 
+Only HTTP helpers (`request`, `http.get` and friends) should write
+`state.response`. Domain operations like `getPatient` or `listActivities` hide
+the HTTP layer, so they write a clean result to `state.data` (the object, or an
+array of objects) and nothing else. Don't wrap results in `{ data: ... }` or
+leave them nested inside the raw response body.
+
 ## Namespacing
 
 Occasionally you'll want to write code that doesn't appear at the top level of
@@ -315,7 +321,36 @@ helpful for OpenFn implementors if adaptors _feel_ similar.
 To this end, there are some patterns and conventions you may wish to adopt in
 your API design.
 
-TODO
+### Pagination
+
+List operations should fetch everything the user asked for, so job code never
+has to write its own paging loop.
+
+- `limit` is the maximum number of records to return in total, across as many
+  pages as it takes. Give it a generous default and allow `Infinity`. Document
+  the default.
+- `pageSize` is how many records to request per page. Most users never need to
+  set it.
+- Never treat `limit` as the page size. `listThings({ limit: 500 })` must
+  return 500 records, even if the API caps pages at 100.
+- Advance the offset (or cursor) by how many records actually came back, and
+  stop on an empty page or when `limit` is reached. APIs often cap page size
+  without telling you, so "stop when a page is shorter than `pageSize`" can
+  silently drop records.
+- A basic `get` or `request` returns exactly what the server sent, with no
+  pagination. Put pagination in `list` (or `search`) operations.
+
+### Options vs query parameters
+
+Keep options which control the adaptor (`limit`, `pageSize`) separate from
+values which are passed straight to the API (filters, query parameters). For
+example, `listActivities(query, { limit })` makes it obvious which values reach
+the backend.
+
+Don't expose internal knobs as options: API versions, throttling, parse modes
+and so on. Once an option is public we have to maintain it. If the backend
+releases a new API version, the response shape usually changes too, so the
+adaptor needs a code change and a release anyway.
 
 ## Error handling
 

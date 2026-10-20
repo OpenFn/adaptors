@@ -30,11 +30,11 @@ ONE-FUNCTION DEFAULT: <yes if N=1, no if N>1>
 
 Invariants:
 ✓ Utils.js: request only (no operational functions)
-✓ Adaptors.js: request + operational functions
+✓ Adaptor.js: request + operational functions
 
 Docs consulted:
-- ./docs/build-a-new-adaptor.md
-- ./docs/unit-testing-guide.md
+- ./wiki/build-a-new-adaptor.md
+- ./wiki/unit-test-guide.md
 
 Questions: <or "None">
 <<<END PLAN>>>
@@ -57,7 +57,7 @@ STOP and wait for "APPROVED:" before coding.
 export function request(configuration, path, params, callback) { ... }
 ```
 
-### Adaptors.js
+### Adaptor.js
 
 ```javascript
 /**
@@ -74,7 +74,7 @@ export function getData(params) { ... }
 
 - Every function needs unit test with **Undici MockAgent**
 - No live network calls
-- Follow `./wiki/unit-testing-guide.md`
+- Follow `./wiki/unit-test-guide.md`
 
 ---
 
@@ -95,11 +95,11 @@ ONE-FUNCTION DEFAULT: yes
 
 Invariants:
 ✓ Utils.js: request only
-✓ Adaptors.js: request + getData
+✓ Adaptor.js: request + getData
 
 Docs consulted:
-- ./docs/build-a-new-adaptor.md
-- ./docs/unit-testing-guide.md
+- ./wiki/build-a-new-adaptor.md
+- ./wiki/unit-test-guide.md
 
 Questions: None
 <<<END PLAN>>>
