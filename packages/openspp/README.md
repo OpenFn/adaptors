@@ -1,4 +1,4 @@
-# language-openspp <img src='assets/square.png' width="30" height="30"/>
+# language-openspp <img src='./assets/square.png' width="30" height="30"/>
 
 An OpenFn **_adaptor_** for building integration jobs for use with the
 [OpenSPP2](https://github.com/OpenSPP/OpenSPP2) REST API v2.

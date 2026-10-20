@@ -1,4 +1,4 @@
-# Language cartodb
+# language-cartodb <img src='./assets/square.png' width="30" height="30"/>
 
 Language Pack for sending messages using the
 [cartodb API](http://docs.cartodb.com/cartodb-platform/sql-api/).

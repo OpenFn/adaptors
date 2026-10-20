@@ -1,4 +1,4 @@
-# language-image-fn <img src='./assets/square.png' width="30" height="30"/>
+# language-image-utils <img src='./assets/square.png' width="30" height="30"/>
 
 An OpenFn **_adaptor_** for building integration jobs for use with the
 image-fn API.

@@ -1,4 +1,4 @@
-# Language Zoho
+# language-zoho <img src='./assets/square.png' width="30" height="30"/>
 
 Language Pack for sending messages using the Zoho API.
 

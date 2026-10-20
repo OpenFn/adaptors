@@ -1,4 +1,4 @@
-# Language ResourceMap
+# language-resourcemap <img src='./assets/square.png' width="30" height="30"/>
 
 Language Pack for building expressions and operations for working with the
 [resourcemap API](https://github.com/instedd/resourcemap/wiki/REST_API).

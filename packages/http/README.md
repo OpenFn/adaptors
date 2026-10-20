@@ -1,4 +1,4 @@
-# Language HTTP
+# language-http <img src='./assets/square.png' width="30" height="30"/>
 
 Language Pack for building expressions and operations to make HTTP calls.
 

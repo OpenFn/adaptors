@@ -1,4 +1,4 @@
-# Language Beyonic
+# language-beyonic <img src='./assets/square.png' width="30" height="30"/>
 
 Language Pack for building expressions and operations for working with the
 [beyonic API](http://apidocs.beyonic.com/).
