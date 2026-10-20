@@ -12,12 +12,9 @@
     },
     "packageManager": {
       "name": "pnpm",
-      "version": "^12.13",
-      "onFail": "warn"
+      "version": "^12.14",
+      "onFail": "download"
     }
-  },
-  "engines": {
-    "node": ">22"
   },
   "scripts": {
     "build:adaptors": "pnpm --filter \"./packages/**\" build",
