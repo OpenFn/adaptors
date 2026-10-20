@@ -43,7 +43,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/setup
+      - uses: pnpm/setup@v6
         with:
           cache: true
       - name: Install node modules
