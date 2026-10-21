@@ -172,3 +172,4 @@ Output file: qa-example-api.js (root directory)
 - QA files saved to root directory: `qa-<adaptor-name>.js`
 - Never rename `request` functions in Utils.js or Adaptors.js
 - One function + one test is default unless operations specified
+- Change `.nvmrc` and `.tool-versions` together; `pnpm check:node-version` enforces it
