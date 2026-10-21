@@ -50,7 +50,8 @@ pnpm run setup
 ### Alternative: Using nvm instead of asdf
 
 If you prefer managing Node.js with [nvm](https://github.com/nvm-sh/nvm), this
-project includes a `.nvmrc` file for node version switching:
+project includes a `.nvmrc` file for node version switching.
+`.nvmrc` and `.tool-versions` always change together.
 
 ```bash
 # Use the Node.js version specified in .nvmrc
