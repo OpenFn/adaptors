@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "type": "string",
+      "description": "The base URL of the OpenG2P Registry partner API",
+      "format": "uri",
+      "minLength": 1,
+      "examples": ["https://registry.example.org"]
+    },
+    "senderId": {
+      "title": "Sender ID",
+      "type": "string",
+      "description": "Partner sender ID, used as header.sender_id. The registry resolves it to PARTNER_<SENDER_ID> in Partner Management",
+      "minLength": 1,
+      "examples": ["openfn"]
+    },
+    "privateKey": {
+      "title": "Private Key",
+      "type": "string",
+      "description": "PEM-encoded RSA, EC P-256 or Ed25519 private key used to sign requests",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": ["-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----"]
+    },
+    "keyId": {
+      "title": "Key ID",
+      "type": "string",
+      "description": "Optional key ID, sent as the JWS kid header",
+      "examples": ["openfn-key-1"]
+    },
+    "algorithm": {
+      "title": "Signing Algorithm",
+      "type": "string",
+      "description": "Optional override for the JWS algorithm. Derived from the key type by default",
+      "enum": ["RS256", "ES256", "EdDSA"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["baseUrl", "senderId", "privateKey"]
+}
