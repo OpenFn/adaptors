@@ -9,13 +9,9 @@
       "name": "node",
       "version": "26.x",
       "onFail": "warn"
-    },
-    "packageManager": {
-      "name": "pnpm",
-      "version": "^12.14",
-      "onFail": "download"
     }
   },
+  "packageManager": "pnpm@12.14.0",
   "scripts": {
     "build:adaptors": "pnpm --filter \"./packages/**\" build",
     "build:tools": "pnpm --filter \"./tools/**\" build",
