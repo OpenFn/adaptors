@@ -1,5 +1,13 @@
 # @openfn/language-openmrs
 
+## 5.5.1 - 23 October 2026
+
+### Patch Changes
+
+- 86c17b6: `fhir.get()`: fetch next pages from `instanceUrl` so a malformed or
+  different host in the `next` link no longer causes redirect loops or `400`
+  errors (#1820)
+
 ## 5.5.0 - 03 September 2026
 
 ### Minor Changes
