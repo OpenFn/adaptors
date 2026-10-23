@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "baseUrl": {
+      "title": "Base URL",
+      "type": "string",
+      "description": "The Overpass API instance to query. Defaults to the public instance at https://overpass-api.de/api",
+      "format": "uri",
+      "examples": ["https://overpass-api.de/api"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true
+}
