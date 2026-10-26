@@ -25,8 +25,9 @@ Overpass API documentation:
 ### Configuration
 
 No credentials are needed. By default the adaptor uses the public instance at
-`https://overpass-api.de/api`. Set `baseUrl` to use another or a self-hosted
-Overpass instance.
+[overpass-api.de](https://overpass-api.de), with the base URL
+`https://overpass-api.de/api` (an API path, not a web page). Set `baseUrl` to
+the `/api` base URL of another or a self-hosted Overpass instance.
 
 View the
 [configuration-schema](https://docs.openfn.org/adaptors/packages/openstreetmap-configuration-schema/)
