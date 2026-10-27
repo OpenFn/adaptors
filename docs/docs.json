@@ -116022,6 +116022,1234 @@
     "common": true
   }
 ],
+{"name":"openstreetmap","adaptor":"@openfn/language-openstreetmap","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#listfeatures\\\">listFeatures(filter, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#query\\\">query(overpassQL, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, body, [options])</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#as\\\">as()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#map\\\">map()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#util\\\">util</a>\\n</dt></dl>\\n\\n## Functions\\n### listFeatures\\n\\n<p><code>listFeatures(filter, [options]) ⇒ Operation</code></p>\\n\\n\\nList OpenStreetMap features which match some tags inside an area or bounding box,\\nas a GeoJSON FeatureCollection.\\nEvery feature is a Point: ways and relations use the center of their bounding box.\\nFeature properties are the OpenStreetMap tags plus `@id`, `@version` and `@timestamp`.\\nThe collection's `timestamp` is the time of the OpenStreetMap data Overpass searched,\\nwhich can be used as the next `changedSince`.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| filter | [<code>FeatureFilter</code>](#featurefilter) | Which features to fetch |\\n| [options] | [<code>QueryOptions</code>](#queryoptions) | Optional query options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | a GeoJSON FeatureCollection |\\n\\n**Example:** List the schools in a region\\n```js\\nlistFeatures({\\n  tags: { amenity: 'school' },\\n  area: { 'ISO3166-2': $.data.regionCode },\\n});\\n```\\n**Example:** List libraries, community centres and parks in a bounding box\\n```js\\nlistFeatures({\\n  tags: [{ amenity: ['library', 'community_centre'] }, { leisure: 'park' }],\\n  bbox: $.data.bbox,\\n});\\n```\\n**Example:** List shops changed since the last run\\n```js\\nlistFeatures({\\n  tags: { shop: '*' },\\n  area: { name: 'Example District', admin_level: '6' },\\n  changedSince: $.lastRunTimestamp,\\n});\\n```\\n\\n* * *\\n\\n### query\\n\\n<p><code>query(overpassQL, [options]) ⇒ Operation</code></p>\\n\\n\\nRun an Overpass QL query and write the matching OpenStreetMap elements to\\n`state.data`. The adaptor adds the `[out:json][timeout:N]` settings, so don't\\ninclude them in the query. See the\\n[Overpass QL docs](https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL).\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| overpassQL | <code>string</code> | The Overpass QL query to run |\\n| [options] | [<code>QueryOptions</code>](#queryoptions) | Optional query options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | an array of OpenStreetMap elements |\\n\\n**Example:** Fetch the schools inside a bounding box\\n```js\\nquery('nwr[\\\"amenity\\\"=\\\"school\\\"](51.47,-0.15,51.52,-0.05); out center;');\\n```\\n**Example:** Allow a slow query to run for up to 10 minutes\\n```js\\nquery($.data.overpassQuery, { queryTimeoutSeconds: 600 });\\n```\\n\\n* * *\\n\\n### request\\n\\n<p><code>request(method, path, body, [options]) ⇒ Operation</code></p>\\n\\n\\nMake a general HTTP request to an Overpass API instance\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource, relative to the configured `baseUrl` |\\n| body | <code>object</code> | Object which will be attached to the request body |\\n| [options] | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Check the rate limit status of the Overpass instance\\n```js\\nrequest('GET', 'status');\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### FeatureFilter\\n\\nWhich features to fetch. `area` or `bbox` is required.\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| tags | <code>object</code> \\\\| <code>Array.&lt;object&gt;</code> | Tags to match. In an object, every tag must match. In an array of objects, any object may match. Values are a string, an array of strings (any of them), or `'*'` (any value). |\\n| area | <code>object</code> | Tags identifying the area to search inside, ie `{ 'ISO3166-2': 'XX-YY' }` or `{ name: 'Example', admin_level: '4' }` |\\n| bbox | <code>object</code> | Bounding box to search inside, as `{ south, west, north, east }` in decimal degrees |\\n| changedSince | <code>string</code> | Only return features created or modified after this date. Deleted features are not reported. |\\n\\n\\n* * *\\n\\n### HttpState\\n\\nState object\\n\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n### QueryOptions\\n\\nOptions for running an Overpass query\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| queryTimeoutSeconds | <code>number</code> | The longest Overpass may run the query, in seconds, sent as `[timeout:N]`. Default: 180. |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions provided to the HTTP request\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |\\n| timeoutMs | <code>number</code> | How long to wait for a response, in milliseconds. Default: 300000 (5 minutes). |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-openstreetmap <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nOpenStreetMap and the OpenStreetMap magnifying glass logo are trademarks of the\\nOpenStreetMap Foundation, and are used with their permission. This adaptor is\\nnot endorsed by or affiliated with the OpenStreetMap Foundation.\\n\\nAn OpenFn **_adaptor_** for reading OpenStreetMap data through the\\n[Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API). It is\\nread-only: it does not edit OpenStreetMap.\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/openstreetmap-docs) for\\nfull technical documentation.\\n\\nOverpass API documentation:\\n\\n- [Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API)\\n- [Overpass QL](https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL)\\n- [Overpass API user's manual](https://dev.overpass-api.de/overpass-doc/en/)\\n- [Map features](https://wiki.openstreetmap.org/wiki/Map_features), eg\\n  [Key:healthcare](https://wiki.openstreetmap.org/wiki/Key:healthcare)\\n\\n### Configuration\\n\\nNo credentials are needed. By default the adaptor uses the public instance at\\n[overpass-api.de](https://overpass-api.de), with the base URL\\n`https://overpass-api.de/api` (an API path, not a web page). Set `baseUrl` to\\nthe `/api` base URL of another or a self-hosted Overpass instance.\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/openstreetmap-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\nThe configuration schema uses\\n[JSON Schema draft-07](https://json-schema.org/draft-07/json-schema-release-notes).\\nRun `pnpm validate:schemas` from the adaptors repo root after editing it.\\n\\n### Usage limits\\n\\nThe public Overpass instances are shared and free. Regular automated use should\\nstay well within the\\n[public instance usage limits](https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances)\\n(at the time of writing, fewer than 10,000 queries and less than 1 GB of\\ndownloads per day). For production workloads, self-host Overpass and set\\n`baseUrl`.\\n\\nOverpass has no pagination, so each query returns its whole result in one\\nresponse. If Overpass gives up on a query (for example it times out or runs out\\nof memory) the adaptor throws Overpass's own error rather than returning partial\\ndata. For large extracts, narrow the area, raise `queryTimeoutSeconds`, or use\\n`changedSince` to fetch only recent changes.\\n\\n### Data license\\n\\nOpenStreetMap data is © OpenStreetMap contributors and available under the\\n[Open Database License (ODbL)](https://www.openstreetmap.org/copyright). Any\\ndata published downstream, including maps, registries and exports, must credit\\n\\\"© OpenStreetMap contributors\\\".\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-openstreetmap\\n\\n## 1.0.0 - 27 October 2026\\n\\nInitial release.\\n\"","functions":["listFeatures","query","request"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","type":"string","description":"The Overpass API instance to query. Defaults to the public instance at https://overpass-api.de/api","format":"uri","examples":["https://overpass-api.de/api"]}},"type":"object","additionalProperties":true}},
+[
+  {
+    "id": "FeatureFilter",
+    "longname": "FeatureFilter",
+    "name": "FeatureFilter",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Which features to fetch. `area` or `bbox` is required.",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "object",
+            "Array.<object>"
+          ]
+        },
+        "description": "Tags to match. In an object, every tag must match. In an array of objects, any object may match. Values are a string, an array of strings (any of them), or `'*'` (any value).",
+        "name": "tags"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Tags identifying the area to search inside, ie `{ 'ISO3166-2': 'XX-YY' }` or `{ name: 'Example', admin_level: '4' }`",
+        "name": "area"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Bounding box to search inside, as `{ south, west, north, east }` in decimal degrees",
+        "name": "bbox"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Only return features created or modified after this date. Deleted features are not reported.",
+        "name": "changedSince"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 31,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/src"
+    },
+    "order": 3,
+    "source": "@openfn/language-openstreetmap",
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "HttpState",
+    "longname": "HttpState",
+    "name": "HttpState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "the response from the HTTP server, including headers, statusCode, body, etc",
+        "name": "response"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 5,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/src"
+    },
+    "order": 0,
+    "source": "@openfn/language-openstreetmap",
+    "level": 0
+  },
+  {
+    "id": "listFeatures",
+    "longname": "listFeatures",
+    "name": "listFeatures",
+    "kind": "function",
+    "scope": "global",
+    "description": "List OpenStreetMap features which match some tags inside an area or bounding box,\nas a GeoJSON FeatureCollection.\nEvery feature is a Point: ways and relations use the center of their bounding box.\nFeature properties are the OpenStreetMap tags plus `@id`, `@version` and `@timestamp`.\nThe collection's `timestamp` is the time of the OpenStreetMap data Overpass searched,\nwhich can be used as the next `changedSince`.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "FeatureFilter"
+          ]
+        },
+        "description": "Which features to fetch",
+        "name": "filter"
+      },
+      {
+        "type": {
+          "names": [
+            "QueryOptions"
+          ]
+        },
+        "optional": true,
+        "description": "Optional query options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>List the schools in a region</caption>\nlistFeatures({\n  tags: { amenity: 'school' },\n  area: { 'ISO3166-2': $.data.regionCode },\n});",
+      "<caption>List libraries, community centres and parks in a bounding box</caption>\nlistFeatures({\n  tags: [{ amenity: ['library', 'community_centre'] }, { leisure: 'park' }],\n  bbox: $.data.bbox,\n});",
+      "<caption>List shops changed since the last run</caption>\nlistFeatures({\n  tags: { shop: '*' },\n  area: { name: 'Example District', admin_level: '6' },\n  changedSince: $.lastRunTimestamp,\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 141,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/src"
+    },
+    "state": [
+      {
+        "name": "data",
+        "description": "a GeoJSON FeatureCollection",
+        "type": null
+      }
+    ],
+    "order": 6,
+    "source": "@openfn/language-openstreetmap",
+    "signature": [
+      "listFeatures(filter, options)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "query",
+    "longname": "query",
+    "name": "query",
+    "kind": "function",
+    "scope": "global",
+    "description": "Run an Overpass QL query and write the matching OpenStreetMap elements to\n`state.data`. The adaptor adds the `[out:json][timeout:N]` settings, so don't\ninclude them in the query. See the\n[Overpass QL docs](https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL).",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The Overpass QL query to run",
+        "name": "overpassQL"
+      },
+      {
+        "type": {
+          "names": [
+            "QueryOptions"
+          ]
+        },
+        "optional": true,
+        "description": "Optional query options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Fetch the schools inside a bounding box</caption>\nquery('nwr[\"amenity\"=\"school\"](51.47,-0.15,51.52,-0.05); out center;');",
+      "<caption>Allow a slow query to run for up to 10 minutes</caption>\nquery($.data.overpassQuery, { queryTimeoutSeconds: 600 });"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 91,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/src"
+    },
+    "state": [
+      {
+        "name": "data",
+        "description": "an array of OpenStreetMap elements",
+        "type": null
+      }
+    ],
+    "order": 5,
+    "source": "@openfn/language-openstreetmap",
+    "signature": [
+      "query(overpassQL, options)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "QueryOptions",
+    "longname": "QueryOptions",
+    "name": "QueryOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options for running an Overpass query",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "The longest Overpass may run the query, in seconds, sent as `[timeout:N]`. Default: 180.",
+        "name": "queryTimeoutSeconds"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 24,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/src"
+    },
+    "order": 2,
+    "source": "@openfn/language-openstreetmap",
+    "level": 0
+  },
+  {
+    "id": "request",
+    "longname": "request",
+    "name": "request",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a general HTTP request to an Overpass API instance",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "HTTP method to use",
+        "name": "method"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path to resource, relative to the configured `baseUrl`",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object which will be attached to the request body",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "optional": true,
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Check the rate limit status of the Overpass instance</caption>\nrequest('GET', 'status');"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 54,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 4,
+    "source": "@openfn/language-openstreetmap",
+    "signature": [
+      "request(method, path, body, options)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "RequestOptions",
+    "longname": "RequestOptions",
+    "name": "RequestOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options provided to the HTTP request",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code.",
+        "name": "errors"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of query parameters to be encoded into the URL.",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of headers to append to the request.",
+        "name": "headers"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Parse the response body as json, text or stream. By default will use the response headers.",
+        "name": "parseAs"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "How long to wait for a response, in milliseconds. Default: 300000 (5 minutes).",
+        "name": "timeoutMs"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 13,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/src"
+    },
+    "order": 1,
+    "source": "@openfn/language-openstreetmap",
+    "level": 0
+  },
+  {
+    "id": "as",
+    "longname": "as",
+    "name": "as()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Run an operation and save the result to a custom key in state instead of overwriting state.data.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The state key to assign the result of the operation to.",
+        "name": "key"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "An operation that returns a new state object with a `data` property",
+        "name": "operation"
+      }
+    ],
+    "examples": [
+      "<caption>Fetch cce-data from collections and store them under state.cceData</caption>\nas('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 987,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/node_modules/@openfn/language-common/src"
+    },
+    "order": 35,
+    "source": "@openfn/language-common",
+    "signature": [
+      "as(key, operation)"
+    ],
+    "common": true
+  },
+  {
+    "id": "combine",
+    "longname": "combine",
+    "name": "combine()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Combines two operations into one",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Operations"
+          ]
+        },
+        "description": "Operations to be performed.",
+        "name": "operations"
+      }
+    ],
+    "examples": [
+      "combine(\n  create('foo'),\n  delete('bar')\n)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 351,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/node_modules/@openfn/language-common/src"
+    },
+    "order": 15,
+    "source": "@openfn/language-common",
+    "signature": [
+      "combine(operations)"
+    ],
+    "common": true
+  },
+  {
+    "id": "cursor",
+    "longname": "cursor",
+    "name": "cursor()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Sets a cursor property on state.\nSupports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\nwhich will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones\nare not yet supported.\nYou can provide a formatter to customise the final cursor value, which is useful for normalising\ndifferent inputs. The custom formatter runs after natural language date conversion.\nSee the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "description": "the cursor value. Usually an ISO date, natural language date, or page number",
+        "name": "value"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "options to control the cursor.",
+        "name": "options"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "set the cursor key. Will persist through the whole run.",
+        "name": "options.key"
+      },
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "description": "the value to use if value is falsy",
+        "name": "options.defaultValue"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "custom formatter for the final cursor value",
+        "name": "options.format"
+      }
+    ],
+    "examples": [
+      "<caption>Use a cursor from state if present, or else use the default value</caption>\ncursor($.cursor, { defaultValue: 'today' })",
+      "<caption>Use a pagination cursor</caption>\ncursor(22)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 856,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/node_modules/@openfn/language-common/src"
+    },
+    "order": 31,
+    "source": "@openfn/language-common",
+    "signature": [
+      "cursor(value, options)"
+    ],
+    "common": true
+  },
+  {
+    "id": "dataPath",
+    "longname": "dataPath",
+    "name": "dataPath()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Ensures a path points at the data.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "JSONPath referencing a point in `data`.",
+        "name": "path"
+      }
+    ],
+    "examples": [
+      "dataPath('key')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 159,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/node_modules/@openfn/language-common/src"
+    },
+    "order": 8,
+    "source": "@openfn/language-common",
+    "signature": [
+      "dataPath(path)"
+    ],
+    "common": true
+  },
+  {
+    "id": "dataValue",
+    "longname": "dataValue",
+    "name": "dataValue()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Picks out a single value from the source data object—usually `state.data`.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "JSONPath referencing a point in `data`.",
+        "name": "path"
+      }
+    ],
+    "examples": [
+      "dataValue('key')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 177,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/node_modules/@openfn/language-common/src"
+    },
+    "order": 9,
+    "source": "@openfn/language-common",
+    "signature": [
+      "dataValue(path)"
+    ],
+    "common": true
+  },
+  {
+    "id": "dateFns",
+    "name": "dateFns",
+    "common": true,
+    "kind": "external",
+    "scope": "global",
+    "source": "@openfn/language-common"
+  },
+  {
+    "id": "each",
+    "longname": "each",
+    "name": "each()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Iterates over an array of items and invokes an operation upon each one, where the state\nobject is _scoped_ so that state.data is the item under iteration.\nThe rest of the state object is untouched and can be referenced as usual.\nYou can pass an array directly, or use lazy state or a JSONPath string to\nreference a slice of state.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "DataSource"
+          ]
+        },
+        "description": "JSONPath referencing a point in `state`.",
+        "name": "dataSource"
+      },
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        },
+        "description": "The operation needed to be repeated.",
+        "name": "operation"
+      }
+    ],
+    "examples": [
+      "<caption>Using lazy state ($) to iterate over items in state.data and pass each into an \"insert\" operation</caption>\neach(\n  $.data,\n  // Inside the callback operation, `$.data` is scoped to the item under iteration\n  insert(\"patient\", {\n    patient_name: $.data.properties.case_name,\n    patient_id: $.data.case_id,\n  })\n);",
+      "<caption>Iterate over items in state.data and pass each one into an \"insert\" operation</caption>\neach(\n  $.data,\n  insert(\"patient\", (state) => ({\n    patient_id: state.data.case_id,\n    ...state.data\n  }))\n);",
+      "<caption>Using JSON path to iterate over items in state.data and pass each one into an \"insert\" operation</caption>\neach(\n  \"$.data[*]\",\n  insert(\"patient\", (state) => ({\n    patient_name: state.data.properties.case_name,\n    patient_id: state.data.case_id,\n  }))\n);"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 321,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/node_modules/@openfn/language-common/src"
+    },
+    "order": 14,
+    "source": "@openfn/language-common",
+    "signature": [
+      "each(dataSource, operation)"
+    ],
+    "common": true
+  },
+  {
+    "id": "field",
+    "longname": "field",
+    "name": "field()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Returns a key, value pair in an array.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Name of the field",
+        "name": "key"
+      },
+      {
+        "type": {
+          "names": [
+            "Value"
+          ]
+        },
+        "description": "The value itself or a sourceable operation.",
+        "name": "value"
+      }
+    ],
+    "examples": [
+      "field('destination_field_name__c', 'value')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Field"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 392,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/node_modules/@openfn/language-common/src"
+    },
+    "order": 17,
+    "source": "@openfn/language-common",
+    "signature": [
+      "field(key, value)"
+    ],
+    "common": true
+  },
+  {
+    "id": "fields",
+    "longname": "fields",
+    "name": "fields()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Zips key value pairs into an object.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Fields"
+          ]
+        },
+        "description": "a list of fields",
+        "name": "fields"
+      }
+    ],
+    "examples": [
+      "fields(list_of_fields)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 405,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/node_modules/@openfn/language-common/src"
+    },
+    "order": 18,
+    "source": "@openfn/language-common",
+    "signature": [
+      "fields(fields)"
+    ],
+    "common": true
+  },
+  {
+    "id": "fn",
+    "longname": "fn",
+    "name": "fn()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Creates a custom step (or operation) for more flexible job writing.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "is the function",
+        "name": "func"
+      }
+    ],
+    "examples": [
+      "fn(state => {\n  // do some things to state\n  return state;\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 76,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/node_modules/@openfn/language-common/src"
+    },
+    "order": 3,
+    "source": "@openfn/language-common",
+    "signature": [
+      "fn(func)"
+    ],
+    "common": true
+  },
+  {
+    "id": "fnIf",
+    "longname": "fnIf",
+    "name": "fnIf()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Execute a function only when the condition returns true",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Boolean"
+          ]
+        },
+        "description": "The condition that returns true",
+        "name": "condition"
+      },
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        },
+        "description": "The operation needed to be executed.",
+        "name": "operation"
+      }
+    ],
+    "examples": [
+      "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 92,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/node_modules/@openfn/language-common/src"
+    },
+    "order": 4,
+    "source": "@openfn/language-common",
+    "signature": [
+      "fnIf(condition, operation)"
+    ],
+    "common": true
+  },
+  {
+    "id": "group",
+    "longname": "group",
+    "name": "group()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Groups an array of objects by a specified key path.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Array.<Object>"
+          ]
+        },
+        "description": "The array of objects to be grouped.",
+        "name": "arrayOfObjects"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The key path to group by.",
+        "name": "keyPath"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "(Optional) Callback function",
+        "name": "callback"
+      }
+    ],
+    "examples": [
+      "const users = [\n  { name: 'Alice', age: 25, city: 'New York' },\n  { name: 'Bob', age: 30, city: 'San Francisco' },\n  { name: 'Charlie', age: 25, city: 'New York' },\n  { name: 'David', age: 30, city: 'San Francisco' }\n];\ngroup(users, 'city');\n// state is { data: { 'New York': [/Alice, Charlie/], 'San Francisco': [ /Bob, David / ] }"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 455,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/node_modules/@openfn/language-common/src"
+    },
+    "order": 20,
+    "source": "@openfn/language-common",
+    "signature": [
+      "group(arrayOfObjects, keyPath, callback)"
+    ],
+    "common": true
+  },
+  {
+    "id": "lastReferenceValue",
+    "longname": "lastReferenceValue",
+    "name": "lastReferenceValue()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Picks out the last reference value from source data.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "JSONPath referencing a point in `references`.",
+        "name": "path"
+      }
+    ],
+    "examples": [
+      "lastReferenceValue('key')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 206,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/node_modules/@openfn/language-common/src"
+    },
+    "order": 11,
+    "source": "@openfn/language-common",
+    "signature": [
+      "lastReferenceValue(path)"
+    ],
+    "common": true
+  },
+  {
+    "id": "map",
+    "longname": "map",
+    "name": "map()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Iterates over a collection of items and returns a new array of mapped values,\nlike Javascript's `Array.map()` function.\n\nEach item in the source array will be passed into the callback function. The returned value\nwill be added to the new array. The callback is passed the original item, the current index\nin the source array (ie, the nth item number), and the state object.\n\nWrites a new array to `state.data` with transformed values.c array.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string",
+            "Array"
+          ]
+        },
+        "description": "An array of items or a a JSONPath string which points to an array of items.",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "The mapping function, invoked with `(data, index, state)` for each item in the array.",
+        "name": "callback"
+      }
+    ],
+    "examples": [
+      "<caption> Transform an array of items in state</caption>\nmap($.items', (data, index, state) => {\n  return {\n    id: index + 1,\n    name: data.name,\n    createdAt: state.cursor,\n  };\n});",
+      "<caption>Map items asynchronously (e.g. fetch extra info)</caption>\nmap($.items, async (data, index, state) => {\n  const userInfo = await fetchUserInfo(data.userId);\n  return {\n    id: index + 1,\n    name: data.name,\n    extra: userInfo,\n  };\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "State"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 244,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/node_modules/@openfn/language-common/src"
+    },
+    "order": 12,
+    "source": "@openfn/language-common",
+    "signature": [
+      "map(path, callback)"
+    ],
+    "common": true
+  },
+  {
+    "id": "merge",
+    "longname": "merge",
+    "name": "merge()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Merges fields into each item in an array.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "DataSource"
+          ]
+        },
+        "name": "dataSource"
+      },
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        },
+        "description": "Group of fields to merge in.",
+        "name": "fields"
+      }
+    ],
+    "examples": [
+      "merge(\n  \"$.books[*]\",\n  fields(\n    field( \"publisher\", sourceValue(\"$.publisher\") )\n  )\n)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "DataSource"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 425,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/node_modules/@openfn/language-common/src"
+    },
+    "order": 19,
+    "source": "@openfn/language-common",
+    "signature": [
+      "merge(dataSource, fields)"
+    ],
+    "common": true
+  },
+  {
+    "id": "scrubEmojis",
+    "longname": "scrubEmojis",
+    "name": "scrubEmojis()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Replaces emojis in a string.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "String that needs to be cleaned",
+        "name": "text"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Characters that replace the emojis",
+        "name": "replacementChars"
+      }
+    ],
+    "examples": [
+      "scrubEmojis('Dove🕊️⭐ 29')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 591,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/node_modules/@openfn/language-common/src"
+    },
+    "order": 27,
+    "source": "@openfn/language-common",
+    "signature": [
+      "scrubEmojis(text, replacementChars)"
+    ],
+    "common": true
+  },
+  {
+    "id": "sourceValue",
+    "longname": "sourceValue",
+    "name": "sourceValue()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Picks out a single value from source data.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "JSONPath referencing a point in `state`.",
+        "name": "path"
+      }
+    ],
+    "examples": [
+      "sourceValue('$.key')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 127,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/openstreetmap/node_modules/@openfn/language-common/src"
+    },
+    "order": 6,
+    "source": "@openfn/language-common",
+    "signature": [
+      "sourceValue(path)"
+    ],
+    "common": true
+  },
+  {
+    "id": "util",
+    "name": "util",
+    "common": true,
+    "kind": "external",
+    "scope": "global",
+    "source": "@openfn/language-common"
+  }
+],
 {"name":"pdfshift","badge":"Core","adaptor":"@openfn/language-pdfshift","version":"1.1.3","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#generatepdf\\\">generatePDF(htmlTemplateString, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, body, options)</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#as\\\">as()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#assert\\\">assert()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#log\\\">log()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#map\\\">map()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#util\\\">util</a>\\n</dt></dl>\\n\\n## Functions\\n### generatePDF\\n\\n<p><code>generatePDF(htmlTemplateString, [options]) ⇒ Operation</code></p>\\n\\n\\nGenerate a PDF from an HTML string.\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| htmlTemplateString | <code>string</code> | A HTML string or url to convert to PDF |\\n| [options] | [<code>PDFBodyOptions</code>](#pdfbodyoptions) | Optional configuration for PDF generation |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The parsed response body when `filename` is provided, otherwise a base64-encoded string. |\\n\\n**Example:** Generate a PDF from a HTML string\\n```js\\ngeneratePDF(\\n`<html>\\n  <body>\\n    <h1>Sales Report</h1>\\n    <p>Date: 2025-02-01</p>\\n    <p>Total Sales: $42</p>\\n  </body>\\n</html>\\n`);\\n```\\n**Example:** Generate a PDF with options\\n```js\\ngeneratePDF(\\n`<html>\\n  <body>\\n    <h1>Sales Report</h1>\\n    <p>Date: 2025-02-01</p>\\n    <p>Total Sales: $42</p>\\n  </body>\\n</html>\\n`, {\\n  sandbox: true});\\n```\\n**Example:** Generate a PDF from a url\\n```js\\ngeneratePDF('https://www.example.com/', {\\n  sandbox: true,\\n  encode: false,\\n});\\n```\\n**Example:** Generate a PDF with a filename\\n```js\\ngeneratePDF('https://www.example.com/', {\\n sandbox: true,\\n filename: 'example.pdf',\\n});\\n```\\n\\n* * *\\n\\n### request\\n\\n<p><code>request(method, path, body, options) ⇒ Operation</code></p>\\n\\n\\nMake a general HTTP request to PDFShift\\n\\n\\n| Param | Type | Description |\\n| --- | --- | --- |\\n| method | <code>string</code> | HTTP method to use |\\n| path | <code>string</code> | Path to resource |\\n| body | [<code>BodyOptions</code>](#bodyoptions) | Object which will be attached to the POST body |\\n| options | [<code>RequestOptions</code>](#requestoptions) | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Make a request to convert a HTML string to PDF\\n```js\\nrequest(\\n  'POST',\\n  '/convert/pdf',\\n   { source: $.html },\\n);\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### BodyOptions\\n\\nPDF Body Options object. [See PDFShift documentation](https://docs.pdfshift.io/#convert) for more details.\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| source | <code>string</code> | The HTML string or url to convert to PDF. |\\n| sandbox | <code>boolean</code> | Generates PDF documents in dev mode that doesn't count in the credits. |\\n| encode | <code>boolean</code> | Return the generated PDF in Base64 encoded format, instead of raw. Defaults to `true`. |\\n| filename | <code>string</code> | Optional. Must be 7+ characters (letters, numbers, \\\"-\\\" or \\\"_\\\").   If set, the API returns a temporary S3 URL (file kept 2 days); otherwise, it returns a Base64 PDF. |\\n\\n\\n* * *\\n\\n### HttpState\\n\\nState object\\n\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, body, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n### PDFBodyOptions\\n\\nPDF Body Options object. [See PDFShift documentation](https://docs.pdfshift.io/#convert) for more details.\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| sandbox | <code>boolean</code> | Generates PDF documents in dev mode that doesn't count in the credits. |\\n| encode | <code>boolean</code> | Return the generated PDF in Base64 encoded format, instead of raw. Defaults to `true`. |\\n| filename | <code>string</code> | Optional. Must be 7+ characters (letters, numbers, \\\"-\\\" or \\\"_\\\").   If set, the API returns a temporary S3 URL (file kept 2 days); otherwise, it returns a Base64 PDF. |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions provided to the HTTP request\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| body | <code>object</code> \\\\| <code>string</code> | body data to append to the request. JSON will be converted to a string (but a content-type header will not be attached to the request). |\\n| errors | <code>object</code> | Map of errorCodes -> error messages, ie, `{ 404: 'Resource not found;' }`. Pass `false` to suppress errors for this code. |\\n| form | <code>object</code> | Pass a JSON object to be serialised into a multipart HTML form (as FormData) in the body. |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL. |\\n| headers | <code>object</code> | An object of headers to append to the request. |\\n| parseAs | <code>string</code> | Parse the response body as json, text or stream. By default will use the response headers. |\\n| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds. |\\n| tls | <code>object</code> | TLS/SSL authentication options. See https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-pdfshift <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the\\npdfshift API.\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/pdfshift-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/pdfshift-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-pdfshift\\n\\n## 1.1.3 - 03 September 2026\\n\\n### Patch Changes\\n\\n- fd1b2be: Security update\\n- Updated dependencies \\\\[654026d]\\n- Updated dependencies \\\\[fd1b2be]\\n  - @openfn/language-common@3.3.5\\n\\n## 1.1.2 - 30 June 2026\\n\\n### Patch Changes\\n\\n- c5f8728: Update undici dependency\\n- Updated dependencies \\\\[c5f8728]\\n  - @openfn/language-common@3.3.4\\n\\n## 1.1.1 - 27 May 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[5276a86]\\n  - @openfn/language-common@3.3.3\\n\\n## 1.1.0 - 21 May 2026\\n\\n### Minor Changes\\n\\n- bf26881: export `log` function from common\\n\\n## 1.0.12 - 20 May 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[9d1e1ae]\\n  - @openfn/language-common@3.3.2\\n\\n## 1.0.11 - 07 April 2026\\n\\n### Patch Changes\\n\\n- add9748: Update dependencies (undici)\\n- Updated dependencies \\\\[add9748]\\n- Updated dependencies \\\\[a9b7597]\\n  - @openfn/language-common@3.3.1\\n\\n## 1.0.10 - 30 March 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[295655f]\\n  - @openfn/language-common@3.3.0\\n\\n## 1.0.9 - 24 February 2026\\n\\n### Patch Changes\\n\\n- 856f85c: Security updates\\n- Updated dependencies \\\\[856f85c]\\n  - @openfn/language-common@3.2.3\\n\\n## 1.0.8 - 09 February 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[8ad6b98]\\n- Updated dependencies \\\\[8ad6b98]\\n  - @openfn/language-common@3.2.2\\n\\n## 1.0.7 - 28 November 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[cfc66df]\\n  - @openfn/language-common@3.2.1\\n\\n## 1.0.6 - 12 November 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[4d7a833]\\n  - @openfn/language-common@3.2.0\\n\\n## 1.0.5 - 04 November 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@3.1.2\\n\\n## 1.0.4 - 16 October 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[408a3a2]\\n  - @openfn/language-common@3.1.1\\n\\n## 1.0.3 - 18 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[e2bc436]\\n  - @openfn/language-common@3.1.0\\n\\n## 1.0.2 - 01 September 2025\\n\\n### Patch Changes\\n\\n- 1b125e8: Update `state` data property docs\\n- Updated dependencies \\\\[1d60531]\\n  - @openfn/language-common@3.0.3\\n\\n## 1.0.1 - 20 August 2025\\n\\n### Patch Changes\\n\\n- 7c606ef: - Format response to `json` when `filename` option is passed.\\n  - Make `generatePDF()` function public\\n\\n## 1.0.0 - 14 August 2025\\n\\nImplement a `pdf` generator from a `html` string using pdfShift API.\\n\"","functions":["generatePDF","request"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"apiVersion":{"title":"API Version","anyOf":[{"type":"string"},{"type":"null"}],"placeholder":"v3","default":"v3","description":"PDFShift api version","minLength":1,"examples":["v3"]},"apiKey":{"title":"API Key","type":"string","description":"Your PDFShift API key","writeOnly":true,"examples":["your-pdfshift-api-key"]}},"type":"object","additionalProperties":true,"required":["apiKey"]}},
 [
   {
