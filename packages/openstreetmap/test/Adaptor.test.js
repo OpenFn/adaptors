@@ -72,13 +72,15 @@ describe('query', () => {
     expect(finalState.response).to.be.undefined;
   });
 
-  it('sends a custom timeout to Overpass', async () => {
+  it('sends queryTimeoutSeconds to Overpass as the query timeout', async () => {
     interceptQuery('[out:json][timeout:600];\nnode(1); out;').reply(200, {
       osm3s,
       elements: [],
     });
 
-    const finalState = await query('node(1); out;', { timeout: 600 })({});
+    const finalState = await query('node(1); out;', {
+      queryTimeoutSeconds: 600,
+    })({});
 
     expect(finalState.data).to.eql([]);
   });
@@ -120,25 +122,179 @@ describe('query', () => {
 });
 
 describe('listFeatures', () => {
-  it('lists features matching any tag group inside an area, changed since a date, as GeoJSON points', async () => {
+  const bbox = { south: 51.47, west: -0.15, north: 51.52, east: -0.05 };
+
+  const interceptFeatureQuery = lines =>
     interceptQuery(
-      [
-        '[out:json][timeout:180];',
-        'area["ISO3166-2"="XX-YY"]->.searchArea;',
-        '(',
-        '  nwr["amenity"~"^(library|community_centre)$"](area.searchArea)(newer:"2026-10-01T00:00:00Z");',
-        '  nwr["leisure"="park"]["access"](area.searchArea)(newer:"2026-10-01T00:00:00Z");',
-        ');',
-        'out center meta;',
-      ].join('\n'),
-    ).reply(200, {
+      ['[out:json][timeout:180];', ...lines, 'out center meta;'].join('\n'),
+    );
+
+  it('requires every tag in a tags object to match', async () => {
+    interceptFeatureQuery([
+      '(',
+      '  nwr["amenity"="school"]["operator"="Example Trust"](51.47,-0.15,51.52,-0.05);',
+      ');',
+    ]).reply(200, { osm3s, elements: [] });
+
+    const finalState = await listFeatures({
+      tags: { amenity: 'school', operator: 'Example Trust' },
+      bbox,
+    })({});
+
+    expect(finalState.data.features).to.eql([]);
+  });
+
+  it('matches any of the tag objects in a tags array', async () => {
+    interceptFeatureQuery([
+      '(',
+      '  nwr["amenity"="library"](51.47,-0.15,51.52,-0.05);',
+      '  nwr["leisure"="park"](51.47,-0.15,51.52,-0.05);',
+      ');',
+    ]).reply(200, { osm3s, elements: [] });
+
+    const finalState = await listFeatures({
+      tags: [{ amenity: 'library' }, { leisure: 'park' }],
+      bbox,
+    })({});
+
+    expect(finalState.data.features).to.eql([]);
+  });
+
+  it('matches any of the values in a tag value array', async () => {
+    interceptFeatureQuery([
+      '(',
+      '  nwr["amenity"~"^(library|community_centre)$"](51.47,-0.15,51.52,-0.05);',
+      ');',
+    ]).reply(200, { osm3s, elements: [] });
+
+    const finalState = await listFeatures({
+      tags: { amenity: ['library', 'community_centre'] },
+      bbox,
+    })({});
+
+    expect(finalState.data.features).to.eql([]);
+  });
+
+  it("matches any value of a tag set to '*'", async () => {
+    interceptFeatureQuery([
+      '(',
+      '  nwr["shop"](51.47,-0.15,51.52,-0.05);',
+      ');',
+    ]).reply(200, { osm3s, elements: [] });
+
+    const finalState = await listFeatures({ tags: { shop: '*' }, bbox })({});
+
+    expect(finalState.data.features).to.eql([]);
+  });
+
+  it('searches inside an area identified by its tags', async () => {
+    interceptFeatureQuery([
+      'area["ISO3166-2"="XX-YY"]->.searchArea;',
+      '(',
+      '  nwr["amenity"="school"](area.searchArea);',
+      ');',
+    ]).reply(200, { osm3s, elements: [] });
+
+    const finalState = await listFeatures({
+      tags: { amenity: 'school' },
+      area: { 'ISO3166-2': 'XX-YY' },
+    })({});
+
+    expect(finalState.data.features).to.eql([]);
+  });
+
+  it('only fetches features changed since the changedSince date', async () => {
+    interceptFeatureQuery([
+      '(',
+      '  nwr["amenity"="school"](51.47,-0.15,51.52,-0.05)(newer:"2026-10-01T00:00:00Z");',
+      ');',
+    ]).reply(200, { osm3s, elements: [] });
+
+    const state = { lastRunTimestamp: '2026-10-01T00:00:00.000Z' };
+
+    const finalState = await listFeatures({
+      tags: { amenity: 'school' },
+      bbox,
+      changedSince: s => s.lastRunTimestamp,
+    })(state);
+
+    expect(finalState.data.features).to.eql([]);
+  });
+
+  it('returns a node as a point at its own location', async () => {
+    interceptFeatureQuery([
+      '(',
+      '  nwr["amenity"="library"](51.47,-0.15,51.52,-0.05);',
+      ');',
+    ]).reply(200, {
       osm3s,
       elements: [
         {
           type: 'node',
           id: 101,
-          lat: 1.5,
-          lon: 30.25,
+          lat: 51.5,
+          lon: -0.1,
+          timestamp: '2026-10-05T10:00:00Z',
+          version: 3,
+          tags: { amenity: 'library' },
+        },
+      ],
+    });
+
+    const finalState = await listFeatures({
+      tags: { amenity: 'library' },
+      bbox,
+    })({});
+
+    expect(finalState.data.features[0].geometry).to.eql({
+      type: 'Point',
+      coordinates: [-0.1, 51.5],
+    });
+  });
+
+  it('returns a way as a point at its center', async () => {
+    interceptFeatureQuery([
+      '(',
+      '  nwr["leisure"="park"](51.47,-0.15,51.52,-0.05);',
+      ');',
+    ]).reply(200, {
+      osm3s,
+      elements: [
+        {
+          type: 'way',
+          id: 202,
+          center: { lat: 51.49, lon: -0.12 },
+          timestamp: '2026-10-06T11:00:00Z',
+          version: 1,
+          tags: { leisure: 'park' },
+        },
+      ],
+    });
+
+    const finalState = await listFeatures({
+      tags: { leisure: 'park' },
+      bbox,
+    })({});
+
+    expect(finalState.data.features[0].geometry).to.eql({
+      type: 'Point',
+      coordinates: [-0.12, 51.49],
+    });
+  });
+
+  it('writes tags, id, version and timestamp to feature properties, without contributor details', async () => {
+    interceptFeatureQuery([
+      '(',
+      '  nwr["amenity"="library"](51.47,-0.15,51.52,-0.05);',
+      ');',
+    ]).reply(200, {
+      osm3s,
+      elements: [
+        {
+          type: 'node',
+          id: 101,
+          lat: 51.5,
+          lon: -0.1,
           timestamp: '2026-10-05T10:00:00Z',
           version: 3,
           changeset: 999,
@@ -146,77 +302,40 @@ describe('listFeatures', () => {
           uid: 42,
           tags: { amenity: 'library', name: 'Central Library' },
         },
-        {
-          type: 'way',
-          id: 202,
-          center: { lat: 1.6, lon: 30.3 },
-          timestamp: '2026-10-06T11:00:00Z',
-          version: 1,
-          changeset: 1000,
-          user: 'mapper',
-          uid: 42,
-          tags: { leisure: 'park', access: 'yes' },
-        },
       ],
     });
-
-    const state = { data: { since: '2026-10-01T00:00:00.000Z' } };
 
     const finalState = await listFeatures({
-      tags: [
-        { amenity: ['library', 'community_centre'] },
-        { leisure: 'park', access: '*' },
-      ],
-      area: { 'ISO3166-2': 'XX-YY' },
-      changedSince: s => s.data.since,
-    })(state);
+      tags: { amenity: 'library' },
+      bbox,
+    })({});
 
-    expect(finalState.data).to.eql({
-      type: 'FeatureCollection',
-      timestamp: '2026-10-20T08:00:00Z',
-      features: [
-        {
-          type: 'Feature',
-          id: 'node/101',
-          geometry: { type: 'Point', coordinates: [30.25, 1.5] },
-          properties: {
-            amenity: 'library',
-            name: 'Central Library',
-            '@id': 'node/101',
-            '@version': 3,
-            '@timestamp': '2026-10-05T10:00:00Z',
-          },
+    expect(finalState.data.features).to.eql([
+      {
+        type: 'Feature',
+        id: 'node/101',
+        geometry: { type: 'Point', coordinates: [-0.1, 51.5] },
+        properties: {
+          amenity: 'library',
+          name: 'Central Library',
+          '@id': 'node/101',
+          '@version': 3,
+          '@timestamp': '2026-10-05T10:00:00Z',
         },
-        {
-          type: 'Feature',
-          id: 'way/202',
-          geometry: { type: 'Point', coordinates: [30.3, 1.6] },
-          properties: {
-            leisure: 'park',
-            access: 'yes',
-            '@id': 'way/202',
-            '@version': 1,
-            '@timestamp': '2026-10-06T11:00:00Z',
-          },
-        },
-      ],
-    });
+      },
+    ]);
   });
 
-  it('searches inside a bounding box', async () => {
-    interceptQuery(
-      [
-        '[out:json][timeout:180];',
-        '(',
-        '  nwr["amenity"="school"](51.47,-0.15,51.52,-0.05);',
-        ');',
-        'out center meta;',
-      ].join('\n'),
-    ).reply(200, { osm3s, elements: [] });
+  it('returns a FeatureCollection stamped with the time of the OpenStreetMap data', async () => {
+    interceptFeatureQuery([
+      '(',
+      '  nwr["amenity"="school"](51.47,-0.15,51.52,-0.05);',
+      ');',
+    ]).reply(200, { osm3s, elements: [] });
 
     const finalState = await listFeatures({
       tags: { amenity: 'school' },
-      bbox: { south: 51.47, west: -0.15, north: 51.52, east: -0.05 },
+      bbox,
     })({});
 
     expect(finalState.data).to.eql({

@@ -18,14 +18,14 @@ import * as util from './Utils.js';
  * @property {object} query - An object of query parameters to be encoded into the URL.
  * @property {object} headers - An object of headers to append to the request.
  * @property {string} parseAs - Parse the response body as json, text or stream. By default will use the response headers.
- * @property {number} timeout - Request timeout in ms. Default: 300 seconds.
+ * @property {number} timeoutMs - How long to wait for a response, in milliseconds. Default: 300000 (5 minutes).
  */
 
 /**
  * Options for running an Overpass query
  * @typedef {Object} QueryOptions
  * @public
- * @property {number} timeout - Maximum query run time in seconds, sent to Overpass as `[timeout:N]`. Default: 180.
+ * @property {number} queryTimeoutSeconds - The longest Overpass may run the query, in seconds, sent as `[timeout:N]`. Default: 180.
  */
 
 /**
@@ -55,6 +55,7 @@ export function request(method, path, body, options = {}) {
   return async state => {
     const [resolvedMethod, resolvedPath, resolvedBody, resolvedOptions] =
       expandReferences(state, method, path, body, options);
+    const { timeoutMs, ...requestOptions } = resolvedOptions ?? {};
 
     const response = await util.request(
       state.configuration,
@@ -62,7 +63,8 @@ export function request(method, path, body, options = {}) {
       resolvedPath,
       {
         body: resolvedBody,
-        ...resolvedOptions,
+        ...requestOptions,
+        timeout: timeoutMs,
       },
     );
 
@@ -78,7 +80,7 @@ export function request(method, path, body, options = {}) {
  * @example <caption>Fetch the schools inside a bounding box</caption>
  * query('nwr["amenity"="school"](51.47,-0.15,51.52,-0.05); out center;');
  * @example <caption>Allow a slow query to run for up to 10 minutes</caption>
- * query($.data.overpassQuery, { timeout: 600 });
+ * query($.data.overpassQuery, { queryTimeoutSeconds: 600 });
  * @function
  * @public
  * @param {string} overpassQL - The Overpass QL query to run
@@ -94,7 +96,7 @@ export function query(overpassQL, options = {}) {
       options,
     );
 
-    const { elements } = await util.interpreter(
+    const { elements } = await util.runQuery(
       state.configuration,
       resolvedQuery,
       resolvedOptions,
@@ -144,7 +146,7 @@ export function listFeatures(filter, options = {}) {
       options,
     );
 
-    const result = await util.interpreter(
+    const result = await util.runQuery(
       state.configuration,
       util.buildFeatureQuery(resolvedFilter),
       resolvedOptions,

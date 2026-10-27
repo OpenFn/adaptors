@@ -49,7 +49,7 @@ downloads per day). For production workloads, self-host Overpass and set
 Overpass has no pagination, so each query returns its whole result in one
 response. If Overpass gives up on a query (for example it times out or runs out
 of memory) the adaptor throws Overpass's own error rather than returning partial
-data. For large extracts, narrow the area, raise `timeout`, or use
+data. For large extracts, narrow the area, raise `queryTimeoutSeconds`, or use
 `changedSince` to fetch only recent changes.
 
 ### Data license

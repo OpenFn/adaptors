@@ -5,7 +5,7 @@ import {
 } from '@openfn/language-common/util';
 
 export const DEFAULT_BASE_URL = 'https://overpass-api.de/api';
-export const DEFAULT_TIMEOUT = 180;
+export const DEFAULT_QUERY_TIMEOUT_SECONDS = 180;
 export const USER_AGENT =
   '@openfn/language-openstreetmap (+https://github.com/OpenFn/adaptors)';
 
@@ -64,22 +64,22 @@ export const request = async (
   }
 };
 
-export const interpreter = async (
+export const runQuery = async (
   configuration,
   overpassQL,
-  { timeout = DEFAULT_TIMEOUT } = {},
+  { queryTimeoutSeconds = DEFAULT_QUERY_TIMEOUT_SECONDS } = {},
 ) => {
-  if (!Number.isInteger(timeout) || timeout <= 0) {
-    throw new Error('timeout must be a positive whole number of seconds');
+  if (!Number.isInteger(queryTimeoutSeconds) || queryTimeoutSeconds <= 0) {
+    throw new Error('queryTimeoutSeconds must be a positive whole number');
   }
 
   const response = await request(configuration, 'POST', 'interpreter', {
     body: new URLSearchParams({
-      data: `[out:json][timeout:${timeout}];\n${overpassQL}`,
+      data: `[out:json][timeout:${queryTimeoutSeconds}];\n${overpassQL}`,
     }).toString(),
     headers: { 'content-type': 'application/x-www-form-urlencoded' },
     parseAs: 'json',
-    timeout: (timeout + 30) * 1000,
+    timeout: (queryTimeoutSeconds + 30) * 1000,
   });
 
   // Overpass returns 200 with a remark when a query fails part way through,

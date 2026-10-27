@@ -97,7 +97,7 @@
           },
           {
             "title": "example",
-            "description": "query($.data.overpassQuery, { timeout: 600 });",
+            "description": "query($.data.overpassQuery, { queryTimeoutSeconds: 600 });",
             "caption": "Allow a slow query to run for up to 10 minutes"
           },
           {
