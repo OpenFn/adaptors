@@ -67,6 +67,11 @@ These come up in almost every review of a generated adaptor. Details are in
   `e.message` and rethrow the same error
 - Let the API validate inputs. Skip client-side validation of arguments so the
   API's own error reaches the user
+- Name functions, including helpers in `Utils.js`, with a verb for what they
+  do (`createContact`), not a noun named after the endpoint they call
+  (`contacts`)
+- Options with a unit say it in the name (`timeoutMs`, `queryTimeoutSeconds`).
+  Never have two options with the same name in different units
 - Examples are generic and read from `$.data`. Never copy the workflow, Zap or
   client use case from the prompt into public docs
 - `README.md` links to the vendor's API documentation; JSDoc on low-level
