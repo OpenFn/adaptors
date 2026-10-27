@@ -106,6 +106,11 @@ wins — update this document to match.
       from values passed through to the API. One option per concept.
 - [ ] No internal knobs are exposed as options (API version, throttling, parse
       modes). Once public, we maintain them.
+- [ ] Functions, including helpers in `Utils.js`, are named with a verb for
+      what they do (`runQuery`), not a noun named after the endpoint they call
+      (`interpreter`). See [best-practice.md](best-practice.md#naming).
+- [ ] Options with a unit say it in the name (`timeoutMs`,
+      `queryTimeoutSeconds`). No two options share a name but differ in unit.
 - [ ] `request`/`http.*` helpers do exactly what they're told: paths relative
       to `baseUrl`, no absolute URLs, no URL magic, raw response returned.
 - [ ] The API stays small. Question new functions that `request`/`get` already

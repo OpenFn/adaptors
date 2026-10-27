@@ -52,6 +52,11 @@ These come up in almost every review of a generated adaptor. Details are in
 - List operations follow the pagination rules in `./wiki/best-practice.md`:
   `limit` is the total, `pageSize` is per request
 - Don't expose internal knobs (API version, throttling, parse modes) as options
+- Name functions, including helpers in `Utils.js`, with a verb for what they
+  do (`runQuery`), not a noun named after the endpoint they call
+  (`interpreter`)
+- Options with a unit say it in the name (`timeoutMs`, `queryTimeoutSeconds`).
+  Never have two options with the same name in different units
 - Examples are generic and read from `$.data`. Never copy the workflow, Zap or
   client use case from the prompt into public docs
 

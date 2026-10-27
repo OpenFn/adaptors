@@ -352,6 +352,20 @@ and so on. Once an option is public we have to maintain it. If the backend
 releases a new API version, the response shape usually changes too, so the
 adaptor needs a code change and a release anyway.
 
+### Naming
+
+Name functions after what they do, not after the endpoint they call. A verb
+says what happens: `runQuery` runs a query. A noun named after the endpoint,
+like `interpreter` for Overpass's `/interpreter`, means nothing to someone who
+hasn't read the backend's docs. This applies to helpers in `Utils.js` as well
+as to public operations.
+
+Options with a unit should say it in the name: `timeoutMs`,
+`queryTimeoutSeconds`. This matters most when two options measure the same
+thing in different units, such as an HTTP timeout in milliseconds and a backend
+query timeout in seconds. Someone who passes `timeout: 600` meaning seconds to
+an option that expects milliseconds gets a 0.6 second timeout and no warning.
+
 ## Error handling
 
 Standard practice with adaptors is to throw an error when something goes wrong.
