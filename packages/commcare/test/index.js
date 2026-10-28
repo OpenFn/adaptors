@@ -1,6 +1,14 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
-import { execute, submitXls, get, post, request, bulk } from '../src/index.js';
+import {
+  execute,
+  submitXls,
+  get,
+  post,
+  request,
+  bulk,
+  fetchReportData,
+} from '../src/index.js';
 
 const hostUrl = 'http://example.commcare.com';
 const testServer = enableMockClient(hostUrl, {
@@ -727,5 +735,34 @@ describe('Bulk', () => {
     // And the adaptor should have uploaded a reasonable looking formdata object
     expect(formdata.get('replace')).to.not.be.undefined;
     expect(formdata.get('replace')).to.equal('false');
+  });
+});
+
+describe('fetchReportData', () => {
+  it('sends the params with the report request, not with the post', async () => {
+    const report = { objects: [{ id: 1 }] };
+    testServer
+      .intercept({
+        path: `/a/${domain}/api/v0.5/configurablereportdata/abcde/`,
+        method: 'GET',
+        query: { limit: 10 },
+      })
+      .reply(200, report, { headers: { 'content-type': 'application/json' } });
+    testServer
+      .intercept({
+        path: '/post-target/',
+        method: 'POST',
+        body: JSON.stringify(report),
+      })
+      .reply(200, {}, { headers: { 'content-type': 'application/json' } });
+
+    const state = { configuration };
+    const result = await fetchReportData(
+      'abcde',
+      { limit: 10 },
+      '/post-target/'
+    )(state);
+
+    expect(result).to.equal(state);
   });
 });
