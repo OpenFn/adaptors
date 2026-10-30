@@ -41,7 +41,7 @@ pnpm generate <adaptor-name>
   implementation. Any internal functions used by your adaptor, but not by job
   code, should go here in Utils.js
 - Update the readme with correct examples that match your new implementation
-- Write and update the tests within the `/tests` folder
+- Write and update the tests within the `test/` folder
 - Edit the CHANGELOG.md file with comments about the initial release.
 - You should set your credentials in the “configuration” property inside
   `state.json`

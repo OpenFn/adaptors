@@ -140,6 +140,12 @@ the common `cursor` operation).
 If your adaptor mutates the state object, you should document this with the
 `@state` JSdoc annotation (search the repo for `@state` for examples).
 
+Only HTTP helpers (`request`, `http.get` and friends) should write
+`state.response`. Domain operations like `getPatient` or `listActivities` hide
+the HTTP layer, so they write a clean result to `state.data` (the object, or an
+array of objects) and nothing else. Don't wrap results in `{ data: ... }` or
+leave them nested inside the raw response body.
+
 ## Namespacing
 
 Occasionally you'll want to write code that doesn't appear at the top level of
@@ -315,7 +321,91 @@ helpful for OpenFn implementors if adaptors _feel_ similar.
 To this end, there are some patterns and conventions you may wish to adopt in
 your API design.
 
-TODO
+### Pagination
+
+Any operation that returns a collection (a list, search, query or export)
+should fetch everything the user asked for, so job code never has to write its
+own paging loop. This holds whatever paging style the backend uses: offset and
+limit, page numbers, a cursor or next-page token, or a next link in the body or
+headers.
+
+What the user controls:
+
+- `limit` is the maximum number of items to return in total, across as many
+  pages as it takes. Give it a generous default, allow `Infinity`, and document
+  the default.
+- `pageSize` is how many items to request per page. Default it to a large size
+  the API allows (often its maximum) so fewer requests are made. Most users
+  never need to set it.
+- Never treat `limit` as the page size. `listThings({ limit: 500 })` must
+  return 500 items, even if the API caps pages at 100.
+- Call these options `limit` and `pageSize` whatever the backend calls them
+  (`per_page`, `maxResults`, `$top`), and map them to the API's own parameters
+  inside the adaptor. The paging mechanism itself (offsets, page numbers,
+  tokens) stays hidden.
+
+How the loop works:
+
+- Advance by what the API reports: the number of items that actually came
+  back, the next page number, or the cursor or next link it returned. APIs
+  often cap page size without telling you, so never work out the next position
+  from `pageSize`.
+- Stop when the API says there is nothing more (no next cursor or link, or the
+  reported total is reached), when a page comes back empty, or when `limit` is
+  reached. Don't stop because a page is shorter than `pageSize`; that silently
+  drops records.
+- On the last page, request only what's still needed and trim the result, so
+  exactly `limit` items come back.
+- When the API returns a next link as a full URL, take the cursor or path from
+  it and keep requesting relative to `baseUrl` (see `commcare`), rather than
+  following whatever URL the server sends.
+- Write one flat array of items to `state.data`: not an array of pages, and no
+  paging metadata (cursors, totals, links).
+- Log one summary at the end ("Fetched 1240 items in 13 pages"). Common's
+  `request` already logs each page request.
+
+Where it lives:
+
+- The paging loop is a helper in `Utils.js`, shared by every operation that
+  pages.
+- `request` and `http.*` helpers return exactly what the server sent, one page,
+  with no pagination.
+
+### Options vs query parameters
+
+Keep options which control the adaptor (`limit`, `pageSize`) separate from
+values which are passed straight to the API (filters, query parameters). For
+example, `listActivities(query, { limit })` makes it obvious which values reach
+the backend.
+
+Don't expose internal knobs as options: throttling, parse modes and so on. Once
+an option is public we have to maintain it.
+
+The API version is the exception. When the API is versioned, users often run
+against servers on different versions, so make it settable: an `apiVersion`
+field in the configuration schema, defaulting in code to the version the
+adaptor was built and tested against (see `asana`), which a single call can
+override with `options.apiVersion` (see `dhis2`).
+
+A new API version often changes the response shape, so domain operations that
+parse responses (pagination, the shape written to `state.data`) may not work
+against an overridden version. Supporting a new version properly still needs a
+code change and a release.
+
+### Naming
+
+Name functions after what they do, not after the endpoint they call. A verb
+says what happens: `createContact` creates a contact. A noun named after the
+endpoint, like `contacts` for `POST /contacts`, doesn't say whether it reads,
+creates or deletes, and endpoint names often mean nothing to someone who
+hasn't read the backend's docs. This applies to helpers in `Utils.js` as well
+as to public operations.
+
+Options with a unit should say it in the name: `timeoutMs`,
+`queryTimeoutSeconds`. This matters most when two options measure the same
+thing in different units, such as an HTTP timeout in milliseconds and a backend
+query timeout in seconds. Someone who passes `timeout: 600` meaning seconds to
+an option that expects milliseconds gets a 0.6 second timeout and no warning.
 
 ## Error handling
 
