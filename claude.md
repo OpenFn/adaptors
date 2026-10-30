@@ -32,8 +32,8 @@ These are rules for you to follow when generating code. They are constant across
   - Must export a function named `request`
   - Infrastructure/helpers ONLY (`request`, `prepareNextState`, pagination
     helpers); NO operational functions
-  - The auto-pagination loop lives here; `list*` operations in `Adaptor.js`
-    call it rather than paging inline
+  - The auto-pagination loop lives here; operations in `Adaptor.js` that
+    return collections call it rather than paging inline
   - To extend: wrap it (e.g., `requestWithRetry`)
 - `Adaptor.js`
   - Must export a function named `request`
@@ -55,7 +55,8 @@ These come up in almost every review of a generated adaptor. Details are in
 - Only `request` (and `http.*` helpers) write `state.response`. Domain
   operations like `upsertLead` or `listActivities` write a clean result to
   `state.data` and nothing else
-- List operations follow the pagination rules in `./wiki/best-practice.md`:
+- Operations that return collections auto-paginate following
+  `./wiki/best-practice.md#pagination`, whatever the API's paging style:
   `limit` is the total, `pageSize` is per request
 - When the API is versioned, the version is user-settable: `apiVersion` in
   `configuration-schema.json`, defaulting in code to the version the adaptor

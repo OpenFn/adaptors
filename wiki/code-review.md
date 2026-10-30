@@ -98,8 +98,9 @@ wins — update this document to match.
 - [ ] New public operations are consistent with existing operations in the same
       adaptor (and, where reasonable, across adaptors).
 - [ ] Pagination follows [best-practice.md](best-practice.md#pagination):
-      `limit` is the total number of records, not the page size; offsets
-      advance by what actually came back; paging stops on an empty page.
+      `limit` is the total number of records, not the page size; the loop
+      advances by what the API reports (items returned, next cursor or link);
+      paging stops when the API says there's nothing more or a page is empty.
       Treating `limit` as page size, or stopping on a "short" page, is
       **Blocking** because it silently drops records.
 - [ ] Options which control the adaptor (`limit`, `pageSize`) are kept apart

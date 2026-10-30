@@ -54,9 +54,10 @@ STOP and wait for "APPROVED:" before coding.
 `claude.md` at the repo root holds the full file invariants and design rules
 for generated adaptors. Follow them. In short:
 
-- `Utils.js` exports `request` plus helpers (`prepareNextState`, the
-  pagination loop); no operational functions
-- `Adaptor.js` exports `request` and all operational functions
+- `Utils.js` exports `request(configuration, method, path, options)` plus
+  helpers (`prepareNextState`, the pagination loop); no operational functions
+- `Adaptor.js` exports `request(method, path, body, options)` and all
+  operational functions
 - `index.js` exports every public function; tests and consumers import from it
 - Required arguments are positional; everything optional goes in a trailing
   `options` object. No callbacks

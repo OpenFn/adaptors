@@ -323,22 +323,53 @@ your API design.
 
 ### Pagination
 
-List operations should fetch everything the user asked for, so job code never
-has to write its own paging loop.
+Any operation that returns a collection (a list, search, query or export)
+should fetch everything the user asked for, so job code never has to write its
+own paging loop. This holds whatever paging style the backend uses: offset and
+limit, page numbers, a cursor or next-page token, or a next link in the body or
+headers.
 
-- `limit` is the maximum number of records to return in total, across as many
-  pages as it takes. Give it a generous default and allow `Infinity`. Document
+What the user controls:
+
+- `limit` is the maximum number of items to return in total, across as many
+  pages as it takes. Give it a generous default, allow `Infinity`, and document
   the default.
-- `pageSize` is how many records to request per page. Most users never need to
-  set it.
+- `pageSize` is how many items to request per page. Default it to a large size
+  the API allows (often its maximum) so fewer requests are made. Most users
+  never need to set it.
 - Never treat `limit` as the page size. `listThings({ limit: 500 })` must
-  return 500 records, even if the API caps pages at 100.
-- Advance the offset (or cursor) by how many records actually came back, and
-  stop on an empty page or when `limit` is reached. APIs often cap page size
-  without telling you, so "stop when a page is shorter than `pageSize`" can
-  silently drop records.
-- A basic `get` or `request` returns exactly what the server sent, with no
-  pagination. Put pagination in `list` (or `search`) operations.
+  return 500 items, even if the API caps pages at 100.
+- Call these options `limit` and `pageSize` whatever the backend calls them
+  (`per_page`, `maxResults`, `$top`), and map them to the API's own parameters
+  inside the adaptor. The paging mechanism itself (offsets, page numbers,
+  tokens) stays hidden.
+
+How the loop works:
+
+- Advance by what the API reports: the number of items that actually came
+  back, the next page number, or the cursor or next link it returned. APIs
+  often cap page size without telling you, so never work out the next position
+  from `pageSize`.
+- Stop when the API says there is nothing more (no next cursor or link, or the
+  reported total is reached), when a page comes back empty, or when `limit` is
+  reached. Don't stop because a page is shorter than `pageSize`; that silently
+  drops records.
+- On the last page, request only what's still needed and trim the result, so
+  exactly `limit` items come back.
+- When the API returns a next link as a full URL, take the cursor or path from
+  it and keep requesting relative to `baseUrl` (see `commcare`), rather than
+  following whatever URL the server sends.
+- Write one flat array of items to `state.data`: not an array of pages, and no
+  paging metadata (cursors, totals, links).
+- Log one summary at the end ("Fetched 1240 items in 13 pages"). Common's
+  `request` already logs each page request.
+
+Where it lives:
+
+- The paging loop is a helper in `Utils.js`, shared by every operation that
+  pages.
+- `request` and `http.*` helpers return exactly what the server sent, one page,
+  with no pagination.
 
 ### Options vs query parameters
 
