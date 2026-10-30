@@ -105,9 +105,10 @@ wins — update this document to match.
 - [ ] Options which control the adaptor (`limit`, `pageSize`) are kept apart
       from values passed through to the API. One option per concept.
 - [ ] No internal knobs are exposed as options (throttling, parse modes). Once
-      public, we maintain them. The API version is the exception: it is
-      settable via `configuration.apiVersion` with a pinned default, and
-      overridable per call with `options.apiVersion`.
+      public, we maintain them. The API version is the exception: for a
+      versioned API it is settable via `configuration.apiVersion`, defaults in
+      code to the version the adaptor was built against, and is overridable
+      per call with `options.apiVersion`.
 - [ ] `request`/`http.*` helpers do exactly what they're told: paths relative
       to `baseUrl`, no absolute URLs, no URL magic, raw response returned.
 - [ ] The API stays small. Question new functions that `request`/`get` already
@@ -216,6 +217,9 @@ wins — update this document to match.
       what was sent (path, query, body, headers), not just return a canned
       reply. A test that still passes with the feature commented out is
       **Blocking**.
+- [ ] **Pagination tests really paginate**: several mocked pages, including a
+      last page that doesn't divide evenly by the page size. A single-page
+      mock can't catch `limit` being treated as page size.
 - [ ] **Tests go through the public export** (`http.get`, `listThings`), not
       internal helpers in `Utils.js`.
 - [ ] **Whole results are asserted** with `deep.equal`, not just `data[0]` or a

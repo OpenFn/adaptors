@@ -350,11 +350,16 @@ the backend.
 Don't expose internal knobs as options: throttling, parse modes and so on. Once
 an option is public we have to maintain it.
 
-The API version is the exception. Users often run against servers on different
-versions, so make it settable: an `apiVersion` field in the configuration
-schema with a pinned default, which a single call can override with
-`options.apiVersion` (see `dhis2`). Pin the default to the version the adaptor
-was built and tested against.
+The API version is the exception. When the API is versioned, users often run
+against servers on different versions, so make it settable: an `apiVersion`
+field in the configuration schema, defaulting in code to the version the
+adaptor was built and tested against (see `asana`), which a single call can
+override with `options.apiVersion` (see `dhis2`).
+
+A new API version often changes the response shape, so domain operations that
+parse responses (pagination, the shape written to `state.data`) may not work
+against an overridden version. Supporting a new version properly still needs a
+code change and a release.
 
 ## Error handling
 

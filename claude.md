@@ -57,13 +57,16 @@ These come up in almost every review of a generated adaptor. Details are in
   `state.data` and nothing else
 - List operations follow the pagination rules in `./wiki/best-practice.md`:
   `limit` is the total, `pageSize` is per request
-- The API version is user-settable: an `apiVersion` field in
-  `configuration-schema.json` with a pinned default, overridable per call with
+- When the API is versioned, the version is user-settable: `apiVersion` in
+  `configuration-schema.json`, defaulting in code to the version the adaptor
+  was built against (see `asana`), and overridable per call with
   `options.apiVersion` (see `dhis2`). Other internal knobs (throttling, parse
   modes) stay out of options
-- Upstream errors propagate as-is. Common's `request` already throws with the
-  API's status and response body; to add context, append to `e.message` and
-  rethrow the same error
+- Upstream errors propagate as-is. Common's `request` throws with the status
+  in `e.message` and the API's response on `e.body`; to add context, append to
+  `e.message` and rethrow the same error
+- Let the API validate inputs. Skip client-side validation of arguments so the
+  API's own error reaches the user
 - Examples are generic and read from `$.data`. Never copy the workflow, Zap or
   client use case from the prompt into public docs
 - `README.md` links to the vendor's API documentation; JSDoc on low-level
@@ -74,8 +77,8 @@ These come up in almost every review of a generated adaptor. Details are in
 
 ## Testing
 
-- At least one unit test per exported function, `request` included, using
-  **Undici MockAgent**
+- At least one unit test per function exported from `index.js`, `request`
+  included, using **Undici MockAgent**
 - No live network calls
 - Follow patterns in `./wiki/unit-test-guide.md`
 - Test through the public export (`../src/index.js`), not internal helpers in
