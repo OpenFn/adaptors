@@ -32,10 +32,16 @@ These are rules for you to follow when generating code. They are constant across
   - Must export a function named `request`
   - Infrastructure/helpers ONLY (`request`, `prepareNextState`, pagination
     helpers); NO operational functions
+  - The auto-pagination loop lives here; `list*` operations in `Adaptor.js`
+    call it rather than paging inline
   - To extend: wrap it (e.g., `requestWithRetry`)
 - `Adaptor.js`
   - Must export a function named `request`
   - ALL operational functions go here
+- `index.js`
+  - The package's public surface: every public function, including namespaced
+    ones from other files, is exported here. Tests and consumers import from
+    `index.js`, never from `Adaptor.js` directly
 
 ---
 
@@ -51,15 +57,25 @@ These come up in almost every review of a generated adaptor. Details are in
   `state.data` and nothing else
 - List operations follow the pagination rules in `./wiki/best-practice.md`:
   `limit` is the total, `pageSize` is per request
-- Don't expose internal knobs (API version, throttling, parse modes) as options
+- The API version is user-settable: an `apiVersion` field in
+  `configuration-schema.json` with a pinned default, overridable per call with
+  `options.apiVersion` (see `dhis2`). Other internal knobs (throttling, parse
+  modes) stay out of options
+- Upstream errors propagate as-is. Common's `request` already throws with the
+  API's status and response body; to add context, append to `e.message` and
+  rethrow the same error
 - Examples are generic and read from `$.data`. Never copy the workflow, Zap or
   client use case from the prompt into public docs
+- `README.md` links to the vendor's API documentation; JSDoc on low-level
+  functions links to the specific endpoint's docs
+- Ship live code only: delete unused code rather than commenting it out
 
 ---
 
 ## Testing
 
-- Every function needs a unit test using **Undici MockAgent**
+- At least one unit test per exported function, `request` included, using
+  **Undici MockAgent**
 - No live network calls
 - Follow patterns in `./wiki/unit-test-guide.md`
 - Test through the public export (`../src/index.js`), not internal helpers in
@@ -81,6 +97,7 @@ Tests: <N>
 Invariants:
 ✓ Utils.js: request + helpers only
 ✓ Adaptor.js: request + operational functions
+✓ index.js: exports every public function
 
 Assumptions:
 - <bullets>
@@ -107,8 +124,10 @@ Generate in order:
 
 ```
 packages/<name>/
+├── README.md         [NEW]
 ├── src/Adaptor.js    [NEW]
 ├── src/Utils.js      [NEW]
+├── src/index.js      [NEW]
 └── test/Adaptor.test.js [NEW]
 ```
 

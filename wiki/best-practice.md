@@ -347,10 +347,14 @@ values which are passed straight to the API (filters, query parameters). For
 example, `listActivities(query, { limit })` makes it obvious which values reach
 the backend.
 
-Don't expose internal knobs as options: API versions, throttling, parse modes
-and so on. Once an option is public we have to maintain it. If the backend
-releases a new API version, the response shape usually changes too, so the
-adaptor needs a code change and a release anyway.
+Don't expose internal knobs as options: throttling, parse modes and so on. Once
+an option is public we have to maintain it.
+
+The API version is the exception. Users often run against servers on different
+versions, so make it settable: an `apiVersion` field in the configuration
+schema with a pinned default, which a single call can override with
+`options.apiVersion` (see `dhis2`). Pin the default to the version the adaptor
+was built and tested against.
 
 ## Error handling
 

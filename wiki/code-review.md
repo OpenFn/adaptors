@@ -104,8 +104,10 @@ wins — update this document to match.
       **Blocking** because it silently drops records.
 - [ ] Options which control the adaptor (`limit`, `pageSize`) are kept apart
       from values passed through to the API. One option per concept.
-- [ ] No internal knobs are exposed as options (API version, throttling, parse
-      modes). Once public, we maintain them.
+- [ ] No internal knobs are exposed as options (throttling, parse modes). Once
+      public, we maintain them. The API version is the exception: it is
+      settable via `configuration.apiVersion` with a pinned default, and
+      overridable per call with `options.apiVersion`.
 - [ ] `request`/`http.*` helpers do exactly what they're told: paths relative
       to `baseUrl`, no absolute URLs, no URL magic, raw response returned.
 - [ ] The API stays small. Question new functions that `request`/`get` already
