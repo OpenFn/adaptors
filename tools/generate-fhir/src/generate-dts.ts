@@ -266,6 +266,30 @@ const generateEntryFuction = (
   return result;
 };
 
+const typePrinter = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
+const typeSourceFile = ts.createSourceFile('', '', ts.ScriptTarget.Latest);
+
+const createUnionTypeNode = (types: ts.TypeNode[]): ts.TypeNode => {
+  const seen = new Set<string>();
+  const uniqueTypes = types.filter(type => {
+    // Compare emitted types after primitive mapping and shorthand expansion.
+    const key = typePrinter.printNode(
+      ts.EmitHint.Unspecified,
+      type,
+      typeSourceFile,
+    );
+    if (seen.has(key)) {
+      return false;
+    }
+    seen.add(key);
+    return true;
+  });
+
+  return uniqueTypes.length === 1
+    ? uniqueTypes[0]
+    : b.createUnionTypeNode(uniqueTypes);
+};
+
 // note that this is kinda duplicated from generate-types
 // because we use two different ast libraries
 // TODO maybe the sig is schema & mappings?
@@ -300,7 +324,7 @@ const createTypeNode = (
     node = b.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
   }
   if (shorthands?.length) {
-    node = b.createUnionTypeNode(
+    node = createUnionTypeNode(
       shorthands.map(s => b.createTypeReferenceNode(s)).concat(node),
     );
   } else if (isArray && !values) {
@@ -382,11 +406,7 @@ export const generateType = (
       const types = t.map(t =>
         createTypeNode(t, s.isArray, m.values || s.values, typeShorthands[t]),
       );
-      if (types.length === 1) {
-        type = types[0];
-      } else {
-        type = b.createUnionTypeNode(types);
-      }
+      type = createUnionTypeNode(types);
     }
     if (s.desc) {
       props.push(b.createJSDocComment(s.desc + '\n'));
@@ -455,11 +475,7 @@ export const generateInterface = (
       const types = t.map(t =>
         createTypeNode(t, s.isArray, m.values || s.values, typeShorthands[t]),
       );
-      if (types.length === 1) {
-        type = types[0];
-      } else {
-        type = b.createUnionTypeNode(types);
-      }
+      type = createUnionTypeNode(types);
     }
     const propSig = b.createPropertySignature(
       [],
