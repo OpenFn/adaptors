@@ -1,5 +1,64 @@
 {
-  "operations": [],
+  "operations": [
+    {
+      "name": "langfuse",
+      "params": [
+        "func"
+      ],
+      "docs": {
+        "description": "Access the langfuse client API. Accepts a callback which receives state and the client API object. See the full API reference at {@link https://js.reference.langfuse.com/}.",
+        "tags": [
+          {
+            "title": "example",
+            "description": "langfuse(async (state, api) => {\n  const { data } = await api.observations.getMany({ limit: 10 });\n  return { ...state, data };\n});",
+            "caption": "Fetch recent observations"
+          },
+          {
+            "title": "example",
+            "description": "langfuse(async (state, api) => {\n  const { data: configs } = await api.scoreConfigs.get({ limit: 100 });\n  return { ...state, data: configs };\n});",
+            "caption": "List score configs"
+          },
+          {
+            "title": "example",
+            "description": "langfuse(async (state, api) => {\n  const query = {\n    view: 'observations',\n    metrics: [{ measure: 'totalCost', aggregation: 'sum' }],\n    fromTimestamp: '2025-01-01T00:00:00Z',\n    toTimestamp: '2025-06-01T00:00:00Z',\n  };\n  const { data } = await api.metrics.metrics({ query: JSON.stringify(query) });\n  return { ...state, data };\n});",
+            "caption": "Query aggregate metrics"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "param",
+            "description": "Callback `(state, api) => state` receiving the {@link LangfuseApiClient} as `api`",
+            "type": {
+              "type": "NameExpression",
+              "name": "function"
+            },
+            "name": "func"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{LangfuseState}"
+          }
+        ]
+      },
+      "valid": true
+    }
+  ],
   "exports": [],
   "common": [
     {

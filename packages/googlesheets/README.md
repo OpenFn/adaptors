@@ -1,4 +1,4 @@
-# Language Google Sheets
+# language-googlesheets <img src='./assets/square.png' width="30" height="30"/>
 
 Language Pack for building expressions and operations to make Google Sheets API
 calls.

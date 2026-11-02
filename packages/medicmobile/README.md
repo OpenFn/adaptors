@@ -1,4 +1,4 @@
-# Language Medic Mobile
+# language-medicmobile <img src='./assets/square.png' width="30" height="30"/>
 
 Language Pack for building expressions and operations to make calls to the Medic
 Mobile API.  

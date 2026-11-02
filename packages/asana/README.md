@@ -1,4 +1,4 @@
-# language-asana
+# language-asana <img src='./assets/square.png' width="30" height="30"/>
 
 Language Pack for connecting with Asana.
 

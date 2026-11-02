@@ -25,15 +25,13 @@ export async function request(state, method, path, data, params) {
     parseAs: 'json',
   };
 
-  const url = `${instanceUrl}/ws/fhir2/${fhirVersion}/${path}`;
+  let url = `${instanceUrl}/ws/fhir2/${fhirVersion}/${path}`;
 
   let allResponses;
-  let query = options?.query;
-  let allowPagination = isNaN(query?._getpagesoffset);
+  const allowPagination = isNaN(options.query?._getpagesoffset);
 
   do {
-    const requestOptions = query ? { ...options, query } : options;
-    const response = await commonRequest(method, url, requestOptions);
+    const response = await commonRequest(method, url, options);
     logResponse(response);
 
     if (allResponses) {
@@ -45,10 +43,9 @@ export async function request(state, method, path, data, params) {
     if (nextUrl) {
       console.log(`Fetched ${response.body.entry.length} results`);
       console.log(`Fetching next page from ${nextUrl}`);
-      const urlObj = new URL(nextUrl);
-      const params = new URLSearchParams(urlObj.search);
-      const paramsObject = Object.fromEntries(params.entries());
-      query = { ...query, ...paramsObject };
+      const queryStart = nextUrl.indexOf('?');
+      const nextQuery = queryStart === -1 ? '' : nextUrl.slice(queryStart);
+      url = `${instanceUrl}/ws/fhir2/${fhirVersion}${nextQuery}`;
     } else {
       delete allResponses.body.link;
       break;

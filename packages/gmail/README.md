@@ -1,4 +1,4 @@
-# Gmail adaptor
+# language-gmail <img src='./assets/square.png' width="30" height="30"/>
 
 Send and receive Gmail messages with file attachments using simple, configurable
 logic.

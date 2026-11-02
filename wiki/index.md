@@ -13,5 +13,7 @@ Here is a list of available resources:
 - [FHIR Adaptors](fhir.md) - Details about our FHIR adaptor generator
 - [Magic Functions](magic-functions.md) - What is a Magic Function, What is
   Metadata, and how it all works
+- [Releases](releases.md) - How adaptors are versioned, published and trusted on
+  npm
 - [Unit Test Guide](unit-test-guide.md) - Guide to unit tests generally, and
   principles of testing for this repo

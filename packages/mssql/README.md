@@ -1,4 +1,4 @@
-# Language MSSQL
+# language-mssql <img src='./assets/square.png' width="30" height="30"/>
 
 Language Pack for connecting to Azure SQL Server via OpenFn.
 

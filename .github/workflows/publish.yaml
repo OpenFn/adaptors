@@ -12,14 +12,13 @@ jobs:
       contents: write
       id-token: write
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 1
           fetch-tags: true
-      - uses: actions/setup-node@v3
+      - uses: pnpm/setup@v3
         with:
-          node-version: '22.20.0'
-      - uses: pnpm/action-setup@v6
+          cache: true
       - run: pnpm install --frozen-lockfile
       - name: Validate configuration schemas
         run: pnpm validate:schemas

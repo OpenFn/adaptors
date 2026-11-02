@@ -1,4 +1,4 @@
-# Language Magpi
+# language-magpi <img src='./assets/square.png' width="30" height="30"/>
 
 Language Pack for building expressions and operations for working with the
 [Magpi inbound API](http://support.magpi.com/support/solutions/articles/4839-magpi-inbound-api)

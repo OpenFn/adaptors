@@ -1,4 +1,4 @@
-# @openfn/language-browserless <img src='./assets/square.png' width="30" height="30"/>
+# language-browserless <img src='./assets/square.png' width="30" height="30"/>
 
 An OpenFn adaptor for interacting with the Browserless API (PDF generation and related endpoints).
 

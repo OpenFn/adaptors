@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-langfuse",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "OpenFn langfuse adaptor",
   "type": "module",
   "exports": {

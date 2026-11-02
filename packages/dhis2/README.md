@@ -1,4 +1,4 @@
-# Language DHIS2
+# language-dhis2 <img src='./assets/square.png' width="30" height="30"/>
 
 An OpenFn language pack for building expressions and operations to work with the
 [DHIS2 API](https://docs.dhis2.org/en/home.html). Commonly used via

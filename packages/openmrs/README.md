@@ -1,4 +1,4 @@
-# Language OpenMRS
+# language-openmrs <img src='./assets/square.png' width="30" height="30"/>
 
 Language Pack for building expressions and operations for working with the
 [OpenMRS Rest API](https://rest.openmrs.org/?javascript#openmrs-rest-api)

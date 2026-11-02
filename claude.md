@@ -22,28 +22,17 @@ review only—no automatic commits or PRs.
 
 ## File Invariants (CRITICAL)
 
-### `Utils.js`
+These are rules for you to follow when generating code. They are constant across the whole repo.
 
-```javascript
-/**
- * INVARIANT: Must export function named `request`
- * - Infrastructure/helpers ONLY
- * - NO operational functions
- * - To extend: wrap it (e.g., requestWithRetry)
- */
-export function request(configuration, path, params, callback) { ... }
-```
+**DO NOT write them into the generated files.** No `INVARIANT:` comments, no "Docs:" or "API:" header blocks, no file-level banner comments restating these rules. Generated files should contain only normal code and JSDoc for the functions themselves.
 
-### `Adaptors.js`
-
-```javascript
-/**
- * INVARIANT: Must export function named `request`
- * - ALL operational functions go here
- */
-export function request(method, path, body, options = {}){ ... }
-export function getData(params) { ... }
-```
+- `Utils.js`
+  - Must export a function named `request`
+  - Infrastructure/helpers ONLY; NO operational functions
+  - To extend: wrap it (e.g., `requestWithRetry`)
+- `Adaptors.js`
+  - Must export a function named `request`
+  - ALL operational functions go here
 
 ---
 
@@ -100,9 +89,8 @@ packages/<name>/
 
 2. **Full file contents** with:
 
-   - Doc references
-   - Invariant comment blocks
-   - JSDoc annotations
+   - JSDoc annotations on exported functions
+   - No invariant comments, doc-reference headers or other file-level banner comments
 
 3. **Test commands**
 
