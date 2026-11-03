@@ -9,6 +9,7 @@
     "update-latest-versions": "src/update-latest-versions.js"
   },
   "scripts": {
+    "test": "node --test test/updateChangelog.test.js",
     "update-latest-versions": "node src/update-latest-versions.js",
     "update-historical-versions": "node src/update-version-histories.js"
   },

@@ -1,0 +1,4 @@
+# These regression fixtures intentionally retain CRLF or extra final blank lines.
+crlf/CHANGELOG.md -text whitespace=cr-at-eol,-blank-at-eof
+dated/CHANGELOG.md whitespace=-blank-at-eof
+undated/CHANGELOG.md whitespace=-blank-at-eof
