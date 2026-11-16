@@ -172,3 +172,10 @@ Output file: qa-example-api.js (root directory)
 - QA files saved to root directory: `qa-<adaptor-name>.js`
 - Never rename `request` functions in Utils.js or Adaptors.js
 - One function + one test is default unless operations specified
+---
+
+## Reference: doc generation
+
+How JSDoc becomes `docs/index.md` / `docs.json` (build pipeline, custom tags,
+templates, debugging): see [`.claude/docgen.md`](.claude/docgen.md).
+Read it before changing anything under `tools/build` or `tools/adaptor-apis`.
