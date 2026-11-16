@@ -3,12 +3,10 @@ import { composeNextState } from '@openfn/language-common';
 import xlsx from 'xlsx';
 
 import {
-  JSON_TO_SHEET_OPTIONS,
-  SHEET_TO_CSV_OPTIONS,
-  SHEET_TO_JSON_OPTIONS,
+  SHEET_TO_CSV_ONLY,
+  SHEET_TO_JSON_ONLY,
   buildWorkbook,
   readWorksheet,
-  splitOptions,
   writeWorkbook,
 } from './Utils.js';
 
@@ -47,7 +45,6 @@ import {
  * {@link https://docs.sheetjs.com/docs/api/utilities/array#array-of-objects-input SheetJS array of objects input option}
  * and any {@link https://docs.sheetjs.com/docs/api/write-options#writing-options SheetJS write option}
  * except `type` - use `output` instead.
- * `cellDates` appears in both lists, and applies to building the sheet.
  * @typedef {Object} JsonToSheetOptions
  * @public
  * @property {string} sheetName - Name of the worksheet. Default: `'Sheet1'`.
@@ -81,13 +78,13 @@ export function sheetToJson(content, options = {}) {
       options
     );
 
-    const { worksheet, outputOptions } = readWorksheet(
+    const { worksheet, conversionOptions } = readWorksheet(
       resolvedContent,
       resolvedOptions,
-      SHEET_TO_JSON_OPTIONS
+      SHEET_TO_JSON_ONLY
     );
 
-    const rows = xlsx.utils.sheet_to_json(worksheet, outputOptions);
+    const rows = xlsx.utils.sheet_to_json(worksheet, conversionOptions);
 
     return composeNextState(state, rows);
   };
@@ -119,13 +116,13 @@ export function sheetToCsv(content, options = {}) {
       options
     );
 
-    const { worksheet, outputOptions } = readWorksheet(
+    const { worksheet, conversionOptions } = readWorksheet(
       resolvedContent,
       resolvedOptions,
-      SHEET_TO_CSV_OPTIONS
+      SHEET_TO_CSV_ONLY
     );
 
-    const csv = xlsx.utils.sheet_to_csv(worksheet, outputOptions);
+    const csv = xlsx.utils.sheet_to_csv(worksheet, conversionOptions);
 
     return composeNextState(state, csv);
   };
@@ -170,18 +167,13 @@ export function jsonToSheet(data, options = {}) {
       ...sheetjsOptions
     } = resolvedOptions;
 
-    const [sheetOptions, writeOptions] = splitOptions(
-      sheetjsOptions,
-      JSON_TO_SHEET_OPTIONS
-    );
-
     const outputWorkbook = buildWorkbook(resolvedData, {
-      ...sheetOptions,
+      ...sheetjsOptions,
       sheetName,
     });
 
     const file = writeWorkbook(outputWorkbook, {
-      ...writeOptions,
+      ...sheetjsOptions,
       bookType,
       output,
     });

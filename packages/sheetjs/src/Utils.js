@@ -6,57 +6,15 @@ export function compact(options = {}) {
   );
 }
 
-// Options each SheetJS utility accepts. Anything else is a parse or write
-// option. Some names, like `raw` and `FS`, mean different things in each.
-// https://docs.sheetjs.com/docs/api/utilities/array#array-output
-export const SHEET_TO_JSON_OPTIONS = [
-  'header',
-  'range',
-  'raw',
-  'defval',
-  'dateNF',
-  'blankrows',
-  'skipHidden',
-  'rawNumbers',
-  'UTC',
-];
+// Option names that mean something else to xlsx.read(), so only the
+// conversion gets them
+export const SHEET_TO_JSON_ONLY = ['raw', 'UTC'];
+export const SHEET_TO_CSV_ONLY = ['FS'];
 
-// https://docs.sheetjs.com/docs/api/utilities/csv#delimiter-separated-output
-export const SHEET_TO_CSV_OPTIONS = [
-  'FS',
-  'RS',
-  'dateNF',
-  'strip',
-  'blankrows',
-  'skipHidden',
-  'forceQuotes',
-  'rawNumbers',
-];
-
-// https://docs.sheetjs.com/docs/api/utilities/array#array-of-objects-input
-export const JSON_TO_SHEET_OPTIONS = [
-  'header',
-  'skipHeader',
-  'dateNF',
-  'cellDates',
-  'nullError',
-  'UTC',
-  'dense',
-  'origin',
-];
-
-/**
- * Split options into those named in `keys` and the rest.
- */
-export function splitOptions(options = {}, keys = []) {
-  const picked = {};
-  const rest = {};
-  for (const [key, value] of Object.entries(options)) {
-    if (value === undefined) continue;
-    (keys.includes(key) ? picked : rest)[key] = value;
-  }
-  return [picked, rest];
-}
+const omit = (options, keys) =>
+  Object.fromEntries(
+    Object.entries(options).filter(([key]) => !keys.includes(key))
+  );
 
 const decodeBase64 = str => {
   // Some APIs wrap base64 at a fixed column, so ignore whitespace
@@ -148,25 +106,20 @@ export function parseWorkbook(content, options = {}) {
 }
 
 /**
- * Parse file content and select one worksheet from it. Options named in
- * `outputKeys` are returned for the conversion step; the rest are parse
- * options. `dateNF` goes to both, because it only formats cell text at
- * parse time.
+ * Parse file content and select one worksheet from it. Returns the SheetJS
+ * options for the conversion step.
  */
-export function readWorksheet(content, options = {}, outputKeys = []) {
+export function readWorksheet(content, options = {}, conversionOnly = []) {
   const { sheetName, sheetIndex, ...sheetjsOptions } = options;
-  const [outputOptions, parseOptions] = splitOptions(
-    sheetjsOptions,
-    outputKeys
-  );
+  const conversionOptions = compact(sheetjsOptions);
 
-  const workbook = parseWorkbook(content, {
-    ...parseOptions,
-    dateNF: outputOptions.dateNF,
-  });
+  const workbook = parseWorkbook(
+    content,
+    omit(conversionOptions, conversionOnly)
+  );
   const { worksheet } = getWorksheet(workbook, { sheetName, sheetIndex });
 
-  return { worksheet, outputOptions };
+  return { worksheet, conversionOptions };
 }
 
 /**

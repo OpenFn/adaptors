@@ -398,6 +398,15 @@ describe('option forwarding', () => {
     expect(finalState.data).to.deep.equal([{ name: 'Amara' }, { name: 'Zuri' }]);
   });
 
+  it('sheetToJson keeps csv numbers as numbers with raw: true', async () => {
+    const finalState = await sheetToJson('name,age\nAmara,34', {
+      type: 'string',
+      raw: true,
+    })(state);
+
+    expect(finalState.data).to.deep.equal([{ name: 'Amara', age: 34 }]);
+  });
+
   it('sheetToJson sends FS to the parser', async () => {
     const finalState = await sheetToJson('name#age\nAmara#34', {
       type: 'string',
@@ -429,6 +438,15 @@ describe('option forwarding', () => {
     expect(finalState.data).to.equal(
       'orderId;amount;orderedAt\nORD-1;1250.5;1/15/24\nORD-2;99;2/2/24'
     );
+  });
+
+  it('sheetToCsv reads a csv with commas and writes it with FS', async () => {
+    const finalState = await sheetToCsv('name,age\nAmara,34', {
+      type: 'string',
+      FS: ';',
+    })(state);
+
+    expect(finalState.data).to.equal('name;age\nAmara;34');
   });
 
   it('jsonToSheet sends array of objects options to the sheet', async () => {
