@@ -1,76 +1,13 @@
 {
   "operations": [
     {
-      "name": "parse",
-      "params": [
-        "content",
-        "options"
-      ],
-      "docs": {
-        "description": "Parse spreadsheet file content into a workbook.\n\nWrites `{ sheetNames }` to `state.data`, so a later step can check which\nsheets a file contains before pulling one out.\n\nHandles `.xlsx`, `.xls`, `.csv` and every other format SheetJS supports.\nBuffers, base64 strings and data URLs are detected automatically - pass\n`type` to override, eg for a single-line CSV that is also valid base64.",
-        "tags": [
-          {
-            "title": "public",
-            "description": null,
-            "type": null
-          },
-          {
-            "title": "example",
-            "description": "parse($.data.fileContent);",
-            "caption": "Parse a base64 file fetched by a previous step"
-          },
-          {
-            "title": "example",
-            "description": "parse($.data.fileContent, { type: 'base64' });",
-            "caption": "Declare the content type explicitly"
-          },
-          {
-            "title": "function",
-            "description": null,
-            "name": null
-          },
-          {
-            "title": "param",
-            "description": "The file content to parse",
-            "type": {
-              "type": "NameExpression",
-              "name": "FileContent"
-            },
-            "name": "content"
-          },
-          {
-            "title": "param",
-            "description": "Optional parse options",
-            "type": {
-              "type": "NameExpression",
-              "name": "ParseOptions"
-            },
-            "name": "options"
-          },
-          {
-            "title": "state",
-            "description": "{SheetjsState}"
-          },
-          {
-            "title": "returns",
-            "description": null,
-            "type": {
-              "type": "NameExpression",
-              "name": "Operation"
-            }
-          }
-        ]
-      },
-      "valid": true
-    },
-    {
       "name": "sheetToJson",
       "params": [
         "content",
         "options"
       ],
       "docs": {
-        "description": "Convert a worksheet into an array of objects, one per row, and write it to\n`state.data`.\n\nReads the first sheet unless `sheetName` or `sheetIndex` says otherwise.",
+        "description": "Convert a worksheet into an array of objects, one per row, and write it to\n`state.data`.\n\nReads the first sheet unless `sheetName` or `sheetIndex` says otherwise.\nThe content type is detected automatically. Pass `type` to override it.",
         "tags": [
           {
             "title": "public",
@@ -84,23 +21,13 @@
           },
           {
             "title": "example",
-            "description": "sheetToJson($.data.fileContent, { sheetName: 'Sheet1', raw: false });",
-            "caption": "Convert a named sheet, as formatted text"
+            "description": "sheetToJson($.data.fileContent, { sheetName: 'Orders' });",
+            "caption": "Convert a named sheet"
           },
           {
             "title": "example",
-            "description": "sheetToJson($.data.fileContent, { header: 1 });",
-            "caption": "Return rows as arrays of cell values instead of objects"
-          },
-          {
-            "title": "example",
-            "description": "sheetToJson($.data.fileContent, { range: 'A2:D40', defval: null });",
-            "caption": "Only read a fixed range, and fill empty cells"
-          },
-          {
-            "title": "example",
-            "description": "sheetToJson($.data.fileContent, { cellDates: false });",
-            "caption": "Keep Excel date serial numbers instead of Date objects"
+            "description": "sheetToJson($.data.fileContent, { cellDates: true });",
+            "caption": "Return dates as Date objects rather than Excel serial numbers"
           },
           {
             "title": "function",
@@ -148,7 +75,7 @@
         "options"
       ],
       "docs": {
-        "description": "Convert a worksheet into a CSV string and write it to `state.data`.\n\nReads the first sheet unless `sheetName` or `sheetIndex` says otherwise.",
+        "description": "Convert a worksheet into a CSV string and write it to `state.data`.\n\nReads the first sheet unless `sheetName` or `sheetIndex` says otherwise.\nThe content type is detected automatically. Pass `type` to override it.",
         "tags": [
           {
             "title": "public",
@@ -216,7 +143,7 @@
         "options"
       ],
       "docs": {
-        "description": "Build a spreadsheet file from an array of objects.\n\nWrites `{ buffer, bookType, sheetName }` to `state.data` - or\n`{ base64, ... }` with `output: 'base64'` - ready for an `http`, `sftp` or\n`googledrive` step to upload.\n\nColumn headers come from the keys of the data; pass `header` to fix their\norder. Values are always written as text, never formulas, but CSV has no\ncell types - sanitise untrusted data before writing a CSV someone will open\nin a spreadsheet app.",
+        "description": "Build a spreadsheet file from an array of objects.\n\nWrites `{ buffer, bookType, sheetName }` to `state.data`, or\n`{ base64, bookType, sheetName }` with `output: 'base64'`.\n\nColumn headers come from the keys of the data. Pass `header` to fix their\norder.",
         "tags": [
           {
             "title": "public",

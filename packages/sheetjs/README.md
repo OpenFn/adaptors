@@ -23,36 +23,36 @@ no credentials.
 
 ### Reading a file
 
-`parse()` turns file content into a workbook and lists its sheets:
-
-```js
-parse($.data.fileContent);
-// state.data = { sheetNames: ['People', 'Orders'] }
-```
-
-The content type is detected automatically for buffers, base64 strings and
-data URLs; SheetJS then works out the file format from the content itself. Pass
-`type` explicitly to override the detection - the one ambiguous case is a
-single-column CSV that is also valid base64:
-
-```js
-parse($.data.fileContent, { type: 'string' });
-```
-
-`sheetToJson()` converts a worksheet into an array of objects. Every operation
-takes the file content, so each one stands on its own:
+`sheetToJson()` converts a worksheet into an array of objects. It reads the
+first sheet unless `sheetName` or `sheetIndex` says otherwise:
 
 ```js
 sheetToJson($.data.fileContent);
 sheetToJson($.data.fileContent, { sheetName: 'Orders' });
 ```
 
-By default cells come back as raw values - numbers as numbers and dates as JS
-`Date` objects. Pass `raw: false` to get each cell's formatted text instead:
+The content type is detected automatically for buffers, base64 strings and
+data URLs. Pass `type` to override the detection. The one ambiguous case is a
+single-column CSV that is also valid base64:
 
 ```js
+sheetToJson($.data.fileContent, { type: 'string' });
+```
+
+Cells come back as raw values: numbers as numbers, and dates as Excel serial
+numbers. Pass `cellDates: true` to get dates as JS `Date` objects, or
+`raw: false` to get each cell's formatted text:
+
+```js
+sheetToJson($.data.fileContent, { cellDates: true });
 sheetToJson($.data.fileContent, { raw: false });
 ```
+
+Any other
+[SheetJS parse option](https://docs.sheetjs.com/docs/api/parse-options#parsing-options)
+or
+[array output option](https://docs.sheetjs.com/docs/api/utilities/array#array-output)
+is passed through to SheetJS.
 
 Other common options:
 
@@ -74,8 +74,7 @@ sheetToCsv($.data.fileContent, { FS: ';' });
 ### Writing a file
 
 `jsonToSheet()` builds a spreadsheet from an array of objects and writes it to
-`state.data` as a buffer, ready for a downstream `http`, `sftp` or
-`googledrive` step to upload:
+`state.data` as a buffer:
 
 ```js
 jsonToSheet($.data.records, { sheetName: 'Export' });
@@ -89,7 +88,7 @@ jsonToSheet($.data.records, { sheetName: 'Export', output: 'base64' });
 // state.data = { base64, bookType: 'xlsx', sheetName: 'Export' }
 ```
 
-The keys of the first object become the column headers. Use `header` to fix the
+The keys of the objects become the column headers. Use `header` to fix the
 column order, and `bookType` to choose the format:
 
 ```js
@@ -99,13 +98,14 @@ jsonToSheet($.data.records, {
 });
 ```
 
-Note that SheetJS prefixes `csv` output with a UTF-8 BOM so that Excel opens it
-with the right encoding.
+SheetJS prefixes `csv` output with a UTF-8 BOM so that Excel opens it with the
+right encoding.
 
 ### Using SheetJS directly
 
-The operations above cover the common steps. For anything else, the full
-SheetJS library is available in job code as `xlsx`:
+For anything the operations above don't cover, the full SheetJS library is
+available in job code as `xlsx`. Its functions are not operations, so call them
+inside `fn()`, not at the top level of a job:
 
 ```js
 fn(state => {
@@ -125,27 +125,23 @@ it can do.
 
 ### Working with untrusted files
 
-SheetJS does not throw on content it cannot identify - it falls back to parsing
+SheetJS does not throw on content it cannot identify. It falls back to parsing
 it as plaintext and returns a workbook with garbage in it. Pass `type`
 explicitly when you know the format, so a bad guess can't pass silently.
 
 There is no size limit on parsing. `sheetRows` caps how many rows are
-materialised, but the archive is still decompressed in full first, so cap file
+materialized, but the archive is still decompressed in full first, so cap file
 size upstream if you accept spreadsheets from an untrusted source.
 
 Values are written as text, never as formulas. But `csv` has no cell types, so a
 spreadsheet app opening a CSV will treat a value like `=1+1` as a formula.
-Sanitise untrusted data before writing a CSV that a person will open.
+Sanitize untrusted data before writing a CSV that a person will open.
 
 ### Performance
 
 Each operation parses the file it is given, so reading several sheets from one
-file parses it several times - around 470ms per call on a 10MB file, and a few
-milliseconds on a typical one. A parsed workbook is never written to `state`,
-which keeps state small and avoids a subtle failure: OpenFn resolves operation
-arguments by rebuilding objects from their own keys, and a `Date` has none, so
-a workbook passed through `state` would come back with every date nulled. File
-content is a Buffer or a string, so it passes through untouched.
+file parses it several times. That takes around 470ms per call on a 10MB file,
+and a few milliseconds on a typical one.
 
 ## Development
 

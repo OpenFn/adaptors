@@ -3,10 +3,12 @@ import { composeNextState } from '@openfn/language-common';
 import xlsx from 'xlsx';
 
 import {
+  JSON_TO_SHEET_OPTIONS,
+  SHEET_TO_CSV_OPTIONS,
+  SHEET_TO_JSON_OPTIONS,
   buildWorkbook,
-  compact,
-  getWorksheet,
-  parseWorkbook,
+  readWorksheet,
+  splitOptions,
   writeWorkbook,
 } from './Utils.js';
 
@@ -22,118 +24,57 @@ import {
  * File content to read. Accepts a Buffer, a base64 string, a base64 data
  * URL, or the raw text of a CSV file.
  * @typedef {Buffer|string} FileContent
- * @private
+ * @public
  **/
 
 /**
- * Options for parsing a spreadsheet file.
- * See {@link https://docs.sheetjs.com/docs/api/parse-options SheetJS parse options}.
- * @typedef {Object} ParseOptions
- * @public
- * @property {'buffer'|'base64'|'string'|'binary'|'array'} type - How to interpret the content. Auto-detected if omitted.
- * @property {boolean} cellDates - Return dates as JS `Date` objects rather than Excel serial numbers. Default: `true`.
- * @property {number} sheetRows - Only parse the first N rows of each sheet.
- * @property {boolean} raw - Return raw, unformatted cell values.
- * @property {string} password - Password for an encrypted workbook.
- */
-
-/**
- * Options for converting a worksheet to JSON.
- * See {@link https://docs.sheetjs.com/docs/api/utilities/array#array-output SheetJS array output}.
+ * Options for converting a worksheet to JSON. Accepts any
+ * {@link https://docs.sheetjs.com/docs/api/utilities/array#array-output SheetJS array output option}
+ * and any {@link https://docs.sheetjs.com/docs/api/parse-options#parsing-options SheetJS parse option}.
+ * `raw` and `UTC` appear in both lists, and apply to the conversion.
  * @typedef {Object} SheetToJsonOptions
  * @public
  * @property {string} sheetName - Name of the sheet to convert. Defaults to the first sheet.
  * @property {number} sheetIndex - Zero-based index of the sheet to convert. Ignored if `sheetName` is set.
- * @property {number|string[]} header - `1` for an array of arrays, or an array of column names to use as keys.
- * @property {string|number} range - Range to read, eg `'A2:D40'`, or a row number to start from.
- * @property {boolean} raw - Return raw cell values (numbers as numbers, dates as `Date`). Set `false` to get each cell's formatted text instead. Default: `true`.
- * @property {*} defval - Value to use for empty cells. Omitted from the row by default.
- * @property {boolean} cellDates - Return dates as JS `Date` objects rather than Excel serial numbers. Default: `true`.
- * @property {string} dateNF - Date format to use for dates when `raw` is `false`, eg `'yyyy-mm-dd'`. Applies to cells with the default date format.
- * @property {boolean} blankrows - Include blank rows in the output.
- * @property {'buffer'|'base64'|'string'|'binary'|'array'} type - Content type, when passing raw file content.
  */
 
 /**
- * Options for converting a worksheet to CSV.
- * See {@link https://docs.sheetjs.com/docs/api/utilities/csv#delimiter-separated-output SheetJS CSV output}.
+ * Options for converting a worksheet to CSV. Accepts any
+ * {@link https://docs.sheetjs.com/docs/api/utilities/csv#delimiter-separated-output SheetJS CSV output option}
+ * and any {@link https://docs.sheetjs.com/docs/api/parse-options#parsing-options SheetJS parse option}.
+ * `FS` appears in both lists, and applies to the CSV output.
  * @typedef {Object} SheetToCsvOptions
  * @public
  * @property {string} sheetName - Name of the sheet to convert. Defaults to the first sheet.
  * @property {number} sheetIndex - Zero-based index of the sheet to convert. Ignored if `sheetName` is set.
- * @property {string} FS - Field separator. Default: `','`.
- * @property {string} RS - Row separator. Default: `'\n'`.
- * @property {boolean} blankrows - Include blank rows in the output. Default: `true`.
- * @property {boolean} rawNumbers - Use raw numbers rather than formatted text.
- * @property {string} dateNF - Date format to use for dates, eg `'yyyy-mm-dd'`. Applies to cells with the default date format.
- * @property {boolean} strip - Strip trailing field separators from each record.
- * @property {'buffer'|'base64'|'string'|'binary'|'array'} type - Content type, when passing raw file content.
+ * @property {boolean} rawNumbers - Write numbers as raw values rather than formatted text.
  */
 
 /**
- * Options for building a spreadsheet file from JSON.
- * See {@link https://docs.sheetjs.com/docs/api/write-options SheetJS write options}.
+ * Options for building a spreadsheet file from JSON. Accepts any
+ * {@link https://docs.sheetjs.com/docs/api/utilities/array#array-of-objects-input SheetJS array of objects input option}
+ * and any {@link https://docs.sheetjs.com/docs/api/write-options#writing-options SheetJS write option}
+ * except `type` - use `output` instead.
+ * `cellDates` appears in both lists, and applies to building the sheet.
  * @typedef {Object} JsonToSheetOptions
  * @public
- * @property {string} sheetName - Name of the worksheet, max 31 characters. Default: `'Sheet1'`.
- * @property {string} bookType - Output file format, eg `'xlsx'`, `'xls'`, `'csv'`, `'ods'`. Default: `'xlsx'`. Note that `'csv'` output is prefixed with a UTF-8 BOM.
+ * @property {string} sheetName - Name of the worksheet. Default: `'Sheet1'`.
  * @property {'buffer'|'base64'} output - Return the file as a Buffer or a base64 string. Default: `'buffer'`.
- * @property {string[]} header - Column keys, in order. Controls which columns appear and in what order.
- * @property {boolean} skipHeader - Omit the header row.
- * @property {boolean} cellDates - Write `Date` values as date cells rather than serial numbers. Default: `true`.
- * @property {string} dateNF - Date format to use for date cells.
  */
-
-/**
- * Parse spreadsheet file content into a workbook.
- *
- * Writes `{ sheetNames }` to `state.data`, so a later step can check which
- * sheets a file contains before pulling one out.
- *
- * Handles `.xlsx`, `.xls`, `.csv` and every other format SheetJS supports.
- * Buffers, base64 strings and data URLs are detected automatically - pass
- * `type` to override, eg for a single-line CSV that is also valid base64.
- * @public
- * @example <caption>Parse a base64 file fetched by a previous step</caption>
- * parse($.data.fileContent);
- * @example <caption>Declare the content type explicitly</caption>
- * parse($.data.fileContent, { type: 'base64' });
- * @function
- * @param {FileContent} content - The file content to parse
- * @param {ParseOptions} options - Optional parse options
- * @state {SheetjsState}
- * @returns {Operation}
- */
-export function parse(content, options = {}) {
-  return state => {
-    const [resolvedContent, resolvedOptions] = expandReferences(
-      state,
-      content,
-      options
-    );
-
-    const workbook = parseWorkbook(resolvedContent, resolvedOptions);
-
-    return composeNextState(state, { sheetNames: workbook.SheetNames });
-  };
-}
 
 /**
  * Convert a worksheet into an array of objects, one per row, and write it to
  * `state.data`.
  *
  * Reads the first sheet unless `sheetName` or `sheetIndex` says otherwise.
+ * The content type is detected automatically. Pass `type` to override it.
  * @public
  * @example <caption>Convert the first sheet of a file to JSON</caption>
  * sheetToJson($.data.fileContent);
- * @example <caption>Convert a named sheet, as formatted text</caption>
- * sheetToJson($.data.fileContent, { sheetName: 'Sheet1', raw: false });
- * @example <caption>Return rows as arrays of cell values instead of objects</caption>
- * sheetToJson($.data.fileContent, { header: 1 });
- * @example <caption>Only read a fixed range, and fill empty cells</caption>
- * sheetToJson($.data.fileContent, { range: 'A2:D40', defval: null });
- * @example <caption>Keep Excel date serial numbers instead of Date objects</caption>
- * sheetToJson($.data.fileContent, { cellDates: false });
+ * @example <caption>Convert a named sheet</caption>
+ * sheetToJson($.data.fileContent, { sheetName: 'Orders' });
+ * @example <caption>Return dates as Date objects rather than Excel serial numbers</caption>
+ * sheetToJson($.data.fileContent, { cellDates: true });
  * @function
  * @param {FileContent} content - The file content to convert
  * @param {SheetToJsonOptions} options - Optional conversion options
@@ -148,33 +89,13 @@ export function sheetToJson(content, options = {}) {
       options
     );
 
-    const {
-      sheetName,
-      sheetIndex,
-      type,
-      cellDates,
-      sheetRows,
-      header,
-      range,
-      raw,
-      defval,
-      dateNF,
-      blankrows,
-    } = resolvedOptions;
-
-    const { worksheet } = getWorksheet(
-      parseWorkbook(
-        resolvedContent,
-        // dateNF only takes effect at read time, when cell text is formatted
-        compact({ type, cellDates, sheetRows, dateNF })
-      ),
-      { sheetName, sheetIndex }
+    const { worksheet, outputOptions } = readWorksheet(
+      resolvedContent,
+      resolvedOptions,
+      SHEET_TO_JSON_OPTIONS
     );
 
-    const rows = xlsx.utils.sheet_to_json(
-      worksheet,
-      compact({ header, range, raw, defval, dateNF, blankrows })
-    );
+    const rows = xlsx.utils.sheet_to_json(worksheet, outputOptions);
 
     return composeNextState(state, rows);
   };
@@ -184,6 +105,7 @@ export function sheetToJson(content, options = {}) {
  * Convert a worksheet into a CSV string and write it to `state.data`.
  *
  * Reads the first sheet unless `sheetName` or `sheetIndex` says otherwise.
+ * The content type is detected automatically. Pass `type` to override it.
  * @public
  * @example <caption>Convert an uploaded xlsx file straight to CSV</caption>
  * sheetToCsv($.data.fileContent);
@@ -205,32 +127,13 @@ export function sheetToCsv(content, options = {}) {
       options
     );
 
-    const {
-      sheetName,
-      sheetIndex,
-      type,
-      cellDates,
-      sheetRows,
-      FS,
-      RS,
-      blankrows,
-      rawNumbers,
-      dateNF,
-      strip,
-    } = resolvedOptions;
-    const { worksheet } = getWorksheet(
-      parseWorkbook(
-        resolvedContent,
-        // dateNF only takes effect at read time, when cell text is formatted
-        compact({ type, cellDates, sheetRows, dateNF })
-      ),
-      { sheetName, sheetIndex }
+    const { worksheet, outputOptions } = readWorksheet(
+      resolvedContent,
+      resolvedOptions,
+      SHEET_TO_CSV_OPTIONS
     );
 
-    const csv = xlsx.utils.sheet_to_csv(
-      worksheet,
-      compact({ FS, RS, blankrows, rawNumbers, dateNF, strip })
-    );
+    const csv = xlsx.utils.sheet_to_csv(worksheet, outputOptions);
 
     return composeNextState(state, csv);
   };
@@ -239,14 +142,11 @@ export function sheetToCsv(content, options = {}) {
 /**
  * Build a spreadsheet file from an array of objects.
  *
- * Writes `{ buffer, bookType, sheetName }` to `state.data` - or
- * `{ base64, ... }` with `output: 'base64'` - ready for an `http`, `sftp` or
- * `googledrive` step to upload.
+ * Writes `{ buffer, bookType, sheetName }` to `state.data`, or
+ * `{ base64, bookType, sheetName }` with `output: 'base64'`.
  *
- * Column headers come from the keys of the data; pass `header` to fix their
- * order. Values are always written as text, never formulas, but CSV has no
- * cell types - sanitise untrusted data before writing a CSV someone will open
- * in a spreadsheet app.
+ * Column headers come from the keys of the data. Pass `header` to fix their
+ * order.
  * @public
  * @example <caption>Build an xlsx buffer from records on state</caption>
  * jsonToSheet($.data.records, { sheetName: 'Export' });
@@ -275,25 +175,23 @@ export function jsonToSheet(data, options = {}) {
       sheetName = 'Sheet1',
       bookType = 'xlsx',
       output = 'buffer',
-      header,
-      skipHeader,
-      cellDates,
-      dateNF,
-      compression,
+      ...sheetjsOptions
     } = resolvedOptions;
 
+    const [sheetOptions, writeOptions] = splitOptions(
+      sheetjsOptions,
+      JSON_TO_SHEET_OPTIONS
+    );
+
     const outputWorkbook = buildWorkbook(resolvedData, {
+      ...sheetOptions,
       sheetName,
-      header,
-      skipHeader,
-      cellDates,
-      dateNF,
     });
 
     const file = writeWorkbook(outputWorkbook, {
+      ...writeOptions,
       bookType,
       output,
-      compression,
     });
 
     return composeNextState(state, {
@@ -305,8 +203,9 @@ export function jsonToSheet(data, options = {}) {
 }
 
 /**
- * The full SheetJS library, for anything the convenience operations above
- * don't cover. See the {@link https://docs.sheetjs.com/docs/api SheetJS API docs}.
+ * The full {@link https://docs.sheetjs.com/docs/api SheetJS library}, for
+ * anything the operations above don't cover. Its functions are not
+ * operations, so call them inside `fn()`, not at the top level of a job.
  * @public
  * @example <caption>Read a workbook and convert a named sheet yourself</caption>
  * fn(state => {

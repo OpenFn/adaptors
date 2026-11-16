@@ -6,6 +6,58 @@ export function compact(options = {}) {
   );
 }
 
+// Options each SheetJS utility accepts. Anything else is a parse or write
+// option. Some names, like `raw` and `FS`, mean different things in each.
+// https://docs.sheetjs.com/docs/api/utilities/array#array-output
+export const SHEET_TO_JSON_OPTIONS = [
+  'header',
+  'range',
+  'raw',
+  'defval',
+  'dateNF',
+  'blankrows',
+  'skipHidden',
+  'rawNumbers',
+  'UTC',
+];
+
+// https://docs.sheetjs.com/docs/api/utilities/csv#delimiter-separated-output
+export const SHEET_TO_CSV_OPTIONS = [
+  'FS',
+  'RS',
+  'dateNF',
+  'strip',
+  'blankrows',
+  'skipHidden',
+  'forceQuotes',
+  'rawNumbers',
+];
+
+// https://docs.sheetjs.com/docs/api/utilities/array#array-of-objects-input
+export const JSON_TO_SHEET_OPTIONS = [
+  'header',
+  'skipHeader',
+  'dateNF',
+  'cellDates',
+  'nullError',
+  'UTC',
+  'dense',
+  'origin',
+];
+
+/**
+ * Split options into those named in `keys` and the rest.
+ */
+export function splitOptions(options = {}, keys = []) {
+  const picked = {};
+  const rest = {};
+  for (const [key, value] of Object.entries(options)) {
+    if (value === undefined) continue;
+    (keys.includes(key) ? picked : rest)[key] = value;
+  }
+  return [picked, rest];
+}
+
 const decodeBase64 = str => {
   // Some APIs wrap base64 at a fixed column, so ignore whitespace
   const normalized = str.replace(/\s/g, '');
@@ -92,11 +144,29 @@ export function parseWorkbook(content, options = {}) {
   const { type, ...readOptions } = options;
   const { data, type: resolvedType } = decodeContent(content, type);
 
-  return xlsx.read(data, {
-    cellDates: true,
-    ...compact(readOptions),
-    type: resolvedType,
+  return xlsx.read(data, { ...compact(readOptions), type: resolvedType });
+}
+
+/**
+ * Parse file content and select one worksheet from it. Options named in
+ * `outputKeys` are returned for the conversion step; the rest are parse
+ * options. `dateNF` goes to both, because it only formats cell text at
+ * parse time.
+ */
+export function readWorksheet(content, options = {}, outputKeys = []) {
+  const { sheetName, sheetIndex, ...sheetjsOptions } = options;
+  const [outputOptions, parseOptions] = splitOptions(
+    sheetjsOptions,
+    outputKeys
+  );
+
+  const workbook = parseWorkbook(content, {
+    ...parseOptions,
+    dateNF: outputOptions.dateNF,
   });
+  const { worksheet } = getWorksheet(workbook, { sheetName, sheetIndex });
+
+  return { worksheet, outputOptions };
 }
 
 /**
@@ -149,13 +219,7 @@ const describeType = value => {
  * https://docs.sheetjs.com/docs/api/utilities/array#array-of-objects-input
  */
 export function buildWorkbook(rows, options = {}) {
-  const {
-    sheetName = 'Sheet1',
-    header,
-    skipHeader,
-    cellDates = true,
-    dateNF,
-  } = options;
+  const { sheetName = 'Sheet1', ...sheetOptions } = options;
 
   if (!Array.isArray(rows)) {
     throw new Error('sheetjs: jsonToSheet expects an array of objects');
@@ -171,10 +235,7 @@ export function buildWorkbook(rows, options = {}) {
     );
   }
 
-  const worksheet = xlsx.utils.json_to_sheet(
-    rows,
-    compact({ header, skipHeader, cellDates, dateNF })
-  );
+  const worksheet = xlsx.utils.json_to_sheet(rows, sheetOptions);
 
   const workbook = xlsx.utils.book_new();
   xlsx.utils.book_append_sheet(workbook, worksheet, sheetName);
@@ -187,7 +248,7 @@ export function buildWorkbook(rows, options = {}) {
  * Write options: https://docs.sheetjs.com/docs/api/write-options
  */
 export function writeWorkbook(workbook, options = {}) {
-  const { bookType = 'xlsx', output = 'buffer', compression } = options;
+  const { bookType = 'xlsx', output = 'buffer', ...writeOptions } = options;
 
   if (output !== 'buffer' && output !== 'base64') {
     throw new Error(
@@ -195,5 +256,5 @@ export function writeWorkbook(workbook, options = {}) {
     );
   }
 
-  return xlsx.write(workbook, compact({ type: output, bookType, compression }));
+  return xlsx.write(workbook, { ...writeOptions, type: output, bookType });
 }
