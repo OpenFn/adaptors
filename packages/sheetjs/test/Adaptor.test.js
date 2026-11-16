@@ -242,6 +242,15 @@ describe('content detection', () => {
       /Buffer\.from\(\)/
     );
   });
+
+  it('rejects an ArrayBuffer and suggests Buffer.from()', async () => {
+    const { buffer, byteOffset, byteLength } = toBuf('sample.xlsx');
+
+    await expectError(
+      sheetToJson(buffer.slice(byteOffset, byteOffset + byteLength)),
+      /Buffer\.from\(\)/
+    );
+  });
 });
 
 describe('sheetToCsv', () => {

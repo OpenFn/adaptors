@@ -13,14 +13,6 @@ import {
 } from './Utils.js';
 
 /**
- * State object
- * @typedef {Object} SheetjsState
- * @property data - the result of the spreadsheet operation
- * @property references - an array of all previous data objects used in the Job
- * @private
- **/
-
-/**
  * File content to read. Accepts a Buffer, a base64 string, a base64 data
  * URL, or the raw text of a CSV file.
  * @typedef {Buffer|string} FileContent
@@ -78,7 +70,7 @@ import {
  * @function
  * @param {FileContent} content - The file content to convert
  * @param {SheetToJsonOptions} options - Optional conversion options
- * @state {SheetjsState}
+ * @state data - an array of row objects, or arrays of cell values with `header: 1`
  * @returns {Operation}
  */
 export function sheetToJson(content, options = {}) {
@@ -116,7 +108,7 @@ export function sheetToJson(content, options = {}) {
  * @function
  * @param {FileContent} content - The file content to convert
  * @param {SheetToCsvOptions} options - Optional conversion options
- * @state {SheetjsState}
+ * @state data - the CSV string
  * @returns {Operation}
  */
 export function sheetToCsv(content, options = {}) {
@@ -160,7 +152,7 @@ export function sheetToCsv(content, options = {}) {
  * @function
  * @param {object[]} data - An array of objects, one per row
  * @param {JsonToSheetOptions} options - Optional write options
- * @state {SheetjsState}
+ * @state data - an object with the file as `buffer` (or `base64` with `output: 'base64'`), plus `bookType` and `sheetName`
  * @returns {Operation}
  */
 export function jsonToSheet(data, options = {}) {
