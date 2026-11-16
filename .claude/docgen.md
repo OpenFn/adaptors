@@ -105,7 +105,7 @@ the monorepo build does not use that path.
 - Render options: `separators: true`, `name-format: false`, `example-lang: js`,
   `member-index-format: list`.
 
-Non-function exports (e.g. lodash `_`) can be documented with `@kind namespace` and `@name _` (no `@function`). They get no signature and render in a `## Utilities` section plus an index list, via the `{{#globals kind="namespace"}}` blocks in the template. Note that `@namespace foo` (our custom tag) means something different: membership of namespace `foo` for a function.
+Non-function exports (e.g. lodash `_`) can be documented with `@kind namespace` and `@name _` (no `@function`). They get no signature and render in a `## Namespaces` section plus an index list, via the `{{#globals kind="namespace"}}` blocks in the template. Note that `@namespace foo` (our custom tag) means something different: membership of namespace `foo` for a function.
 
 Result is written to `packages/<x>/docs/index.md`.
 
