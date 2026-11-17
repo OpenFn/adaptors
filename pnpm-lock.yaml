@@ -2043,7 +2043,7 @@ importers:
         version: link:../common
       adm-zip:
         specifier: ^0.6.0
-        version: 0.6.0
+        version: 0.6.1
       undici:
         specifier: ^7.29.0
         version: 7.29.0
@@ -3012,7 +3012,7 @@ importers:
         version: link:../common
       twilio:
         specifier: ^3.83.2
-        version: 3.83.2(supports-color@8.1.1)
+        version: 3.83.2(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
     devDependencies:
       assertion-error:
         specifier: ^1.1.0
@@ -6267,8 +6267,8 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  adm-zip@0.6.0:
-    resolution: {integrity: sha512-XleryMhbuksdKtofnWZ9Sk+4CUTbms4Mb/EU32SZwToAyZ5RgVos/ki8n+yr0LWHOGKuakbXTuuYNHLQjhddgg==}
+  adm-zip@0.6.1:
+    resolution: {integrity: sha512-Xwrja8nx9e5o2N1my4DsKCeKpdrnACyr1wtbPxBDgGzKzKyE9kRtBFA8mWldI+RVlD7CBZNWY/wQ2+ydwOR6kQ==}
     engines: {node: '>=14.0'}
 
   agent-base@6.0.2:
@@ -13059,15 +13059,15 @@ snapshots:
 
   '@babel/core@7.28.4(supports-color@8.1.1)':
     dependencies:
-      '@babel/code-frame': 7.27.1
-      '@babel/generator': 7.28.3
+      '@babel/code-frame': 7.29.7
+      '@babel/generator': 7.29.7
       '@babel/helper-compilation-targets': 7.27.2
-      '@babel/helper-module-transforms': 7.28.3(@babel/core@7.28.4(supports-color@8.1.1))(supports-color@8.1.1)
+      '@babel/helper-module-transforms': 7.29.7(@babel/core@7.28.4(supports-color@8.1.1))(supports-color@8.1.1)
       '@babel/helpers': 7.28.4
-      '@babel/parser': 7.28.4
-      '@babel/template': 7.27.2
-      '@babel/traverse': 7.28.4(supports-color@8.1.1)
-      '@babel/types': 7.28.4
+      '@babel/parser': 7.29.7
+      '@babel/template': 7.29.7
+      '@babel/traverse': 7.29.7(supports-color@8.1.1)
+      '@babel/types': 7.29.7
       '@jridgewell/remapping': 2.3.5
       convert-source-map: 2.0.0
       debug: 4.4.3(supports-color@8.1.1)
@@ -13104,8 +13104,8 @@ snapshots:
   '@babel/helper-compilation-targets@7.27.2':
     dependencies:
       '@babel/compat-data': 7.28.4
-      '@babel/helper-validator-option': 7.27.1
-      browserslist: 4.26.3
+      '@babel/helper-validator-option': 7.29.7
+      browserslist: 4.28.8
       lru-cache: 5.1.1
       semver: 6.3.1
 
@@ -13278,8 +13278,8 @@ snapshots:
 
   '@babel/helpers@7.28.4':
     dependencies:
-      '@babel/template': 7.27.2
-      '@babel/types': 7.28.4
+      '@babel/template': 7.29.7
+      '@babel/types': 7.29.7
 
   '@babel/parser@7.26.7':
     dependencies:
@@ -15673,7 +15673,7 @@ snapshots:
 
   acorn@8.18.0: {}
 
-  adm-zip@0.6.0: {}
+  adm-zip@0.6.1: {}
 
   agent-base@6.0.2(supports-color@8.1.1):
     dependencies:
@@ -16021,7 +16021,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  axios@0.33.0:
+  axios@0.33.0(debug@4.4.3(supports-color@8.1.1)):
     dependencies:
       follow-redirects: 1.16.0(debug@4.4.3(supports-color@8.1.1))
       form-data: 4.0.6
@@ -22625,9 +22625,9 @@ snapshots:
 
   tweetnacl@1.0.3: {}
 
-  twilio@3.83.2(supports-color@8.1.1):
+  twilio@3.83.2(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1):
     dependencies:
-      axios: 0.33.0
+      axios: 0.33.0(debug@4.4.3(supports-color@8.1.1))
       dayjs: 1.11.18
       https-proxy-agent: 5.0.1(supports-color@8.1.1)
       jsonwebtoken: 8.5.1
