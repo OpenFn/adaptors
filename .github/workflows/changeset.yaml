@@ -1,0 +1,58 @@
+name: Changeset
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+permissions:
+  contents: read
+
+jobs:
+  changeset:
+    name: Changeset required
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Check whether a changeset is required
+        id: requirements
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: node scripts/check-changesets.mjs detect --base "$BASE_SHA"
+
+      - name: Record changeset exemption
+        if: >-
+          steps.requirements.outputs.required == 'true' &&
+          contains(github.event.pull_request.labels.*.name, 'no changeset required')
+        run: |
+          echo "Changeset check skipped by the 'no changeset required' label."
+          {
+            echo "## Changeset check skipped"
+            echo
+            echo "A maintainer applied the \`no changeset required\` label."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Setup pnpm
+        if: >-
+          steps.requirements.outputs.required == 'true' &&
+          !contains(github.event.pull_request.labels.*.name, 'no changeset required')
+        uses: pnpm/action-setup@v4
+
+      - name: Install changeset checker dependencies
+        if: >-
+          steps.requirements.outputs.required == 'true' &&
+          !contains(github.event.pull_request.labels.*.name, 'no changeset required')
+        run: pnpm install --filter adaptors --frozen-lockfile
+
+      - name: Validate changeset coverage
+        if: >-
+          steps.requirements.outputs.required == 'true' &&
+          !contains(github.event.pull_request.labels.*.name, 'no changeset required')
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: node scripts/check-changesets.mjs validate --base "$BASE_SHA"
