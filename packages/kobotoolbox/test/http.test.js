@@ -85,3 +85,23 @@ describe('http.post', () => {
     expect(data.name).to.eql('Feedback Survey Test');
   });
 });
+
+describe('absolute URLs', () => {
+  const expectRejected = async path => {
+    let error;
+    try {
+      await http.get(path)({ configuration });
+    } catch (e) {
+      error = e;
+    }
+    expect(error?.message).to.contain('appears to be an absolute URL');
+  };
+
+  it('should throw for an absolute URL', async () => {
+    await expectRejected('https://openfn.org');
+  });
+
+  it('should throw for a protocol-relative URL', async () => {
+    await expectRejected('//openfn.org/assets');
+  });
+});

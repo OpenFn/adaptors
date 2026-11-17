@@ -1,5 +1,11 @@
 # @openfn/language-primero
 
+## 4.2.1
+
+### Patch Changes
+
+- a39d4af: Bump dependencies
+
 ## 4.2.0 - 03 September 2026
 
 ### Minor Changes

@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-bigquery",
   "label": "BigQuery",
-  "version": "4.1.4",
+  "version": "4.1.5",
   "description": "A Google BigQuery language package for use with Open Function",
   "main": "dist/index.cjs",
   "scripts": {
@@ -23,7 +23,7 @@
   "dependencies": {
     "@google-cloud/bigquery": "^5.12.0",
     "@openfn/language-common": "workspace:*",
-    "csv-parse": "^4.16.3",
+    "csv-parse": "^7.0.2",
     "import": "0.0.6",
     "json2csv": "^5.0.7",
     "xml2js": "0.5.0"

@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-primero",
   "label": "Primero",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "A UNICEF Primero language package for use with Open Function",
   "exports": {
     ".": {
@@ -36,7 +36,7 @@
     "@openfn/language-common": "workspace:*",
     "cheerio": "^1.0.0-rc.10",
     "cheerio-tableparser": "1.0.1",
-    "csv-parse": "^4.8.3",
+    "csv-parse": "^7.0.2",
     "request": "^2.72.0"
   },
   "devDependencies": {

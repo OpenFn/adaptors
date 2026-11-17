@@ -1,7 +1,7 @@
 {
   "name": "@openfn/language-collections",
   "label": "Collections",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "description": "Collections Adaptor for OpenFn",
   "type": "module",
   "exports": {
@@ -30,7 +30,7 @@
   ],
   "dependencies": {
     "@openfn/language-common": "workspace:*",
-    "stream-json": "^1.8.0",
+    "stream-json": "^3.9.0",
     "undici": "^7.29.0"
   },
   "devDependencies": {

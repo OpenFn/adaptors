@@ -1,5 +1,13 @@
 # @openfn/language-kobotoolbox
 
+## 4.3.4
+
+### Patch Changes
+
+- b660bc2: Throw a clear error when a request path is an absolute URL
+  (`https://...` or `//...`) instead of failing with "Invalid URL" or quietly
+  requesting a path on the Kobo server (#1168)
+
 ## 4.3.3 - 03 September 2026
 
 ### Patch Changes

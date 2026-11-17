@@ -1,0 +1,61 @@
+name: Changeset
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+permissions:
+  contents: read
+
+jobs:
+  changeset:
+    name: Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Check whether a changeset is required
+        id: requirements
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: node scripts/check-changesets.mjs detect --base "$BASE_SHA"
+
+      # Decide once whether to enforce; later steps just check `enforce`.
+      - name: Check for exemption label
+        id: gate
+        if: steps.requirements.outputs.required == 'true'
+        env:
+          EXEMPT:
+            ${{ contains(github.event.pull_request.labels.*.name, 'no changeset
+            required') }}
+        run: |
+          if [ "$EXEMPT" = "true" ]; then
+            echo "enforce=false" >> "$GITHUB_OUTPUT"
+            echo "Changeset check skipped by the 'no changeset required' label."
+            {
+              echo "## Changeset check skipped"
+              echo
+              echo "A maintainer applied the \`no changeset required\` label."
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "enforce=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup pnpm
+        if: steps.gate.outputs.enforce == 'true'
+        uses: pnpm/action-setup@v4
+
+      - name: Install changeset checker dependencies
+        if: steps.gate.outputs.enforce == 'true'
+        run: pnpm install --filter adaptors --frozen-lockfile
+
+      - name: Validate changeset coverage
+        if: steps.gate.outputs.enforce == 'true'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: node scripts/check-changesets.mjs validate --base "$BASE_SHA"
