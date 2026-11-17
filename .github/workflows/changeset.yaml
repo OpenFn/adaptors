@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   changeset:
-    name: Changeset required
+    name: Check
     runs-on: ubuntu-latest
 
     steps:
@@ -30,7 +30,9 @@ jobs:
         id: gate
         if: steps.requirements.outputs.required == 'true'
         env:
-          EXEMPT: ${{ contains(github.event.pull_request.labels.*.name, 'no changeset required') }}
+          EXEMPT:
+            ${{ contains(github.event.pull_request.labels.*.name, 'no changeset
+            required') }}
         run: |
           if [ "$EXEMPT" = "true" ]; then
             echo "enforce=false" >> "$GITHUB_OUTPUT"
