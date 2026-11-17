@@ -177,7 +177,7 @@
               }
             },
             "name": "callback",
-            "default": "s"
+            "default": "s=>s"
           },
           {
             "title": "return",
@@ -245,7 +245,7 @@
               }
             },
             "name": "callback",
-            "default": "s"
+            "default": "s=>s"
           },
           {
             "title": "return",
@@ -313,7 +313,7 @@
               }
             },
             "name": "callback",
-            "default": "s"
+            "default": "s=>s"
           },
           {
             "title": "return",
