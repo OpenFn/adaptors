@@ -8,13 +8,17 @@ import * as util from './Utils.js';
  * http.get('devices/measurements/sites/site123/recent');
  * @function
  * @public
- * @param {string} path 
+ * @param {string} path
  * @param {object} [options] - Additional options such as query parameters or headers.
  * @returns {Operation}
  */
 export function get(path, options = {}) {
   return async state => {
-    const [resolvedPath, resolvedOptions] = expandReferences(state, path, options);
+    const [resolvedPath, resolvedOptions] = expandReferences(
+      state,
+      path,
+      options,
+    );
 
     util.assertNonEmptyString(resolvedPath, 'path');
 
@@ -22,12 +26,14 @@ export function get(path, options = {}) {
       state.configuration,
       'GET',
       resolvedPath,
-      resolvedOptions
+      resolvedOptions,
     );
 
     return util.prepareNextState(state, response);
   };
 }
+
+// EDIT
 
 /**
  * Make a generic authenticated POST request to any AirQo endpoint.
@@ -47,15 +53,20 @@ export function post(path, body = {}, options = {}) {
       state,
       path,
       body,
-      options
+      options,
     );
 
     util.assertNonEmptyString(resolvedPath, 'path');
 
-    const response = await util.request(state.configuration, 'POST', resolvedPath, {
-      ...resolvedOptions,
-      body: resolvedBody,
-    });
+    const response = await util.request(
+      state.configuration,
+      'POST',
+      resolvedPath,
+      {
+        ...resolvedOptions,
+        body: resolvedBody,
+      },
+    );
 
     return util.prepareNextState(state, response);
   };
@@ -79,7 +90,7 @@ export function request(method, path, options = {}) {
       state,
       method,
       path,
-      options
+      options,
     );
 
     util.assertNonEmptyString(resolvedMethod, 'method');
@@ -89,7 +100,7 @@ export function request(method, path, options = {}) {
       state.configuration,
       resolvedMethod,
       resolvedPath,
-      resolvedOptions
+      resolvedOptions,
     );
 
     return util.prepareNextState(state, response);
