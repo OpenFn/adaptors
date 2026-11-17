@@ -74690,6 +74690,1147 @@
     "source": "@openfn/language-common"
   }
 ],
+{"name":"inji","adaptor":"@openfn/language-inji","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, body, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#verify\\\">verify(credential, [options])</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#as\\\">as()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#map\\\">map()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#util\\\">util</a>\\n</dt></dl>\\n\\n## Functions\\n### request\\n\\n<p><code>request(method, path, body, [options]) ⇒ Operation</code></p>\\n\\n\\nMake a general HTTP request to Inji Verify.\\nPrefer [verify](#verify) for VC verification.\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| method | <code>string</code> |  | HTTP method to use |\\n| path | <code>string</code> |  | Path relative to configuration.baseUrl |\\n| body | <code>object</code> |  | Object attached to the request body |\\n| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\nrequest('POST', 'v2/vc-verification', {\\n  verifiableCredential: JSON.stringify($.data),\\n  skipStatusChecks: false,\\n  statusCheckFilters: ['revocation'],\\n  includeClaims: false,\\n});\\n```\\n\\n* * *\\n\\n### verify\\n\\n<p><code>verify(credential, [options]) ⇒ Operation</code></p>\\n\\n\\nVerify a Verifiable Credential with Inji Verify (V2).\\n\\nPosts to `{baseUrl}/v2/vc-verification`. Configure `baseUrl` with the\\nservice context path, e.g. `https://verify.example.org/v1/verify`.\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| credential | <code>object</code> \\\\| <code>string</code> |  | JSON-LD object, SD-JWT string, or CWT hex string |\\n| [options] | [<code>VerifyOptions</code>](#verifyoptions) | <code>{}</code> | Verification options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Verify a credential from state\\n```js\\nverify($.data, {\\n  skipStatusChecks: false,\\n  statusCheckFilters: ['revocation'],\\n  includeClaims: false,\\n});\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### HttpState\\n\\nState object after an Inji Verify HTTP call\\n\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions provided to a general HTTP request\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| body | <code>object</code> \\\\| <code>string</code> | body data to append to the request |\\n| errors | <code>object</code> | Map of errorCodes -> error messages |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL |\\n| headers | <code>object</code> | An object of headers to append to the request |\\n| parseAs | <code>string</code> | Parse the response body as json, text or stream |\\n| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds |\\n\\n\\n* * *\\n\\n### VerifyOptions\\n\\nOptions for verify\\n\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| [skipStatusChecks] | <code>boolean</code> | <code>false</code> | Skip credential status (e.g. revocation) checks |\\n| [statusCheckFilters] | <code>Array.&lt;string&gt;</code> | <code>[]</code> | Status check purposes to run (e.g. `['revocation']`) |\\n| [includeClaims] | <code>boolean</code> | <code>false</code> | Include extracted claims when schema/signature is valid |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-inji <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **adaptor** for [Inji Verify](https://docs.mosip.io/inji/inji-verify/overview):\\nserver-side verification of Verifiable Credentials (JSON-LD, SD-JWT, CWT).\\n\\nUse it as **step 3** of a typical verification workflow:\\n\\n1. Receive an issued credential over HTTP (another step / adaptor).\\n2. Validate the request body in job code.\\n3. Call Inji Verify with `verify` (this adaptor).\\n4. Process the result (e.g. log `allChecksSuccessful`).\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/language-inji-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/language-inji-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n`baseUrl` must include the Inji Verify context path, for example:\\n\\n```json\\n{\\n  \\\"baseUrl\\\": \\\"https://verify.example.org/v1/verify\\\"\\n}\\n```\\n\\nThe configuration schema uses\\n[JSON Schema draft-07](https://json-schema.org/draft-07/json-schema-release-notes).\\nRun `pnpm validate:schemas` from the adaptors repo root after editing it.\\n\\n### Example job\\n\\n```javascript\\n// Steps 1–2: credential already received and validated into state.data\\nverify($.data, {\\n  skipStatusChecks: false,\\n  statusCheckFilters: ['revocation'],\\n  includeClaims: false,\\n});\\n\\n// Step 4: process / log the verification result\\nfn(state => {\\n  console.log(state.data.allChecksSuccessful);\\n  return state;\\n});\\n```\\n\\n`verify` posts to `{baseUrl}/v2/vc-verification` and writes the\\ndetailed V2 result to `state.data` (`allChecksSuccessful`,\\n`schemaAndSignatureCheck`, `expiryCheck`, `statusCheck`, `claims`).\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\n```bash\\ncd packages/language-inji\\npnpm install\\npnpm test\\npnpm build\\n```\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-inji\\n\\n## 1.0.0\\n\\n### New Features\\n\\n- Initial release with `verify` for Inji Verify\\n  `POST /v2/vc-verification` (JSON-LD, SD-JWT, CWT)\\n- Low-level `request` helper for other Inji Verify paths\\n\"","functions":["request","verify"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","type":"string","description":"Inji Verify service base URL, including the context path /v1/verify","format":"uri","minLength":1,"examples":["https://verify.example.org/v1/verify"]}},"type":"object","additionalProperties":false,"required":["baseUrl"]}},
+[
+  {
+    "id": "HttpState",
+    "longname": "HttpState",
+    "name": "HttpState",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "State object after an Inji Verify HTTP call",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "description": "the parsed response body",
+        "name": "data"
+      },
+      {
+        "description": "the response from the HTTP server, including headers, statusCode, etc",
+        "name": "response"
+      },
+      {
+        "description": "an array of all previous data objects used in the Job",
+        "name": "references"
+      }
+    ],
+    "meta": {
+      "lineno": 4,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/src"
+    },
+    "order": 0,
+    "source": "@openfn/language-inji",
+    "newscope": true,
+    "level": 0
+  },
+  {
+    "id": "request",
+    "longname": "request",
+    "name": "request",
+    "kind": "function",
+    "scope": "global",
+    "description": "Make a general HTTP request to Inji Verify.\nPrefer {@link verify} for VC verification.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "HTTP method to use",
+        "name": "method"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Path relative to configuration.baseUrl",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Object attached to the request body",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "RequestOptions"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": "{}",
+        "description": "Optional request options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "request('POST', 'v2/vc-verification', {\n  verifiableCredential: JSON.stringify($.data),\n  skipStatusChecks: false,\n  statusCheckFilters: ['revocation'],\n  includeClaims: false,\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 103,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 4,
+    "source": "@openfn/language-inji",
+    "signature": [
+      "request(method, path, body, options)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "RequestOptions",
+    "longname": "RequestOptions",
+    "name": "RequestOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options provided to a general HTTP request",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "object",
+            "string"
+          ]
+        },
+        "description": "body data to append to the request",
+        "name": "body"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "Map of errorCodes -> error messages",
+        "name": "errors"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of query parameters to be encoded into the URL",
+        "name": "query"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "An object of headers to append to the request",
+        "name": "headers"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Parse the response body as json, text or stream",
+        "name": "parseAs"
+      },
+      {
+        "type": {
+          "names": [
+            "number"
+          ]
+        },
+        "description": "Request timeout in ms. Default: 300 seconds",
+        "name": "timeout"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 21,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/src"
+    },
+    "order": 2,
+    "source": "@openfn/language-inji",
+    "level": 0
+  },
+  {
+    "id": "verify",
+    "longname": "verify",
+    "name": "verify",
+    "kind": "function",
+    "scope": "global",
+    "description": "Verify a Verifiable Credential with Inji Verify (V2).\n\nPosts to `{baseUrl}/v2/vc-verification`. Configure `baseUrl` with the\nservice context path, e.g. `https://verify.example.org/v1/verify`.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "object",
+            "string"
+          ]
+        },
+        "description": "JSON-LD object, SD-JWT string, or CWT hex string",
+        "name": "credential"
+      },
+      {
+        "type": {
+          "names": [
+            "VerifyOptions"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": "{}",
+        "description": "Verification options",
+        "name": "options"
+      }
+    ],
+    "examples": [
+      "<caption>Verify a credential from state</caption>\nverify($.data, {\n  skipStatusChecks: false,\n  statusCheckFilters: ['revocation'],\n  includeClaims: false,\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 52,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/src"
+    },
+    "state": [
+      {
+        "name": null,
+        "description": "No description",
+        "type": "HttpState"
+      }
+    ],
+    "order": 3,
+    "source": "@openfn/language-inji",
+    "signature": [
+      "verify(credential, options)"
+    ],
+    "level": 0
+  },
+  {
+    "id": "VerifyOptions",
+    "longname": "VerifyOptions",
+    "name": "VerifyOptions",
+    "kind": "typedef",
+    "scope": "global",
+    "description": "Options for verify",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "properties": [
+      {
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": false,
+        "description": "Skip credential status (e.g. revocation) checks",
+        "name": "skipStatusChecks"
+      },
+      {
+        "type": {
+          "names": [
+            "Array.<string>"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": "[]",
+        "description": "Status check purposes to run (e.g. `['revocation']`)",
+        "name": "statusCheckFilters"
+      },
+      {
+        "type": {
+          "names": [
+            "boolean"
+          ]
+        },
+        "optional": true,
+        "defaultvalue": false,
+        "description": "Include extracted claims when schema/signature is valid",
+        "name": "includeClaims"
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 12,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/src"
+    },
+    "order": 1,
+    "source": "@openfn/language-inji",
+    "level": 0
+  },
+  {
+    "id": "as",
+    "longname": "as",
+    "name": "as()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Run an operation and save the result to a custom key in state instead of overwriting state.data.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The state key to assign the result of the operation to.",
+        "name": "key"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "An operation that returns a new state object with a `data` property",
+        "name": "operation"
+      }
+    ],
+    "examples": [
+      "<caption>Fetch cce-data from collections and store them under state.cceData</caption>\nas('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 987,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/node_modules/@openfn/language-common/src"
+    },
+    "order": 35,
+    "source": "@openfn/language-common",
+    "signature": [
+      "as(key, operation)"
+    ],
+    "common": true
+  },
+  {
+    "id": "combine",
+    "longname": "combine",
+    "name": "combine()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Combines two operations into one",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Operations"
+          ]
+        },
+        "description": "Operations to be performed.",
+        "name": "operations"
+      }
+    ],
+    "examples": [
+      "combine(\n  create('foo'),\n  delete('bar')\n)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 351,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/node_modules/@openfn/language-common/src"
+    },
+    "order": 15,
+    "source": "@openfn/language-common",
+    "signature": [
+      "combine(operations)"
+    ],
+    "common": true
+  },
+  {
+    "id": "cursor",
+    "longname": "cursor",
+    "name": "cursor()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Sets a cursor property on state.\nSupports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\nwhich will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones\nare not yet supported.\nYou can provide a formatter to customise the final cursor value, which is useful for normalising\ndifferent inputs. The custom formatter runs after natural language date conversion.\nSee the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "description": "the cursor value. Usually an ISO date, natural language date, or page number",
+        "name": "value"
+      },
+      {
+        "type": {
+          "names": [
+            "object"
+          ]
+        },
+        "description": "options to control the cursor.",
+        "name": "options"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "set the cursor key. Will persist through the whole run.",
+        "name": "options.key"
+      },
+      {
+        "type": {
+          "names": [
+            "any"
+          ]
+        },
+        "description": "the value to use if value is falsy",
+        "name": "options.defaultValue"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "custom formatter for the final cursor value",
+        "name": "options.format"
+      }
+    ],
+    "examples": [
+      "<caption>Use a cursor from state if present, or else use the default value</caption>\ncursor($.cursor, { defaultValue: 'today' })",
+      "<caption>Use a pagination cursor</caption>\ncursor(22)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 856,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/node_modules/@openfn/language-common/src"
+    },
+    "order": 31,
+    "source": "@openfn/language-common",
+    "signature": [
+      "cursor(value, options)"
+    ],
+    "common": true
+  },
+  {
+    "id": "dataPath",
+    "longname": "dataPath",
+    "name": "dataPath()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Ensures a path points at the data.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "JSONPath referencing a point in `data`.",
+        "name": "path"
+      }
+    ],
+    "examples": [
+      "dataPath('key')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 159,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/node_modules/@openfn/language-common/src"
+    },
+    "order": 8,
+    "source": "@openfn/language-common",
+    "signature": [
+      "dataPath(path)"
+    ],
+    "common": true
+  },
+  {
+    "id": "dataValue",
+    "longname": "dataValue",
+    "name": "dataValue()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Picks out a single value from the source data object—usually `state.data`.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "JSONPath referencing a point in `data`.",
+        "name": "path"
+      }
+    ],
+    "examples": [
+      "dataValue('key')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 177,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/node_modules/@openfn/language-common/src"
+    },
+    "order": 9,
+    "source": "@openfn/language-common",
+    "signature": [
+      "dataValue(path)"
+    ],
+    "common": true
+  },
+  {
+    "id": "dateFns",
+    "name": "dateFns",
+    "common": true,
+    "kind": "external",
+    "scope": "global",
+    "source": "@openfn/language-common"
+  },
+  {
+    "id": "each",
+    "longname": "each",
+    "name": "each()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Iterates over an array of items and invokes an operation upon each one, where the state\nobject is _scoped_ so that state.data is the item under iteration.\nThe rest of the state object is untouched and can be referenced as usual.\nYou can pass an array directly, or use lazy state or a JSONPath string to\nreference a slice of state.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "DataSource"
+          ]
+        },
+        "description": "JSONPath referencing a point in `state`.",
+        "name": "dataSource"
+      },
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        },
+        "description": "The operation needed to be repeated.",
+        "name": "operation"
+      }
+    ],
+    "examples": [
+      "<caption>Using lazy state ($) to iterate over items in state.data and pass each into an \"insert\" operation</caption>\neach(\n  $.data,\n  // Inside the callback operation, `$.data` is scoped to the item under iteration\n  insert(\"patient\", {\n    patient_name: $.data.properties.case_name,\n    patient_id: $.data.case_id,\n  })\n);",
+      "<caption>Iterate over items in state.data and pass each one into an \"insert\" operation</caption>\neach(\n  $.data,\n  insert(\"patient\", (state) => ({\n    patient_id: state.data.case_id,\n    ...state.data\n  }))\n);",
+      "<caption>Using JSON path to iterate over items in state.data and pass each one into an \"insert\" operation</caption>\neach(\n  \"$.data[*]\",\n  insert(\"patient\", (state) => ({\n    patient_name: state.data.properties.case_name,\n    patient_id: state.data.case_id,\n  }))\n);"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 321,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/node_modules/@openfn/language-common/src"
+    },
+    "order": 14,
+    "source": "@openfn/language-common",
+    "signature": [
+      "each(dataSource, operation)"
+    ],
+    "common": true
+  },
+  {
+    "id": "field",
+    "longname": "field",
+    "name": "field()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Returns a key, value pair in an array.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Name of the field",
+        "name": "key"
+      },
+      {
+        "type": {
+          "names": [
+            "Value"
+          ]
+        },
+        "description": "The value itself or a sourceable operation.",
+        "name": "value"
+      }
+    ],
+    "examples": [
+      "field('destination_field_name__c', 'value')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Field"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 392,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/node_modules/@openfn/language-common/src"
+    },
+    "order": 17,
+    "source": "@openfn/language-common",
+    "signature": [
+      "field(key, value)"
+    ],
+    "common": true
+  },
+  {
+    "id": "fields",
+    "longname": "fields",
+    "name": "fields()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Zips key value pairs into an object.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Fields"
+          ]
+        },
+        "description": "a list of fields",
+        "name": "fields"
+      }
+    ],
+    "examples": [
+      "fields(list_of_fields)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 405,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/node_modules/@openfn/language-common/src"
+    },
+    "order": 18,
+    "source": "@openfn/language-common",
+    "signature": [
+      "fields(fields)"
+    ],
+    "common": true
+  },
+  {
+    "id": "fn",
+    "longname": "fn",
+    "name": "fn()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Creates a custom step (or operation) for more flexible job writing.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "is the function",
+        "name": "func"
+      }
+    ],
+    "examples": [
+      "fn(state => {\n  // do some things to state\n  return state;\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 76,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/node_modules/@openfn/language-common/src"
+    },
+    "order": 3,
+    "source": "@openfn/language-common",
+    "signature": [
+      "fn(func)"
+    ],
+    "common": true
+  },
+  {
+    "id": "fnIf",
+    "longname": "fnIf",
+    "name": "fnIf()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Execute a function only when the condition returns true",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Boolean"
+          ]
+        },
+        "description": "The condition that returns true",
+        "name": "condition"
+      },
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        },
+        "description": "The operation needed to be executed.",
+        "name": "operation"
+      }
+    ],
+    "examples": [
+      "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 92,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/node_modules/@openfn/language-common/src"
+    },
+    "order": 4,
+    "source": "@openfn/language-common",
+    "signature": [
+      "fnIf(condition, operation)"
+    ],
+    "common": true
+  },
+  {
+    "id": "group",
+    "longname": "group",
+    "name": "group()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Groups an array of objects by a specified key path.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Array.<Object>"
+          ]
+        },
+        "description": "The array of objects to be grouped.",
+        "name": "arrayOfObjects"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "The key path to group by.",
+        "name": "keyPath"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "(Optional) Callback function",
+        "name": "callback"
+      }
+    ],
+    "examples": [
+      "const users = [\n  { name: 'Alice', age: 25, city: 'New York' },\n  { name: 'Bob', age: 30, city: 'San Francisco' },\n  { name: 'Charlie', age: 25, city: 'New York' },\n  { name: 'David', age: 30, city: 'San Francisco' }\n];\ngroup(users, 'city');\n// state is { data: { 'New York': [/Alice, Charlie/], 'San Francisco': [ /Bob, David / ] }"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 455,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/node_modules/@openfn/language-common/src"
+    },
+    "order": 20,
+    "source": "@openfn/language-common",
+    "signature": [
+      "group(arrayOfObjects, keyPath, callback)"
+    ],
+    "common": true
+  },
+  {
+    "id": "lastReferenceValue",
+    "longname": "lastReferenceValue",
+    "name": "lastReferenceValue()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Picks out the last reference value from source data.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "JSONPath referencing a point in `references`.",
+        "name": "path"
+      }
+    ],
+    "examples": [
+      "lastReferenceValue('key')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 206,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/node_modules/@openfn/language-common/src"
+    },
+    "order": 11,
+    "source": "@openfn/language-common",
+    "signature": [
+      "lastReferenceValue(path)"
+    ],
+    "common": true
+  },
+  {
+    "id": "map",
+    "longname": "map",
+    "name": "map()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Iterates over a collection of items and returns a new array of mapped values,\nlike Javascript's `Array.map()` function.\n\nEach item in the source array will be passed into the callback function. The returned value\nwill be added to the new array. The callback is passed the original item, the current index\nin the source array (ie, the nth item number), and the state object.\n\nWrites a new array to `state.data` with transformed values.c array.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string",
+            "Array"
+          ]
+        },
+        "description": "An array of items or a a JSONPath string which points to an array of items.",
+        "name": "path"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "The mapping function, invoked with `(data, index, state)` for each item in the array.",
+        "name": "callback"
+      }
+    ],
+    "examples": [
+      "<caption> Transform an array of items in state</caption>\nmap($.items', (data, index, state) => {\n  return {\n    id: index + 1,\n    name: data.name,\n    createdAt: state.cursor,\n  };\n});",
+      "<caption>Map items asynchronously (e.g. fetch extra info)</caption>\nmap($.items, async (data, index, state) => {\n  const userInfo = await fetchUserInfo(data.userId);\n  return {\n    id: index + 1,\n    name: data.name,\n    extra: userInfo,\n  };\n});"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "State"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 244,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/node_modules/@openfn/language-common/src"
+    },
+    "order": 12,
+    "source": "@openfn/language-common",
+    "signature": [
+      "map(path, callback)"
+    ],
+    "common": true
+  },
+  {
+    "id": "merge",
+    "longname": "merge",
+    "name": "merge()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Merges fields into each item in an array.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "DataSource"
+          ]
+        },
+        "name": "dataSource"
+      },
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        },
+        "description": "Group of fields to merge in.",
+        "name": "fields"
+      }
+    ],
+    "examples": [
+      "merge(\n  \"$.books[*]\",\n  fields(\n    field( \"publisher\", sourceValue(\"$.publisher\") )\n  )\n)"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "DataSource"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 425,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/node_modules/@openfn/language-common/src"
+    },
+    "order": 19,
+    "source": "@openfn/language-common",
+    "signature": [
+      "merge(dataSource, fields)"
+    ],
+    "common": true
+  },
+  {
+    "id": "scrubEmojis",
+    "longname": "scrubEmojis",
+    "name": "scrubEmojis()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Replaces emojis in a string.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "String that needs to be cleaned",
+        "name": "text"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Characters that replace the emojis",
+        "name": "replacementChars"
+      }
+    ],
+    "examples": [
+      "scrubEmojis('Dove🕊️⭐ 29')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 591,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/node_modules/@openfn/language-common/src"
+    },
+    "order": 27,
+    "source": "@openfn/language-common",
+    "signature": [
+      "scrubEmojis(text, replacementChars)"
+    ],
+    "common": true
+  },
+  {
+    "id": "sourceValue",
+    "longname": "sourceValue",
+    "name": "sourceValue()",
+    "kind": "external",
+    "scope": "global",
+    "description": "Picks out a single value from source data.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "JSONPath referencing a point in `state`.",
+        "name": "path"
+      }
+    ],
+    "examples": [
+      "sourceValue('$.key')"
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Operation"
+          ]
+        }
+      }
+    ],
+    "access": "public",
+    "meta": {
+      "lineno": 127,
+      "filename": "Adaptor.js",
+      "path": "/home/runner/work/adaptors/adaptors/packages/inji/node_modules/@openfn/language-common/src"
+    },
+    "order": 6,
+    "source": "@openfn/language-common",
+    "signature": [
+      "sourceValue(path)"
+    ],
+    "common": true
+  },
+  {
+    "id": "util",
+    "name": "util",
+    "common": true,
+    "kind": "external",
+    "scope": "global",
+    "source": "@openfn/language-common"
+  }
+],
 {"name":"intuit","adaptor":"@openfn/language-intuit","version":"1.1.3","docs":"\"\\nThis adaptor exports the following namespaced functions:\\n\\n<dl>\\n<dt>\\n    <a href=\\\"#http_get\\\">http.get(path, [options])</a>\\n</dt>\\n\\n<dt>\\n    <a href=\\\"#http_post\\\">http.post(path, data, [options])</a>\\n</dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#log\\\">log()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt></dl>\\n\\n\\n## http\\n\\nThese functions belong to the http namespace.\\n### http.get {#http_get}\\n\\n<p><code>get(path, [options]) ⇒ Operation</code></p>\\n\\n\\nMake a GET request to any intuit endpoint\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| path | <code>string</code> |  | Path to resource |\\n| [options] | [<code>IntuitOptions</code>](#intuitoptions) | <code>{}</code> | An object containing query and headers for the request |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the Quickbook(intuit) server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n\\n**Example:** Get intuit user company information.\\n```js\\nhttp.get(\\\"/v3/company/9341453908059456/companyinfo/9341453908059456\\\");\\n```\\n\\n* * *\\n\\n\\n### http.post {#http_post}\\n\\n<p><code>post(path, data, [options]) ⇒ Operation</code></p>\\n\\n\\nMake a POST request to any Intuit endpoint\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| path | <code>string</code> |  | Path to resource |\\n| data | <code>object</code> |  | The request body (as JSON) |\\n| [options] | [<code>IntuitOptions</code>](#intuitoptions) | <code>{}</code> | An object containing query, and headers for the request |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | The response body (as JSON) |\\n| response | The HTTP response from the Quickbook(intuit) server (excluding the body) |\\n| references | An array of all previous data objects used in the Job |\\n\\n**Example:** Create an account on intuit.\\n```js\\nhttp.post(\\\"/v3/company/9341453908059456/account\\\",\\n {\\n      \\\"Name\\\": \\\"MyJobs_testing\\\",\\n      \\\"AccountType\\\": \\\"Accounts Receivable\\\"\\n },\\n {\\n query: {\\n   minorversion: 40,\\n  },\\n})\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### IntuitOptions\\n\\nOptions object\\n\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| query | <code>object</code> |  | An object of query parameters to be encoded into the URL |\\n| headers | <code>object</code> |  | An object of all request headers |\\n| [parseAs] | <code>string</code> | <code>&quot;&#x27;json&#x27;&quot;</code> | The response format to parse (e.g., 'json', 'text', or 'stream') |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-intuit <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **_adaptor_** for building integration jobs for use with the intuit\\nAPI.\\n\\n## Documentation\\n\\nView the [docs site](https://docs.openfn.org/adaptors/packages/intuit-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/intuit-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n### A example expression using the `create` function\\n\\n```js\\nhttp.post(\\n  '/v3/company/9341453908059321/account',\\n  {\\n    Name: 'MyJobs_testing',\\n    AccountType: 'Accounts Receivable',\\n  },\\n  {\\n    query: {\\n      minorversion: 40,\\n    },\\n  }\\n);\\n```\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\nRun tests using `pnpm run test` or `pnpm run test:watch`\\n\\nBuild the project using `pnpm build`.\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-intuit\\n\\n## 1.1.3 - 03 September 2026\\n\\n### Patch Changes\\n\\n- fd1b2be: Security update\\n- Updated dependencies \\\\[654026d]\\n- Updated dependencies \\\\[fd1b2be]\\n  - @openfn/language-common@3.3.5\\n\\n## 1.1.2 - 30 June 2026\\n\\n### Patch Changes\\n\\n- c5f8728: Update undici dependency\\n- Updated dependencies \\\\[c5f8728]\\n  - @openfn/language-common@3.3.4\\n\\n## 1.1.1 - 27 May 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[5276a86]\\n  - @openfn/language-common@3.3.3\\n\\n## 1.1.0 - 21 May 2026\\n\\n### Minor Changes\\n\\n- 71115af: export `combine` function from common\\n- bf26881: export `log` function from common\\n\\n## 1.0.20 - 20 May 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[9d1e1ae]\\n  - @openfn/language-common@3.3.2\\n\\n## 1.0.19 - 07 April 2026\\n\\n### Patch Changes\\n\\n- add9748: Update dependencies (undici)\\n- Updated dependencies \\\\[add9748]\\n- Updated dependencies \\\\[a9b7597]\\n  - @openfn/language-common@3.3.1\\n\\n## 1.0.18 - 30 March 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[295655f]\\n  - @openfn/language-common@3.3.0\\n\\n## 1.0.17 - 24 February 2026\\n\\n### Patch Changes\\n\\n- 856f85c: Security updates\\n- Updated dependencies \\\\[856f85c]\\n  - @openfn/language-common@3.2.3\\n\\n## 1.0.16 - 09 February 2026\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[8ad6b98]\\n- Updated dependencies \\\\[8ad6b98]\\n  - @openfn/language-common@3.2.2\\n\\n## 1.0.15 - 28 November 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[cfc66df]\\n  - @openfn/language-common@3.2.1\\n\\n## 1.0.14 - 12 November 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[4d7a833]\\n  - @openfn/language-common@3.2.0\\n\\n## 1.0.13 - 04 November 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies\\n  - @openfn/language-common@3.1.2\\n\\n## 1.0.12 - 16 October 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[408a3a2]\\n  - @openfn/language-common@3.1.1\\n\\n## 1.0.11 - 18 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[e2bc436]\\n  - @openfn/language-common@3.1.0\\n\\n## 1.0.10 - 01 September 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[1d60531]\\n  - @openfn/language-common@3.0.3\\n\\n## 1.0.9 - 28 August 2025\\n\\n### Patch Changes\\n\\n- b7af59a: - Update `package.json` description to be LLM-readable\\n\\n## 1.0.8 - 14 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[9b5a4f8]\\n  - @openfn/language-common@3.0.2\\n\\n## 1.0.7 - 10 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[cf9c09f]\\n  - @openfn/language-common@3.0.1\\n\\n## 1.0.6 - 10 July 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[ea85695]\\n- Updated dependencies \\\\[3fce58f]\\n- Updated dependencies \\\\[19f2d7e]\\n- Updated dependencies \\\\[f26bd2b]\\n- Updated dependencies \\\\[19f2d7e]\\n  - @openfn/language-common@3.0.0\\n\\n## 1.0.5 - 20 June 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[28c2e8b]\\n  - @openfn/language-common@2.5.0\\n\\n## 1.0.4 - 22 April 2025\\n\\n### Patch Changes\\n\\n- 99e4b48: - Better handling of HTML content in http requests\\n  - When logging HTTP requests, include query parameters\\n- Updated dependencies \\\\[99e4b48]\\n- Updated dependencies \\\\[13bf08f]\\n  - @openfn/language-common@2.4.0\\n\\n## 1.0.3 - 16 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[b089c56]\\n  - @openfn/language-common@2.3.3\\n\\n## 1.0.2 - 11 April 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[d7105c0]\\n  - @openfn/language-common@2.3.2\\n\\n## 1.0.1 - 14 March 2025\\n\\n### Patch Changes\\n\\n- Updated dependencies \\\\[23ccb01]\\n  - @openfn/language-common@2.3.1\\n\\n## 1.0.0 - 30 January 2025\\n\\nInitial release.\\n\"","functions":[],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","type":"string","description":"The Quickbooks(intuit) base URL","format":"uri","minLength":1,"examples":["https://sandbox-quickbooks.api.intuit.com"]},"access_token":{"title":"Access Token","type":"string","description":"Your Quickbooks(intuit) access token","examples":["eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjlGWERwYmZNRlQyU3ZRdVhoODQ2WVR3RUlCdyIsI"]}},"type":"object","additionalProperties":true,"required":["access_token","baseUrl"]}},
 [
   {
@@ -79568,1147 +80709,6 @@
       "lineno": 127,
       "filename": "Adaptor.js",
       "path": "/home/runner/work/adaptors/adaptors/packages/langfuse/node_modules/@openfn/language-common/src"
-    },
-    "order": 6,
-    "source": "@openfn/language-common",
-    "signature": [
-      "sourceValue(path)"
-    ],
-    "common": true
-  },
-  {
-    "id": "util",
-    "name": "util",
-    "common": true,
-    "kind": "external",
-    "scope": "global",
-    "source": "@openfn/language-common"
-  }
-],
-{"name":"language-inji","adaptor":"@openfn/language-inji","version":"1.0.0","docs":"\"<dl>\\n<dt>\\n    <a href=\\\"#request\\\">request(method, path, body, [options])</a></dt>\\n<dt>\\n    <a href=\\\"#verify\\\">verify(credential, [options])</a></dt>\\n</dl>\\n\\n\\nThis adaptor exports the following from common:\\n<dl>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#as\\\">as()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#combine\\\">combine()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#cursor\\\">cursor()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datapath\\\">dataPath()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datavalue\\\">dataValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#datefns\\\">dateFns</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#each\\\">each()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#field\\\">field()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fields\\\">fields()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fn\\\">fn()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#fnif\\\">fnIf()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#group\\\">group()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#lastreferencevalue\\\">lastReferenceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#map\\\">map()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#merge\\\">merge()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#scrubemojis\\\">scrubEmojis()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#sourcevalue\\\">sourceValue()</a>\\n</dt>\\n<dt>\\n    <a href=\\\"/adaptors/packages/common-docs#util\\\">util</a>\\n</dt></dl>\\n\\n## Functions\\n### request\\n\\n<p><code>request(method, path, body, [options]) ⇒ Operation</code></p>\\n\\n\\nMake a general HTTP request to Inji Verify.\\nPrefer [verify](#verify) for VC verification.\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| method | <code>string</code> |  | HTTP method to use |\\n| path | <code>string</code> |  | Path relative to configuration.baseUrl |\\n| body | <code>object</code> |  | Object attached to the request body |\\n| [options] | [<code>RequestOptions</code>](#requestoptions) | <code>{}</code> | Optional request options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example**\\n```js\\nrequest('POST', 'v2/vc-verification', {\\n  verifiableCredential: JSON.stringify($.data),\\n  skipStatusChecks: false,\\n  statusCheckFilters: ['revocation'],\\n  includeClaims: false,\\n});\\n```\\n\\n* * *\\n\\n### verify\\n\\n<p><code>verify(credential, [options]) ⇒ Operation</code></p>\\n\\n\\nVerify a Verifiable Credential with Inji Verify (V2).\\n\\nPosts to `{baseUrl}/v2/vc-verification`. Configure `baseUrl` with the\\nservice context path, e.g. `https://verify.example.org/v1/verify`.\\n\\n\\n| Param | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| credential | <code>object</code> \\\\| <code>string</code> |  | JSON-LD object, SD-JWT string, or CWT hex string |\\n| [options] | [<code>VerifyOptions</code>](#verifyoptions) | <code>{}</code> | Verification options |\\n\\nThis operation writes the following keys to state:\\n\\n| State Key | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n**Example:** Verify a credential from state\\n```js\\nverify($.data, {\\n  skipStatusChecks: false,\\n  statusCheckFilters: ['revocation'],\\n  includeClaims: false,\\n});\\n```\\n\\n* * *\\n\\n\\n##  Interfaces\\n\\n### HttpState\\n\\nState object after an Inji Verify HTTP call\\n\\n\\n**Properties**\\n\\n| Name | Description |\\n| --- | --- |\\n| data | the parsed response body |\\n| response | the response from the HTTP server, including headers, statusCode, etc |\\n| references | an array of all previous data objects used in the Job |\\n\\n\\n* * *\\n\\n### RequestOptions\\n\\nOptions provided to a general HTTP request\\n\\n\\n**Properties**\\n\\n| Name | Type | Description |\\n| --- | --- | --- |\\n| body | <code>object</code> \\\\| <code>string</code> | body data to append to the request |\\n| errors | <code>object</code> | Map of errorCodes -> error messages |\\n| query | <code>object</code> | An object of query parameters to be encoded into the URL |\\n| headers | <code>object</code> | An object of headers to append to the request |\\n| parseAs | <code>string</code> | Parse the response body as json, text or stream |\\n| timeout | <code>number</code> | Request timeout in ms. Default: 300 seconds |\\n\\n\\n* * *\\n\\n### VerifyOptions\\n\\nOptions for verify\\n\\n\\n**Properties**\\n\\n| Name | Type | Default | Description |\\n| --- | --- | --- | --- |\\n| [skipStatusChecks] | <code>boolean</code> | <code>false</code> | Skip credential status (e.g. revocation) checks |\\n| [statusCheckFilters] | <code>Array.&lt;string&gt;</code> | <code>[]</code> | Status check purposes to run (e.g. `['revocation']`) |\\n| [includeClaims] | <code>boolean</code> | <code>false</code> | Include extracted claims when schema/signature is valid |\\n\\n\\n* * *\\n\\n\"","readme":"\"# language-inji <img src='./assets/square.png' width=\\\"30\\\" height=\\\"30\\\"/>\\n\\nAn OpenFn **adaptor** for [Inji Verify](https://docs.mosip.io/inji/inji-verify/overview):\\nserver-side verification of Verifiable Credentials (JSON-LD, SD-JWT, CWT).\\n\\nUse it as **step 3** of a typical verification workflow:\\n\\n1. Receive an issued credential over HTTP (another step / adaptor).\\n2. Validate the request body in job code.\\n3. Call Inji Verify with `verify` (this adaptor).\\n4. Process the result (e.g. log `allChecksSuccessful`).\\n\\n## Documentation\\n\\nView the\\n[docs site](https://docs.openfn.org/adaptors/packages/language-inji-docs) for\\nfull technical documentation.\\n\\n### Configuration\\n\\nView the\\n[configuration-schema](https://docs.openfn.org/adaptors/packages/language-inji-configuration-schema/)\\nfor required and optional `configuration` properties.\\n\\n`baseUrl` must include the Inji Verify context path, for example:\\n\\n```json\\n{\\n  \\\"baseUrl\\\": \\\"https://verify.example.org/v1/verify\\\"\\n}\\n```\\n\\nThe configuration schema uses\\n[JSON Schema draft-07](https://json-schema.org/draft-07/json-schema-release-notes).\\nRun `pnpm validate:schemas` from the adaptors repo root after editing it.\\n\\n### Example job\\n\\n```javascript\\n// Steps 1–2: credential already received and validated into state.data\\nverify($.data, {\\n  skipStatusChecks: false,\\n  statusCheckFilters: ['revocation'],\\n  includeClaims: false,\\n});\\n\\n// Step 4: process / log the verification result\\nfn(state => {\\n  console.log(state.data.allChecksSuccessful);\\n  return state;\\n});\\n```\\n\\n`verify` posts to `{baseUrl}/v2/vc-verification` and writes the\\ndetailed V2 result to `state.data` (`allChecksSuccessful`,\\n`schemaAndSignatureCheck`, `expiryCheck`, `statusCheck`, `claims`).\\n\\n## Development\\n\\nClone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the\\n\\\"Getting Started\\\" guide inside to get set up.\\n\\n```bash\\ncd packages/language-inji\\npnpm install\\npnpm test\\npnpm build\\n```\\n\\nTo build _only_ the docs run `pnpm build docs`.\\n\"","changelog":"\"# @openfn/language-inji\\n\\n## 1.0.0\\n\\n### New Features\\n\\n- Initial release with `verify` for Inji Verify\\n  `POST /v2/vc-verification` (JSON-LD, SD-JWT, CWT)\\n- Low-level `request` helper for other Inji Verify paths\\n\"","functions":["request","verify"],"configuration-schema":{"$schema":"http://json-schema.org/draft-07/schema#","properties":{"baseUrl":{"title":"Base URL","type":"string","description":"Inji Verify service base URL, including the context path /v1/verify","format":"uri","minLength":1,"examples":["https://verify.example.org/v1/verify"]}},"type":"object","additionalProperties":false,"required":["baseUrl"]}},
-[
-  {
-    "id": "HttpState",
-    "longname": "HttpState",
-    "name": "HttpState",
-    "kind": "typedef",
-    "scope": "global",
-    "description": "State object after an Inji Verify HTTP call",
-    "type": {
-      "names": [
-        "Object"
-      ]
-    },
-    "properties": [
-      {
-        "description": "the parsed response body",
-        "name": "data"
-      },
-      {
-        "description": "the response from the HTTP server, including headers, statusCode, etc",
-        "name": "response"
-      },
-      {
-        "description": "an array of all previous data objects used in the Job",
-        "name": "references"
-      }
-    ],
-    "meta": {
-      "lineno": 4,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/src"
-    },
-    "order": 0,
-    "source": "@openfn/language-inji",
-    "newscope": true,
-    "level": 0
-  },
-  {
-    "id": "request",
-    "longname": "request",
-    "name": "request",
-    "kind": "function",
-    "scope": "global",
-    "description": "Make a general HTTP request to Inji Verify.\nPrefer {@link verify} for VC verification.",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "HTTP method to use",
-        "name": "method"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "Path relative to configuration.baseUrl",
-        "name": "path"
-      },
-      {
-        "type": {
-          "names": [
-            "object"
-          ]
-        },
-        "description": "Object attached to the request body",
-        "name": "body"
-      },
-      {
-        "type": {
-          "names": [
-            "RequestOptions"
-          ]
-        },
-        "optional": true,
-        "defaultvalue": "{}",
-        "description": "Optional request options",
-        "name": "options"
-      }
-    ],
-    "examples": [
-      "request('POST', 'v2/vc-verification', {\n  verifiableCredential: JSON.stringify($.data),\n  skipStatusChecks: false,\n  statusCheckFilters: ['revocation'],\n  includeClaims: false,\n});"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 103,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/src"
-    },
-    "state": [
-      {
-        "name": null,
-        "description": "No description",
-        "type": "HttpState"
-      }
-    ],
-    "order": 4,
-    "source": "@openfn/language-inji",
-    "signature": [
-      "request(method, path, body, options)"
-    ],
-    "level": 0
-  },
-  {
-    "id": "RequestOptions",
-    "longname": "RequestOptions",
-    "name": "RequestOptions",
-    "kind": "typedef",
-    "scope": "global",
-    "description": "Options provided to a general HTTP request",
-    "type": {
-      "names": [
-        "Object"
-      ]
-    },
-    "properties": [
-      {
-        "type": {
-          "names": [
-            "object",
-            "string"
-          ]
-        },
-        "description": "body data to append to the request",
-        "name": "body"
-      },
-      {
-        "type": {
-          "names": [
-            "object"
-          ]
-        },
-        "description": "Map of errorCodes -> error messages",
-        "name": "errors"
-      },
-      {
-        "type": {
-          "names": [
-            "object"
-          ]
-        },
-        "description": "An object of query parameters to be encoded into the URL",
-        "name": "query"
-      },
-      {
-        "type": {
-          "names": [
-            "object"
-          ]
-        },
-        "description": "An object of headers to append to the request",
-        "name": "headers"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "Parse the response body as json, text or stream",
-        "name": "parseAs"
-      },
-      {
-        "type": {
-          "names": [
-            "number"
-          ]
-        },
-        "description": "Request timeout in ms. Default: 300 seconds",
-        "name": "timeout"
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 21,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/src"
-    },
-    "order": 2,
-    "source": "@openfn/language-inji",
-    "level": 0
-  },
-  {
-    "id": "verify",
-    "longname": "verify",
-    "name": "verify",
-    "kind": "function",
-    "scope": "global",
-    "description": "Verify a Verifiable Credential with Inji Verify (V2).\n\nPosts to `{baseUrl}/v2/vc-verification`. Configure `baseUrl` with the\nservice context path, e.g. `https://verify.example.org/v1/verify`.",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "object",
-            "string"
-          ]
-        },
-        "description": "JSON-LD object, SD-JWT string, or CWT hex string",
-        "name": "credential"
-      },
-      {
-        "type": {
-          "names": [
-            "VerifyOptions"
-          ]
-        },
-        "optional": true,
-        "defaultvalue": "{}",
-        "description": "Verification options",
-        "name": "options"
-      }
-    ],
-    "examples": [
-      "<caption>Verify a credential from state</caption>\nverify($.data, {\n  skipStatusChecks: false,\n  statusCheckFilters: ['revocation'],\n  includeClaims: false,\n});"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 52,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/src"
-    },
-    "state": [
-      {
-        "name": null,
-        "description": "No description",
-        "type": "HttpState"
-      }
-    ],
-    "order": 3,
-    "source": "@openfn/language-inji",
-    "signature": [
-      "verify(credential, options)"
-    ],
-    "level": 0
-  },
-  {
-    "id": "VerifyOptions",
-    "longname": "VerifyOptions",
-    "name": "VerifyOptions",
-    "kind": "typedef",
-    "scope": "global",
-    "description": "Options for verify",
-    "type": {
-      "names": [
-        "Object"
-      ]
-    },
-    "properties": [
-      {
-        "type": {
-          "names": [
-            "boolean"
-          ]
-        },
-        "optional": true,
-        "defaultvalue": false,
-        "description": "Skip credential status (e.g. revocation) checks",
-        "name": "skipStatusChecks"
-      },
-      {
-        "type": {
-          "names": [
-            "Array.<string>"
-          ]
-        },
-        "optional": true,
-        "defaultvalue": "[]",
-        "description": "Status check purposes to run (e.g. `['revocation']`)",
-        "name": "statusCheckFilters"
-      },
-      {
-        "type": {
-          "names": [
-            "boolean"
-          ]
-        },
-        "optional": true,
-        "defaultvalue": false,
-        "description": "Include extracted claims when schema/signature is valid",
-        "name": "includeClaims"
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 12,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/src"
-    },
-    "order": 1,
-    "source": "@openfn/language-inji",
-    "level": 0
-  },
-  {
-    "id": "as",
-    "longname": "as",
-    "name": "as()",
-    "kind": "external",
-    "scope": "global",
-    "description": "Run an operation and save the result to a custom key in state instead of overwriting state.data.",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "The state key to assign the result of the operation to.",
-        "name": "key"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "An operation that returns a new state object with a `data` property",
-        "name": "operation"
-      }
-    ],
-    "examples": [
-      "<caption>Fetch cce-data from collections and store them under state.cceData</caption>\nas('cceData', collections.get('cce-data-dhis2', { key: `*:*:${$.syncedAt}*` }));"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 987,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/node_modules/@openfn/language-common/src"
-    },
-    "order": 35,
-    "source": "@openfn/language-common",
-    "signature": [
-      "as(key, operation)"
-    ],
-    "common": true
-  },
-  {
-    "id": "combine",
-    "longname": "combine",
-    "name": "combine()",
-    "kind": "external",
-    "scope": "global",
-    "description": "Combines two operations into one",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "Operations"
-          ]
-        },
-        "description": "Operations to be performed.",
-        "name": "operations"
-      }
-    ],
-    "examples": [
-      "combine(\n  create('foo'),\n  delete('bar')\n)"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 351,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/node_modules/@openfn/language-common/src"
-    },
-    "order": 15,
-    "source": "@openfn/language-common",
-    "signature": [
-      "combine(operations)"
-    ],
-    "common": true
-  },
-  {
-    "id": "cursor",
-    "longname": "cursor",
-    "name": "cursor()",
-    "kind": "external",
-    "scope": "global",
-    "description": "Sets a cursor property on state.\nSupports natural language dates like `now`, `today`, `yesterday`, `n hours ago`, `n days ago`, and `start`,\nwhich will be converted relative to the environment (ie, the Lightning or CLI locale). Custom timezones\nare not yet supported.\nYou can provide a formatter to customise the final cursor value, which is useful for normalising\ndifferent inputs. The custom formatter runs after natural language date conversion.\nSee the usage guide at {@link https://docs.openfn.org/documentation/jobs/job-writing-guide#using-cursors}",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "any"
-          ]
-        },
-        "description": "the cursor value. Usually an ISO date, natural language date, or page number",
-        "name": "value"
-      },
-      {
-        "type": {
-          "names": [
-            "object"
-          ]
-        },
-        "description": "options to control the cursor.",
-        "name": "options"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "set the cursor key. Will persist through the whole run.",
-        "name": "options.key"
-      },
-      {
-        "type": {
-          "names": [
-            "any"
-          ]
-        },
-        "description": "the value to use if value is falsy",
-        "name": "options.defaultValue"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "custom formatter for the final cursor value",
-        "name": "options.format"
-      }
-    ],
-    "examples": [
-      "<caption>Use a cursor from state if present, or else use the default value</caption>\ncursor($.cursor, { defaultValue: 'today' })",
-      "<caption>Use a pagination cursor</caption>\ncursor(22)"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 856,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/node_modules/@openfn/language-common/src"
-    },
-    "order": 31,
-    "source": "@openfn/language-common",
-    "signature": [
-      "cursor(value, options)"
-    ],
-    "common": true
-  },
-  {
-    "id": "dataPath",
-    "longname": "dataPath",
-    "name": "dataPath()",
-    "kind": "external",
-    "scope": "global",
-    "description": "Ensures a path points at the data.",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "JSONPath referencing a point in `data`.",
-        "name": "path"
-      }
-    ],
-    "examples": [
-      "dataPath('key')"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 159,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/node_modules/@openfn/language-common/src"
-    },
-    "order": 8,
-    "source": "@openfn/language-common",
-    "signature": [
-      "dataPath(path)"
-    ],
-    "common": true
-  },
-  {
-    "id": "dataValue",
-    "longname": "dataValue",
-    "name": "dataValue()",
-    "kind": "external",
-    "scope": "global",
-    "description": "Picks out a single value from the source data object—usually `state.data`.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "String"
-          ]
-        },
-        "description": "JSONPath referencing a point in `data`.",
-        "name": "path"
-      }
-    ],
-    "examples": [
-      "dataValue('key')"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 177,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/node_modules/@openfn/language-common/src"
-    },
-    "order": 9,
-    "source": "@openfn/language-common",
-    "signature": [
-      "dataValue(path)"
-    ],
-    "common": true
-  },
-  {
-    "id": "dateFns",
-    "name": "dateFns",
-    "common": true,
-    "kind": "external",
-    "scope": "global",
-    "source": "@openfn/language-common"
-  },
-  {
-    "id": "each",
-    "longname": "each",
-    "name": "each()",
-    "kind": "external",
-    "scope": "global",
-    "description": "Iterates over an array of items and invokes an operation upon each one, where the state\nobject is _scoped_ so that state.data is the item under iteration.\nThe rest of the state object is untouched and can be referenced as usual.\nYou can pass an array directly, or use lazy state or a JSONPath string to\nreference a slice of state.",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "DataSource"
-          ]
-        },
-        "description": "JSONPath referencing a point in `state`.",
-        "name": "dataSource"
-      },
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        },
-        "description": "The operation needed to be repeated.",
-        "name": "operation"
-      }
-    ],
-    "examples": [
-      "<caption>Using lazy state ($) to iterate over items in state.data and pass each into an \"insert\" operation</caption>\neach(\n  $.data,\n  // Inside the callback operation, `$.data` is scoped to the item under iteration\n  insert(\"patient\", {\n    patient_name: $.data.properties.case_name,\n    patient_id: $.data.case_id,\n  })\n);",
-      "<caption>Iterate over items in state.data and pass each one into an \"insert\" operation</caption>\neach(\n  $.data,\n  insert(\"patient\", (state) => ({\n    patient_id: state.data.case_id,\n    ...state.data\n  }))\n);",
-      "<caption>Using JSON path to iterate over items in state.data and pass each one into an \"insert\" operation</caption>\neach(\n  \"$.data[*]\",\n  insert(\"patient\", (state) => ({\n    patient_name: state.data.properties.case_name,\n    patient_id: state.data.case_id,\n  }))\n);"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 321,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/node_modules/@openfn/language-common/src"
-    },
-    "order": 14,
-    "source": "@openfn/language-common",
-    "signature": [
-      "each(dataSource, operation)"
-    ],
-    "common": true
-  },
-  {
-    "id": "field",
-    "longname": "field",
-    "name": "field()",
-    "kind": "external",
-    "scope": "global",
-    "description": "Returns a key, value pair in an array.",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "Name of the field",
-        "name": "key"
-      },
-      {
-        "type": {
-          "names": [
-            "Value"
-          ]
-        },
-        "description": "The value itself or a sourceable operation.",
-        "name": "value"
-      }
-    ],
-    "examples": [
-      "field('destination_field_name__c', 'value')"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Field"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 392,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/node_modules/@openfn/language-common/src"
-    },
-    "order": 17,
-    "source": "@openfn/language-common",
-    "signature": [
-      "field(key, value)"
-    ],
-    "common": true
-  },
-  {
-    "id": "fields",
-    "longname": "fields",
-    "name": "fields()",
-    "kind": "external",
-    "scope": "global",
-    "description": "Zips key value pairs into an object.",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "Fields"
-          ]
-        },
-        "description": "a list of fields",
-        "name": "fields"
-      }
-    ],
-    "examples": [
-      "fields(list_of_fields)"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Object"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 405,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/node_modules/@openfn/language-common/src"
-    },
-    "order": 18,
-    "source": "@openfn/language-common",
-    "signature": [
-      "fields(fields)"
-    ],
-    "common": true
-  },
-  {
-    "id": "fn",
-    "longname": "fn",
-    "name": "fn()",
-    "kind": "external",
-    "scope": "global",
-    "description": "Creates a custom step (or operation) for more flexible job writing.",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "is the function",
-        "name": "func"
-      }
-    ],
-    "examples": [
-      "fn(state => {\n  // do some things to state\n  return state;\n});"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 76,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/node_modules/@openfn/language-common/src"
-    },
-    "order": 3,
-    "source": "@openfn/language-common",
-    "signature": [
-      "fn(func)"
-    ],
-    "common": true
-  },
-  {
-    "id": "fnIf",
-    "longname": "fnIf",
-    "name": "fnIf()",
-    "kind": "external",
-    "scope": "global",
-    "description": "Execute a function only when the condition returns true",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "Boolean"
-          ]
-        },
-        "description": "The condition that returns true",
-        "name": "condition"
-      },
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        },
-        "description": "The operation needed to be executed.",
-        "name": "operation"
-      }
-    ],
-    "examples": [
-      "fnIf((state) => state?.data?.name, get(\"https://example.com\"));"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 92,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/node_modules/@openfn/language-common/src"
-    },
-    "order": 4,
-    "source": "@openfn/language-common",
-    "signature": [
-      "fnIf(condition, operation)"
-    ],
-    "common": true
-  },
-  {
-    "id": "group",
-    "longname": "group",
-    "name": "group()",
-    "kind": "external",
-    "scope": "global",
-    "description": "Groups an array of objects by a specified key path.",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "Array.<Object>"
-          ]
-        },
-        "description": "The array of objects to be grouped.",
-        "name": "arrayOfObjects"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "The key path to group by.",
-        "name": "keyPath"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "(Optional) Callback function",
-        "name": "callback"
-      }
-    ],
-    "examples": [
-      "const users = [\n  { name: 'Alice', age: 25, city: 'New York' },\n  { name: 'Bob', age: 30, city: 'San Francisco' },\n  { name: 'Charlie', age: 25, city: 'New York' },\n  { name: 'David', age: 30, city: 'San Francisco' }\n];\ngroup(users, 'city');\n// state is { data: { 'New York': [/Alice, Charlie/], 'San Francisco': [ /Bob, David / ] }"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 455,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/node_modules/@openfn/language-common/src"
-    },
-    "order": 20,
-    "source": "@openfn/language-common",
-    "signature": [
-      "group(arrayOfObjects, keyPath, callback)"
-    ],
-    "common": true
-  },
-  {
-    "id": "lastReferenceValue",
-    "longname": "lastReferenceValue",
-    "name": "lastReferenceValue()",
-    "kind": "external",
-    "scope": "global",
-    "description": "Picks out the last reference value from source data.",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "String"
-          ]
-        },
-        "description": "JSONPath referencing a point in `references`.",
-        "name": "path"
-      }
-    ],
-    "examples": [
-      "lastReferenceValue('key')"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 206,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/node_modules/@openfn/language-common/src"
-    },
-    "order": 11,
-    "source": "@openfn/language-common",
-    "signature": [
-      "lastReferenceValue(path)"
-    ],
-    "common": true
-  },
-  {
-    "id": "map",
-    "longname": "map",
-    "name": "map()",
-    "kind": "external",
-    "scope": "global",
-    "description": "Iterates over a collection of items and returns a new array of mapped values,\nlike Javascript's `Array.map()` function.\n\nEach item in the source array will be passed into the callback function. The returned value\nwill be added to the new array. The callback is passed the original item, the current index\nin the source array (ie, the nth item number), and the state object.\n\nWrites a new array to `state.data` with transformed values.c array.",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "string",
-            "Array"
-          ]
-        },
-        "description": "An array of items or a a JSONPath string which points to an array of items.",
-        "name": "path"
-      },
-      {
-        "type": {
-          "names": [
-            "function"
-          ]
-        },
-        "description": "The mapping function, invoked with `(data, index, state)` for each item in the array.",
-        "name": "callback"
-      }
-    ],
-    "examples": [
-      "<caption> Transform an array of items in state</caption>\nmap($.items', (data, index, state) => {\n  return {\n    id: index + 1,\n    name: data.name,\n    createdAt: state.cursor,\n  };\n});",
-      "<caption>Map items asynchronously (e.g. fetch extra info)</caption>\nmap($.items, async (data, index, state) => {\n  const userInfo = await fetchUserInfo(data.userId);\n  return {\n    id: index + 1,\n    name: data.name,\n    extra: userInfo,\n  };\n});"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "State"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 244,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/node_modules/@openfn/language-common/src"
-    },
-    "order": 12,
-    "source": "@openfn/language-common",
-    "signature": [
-      "map(path, callback)"
-    ],
-    "common": true
-  },
-  {
-    "id": "merge",
-    "longname": "merge",
-    "name": "merge()",
-    "kind": "external",
-    "scope": "global",
-    "description": "Merges fields into each item in an array.",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "DataSource"
-          ]
-        },
-        "name": "dataSource"
-      },
-      {
-        "type": {
-          "names": [
-            "Object"
-          ]
-        },
-        "description": "Group of fields to merge in.",
-        "name": "fields"
-      }
-    ],
-    "examples": [
-      "merge(\n  \"$.books[*]\",\n  fields(\n    field( \"publisher\", sourceValue(\"$.publisher\") )\n  )\n)"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "DataSource"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 425,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/node_modules/@openfn/language-common/src"
-    },
-    "order": 19,
-    "source": "@openfn/language-common",
-    "signature": [
-      "merge(dataSource, fields)"
-    ],
-    "common": true
-  },
-  {
-    "id": "scrubEmojis",
-    "longname": "scrubEmojis",
-    "name": "scrubEmojis()",
-    "kind": "external",
-    "scope": "global",
-    "description": "Replaces emojis in a string.",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "String that needs to be cleaned",
-        "name": "text"
-      },
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        },
-        "description": "Characters that replace the emojis",
-        "name": "replacementChars"
-      }
-    ],
-    "examples": [
-      "scrubEmojis('Dove🕊️⭐ 29')"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "string"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 591,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/node_modules/@openfn/language-common/src"
-    },
-    "order": 27,
-    "source": "@openfn/language-common",
-    "signature": [
-      "scrubEmojis(text, replacementChars)"
-    ],
-    "common": true
-  },
-  {
-    "id": "sourceValue",
-    "longname": "sourceValue",
-    "name": "sourceValue()",
-    "kind": "external",
-    "scope": "global",
-    "description": "Picks out a single value from source data.\nIf a JSONPath returns more than one value for the reference, the first\nitem will be returned.",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "String"
-          ]
-        },
-        "description": "JSONPath referencing a point in `state`.",
-        "name": "path"
-      }
-    ],
-    "examples": [
-      "sourceValue('$.key')"
-    ],
-    "returns": [
-      {
-        "type": {
-          "names": [
-            "Operation"
-          ]
-        }
-      }
-    ],
-    "access": "public",
-    "meta": {
-      "lineno": 127,
-      "filename": "Adaptor.js",
-      "path": "/home/runner/work/adaptors/adaptors/packages/language-inji/node_modules/@openfn/language-common/src"
     },
     "order": 6,
     "source": "@openfn/language-common",
