@@ -1,5 +1,11 @@
 # @openfn/language-bigquery
 
+## 4.1.5
+
+### Patch Changes
+
+- a39d4af: Bump dependencies
+
 ## 4.1.4 - 03 September 2026
 
 ### Patch Changes
