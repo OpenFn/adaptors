@@ -3265,7 +3265,7 @@ importers:
         version: 5.3.0
       handlebars:
         specifier: ^4.7.9
-        version: 4.7.9
+        version: 4.7.10
       jsdoc-babel:
         specifier: ^0.5.0
         version: 0.5.0(@babel/core@7.28.4(supports-color@8.1.1))
@@ -8283,8 +8283,8 @@ packages:
     resolution: {integrity: sha512-4haO1M4mLO91PW57BMsDFf75UmwoRX0GkdD+Faw+Lr+r/OZrOCS0pIBwOL1xCKQqnQzbNFGgK2V2CpBUPeFNTw==}
     hasBin: true
 
-  handlebars@4.7.9:
-    resolution: {integrity: sha512-4E71E0rpOaQuJR2A3xDZ+GM1HyWYv1clR58tC8emQNeQe3RH7MAzSbat+V0wG78LQBo6m6bzSG/L4pBuCsgnUQ==}
+  handlebars@4.7.10:
+    resolution: {integrity: sha512-P5VJMVM7qgBn6vjXMw8WG9uVI+ncf2pi72j4de4yz5ZULLj2RGqLYaKOYGsgyrViQ0tePOVlN1tDCCXXtFqXKg==}
     engines: {node: '>=0.4.7'}
     hasBin: true
 
@@ -16619,7 +16619,7 @@ snapshots:
       cache-point: 2.0.0
       common-sequence: 2.0.2
       file-set: 4.0.2
-      handlebars: 4.7.9
+      handlebars: 4.7.10
       marked: 4.3.0
       object-get: 2.1.1
       reduce-flatten: 3.0.1
@@ -16636,7 +16636,7 @@ snapshots:
       cache-point: 3.0.1
       common-sequence: 3.0.0
       file-set: 5.3.0
-      handlebars: 4.7.9
+      handlebars: 4.7.10
       marked: 4.3.0
       walk-back: 5.1.2
 
@@ -17839,7 +17839,7 @@ snapshots:
       pumpify: 1.5.1
       through2: 2.0.5
 
-  handlebars@4.7.9:
+  handlebars@4.7.10:
     dependencies:
       minimist: 1.2.8
       neo-async: 2.6.2
