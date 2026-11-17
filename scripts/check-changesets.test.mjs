@@ -23,7 +23,7 @@ const write = async (cwd, file, contents) => {
   await fs.writeFile(target, contents);
 };
 
-const packageJson = name => JSON.stringify({ name }, null, 2);
+const packageJson = name => JSON.stringify({ name, version: '1.0.0' }, null, 2);
 
 const createRepository = async () => {
   const cwd = await fs.mkdtemp(path.join(os.tmpdir(), 'changeset-check-'));
@@ -215,4 +215,31 @@ test('resolves added and deleted package names', async () =>
       '@openfn/language-common',
       '@openfn/language-new',
     ]);
+  }));
+
+test('accepts a package whose version was bumped without a changeset', async () =>
+  withRepository(async cwd => {
+    await write(
+      cwd,
+      'packages/common/package.json',
+      JSON.stringify({ name: '@openfn/language-common', version: '2.0.0' })
+    );
+    await write(cwd, 'packages/common/CHANGELOG.md', '## 2.0.0\n');
+    const result = await evaluateCoverage({ cwd, baseRef: 'main' });
+
+    assert.deepEqual(packageNames(result), ['@openfn/language-common']);
+    assert.deepEqual(result.missing, []);
+  }));
+
+test('still requires a changeset when other files change without a bump', async () =>
+  withRepository(async cwd => {
+    await write(cwd, 'packages/common/index.js', 'export const common = 2;\n');
+    await write(
+      cwd,
+      'packages/gmail/package.json',
+      JSON.stringify({ name: '@openfn/language-gmail', version: '9.9.9' })
+    );
+    const result = await evaluateCoverage({ cwd, baseRef: 'main' });
+
+    assert.deepEqual(missingNames(result), ['@openfn/language-common']);
   }));

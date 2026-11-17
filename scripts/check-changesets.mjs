@@ -7,7 +7,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const rootDir = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
-  '..'
+  '..',
 );
 const docsUrl =
   'https://github.com/OpenFn/adaptors/blob/main/README.md#changesets';
@@ -62,20 +62,44 @@ const readPackage = async (directory, mergeBase, cwd) => {
   }
 };
 
-export const inspectRepository = async ({
-  cwd = rootDir,
-  baseRef,
-} = {}) => {
+const readVersions = async (directory, mergeBase, cwd) => {
+  const packageFile = `packages/${directory}/package.json`;
+  const parseVersion = contents => {
+    try {
+      return JSON.parse(contents).version ?? null;
+    } catch {
+      return null;
+    }
+  };
+
+  const before = git(['show', `${mergeBase}:${packageFile}`], {
+    cwd,
+    allowFailure: true,
+  });
+  let after = null;
+  try {
+    after = await fs.readFile(path.join(cwd, packageFile), 'utf8');
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+  }
+
+  return {
+    before: before && parseVersion(before),
+    after: after && parseVersion(after),
+  };
+};
+
+export const inspectRepository = async ({ cwd = rootDir, baseRef } = {}) => {
   const base = baseRef ?? resolveBase(cwd);
   const mergeBase = git(['merge-base', base, 'HEAD'], { cwd }).trim();
   const untrackedFiles = splitFiles(
-    git(['ls-files', '--others', '--exclude-standard', '-z'], { cwd })
+    git(['ls-files', '--others', '--exclude-standard', '-z'], { cwd }),
   );
   const changedFiles = [
     ...splitFiles(
       git(['diff', '--name-only', '--no-renames', '-z', mergeBase, '--'], {
         cwd,
-      })
+      }),
     ),
     ...untrackedFiles,
   ];
@@ -95,16 +119,30 @@ export const inspectRepository = async ({
     const packageJson = await readPackage(directory, mergeBase, cwd);
     if (!packageJson.name?.startsWith('@openfn/language-')) {
       throw new Error(
-        `packages/${directory}/package.json has no OpenFn adaptor package name.`
+        `packages/${directory}/package.json has no OpenFn adaptor package name.`,
       );
     }
 
-    const paths = packagesByName.get(packageJson.name) ?? [];
-    paths.push(...files);
-    packagesByName.set(packageJson.name, paths);
+    // Check if the version was bumped locally - this is the same as a changeset
+    const { before, after } = await readVersions(directory, mergeBase, cwd);
+    const entry = packagesByName.get(packageJson.name) ?? {
+      paths: [],
+      versionBumped: false,
+    };
+    entry.paths.push(...files);
+    // Only an existing package whose version changed counts as a bump
+    // (new and deleted packages have no before/after pair)
+    if (before && after && before !== after) {
+      entry.versionBumped = true;
+    }
+    packagesByName.set(packageJson.name, entry);
   }
   const changedPackages = [...packagesByName]
-    .map(([name, files]) => ({ name, paths: [...new Set(files)].sort() }))
+    .map(([name, { paths, versionBumped }]) => ({
+      name,
+      paths: [...new Set(paths)].sort(),
+      versionBumped,
+    }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
   const changesetFiles = [
@@ -119,8 +157,8 @@ export const inspectRepository = async ({
           '--',
           '.changeset/*.md',
         ],
-        { cwd }
-      )
+        { cwd },
+      ),
     ),
     ...untrackedFiles.filter(file => /^\.changeset\/[^/]+\.md$/.test(file)),
   ]
@@ -161,7 +199,7 @@ export const evaluateCoverage = async ({
     ...inspection,
     covered: [...covered].sort(),
     missing: inspection.changedPackages.filter(
-      pkg => !covered.has(pkg.name)
+      pkg => !covered.has(pkg.name) && !pkg.versionBumped,
     ),
     errors,
   };
@@ -183,7 +221,7 @@ const reportNotRequired = async environment => {
     'GITHUB_STEP_SUMMARY',
     `## Changeset not required
 
-No files under \`packages/*\` changed in this pull request.`
+No files under \`packages/*\` changed in this pull request.`,
   );
 };
 
@@ -195,7 +233,7 @@ const detect = async (baseRef, environment) => {
     environment,
     'GITHUB_OUTPUT',
     `required=${required}
-changed-packages=${JSON.stringify(changedPackages.map(pkg => pkg.name))}`
+changed-packages=${JSON.stringify(changedPackages.map(pkg => pkg.name))}`,
   );
 
   if (!required) return reportNotRequired(environment);
@@ -207,7 +245,7 @@ changed-packages=${JSON.stringify(changedPackages.map(pkg => pkg.name))}`
     'GITHUB_STEP_SUMMARY',
     `## Changeset required
 
-${packageList(changedPackages)}`
+${packageList(changedPackages)}`,
   );
 };
 
@@ -235,7 +273,7 @@ const validate = async (baseRef, environment) => {
       '',
       "Run 'pnpm changeset' and commit the generated file.",
       "If no release is needed, ask a maintainer to apply the exact 'no changeset required' label.",
-      `See ${docsUrl}.`
+      `See ${docsUrl}.`,
     );
 
     const message = lines.join('\n');
@@ -257,7 +295,7 @@ const validate = async (baseRef, environment) => {
 
 \`\`\`
 ${message}
-\`\`\``
+\`\`\``,
     );
     return false;
   }
@@ -269,7 +307,7 @@ ${message}
     'GITHUB_STEP_SUMMARY',
     `## Changeset coverage passed
 
-${packageList(result.changedPackages)}`
+${packageList(result.changedPackages)}`,
   );
   return true;
 };
@@ -278,7 +316,7 @@ const parseArguments = argv => {
   const mode = argv[0];
   if (!['detect', 'validate'].includes(mode)) {
     throw new Error(
-      'Usage: node scripts/check-changesets.mjs <detect|validate> [--base <ref>]'
+      'Usage: node scripts/check-changesets.mjs <detect|validate> [--base <ref>]',
     );
   }
 
@@ -291,7 +329,7 @@ const parseArguments = argv => {
 
 export const main = async (
   argv = process.argv.slice(2),
-  environment = process.env
+  environment = process.env,
 ) => {
   const { mode, baseRef } = parseArguments(argv);
   if (mode === 'detect') {
