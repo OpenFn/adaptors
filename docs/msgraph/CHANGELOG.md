@@ -1,5 +1,11 @@
 # @openfn/language-msgraph
 
+## 0.10.3
+
+### Patch Changes
+
+- ee791b4: Update docs
+
 ## 0.10.2 - 03 September 2026
 
 ### Patch Changes
@@ -419,7 +425,7 @@
 ### Patch Changes
 
 - aad9549: Ensure that standard OAuth2 credentials with snake-cased
-  "access\_token" keys can be used for OAuth2-reliant adaptors
+  "access_token" keys can be used for OAuth2-reliant adaptors
 - Updated dependencies \[aad9549]
   - @openfn/language-common@1.10.0
 

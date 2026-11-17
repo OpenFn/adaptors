@@ -1,5 +1,11 @@
 # @openfn/language-collections
 
+## 0.9.5
+
+### Patch Changes
+
+- 2b495b3: Security update
+
 ## 0.9.4 - 03 September 2026
 
 ### Patch Changes
@@ -35,7 +41,7 @@
 
 ### Minor Changes
 
-- Add support for project\_id on config
+- Add support for project_id on config
 
 ## 0.8.6 - 14 April 2026
 
