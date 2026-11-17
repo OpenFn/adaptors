@@ -239,13 +239,16 @@ const validate = async (baseRef, environment) => {
     );
 
     const message = lines.join('\n');
-    console.error(message);
     if (environment.GITHUB_ACTIONS === 'true') {
+      // The annotation is also echoed in the step log, so don't print the
+      // plain message as well or it appears twice.
       const annotation = message
         .replace(/%/g, '%25')
         .replace(/\r/g, '%0D')
         .replace(/\n/g, '%0A');
       console.error(`::error title=Changeset required::${annotation}`);
+    } else {
+      console.error(message);
     }
     await appendEnvironmentFile(
       environment,
