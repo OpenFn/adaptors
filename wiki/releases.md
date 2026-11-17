@@ -131,6 +131,8 @@ If the publish and tag succeeded but the trust step failed (usually an expired
 OTP) the package is live and **nothing is rolled back**. Don't run `publish:new`
 again. Just [trust the package](#trusting-a-package).
 
+If you get a 404 error, it probably means you need to run `npm login`.
+
 ## Trusting a package
 
 Every adaptor must be manually configured for trust by a collaborator.
