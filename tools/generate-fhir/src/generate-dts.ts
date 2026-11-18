@@ -2,7 +2,7 @@
 // https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API#creating-and-printing-a-typescript-ast
 
 import ts from 'typescript';
-import { getBuilderName, getTypeName } from './util';
+import { dedupe, getBuilderName, getTypeName } from './util';
 import { PropDef } from './generate-schema';
 import { MappingSpec } from './types';
 
@@ -266,28 +266,9 @@ const generateEntryFuction = (
   return result;
 };
 
-const typePrinter = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
-const typeSourceFile = ts.createSourceFile('', '', ts.ScriptTarget.Latest);
-
 const createUnionTypeNode = (types: ts.TypeNode[]): ts.TypeNode => {
-  const seen = new Set<string>();
-  const uniqueTypes = types.filter(type => {
-    // Compare emitted types after primitive mapping and shorthand expansion.
-    const key = typePrinter.printNode(
-      ts.EmitHint.Unspecified,
-      type,
-      typeSourceFile,
-    );
-    if (seen.has(key)) {
-      return false;
-    }
-    seen.add(key);
-    return true;
-  });
-
-  return uniqueTypes.length === 1
-    ? uniqueTypes[0]
-    : b.createUnionTypeNode(uniqueTypes);
+  const unique = dedupe(types);
+  return unique.length === 1 ? unique[0] : b.createUnionTypeNode(unique);
 };
 
 // note that this is kinda duplicated from generate-types
