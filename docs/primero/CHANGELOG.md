@@ -1,6 +1,6 @@
 # @openfn/language-primero
 
-## 4.2.1
+## 4.2.1 - 18 November 2026
 
 ### Patch Changes
 

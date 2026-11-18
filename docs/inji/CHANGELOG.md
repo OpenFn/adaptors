@@ -1,6 +1,6 @@
 # @openfn/language-inji
 
-## 1.0.0
+## 1.0.0 - 18 November 2026
 
 ### New Features
 

@@ -1,6 +1,6 @@
 # @openfn/language-kobotoolbox
 
-## 4.3.4
+## 4.3.4 - 18 November 2026
 
 ### Patch Changes
 
