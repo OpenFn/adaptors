@@ -43,3 +43,8 @@ test('returns empty and single inputs unchanged', t => {
   const only = string();
   t.deepEqual(dedupe([only]), [only]);
 });
+
+test('dedupes by a custom key', t => {
+  const result = dedupe(['a', 'A', 'b'], s => s.toLowerCase());
+  t.deepEqual(result, ['a', 'b']);
+});

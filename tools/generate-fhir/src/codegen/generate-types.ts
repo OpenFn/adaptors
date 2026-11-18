@@ -1,7 +1,12 @@
 import { namedTypes as n, builders as b, ASTNode } from 'ast-types';
 import { print, parse } from 'recast';
 import _ from 'lodash';
-import { getBuilderName, getInterfaceName, getTypeName } from '../util';
+import {
+  dedupe,
+  getBuilderName,
+  getInterfaceName,
+  getTypeName,
+} from '../util';
 import { PropDef } from '../generate-schema';
 import { MappingSpec, Schema } from '../types';
 import { ValueSets } from './values';
@@ -117,13 +122,19 @@ export const generateType = (
     }
 
     // Now map them to nodes
-    const types = t.map(t =>
+    const nodes = t.map(t =>
       createTypeNode(
         t in fhirTypes ? `FHIR.${t}` : t,
         s.isArray,
         m.values || s.values,
         mappings.typeShorthands?.[t]?.filter(s => !t.includes(s)),
       ),
+    );
+    // Shorthand unions print without brackets, so flatten them before
+    // removing duplicates (eg string | string | FHIR.Reference)
+    const types = dedupe<any>(
+      nodes.flatMap(node => (n.TSUnionType.check(node) ? node.types : [node])),
+      node => print(node).code,
     );
     if (types.length == 1) {
       props.push(
