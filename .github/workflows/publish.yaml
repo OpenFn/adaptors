@@ -59,7 +59,8 @@ jobs:
           if [ -n "$CHANGED" ]; then
             git add -A
             git commit -m "automation: update changelog dates [skip ci]"
-            git push
+            
+            # We push at the end of the job, if publish succeeds
           else
             echo "No changelog date changes to commit"
           fi
@@ -68,11 +69,16 @@ jobs:
           pnpm publish -r --report-summary --publish-branch main --access=public
 
       - run: pnpm changeset tag
-      - run: git push --tags
 
       - run: pnpm slack:notify
         env:
           SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+
+      # Only push git changes once the publish has succeeded
+      - name: Push changelog commit and tags
+        run: |
+          git push
+          git push --tags
 
       # deprecate any outstanding @next builds, if any
       # - run: pnpm next:deprecate
