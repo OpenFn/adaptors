@@ -12,8 +12,14 @@ jobs:
       contents: write
       id-token: write
     steps:
+      - uses: actions/create-github-app-token@v2
+        id: app-token
+        with:
+          app-id: ${{ secrets.RELEASE_APP_ID }}
+          private-key: ${{ secrets.RELEASE_APP_KEY }}
       - uses: actions/checkout@v6
         with:
+          token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 1
           fetch-tags: true
       - uses: pnpm/setup@v3
@@ -26,10 +32,18 @@ jobs:
       - run: pnpm test:git
       - run: pnpm test
 
+      - name: Get bot user id
+        id: bot-user
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          echo "id=$(gh api "/users/${{ steps.app-token.outputs.app-slug }}[bot]" --jq .id)" >> "$GITHUB_OUTPUT"
       - name: Setup GH user
-        run: git config user.name ${{ secrets.GH_USER }}
+        run: git config user.name '${{ steps.app-token.outputs.app-slug }}[bot]'
       - name: Setup GH email
-        run: git config user.email ${{ secrets.GH_EMAIL }}
+        run:
+          git config user.email '${{ steps.bot-user.outputs.id }}+${{
+          steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com'
 
       - name: Update changelog dates
         run: pnpm run changelog
