@@ -70,15 +70,15 @@ jobs:
 
       - run: pnpm changeset tag
 
-      - run: pnpm slack:notify
-        env:
-          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
-
       # Only push git changes once the publish has succeeded
       - name: Push changelog commit and tags
         run: |
           git push
           git push --tags
+
+      - run: pnpm slack:notify
+        env:
+          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
 
       # deprecate any outstanding @next builds, if any
       # - run: pnpm next:deprecate
