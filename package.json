@@ -26,6 +26,7 @@
     "metadata": "pnpm -C tools/metadata cli",
     "migrate": "cd tools/migrate && pnpm migrate",
     "prerelease": "node scripts/prerelease.mjs --no-warnings",
+    "publish:list": "node scripts/publish-list.mjs",
     "publish:new": "node scripts/publish-new.mjs",
     "setup": "pnpm --filter \"./tools/**\" install",
     "slack:notify": "cd tools/slack && pnpm notify",

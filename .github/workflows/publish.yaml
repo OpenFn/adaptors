@@ -32,6 +32,10 @@ jobs:
       - run: pnpm test:git
       - run: pnpm test
 
+      # Log every adaptor that will be published (dry run)
+      - name: List adaptors to publish
+        run: pnpm publish:list
+
       - name: Get bot user id
         id: bot-user
         env:
