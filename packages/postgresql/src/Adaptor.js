@@ -1,4 +1,5 @@
 import pg from 'pg';
+import { createTunnel } from './tunnel.js';
 import { format } from './util.js';
 import {
   execute as commonExecute,
@@ -13,6 +14,7 @@ import {
 } from './builders.js';
 
 let client = null;
+let tunnel = null;
 
 /**
  * State object
@@ -85,15 +87,15 @@ export function execute(...operations) {
       newClient,
       ...operations,
       endClient
-    )({ ...initialState, ...state }).catch(e => {
-      endClient(state);
+    )({ ...initialState, ...state }).catch(async e => {
+      await endClient(state).catch(() => {});
       console.error(e);
       throw e;
     });
   };
 }
 
-function newClient(state) {
+async function newClient(state) {
   const {
     ca,
     ssl,
@@ -105,6 +107,11 @@ function newClient(state) {
     database,
     password,
     allowSelfSignedCert,
+    ssh_key,
+    ssh_host,
+    ssh_port,
+    ssh_user,
+    ssh_passphrase,
   } = state.configuration || {};
 
   // Allowing or blocking self signed certificate
@@ -116,14 +123,45 @@ function newClient(state) {
   // setup client config
   const config = { host, port, database, user, password, ssl: sslOptions };
 
+  // If an ssh key is provided, connect through an ssh tunnel.
+  // host/port are resolved from the ssh server's point of view.
+  if (ssh_key) {
+    tunnel = await createTunnel({
+      sshHost: ssh_host ?? host,
+      sshPort: ssh_port,
+      sshUser: ssh_user,
+      privateKey: ssh_key,
+      passphrase: ssh_passphrase,
+      dstHost: host,
+      dstPort: port ?? 5432,
+    });
+    console.log(`SSH tunnel open on ${tunnel.host}:${tunnel.port}`);
+    config.host = tunnel.host;
+    config.port = tunnel.port;
+  }
+
   // instantiate a new client
   client = new pg.Client(config);
-  client.connect();
+  try {
+    await client.connect();
+  } catch (e) {
+    await closeTunnel();
+    throw e;
+  }
   return state;
 }
 
-function endClient(state) {
-  client.end();
+async function closeTunnel() {
+  if (tunnel) {
+    const t = tunnel;
+    tunnel = null;
+    await t.close();
+  }
+}
+
+async function endClient(state) {
+  await client?.end();
+  await closeTunnel();
   return state;
 }
 async function queryHandler(query, values) {
