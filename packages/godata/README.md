@@ -23,232 +23,45 @@ definition.
 
 ## Helper Functions
 
-### post(...)
+Full function docs live on the
+[docs site](https://docs.openfn.org/adaptors/packages/godata-docs). Every
+operation writes the response body to `state.data` and the rest of the
+response (status code, headers, url) to `state.response`. A failed request
+fails the run.
 
-## Fetch the list of outbreaks
-
-This function is used to fetch the whole list of outbreaks in Go.Data.
-
-```js
-listOutbreaks(state => {
-  console.log(state.data);
-  return state;
-});
-```
-
-## Get a specific outbreak
-
-This function can be used to fetch one specific outbreak. A filtering mechanism
-is used to specify a criteria to match. Mutliple outbreaks could be returned if
-matched by the filter.
+### Outbreaks, cases, contacts, locations and reference data
 
 ```js
-getOutbreak({ where: { name: 'Outbreak demo' } }, state => {
-  console.log(state.data);
-  return state;
-});
-```
-
-## Insert or Update an outbreak using a unique id as a key
-
-This function is used to either update a record in Go.Data if matched or insert
-a new one if no record matched the unique id.
-
-```js
-upsertOutbreak({
-  externalId: '3dec33-ede3',
-  data: {
-    name: 'string',
-    description: 'string',
-    disease: 'string',
-    countries: [
-      {
-        id: 'SENEGAL',
-      },
-    ],
-    startDate: '2020-12-17T14:54:19.498Z',
-    endDate: '2020-12-17T14:54:19.498Z',
-    longPeriodsBetweenCaseOnset: 0,
-    periodOfFollowup: 0,
-  },
-});
-```
-
-## Fetch the list of cases
-
-This function is used to fetch the whole list of cases for a specific outbreak
-in Go.Data.
-
-```js
-listCases('4c444f7-4e11-41d0-c1af-331dd15a892e', state => {
-  console.log(state);
-  return state;
-});
-```
-
-## Get a specific case
-
-This function can be used to fetch one specific case for an outbreak. A
-filtering mechanism can specify a criteria to match. Mutliple cases could be
-returned if matched by the filter.
-
-```js
-getCase(
-  '4c444f7-4e11-41d0-c1af-331dd15a892e',
-  { 'where.relationship': { active: true }, where: { firstName: 'Luca' } },
-  state => {
-    console.log(state);
-    return state;
-  }
-);
-```
-
-## Insert or Update a case using a unique id as a key
-
-This function is used to either update a case in Go.Data if matched or insert a
-new one if no record matched the unique id.
-
-```js
-upsertCase('4dce-3eedce3-rd33', 'visualId',
-  data: state => {
-    const patient = state.data.body;
-    return {
-      firstName: patient.Patient_name.split(' ')[0],
-      lastName: patient.Patient_name.split(' ')[1],
-      visualId: patient.Case_ID,
-      'age:years': patient.Age_in_year,
-      gender: patient.Sex,
-    };
-  });
-```
-
-## Fetch the list of contacts
-
-This function is used to fetch the whole list of contacts for a specific
-outbreak in Go.Data.
-
-```js
-listContacts('4c444f7-4e11-41d0-c1af-331dd15a892e', state => {
-  console.log(state);
-  return state;
-});
-```
-
-## Get a specific contact
-
-This function can be used to get one specific contact for an outbreak. A
-filtering mechanism can specify a criteria to match. Mutliple contacts could be
-returned if matched by the filter.
-
-```js
-getContact('343d-dc3e', { where: { firstName: 'Luca' } }, state => {
-  console.log(state.data);
-  return state;
-});
-```
-
-## Insert or Update a contact using a unique id as a key
-
-This function is used to either update a contact in Go.Data if matched or insert
-a new one if no record matched the unique id.
-
-```js
-upsertContact('4dce-3eedce3-rd33', 'visualId', {
+listOutbreaks();
+getCase('343d-dc3e', { where: { visualId: 'CA00000001' } });
+upsertContact('343d-dc3e', 'visualId', {
+  visualId: 'CON-0001',
   firstName: 'Luca',
-  gender: 'male',
-  'age:years': '20',
 });
 ```
 
-## Fetch the list of locations
+The `upsert*` functions look for an existing record whose match field (e.g.
+`visualId`) equals the value in the payload. They create the record if none
+match, update it if one matches, and throw if more than one matches. On update,
+send only the fields you want to change.
 
-This function is used to fetch the list of locations.
+### Any other GoData endpoint
+
+Use `get`, `post`, `put`, `patch`, `del` or `request` with a path
+relative to `apiUrl`. A `filter` object in the query is JSON-encoded for you.
 
 ```js
-listLocations(state => {
-  console.log(state);
-  return state;
+get('/outbreaks/343d-dc3e/follow-ups', {
+  filter: { where: { date: { gt: '2026-01-01' } }, limit: 100 },
 });
+post('/teams', { name: 'Team A', userIds: [] });
 ```
 
-## Get a specific location
+### Access
 
-This function can be used to get one specific location. A filtering mechanism
-can specify a criteria to match. Mutliple locations could be returned if matched
-by the filter.
-
-```js
-getLocation({ where: { name: '30 DE MAYO' } }, state => {
-  console.log(state.data);
-  return state;
-});
-```
-
-## Insert or Update a location using a unique id as a key
-
-This function is used to either update a location if matched or insert a new. A
-custom `externalId` can be provided.
-
-```js
-upsertLocation('name', {
-  name: '30 DE DECIEMBRE',
-  synonyms: [],
-  identifiers: [],
-  active: true,
-  populationDensity: 0,
-  geoLocation: {
-    lat: -45.343244,
-    lng: -67.193873,
-  },
-});
-```
-
-## Fetch the list of reference data
-
-This function is used to fetch the list of reference data.
-
-```js
-listReferenceData(state => {
-  console.log(state);
-  return state;
-});
-```
-
-## Get a specific reference data
-
-This function can be used to get one specific reference data. A filtering
-mechanism can specify a criteria to match.
-
-```js
-getReferenceData(
-  { where: { categoryId: 'LNG_REFERENCE_DATA_CATEGORY_CENTRE_NAME' } },
-  state => {
-    console.log(state.data);
-    return state;
-  }
-);
-```
-
-## Insert or Update a reference data using a unique id as a key
-
-This function is used to either update a location if matched or insert a new. A
-custom `externalId` can be provided.
-
-```js
-upsertReferenceData('id', {
-  categoryId: 'CATEGORY',
-  value: 'VALUE',
-  readOnly: false,
-  active: true,
-  id: 'ID',
-  createdAt: '2020-10-01T18:48:31.784Z',
-  createdBy: '95d31ea9',
-  updatedAt: '2020-10-01T18:48:31.784Z',
-  updatedBy: '95d31ea9',
-  createdOn: 'API',
-  deleted: false,
-});
-```
+The GoData user in the credential must have access to every outbreak the job
+reads or writes. Operations always name the outbreak explicitly and do not rely
+on the user's active outbreak.
 
 ## Development
 
