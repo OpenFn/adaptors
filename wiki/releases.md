@@ -178,6 +178,14 @@ First check the workflow log to see which package was rejected. Then check the
 package's Settings tab on npmjs.com to see whether a trusted publisher is
 listed, and whether it points at `OpenFn/adaptors` and `publish.yaml`.
 
+See Renewing Trust to fix it.
+
+The error for broken trust is often not obvious. It can look like this:
+
+```
+[WARN] Skipped OIDC: ERR_PNPM_AUTH_TOKEN_EXCHANGE: Failed token exchange request with body message: Unknown error (status code 404)
+```
+
 ### Renewing trust
 
 If trust is missing, wrong, or stale, revoke it and add it again:
