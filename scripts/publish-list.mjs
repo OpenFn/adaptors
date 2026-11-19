@@ -112,6 +112,7 @@ if (process.env.GITHUB_STEP_SUMMARY) {
           `| ${p.name} | ${p.version} | ${failed.has(p.name) ? 'FAILED' : 'ok'} |`,
       ),
       '',
+      'For any adaptors which fail to publish, try asking a maintainer to renew trust with `pnpm run trust --renew <adaptor> <opt>`',
     ].join('\n'),
   );
 }
