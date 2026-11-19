@@ -8,10 +8,12 @@ Do NOT infer or add endpoints.
 
 ## Workflow
 
-1. **Read docs first**
+1. **Read `./wiki/` first**
 2. **Output PLAN** (see template below)
 3. **Wait for "APPROVED:"** before generating code
-4. **Generate code** with doc references
+4. **Generate code**
+5. **Self-review** the diff against `./wiki/code-review.md` and fix what it
+   finds before handing back
 
 ---
 
@@ -29,12 +31,15 @@ Tests: <N>
 ONE-FUNCTION DEFAULT: <yes if N=1, no if N>1>
 
 Invariants:
-✓ Utils.js: request only (no operational functions)
-✓ Adaptors.js: request + operational functions
+✓ Utils.js: request + helpers only
+✓ Adaptor.js: request + operational functions
+✓ index.js: exports every public function
 
 Docs consulted:
-- ./docs/build-a-new-adaptor.md
-- ./docs/unit-testing-guide.md
+- ./wiki/build-a-new-adaptor.md
+- ./wiki/best-practice.md
+- ./wiki/docs.md
+- ./wiki/unit-test-guide.md
 
 Questions: <or "None">
 <<<END PLAN>>>
@@ -44,37 +49,29 @@ STOP and wait for "APPROVED:" before coding.
 
 ---
 
-## File Invariants (DO NOT BREAK)
+## File and Design Rules
 
-### Utils.js
+`claude.md` at the repo root holds the full file invariants and design rules
+for generated adaptors. Follow them. In short:
 
-```javascript
-/**
- * INVARIANT: Must export function named `request`
- * - Infrastructure/helpers ONLY
- * - NO operational functions here
- */
-export function request(configuration, path, params, callback) { ... }
-```
-
-### Adaptors.js
-
-```javascript
-/**
- * INVARIANT: Must export function named `request`
- * - ALL operational functions go here
- */
-export function request(method, path, body, options = {}){ ... }
-export function getData(params) { ... }
-```
+- `Utils.js` exports `request(configuration, method, path, options)` plus
+  helpers (`prepareNextState`, the pagination loop); no operational functions
+- `Adaptor.js` exports `request(method, path, body, options)` and all
+  operational functions
+- `index.js` exports every public function; tests and consumers import from it
+- Required arguments are positional; everything optional goes in a trailing
+  `options` object. No callbacks
+- Generated files contain only code and JSDoc for the functions: no banner
+  comments, invariant comments or commented-out code
 
 ---
 
 ## Testing
 
-- Every function needs unit test with **Undici MockAgent**
+- At least one unit test per function exported from `index.js`, `request`
+  included, using **Undici MockAgent**
 - No live network calls
-- Follow `./wiki/unit-testing-guide.md`
+- Follow `./wiki/unit-test-guide.md`
 
 ---
 
@@ -94,12 +91,15 @@ Tests: 1
 ONE-FUNCTION DEFAULT: yes
 
 Invariants:
-✓ Utils.js: request only
-✓ Adaptors.js: request + getData
+✓ Utils.js: request + helpers only
+✓ Adaptor.js: request + getData
+✓ index.js: exports every public function
 
 Docs consulted:
-- ./docs/build-a-new-adaptor.md
-- ./docs/unit-testing-guide.md
+- ./wiki/build-a-new-adaptor.md
+- ./wiki/best-practice.md
+- ./wiki/docs.md
+- ./wiki/unit-test-guide.md
 
 Questions: None
 <<<END PLAN>>>

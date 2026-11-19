@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { enableMockClient } from '@openfn/language-common/util';
 
-import { request, dataValue } from '../src/Adaptor.js';
+import { request, dataValue } from '../src/index.js';
 
 // This creates a mock client which acts like a fake server.
 // It enables pattern-matching on the request object and custom responses
