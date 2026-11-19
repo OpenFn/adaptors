@@ -1,10 +1,425 @@
 {
   "operations": [
     {
+      "name": "request",
+      "params": [
+        "method",
+        "path",
+        "options"
+      ],
+      "docs": {
+        "description": "Make a request to any GoData API endpoint. Paths are relative to `apiUrl`.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "request('GET', '/teams');",
+            "caption": "List the teams in GoData"
+          },
+          {
+            "title": "example",
+            "description": "request('POST', '/outbreaks/3b55-cdf4/contacts/a1b2/follow-ups', {\n  body: { date: '2026-11-19', targeted: true },\n});",
+            "caption": "Create a follow-up for a contact"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "HTTP method to use",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "method"
+          },
+          {
+            "title": "param",
+            "description": "Path to resource, e.g. `/outbreaks`",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Query, body, headers and error options",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "RequestOptions"
+              }
+            },
+            "name": "options"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "get",
+      "params": [
+        "path",
+        "params"
+      ],
+      "docs": {
+        "description": "Make a GET request to any GoData API endpoint. A `filter` object in the query is JSON-encoded for you.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "get('/users', { filter: { where: { firstName: 'Luca' } } });",
+            "caption": "Get users with a filter"
+          },
+          {
+            "title": "example",
+            "description": "get($ => `/outbreaks/${$.outbreakId}/follow-ups`);",
+            "caption": "Get follow-ups for an outbreak"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource, e.g. `/users`",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Query parameters, e.g. `{ filter: { where: {...}, limit: 10 } }`",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "params"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "post",
+      "params": [
+        "path",
+        "data",
+        "params"
+      ],
+      "docs": {
+        "description": "Make a POST request to any GoData API endpoint.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "post('/teams', { name: 'Team A', userIds: [] });",
+            "caption": "Create a team"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource, e.g. `/teams`",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Body of the request",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Query parameters",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "params"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "put",
+      "params": [
+        "path",
+        "data",
+        "params"
+      ],
+      "docs": {
+        "description": "Make a PUT request to any GoData API endpoint. Send only the fields you want to change.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "put('/teams/a1b2', { name: 'Team B' });",
+            "caption": "Update a team"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource, e.g. `/teams/a1b2`",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Body of the request",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Query parameters",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "params"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "patch",
+      "params": [
+        "path",
+        "data",
+        "params"
+      ],
+      "docs": {
+        "description": "Make a PATCH request to any GoData API endpoint.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "patch('/users/a1b2', { lastName: 'Smith' });",
+            "caption": "Patch a user"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Body of the request",
+            "type": {
+              "type": "NameExpression",
+              "name": "object"
+            },
+            "name": "data"
+          },
+          {
+            "title": "param",
+            "description": "Query parameters",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "params"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "del",
+      "params": [
+        "path",
+        "params"
+      ],
+      "docs": {
+        "description": "Make a DELETE request to any GoData API endpoint.",
+        "tags": [
+          {
+            "title": "public",
+            "description": null,
+            "type": null
+          },
+          {
+            "title": "example",
+            "description": "del('/teams/a1b2');",
+            "caption": "Delete a team"
+          },
+          {
+            "title": "function",
+            "description": null,
+            "name": null
+          },
+          {
+            "title": "param",
+            "description": "Path to resource",
+            "type": {
+              "type": "NameExpression",
+              "name": "string"
+            },
+            "name": "path"
+          },
+          {
+            "title": "param",
+            "description": "Query parameters",
+            "type": {
+              "type": "OptionalType",
+              "expression": {
+                "type": "NameExpression",
+                "name": "object"
+              }
+            },
+            "name": "params"
+          },
+          {
+            "title": "returns",
+            "description": null,
+            "type": {
+              "type": "NameExpression",
+              "name": "Operation"
+            }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
       "name": "listContacts",
       "params": [
-        "id",
-        "callback"
+        "id"
       ],
       "docs": {
         "description": "Fetch the list of contacts within a particular outbreak using its ID.",
@@ -16,7 +431,7 @@
           },
           {
             "title": "example",
-            "description": "listContacts(\"343d-dc3e\", // Outbreak Id\n   state => {\n      console.log(state);\n   return state;\n });"
+            "description": "listContacts('343d-dc3e');"
           },
           {
             "title": "function",
@@ -33,21 +448,16 @@
             "name": "id"
           },
           {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
           }
         ]
       },
@@ -57,11 +467,10 @@
       "name": "getContact",
       "params": [
         "id",
-        "query",
-        "callback"
+        "query"
       ],
       "docs": {
-        "description": "Get one or multiple contacts within an outbreak from a query filter",
+        "description": "Get one or multiple contacts within an outbreak from a query filter.",
         "tags": [
           {
             "title": "public",
@@ -70,7 +479,7 @@
           },
           {
             "title": "example",
-            "description": "getContact(\"343d-dc3e\", {\"where\":{\"firstName\": \"Luca\"}}, state => {\n   console.log(state.data);\n   return state;\n });"
+            "description": "getContact('343d-dc3e', { where: { firstName: 'Luca' } });"
           },
           {
             "title": "function",
@@ -88,21 +497,12 @@
           },
           {
             "title": "param",
-            "description": "An object with a query filter parameter",
+            "description": "A GoData (LoopBack) filter, e.g. `{ where: {...} }`",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
             "name": "query"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -111,6 +511,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
           }
         ]
       },
@@ -121,11 +525,10 @@
       "params": [
         "id",
         "externalId",
-        "goDataContact",
-        "callback"
+        "goDataContact"
       ],
       "docs": {
-        "description": "Upsert contact to godata using an external id to match a specific record.",
+        "description": "Upsert a contact within an outbreak. Looks up the contact whose `externalId` field\nmatches the value of that field on `goDataContact`. Creates the contact if none match,\nupdates it if one matches, and throws if more than one matches.\nOn update, send only the fields you want to change.",
         "tags": [
           {
             "title": "public",
@@ -134,7 +537,7 @@
           },
           {
             "title": "example",
-            "description": "upsertContact(\"4dce-3eedce3-rd33\", 'visualId',\n   {\n     firstName: 'Luca',\n     gender: 'male',\n     'age:years': '20'\n     ...\n   }\n )"
+            "description": "upsertContact('4dce-3eedce3-rd33', 'visualId', {\n  visualId: 'CON-0001',\n  firstName: 'Luca',\n  gender: 'male',\n  'age:years': '20',\n});"
           },
           {
             "title": "function",
@@ -152,7 +555,7 @@
           },
           {
             "title": "param",
-            "description": "External Id to match",
+            "description": "Match field: the contact property used to find an existing contact, e.g. `visualId`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -161,21 +564,12 @@
           },
           {
             "title": "param",
-            "description": "an object with some case data.",
+            "description": "The contact data. Must include the match field.",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
             "name": "goDataContact"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -184,6 +578,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
           }
         ]
       },
@@ -191,11 +589,9 @@
     },
     {
       "name": "listOutbreaks",
-      "params": [
-        "callback"
-      ],
+      "params": [],
       "docs": {
-        "description": "Fetch the list of outbreaks",
+        "description": "Fetch the list of outbreaks.",
         "tags": [
           {
             "title": "public",
@@ -204,21 +600,12 @@
           },
           {
             "title": "example",
-            "description": "listOutbreaks(state => {\n   console.log(state.data);\n   return state;\n });"
+            "description": "listOutbreaks();"
           },
           {
             "title": "function",
             "description": null,
             "name": null
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -227,6 +614,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
           }
         ]
       },
@@ -235,11 +626,10 @@
     {
       "name": "getOutbreak",
       "params": [
-        "query",
-        "callback"
+        "query"
       ],
       "docs": {
-        "description": "Get one or multiple outbreaks from a query filter",
+        "description": "Get one or multiple outbreaks from a query filter.",
         "tags": [
           {
             "title": "public",
@@ -248,7 +638,7 @@
           },
           {
             "title": "example",
-            "description": "getOutbreak({\"where\":{\"name\": \"Outbreak demo\"}}, state => {\n   console.log(state.data);\n   return state;\n });"
+            "description": "getOutbreak({ where: { name: 'Outbreak demo' } });"
           },
           {
             "title": "function",
@@ -257,21 +647,12 @@
           },
           {
             "title": "param",
-            "description": "An object with a query filter parameter",
+            "description": "A GoData (LoopBack) filter, e.g. `{ where: {...} }`",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
             "name": "query"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -280,6 +661,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
           }
         ]
       },
@@ -288,11 +673,10 @@
     {
       "name": "upsertOutbreak",
       "params": [
-        "outbreak",
-        "callback"
+        "outbreak"
       ],
       "docs": {
-        "description": "Upsert outbreak to godata",
+        "description": "Upsert an outbreak. `outbreak.externalId` is the outbreak `id` to match:\nif an outbreak with that id exists it is updated, otherwise `outbreak.data` is created.\nOn update, send only the fields you want to change.",
         "tags": [
           {
             "title": "public",
@@ -301,7 +685,7 @@
           },
           {
             "title": "example",
-            "description": "upsertOutbreak({externalId: \"3dec33-ede3\", data: {...}})"
+            "description": "upsertOutbreak({\n  externalId: '3dec33-ede3',\n  data: {\n    name: 'Outbreak demo',\n    disease: 'LNG_REFERENCE_DATA_CATEGORY_DISEASE_COVID_19',\n    countries: [{ id: 'SENEGAL' }],\n    startDate: '2020-12-17T14:54:19.498Z',\n  },\n});"
           },
           {
             "title": "function",
@@ -310,21 +694,12 @@
           },
           {
             "title": "param",
-            "description": "an object with an externalId and some outbreak data.",
+            "description": "`{ externalId, data }` where `externalId` is the outbreak id to match and `data` is the outbreak body",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
             "name": "outbreak"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -333,6 +708,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
           }
         ]
       },
@@ -341,8 +720,7 @@
     {
       "name": "listCases",
       "params": [
-        "id",
-        "callback"
+        "id"
       ],
       "docs": {
         "description": "Fetch the list of cases within a particular outbreak using its ID.",
@@ -354,7 +732,7 @@
           },
           {
             "title": "example",
-            "description": "listCases(\"343d-dc3e\", state => {\n   console.log(state);\n   return state;\n });"
+            "description": "listCases('343d-dc3e');"
           },
           {
             "title": "function",
@@ -371,21 +749,16 @@
             "name": "id"
           },
           {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
-          },
-          {
             "title": "returns",
             "description": null,
             "type": {
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
           }
         ]
       },
@@ -395,11 +768,10 @@
       "name": "getCase",
       "params": [
         "id",
-        "query",
-        "callback"
+        "query"
       ],
       "docs": {
-        "description": "Get one or multiple cases within an outbreak from a query filter",
+        "description": "Get one or multiple cases within an outbreak from a query filter.",
         "tags": [
           {
             "title": "public",
@@ -408,7 +780,7 @@
           },
           {
             "title": "example",
-            "description": "getCase(\n   '3b55-cdf4',\n   { 'where.relationship': { active: true }, where: { firstName: 'Luca'} },\n   state => {\n     console.log(state);\n     return state;\n   }\n);"
+            "description": "getCase('3b55-cdf4', { where: { firstName: 'Luca' } });"
           },
           {
             "title": "function",
@@ -426,21 +798,12 @@
           },
           {
             "title": "param",
-            "description": "An object with a query filter parameter",
+            "description": "A GoData (LoopBack) filter, e.g. `{ where: {...} }`",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
             "name": "query"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -449,6 +812,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
           }
         ]
       },
@@ -459,11 +826,10 @@
       "params": [
         "id",
         "externalId",
-        "goDataCase",
-        "callback"
+        "goDataCase"
       ],
       "docs": {
-        "description": "Upsert case to godata using an external id to mach a specific record",
+        "description": "Upsert a case within an outbreak. Looks up the case whose `externalId` field\nmatches the value of that field on `goDataCase`. Creates the case if none match,\nupdates it if one matches, and throws if more than one matches.\nOn update, the matched case's `id` is added to the body and `visualId` is removed.\nSend only the fields you want to change.",
         "tags": [
           {
             "title": "public",
@@ -472,7 +838,7 @@
           },
           {
             "title": "example",
-            "description": "upsertCase(\"4dce-3eedce3-rd33\", 'visualId',\n   data: state => {\n     const patient = state.data.body;\n      return {\n        firstName: patient.Patient_name.split(' ')[0],\n        lastName: patient.Patient_name.split(' ')[1],\n        visualId: patient.Case_ID,\n        'age:years': patient.Age_in_year,\n        gender: patient.Sex,\n      };\n })"
+            "description": "upsertCase('4dce-3eedce3-rd33', 'visualId', $ => ({\n  firstName: $.data.firstName,\n  lastName: $.data.lastName,\n  visualId: $.data.caseId,\n  'age:years': $.data.age,\n  gender: $.data.sex,\n}));"
           },
           {
             "title": "function",
@@ -490,7 +856,7 @@
           },
           {
             "title": "param",
-            "description": "External Id to match",
+            "description": "Match field: the case property used to find an existing case, e.g. `visualId`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -499,21 +865,12 @@
           },
           {
             "title": "param",
-            "description": "an object with some case data.",
+            "description": "The case data. Must include the match field.",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
             "name": "goDataCase"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -522,6 +879,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
           }
         ]
       },
@@ -529,11 +890,9 @@
     },
     {
       "name": "listLocations",
-      "params": [
-        "callback"
-      ],
+      "params": [],
       "docs": {
-        "description": "Fetch the list of locations",
+        "description": "Fetch the list of locations.",
         "tags": [
           {
             "title": "public",
@@ -542,21 +901,12 @@
           },
           {
             "title": "example",
-            "description": "listLocations(state => {\n   console.log(state.data);\n   return state;\n });"
+            "description": "listLocations();"
           },
           {
             "title": "function",
             "description": null,
             "name": null
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -565,6 +915,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
           }
         ]
       },
@@ -573,11 +927,10 @@
     {
       "name": "getLocation",
       "params": [
-        "query",
-        "callback"
+        "query"
       ],
       "docs": {
-        "description": "Get one or multiple locations from a query filter",
+        "description": "Get one or multiple locations from a query filter.",
         "tags": [
           {
             "title": "public",
@@ -586,7 +939,7 @@
           },
           {
             "title": "example",
-            "description": "getLocation({\"where\":{\"name\": \"30 DE OCTUBRE\"}}, state => {\n   console.log(state.data);\n   return state;\n });"
+            "description": "getLocation({ where: { name: '30 DE OCTUBRE' } });"
           },
           {
             "title": "function",
@@ -595,21 +948,12 @@
           },
           {
             "title": "param",
-            "description": "An object with a query filter parameter",
+            "description": "A GoData (LoopBack) filter, e.g. `{ where: {...} }`",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
             "name": "query"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -618,6 +962,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
           }
         ]
       },
@@ -627,11 +975,10 @@
       "name": "upsertLocation",
       "params": [
         "externalId",
-        "goDataLocation",
-        "callback"
+        "goDataLocation"
       ],
       "docs": {
-        "description": "Upsert location to godata",
+        "description": "Upsert a location. Looks up the location whose `externalId` field matches the value\nof that field on `goDataLocation`. Creates the location if none match, updates it if\none matches, and throws if more than one matches.",
         "tags": [
           {
             "title": "public",
@@ -640,7 +987,7 @@
           },
           {
             "title": "example",
-            "description": "upsertLocation('name', {...})"
+            "description": "upsertLocation('name', {\n  name: '30 DE DECIEMBRE',\n  active: true,\n  geoLocation: { lat: -45.343244, lng: -67.193873 },\n});"
           },
           {
             "title": "function",
@@ -649,7 +996,7 @@
           },
           {
             "title": "param",
-            "description": "External Id to match",
+            "description": "Match field: the location property used to find an existing location, e.g. `name`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -658,21 +1005,12 @@
           },
           {
             "title": "param",
-            "description": "an object with some location data.",
+            "description": "The location data. Must include the match field.",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
             "name": "goDataLocation"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -681,6 +1019,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
           }
         ]
       },
@@ -688,11 +1030,9 @@
     },
     {
       "name": "listReferenceData",
-      "params": [
-        "callback"
-      ],
+      "params": [],
       "docs": {
-        "description": "Fetch the list of reference data",
+        "description": "Fetch the list of reference data.",
         "tags": [
           {
             "title": "public",
@@ -701,21 +1041,12 @@
           },
           {
             "title": "example",
-            "description": "listReferenceData(state => {\n   console.log(state.data);\n   return state;\n });"
+            "description": "listReferenceData();"
           },
           {
             "title": "function",
             "description": null,
             "name": null
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -724,6 +1055,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
           }
         ]
       },
@@ -732,11 +1067,10 @@
     {
       "name": "getReferenceData",
       "params": [
-        "query",
-        "callback"
+        "query"
       ],
       "docs": {
-        "description": "Get one or multiple reference data from a query filter",
+        "description": "Get one or multiple reference data entries from a query filter.",
         "tags": [
           {
             "title": "public",
@@ -745,7 +1079,7 @@
           },
           {
             "title": "example",
-            "description": "getReferenceData({\"where\":{\"categoryId\": \"LNG_REFERENCE_DATA_CATEGORY_CENTRE_NAME\"}}, state => {\n   console.log(state.data);\n   return state;\n });"
+            "description": "getReferenceData({ where: { categoryId: 'LNG_REFERENCE_DATA_CATEGORY_CENTRE_NAME' } });"
           },
           {
             "title": "function",
@@ -754,21 +1088,12 @@
           },
           {
             "title": "param",
-            "description": "An object with a query filter parameter",
+            "description": "A GoData (LoopBack) filter, e.g. `{ where: {...} }`",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
             "name": "query"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -777,6 +1102,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
           }
         ]
       },
@@ -786,11 +1115,10 @@
       "name": "upsertReferenceData",
       "params": [
         "externalId",
-        "goDataReferenceData",
-        "callback"
+        "goDataReferenceData"
       ],
       "docs": {
-        "description": "Upsert reference data to godata",
+        "description": "Upsert a reference data entry. Looks up the entry whose `externalId` field matches the\nvalue of that field on `goDataReferenceData`. Creates the entry if none match, updates\nit if one matches, and throws if more than one matches.",
         "tags": [
           {
             "title": "public",
@@ -799,7 +1127,7 @@
           },
           {
             "title": "example",
-            "description": "upsertReferenceData('id', {...})"
+            "description": "upsertReferenceData('id', {\n  id: 'LNG_REFERENCE_DATA_CATEGORY_CENTRE_NAME_CLINIC_A',\n  categoryId: 'LNG_REFERENCE_DATA_CATEGORY_CENTRE_NAME',\n  value: 'Clinic A',\n  active: true,\n});"
           },
           {
             "title": "function",
@@ -808,7 +1136,7 @@
           },
           {
             "title": "param",
-            "description": "External Id to match",
+            "description": "Match field: the reference data property used to find an existing entry, e.g. `id`",
             "type": {
               "type": "NameExpression",
               "name": "string"
@@ -817,21 +1145,12 @@
           },
           {
             "title": "param",
-            "description": "an object with some reference data.",
+            "description": "The reference data. Must include the match field.",
             "type": {
               "type": "NameExpression",
               "name": "object"
             },
             "name": "goDataReferenceData"
-          },
-          {
-            "title": "param",
-            "description": "(Optional) Callback function",
-            "type": {
-              "type": "NameExpression",
-              "name": "function"
-            },
-            "name": "callback"
           },
           {
             "title": "returns",
@@ -840,6 +1159,10 @@
               "type": "NameExpression",
               "name": "Operation"
             }
+          },
+          {
+            "title": "state",
+            "description": "{HttpState}"
           }
         ]
       },
