@@ -1,0 +1,11 @@
+# TEST ONLY. Only the ssh port is published. Postgres (5432) is NOT reachable from the host.
+services:
+  postgres-ssh:
+    build: .
+    container_name: openfn-postgres-ssh
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpass
+      POSTGRES_DB: testdb
+    ports:
+      - '127.0.0.1:2222:22'
