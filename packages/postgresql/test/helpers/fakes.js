@@ -1,4 +1,6 @@
+import fs from 'node:fs';
 import net from 'node:net';
+import tls from 'node:tls';
 import ssh2 from 'ssh2';
 
 const { Server, utils } = ssh2;
@@ -121,12 +123,41 @@ export const LOGIN_OK = Buffer.from([
 ]);
 
 /**
+ * Read a file from test/fixtures/tls.
+ * @param {string} name
+ * @returns {string}
+ */
+export const tlsFixture = name =>
+  fs.readFileSync(new URL(`../fixtures/tls/${name}`, import.meta.url), 'utf8');
+
+/**
  * Answer the startup packet with a canned reply. It cannot run queries.
  * @param {Buffer} reply
  */
 export const startFakePostgres = reply =>
   startTcpServer(socket => {
     socket.once('data', () => socket.write(reply));
+  });
+
+/**
+ * Accept the SSLRequest, upgrade to TLS with the named fixture certificate,
+ * then answer the startup packet.
+ * @param {string} name - fixture certificate, e.g. 'server'
+ * @param {(servername: string | false) => void} [onServername] - called with the SNI name the client sent
+ */
+export const startFakeTlsPostgres = (name, onServername = () => {}) =>
+  startTcpServer(socket => {
+    socket.once('data', () => {
+      socket.write('S');
+      const secure = new tls.TLSSocket(socket, {
+        isServer: true,
+        cert: tlsFixture(`${name}.crt`),
+        key: tlsFixture(`${name}.key`),
+      });
+      secure.on('error', () => {});
+      secure.once('secure', () => onServername(secure.servername));
+      secure.once('data', () => secure.write(LOGIN_OK));
+    });
   });
 
 let restores = [];

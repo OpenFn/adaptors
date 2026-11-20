@@ -1,9 +1,20 @@
+import net from 'node:net';
+import tls from 'node:tls';
 import pg from 'pg';
 import { directRoute, sshRoute } from './routes.js';
 
 // https://node-postgres.com/features/ssl
-const sslOptions = ({ ssl, ca, cert, key, allowSelfSignedCert }) =>
-  ssl ? { rejectUnauthorized: !allowSelfSignedCert, ca, cert, key } : false;
+const sslOptions = ({ ssl, host, ca, cert, key, allowSelfSignedCert }) => {
+  if (!ssl) return false;
+  const options = { rejectUnauthorized: !allowSelfSignedCert, ca, cert, key };
+  // pg sends no servername for an IP, so Node would check the certificate
+  // against "localhost" instead of the address we connected to.
+  if (net.isIP(host)) {
+    options.checkServerIdentity = (_, peerCert) =>
+      tls.checkServerIdentity(host, peerCert);
+  }
+  return options;
+};
 
 /**
  * Connect to postgres, optionally through an SSH server. When `sshHost` is
