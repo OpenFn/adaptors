@@ -1,5 +1,4 @@
-import pg from 'pg';
-import { createTunnel } from './tunnel.js';
+import { connect } from './connection.js';
 import { format } from './util.js';
 import {
   execute as commonExecute,
@@ -13,8 +12,7 @@ import {
   findValueQuery,
 } from './builders.js';
 
-let client = null;
-let tunnel = null;
+let connection = null;
 
 /**
  * State object
@@ -96,86 +94,30 @@ export function execute(...operations) {
 }
 
 async function newClient(state) {
-  const {
-    ca,
-    ssl,
-    key,
-    host,
-    port,
-    user,
-    cert,
-    database,
-    password,
-    allowSelfSignedCert,
-    ssh_key,
-    ssh_host,
-    ssh_port,
-    ssh_user,
-    ssh_passphrase,
-  } = state.configuration || {};
-
-  // Allowing or blocking self signed certificate
-  // https://node-postgres.com/features/ssl
-  const sslOptions = ssl
-    ? { rejectUnauthorized: !allowSelfSignedCert, cert, ca, key }
-    : false;
-
-  // setup client config
-  const config = { host, port, database, user, password, ssl: sslOptions };
-
-  // If an ssh key is provided, connect through an ssh tunnel.
-  // host/port are resolved from the ssh server's point of view.
-  if (ssh_key) {
-    tunnel = await createTunnel({
-      sshHost: ssh_host ?? host,
-      sshPort: ssh_port,
-      sshUser: ssh_user,
-      privateKey: ssh_key,
-      passphrase: ssh_passphrase,
-      dstHost: host,
-      dstPort: port ?? 5432,
-    });
-    console.log(`SSH tunnel open on ${tunnel.host}:${tunnel.port}`);
-    config.host = tunnel.host;
-    config.port = tunnel.port;
-  }
-
-  // instantiate a new client
-  client = new pg.Client(config);
-  try {
-    await client.connect();
-  } catch (e) {
-    await closeTunnel();
-    throw e;
-  }
+  connection = await connect(state.configuration);
   return state;
-}
-
-async function closeTunnel() {
-  if (tunnel) {
-    const t = tunnel;
-    tunnel = null;
-    await t.close();
-  }
 }
 
 async function endClient(state) {
-  await client?.end();
-  await closeTunnel();
+  const current = connection;
+  connection = null;
+  await current?.close();
   return state;
 }
+
 async function queryHandler(query, values) {
   let result;
   if (values) {
-    result = await client.query(query, values);
+    result = await connection.client.query(query, values);
   } else {
-    result = await client.query(query);
+    result = await connection.client.query(query);
   }
   console.log(`${result.command} succeeded, rowCount: ${result.rowCount}`);
   return result;
 }
+
 export function setMockClient(mockClient) {
-  client = mockClient;
+  connection = { client: mockClient, close: async () => {} };
 }
 
 /**

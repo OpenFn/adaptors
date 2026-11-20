@@ -9,8 +9,8 @@ state=$(jq -nc --rawfile key ../keys/test_key '{
   configuration: {
     host: "127.0.0.1", port: 5432,
     user: "testuser", password: "testpass", database: "testdb",
-    ssh_host: "localhost", ssh_port: 2222, ssh_user: "tunnel",
-    ssh_key: $key
+    sshHost: "localhost", sshPort: 2222, sshUsername: "tunnel",
+    sshPrivateKey: $key
   }
 }')
 

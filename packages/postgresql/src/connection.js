@@ -1,0 +1,46 @@
+import pg from 'pg';
+import { directRoute, sshRoute } from './routes.js';
+
+// https://node-postgres.com/features/ssl
+const sslOptions = ({ ssl, ca, cert, key, allowSelfSignedCert }) =>
+  ssl ? { rejectUnauthorized: !allowSelfSignedCert, ca, cert, key } : false;
+
+/**
+ * Connect to postgres, optionally through an SSH server. When `sshHost` is
+ * set, `host` and `port` are resolved from the SSH server's point of view.
+ * @private
+ * @param {object} configuration - the adaptor configuration
+ * @returns {Promise<{ client: pg.Client, close: Function }>}
+ */
+export async function connect(configuration = {}) {
+  const { sshHost, host, port, user, password, database } = configuration;
+
+  const route = sshHost
+    ? await sshRoute(configuration, { host, port: port ?? 5432 })
+    : directRoute();
+
+  const client = new pg.Client({
+    host,
+    port,
+    user,
+    password,
+    database,
+    ssl: sslOptions(configuration),
+    stream: route.stream,
+  });
+  client.on('error', e =>
+    console.error(`Postgres connection error: ${e.message}`)
+  );
+
+  try {
+    await client.connect();
+  } catch (e) {
+    await route.close();
+    throw e;
+  }
+
+  return {
+    client,
+    close: () => client.end().finally(route.close),
+  };
+}
