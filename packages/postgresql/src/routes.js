@@ -1,4 +1,5 @@
 import net from 'node:net';
+import { createHash } from 'node:crypto';
 import { Client as SSHClient } from 'ssh2';
 
 /**
@@ -9,6 +10,21 @@ import { Client as SSHClient } from 'ssh2';
  * @property {Function} close - returns a Promise which resolves once the route is closed
  * @private
  */
+
+/**
+ * The OpenSSH-style fingerprint of a host key, as `ssh-keygen -lf` prints it,
+ * followed by the key type.
+ * @private
+ * @param {Buffer} key - the host key in SSH wire format
+ * @returns {{ fingerprint: string, type: string }}
+ */
+const describeHostKey = key => ({
+  fingerprint: `SHA256:${createHash('sha256')
+    .update(key)
+    .digest('base64')
+    .replace(/=+$/, '')}`,
+  type: key.toString('ascii', 4, 4 + key.readUInt32BE(0)),
+});
 
 /**
  * Connect straight to postgres over TCP.
@@ -26,12 +42,30 @@ const openSsh = ({
   sshUsername,
   sshPrivateKey,
   sshPassphrase,
-}) =>
-  new Promise((resolve, reject) => {
+  sshHostKey,
+}) => {
+  const expected =
+    sshHostKey &&
+    `SHA256:${String(sshHostKey)
+      .trim()
+      .replace(/^SHA256:/i, '')
+      .replace(/=+$/, '')}`;
+  let presented;
+  let mismatch;
+
+  return new Promise((resolve, reject) => {
     const ssh = new SSHClient();
+    // ssh2 reports a refused host key only as "Host denied (verification failed)".
     ssh
-      .once('error', reject)
-      .once('ready', () => resolve(ssh))
+      .once('error', e => reject(mismatch ?? e))
+      .once('ready', () => {
+        if (!expected) {
+          console.log(
+            `SSH host key for ${sshHost}: ${presented.fingerprint} (${presented.type}). Set sshHostKey to verify it`
+          );
+        }
+        resolve(ssh);
+      })
       .connect({
         host: sshHost,
         port: sshPort,
@@ -39,8 +73,19 @@ const openSsh = ({
         privateKey: sshPrivateKey,
         passphrase: sshPassphrase,
         keepaliveInterval: 10000,
+        hostVerifier: key => {
+          presented = describeHostKey(key);
+          if (expected && presented.fingerprint !== expected) {
+            mismatch = new Error(
+              `SSH host key mismatch for ${sshHost}: expected ${expected}, got ${presented.fingerprint} (${presented.type})`
+            );
+            return false;
+          }
+          return true;
+        },
       });
   });
+};
 
 // pg drives its stream like a net.Socket: it calls setNoDelay and connect, then
 // waits for 'connect'. An ssh channel is already open, so those are no-ops.

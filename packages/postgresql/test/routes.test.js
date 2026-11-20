@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { once } from 'node:events';
 import { expect } from 'chai';
 import { sshRoute } from '../src/routes.js';
@@ -33,6 +34,13 @@ const AUTHENTICATION_FAILED = errorResponse({
   M: 'password authentication failed for user "tester"',
 });
 
+// What `ssh-keygen -lf` prints for an OpenSSH public key line.
+const opensshFingerprint = publicKey => {
+  const blob = Buffer.from(publicKey.split(' ')[1], 'base64');
+  const digest = createHash('sha256').update(blob).digest('base64');
+  return `SHA256:${digest.replace(/=+$/, '')}`;
+};
+
 const listeningServers = () =>
   process
     .getActiveResourcesInfo()
@@ -59,6 +67,7 @@ describe('ssh route', () => {
   let userKey;
   let sshServer;
   let echoServer;
+  let hostFingerprint;
   let route;
 
   const routeTo = (port, overrides = {}) =>
@@ -68,6 +77,7 @@ describe('ssh route', () => {
         sshPort: sshServer.port,
         sshUsername: 'tester',
         sshPrivateKey: userKey.private,
+        sshHostKey: hostFingerprint,
         ...overrides,
       },
       { host: '127.0.0.1', port }
@@ -79,6 +89,7 @@ describe('ssh route', () => {
       allowedPublicKey: userKey.public,
       hosts: { 'db.internal': '127.0.0.1' },
     });
+    hostFingerprint = opensshFingerprint(sshServer.hostPublicKey);
     echoServer = await startTcpServer(socket => socket.pipe(socket));
   });
 
@@ -122,6 +133,76 @@ describe('ssh route', () => {
       await until(() => sshServer.clients.size === 0);
     });
 
+    describe('host key', () => {
+      const otherFingerprint = () => opensshFingerprint(generateKey().public);
+
+      it('accepts the fingerprint without its prefix and with whitespace', async () => {
+        route = await routeTo(echoServer.port, {
+          sshHostKey: `  ${hostFingerprint.replace('SHA256:', '')}\n`,
+        });
+
+        expect(await roundTrip(route, 'hello')).to.eql('hello');
+      });
+
+      it('accepts the fingerprint with its trailing padding', async () => {
+        route = await routeTo(echoServer.port, {
+          sshHostKey: `${hostFingerprint}=`,
+        });
+
+        expect(await roundTrip(route, 'hello')).to.eql('hello');
+      });
+
+      it('accepts a lowercase sha256 prefix', async () => {
+        route = await routeTo(echoServer.port, {
+          sshHostKey: hostFingerprint.replace('SHA256:', 'sha256:'),
+        });
+
+        expect(await roundTrip(route, 'hello')).to.eql('hello');
+      });
+
+      it('rejects a mismatched host key before authenticating and leaves nothing open', async () => {
+        const expected = otherFingerprint();
+        const serversBefore = listeningServers();
+        const authAttemptsBefore = sshServer.authAttempts;
+
+        const error = await routeTo(echoServer.port, {
+          sshHostKey: expected,
+        }).catch(e => e);
+
+        expect(error).to.be.an('error');
+        expect(error.message).to.eql(
+          `SSH host key mismatch for 127.0.0.1: expected ${expected}, got ${hostFingerprint} (ssh-ed25519)`
+        );
+        expect(sshServer.authAttempts).to.eql(authAttemptsBefore);
+        await until(() => sshServer.clients.size === 0);
+        expect(listeningServers()).to.eql(serversBefore);
+      });
+
+      it('compares a fingerprint given as a non-string', async () => {
+        const error = await routeTo(echoServer.port, {
+          sshHostKey: 12345,
+        }).catch(e => e);
+
+        expect(error).to.be.an('error');
+        expect(error.message).to.eql(
+          `SSH host key mismatch for 127.0.0.1: expected SHA256:12345, got ${hostFingerprint} (ssh-ed25519)`
+        );
+      });
+
+      it('logs the presented fingerprint once when none is set', async () => {
+        const logged = captureConsole('log');
+
+        route = await routeTo(echoServer.port, {
+          sshHostKey: undefined,
+        });
+
+        expect(await roundTrip(route, 'hello')).to.eql('hello');
+        expect(logged).to.eql([
+          `SSH host key for 127.0.0.1: ${hostFingerprint} (ssh-ed25519). Set sshHostKey to verify it`,
+        ]);
+      });
+    });
+
     it('opens no listening port', async () => {
       const serversBefore = listeningServers();
 
@@ -156,6 +237,7 @@ describe('ssh route', () => {
       sshPort: sshServer.port,
       sshUsername: 'tester',
       sshPrivateKey: userKey.private,
+      sshHostKey: hostFingerprint,
     });
 
     afterEach(async () => {

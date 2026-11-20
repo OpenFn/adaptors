@@ -47,12 +47,13 @@ export const startTcpServer = async onConnection => {
  * @param {object} options
  * @param {string} options.allowedPublicKey - the only key allowed to log in
  * @param {Record<string, string>} [options.hosts] - destination names to rewrite before connecting, like /etc/hosts
- * @returns {Promise<{ port: number, hostPublicKey: string, clients: Set<object>, close: () => Promise<void> }>}
+ * @returns {Promise<{ port: number, hostPublicKey: string, clients: Set<object>, authAttempts: number, close: () => Promise<void> }>}
  */
 export const startSshServer = async ({ allowedPublicKey, hosts = {} }) => {
   const allowed = utils.parseKey(allowedPublicKey);
   const hostKey = generateKey();
   const clients = new Set();
+  let authAttempts = 0;
 
   const isAllowed = ctx =>
     ctx.method === 'publickey' &&
@@ -67,6 +68,7 @@ export const startSshServer = async ({ allowedPublicKey, hosts = {} }) => {
     client.on('close', () => clients.delete(client));
     client.on('error', () => {});
     client.on('authentication', ctx => {
+      authAttempts++;
       isAllowed(ctx) ? ctx.accept() : ctx.reject(['publickey']);
     });
     client.on('ready', () => {
@@ -90,6 +92,9 @@ export const startSshServer = async ({ allowedPublicKey, hosts = {} }) => {
     port: server.address().port,
     hostPublicKey: hostKey.public,
     clients,
+    get authAttempts() {
+      return authAttempts;
+    },
     close: () =>
       new Promise(resolve => {
         server.close(() => resolve());
