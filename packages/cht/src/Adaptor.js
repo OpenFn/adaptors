@@ -109,7 +109,7 @@ export function request(method, path, body, options = {}, callback = s => s) {
       resolvedMethod,
       resolvedPath,
       {
-        data: resolvedData,
+        body: resolvedData,
         ...resolvedoptions,
       },
     );
