@@ -12,7 +12,6 @@ cd packages/postgresql/test/ssh
 docker compose up -d --build
 
 node scripts/direct.js   # no tunnel: both attempts fail (ECONNREFUSED)
-node scripts/tunnel.js   # ssh2 tunnel + pg: prints the 2 users
 
 # the adaptor itself, via the CLI (build the adaptor first: pnpm build)
 ./cli/run.sh
