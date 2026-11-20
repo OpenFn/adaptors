@@ -11,6 +11,7 @@ import {
   restoreConsole,
   startFakePostgres,
   startSshServer,
+  startStubbornProxy,
   startTcpServer,
 } from './helpers/fakes.js';
 
@@ -70,7 +71,7 @@ describe('ssh route', () => {
   let hostFingerprint;
   let route;
 
-  const routeTo = (port, overrides = {}) =>
+  const routeTo = (port, overrides = {}, timeouts) =>
     sshRoute(
       {
         sshHost: '127.0.0.1',
@@ -80,7 +81,8 @@ describe('ssh route', () => {
         sshHostKey: hostFingerprint,
         ...overrides,
       },
-      { host: '127.0.0.1', port }
+      { host: '127.0.0.1', port },
+      timeouts
     );
 
   before(async () => {
@@ -119,6 +121,41 @@ describe('ssh route', () => {
       expect(error).to.be.an('error');
       expect(error.message).to.match(/authentication methods failed/i);
       await until(() => sshServer.clients.size === 0);
+    });
+
+    it('names the ssh server when it cannot be reached', async () => {
+      const port = await closedPort();
+
+      const error = await routeTo(echoServer.port, {
+        sshHost: 'localhost',
+        sshPort: port,
+      }).catch(e => e);
+
+      expect(error).to.be.an('error');
+      expect(error.message).to.match(
+        new RegExp(
+          `^SSH connection to localhost:${port} failed: .*ECONNREFUSED`
+        )
+      );
+    });
+
+    it('rejects once when the ssh server accepts but never speaks', async () => {
+      const silent = await startTcpServer(socket => socket.resume());
+
+      const error = await routeTo(
+        echoServer.port,
+        { sshPort: silent.port },
+        { readyTimeout: 50 }
+      ).catch(e => e);
+      // ssh2 reports the dropped socket as a second error just after the timeout
+      await until(() => silent.connections.size === 0);
+      await new Promise(resolve => setTimeout(resolve, 20));
+      await silent.close();
+
+      expect(error).to.be.an('error');
+      expect(error.message).to.eql(
+        `SSH connection to 127.0.0.1:${silent.port} failed: Timed out while waiting for handshake`
+      );
     });
 
     it('rejects when the ssh server cannot reach the destination', async () => {
@@ -223,6 +260,19 @@ describe('ssh route', () => {
         () => sshServer.clients.size === 0 && echoServer.connections.size === 0
       );
     });
+
+    it('stops waiting for an ssh server that never hangs up', async () => {
+      const proxy = await startStubbornProxy(sshServer.port);
+      route = await routeTo(
+        echoServer.port,
+        { sshPort: proxy.port },
+        { closeTimeout: 50 }
+      );
+
+      await route.close();
+      route = undefined;
+      await proxy.close();
+    });
   });
 
   describe('connect', () => {
@@ -262,6 +312,30 @@ describe('ssh route', () => {
       );
     });
 
+    it('reaches postgres on localhost when host is unset', async () => {
+      postgres = await startFakePostgres(LOGIN_OK);
+
+      const { close } = await connect({
+        ...configFor(postgres.port),
+        host: undefined,
+      });
+
+      expect(postgres.connections.size).to.eql(1);
+      await close();
+    });
+
+    it('times out when postgres accepts but never answers', async () => {
+      postgres = await startTcpServer(() => {});
+
+      const error = await connect(configFor(postgres.port), {
+        connectionTimeout: 50,
+      }).catch(e => e);
+
+      expect(error).to.be.an('error');
+      expect(error.message).to.eql('timeout expired');
+      await until(() => sshServer.clients.size === 0);
+    });
+
     it('rejects and closes the ssh connection when postgres is unreachable', async () => {
       const port = await closedPort();
 
@@ -290,5 +364,20 @@ describe('ssh route', () => {
         () => postgres.connections.size === 0 && sshServer.clients.size === 0
       );
     });
+  });
+});
+
+describe('direct connect', () => {
+  it('times out when postgres accepts but never answers', async () => {
+    const postgres = await startTcpServer(() => {});
+
+    const error = await connect(
+      { host: '127.0.0.1', port: postgres.port, user: 'tester' },
+      { connectionTimeout: 50 }
+    ).catch(e => e);
+    await postgres.close();
+
+    expect(error).to.be.an('error');
+    expect(error.message).to.eql('timeout expired');
   });
 });

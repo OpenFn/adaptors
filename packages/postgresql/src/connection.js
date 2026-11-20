@@ -21,10 +21,16 @@ const sslOptions = ({ ssl, host, ca, cert, key, allowSelfSignedCert }) => {
  * set, `host` and `port` are resolved from the SSH server's point of view.
  * @private
  * @param {object} configuration - the adaptor configuration
+ * @param {object} [timeouts]
+ * @param {number} [timeouts.connectionTimeout=30000] - milliseconds to wait for postgres to accept the login
  * @returns {Promise<{ client: pg.Client, close: Function }>}
  */
-export async function connect(configuration = {}) {
-  const { sshHost, host, port, user, password, database } = configuration;
+export async function connect(
+  configuration = {},
+  { connectionTimeout = 30000 } = {}
+) {
+  const { sshHost, port, user, password, database } = configuration;
+  const host = configuration.host ?? (sshHost ? 'localhost' : undefined);
 
   const route = sshHost
     ? await sshRoute(configuration, { host, port: port ?? 5432 })
@@ -38,6 +44,7 @@ export async function connect(configuration = {}) {
     database,
     ssl: sslOptions(configuration),
     stream: route.stream,
+    connectionTimeoutMillis: connectionTimeout,
   });
   client.on('error', e =>
     console.error(`Postgres connection error: ${e.message}`)

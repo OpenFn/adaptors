@@ -36,14 +36,17 @@ export const directRoute = () => ({
   close: async () => {},
 });
 
-const openSsh = ({
-  sshHost,
-  sshPort = 22,
-  sshUsername,
-  sshPrivateKey,
-  sshPassphrase,
-  sshHostKey,
-}) => {
+const openSsh = (
+  {
+    sshHost,
+    sshPort = 22,
+    sshUsername,
+    sshPrivateKey,
+    sshPassphrase,
+    sshHostKey,
+  },
+  readyTimeout
+) => {
   const expected =
     sshHostKey &&
     `SHA256:${String(sshHostKey)
@@ -53,26 +56,40 @@ const openSsh = ({
   let presented;
   let mismatch;
 
+  const ssh = new SSHClient();
+  // ssh2's own destroy() does nothing once end() has run, so keep the socket
+  // to drop a server that never hangs up.
+  const socket = net.connect({ host: sshHost, port: sshPort });
+
   return new Promise((resolve, reject) => {
-    const ssh = new SSHClient();
-    // ssh2 reports a refused host key only as "Host denied (verification failed)".
+    // ssh2 can emit more than one error while connecting, and reports a refused
+    // host key only as "Host denied (verification failed)".
     ssh
-      .once('error', e => reject(mismatch ?? e))
+      .on('error', e =>
+        reject(
+          mismatch ??
+            new Error(
+              `SSH connection to ${sshHost}:${sshPort} failed: ${
+                e.message || e.code
+              }`
+            )
+        )
+      )
       .once('ready', () => {
         if (!expected) {
           console.log(
             `SSH host key for ${sshHost}: ${presented.fingerprint} (${presented.type}). Set sshHostKey to verify it`
           );
         }
-        resolve(ssh);
+        resolve({ ssh, socket });
       })
       .connect({
-        host: sshHost,
-        port: sshPort,
+        sock: socket,
         username: sshUsername,
         privateKey: sshPrivateKey,
         passphrase: sshPassphrase,
         keepaliveInterval: 10000,
+        readyTimeout,
         hostVerifier: key => {
           presented = describeHostKey(key);
           if (expected && presented.fingerprint !== expected) {
@@ -89,14 +106,22 @@ const openSsh = ({
 
 // pg drives its stream like a net.Socket: it calls setNoDelay and connect, then
 // waits for 'connect'. An ssh channel is already open, so those are no-ops.
-const asSocket = channel =>
-  Object.assign(channel, {
+// pg also destroys the stream with its reason for giving up, which an ssh
+// channel would drop, leaving pg to report only that the connection closed.
+const asSocket = channel => {
+  const destroy = channel.destroy.bind(channel);
+  return Object.assign(channel, {
     connect() {
       process.nextTick(() => channel.emit('connect'));
       return channel;
     },
     setNoDelay: () => channel,
+    destroy(reason) {
+      if (reason) channel.emit('error', reason);
+      return destroy();
+    },
   });
+};
 
 /**
  * Reach postgres through an SSH server. `host` and `port` are resolved from
@@ -107,10 +132,17 @@ const asSocket = channel =>
  * @param {object} destination
  * @param {string} destination.host
  * @param {number} destination.port
+ * @param {object} [timeouts]
+ * @param {number} [timeouts.readyTimeout=20000] - milliseconds to wait for the SSH handshake
+ * @param {number} [timeouts.closeTimeout=5000] - milliseconds to wait for the SSH server to hang up before dropping the connection
  * @returns {Promise<Route>}
  */
-export const sshRoute = async (configuration, { host, port }) => {
-  const ssh = await openSsh(configuration);
+export const sshRoute = async (
+  configuration,
+  { host, port },
+  { readyTimeout = 20000, closeTimeout = 5000 } = {}
+) => {
+  const { ssh, socket } = await openSsh(configuration, readyTimeout);
   ssh.on('error', e => console.error(`SSH tunnel error: ${e.message}`));
   const closed = new Promise(resolve => ssh.once('close', resolve));
 
@@ -128,7 +160,8 @@ export const sshRoute = async (configuration, { host, port }) => {
     stream: () => stream,
     close: () => {
       ssh.end();
-      return closed;
+      const timer = setTimeout(() => socket.destroy(), closeTimeout);
+      return closed.finally(() => clearTimeout(timer));
     },
   };
 };

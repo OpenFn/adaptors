@@ -86,7 +86,9 @@ export function execute(...operations) {
       ...operations,
       endClient
     )({ ...initialState, ...state }).catch(async e => {
-      await endClient(state).catch(() => {});
+      await endClient(state).catch(e =>
+        console.error(`Failed to close connection: ${e.message}`)
+      );
       console.error(e);
       throw e;
     });

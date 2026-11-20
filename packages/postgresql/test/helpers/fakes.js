@@ -106,6 +106,38 @@ export const startSshServer = async ({ allowedPublicKey, hosts = {} }) => {
 };
 
 /**
+ * Forward TCP connections to a local port, but never pass on either side
+ * hanging up, so the client waits for a close that does not come.
+ * @param {number} port - where to forward to
+ * @returns {Promise<{ port: number, close: () => Promise<void> }>}
+ */
+export const startStubbornProxy = async port => {
+  const sockets = new Set();
+  const track = socket => {
+    sockets.add(socket);
+    socket.on('error', () => {});
+    socket.on('close', () => sockets.delete(socket));
+    return socket;
+  };
+  const server = net.createServer({ allowHalfOpen: true }, client => {
+    track(client);
+    const upstream = track(net.connect({ port, allowHalfOpen: true }));
+    client.pipe(upstream, { end: false });
+    upstream.pipe(client, { end: false });
+  });
+  await listen(server);
+
+  return {
+    port: server.address().port,
+    close: () =>
+      new Promise(resolve => {
+        server.close(() => resolve());
+        sockets.forEach(socket => socket.destroy());
+      }),
+  };
+};
+
+/**
  * Reserve a local port and release it, so nothing is listening there.
  * @returns {Promise<number>}
  */
