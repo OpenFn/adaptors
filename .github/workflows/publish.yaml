@@ -26,15 +26,14 @@ jobs:
         with:
           cache: true
       - run: pnpm install --frozen-lockfile
+      - name: Check trusted publishing
+        id: preflight
+        run: pnpm publish:list
       - name: Validate configuration schemas
         run: pnpm validate:schemas
       - run: pnpm build
       - run: pnpm test:git
       - run: pnpm test
-
-      # Log every adaptor that will be published (dry run)
-      - name: List adaptors to publish
-        run: pnpm publish:list
 
       - name: Get bot user id
         id: bot-user
@@ -69,8 +68,18 @@ jobs:
             echo "No changelog date changes to commit"
           fi
 
-      - run:
-          pnpm publish -r --report-summary --publish-branch main --access=public
+      - name: Publish checked packages
+        if: steps.preflight.outputs.packages != '[]'
+        env:
+          CHECKED_PACKAGES: ${{ steps.preflight.outputs.packages }}
+        run: |
+          package_names=$(jq -er 'if type == "array" and length > 0 then .[] else error("Missing checked packages") end' <<< "$CHECKED_PACKAGES")
+          test -n "$package_names"
+          filters=()
+          while IFS= read -r package; do
+            filters+=(--filter "$package")
+          done <<< "$package_names"
+          pnpm publish -r --fail-if-no-match --report-summary --publish-branch main --access=public "${filters[@]}"
 
       - run: pnpm changeset tag
 
@@ -80,7 +89,8 @@ jobs:
           git push
           git push --tags
 
-      - run: pnpm slack:notify
+      - if: steps.preflight.outputs.packages != '[]'
+        run: pnpm slack:notify
         env:
           SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
 
