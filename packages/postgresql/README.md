@@ -265,7 +265,7 @@ Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
 Run tests using `pnpm run test` or `pnpm run test:watch`
 
 To try the SSH tunnel against a real postgres that is only reachable over SSH,
-see [test/ssh/README.md](test/ssh/README.md).
+see `test/ssh`.
 
 Build the project using `pnpm build`.
 
