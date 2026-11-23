@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-airqo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "OpenFn adaptor for AirQo - Air quality data from African cities",
   "type": "module",
   "exports": {

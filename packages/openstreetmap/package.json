@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-openstreetmap",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "OpenFn adaptor for OpenStreetMap, via the Overpass API",
   "type": "module",
   "exports": {

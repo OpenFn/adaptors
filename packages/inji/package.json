@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-inji",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "OpenFn Inji Verify adaptor",
   "type": "module",
   "exports": {

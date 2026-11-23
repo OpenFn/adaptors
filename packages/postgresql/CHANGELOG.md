@@ -1,5 +1,16 @@
 # @openfn/language-postgresql
 
+## 8.2.0 - 23 November 2026
+
+### Minor Changes
+
+- 930fd06: Add optional SSH tunnel support. See readme for details.
+
+### Patch Changes
+
+- Updated dependencies \[df9ca6c]
+  - @openfn/language-common@3.3.6
+
 ## 8.1.3 - 03 September 2026
 
 ### Patch Changes

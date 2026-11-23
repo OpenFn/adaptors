@@ -1,5 +1,14 @@
 # @openfn/language-cht
 
+## 1.2.4 - 23 November 2026
+
+### Patch Changes
+
+- 5a1b7aa: Send the body passed to `post()` and `request()`, and keep custom
+  headers from `options.headers` instead of replacing them with the auth headers
+- Updated dependencies \[df9ca6c]
+  - @openfn/language-common@3.3.6
+
 ## 1.2.3 - 03 September 2026
 
 ### Patch Changes

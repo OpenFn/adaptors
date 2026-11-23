@@ -1,5 +1,14 @@
 # @openfn/language-fhir-opensrp
 
+## 2.0.2 - 23 November 2026
+
+### Patch Changes
+
+- Updated dependencies \[df9ca6c]
+- Updated dependencies \[cad3000]
+  - @openfn/language-common@3.3.6
+  - @openfn/language-fhir-4@0.6.1
+
 ## 2.0.1 - 03 September 2026
 
 ### Patch Changes

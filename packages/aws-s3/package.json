@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-aws-s3",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "OpenFn aws-s3 adaptor",
   "type": "module",
   "exports": {

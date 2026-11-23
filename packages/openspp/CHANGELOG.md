@@ -1,5 +1,12 @@
 # @openfn/language-openspp
 
+## 4.0.1 - 23 November 2026
+
+### Patch Changes
+
+- Updated dependencies \[df9ca6c]
+  - @openfn/language-common@3.3.6
+
 ## 4.0.0 - 29 September 2026
 
 ### Major Changes

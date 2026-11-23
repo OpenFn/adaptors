@@ -1,5 +1,14 @@
 # @openfn/language-resourcemap
 
+## 0.5.4 - 23 November 2026
+
+### Patch Changes
+
+- 5a1b7aa: `submitSite()`: reject with the connection error instead of crashing
+  when the server can't be reached
+- Updated dependencies \[df9ca6c]
+  - @openfn/language-common@3.3.6
+
 ## 0.5.3 - 03 September 2026
 
 ### Patch Changes

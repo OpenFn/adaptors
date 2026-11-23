@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-copper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "OpenFn copper adaptor",
   "type": "module",
   "exports": {
