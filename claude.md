@@ -172,3 +172,42 @@ Output file: qa-example-api.js (root directory)
 - QA files saved to root directory: `qa-<adaptor-name>.js`
 - Never rename `request` functions in Utils.js or Adaptors.js
 - One function + one test is default unless operations specified
+---
+
+## Reference: doc generation
+
+How JSDoc becomes `docs/index.md` / `docs.json` (build pipeline, custom tags,
+templates, debugging): see [`.claude/docgen.md`](.claude/docgen.md).
+Read it before changing anything under `tools/build` or `tools/adaptor-apis`.
+
+### Documenting non-function exports (`@kind namespace`)
+
+Some exports are not functions (eg lodash's `_` in common). If you tag them
+`@function` they are listed under **Functions** with a bogus `name()` signature.
+Instead, declare them as a namespace doclet:
+
+```js
+/**
+ * Lodash utility library.
+ * @see https://lodash.com/docs/
+ * @public
+ * @kind namespace
+ * @name _
+ * @example ...
+ */
+export { _ };
+```
+
+- `@kind namespace` sets the doclet's `kind` to `namespace`. Do NOT also add
+  `@function`, and use `@name` to give it its documented name.
+- `@public` is still required, or the item is filtered out.
+- No signature is generated (only `kind: function` gets one), and it is not
+  rendered under Functions.
+- `docs-template.hbs` renders `kind="namespace"` globals twice: an index list
+  ("exports the following utility namespaces") and a `## Namespaces` section
+  with the description, `@see` and examples.
+- Don't confuse this with the repo's custom `@namespace foo` tag, which means
+  "this function belongs to namespace `foo`" (it sets `scope`, as with
+  `http.get`). It does not declare a namespace item.
+
+Details: [`.claude/docgen.md`](.claude/docgen.md).

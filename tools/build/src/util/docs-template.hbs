@@ -39,6 +39,19 @@ This adaptor exports the following namespaced functions:
 {{/if}}
 {{/namespaces}}
 
+{{#globals kind="namespace" ~}}
+{{#if @first~}}
+This adaptor exports the following utility namespaces:
+
+<dl>
+{{/if~}}
+<dt>
+    <a href="#{{toLowerCase (anchorName)}}">{{name}}</a>
+</dt>
+{{#if @last~}}</dl>
+{{/if~}}
+{{/globals~}}
+
 {{#commonFns}}
 
 {{#if @first~}}
@@ -62,6 +75,16 @@ This adaptor exports the following from common:
 {{>member-index~}}
 {{>separator~}}
 {{>members~}}
+{{/globals~}}
+
+{{#globals kind="namespace" ~}}
+{{#if @first~}}## Namespaces
+{{/if~}}
+
+### {{anchorName}}
+
+{{>body}}
+{{>separator~}}
 {{/globals~}}
 
 
