@@ -2,7 +2,7 @@
 // https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API#creating-and-printing-a-typescript-ast
 
 import ts from 'typescript';
-import { getBuilderName, getTypeName } from './util';
+import { dedupe, getBuilderName, getTypeName } from './util';
 import { PropDef } from './generate-schema';
 import { MappingSpec } from './types';
 
@@ -266,6 +266,11 @@ const generateEntryFuction = (
   return result;
 };
 
+const createUnionTypeNode = (types: ts.TypeNode[]): ts.TypeNode => {
+  const unique = dedupe(types);
+  return unique.length === 1 ? unique[0] : b.createUnionTypeNode(unique);
+};
+
 // note that this is kinda duplicated from generate-types
 // because we use two different ast libraries
 // TODO maybe the sig is schema & mappings?
@@ -300,7 +305,7 @@ const createTypeNode = (
     node = b.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
   }
   if (shorthands?.length) {
-    node = b.createUnionTypeNode(
+    node = createUnionTypeNode(
       shorthands.map(s => b.createTypeReferenceNode(s)).concat(node),
     );
   } else if (isArray && !values) {
@@ -382,11 +387,7 @@ export const generateType = (
       const types = t.map(t =>
         createTypeNode(t, s.isArray, m.values || s.values, typeShorthands[t]),
       );
-      if (types.length === 1) {
-        type = types[0];
-      } else {
-        type = b.createUnionTypeNode(types);
-      }
+      type = createUnionTypeNode(types);
     }
     if (s.desc) {
       props.push(b.createJSDocComment(s.desc + '\n'));
@@ -455,11 +456,7 @@ export const generateInterface = (
       const types = t.map(t =>
         createTypeNode(t, s.isArray, m.values || s.values, typeShorthands[t]),
       );
-      if (types.length === 1) {
-        type = types[0];
-      } else {
-        type = b.createUnionTypeNode(types);
-      }
+      type = createUnionTypeNode(types);
     }
     const propSig = b.createPropertySignature(
       [],

@@ -424,7 +424,7 @@ interface ElementDefinition {
     /** Reference to definition of content for the element */
     contentReference?: string;
     /** Specified value if missing from instance */
-    defaultValue?: any | boolean | any | string | string | string | number | string | string | number | string | string | number | string | string | number | string | url | string | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
+    defaultValue?: any | boolean | string | number | url | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
     /** Full formal definition as narrative text */
     definition?: string;
     /** Example value (as defined for type) */
@@ -445,7 +445,7 @@ interface ElementDefinition {
     /** Additional content defined by implementations */
     extension?: Extension[];
     /** Value must be exactly this */
-    fixed?: any | boolean | any | string | string | string | number | string | string | number | string | string | number | string | string | number | string | url | string | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
+    fixed?: any | boolean | string | number | url | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
     /** Unique id for inter-element referencing */
     id?: string;
     /** If this modifies the meaning of other elements */
@@ -484,13 +484,13 @@ interface ElementDefinition {
     /** Max length for strings */
     maxLength?: number;
     /** Maximum Allowed Value (for some types) */
-    maxValue?: string | string | string | string | number | number | number | number | Quantity;
+    maxValue?: string | number | Quantity;
     /** Implicit meaning when this element is missing */
     meaningWhenMissing?: string;
     /** Minimum Cardinality */
     min?: number;
     /** Minimum Allowed Value (for some types) */
-    minValue?: string | string | string | string | number | number | number | number | Quantity;
+    minValue?: string | number | Quantity;
     /** Extensions that cannot be ignored even if unrecognized */
     modifierExtension?: Extension[];
     /** If the element must be supported */
@@ -500,7 +500,7 @@ interface ElementDefinition {
     /** Path of the element in the hierarchy of elements */
     path?: string;
     /** Value must have at least these property values */
-    pattern?: any | boolean | any | string | string | string | number | string | string | number | string | string | number | string | string | number | string | url | string | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
+    pattern?: any | boolean | string | number | url | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
     /** xmlAttr | xmlText | typeAttr | cdaText | xhtml */
     representation?: string[];
     /** Why this resource has been created */
@@ -586,7 +586,7 @@ interface Extension {
     /** identifies the meaning of the extension */
     url?: string;
     /** Value of extension */
-    value?: any | boolean | any | string | string | string | number | string | string | number | string | string | number | string | string | number | string | url | string | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
+    value?: any | boolean | string | number | url | Address | Age | Annotation | Attachment | (string[] | CodeableConcept) | CodeableReference | Coding | ContactPoint | Count | Distance | Duration | HumanName | (string | Identifier) | Money | Period | Quantity | Range | Ratio | RatioRange | (string | Reference) | SampledData | Signature | Timing | ContactDetail | Contributor | DataRequirement | Expression | ParameterDefinition | RelatedArtifact | TriggerDefinition | UsageContext | Dosage;
 }
 interface HumanName {
     /** Additional content defined by implementations */
@@ -1019,7 +1019,7 @@ interface TriggerDefinition {
     /** Name or URI that identifies the event */
     name?: string;
     /** Timing of the event */
-    timing?: Timing | (string | Reference) | string | string;
+    timing?: Timing | (string | Reference) | string;
     /** named-event | periodic | data-changed | data-added | data-modified | data-removed | data-accessed | data-access-ended */
     type?: string;
 }
@@ -1921,7 +1921,7 @@ type DeviceDefinition_Props = {
     implicitRules?: string;
     language?: string;
     languageCode?: MaybeArray$1e<string[] | CodeableConcept>;
-    manufacturer?: string | string | Reference;
+    manufacturer?: string | Reference;
     material?: BackboneElement[];
     meta?: Meta;
     modelNumber?: string;
@@ -2222,7 +2222,7 @@ type Evidence_Props = {
     assertion?: string;
     author?: ContactDetail[];
     certainty?: BackboneElement[];
-    citeAs?: string | Reference | string;
+    citeAs?: string | Reference;
     contact?: ContactDetail[];
     contained?: any[];
     date?: string;
@@ -2257,7 +2257,7 @@ type Evidence_Props = {
 type MaybeArray$13<T> = T | T[];
 type EvidenceReport_Props = {
     author?: ContactDetail[];
-    citeAs?: string | Reference | string;
+    citeAs?: string | Reference;
     contact?: ContactDetail[];
     contained?: any[];
     editor?: ContactDetail[];
