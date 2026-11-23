@@ -709,8 +709,8 @@ importers:
         specifier: ^4.18.1
         version: 4.18.1
       qs:
-        specifier: ^6.16.0
-        version: 6.16.0
+        specifier: ^6.16.1
+        version: 6.16.1
     devDependencies:
       assertion-error:
         specifier: 2.0.0
@@ -1544,8 +1544,8 @@ importers:
         specifier: workspace:*
         version: link:../common
       qs:
-        specifier: ^6.16.0
-        version: 6.16.0
+        specifier: ^6.16.1
+        version: 6.16.1
       request:
         specifier: ^2.88.2
         version: 2.88.2
@@ -10393,8 +10393,8 @@ packages:
   qs@2.4.2:
     resolution: {integrity: sha512-Ur2glV49dt6jknphzkWeLUNCy7pmwGxGaEJuuxVVBioSwQzT00cZPLEtRqr4cg/iO/6N+RbfB0lFD2EovyeEng==}
 
-  qs@6.16.0:
-    resolution: {integrity: sha512-h6fhOIaRrID2CbEY2fqs+7t+UXZo+MLAnU5gRIq85uFtdiUPCdsApMlHhXogKVM4HM2DVbIjGNTTYH2OcmP1vA==}
+  qs@6.16.1:
+    resolution: {integrity: sha512-5Px6J7rfHBAGUhNQ3es4YzcOdBBw0SDcVtThJml4RdnKw4tKs2epA0kPZ+K8X+WiHktT93RHVcQ/3ym5aTCgtg==}
     engines: {node: '>=0.6'}
 
   qs@6.5.5:
@@ -15985,7 +15985,7 @@ snapshots:
       cookiejar: 2.1.4
       is-ip: 2.0.0
       methods: 1.1.2
-      qs: 6.16.0
+      qs: 6.16.1
       superagent: 3.8.3(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
@@ -16201,7 +16201,7 @@ snapshots:
     dependencies:
       '@hapi/bourne': 3.0.0
       inflation: 2.1.0
-      qs: 6.16.0
+      qs: 6.16.1
       raw-body: 2.5.3
       type-is: 1.6.18
 
@@ -17543,7 +17543,7 @@ snapshots:
       '@paralleldrive/cuid2': 2.2.2
       dezalgo: 1.0.4
       once: 1.4.0
-      qs: 6.16.0
+      qs: 6.16.1
 
   fragment-cache@0.2.1:
     dependencies:
@@ -17823,7 +17823,7 @@ snapshots:
       extend: 3.0.2
       gaxios: 7.1.4(supports-color@8.1.1)
       google-auth-library: 10.6.2(supports-color@8.1.1)
-      qs: 6.16.0
+      qs: 6.16.1
       url-template: 2.0.8
     transitivePeerDependencies:
       - supports-color
@@ -19530,7 +19530,7 @@ snapshots:
       lodash: 4.18.1
       mkdirp: 0.5.6
       propagate: 0.4.0
-      qs: 6.16.0
+      qs: 6.16.1
     transitivePeerDependencies:
       - supports-color
 
@@ -20123,7 +20123,7 @@ snapshots:
 
   qs@2.4.2: {}
 
-  qs@6.16.0:
+  qs@6.16.1:
     dependencies:
       es-define-property: 1.0.1
       side-channel: 1.1.1
@@ -21054,7 +21054,7 @@ snapshots:
       formidable: 1.2.6
       methods: 1.1.2
       mime: 1.6.0
-      qs: 6.16.0
+      qs: 6.16.1
       readable-stream: 2.3.8
     transitivePeerDependencies:
       - supports-color
@@ -21069,7 +21069,7 @@ snapshots:
       formidable: 1.2.6
       methods: 1.1.2
       mime: 1.6.0
-      qs: 6.16.0
+      qs: 6.16.1
       readable-stream: 2.3.8
     transitivePeerDependencies:
       - supports-color
@@ -21084,7 +21084,7 @@ snapshots:
       formidable: 2.1.5
       methods: 1.1.2
       mime: 2.6.0
-      qs: 6.16.0
+      qs: 6.16.1
       semver: 7.7.4
     transitivePeerDependencies:
       - supports-color
@@ -21222,7 +21222,7 @@ snapshots:
       http-basic: 8.1.3
       http-response-object: 3.0.2
       promise: 8.3.0
-      qs: 6.16.0
+      qs: 6.16.1
 
   thenify-all@1.6.0:
     dependencies:
@@ -21479,7 +21479,7 @@ snapshots:
       jsonwebtoken: 8.5.1
       lodash: 4.18.1
       q: 2.0.3
-      qs: 6.16.0
+      qs: 6.16.1
       rootpath: 0.1.2
       scmp: 2.1.0
       url-parse: 1.5.10
