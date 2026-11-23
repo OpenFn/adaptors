@@ -44,8 +44,6 @@
 <dt>
     <a href="#lastreferencevalue">lastReferenceValue(path)</a></dt>
 <dt>
-    <a href="#lodash">lodash()</a></dt>
-<dt>
     <a href="#log">log(args)</a></dt>
 <dt>
     <a href="#map">map(path, callback)</a></dt>
@@ -113,6 +111,13 @@ This adaptor exports the following namespaced functions:
 </dt>
 </dl>
 
+This adaptor exports the following utility namespaces:
+
+<dl>
+<dt>
+    <a href="#_">_</a>
+</dt>
+</dl>
 
 ## Functions
 ### arrayToString
@@ -640,28 +645,6 @@ lastReferenceValue('key')
 
 * * *
 
-### lodash
-
-<p><code>lodash()</code></p>
-
-
-Lodash utility library.
-All lodash v4.17 functions are available on the `_` namespace, eg,
-`_.map`, `_.cloneDeep`, etc.
-
-**See**: https://lodash.com/docs/  
-
-**Example:** Split an array into chunks of 2 items each
-```js
-fn(state => {
-  const items = [1, 2, 3, 4, 5];
-  const chunks = lodash.chunk(items, 2);
-  return { ...state, chunks };
-});
-```
-
-* * *
-
 ### log
 
 <p><code>log(args) ⇒ Operation</code></p>
@@ -947,6 +930,29 @@ validate("https://www.example.com/schema/record", "form")
 **Example:** Validate the each item in `state.records` with a schema from a URL
 ```js
 each("records[*]", validate("https://www.example.com/schema/record"))
+```
+
+* * *
+
+## Namespaces
+### _
+
+
+Lodash utility library. All lodash v4.17 functions are available on
+the `_` object, eg `_.map`, `_.cloneDeep`, etc.
+
+Note that lodash can only be called from inside a callback (ie, an `fn()` block),
+and cannot be used as a top-level operation.
+
+**See**: https://lodash.com/docs/  
+
+**Example:** Split an array into chunks of 2 items each
+```js
+fn(state => {
+  const items = [1, 2, 3, 4, 5];
+  const chunks = _.chunk(items, 2);
+  return { ...state, chunks };
+});
 ```
 
 * * *

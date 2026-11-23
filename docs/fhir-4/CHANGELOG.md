@@ -1,5 +1,14 @@
 # @openfn/language-fhir-4
 
+## 0.6.1 - 23 November 2026
+
+### Patch Changes
+
+- cad3000: Remove duplicate members from generated FHIR datatype and resource
+  unions while preserving member order, shorthand types, and array types.
+- Updated dependencies \[df9ca6c]
+  - @openfn/language-common@3.3.6
+
 ## 0.6.0 - 03 September 2026
 
 ### Minor Changes

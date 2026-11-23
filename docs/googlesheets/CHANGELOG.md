@@ -1,5 +1,12 @@
 # @openfn/language-googlesheets
 
+## 5.1.2 - 23 November 2026
+
+### Patch Changes
+
+- Updated dependencies \[df9ca6c]
+  - @openfn/language-common@3.3.6
+
 ## 5.1.1 - 03 September 2026
 
 ### Patch Changes

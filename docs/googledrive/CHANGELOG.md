@@ -1,5 +1,12 @@
 # @openfn/language-googledrive
 
+## 3.2.2 - 23 November 2026
+
+### Patch Changes
+
+- Updated dependencies \[df9ca6c]
+  - @openfn/language-common@3.3.6
+
 ## 3.2.1 - 03 September 2026
 
 ### Patch Changes

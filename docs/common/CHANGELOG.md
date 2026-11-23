@@ -1,5 +1,12 @@
 ## 3.0.1 - 11 July 2025
 
+## 3.3.6 - 23 November 2026
+
+### Patch Changes
+
+- df9ca6c: Docs: list lodash (`_`) as a utility namespace rather than a
+  function, and fix the example to use `_`.
+
 ## 3.3.5 - 03 September 2026
 
 ### Patch Changes
