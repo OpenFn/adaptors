@@ -782,29 +782,6 @@ describe('list', () => {
     expect(data.length).to.equal(6);
   });
 
-  it('should respect a client-side limit and stop paginating', async () => {
-    let callCount = 0;
-
-    testServer
-      .intercept({
-        path: new RegExp(`/a/${domain}/api/case/v2`),
-        method: 'GET',
-      })
-      .reply(200, req => {
-        callCount++;
-        const cursor = req.query?.cursor;
-        if (!cursor) return cursorResponse(defaultObjects.slice(0, 3), null, 'page2');
-        return cursorResponse(defaultObjects.slice(3, 6), 'page2', null);
-      })
-      .times(2);
-
-    const state = { configuration };
-    const { data } = await execute(list('case', { params: { limit: 4 } }))(state);
-
-    expect(data.length).to.equal(4);
-    expect(callCount).to.equal(2);
-  });
-
   it('should stop when there is no next cursor', async () => {
     testServer
       .intercept({

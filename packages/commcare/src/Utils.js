@@ -70,15 +70,20 @@ export async function request(configuration, path, opts) {
 
 export async function requestWithPagination(configuration, path, options = {}) {
   const { domain } = configuration;
-  const { resultsKey, apiVersion = 'v2' } = options;
+  const { 
+    resultsKey, 
+    apiVersion = 'v2',
+    params = {},
+    ...requestOptions
+  } = options;
   const url = buildUrl(path, domain, apiVersion);
 
-  const requestParams = { ...(options.params ?? {}) };
-  let currentParams = { ...requestParams };
+  let currentParams = { ...params };
   const results = [];
 
   while (true) {
     const { body = {} } = await request(configuration, url, {
+      ...requestOptions,
       method: 'GET',
       params: currentParams
     });
@@ -86,14 +91,12 @@ export async function requestWithPagination(configuration, path, options = {}) {
     const key = resultsKey ?? Object.keys(body).find(key => Array.isArray(body[key]));
     if (key) results.push(...body[key]);
 
-    if (requestParams.limit && results.length >= requestParams.limit) break;
-
-    if (body?.next) {
+    if (body.next) {
       const cursor = new URL(body.next).searchParams.get('cursor');
-      currentParams = { ...request, cursor };
-    } else if (body?.meta?.next) {
+      currentParams = { ...params, cursor };
+    } else if (body.meta?.next) {
       currentParams = {
-        ...requestParams,
+        ...params,
         offset: body.meta.offset + body.meta.limit,
         limit: body.meta.limit
       }
@@ -102,5 +105,5 @@ export async function requestWithPagination(configuration, path, options = {}) {
     }
   }
 
-  return requestParams.limit ? results.slice(0, requestParams.limit) : results;
+  return results;
 };
