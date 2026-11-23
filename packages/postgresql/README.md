@@ -18,6 +18,67 @@ Language Pack for building expressions and operations to run PostgreSQL queries.
 }
 ```
 
+## Connecting through an SSH tunnel
+
+If the database can only be reached through an SSH server (a bastion or jump
+host), set `sshHost` in the configuration. The adaptor connects to the SSH
+server and sends postgres traffic over that SSH connection (without opening a
+local port).
+
+`host` and `port` then name the database **as the SSH server sees it**, often
+`localhost`. They default to `localhost` and `5432`.
+
+```json
+{
+  "host": "localhost",
+  "port": 5432,
+  "database": "mydb",
+  "user": "me",
+  "password": "noway",
+  "sshHost": "bastion.example.com",
+  "sshPort": 22,
+  "sshUsername": "tunnel",
+  "sshPrivateKey": "-----BEGIN OPENSSH PRIVATE KEY-----\n...\n-----END OPENSSH PRIVATE KEY-----\n",
+  "sshHostKey": "SHA256:abc..."
+}
+```
+
+| Key             | Description                                                                  |
+| --------------- | ---------------------------------------------------------------------------- |
+| `sshHost`       | The SSH server. Setting it turns the tunnel on.                              |
+| `sshPort`       | The SSH port. Defaults to 22.                                                |
+| `sshUsername`   | The SSH username.                                                            |
+| `sshPrivateKey` | The private key contents (not a file path).                                  |
+| `sshPassphrase` | Optional. The passphrase for an encrypted private key.                       |
+| `sshHostKey`    | Optional but recommended. The SSH server's host key fingerprint (see below). |
+
+### Verifying the SSH server
+
+Set `sshHostKey` to the server's SHA256 fingerprint, as `ssh-keygen -lf` prints
+it (for example `SHA256:abc...`). The `SHA256:` prefix and any trailing `=` are
+optional. If the server presents a different key, the adaptor refuses to connect
+before it sends any credentials.
+
+If `sshHostKey` is not set, **any host key is accepted**, which leaves the
+connection open to interception. The adaptor logs the fingerprint it saw so you
+can copy it into `sshHostKey`.
+
+## SSL certificates and connection timeout
+
+When `ssl` is on and `host` is an IP address, the adaptor checks that the
+server's certificate is issued for that IP address. This applies to every
+connection, with or without SSH, and is skipped when `allowSelfSignedCert` is
+on.
+
+This can break a connection that uses all of these: `ssl` on,
+`allowSelfSignedCert` off, an IP address as `host`, and a certificate that names
+`localhost` but not that IP address. To fix it, reissue the certificate with the
+IP address in its subject alternative names, or connect by a hostname the
+certificate names.
+
+The adaptor gives up connecting to postgres after 30 seconds, rather than
+waiting forever for a server that never answers.
+
 ## `sql(query)`
 
 Execute an sql query. An option can be added to either log the query or not and
@@ -35,7 +96,7 @@ sql(
     `, ` +
     dataValue('long')(state) +
     `),4326))`,
-  { writeSql: true, execute: true }
+  { writeSql: true, execute: true },
 );
 ```
 
@@ -77,7 +138,7 @@ insert(
     inserted_at: '2020-08-27 00:00:00',
     updated_at: '2020-08-27 00:00:00',
   },
-  { setNull: ["''", "'undefined'"], writeSql: true, logValues: true }
+  { setNull: ["''", "'undefined'"], writeSql: true, logValues: true },
 );
 ```
 
@@ -101,7 +162,7 @@ upsert(
     writeSql: false,
     execute: true,
     logValues: true,
-  }
+  },
 );
 ```
 
@@ -132,7 +193,7 @@ insertMany(
         updated_at: '2020-01-01 00:00:00',
       };
     }),
-  { logValues: true }
+  { logValues: true },
 );
 ```
 
@@ -148,7 +209,7 @@ upsertMany('users', 'ON CONSTRAINT users_pkey', state =>
       inserted_at: '2020-01-01 00:00:00',
       updated_at: '2020-01-01 00:00:00',
     };
-  })
+  }),
 );
 ```
 
@@ -173,7 +234,7 @@ insertTable('users', state =>
     type: column.type,
     required: true, // optional
     unique: false, // optional - set to true for unique constraint
-  }))
+  })),
 );
 ```
 
@@ -192,7 +253,7 @@ modifyTable(
       required: true, // optional
       unique: false, // optional - set to true for unique constraint
     })),
-  { writeSql: false, execute: true }
+  { writeSql: false, execute: true },
 );
 ```
 
@@ -202,6 +263,9 @@ Clone the [adaptors monorepo](https://github.com/OpenFn/adaptors). Follow the
 `Getting Started` guide inside to get set up.
 
 Run tests using `pnpm run test` or `pnpm run test:watch`
+
+To try the SSH tunnel against a real postgres that is only reachable over SSH,
+see [test/ssh/README.md](test/ssh/README.md).
 
 Build the project using `pnpm build`.
 
