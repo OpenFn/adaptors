@@ -1,4 +1,4 @@
-import pg from 'pg';
+import { connect } from './connection.js';
 import { format } from './util.js';
 import {
   execute as commonExecute,
@@ -12,7 +12,7 @@ import {
   findValueQuery,
 } from './builders.js';
 
-let client = null;
+let connection = null;
 
 /**
  * State object
@@ -85,59 +85,41 @@ export function execute(...operations) {
       newClient,
       ...operations,
       endClient
-    )({ ...initialState, ...state }).catch(e => {
-      endClient(state);
+    )({ ...initialState, ...state }).catch(async e => {
+      await endClient(state).catch(e =>
+        console.error(`Failed to close connection: ${e.message}`)
+      );
       console.error(e);
       throw e;
     });
   };
 }
 
-function newClient(state) {
-  const {
-    ca,
-    ssl,
-    key,
-    host,
-    port,
-    user,
-    cert,
-    database,
-    password,
-    allowSelfSignedCert,
-  } = state.configuration || {};
-
-  // Allowing or blocking self signed certificate
-  // https://node-postgres.com/features/ssl
-  const sslOptions = ssl
-    ? { rejectUnauthorized: !allowSelfSignedCert, cert, ca, key }
-    : false;
-
-  // setup client config
-  const config = { host, port, database, user, password, ssl: sslOptions };
-
-  // instantiate a new client
-  client = new pg.Client(config);
-  client.connect();
+async function newClient(state) {
+  connection = await connect(state.configuration);
   return state;
 }
 
-function endClient(state) {
-  client.end();
+async function endClient(state) {
+  const current = connection;
+  connection = null;
+  await current?.close();
   return state;
 }
+
 async function queryHandler(query, values) {
   let result;
   if (values) {
-    result = await client.query(query, values);
+    result = await connection.client.query(query, values);
   } else {
-    result = await client.query(query);
+    result = await connection.client.query(query);
   }
   console.log(`${result.command} succeeded, rowCount: ${result.rowCount}`);
   return result;
 }
+
 export function setMockClient(mockClient) {
-  client = mockClient;
+  connection = { client: mockClient, close: async () => {} };
 }
 
 /**

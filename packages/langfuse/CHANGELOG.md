@@ -1,5 +1,12 @@
 # @openfn/language-langfuse
 
+## 1.0.3 - 23 November 2026
+
+### Patch Changes
+
+- Updated dependencies \[df9ca6c]
+  - @openfn/language-common@3.3.6
+
 ## 1.0.2 - 15 October 2026
 
 ### Patch Changes

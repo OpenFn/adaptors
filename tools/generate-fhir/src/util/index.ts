@@ -1,8 +1,9 @@
 import addDisclaimer from './disclaimer';
 import sortKeys from './sort-keys';
+import { dedupe } from './dedupe';
 import type { MappingSpec, ProfileSpec, Schema } from '../types';
 
-export { addDisclaimer, sortKeys };
+export { addDisclaimer, sortKeys, dedupe };
 
 export const getBuilderName = (resourceName: string) =>
   resourceName[0].toLowerCase() + resourceName.slice(1);

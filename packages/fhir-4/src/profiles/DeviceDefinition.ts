@@ -19,7 +19,7 @@ export type DeviceDefinition_Props = {
     implicitRules?: string;
     language?: string;
     languageCode?: MaybeArray<string[] | FHIR.CodeableConcept>;
-    manufacturer?: string | string | FHIR.Reference;
+    manufacturer?: string | FHIR.Reference;
     material?: FHIR.BackboneElement[];
     meta?: FHIR.Meta;
     modelNumber?: string;

@@ -10,7 +10,7 @@ type MaybeArray<T> = T | T[];
 
 export type EvidenceReport_Props = {
     author?: FHIR.ContactDetail[];
-    citeAs?: string | FHIR.Reference | string;
+    citeAs?: string | FHIR.Reference;
     contact?: FHIR.ContactDetail[];
     contained?: any[];
     editor?: FHIR.ContactDetail[];

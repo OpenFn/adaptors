@@ -13,7 +13,7 @@ export type Evidence_Props = {
     assertion?: string;
     author?: FHIR.ContactDetail[];
     certainty?: FHIR.BackboneElement[];
-    citeAs?: string | FHIR.Reference | string;
+    citeAs?: string | FHIR.Reference;
     contact?: FHIR.ContactDetail[];
     contained?: any[];
     date?: string;

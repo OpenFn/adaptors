@@ -1,5 +1,14 @@
 # @openfn/language-commcare
 
+## 4.3.4 - 23 November 2026
+
+### Patch Changes
+
+- 5a1b7aa: `fetchReportData()`: send `params` with the report request to
+  CommCare instead of with the POST to `postUrl`
+- Updated dependencies \[df9ca6c]
+  - @openfn/language-common@3.3.6
+
 ## 4.3.3 - 16 September 2026
 
 ### Patch Changes

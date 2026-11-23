@@ -1,11 +1,9 @@
 #!/usr/bin/env node
 // Runs scripts/trust.mjs for every published adaptor in the workspace.
 // See https://docs.npmjs.com/cli/v11/commands/npm-trust#bulk-usage
-import { spawnSync } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-
-const DELAY_MS = 2000;
 
 const argv = yargs(hideBin(process.argv))
   .command(
@@ -20,6 +18,17 @@ const argv = yargs(hideBin(process.argv))
     type: 'string',
     description:
       'skip ahead to this adaptor (by short name) in the sorted list, e.g. to resume a run',
+  })
+  .option('concurrency', {
+    alias: 'c',
+    type: 'number',
+    default: 10,
+    description: 'how many adaptors to process in parallel',
+  })
+  .option('renew', {
+    type: 'boolean',
+    default: false,
+    description: 'revoke and re-add trust for adaptors that are already trusted',
   })
   .example('$0 123456', 'trust every published adaptor')
   .example('$0 123456 --from http', 'resume starting at http')
@@ -76,37 +85,61 @@ if (argv.from) {
 console.log(`Configuring trust for ${packages.length} adaptors...\n`);
 
 // trust.mjs exits 0 both when it configures trust and when it skips
-// (already trusted / not yet published) — see its own output above for
-// which happened to each package. This only tracks real (non-OTP) failures.
+// (already trusted / not yet published). This only tracks real (non-OTP)
+// failures.
 const failed = [];
+let done = 0;
 
-let i = 0;
-while (i < packages.length) {
-  const adaptor = packages[i];
-  console.log(`\n[${i + 1}/${packages.length}] ${adaptor}`);
-  const { status } = spawnSync('node', ['scripts/trust.mjs', adaptor, otp], {
-    stdio: 'inherit',
+// Runs trust.mjs asynchronously, buffering output so parallel runs don't
+// interleave; the whole block is printed when the package finishes.
+function runTrust(adaptor, otpUsed) {
+  return new Promise(resolve => {
+    const args = ['scripts/trust.mjs', adaptor, otpUsed];
+    if (argv.renew) args.push('--renew');
+    const child = spawn('node', args);
+    let out = '';
+    child.stdout.on('data', d => (out += d));
+    child.stderr.on('data', d => (out += d));
+    child.on('close', status => resolve({ status, out }));
   });
+}
 
-  if (status === 2) {
-    otp = askOtp('\nOTP expired. Enter a fresh one to keep going: ');
-    continue; // retry this same package, don't advance
-  }
+async function processAdaptor(adaptor) {
+  while (true) {
+    const otpUsed = otp;
+    const { status, out } = await runTrust(adaptor, otpUsed);
 
-  if (status !== 0) {
-    failed.push(adaptor);
-  }
+    if (status === 2) {
+      // Another worker may already have refreshed the OTP while we ran.
+      if (otp === otpUsed) {
+        otp = askOtp('\nOTP expired. Enter a fresh one to keep going: ');
+      }
+      continue; // retry this same package
+    }
 
-  i++;
-  if (i < packages.length) {
-    await new Promise(resolve => setTimeout(resolve, DELAY_MS));
+    done++;
+    console.log(`\n[${done}/${packages.length}] ${adaptor}${out}`);
+    if (status !== 0) failed.push(adaptor);
+    return;
   }
 }
+
+// Worker pool: keeps `concurrency` adaptors in flight at all times.
+const queue = [...packages];
+const workers = Array.from(
+  { length: Math.max(1, Math.min(argv.concurrency, packages.length)) },
+  async () => {
+    while (queue.length) {
+      await processAdaptor(queue.shift());
+    }
+  }
+);
+await Promise.all(workers);
 
 console.log(
   `\nDone. ${packages.length - failed.length}/${packages.length} ok.`
 );
 if (failed.length) {
-  console.log(`Failed: ${failed.join(', ')}`);
+  console.log(`Failed: ${failed.sort().join(', ')}`);
   process.exit(1);
 }

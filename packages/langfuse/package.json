@@ -1,6 +1,6 @@
 {
   "name": "@openfn/language-langfuse",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "OpenFn langfuse adaptor",
   "type": "module",
   "exports": {
@@ -36,7 +36,7 @@
     "chai": "4.3.6",
     "deep-eql": "4.1.1",
     "rimraf": "3.0.2",
-    "undici": "^7.29.0"
+    "undici": "^7.30.1"
   },
   "repository": {
     "type": "git",
