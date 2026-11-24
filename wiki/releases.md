@@ -87,13 +87,13 @@ Sometimes versioning is run on a release branch after merging.
 Merging triggers the [Publish workflow](../.github/workflows/publish.yaml),
 which will:
 
-1. Install, validate configuration schemas, build, and run tests
-2. Fill in any missing changelog dates (and commit them back to `main`)
-3. Run `pnpm publish -r`, which publishes every package whose version is not yet
-   on npm, authenticating through trusted publishing
-4. Create git tags for each new version and push them
-5. Post a notification to Slack
-6. Update `docs/docs.json` and docs.openfn.org
+1. Install dependencies and check npm trusted publishing for every pending package
+2. Validate configuration schemas, build, and run tests
+3. Fill in any missing changelog dates (and commit them back to `main`)
+4. Publish the checked packages whose versions are still missing on npm
+5. Create git tags for each new version and push them
+6. Post a notification to Slack
+7. Update `docs/docs.json` and docs.openfn.org
 
 You can watch progress in the Actions tab on GitHub. If the publish step fails,
 see [When publishing fails](#when-publishing-fails).
@@ -105,8 +105,7 @@ first release of an adaptor is done by hand by a maintainer with npm publish
 rights. You'll need your authenticator app handy.
 
 1. Merge the PR that adds the adaptor (with its changeset) as usual. The
-   automated publish can't release the new package, so expect that step to fail
-   for it.
+   release preflight will block the batch until the new package exists on npm.
 2. From a clean, up-to-date checkout of `main`, run:
 
    ```bash
@@ -158,15 +157,16 @@ Options:
 - `--renew` revokes the existing trust and adds it again (see
   [Renewing trust](#renewing-trust))
 
-Note that after trusting, the adaptor is granted a temporary "pending" trusted
-status. For trust to be applied permanently, a new version must be released
-within 48 hours. This is why trust sometimes needs to be renewed for older
-adaptors; see [Renewing trust](#renewing-trust).
+A new trusted publisher configuration must complete its first successful
+publish within two days. That publish validates the configuration and binds
+it to the repository. If the initial window expires, see
+[Renewing trust](#renewing-trust).
 
 ## When publishing fails
 
-If the Publish workflow fails at the `pnpm publish` step, the most likely cause
-is that a package's trust is missing or no longer valid. For example:
+Open the Publish run summary to see the pending packages and their OIDC
+exchange results. If the preflight fails, the workflow stops before build,
+tests, and uploads. A rejected exchange can mean:
 
 - The package was never trusted (for example, a new adaptor that skipped the
   trust step)
@@ -178,7 +178,14 @@ First check the workflow log to see which package was rejected. Then check the
 package's Settings tab on npmjs.com to see whether a trusted publisher is
 listed, and whether it points at `OpenFn/adaptors` and `publish.yaml`.
 
-See Renewing Trust to fix it.
+For an existing adaptor, see [Renewing trust](#renewing-trust). For a new
+adaptor, follow [Releasing a new adaptor](#releasing-a-new-adaptor). For a
+workspace tool, check its npm package settings and verify that direct publishing
+is allowed. For unverified exchanges, check GitHub OIDC permissions and npm
+registry availability before retrying.
+
+The preflight checks the OIDC exchange. A later upload can still fail, in
+which case the release can be rerun.
 
 The error for broken trust is often not obvious. It can look like this:
 
@@ -232,6 +239,7 @@ Slack notification went out.
 | ------------------------------------ | ------------------------------------------------------- |
 | `pnpm changeset`                     | Create a changeset for your changes                     |
 | `pnpm run version`                   | Apply changesets, bump versions, update changelog dates |
+| `pnpm publish:list`                  | Preview the packages pending release locally                            |
 | `pnpm publish:new <adaptor> <otp>`   | First release of a new adaptor (publish, tag, trust)    |
 | `pnpm trust <adaptor> <otp>`         | Set up trusted publishing for one adaptor               |
 | `pnpm trust <adaptor> <otp> --renew` | Revoke and re-add trust for one adaptor                 |
