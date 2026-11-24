@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "apiKey": {
+      "title": "API Key",
+      "type": "string",
+      "description": "Your Thaura API key. Create one in the Thaura app: open your account menu, then API, then API Keys.",
+      "writeOnly": true,
+      "minLength": 1,
+      "examples": ["YOUR_THAURA_API_KEY"]
+    },
+    "baseUrl": {
+      "title": "Base URL",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The base URL of the Thaura API. Defaults to https://backend.thaura.ai/v1.",
+      "format": "uri",
+      "minLength": 1,
+      "default": "https://backend.thaura.ai/v1",
+      "examples": ["https://backend.thaura.ai/v1"]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["apiKey"]
+}
