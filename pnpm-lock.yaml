@@ -3030,6 +3030,28 @@ importers:
         specifier: ^1.12.0
         version: 1.12.0(supports-color@8.1.1)
 
+  packages/thaura:
+    dependencies:
+      '@openfn/language-common':
+        specifier: workspace:*
+        version: link:../common
+    devDependencies:
+      assertion-error:
+        specifier: 2.0.0
+        version: 2.0.0
+      chai:
+        specifier: 4.3.6
+        version: 4.3.6
+      deep-eql:
+        specifier: 4.1.1
+        version: 4.1.1
+      rimraf:
+        specifier: 3.0.2
+        version: 3.0.2
+      undici:
+        specifier: ^7.30.1
+        version: 7.30.1
+
   packages/twilio:
     dependencies:
       '@openfn/language-common':
